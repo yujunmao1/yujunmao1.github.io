@@ -4,4 +4,4 @@ I am looking for PhD positions that start in Fall of 2024.
 
 # Publications
 
-**Yujun Mao**, Yoon Kim, Yilun Zhou. CHAMP: A Competition-Level Dataset for Fine-Grained Analyses of LLMs' Mathematical Reasoning Capabilities, *NeurIPS MATH-AI Workshop*, 2023. [\[Paper PDF\]](https://openreview.net/attachment?id=loDIYsNLbw&name=pdf)
+**Yujun Mao**, Yoon Kim, Yilun Zhou. CHAMP: A Competition-Level Dataset for Fine-Grained Analyses of LLMs' Mathematical Reasoning Capabilities, *NeurIPS MATH-AI Workshop*, 2023. [\[Paper PDF\]](https://mathai2023.github.io/papers/14.pdf)
