@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_3</td>
+            <td>GPT-4</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_3']
+messages = problem.conversations['GPT-4|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1=2, and define x_(n+1)=2x_n/(x_n^2-1). Could this sequence be extended indefinitely (i.e., not encountering division-by-zero issue)?
+
+You may find the following information useful:
+
+1. Study the possible x_n values which would result in a division-by-zero error when computing x_(n+1).
+2. Study the rationality of possible values of x_(n-1) which would result in those x_n values.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>1. Study the possible x_n values which would result in a division-by-zero error when computing x_(n+1).
+
+The division-by-zero error would occur when the denominator of the expression for x_(n+1) is zero. That is, when x_n^2 - 1 = 0. Solving this equation gives x_n = ±1. 
+
+2. Study the rationality of possible values of x_(n-1) which would result in those x_n values.
+
+We need to find if there exist any rational values of x_(n-1) that would result in x_n = ±1. 
+
+We can do this by setting x_(n+1) = ±1 in the given expression and solving for x_n:
+
+2x_n/(x_n^2 - 1) = 1
+=&gt; 2x_n = x_n^2 - 1
+=&gt; x_n^2 - 2x_n - 1 = 0
+
+Solving this quadratic equation using the quadratic formula gives:
+
+x_n = [2 ± sqrt((2)^2 - 4*1*(-1))]/(2*1)
+     = [2 ± sqrt(4 + 4)]/2
+     = [2 ± sqrt(8)]/2
+     = 1 ± sqrt(2)
+
+Similarly, for x_(n+1) = -1, we get:
+
+2x_n/(x_n^2 - 1) = -1
+=&gt; 2x_n = -x_n^2 + 1
+=&gt; x_n^2 + 2x_n - 1 = 0
+
+Solving this quadratic equation gives:
+
+x_n = [-2 ± sqrt((2)^2 - 4*1*(-1))]/(2*1)
+     = [-2 ± sqrt(4 + 4)]/2
+     = [-2 ± sqrt(8)]/2
+     = -1 ± sqrt(2)
+
+So, the possible values of x_n that would result in x_(n+1) = ±1 are 1 ± sqrt(2) and -1 ± sqrt(2). 
+
+These are irrational numbers. Therefore, if the sequence starts with a rational number (like x_1 = 2), it will never reach these irrational values. 
+
+So, the sequence can be extended indefinitely without encountering a division-by-zero issue.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence defined by x_(n+1)=2x_n/(x_n^2-1) can be extended indefinitely without encountering a division-by-zero issue, as the values that would cause this issue are irrational and cannot be reached starting from a rational number.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

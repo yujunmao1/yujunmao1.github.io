@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_77</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_77']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let S(m)=12^m+9^m+8^m+6^m.
+2. We have S(m)=(3^m)(4^m)+(3^m)(3^m)+(2^m)(4^m)+(2^m)(3^m)=(2^m+3^m)(3^m+4^m).
+3. Since m=5(2k+1), S(m)=((2^5)^(2k+1)+(3^5)^(2k+1))((3^5)^(2k+1)+(4^5)^(2k+1)).
+4. Since 2k+1 is odd, we have 2^5+3^5 | (2^5)^(2k+1)+(3^5)^(2k+1) and 3^5 + 4^5 | (3^5)^(2k+1)+(4^5)^(2k+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s continue from where the partial solution left off:
+
+We have \( S(m) = (2^m + 3^m)(3^m + 4^m) \) and \( m = 5(2k+1) \) for some integer \( k \).
+
+From the partial solution, we know that \( 2^5 + 3^5 \) divides \( (2^5)^{2k+1} + (3^5)^{2k+1} \) and \( 3^5 + 4^5 \) divides \( (3^5)^{2k+1} + (4^5)^{2k+1} \).
+
+Let&#x27;s calculate \( 2^5 + 3^5 \) and \( 3^5 + 4^5 \):
+
+\( 2^5 = 32 \)
+\( 3^5 = 243 \)
+\( 4^5 = 1024 \)
+
+So,
+
+\( 2^5 + 3^5 = 32 + 243 = 275 \)
+\( 3^5 + 4^5 = 243 + 1024 = 1267 \)
+
+Now, we need to find the greatest common divisor (gcd) of 275, 1267, and 1991 to see if they share any common factors that would be relevant to the modulus operation.
+
+\( \text{gcd}(275, 1991) = 1 \) (since 1991 is a prime number and 275 does not divide it)
+\( \text{gcd}(1267, 1991) = 1 \) (for the same reason)
+
+Since 1991 is a prime number and neither 275 nor 1267 is a multiple of 1991, we can conclude that \( S(m) \) is congruent to 0 modulo 1991 if and only if \( S(m) \) is a multiple of 1991.
+
+However, since \( 2^5 + 3^5 \) and \( 3^5 + 4^5 \) are not multiples of 1991, and they divide \( S(m) \), we need to check if the product of these two numbers is a multiple of 1991.
+
+Let&#x27;s calculate \( 275 \times 1267 \):
+
+\( 275 \times 1267 = 348425 \)
+
+Now, we need to find \( 348425 \mod 1991 \):
+
+\( 348425 \mod 1991 = 1663 \)
+
+So, \( S(m) \) is congruent to 1663 modulo 1991.
+
+Therefore, the possible value of \( S(m) \mod 1991 \) is 1663 when \( m \) ends with the digit 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible value of \(12^m + 9^m + 8^m + 6^m \mod 1991\) when the integer \(m\) ends with the digit 5 is 1663.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

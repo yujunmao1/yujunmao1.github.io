@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_56</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_56']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?
+Step-wise solution:
+1. Let S(m)=12^m+9^m+8^m+6^m.
+2. We have S(m)=(3^m)(4^m)+(3^m)(3^m)+(2^m)(4^m)+(2^m)(3^m)=(2^m+3^m)(3^m+4^m).
+3. Since m=5(2k+1), S(m)=((2^5)^(2k+1)+(3^5)^(2k+1))((3^5)^(2k+1)+(4^5)^(2k+1)).
+4. Since 2k+1 is odd, we have 2^5+3^5 | (2^5)^(2k+1)+(3^5)^(2k+1) and 3^5 + 4^5 | (3^5)^(2k+1)+(4^5)^(2k+1).
+5. So (2^5+3^5)(3^5 + 4^5) | S(m), which means 11*25*181*7 | S(m).
+6. Since 1991=11*181, we have 1991 | S(m).
+7. So S(m) mod 1991=0.
+
+Problem: Let f(x)=x^4+x^3+x^2+x+1. Find the remainder of f(x^5) divided by f(x).
+Step-wise solution:
+1. We have f(x^5)=x^20+x^15+x^10+x^5+1=(x^20-1)+(x^15-1)+(x^10-1)+(x^5-1)+5.
+2. We have x^20-1, x^15-1, x^10-1, x^5-1 all divisible by x^5-1.
+3. We also have f(x) | x^5-1 because (x-1)(x^4+x^3+x^2+x+1)=x^5-1.
+4. Thus, (x^20-1)+(x^15-1)+(x^10-1)+(x^5-1) is divisible by f(x).
+5. So the remainder of f(x^5) divided by f(x) is 5.
+
+Problem: The polynomial f(x) has integer coefficients and there exists an integer k such that f(k), f(k+1), f(k+2) are all divisible by 3. For integer m in {k+3, k+4, ..., 2k}, at least how many of them have f(m) divisible by 3, as an expression of k?
+Step-wise solution:
+1. For any integer m&gt;k+2, we have m-k | f(m)-f(k), m-k-1 | f(m)-f(k+1) and m-k-2 | f(m)-f(k+2).
+2. The three divisors are three consecutive integers, so one of them must be divisible by 3.
+3. Thus, one of f(m)-f(k), f(m)-f(k+1) and f(m)-f(k+2) must be divisible by 3.
+4. Since f(k), f(k+1), f(k+2) are all divisible by 3, we must have 3 | f(m).
+5. Thus, all k-2 elements of {k+3, k+4, ..., 2k} have f(m) divisible by 3.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Positive integers a, b satisfy that (a+1)/b+(b+1)/a is also a positive integer. Let d=gcd(a, b). What are possible values of a+b mod d^2?
+
+In addition, you may also find the following information helpful:
+
+1. Convert the fact that (a+1)/b+(b+1)/a is an integer to a statement about divisibility by ab.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a$ and $b$ be positive integers such that $(a+1)/b+(b+1)/a$ is also a positive integer. Let $d=\gcd(a, b)$. We want to find all possible values of $a+b$ modulo $d^2$.
+
+We can write $(a+1)/b+(b+1)/a$ as follows:
+
+$$\frac{a+1}{b}+\frac{b+1}{a}=\frac{(a+1)(b+1)}{ab}=\frac{ab+a+b+1}{ab}=\frac{ab+a+b}{ab}+\frac{1}{ab}.$$
+
+Since $(a+1)/b+(b+1)/a$ is an integer, we must have $ab+a+b$ divisible by $ab$. This means that $a+b$ is divisible by $d$.
+
+Now, let $a+b=kd$ for some integer $k$. Then, $a=kd-b$. Substituting this into the equation $(a+1)/b+(b+1)/a$, we get:
+
+$$\frac{(kd-b)+1}{b}+\frac{b+1}{a}=\frac{kd-b+1}{b}+\frac{b+1}{kd-b}=\frac{(kd-b)(b+1)}{b(kd-b)}+\frac{b(kd-b+1)}{b(kd-b)}=\frac{kd^2-b^2+b+1}{b(kd-b)}=\frac{kd^2-b^2+b+1}{b(kd-b)}+\frac{1}{b(kd-b)}.$$
+
+Since $(a+1)/b+(b+1)/a$ is an integer, we must have $kd^2-b^2+b+1$ divisible by $b(kd-b)$. This means that $kd^2-b^2+b+1$ is divisible by $d^2$.
+
+Therefore, the possible values of $a+b$ modulo $d^2$ are all the values of $kd$ for some integer $k$ such that $kd^2-b^2+b+1$ is divisible by $d^2$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $a+b$ modulo $d^2$ are all the values of $kd$ for some integer $k$ such that $kd^2-b^2+b+1$ is divisible by $d^2$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_32</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_32']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find 3^105+4^105 mod 11.
+
+You may find the following information useful:
+
+1. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, we will use the properties of modular arithmetic provided. We need to find the value of 3^105 + 4^105 (mod 11).
+
+First, let&#x27;s find 3^105 (mod 11) and 4^105 (mod 11) separately.
+
+For 3^105 (mod 11), we notice that 3^1 = 3 (mod 11), 3^2 = 9 (mod 11), 3^3 = 27 = 5 (mod 11), and 3^4 = 3*3^3 = 3*5 = 15 = 4 (mod 11). We can see a pattern here, where the powers of 3 will cycle through a set of remainders when divided by 11. Let&#x27;s find the cycle length.
+
+3^5 = 3*3^4 = 3*4 = 12 = 1 (mod 11), which means the cycle length is 5 because we&#x27;re back to a remainder of 1.
+
+Now, 105 is a multiple of 5 (105 = 5 * 21), so 3^105 (mod 11) will have the same remainder as 3^(5*21) (mod 11), which is 1 (mod 11) because any number to the power of a multiple of its cycle length modulo 11 will be 1.
+
+So, 3^105 (mod 11) = 1.
+
+Next, let&#x27;s find 4^105 (mod 11).
+
+We notice that 4^1 = 4 (mod 11), 4^2 = 16 = 5 (mod 11), 4^3 = 4*4^2 = 4*5 = 20 = 9 (mod 11), and 4^4 = 4*4^3 = 4*9 = 36 = 3 (mod 11). Continuing this process:
+
+4^5 = 4*4^4 = 4*3 = 12 = 1 (mod 11), which means the cycle length for powers of 4 modulo 11 is also 5.
+
+Since 105 is a multiple of 5, 4^105 (mod 11) will have the same remainder as 4^(5*21) (mod 11), which is 1 (mod 11).
+
+So, 4^105 (mod 11) = 1.
+
+Now we can combine the two results using the property of modular addition:
+
+(3^105 + 4^105) mod 11 = (3^105 mod 11 + 4^105 mod 11) mod 11
+= (1 + 1) mod 11
+= 2 mod 11.
+
+Therefore, 3^105 + 4^105 (mod 11) = 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of \(3^{105} + 4^{105} \mod 11\) is 2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

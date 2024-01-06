@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_40</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_40']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest value of a^2+ab+b^2-3a-3b for real numbers a, b.
+
+You may find the following information useful:
+
+1. Let the smallest value be m and define a non-negative expression.
+2. Consider the expression as a quadratic polynomial in the variable a.
+3. x^n is an even function (i.e., f(x)=f(-x)) if n is even, and is an odd function (i.e., f(x)=-f(-x)) if n is odd.
+4. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).
+5. For non-negative x, y, we have (x+y)/2≤sqrt((x^2+y^2)/2), with equality if and only if x=y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the expression \( a^2 + ab + b^2 - 3a - 3b \) for real numbers \( a \) and \( b \), we can complete the square for \( a \) and \( b \) to rewrite the expression in a form that makes it easier to analyze.
+
+First, let&#x27;s consider the expression as a quadratic polynomial in \( a \). We can rewrite the expression as follows:
+
+\[ a^2 + ab + b^2 - 3a - 3b = a^2 + a(b - 3) + b^2 - 3b \]
+
+Now, to complete the square for \( a \), we need to add and subtract the square of half the coefficient of \( a \) in the linear term \( a(b - 3) \). The coefficient of \( a \) is \( (b - 3) \), so half of this is \( \frac{b - 3}{2} \), and the square of this is \( \left(\frac{b - 3}{2}\right)^2 = \frac{(b - 3)^2}{4} \).
+
+Adding and subtracting \( \frac{(b - 3)^2}{4} \) to the expression, we get:
+
+\[ a^2 + a(b - 3) + \frac{(b - 3)^2}{4} - \frac{(b - 3)^2}{4} + b^2 - 3b \]
+
+Now, we can group the terms to complete the square for \( a \):
+
+\[ \left(a + \frac{b - 3}{2}\right)^2 - \frac{(b - 3)^2}{4} + b^2 - 3b \]
+
+Next, we can simplify the expression by combining the terms that involve \( b \):
+
+\[ \left(a + \frac{b - 3}{2}\right)^2 + b^2 - \frac{(b - 3)^2}{4} - 3b \]
+\[ \left(a + \frac{b - 3}{2}\right)^2 + b^2 - \frac{b^2 - 6b + 9}{4} - 3b \]
+\[ \left(a + \frac{b - 3}{2}\right)^2 + \frac{4b^2 - b^2 + 24b - 36}{4} \]
+\[ \left(a + \frac{b - 3}{2}\right)^2 + \frac{3b^2 + 24b - 36}{4} \]
+
+Now, we need to minimize the expression. The square term \( \left(a + \frac{b - 3}{2}\right)^2 \) is always non-negative, and it is zero when \( a = -\frac{b - 3}{2} \). So, we need to minimize the remaining expression involving \( b \):
+
+\[ \frac{3b^2 + 24b - 36}{4} \]
+
+This is a quadratic in \( b \), and it will have a minimum value when \( b \) is equal to the vertex of the parabola. The vertex of a parabola given by \( y = ax^2 + bx + c \) is at \( x = -\frac{b}{2a} \). In our case, \( a = \frac{3}{4} \) and \( b = 6 \), so the vertex is at:
+
+\[ b = -\frac{6}{2 \cdot \frac{3}{4}} = -\frac{6}{\frac{3}{2}} = -\frac{6 \cdot 2}{3} = -4 \]
+
+Substituting \( b = -4 \) into the quadratic expression, we get:
+
+\[ \frac{3(-4)^2 + 24(-4) - 36}{4} \]
+\[ \frac{3 \cdot 16 - 96 - 36}{4} \]
+\[ \frac{48 - 96 - 36}{4} \]
+\[ \frac{-84}{4} \]
+\[ -21 \]
+
+Therefore, the smallest value of the expression \( a^2 + ab + b^2 - 3a - 3b \) for real numbers \( a \) and \( b \) is \( -21 \), which occurs when \( a = -\frac{b - 3}{2} = -\frac{-4 - 3}{2} = \frac{7}{2} \) and \( b = -4 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( a^2 + ab + b^2 - 3a - 3b \) for real numbers \( a \) and \( b \) is \(-21\), which occurs when \( a = \frac{7}{2} \) and \( b = -4 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

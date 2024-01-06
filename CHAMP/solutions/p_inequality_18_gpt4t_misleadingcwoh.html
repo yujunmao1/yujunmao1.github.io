@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_18</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> sqrt(3)/3, or equivalently 1/sqrt(3)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_18']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, what is the largest value of sqrt(ab+bc+ac)/(a+b+c)?
+
+You may find the following information useful:
+
+1. For real numbers a, b, (a+b)^2≥4ab.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the largest value of the expression sqrt(ab + bc + ac) / (a + b + c), we can use the given inequality (a + b)^2 ≥ 4ab, which is a consequence of the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality).
+
+First, let&#x27;s apply the given inequality to each pair of variables:
+
+(a + b)^2 ≥ 4ab
+(b + c)^2 ≥ 4bc
+(c + a)^2 ≥ 4ac
+
+Now, let&#x27;s sum these inequalities:
+
+(a + b)^2 + (b + c)^2 + (c + a)^2 ≥ 4ab + 4bc + 4ac
+
+Expanding the left side, we get:
+
+(a^2 + 2ab + b^2) + (b^2 + 2bc + c^2) + (c^2 + 2ac + a^2) ≥ 4ab + 4bc + 4ac
+
+2a^2 + 2b^2 + 2c^2 + 2ab + 2bc + 2ac ≥ 4ab + 4bc + 4ac
+
+Divide both sides by 2:
+
+a^2 + b^2 + c^2 + ab + bc + ac ≥ 2ab + 2bc + 2ac
+
+Now, let&#x27;s add 3ab + 3bc + 3ac to both sides to complete the square on the left side:
+
+a^2 + ab + b^2 + ab + b^2 + bc + b^2 + bc + c^2 + bc + c^2 + ac + c^2 + ac + a^2 + ac + a^2 + ab ≥ 5ab + 5bc + 5ac
+
+(a + b + c)^2 ≥ 5(ab + bc + ac)
+
+Now, take the square root of both sides:
+
+sqrt((a + b + c)^2) ≥ sqrt(5(ab + bc + ac))
+
+a + b + c ≥ sqrt(5(ab + bc + ac))
+
+Now, we want to find the maximum value of sqrt(ab + bc + ac) / (a + b + c). From the above inequality, we have:
+
+sqrt(ab + bc + ac) ≤ (a + b + c) / sqrt(5)
+
+Divide both sides by (a + b + c):
+
+sqrt(ab + bc + ac) / (a + b + c) ≤ 1 / sqrt(5)
+
+Therefore, the largest value of sqrt(ab + bc + ac) / (a + b + c) is 1 / sqrt(5), which is achieved when a = b = c (by the equality condition of the AM-GM inequality).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression sqrt(ab + bc + ac) / (a + b + c) for positive a, b, c is 1 / sqrt(5).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

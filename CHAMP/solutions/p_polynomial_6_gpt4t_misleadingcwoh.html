@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_6</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x=1, y=2) and (x=2, y=1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_6']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equations x^5+y^5=33, x+y=3.
+
+You may find the following information useful:
+
+1. Let x_1, x_2, x_3 be the root of the polynomial x^3+px^2+qx+r. Then x_1+x_2+x_3=-p, x_1*x_2+x_2*x_3+x_1*x_3=q and x_1*x_2*x_3=-r. For the polynomial sx^3+px^2+qx+r, we have x_1+x_2+x_3=-p/s, x_1*x_2+x_2*x_3+x_1*x_3=q/s and x_1*x_2*x_3=-r/s.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the system of equations:
+
+1) \( x^5 + y^5 = 33 \)
+2) \( x + y = 3 \)
+
+We are looking for integer solutions. From equation (2), we can express \( y \) in terms of \( x \):
+
+\( y = 3 - x \)
+
+Now, we substitute \( y \) in equation (1) with \( 3 - x \):
+
+\( x^5 + (3 - x)^5 = 33 \)
+
+Expanding \( (3 - x)^5 \) using the binomial theorem:
+
+\( (3 - x)^5 = 3^5 - 5 \cdot 3^4 \cdot x + 10 \cdot 3^3 \cdot x^2 - 10 \cdot 3^2 \cdot x^3 + 5 \cdot 3 \cdot x^4 - x^5 \)
+
+Now, we substitute this into our equation:
+
+\( x^5 + 3^5 - 5 \cdot 3^4 \cdot x + 10 \cdot 3^3 \cdot x^2 - 10 \cdot 3^2 \cdot x^3 + 5 \cdot 3 \cdot x^4 - x^5 = 33 \)
+
+The \( x^5 \) terms cancel out:
+
+\( 3^5 - 5 \cdot 3^4 \cdot x + 10 \cdot 3^3 \cdot x^2 - 10 \cdot 3^2 \cdot x^3 + 5 \cdot 3 \cdot x^4 = 33 \)
+
+Simplify the equation:
+
+\( 243 - 405x + 270x^2 - 90x^3 + 15x^4 = 33 \)
+
+Move all terms to one side:
+
+\( 15x^4 - 90x^3 + 270x^2 - 405x + 210 = 0 \)
+
+Divide the entire equation by 15 to simplify:
+
+\( x^4 - 6x^3 + 18x^2 - 27x + 14 = 0 \)
+
+Now, we need to find integer solutions for this quartic equation. Since the coefficients are relatively small, we can try integer values for \( x \) that are close to the sum \( x + y = 3 \). Since \( x + y = 3 \), and we are looking for integer solutions, \( x \) and \( y \) must be integers between -3 and 6.
+
+We can use the Rational Root Theorem to test for possible integer roots. The possible roots are the factors of the constant term (14) divided by the factors of the leading coefficient (1), which are ±1, ±2, ±7, ±14.
+
+Let&#x27;s test these values:
+
+For \( x = 1 \):
+\( 1 - 6 + 18 - 27 + 14 = 0 \)
+\( 0 = 0 \) (True)
+
+For \( x = 2 \):
+\( 16 - 48 + 72 - 54 + 14 = 0 \)
+\( 0 = 0 \) (True)
+
+So, \( x = 1 \) and \( x = 2 \) are roots of the equation. Since \( x + y = 3 \), the corresponding values for \( y \) are \( y = 2 \) and \( y = 1 \), respectively.
+
+Therefore, the integer solutions to the original system of equations are \( (x, y) = (1, 2) \) and \( (x, y) = (2, 1) \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer solutions to the system of equations \(x^5 + y^5 = 33\) and \(x + y = 3\) are \((x, y) = (1, 2)\) and \((x, y) = (2, 1)\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_16</td>
+            <td>GPT-3.5</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The only possible value for the limit is sqrt(a)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_16']
+messages = problem.conversations['GPT-3.5|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What are possible values of the limit of the sequence x_(n+1)=(x_n+a/x_n)/2, for different values of x_0&gt;0, a&gt;0, possibly as an expression of x_0, a?
+
+You may find the following information useful:
+
+1. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the possible values of the limit of the sequence, we can start by finding a pattern in the sequence.
+
+Let&#x27;s calculate the first few terms of the sequence:
+
+x_1 = (x_0 + a/x_0)/2
+x_2 = (x_1 + a/x_1)/2
+x_3 = (x_2 + a/x_2)/2
+...
+
+We can see that each term in the sequence is calculated by taking the previous term, adding a divided by the previous term, and then dividing the result by 2.
+
+To simplify the calculations, let&#x27;s introduce a new variable, y_n = x_n^2. This will allow us to rewrite the sequence equation in terms of y_n:
+
+y_(n+1) = (x_(n+1))^2 = ((x_n + a/x_n)/2)^2
+         = (1/4)(x_n^2 + 2a + a^2/x_n^2)
+         = (1/4)(y_n + 2a + a^2/y_n)
+
+Now, let&#x27;s calculate the first few terms of the sequence using this new equation:
+
+y_1 = (1/4)(y_0 + 2a + a^2/y_0)
+y_2 = (1/4)(y_1 + 2a + a^2/y_1)
+y_3 = (1/4)(y_2 + 2a + a^2/y_2)
+...
+
+We can see that each term in the sequence is calculated by taking the previous term, adding 2a, and then dividing the result by 4.
+
+Now, let&#x27;s find the limit of this new sequence as n approaches infinity. We can assume that the limit exists and denote it as L:
+
+L = (1/4)(L + 2a + a^2/L)
+
+To solve for L, we can multiply both sides of the equation by 4L:
+
+4L^2 = L^2 + 2aL + a^2
+
+Simplifying the equation:
+
+3L^2 - 2aL - a^2 = 0
+
+This is a quadratic equation in terms of L. We can solve it using the quadratic formula:
+
+L = (-(-2a) ± √((-2a)^2 - 4(3)(-a^2))) / (2(3))
+L = (2a ± √(4a^2 + 12a^2)) / 6
+L = (2a ± √(16a^2)) / 6
+L = (2a ± 4a) / 6
+
+Simplifying further:
+
+L = (a ± 2a) / 3
+
+Therefore, the possible values of the limit of the sequence are:
+
+L = 3a/3 = a
+L = -a/3
+
+So, the possible values of the limit are a and -a/3, expressed in terms of x_0 and a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of the limit of the sequence x_(n+1)=(x_n+a/x_n)/2, for different values of x_0&gt;0, a&gt;0, are a and -a/3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

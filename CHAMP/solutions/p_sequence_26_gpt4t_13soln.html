@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_26</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_26']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence is defined by a_1=sqrt(2), a_(n+1)=sqrt(2)^a_n. Does the limit for the sequence exist, and if so, find it.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have 0&lt;a_1&lt;a_2 and if 0&lt;a_(n-1)&lt;a_n, we have a_n=sqrt(2)^a_(n-1)&lt;sqrt(2)^a_n=a_(n+1).
+2. Thus, the sequence is monotonically increasing.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the limit of the sequence exists, we need to check if the sequence is bounded above. If it is both monotonically increasing and bounded above, then by the Monotone Convergence Theorem, it will converge to a limit.
+
+Let&#x27;s assume that the sequence does converge to a limit, say L. Then, by the definition of the sequence, we have:
+
+\[ a_{n+1} = \sqrt{2}^{a_n} \]
+
+Taking the limit as \( n \) approaches infinity on both sides, and using the fact that the limit of a composite function is the composition of the limits (provided the limits exist and the functions are continuous), we get:
+
+\[ \lim_{n \to \infty} a_{n+1} = \lim_{n \to \infty} \sqrt{2}^{a_n} \]
+
+Since we are assuming the sequence converges, we have:
+
+\[ L = \sqrt{2}^L \]
+
+Now, we need to solve this equation for \( L \). Taking the logarithm base \( \sqrt{2} \) of both sides gives us:
+
+\[ \log_{\sqrt{2}}(L) = L \]
+
+Converting to natural logarithms, we get:
+
+\[ \frac{\ln(L)}{\ln(\sqrt{2})} = L \]
+
+\[ \ln(L) = L \cdot \ln(\sqrt{2}) \]
+
+\[ \ln(L) = L \cdot \frac{1}{2} \ln(2) \]
+
+\[ 2\ln(L) = L \ln(2) \]
+
+\[ \frac{2\ln(L)}{\ln(2)} = L \]
+
+This is a transcendental equation and is not straightforward to solve algebraically. However, we can see that \( L = 2 \) is a solution because:
+
+\[ \frac{2\ln(2)}{\ln(2)} = 2 \]
+
+So, if the sequence has a limit, it must be \( L = 2 \). However, we still need to show that the sequence is bounded above by 2 to ensure that the limit exists.
+
+Let&#x27;s prove by induction that \( a_n &lt; 2 \) for all \( n \).
+
+Base case: \( a_1 = \sqrt{2} &lt; 2 \), which is true.
+
+Inductive step: Assume \( a_n &lt; 2 \). We need to show that \( a_{n+1} &lt; 2 \).
+
+Since \( a_n &lt; 2 \) and \( \sqrt{2} &lt; 2 \), we have:
+
+\[ a_{n+1} = \sqrt{2}^{a_n} &lt; \sqrt{2}^2 = 2 \]
+
+Thus, by induction, the sequence is bounded above by 2.
+
+Since the sequence is monotonically increasing and bounded above, it converges to a limit. We have shown that if a limit exists, it must be 2, and we have shown that the sequence is bounded above by 2. Therefore, the limit of the sequence exists and is equal to 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by \(a_1 = \sqrt{2}\) and \(a_{n+1} = \sqrt{2}^{a_n}\) exists and is equal to 2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

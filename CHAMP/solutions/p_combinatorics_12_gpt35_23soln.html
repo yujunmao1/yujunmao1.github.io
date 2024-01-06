@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_12</td>
+            <td>GPT-3.5</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_12']
+messages = problem.conversations['GPT-3.5|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Along a one-way street there are n parking lots. One-by-one n cars numbered 1 to n enter the street. Each driver i heads to his favorite parking lot a_i, and, if it is free, he occupies it. Otherwise, he continues to the next free lot and occupies it. But if all succeeding lots are occupied, he leaves for good. How many sequences {a_1, ..., a_n} are such that every driver can park, as an expression of n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Make the parking lot arrangement a circle, by connecting the n-th lot to a new (n+1)-th lot, which connects back to the 1st lot.
+2. Thus, every car will have somewhere to park because there are n cars in the (n+1)-lot circle.
+3. In addition, satisfying the original parking configuration is equivalent to the (n+1)-th lot being empty after all cars have parked (because an occupied (n+1)-th lot means that the car on that lot would have left for good originally).
+4. Let each driver choose his favorite lot number from 1 to n+1, so there are (n+1)^n sequences.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, we need to find the number of sequences {a_1, ..., a_n} such that every driver can park.
+
+From step 4 of the partial solution, we know that there are (n+1)^n possible sequences if we consider the (n+1)-th lot as well. However, not all of these sequences will satisfy the condition that every driver can park.
+
+To determine the number of valid sequences, we need to consider the cases where the (n+1)-th lot is occupied and where it is empty.
+
+Case 1: The (n+1)-th lot is occupied.
+In this case, we need to find the number of sequences where all drivers can park except for the driver who would have parked in the (n+1)-th lot. This is equivalent to finding the number of sequences {a_1, ..., a_n} such that every driver can park in the first n lots, which is the original problem with n lots. Therefore, the number of sequences in this case is (n+1)^(n-1).
+
+Case 2: The (n+1)-th lot is empty.
+In this case, we need to find the number of sequences where every driver can park in the first n lots and the (n+1)-th lot remains empty. This is equivalent to finding the number of sequences {a_1, ..., a_n} such that every driver can park in the first n lots and the last driver parks in the (n+1)-th lot. Therefore, the number of sequences in this case is (n+1)^(n-1).
+
+To find the total number of valid sequences, we sum the number of sequences from both cases:
+
+Total number of valid sequences = (n+1)^(n-1) + (n+1)^(n-1) = 2 * (n+1)^(n-1)
+
+Therefore, the final answer is 2 * (n+1)^(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences {a_1, ..., a_n} where every driver can park is 2 * (n+1)^(n-1).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

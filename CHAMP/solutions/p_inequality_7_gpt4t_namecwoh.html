@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_7</td>
+            <td>GPT-4 Turbo</td>
+            <td>Name w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_7']
+messages = problem.conversations['GPT-4 Turbo|Name w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If a, b, c are side lengths of a (possibly degenerate) triangle, then what is the largest value of a/(b+c)+b/(a+c)+c/(a+b)?
+
+You may find the following information useful:
+
+1. a, b, c are the sides of a (possibly degenerate) triangle if and only if a+b≥s, b+c≥s, a+c≥s for semi-perimeter s=(a+b+c)/2. The triangle is not degenerate if and only if all inequalities are strict.
+2. Compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the given information and the concept of the triangle inequality. Let&#x27;s denote the semi-perimeter by \( s = \frac{a+b+c}{2} \).
+
+We are given that for a non-degenerate triangle, the following strict inequalities hold:
+\[ a + b &gt; c, \]
+\[ b + c &gt; a, \]
+\[ a + c &gt; b. \]
+
+For a degenerate triangle, these inequalities are not strict, meaning they can be equal:
+\[ a + b \geq c, \]
+\[ b + c \geq a, \]
+\[ a + c \geq b. \]
+
+We want to maximize the expression:
+\[ \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b}. \]
+
+Let&#x27;s compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter \( s \):
+\[ \frac{a}{b+c} \leq \frac{a}{s}, \]
+\[ \frac{b}{a+c} \leq \frac{b}{s}, \]
+\[ \frac{c}{a+b} \leq \frac{c}{s}. \]
+
+Adding these inequalities together, we get:
+\[ \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \leq \frac{a}{s} + \frac{b}{s} + \frac{c}{s} = \frac{a+b+c}{s}. \]
+
+Since \( s = \frac{a+b+c}{2} \), we have:
+\[ \frac{a+b+c}{s} = \frac{a+b+c}{\frac{a+b+c}{2}} = 2. \]
+
+Therefore, the maximum value of the expression is 2, and this maximum is achieved when the triangle is degenerate, meaning one of the sides is equal to the sum of the other two sides (e.g., when \( a = b + c \), \( b = a + c \), or \( c = a + b \)).
+
+Thus, the largest value of \( \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \) is 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression \( \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \) for side lengths \( a \), \( b \), and \( c \) of a (possibly degenerate) triangle is 2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

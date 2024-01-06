@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_8</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No possible solutions</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_8']
+messages = problem.conversations['GPT-3.5|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible solutions to the equation (n-1)n(n+1)=a^m for integer n, a&gt;0 and m&gt;1.
+
+You may find the following information useful:
+
+1. If gcd(a, b)=gcd(a, c)=1, then gcd(a, bc)=1.
+2. If ab=c^k and gcd(a, b)=1, then a=u^k and b=v^k for gcd(u, v)=1 and uv=c.
+3. x^2-y^2=(x+y)(x-y).
+4. x^n-y^n=(x-y)(x^(n-1)+x^(n-2)*y+x^(n-3)*y^2+...+x^2*y^(n-3)+x*y^(n-2)+y^(n-1)).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation (n-1)n(n+1) = a^m, we can start by factoring the left side of the equation using the information provided.
+
+Using property 4, we can rewrite the equation as:
+(n-1)n(n+1) = (n^2 - 1)n = a^m
+
+Now, let&#x27;s consider the factors (n^2 - 1) and n separately.
+
+Factor 1: (n^2 - 1)
+Using property 3, we can rewrite (n^2 - 1) as (n + 1)(n - 1).
+
+Factor 2: n
+
+Now, we have the equation:
+(n + 1)(n - 1)n = a^m
+
+Since a &gt; 0, we know that a^m is a positive integer. Therefore, each factor on the left side of the equation must be a divisor of a^m.
+
+Now, let&#x27;s consider the possible cases for the factors:
+
+Case 1: (n + 1) = a^p, (n - 1) = a^q, and n = a^r
+where p + q + r = m
+
+Using property 1, we know that gcd(a^p, a^q) = gcd(a^p, a^r) = gcd(a^q, a^r) = 1.
+
+Since (n + 1) and (n - 1) are consecutive integers, one of them must be even. Therefore, one of the factors (n + 1) or (n - 1) must be divisible by 2.
+
+If (n + 1) is divisible by 2, then (n - 1) must be divisible by 2^q, where q &gt; 0.
+
+If (n - 1) is divisible by 2, then (n + 1) must be divisible by 2^p, where p &gt; 0.
+
+However, this leads to a contradiction because (n + 1) and (n - 1) cannot both be divisible by 2^p and 2^q simultaneously, where p and q are positive integers.
+
+Therefore, there are no solutions for Case 1.
+
+Case 2: (n + 1) = a^p, (n - 1) = a^q, and n = a^r
+where p + q + r = m
+
+Similar to Case 1, we consider the divisibility of (n + 1) and (n - 1) by 2.
+
+If (n + 1) is divisible by 2, then (n - 1) must be divisible by 2^q, where q &gt; 0.
+
+If (n - 1) is divisible by 2, then (n + 1) must be divisible by 2^p, where p &gt; 0.
+
+Again, this leads to a contradiction because (n + 1) and (n - 1) cannot both be divisible by 2^p and 2^q simultaneously, where p and q are positive integers.
+
+Therefore, there are no solutions for Case 2.
+
+In conclusion, there are no possible solutions to the equation (n-1)n(n+1) = a^m for integer n, a &gt; 0, and m &gt; 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no possible solutions to the equation (n-1)n(n+1) = a^m for integer n, a &gt; 0, and m &gt; 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

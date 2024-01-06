@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_36</td>
+            <td>GPT-4</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Monotonically increasing</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_36']
+messages = problem.conversations['GPT-4|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Suppose that for x, y we have x+y=a and x^3+y^3=b. Find x^2+y^2, as an expression of a and b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let u=x+y, v=xy and s_n=x^n+y^n.
+2. Thus, we have s_0=2, s_1=u=a, s_2=u^2-2v and s_3=u^3-3uv=b.
+3. So we have v=(a^3-b)/(3a).
+4. Plugging this, along with u=a, into the equation for s_2, we have s_2=a^2-2(a^3-b)/(3a)=(a^3+2b)/(3a).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {1, 2, ..., 100}, do we have (1/2)*(3/4)*(5/6)*...*(2n-1)/(2n)≤1/sqrt(3n+1)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We can see that the inequality holds for n=1.
+2. Assuming that the inequality holds for an arbitrary n, we want to see if it holds for n+1.
+3. This means that we need to compare (2n+1)/(2n+2) with sqrt(3n+1)/sqrt(3(n+1)+1)=sqrt(3n+1)/sqrt(3n+4).
+4. Squaring both sides, we have (4n^2+4n+1)/(4n^2+8n+4) vs (3n+1)/(3n+4).
+5. We have (4n^2+4n+1)(3n+4)=12n^3+28n^2+19n+4, and (4n^2+8n+4)(3n+1)=12n^3+28n^2+20n+4.
+6. Since (4n^2+4n+1)(3n+4)≤(4n^2+8n+4)(3n+1) for n&gt;0, we have (4n^2+4n+1)/(4n^2+8n+4)≤(3n+1)/(3n+4).
+7. So the inequality also holds for n+1.
+8. Thus, we conclude that the inequality holds for all n.
+9. So we have 100 valid values for n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of p^2 mod 24 for prime number p.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For p≤3, we have 2^2 mod 24=4 and 3^2 mod 24=9.
+2. For p&gt;3, we have p=6n±1.
+3. So (6n±1)^2=36n^2±12n+1=12n(3n±1)+1.
+4. Either n or 3n±1 is even, so 12n(3n±1) mod 24=0.
+5. Thus, (6n±1)^2 mod 24=1.
+6. So we have all possible values of p^2 mod 24 being 1, 4, and 9.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of 4^n+15n-1 mod 9 for interger n≥0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let f(n)=4^n+15n-1.
+2. We see that f(0)=0, so f(0) mod 9=0.
+3. We have f(n+1)=4*4^n+15n+15-1=3(4^n+5)+f(n).
+4. 4^n+5 mod 3=(4 mod 3)^n+(5 mod 3) mod 3=1+2 mod 3=0.
+5. If f(n) mod 9=0, then f(n+1) mod 9=(3(4^n+5) mod 9)+(f(n) mod 9) mod 9=0.
+6. Thus, by induction, we have 4^n+15n-1 mod 9=0 for all n≥0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 11 rectangle with 2 x 1 tiles.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We let a_n be the number of ways to tile a 2 x n rectangle.
+2. For a 2 x (n+1) rectangle, let 2 be the vertical dimension and n+1 be the horizontal direction.
+3. Thus, it could have one vertical tile in the last column, or two horizontal tiles in the last two columns.
+4. Without these new tiles, we have 2 x n or 2 x (n-1) rectangles.
+5. Thus, we have a_(n+1)=a_n+a_(n-1).
+6. Starting from a_1=1 and a_2=2, we have the sequence of number of ways as 3, 5, 8, 13, 21, 34, 55, 89, 144, with a_11=144.
+7. Thus, there are 144 ways to tile a 2 x 11 rectangle.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. Is the sequence a_n/b_n monotonically increasing, monotonically decreasing, or neither?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. We have a_(n+1)/b_(n+1)=sqrt(a_n*b_n)/((a_n+b_n)/2)=2sqrt(a_n*b_n)/(a_n+b_n).
+2. We want to compare a_(n+1)/b_(n+1) with a_n/b_n.
+3. This means that we need to compare 2sqrt(a_n*b_n)/(a_n+b_n) with a_n/b_n.
+4. Cross multiplying, we have 2b_n*sqrt(a_n*b_n) vs a_n^2+a_n*b_n.
+5. Squaring both sides, we have 4b_n^2*a_n*b_n vs a_n^4+a_n^2*b_n^2.
+6. Since a_n&lt;b_n, we have a_n^4+a_n^2*b_n^2&lt;2a_n^2*b_n^2=4a_n*b_n^3/2&lt;4b_n^2*a_n*b_n.
+7. Thus, a_(n+1)/b_(n+1)&gt;a_n/b_n.
+8. So the sequence a_n/b_n is monotonically increasing.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence a_n/b_n is monotonically increasing.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

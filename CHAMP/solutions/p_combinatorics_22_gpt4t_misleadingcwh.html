@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_22</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)/(r+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_22']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 1≤r≤n and consider all subsets of r elements of the set {1, 2, ..., n}. What is the arithmetic mean of the smallest element of these subsets, as an expression of n and r?
+
+You may find the following information useful:
+
+1. Consider the subsets of {0, 1, ..., n} and define a mapping f from these subsets to the subsets of {1, ..., n} by removing the smallest element (e.g., f({0, 2, 3, 5})={2, 3, 5}).
+2. For f(x)=y, where x and y are the two subsets, how many x map to the same y?
+3. Relate the number of all possible x to the sum of the smallest element of all possible y.
+4. C(n, k)=n/k*C(n-1, k-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the arithmetic mean of the smallest element of all possible subsets of size r from the set {1, 2, ..., n}. Let&#x27;s denote this mean by M.
+
+First, let&#x27;s consider the subsets of size r from the set {0, 1, ..., n}. Each of these subsets will have a smallest element, and if we remove this smallest element, we get a subset of size r-1 from the set {1, 2, ..., n}. This is the mapping f described in the problem statement.
+
+Now, let&#x27;s consider a subset y of size r-1 from the set {1, 2, ..., n}. How many subsets x of size r from the set {0, 1, ..., n} map to the same subset y? The answer is r, because the smallest element of x can be any of the r elements in y when 0 is included, or it can be 0 itself.
+
+Next, let&#x27;s consider the number of all possible subsets x of size r from the set {0, 1, ..., n}. This is given by the binomial coefficient C(n+1, r). Each of these subsets maps to a subset y of size r-1 from the set {1, 2, ..., n}.
+
+Now, let&#x27;s calculate the sum of the smallest elements of all possible subsets y of size r-1 from the set {1, 2, ..., n}. We can do this by considering each possible smallest element i (where 1 ≤ i ≤ n-r+2, since i+r-2 must be less than or equal to n) and multiplying it by the number of subsets of size r-1 that have i as their smallest element.
+
+For each i, the number of such subsets is C(n-i, r-2), because we are choosing the remaining r-2 elements from the set {i+1, i+2, ..., n}. Therefore, the sum of the smallest elements of all possible subsets y is:
+
+Sum = 1 * C(n-1, r-2) + 2 * C(n-2, r-2) + ... + (n-r+2) * C(n-(n-r+2), r-2)
+Sum = ∑(i * C(n-i, r-2)) for i from 1 to n-r+2
+
+Now, we can use the property of binomial coefficients given in the problem statement:
+
+C(n, k) = n/k * C(n-1, k-1)
+
+This allows us to rewrite the sum as:
+
+Sum = ∑(i * (n-i)/(r-2) * C(n-i-1, r-3)) for i from 1 to n-r+2
+
+Now, we need to find the arithmetic mean M of the smallest element of these subsets. Since each subset y of size r-1 is counted r times among the subsets x of size r (due to the mapping f), the total number of smallest elements counted is r * C(n, r-1). Therefore, the mean M is:
+
+M = Sum / (r * C(n, r-1))
+
+Substituting the expression for Sum, we get:
+
+M = [∑(i * (n-i)/(r-2) * C(n-i-1, r-3)) for i from 1 to n-r+2] / (r * C(n, r-1))
+
+Now, we need to simplify this expression. However, the simplification is not straightforward, and we need to consider the properties of binomial coefficients and summations to proceed further. Unfortunately, the simplification process is quite involved and may require additional combinatorial arguments or insights to express M solely in terms of n and r. 
+
+Given the complexity of the problem, it&#x27;s possible that additional information or constraints are needed to find a closed-form solution for M. If there are any specific techniques or theorems that are intended to be applied to this problem, please provide them, and I can continue the solution accordingly.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The arithmetic mean of the smallest element of all r-element subsets of the set {1, 2, ..., n} is a complex combinatorial expression that requires further simplification to express solely in terms of n and r, and the solution provided does not yet offer a final closed-form formula.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_33</td>
+            <td>GPT-4</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_33']
+messages = problem.conversations['GPT-4|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial p(x)=ax^4+bx^3+cx^2+dx+e with integer coefficients is divisible by 7 for every integer x. What are possible values of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7)?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have p(0)=e being divisible by 7, so 7 | e.
+2. We have p(1)=a+b+c+d+e being divisible by 7, so 7 | a+b+c+d+e, and thus 7 | a+b+c+d.
+3. We have p(-1)=a-b+c-d+e being divisible by 7, so 7 | a-b+c-d+e, and thus 7 | a-b+c-d.
+4. Thus, 7 | a+c and 7 | b+d.
+5. We have p(2)=16a+8b+4c+2d+e being divisible by 7, so 7 | 8a+4b+2c+d.
+6. We have p(-2)=16a-8b+4c-2d+e being divisible by 7, so 7 | 8a-4b+2c-d.
+7. Thus, 7 | 4a+c and 7 | 4b+d.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>From the partial solution, we have the following equations:
+
+1. 7 | e
+2. 7 | a+b+c+d
+3. 7 | a-b+c-d
+4. 7 | a+c
+5. 7 | b+d
+6. 7 | 4a+c
+7. 7 | 4b+d
+
+From equations 4 and 6, we can see that if 7 divides a+c and 4a+c, then 7 must divide 4a. Similarly, from equations 5 and 7, if 7 divides b+d and 4b+d, then 7 must divide 4b. 
+
+Therefore, a and b must be multiples of 7. 
+
+From equations 2 and 3, we can see that if 7 divides a+b+c+d and a-b+c-d, then 7 must divide 2c. Therefore, c must be a multiple of 7.
+
+From equations 2 and 5, we can see that if 7 divides a+b+c+d and b+d, then 7 must divide a+c. But we already know that a and c are multiples of 7, so d must also be a multiple of 7.
+
+Finally, from equation 1, we know that e must be a multiple of 7.
+
+Therefore, all coefficients a, b, c, d, and e must be multiples of 7. 
+
+The modulus operation &quot;mod 7&quot; returns the remainder when a number is divided by 7. Since all coefficients are multiples of 7, their remainders when divided by 7 are all 0. 
+
+Therefore, the possible value of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7) is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible value of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7) is 0, given that the polynomial p(x)=ax^4+bx^3+cx^2+dx+e with integer coefficients is divisible by 7 for every integer x.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

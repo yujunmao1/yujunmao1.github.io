@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_23</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_23']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence {x_n} is defined by x_1=2, x_(n+1)=(2+x_n)/(1−2x_n), and it is known that there are no x_n=0. Could x_p=x_q for any p≠q, and if so, find the smallest possible value of p+q.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have x_1=2=tan(a) for a=arctan(2).
+2. If x_n=tan(na), then x_(n+1)=(2+x_n)/(1−2x_n)=(tan(a)+tan(na))/(1-tan(a)tan(na))=tan(a+na)=tan((n+1)a).
+3. Suppose that x_q=x_p.
+4. Then x_q-x_p=tan(qa)-tan(pa)=sin((q-p)a)/cos(qa)cos(pa)=0.
+5. Thus, sin((q-p)a)=0, which means that (q-p)a=0, tan((q-p)a)=0 and x_(q-p)=0.
+6. This is impossible since 0 is not in the sequence.
+7. So there does not exist any x_p=x_q.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the remainder of x^1959−1 divided by (x^2+1)(x^2+x+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have f(x)=x^1959-1=(x^2+1)(x^2+x+1)q(x)+ax^3+bx^2+cx+d.
+2. At x=i, f(i)=-i-1=-ai-b+ci+d.
+3. At x=-i, f(-i)=i-1=ai-b-ci+d.
+4. At x=w, f(w)=0=a+bw^2+cw+d.
+5. At x=w^2, f(w^2)=0=a+bw+cw^2+d.
+6. We have f(i)+f(-i)=-2b+2d=-2, which means b-d=1.
+7. We have f(i)-f(-i)=-2ai+2ci=-2i, which means a-c=1.
+8. We have f(w)+f(w^2)=2a-b-c+2d=0.
+9. We have f(w)-f(w^2)=(b-c)(w^2-w)=0, which means b=c.
+10. These equations give us a=1, b=c=0, d=-1.
+11. So the remainder is ax^3+bx^2+cx+d=x^3-1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many strings of length 5 using the digits {0, 1, ..., 9} (with leading zeros allowed) have strictly increasing digits?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For any 5 numbers, if they are distinct, there is exactly one such string, and if they contain duplicate values, there is no such string.
+2. Thus, the number of strings is exactly the number of ways to choose 5 distinct numbers from 10 numbers, which is C(10, 5).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let S(m)=12^m+9^m+8^m+6^m.
+2. We have S(m)=(3^m)(4^m)+(3^m)(3^m)+(2^m)(4^m)+(2^m)(3^m)=(2^m+3^m)(3^m+4^m).
+3. Since m=5(2k+1), S(m)=((2^5)^(2k+1)+(3^5)^(2k+1))((3^5)^(2k+1)+(4^5)^(2k+1)).
+4. Since 2k+1 is odd, we have 2^5+3^5 | (2^5)^(2k+1)+(3^5)^(2k+1) and 3^5 + 4^5 | (3^5)^(2k+1)+(4^5)^(2k+1).
+5. So (2^5+3^5)(3^5 + 4^5) | S(m), which means 11*25*181*7 | S(m).
+6. Since 1991=11*181, we have 1991 | S(m).
+7. So S(m) mod 1991=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x) be a polynomial of degree n and f(x)=x has no real number solutions. What is the maximum number of real number solutions does f(f(x))=x have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since f(x)=x has no real number solution, we have f(x)-x&gt;0 for all x or f(x)&lt;0 for all x.
+2. Consider the case of f(x)-x&gt;0, which means that f(x)&gt;x for all x.
+3. Thus, f(f(x))&gt;f(x)&gt;x, so f(f(x))-x&gt;0, which means that f(f(x))=x has no real number solution either.
+4. The case of f(x)-x&lt;0 is analogous, also with no solution.
+5. Thus, the maximum number of real number solutions of f(f(x))=x is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b, c&gt;0. What is the minimum value of abc-(a+b-c)(a+c-b)(b+c-a)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the minimum value of the expression \( abc - (a+b-c)(a+c-b)(b+c-a) \), we can rewrite it using the substitution \( x = a+b-c \), \( y = a+c-b \), and \( z = b+c-a \). This substitution is valid because \( a \), \( b \), and \( c \) are positive, and we are looking for the case where \( x \), \( y \), and \( z \) are also positive, which corresponds to the sides of a triangle by the triangle inequality.
+
+Given the substitution, we have:
+\( a = \frac{x+y}{2} \)
+\( b = \frac{x+z}{2} \)
+\( c = \frac{y+z}{2} \)
+
+The expression becomes:
+\( abc - (a+b-c)(a+c-b)(b+c-a) \)
+\( = \left(\frac{x+y}{2}\right)\left(\frac{x+z}{2}\right)\left(\frac{y+z}{2}\right) - xyz \)
+
+Expanding the product, we get:
+\( = \frac{1}{8}(x+y)(x+z)(y+z) - xyz \)
+\( = \frac{1}{8}(xyz + xy^2 + x^2z + xz^2 + yz^2 + y^2z + x^2y) - xyz \)
+\( = \frac{1}{8}(2xyz + xy^2 + x^2z + xz^2 + yz^2 + y^2z + x^2y) - \frac{8}{8}xyz \)
+\( = \frac{1}{8}(xy^2 + x^2z + xz^2 + yz^2 + y^2z + x^2y) - \frac{7}{8}xyz \)
+
+Now, by AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), we have for any non-negative real numbers \( p \), \( q \), and \( r \):
+\( \frac{p+q+r}{3} \geq \sqrt[3]{pqr} \)
+
+Applying this to the terms \( xy^2 \), \( x^2z \), \( xz^2 \), \( yz^2 \), \( y^2z \), and \( x^2y \), we get:
+\( \frac{xy^2 + x^2z + xz^2 + yz^2 + y^2z + x^2y}{6} \geq \sqrt[6]{(xy^2)(x^2z)(xz^2)(yz^2)(y^2z)(x^2y)} \)
+\( = \sqrt[6]{x^6y^6z^6} \)
+\( = xyz \)
+
+Multiplying both sides by \( \frac{6}{8} \) or \( \frac{3}{4} \), we get:
+\( \frac{3}{4}xyz \leq \frac{1}{8}(xy^2 + x^2z + xz^2 + yz^2 + y^2z + x^2y) \)
+
+Subtracting \( \frac{7}{8}xyz \) from both sides, we have:
+\( -\frac{1}{8}xyz \leq \frac{1}{8}(xy^2 + x^2z + xz^2 + yz^2 + y^2z + x^2y) - \frac{7}{8}xyz \)
+
+This implies that the minimum value of the expression is \( -\frac{1}{8}xyz \) when \( x = y = z \), which corresponds to \( a = b = c \). In this case, the expression equals zero.
+
+Therefore, the minimum value of \( abc - (a+b-c)(a+c-b)(b+c-a) \) is \( 0 \), and it occurs when \( a = b = c \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression \( abc - (a+b-c)(a+c-b)(b+c-a) \) for \( a, b, c &gt; 0 \) is \( 0 \), which occurs when \( a = b = c \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

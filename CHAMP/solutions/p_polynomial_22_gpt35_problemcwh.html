@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_22</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=±1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_22']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Find all real-valued solutions to the equation 4x^11+4x^10−21x^9-21x^8+17x^7+17x^6+17x^5+17x^4−21x^3-21x^2+4x+4=0.
+Step-wise solution:
+1. Let the polynomial be f(x) and we recognize it to be a reciprocal polynomial of an odd degree.
+2. Thus, one root is x=-1 and we can write f(x)=(x+1)g(x).
+3. We can find g(x)=4x^10-21x^8+17x^6+17x^4-21x^2+4 by collecting every other term of f(x).
+4. This g(x) is a reciprocal polynomial of degree 2n where n=5.
+5. This means that g(x)=x^5*h(z) where h(z) is a polynomial of degree 5 in z=x+1/x.
+6. We have h(z)=4x^5-21x^3+17x+17/x-21/x^3+4/x^5.
+7. We have 4z^5=4(x+1/x)^5=4x^5+20x^3+40x+40/x+20/x^3+4, so h(z)=4z^5-41x^3-23x-23/x-41/x^3.
+8. We have -41z^3=-41(x+1/x)^3=-41x^3-123x-123/x-41/x^3, so h(z)=4z^5-41z^3+100x+100/x=4z^5-41z^3+100z=z(4z^4-41z^2+100).
+9. We know that z=x+1/x≠0 for real-valued x, so we need 4z^4-41z^2+100.
+10. Let u=z^2, we have 4u^2-41u+100=(4u-25)(u-4)=100.
+11. So u=25/4 or u=4.
+12. This means that z=x+1/x=±5/2 or z=x+1/x=±2.
+13. These two solutions result in x=±2, ±1/2 for z=±5/2 and x=±1 for z=±2.
+14. Thus, all solutions to the equation are x=±1, ±2, ±1/2.
+
+Problem: Find all positive integer solutions to the equation m^2+(m+1)^2=n^4+(n+1)^4.
+Step-wise solution:
+1. We have 2m^2+2m+1=2n^4+4n^3+6n^2+4n+1, which gives m^2+m=n^4+2n^3+3n^2+2n.
+2. Thus, m^2+m+1=n^4+2n^3+3n^2+2n+1.
+3. n^4+2n^3+n^2+2n^2+2n+1=(n^2+n)^2+2(n^2+n)+1=(n^2+n+1)^2, which is a perfect square.
+4. However, for m≥1, m^2&lt;m^2+m+1&lt;m^2+2m+1=(m+1)^2.
+5. So m^2+m+1 is strictly between two consecutive perfect squares.
+6. Thus, the equation has no positive integer solution.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all real-valued solutions to the equation x^8+4x^6−10x^4+4x^2+1=0.
+
+In addition, you may also find the following information helpful:
+
+1. Find g(z) by comparing it to the expression of z^4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation x^8+4x^6−10x^4+4x^2+1=0, we can follow a similar approach as in the first problem.
+
+Step-wise solution:
+1. Let the polynomial be f(x) and we recognize it to be a reciprocal polynomial of an even degree.
+2. Thus, one root is x=1 and we can write f(x)=(x-1)g(x).
+3. We can find g(x)=x^7+x^6+5x^5+5x^4+5x^3+5x^2+5x+1 by dividing f(x) by (x-1).
+4. This g(x) is a reciprocal polynomial of degree 2n-1 where n=4.
+5. This means that g(x)=x^4*h(z) where h(z) is a polynomial of degree 4 in z=x+1/x.
+6. We have h(z)=x^4+5x^3+5x+1+5/x+5/x^3+1/x^4.
+7. We have z^2=x^2+2+1/x^2, so h(z)=z^2(x^2+2+1/x^2)+5z(x+1/x)+6.
+8. Expanding h(z), we get h(z)=x^2z^2+2z^2+1/x^2z^2+5xz+5z/x+6.
+9. We have xz=x(x+1/x)=x^2+1, so h(z)=(x^2+1)z^2+2z^2+(x^2+1)/x^2z^2+5(x^2+1)+5z/x+6.
+10. Simplifying h(z), we get h(z)=(x^2+1)z^2+2z^2+(x^2+1)/x^2z^2+5(x^2+1)+5z/x+6.
+11. We have (x^2+1)/x^2z^2=(x^2+1)/(x^2(x+1/x)^2)=(x^2+1)/(x^2(x^2+2+1/x^2))=(x^2+1)/(x^4+2x^2+1)=(x^2+1)/(x^2+1)^2=1/(x^2+1).
+12. Substituting this back into h(z), we get h(z)=(x^2+1)z^2+2z^2+1/(x^2+1)+5(x^2+1)+5z/x+6.
+13. Simplifying further, we have h(z)=(x^2+1)z^2+2z^2+1/(x^2+1)+5(x^2+1)+5z/x+6.
+14. We have z^2=(x+1/x)^2=x^2+2+1/x^2, so h(z)=(x^2+1)(x^2+2+1/x^2)+2(x^2+2+1/x^2)+1/(x^2+1)+5(x^2+1)+5z/x+6.
+15. Expanding h(z), we get h(z)=x^4+3x^2+1+2x^2+4+2/x^2+1/(x^2+1)+5x^2+5+5z/x+6.
+16. Simplifying h(z), we have h(z)=x^4+10x^2+2/x^2+1/(x^2+1)+5z/x+16.
+17. We have 5z/x=5(x+1/x)/x=5(x^2+1)/x^2=5+5/x^2, so h(z)=x^4+10x^2+2/x^2+1/(x^2+1)+5+5/x^2+16.
+18. Simplifying further, we get h(z)=x^4+10x^2+2/x^2+1/(x^2+1)+5+5/x^2+16.
+19. We have 2/x^2+5/x^2=7/x^2, so h(z)=x^4+10x^2+7/x^2+1/(x^2+1)+21.
+20. We have 7/x^2=7(x+1/x)/x^2=7(x^2+1)/x^3=7(x^2+1)/z^3, so h(z)=x^4+10x^2+7/x^2+1/(x^2+1)+21.
+21. We have 1/(x^2+1)=1/z^2, so h(z)=x^4+10x^2+7/x^2+1/z^2+21.
+22. We have x^4+7/x^2=(x^6+7)/x^2=(x^6+7)(x+1/x)/(x(x+1/x))=(x^6+7)(x^2+1)/z, so h(z)=(x^6+7)(x^2+1)/z+1/z^2+21.
+23. We have (x^6+7)(x^2+1)/z=(x^6+7)(x^2+1)/(x+1/x)=(x^6+7)(x^2+1)/(x^2+2+1/x^2)=(x^6+7)(x^2+1)/(x^2+1)^2=x^6+7.
+24. Substituting this back into h(z), we get h(z)=x^6+7+1/z^2+21.
+25. We have 1/z^2=1/(x+1/x)^2=1/(x^2+2+1/x^2)=1/(x^2+1+1/x^2+1)=1/(x^2+1+1/(x^2+1))=1/(z^2+1), so h(z)=x^6+7+1/(z^2+1)+21.
+26. We have h(z)=x^6+7+1/(z^2+1)+21=x^6+28+1/(z^2+1).
+27. We know that z=x+1/x≠0 for real-valued x, so we need to find the solutions to x^6+28+1/(z^2+1)=0.
+28. Let u=z^2+1, we have x^6+28+1/u=0.
+29. Multiplying both sides by u, we get x^6u+28u+1=0.
+30. This is a quadratic equation in u, so we can solve for u using the quadratic formula.
+31. The discriminant of the quadratic equation is Δ=28^2-4(x^6)(1)=784-4x^6.
+32. For real-valued solutions, the discriminant must be non-negative, so Δ≥0.
+33. Simplifying the inequality, we have 784-4x^6≥0.
+34. Rearranging the inequality, we get 4x^6≤784.
+35. Dividing both sides by 4, we have x^6≤196.
+36. Taking the sixth root of both sides, we have x≤2.
+37. Thus, the real-valued solutions to the equation x^8+4x^6−10x^4+4x^2+1=0 are x≤2.
+
+Therefore, the final answer is x≤2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The real-valued solutions to the equation x^8+4x^6−10x^4+4x^2+1=0 are x≤2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_46</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x(x-1)(x-2)...(x-2022)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_46']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a monic polynomial (i.e. a polynomial with the leading coefficient being 1) p(x) of degree greater than 1 that satisfies x*p(x-1)=(x-2023)*p(x).
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Plugging x=0 into the equation, we get -2023p(0)=0, so p(0)=0 and 0 is a root of p(x).
+2. Plugging x=1 into the equation, we get -2022p(1)=p(0)=0, so p(1)=0 and 1 is a root.
+3. Plugging x=2 into the equation, we get -2021p(2)=2p(1)=0, so p(2)=0 and 2 is a root.
+4. This process can continue to x=2022, where we get -p(2022)=2022p(2021)=0 and 2022 is a root.
+5. We cannot continue because at x=2023, we have 0*p(2023)=0, but p(2023) is not necessarily 0.
+6. So we have identified the roots 0, 1, ..., 2022, which means that p(x)=x(x-1)(x-2)...(x-2022)f(x) for some f(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The partial solution has correctly identified that the polynomial p(x) has roots at x = 0, 1, 2, ..., 2022. This means that p(x) can be written as a product of linear factors corresponding to these roots, multiplied by some other polynomial f(x):
+
+p(x) = x(x - 1)(x - 2)...(x - 2022)f(x)
+
+Now, we need to determine the polynomial f(x). To do this, we can use the given functional equation:
+
+x * p(x - 1) = (x - 2023) * p(x)
+
+Let&#x27;s substitute the expression for p(x) into the equation:
+
+x * [(x - 1)(x - 2)...(x - 2023)f(x - 1)] = (x - 2023) * [x(x - 1)(x - 2)...(x - 2022)f(x)]
+
+Notice that on both sides of the equation, we have the term (x - 2023) as a factor. On the left side, it is implicit in the product (x - 1)(x - 2)...(x - 2023), and on the right side, it is explicit. We can cancel out this term from both sides of the equation:
+
+x * [(x - 1)(x - 2)...(x - 2022)f(x - 1)] = x * [(x - 1)(x - 2)...(x - 2022)f(x)]
+
+Now, we can cancel the common factors on both sides:
+
+f(x - 1) = f(x)
+
+This implies that f(x) is a constant polynomial because it is equal to its own shift. Since we are looking for a monic polynomial, the leading coefficient must be 1. Therefore, f(x) must be the constant polynomial 1.
+
+Thus, the monic polynomial p(x) of degree greater than 1 that satisfies the given functional equation is:
+
+p(x) = x(x - 1)(x - 2)...(x - 2022)
+
+This polynomial is of degree 2023, which is greater than 1, and it is monic because the leading coefficient is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The monic polynomial p(x) of degree greater than 1 that satisfies the equation x*p(x-1)=(x-2023)*p(x) is p(x) = x(x - 1)(x - 2)...(x - 2022).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

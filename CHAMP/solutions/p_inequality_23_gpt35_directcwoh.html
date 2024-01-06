@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_23</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_23']
+messages = problem.conversations['GPT-3.5|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b, c&gt;0. What is the minimum value of abc-(a+b-c)(a+c-b)(b+c-a)?
+
+You may find the following information useful:
+
+1. For non-negative x, y, we have (x+y)≥2*sqrt(xy) and (x+y)/2≥sqrt(xy), with equality if and only if x=y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the minimum value of the expression abc - (a+b-c)(a+c-b)(b+c-a), we can use the given information to simplify the expression.
+
+Let&#x27;s start by expanding the expression (a+b-c)(a+c-b)(b+c-a):
+
+(a+b-c)(a+c-b)(b+c-a) = [(a+b-c)(a+c-b)](b+c-a)
+                       = [(a^2 + ac - ab + bc - c^2 - cb)](b+c-a)
+                       = (a^2b + abc - a^2c + acb + b^2c - bc^2 - ac^2 - c^2b)
+
+Now, let&#x27;s simplify the expression abc - (a+b-c)(a+c-b)(b+c-a) using the expanded form:
+
+abc - (a+b-c)(a+c-b)(b+c-a) = abc - (a^2b + abc - a^2c + acb + b^2c - bc^2 - ac^2 - c^2b)
+                            = abc - a^2b - abc + a^2c - acb - b^2c + bc^2 + ac^2 + c^2b
+                            = -a^2b + a^2c - acb - b^2c + bc^2 + ac^2 + c^2b
+
+Now, let&#x27;s rearrange the terms:
+
+abc - (a+b-c)(a+c-b)(b+c-a) = -a^2b + a^2c - acb - b^2c + bc^2 + ac^2 + c^2b
+                            = a^2c + ac^2 + c^2b - a^2b - acb - b^2c + bc^2
+
+Using the given information, we can apply the inequality (x+y) ≥ 2√(xy) to each term:
+
+a^2c + ac^2 ≥ 2√(a^2c * ac^2) = 2√(a^3c^3)
+c^2b + bc^2 ≥ 2√(c^2b * bc^2) = 2√(b^3c^3)
+a^2b + acb ≥ 2√(a^2b * acb) = 2√(a^3b^2c)
+
+Adding these inequalities together, we have:
+
+a^2c + ac^2 + c^2b + bc^2 + a^2b + acb ≥ 2√(a^3c^3) + 2√(b^3c^3) + 2√(a^3b^2c)
+
+Now, let&#x27;s simplify the right side of the inequality:
+
+2√(a^3c^3) + 2√(b^3c^3) + 2√(a^3b^2c) = 2√(c^3(a^3 + b^3)) + 2√(a^3b^2c)
+                                        = 2c√(a^3 + b^3) + 2√(a^3b^2c)
+
+Therefore, we have:
+
+a^2c + ac^2 + c^2b + bc^2 + a^2b + acb ≥ 2c√(a^3 + b^3) + 2√(a^3b^2c)
+
+Since the left side of the inequality is the expression we want to minimize, the minimum value occurs when the right side is minimized.
+
+To minimize 2c√(a^3 + b^3) + 2√(a^3b^2c), we can apply the inequality (x+y)/2 ≥ √(xy) to each term:
+
+2c√(a^3 + b^3) + 2√(a^3b^2c) ≥ 2c * 2√(a^3 * b^3) + 2 * 2√(a^3b^2c)
+                              = 4c√(a^3b^3) + 4√(a^3b^2c)
+                              = 4√(a^3b^2c)(√(ab) + c)
+
+Therefore, the minimum value of abc - (a+b-c)(a+c-b)(b+c-a) is 4√(a^3b^2c)(√(ab) + c).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of abc - (a+b-c)(a+c-b)(b+c-a) is 4√(a^3b^2c)(√(ab) + c).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

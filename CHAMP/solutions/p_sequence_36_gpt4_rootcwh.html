@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_36</td>
+            <td>GPT-4</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Monotonically increasing</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_36']
+messages = problem.conversations['GPT-4|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. Is the sequence a_n/b_n monotonically increasing, monotonically decreasing, or neither?
+
+You may find the following information useful:
+
+1. Study the monotonicity of a_n and b_n separately.
+2. For n non-negative numbers x_1, ..., x_n, we have (x_1+x_2+...+x_n)/n≥(x_1*x_2*...*x_n)^(1/n), with equality if and only if x_1=...=x_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we first need to study the monotonicity of the sequences {a_n} and {b_n} separately.
+
+1. Monotonicity of {a_n}:
+
+We have a_(n+1) = sqrt(a_n*b_n). Since 0&lt;a&lt;b, we have 0&lt;a_n&lt;b_n for all n. Therefore, a_n &lt; sqrt(a_n*b_n) &lt; b_n, which implies a_n &lt; a_(n+1) &lt; b_n. Hence, the sequence {a_n} is monotonically increasing.
+
+2. Monotonicity of {b_n}:
+
+We have b_(n+1) = (a_n + b_n)/2. Since a_n &lt; b_n, we have a_n &lt; (a_n + b_n)/2 &lt; b_n, which implies a_n &lt; b_(n+1) &lt; b_n. Hence, the sequence {b_n} is monotonically decreasing.
+
+Now, let&#x27;s study the monotonicity of the sequence a_n/b_n.
+
+We have a_(n+1)/b_(n+1) = sqrt(a_n*b_n)/((a_n + b_n)/2) = 2*sqrt(a_n*b_n)/(a_n + b_n).
+
+Since {a_n} is monotonically increasing and {b_n} is monotonically decreasing, we have a_n ≤ a_(n+1) and b_n ≥ b_(n+1). Therefore, a_n*b_n ≤ a_(n+1)*b_(n+1) and a_n + b_n ≥ a_(n+1) + b_(n+1).
+
+By the AM-GM inequality, we know that (x_1+x_2+...+x_n)/n ≥ (x_1*x_2*...*x_n)^(1/n), with equality if and only if x_1=...=x_n. Applying this to our case, we have (a_n + b_n)/2 ≥ sqrt(a_n*b_n), with equality if and only if a_n = b_n.
+
+Therefore, 2*sqrt(a_n*b_n)/(a_n + b_n) ≤ 1, with equality if and only if a_n = b_n. This implies that a_n/b_n ≤ a_(n+1)/b_(n+1), which means the sequence {a_n/b_n} is monotonically increasing.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence {a_n/b_n} is monotonically increasing for 0&lt;a&lt;b.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

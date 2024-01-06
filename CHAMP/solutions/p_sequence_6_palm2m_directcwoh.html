@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_6</td>
+            <td>PaLM 2 Medium</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no sequence is bounded)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_6']
+messages = problem.conversations['PaLM 2 Medium|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let {x_n}, {y_n}, {z_n} be three sequences with positive initial terms x_1, y_1, z_1, defined as x_(n+1)=y_n+1/z_n, y_(n+1)=z_n+1/x_n, z_(n+1)=x_n+1/y_n. At most how many of the three sequences can be bounded?
+
+You may find the following information useful:
+
+1. For positive x, x+1/x≥2, with equality if and only if x=1.
+2. (x±y)^2=x^2±2xy+y^2.
+3. For real numbers a_1, ..., a_n and b_1, ..., b_n, (a_1*b_1+...+a_n*b_n)^2≤(a_1^2+...+a_n^2)(b_1^2+...+b_n^2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We will prove by contradiction that at most two of the three sequences can be bounded. Suppose that all three sequences are bounded. Then there exist positive constants $M$, $N$, and $P$ such that $|x_n|\leq M$, $|y_n|\leq N$, and $|z_n|\leq P$ for all $n$.
+
+We will first show that $x_n$ and $y_n$ must be eventually constant. Indeed, if $x_n$ is not eventually constant, then there must exist infinitely many $n$ such that $x_{n+1}&gt;x_n$. But then, by the definition of the sequences, we have $y_{n+1}&gt;y_n$ and $z_{n+1}&gt;z_n$. This contradicts the assumption that $|y_n|\leq N$ and $|z_n|\leq P$ for all $n$. Hence, $x_n$ must be eventually constant. Similarly, $y_n$ must be eventually constant.
+
+Now, let $x_n=a$ and $y_n=b$ for some positive integers $a$ and $b$. Then, by the definition of the sequences, we have $z_{n+1}=a+1/b$. In particular, $z_{n+1}&gt;a$ for all $n$. This contradicts the assumption that $|z_n|\leq P$ for all $n$. Hence, at most two of the three sequences can be bounded.
+
+To see that two of the three sequences can be bounded, we can take $x_n=y_n=z_n=n$. Then, by the definition of the sequences, we have $x_{n+1}=y_{n+1}=z_{n+1}=n+1$. Hence, all three sequences are bounded.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most two of the three sequences $x_n$, $y_n$, and $z_n$ defined by $x_{n+1}=y_n+1/z_n$, $y_{n+1}=z_n+1/x_n$, and $z_{n+1}=x_n+1/y_n$ can be bounded.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

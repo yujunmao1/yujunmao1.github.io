@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_6</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_6']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Do there exist positive integers x, y such that x+y, x+2y and 2x+y are both squares?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let x+y=a^2, x+2y=b^2, 2x+y=c^2.
+2. Thus, 3a^2=b^2+c^2.
+3. Since u^2 mod 3∈{0, 1}, we must have b^2 mod 3=c^2 mod 3=0.
+4. This means 3 | b and 3 | c.
+5. Thus, for b=3v and c=3w, b^2 mod 9=c^2 mod 9=0.
+6. So a^2 mod 3=0, and 3 | a.
+7. Therefore, we can substitute a=3u, b=3v, c=3w into the equation and get 3u^2=v^2+w^2.
+8. So if (a,b,c) satisfies the equation, (a/3, b/3, c/3) also satisfies the equation.
+9. Thus, the only possible value for integer (a, b, c) is (0, 0, 0), but this contradicts with the fact that x, y are positive.
+10. So there cannot exist such x, y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If x_1, x_2 are the two roots of the polynomial x^2-6x+1, for how many integer n in {61, 62, ..., 120} does x_1^n+x_2^n divided by 5 give a remainder of 4?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have x_1+x_2=6, x_1*x_2=1.
+2. Define u=x_1+x_2, v=x_1*x_2 and s_n=x_1^n+x_2^n.
+3. Thus, we have s_0=2, s_1=6 and s_n=u^s_(n-1)-v*s_(n-2)=6s_(n-1)-s_(n-2).
+4. Modulo 5, we have s_n mod 5=(s_(n-1)-s(n-2) mod 5).
+5. The sequence of s_n modulo 5 is 2, 1, 4, 3, 4, 1, 2, 1.
+6. We see that the sequence becomes periodic after the occurrence of 2, 1 in the end, with a period of 6.
+7. In one period, the remainder of 4 appears 2 times.
+8. So for n=61, 62, ..., 120, there are 60 values, or 10 periods, and the remainder of 4 appears 20 times.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For non-negative a, b, c, d, what is the smallest value of sqrt((a+c)(b+d))-sqrt(ab)-sqrt(cd)-1?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have sqrt((a+c)(b+d))^2=(a+c)(b+d)=ab+ad+bc+cd.
+2. We have (sqrt(ab)+sqrt(cd))^2=ab+cd+2*sqrt(abcd).
+3. Thus, sqrt((a+c)(b+d))^2-(sqrt(ab)+sqrt(cd))^2=ad+bc-2sqrt(abcd), which is non-negative because ad+bc≥2sqrt(abcd).
+4. Thus, sqrt((a+c)(b+d))^2≥(sqrt(ab)+sqrt(cd))^2.
+5. Since a, b, c, d are all non-negative, we have sqrt((a+c)(b+d))≥sqrt(ab)+sqrt(cd).
+6. So the smallest value of sqrt((a+c)(b+d))-sqrt(ab)-sqrt(cd)-1 is -1, achieved when a=b=c=d.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_i&gt;0, and s=x_1+x_2+···+x_n. What is the smallest value of s/(s-x_1)+s/(s-x_2)+...+s/(s-x_n) in terms of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have (s/(s-x_1)+s/(s-x_2)+...+s/(s-x_n))((s-x_1)/s+(s-x_2)/s+...+(s-x_n)/s)=(s/(s-x_1)+s/(s-x_2)+...+s/(s-x_n))((ns-s)/s)=(s/(s-x_1)+s/(s-x_2)+...+s/(s-x_n))(n-1).
+2. We also have (s/(s-x_1)+s/(s-x_2)+...+s/(s-x_n))((s-x_1)/s+(s-x_2)/s+...+(s-x_n)/s)≥n^2.
+3. Thus, s/(s-x_1)+s/(s-x_2)+...+s/(s-x_n)≥n^2/(n-1), with equality being achieved when each of s-x_i is equal.
+4. So the smallest value is n^2/(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+8 dogs fight over 3 cookies. It is possible that a dog gets more than one cookie or no cookies. However, no two dogs would share the same cookie and there are no cookies left unclaimed. If the cookies are the same but the dogs are different (e.g., dog A, B, C each getting one cookie is one result but dog B, C, D each getting one cookie is a different result), how many possible results are there?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Consider possible configurations of a row of 10 dots, with 7 being black and 3 being white.
+2. We can derive 8 numbers, being the numbers of white dots to the left of the first black dot, in between each black dots, and to the right of the last black dot.
+3. Obviously each number is non-negative and all numbers sum up to 3.
+4. Thus, we can consider this as one possible result of the fight.
+5. Furthermore, each fight result can also be encoded as a dot configuration.
+6. So there are C(10, 7)=C(10, 3)=120 possible results.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A=(1/2)*(3/4)*(5/6)*...*(99/100). Is A greater than 0.1?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, $A=(1/2)*(3/4)*(5/6)*...*(99/100)$ is greater than 0.1.
+
+We can write $A$ as follows:
+
+$$A = \frac{1}{2} \cdot \frac{3}{4} \cdot \frac{5}{6} \cdot ... \cdot \frac{99}{100} = \prod_{n=1}^{50} \frac{2n-1}{2n}$$
+
+Now, we can use the inequality $\frac{a}{b} &lt; \frac{a+1}{b+1}$ for $a, b &gt; 0$ to get:
+
+$$\frac{2n-1}{2n} &lt; \frac{2n-1+1}{2n+1} = \frac{2n}{2n+1}$$
+
+Therefore, we have:
+
+$$A = \prod_{n=1}^{50} \frac{2n-1}{2n} &lt; \prod_{n=1}^{50} \frac{2n}{2n+1} = \frac{2 \cdot 3 \cdot 4 \cdot ... \cdot 50}{3 \cdot 4 \cdot 5 \cdot ... \cdot 51} = \frac{2^{50}}{3^{50}}$$
+
+Finally, we can use the inequality $\frac{a^b}{c^b} &lt; \frac{a}{c}$ for $a, b, c &gt; 0$ to get:
+
+$$\frac{2^{50}}{3^{50}} &lt; \frac{2^{50}}{5^{50}} = \left(\frac{2}{5}\right)^{50}$$
+
+Therefore, we have:
+
+$$A &lt; \left(\frac{2}{5}\right)^{50} &lt; 0.1$$
+
+Since $A$ is a product of numbers greater than 0, it must itself be greater than 0. Therefore, $A$ is greater than 0.1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, $A=(1/2)*(3/4)*(5/6)*...*(99/100)$ is greater than 0.1 because $A$ is a product of numbers greater than 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

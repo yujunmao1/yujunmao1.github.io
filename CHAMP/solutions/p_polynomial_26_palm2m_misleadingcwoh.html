@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_26</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -3 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_26']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For what value(s) of k is x^3+y^3+z^3+kxyz divisible by x+y+z?
+
+You may find the following information useful:
+
+1. Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).
+2. x^2-y^2=(x+y)(x-y).
+3. The cube root of unity w=e^(i*pi/3) satisfies w+w^2+1=0 and w^n=w^(n mod 3).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can use the following identity to solve this problem:
+
+$$x^3+y^3+z^3-3xyz=(x+y+z)(x^2-xy+y^2-xz+zx-yz)$$
+
+We can then substitute $u=x+y$ and $v=xy$ to get:
+
+$$u^3-3uv^2=(u+v)(u^2-uv+v^2)$$
+
+We can then factor the left-hand side to get:
+
+$$(u-v)(u^2+uv+v^2)=(u-v)(u+v)^2$$
+
+We can then substitute $w=u/v$ to get:
+
+$$(w-1)(w^2+w+1)=(w-1)(w^2+w+1)^2$$
+
+We can then solve for $w$ to get:
+
+$$w=0, \pm i\sqrt{3}, \pm 1$$
+
+We can then substitute $w=e^{i\theta}$ to get:
+
+$$e^{i3\theta}=0, \pm i\sqrt{3}, \pm 1$$
+
+We can then solve for $\theta$ to get:
+
+$$\theta=\frac{2\pi}{3}, \frac{4\pi}{3}, \frac{6\pi}{3}, \frac{0\pi}{3}, \frac{2\pi}{3}, \frac{4\pi}{3}$$
+
+We can then substitute $\theta$ back into $w=e^{i\theta}$ to get:
+
+$$w=e^{i2\pi/3}, e^{i4\pi/3}, e^{i6\pi/3}, e^{i0\pi/3}, e^{i2\pi/3}, e^{i4\pi/3}$$
+
+We can then substitute $w=u/v$ to get:
+
+$$u=v\cos\frac{2\pi}{3}, v\cos\frac{4\pi}{3}, v\cos\frac{6\pi}{3}, v\cos\frac{0\pi}{3}, v\cos\frac{2\pi}{3}, v\cos\frac{4\pi}{3}$$
+
+We can then substitute $u=x+y$ and $v=xy$ to get:
+
+$$x+y=v\cos\frac{2\pi}{3}, v\cos\frac{4\pi}{3}, v\cos\frac{6\pi}{3}, v\cos\frac{0\pi}{3}, v\cos\frac{2\pi}{3}, v\cos\frac{4\pi}{3}$$
+
+We can then solve for $x$ and $y$ to get:
+
+$$x=v\cos\frac{2\pi}{3}-y, x=v\cos\frac{4\pi}{3}-y, x=v\cos\frac{6\pi}{3}-y, x=v\cos\frac{0\pi}{3}-y, x=v\cos\frac{2\pi}{3}-y, x=v\cos\frac{4\pi}{3}-y$$
+
+We can then substitute $x=v\cos\frac{2\pi}{3}-y$, $y=v\sin\frac{2\pi}{3}$, and $z=v$ into the equation $x^3+y^3+z^3+kxyz$ to get:
+
+$$v^3\cos^3\frac{2\pi}{3}+v^3\sin^3\frac{2\pi}{3}+v^3+kxyz=v^3\cos^3\frac{2\pi}{3}+v^3\sin^3\frac{2\pi}{3}+v^3+kv(v\cos\frac{2\pi}{3}-y)(v\sin\frac{2\pi}{3})$$
+
+We can then simplify this equation to get:
+
+$$v^3(1+\cos^3\frac{2\pi}{3}+\sin^3\frac{2\pi}{3}+k\cos\frac{2\pi}{3}\sin\frac{2\pi}{3})=v^3(1+k\cos\frac{2\pi}{3}\sin\frac{2\pi}{3})$$
+
+We</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of $k$ for which $x^3+y^3+z^3+kxyz$ is divisible by $x+y+z$ is $k=0, \pm i\sqrt{3}, \pm 1$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_16</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_16']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A be a string of n binary digits (leading 0s are allowed). How many such strings have the substring &quot;01&quot; appearing exactly m times, as an expression of m and n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. For the string, we add 1 to the front and 0 to the back, and consider the n+1 gaps between the n+2 digits.
+2. For the two digits around the gap, if they are &quot;01&quot;, we call the gap a &quot;0-1&quot; transition, and analogously a &quot;1-0&quot; transition, or neither.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of binary strings of length n that contain exactly m occurrences of the substring &quot;01&quot;. We will use the partial solution provided as a starting point.
+
+First, let&#x27;s consider the modified string with an added &quot;1&quot; at the front and a &quot;0&quot; at the back. This string now has n+2 digits, and there are n+1 gaps between these digits. We are interested in the gaps that represent a &quot;0-1&quot; transition, as these correspond to the &quot;01&quot; substrings in the original string.
+
+Since we want exactly m &quot;01&quot; substrings, we need to place m &quot;0-1&quot; transitions among the n+1 gaps. The remaining gaps will either be &quot;1-0&quot; transitions or neither (if the digits on both sides of the gap are the same).
+
+Let&#x27;s denote the number of &quot;0-1&quot; transitions as m, and the number of &quot;1-0&quot; transitions as k. The number of gaps that are neither transition will then be n+1 - m - k. Note that since each &quot;01&quot; must be followed by something other than &quot;1&quot; to count as a separate occurrence, each &quot;01&quot; must be followed by either a &quot;0&quot; or the end of the string. This means that after each &quot;01&quot; substring, we cannot immediately have another &quot;1&quot;, which imposes a restriction on how we can arrange the transitions.
+
+To count the number of valid arrangements, we can use stars and bars (a combinatorial method for distributing indistinguishable items into distinguishable bins). We will treat the &quot;0-1&quot; transitions as stars and the gaps between them as bars. However, we must account for the restrictions mentioned above.
+
+Here&#x27;s how we can proceed:
+
+1. Place m &quot;0-1&quot; transitions. There are m+1 positions where &quot;1-0&quot; transitions can occur: before the first &quot;0-1&quot;, between any two &quot;0-1&quot; transitions, and after the last &quot;0-1&quot;.
+
+2. We need to distribute k &quot;1-0&quot; transitions among these m+1 positions. This can be done in C(m+1, k) ways, where C(n, k) is the binomial coefficient representing the number of ways to choose k items from n.
+
+3. The remaining gaps will be filled with neither transitions. Since there are n+1 gaps in total and we have already placed m &quot;0-1&quot; transitions and k &quot;1-0&quot; transitions, the number of gaps that are neither is n+1 - m - k.
+
+However, we need to determine the value of k. Since we have m &quot;01&quot; substrings and each must be followed by a &quot;0&quot; or the end of the string, we can have at most m &quot;1-0&quot; transitions (one after each &quot;01&quot;). Therefore, k can range from 0 to m.
+
+The total number of strings is the sum of the number of ways to arrange the transitions for each possible value of k:
+
+Total = Σ (from k=0 to m) C(m+1, k)
+
+This sum is actually the sum of the first m+1 terms of the binomial expansion of (1+1)^(m+1), which is 2^(m+1). Therefore, the total number of strings with exactly m &quot;01&quot; substrings is 2^(m+1).
+
+So, the final answer is 2^(m+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of binary strings of length n that contain exactly m occurrences of the substring &quot;01&quot; is 2^(m+1).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

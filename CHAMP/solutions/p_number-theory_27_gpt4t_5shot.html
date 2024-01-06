@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_27</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_27']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For three integer numbers a, b, c, if their sum a+b+c is divisible by 6, is their cubed sum a^3+b^3+c^3 always divisble by 6?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. u^3-u mod 2=0 since u^3 and u have the same parity.
+2. u^3-u mod 3=0 by following the observing that: u mod 3=u^3 mod 3 for any u mod 3=0, 1, or 2.
+3. Thus, 6 | u^3-u.
+4. Thus, 6 | (a^3-a)+(b^3-b)+(c^3-c), which means that 6 | a^3+b^3+c^3-(a+b+c).
+5. Since 6 | a+b+c, we have 6 | a^3+b^3+c^3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Does the limit exist for the sequence defined as a_n=((2^3-1)/(2^3+1))*((3^3-1)/(3^3+1))*((4^3-1)/(4^3+1))*...*((n^3-1)/(n^3+1)), and if so, find it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have n^3-1=(n-1)(n^2+n+1) and n^3+1=(n+1)(n^2-n+1).
+2. Thus, a_n=PQ where P=(2-1)/(2+1)*(3-1)/(3+1)*(4-1)/(4+1)*...*(n-3)/(n-1)*(n-2)/n*(n-1)/(n+1) and Q=(2^2+2+1)/(2^2-2+1)*(3^2+3+1)/(3^2-3+1)*(4^2+4+1)/(4^2-4+1)*...*(n^2+n+1)/(n^2-n+1).
+3. We have P=2/(n(n+1)).
+4. We also have (k-1)^2+(k-1)+1=k^2-2k+1+k-1+1=k^2-k+1.
+5. Thus, Q=(n^2+n+1)/(2^2-2+1), and a_n=PQ=2(n^2+n+1)/(3n(n+1)).
+6. So lim_(n→∞) a_n=2/3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, what is the smallest value of (a^2+b^2)/(a+b)^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since (a+b)/2≤sqrt((a^2+b^2)/2), we have (a+b)^2/4≤(a^2+b^2)/2.
+2. This means that (a^2+b^2)/(a+b)^2≥1/2.
+3. So the smallest value is 1/2, achieved at a=b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation (n-2)^2+(n-1)^2+n^2+(n+1)^2+(n+2)^2=m^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have (n-2)^2+(n-1)^2+n^2+(n+1)^2+(n+2)^2=5n^2+10=5(n^2+2), which is divisible by 5.
+2. If it is equal to a perfect square m^2, we must have 5 | m.
+3. Thus, 5 | n^2+2, which means that n^2+2 ends with 5 or 0.
+4. Thus, n^2 ends with 3 or 8.
+5. However, a perfect square could not end with 3 or 8.
+6. So there is no integer solution to the equation.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, at most how many of the three inequalities a(1-b)&gt;1/4, b(1-c)&gt;1/4, c(1-a)&gt;1/4 can be true at the same time?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We can see that a=0.9, b=0.5, c=0.1 makes a(1-b)=0.45&gt;1/4 and b(1-c)=0.45&gt;1/4.
+2. Assume that all three inequalities are true.
+3. Since we have a, b, c&gt;0, we must have a, b, c&lt;1 for the three inequalities to hold.
+4. Thus, we need to have a(1-a)*b(1-b)*c(1-c)&gt;(1/4)^3.
+5. However, we know that a(1-a)=-a^2+a=-(a-1/2)^2+1/4≤1/4, and the same for b, c.
+6. Thus, we cannot have a(1-a)*b(1-b)*c(1-c)&gt;(1/4)^3, so the three inequalities cannot be true at the same time.
+7. So at most 2 inequalities can be true.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let n be 22...22, with a total of 1980 digits. What is n mod 1982?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find \( n \mod 1982 \), where \( n \) is the number 22...22 with 1980 digits, we can use the fact that \( n \) is composed entirely of the digit 2 repeated 1980 times.
+
+First, let&#x27;s express \( n \) as a sum of powers of 10:
+
+\( n = 2 \times 10^{1979} + 2 \times 10^{1978} + \ldots + 2 \times 10^1 + 2 \times 10^0 \)
+
+Now, we can factor out the 2:
+
+\( n = 2 \times (10^{1979} + 10^{1978} + \ldots + 10^1 + 1) \)
+
+We want to find \( n \mod 1982 \). Since \( 1982 = 2 \times 991 \), we can look at the problem modulo 2 and modulo 991 separately due to the Chinese Remainder Theorem.
+
+First, modulo 2:
+
+\( n \equiv 2 \times (10^{1979} + 10^{1978} + \ldots + 10^1 + 1) \mod 2 \)
+
+Since 2 modulo 2 is 0, and any power of 10 modulo 2 is also 0, the entire expression is congruent to 0 modulo 2:
+
+\( n \equiv 0 \mod 2 \)
+
+Now, modulo 991:
+
+\( n \equiv 2 \times (10^{1979} + 10^{1978} + \ldots + 10^1 + 1) \mod 991 \)
+
+Since 991 is a prime number and does not divide 10, we can use Fermat&#x27;s Little Theorem, which states that for any integer \( a \) not divisible by a prime \( p \), \( a^{p-1} \equiv 1 \mod p \).
+
+Here, \( p = 991 \), so \( 10^{990} \equiv 1 \mod 991 \).
+
+Now, we can break 1979 into \( 2 \times 990 + 99 \), and similarly for other powers of 10 in the expression for \( n \):
+
+\( 10^{1979} \equiv 10^{2 \times 990 + 99} \equiv (10^{990})^2 \times 10^{99} \equiv 1^2 \times 10^{99} \equiv 10^{99} \mod 991 \)
+
+We can apply this process to each term in the sum, but we notice that we only need to consider the powers of 10 that are less than 991, since higher powers will be reduced to lower powers by Fermat&#x27;s Little Theorem.
+
+So we only need to consider \( 10^0, 10^1, \ldots, 10^{990} \) modulo 991.
+
+Since \( 10^0, 10^1, \ldots, 10^{990} \) are all distinct modulo 991 (because 991 is prime and does not divide 10), and since \( 10^{990} \equiv 1 \mod 991 \), we can pair up terms in the sum:
+
+\( 10^0 \equiv 1 \mod 991 \)
+\( 10^1 \equiv 10 \mod 991 \)
+\( \ldots \)
+\( 10^{989} \equiv 10^{989} \mod 991 \)
+\( 10^{990} \equiv 1 \mod 991 \)
+
+We have 1980 terms in the sum, which means we have 990 pairs of \( 10^k \) and \( 10^{990+k} \) for \( k = 0, 1, \ldots, 989 \), each pair summing to \( 10^k + 1 \) modulo 991.
+
+Now, we can sum these pairs:
+
+\( n \equiv 2 \times (990 \times (10^0 + 1) + \sum_{k=1}^{989} (10^k + 1)) \mod 991 \)
+
+Since \( 10^0 + 1 = 2 \), we have 990 pairs of 2:
+
+\( n \equiv 2 \times (990 \times 2 + \sum_{k=1}^{989} (10^k + 1)) \mod 991 \)
+
+Now, we can simplify the sum of the pairs:
+
+\( n \equiv 2 \times (1980 + \sum_{k=1}^{989} (10^k + 1)) \mod 991 \)
+
+Since \( 1980 \equiv -11 \mod 991 \), we have:
+
+\( n \equiv 2 \times (-11 + \sum_{k=1}^{989} (10^k + 1)) \mod 991 \)
+
+Now, we need to consider the sum \( \sum_{k=1}^{989} (10^k + 1) \) modulo 991. However, we can notice that this sum is symmetric around \( 10^{495} \), and since \( 10^{495} \) is not congruent to 1 or -1 modulo 991, the sum of each pair \( 10^k + 10^{990-k} \) is not congruent to 0 modulo 991. Therefore, the sum \( \sum_{k=1}^{989} (10^k + 1) \) cannot be a multiple of 991.
+
+Since we cannot easily compute the sum \( \sum_{k=1}^{989} (10^k + 1) \) modulo 991, we need to find another approach to solve the problem.
+
+Let&#x27;s reconsider the original problem and look for a pattern in the powers of 10 modulo 991. We can compute the first few powers of 10 modulo 991 to see if there is a pattern that emerges:
+
+\( 10^0 \equiv 1 \mod 991 \)
+\( 10^1 \equiv 10 \mod 991 \)
+\( 10^2 \equiv 100 \mod 991 \)
+\( 10^3 \equiv 1000 \equiv 9 \mod 991 \)
+\( 10^4 \equiv 90 \mod 991 \)
+\( 10^5 \equiv 900 \equiv -91 \mod 991 \)
+\( 10^6 \equiv -910 \equiv 81 \mod 991 \)
+\( \ldots \)
+
+We can see that the powers of 10 modulo 991 do not immediately repeat, but we can use the fact that \( 10^{990} \equiv 1 \mod 991 \) to reduce the powers of 10 to their remainders modulo 990. Since we have 1980 digits, we can write 1980 as \( 2 \times 990 \), and thus we only need to consider the powers of 10 up to \( 10^{989} \) modulo 991.
+
+Let&#x27;s compute the sum of the powers of 10 up to \( 10^{989} \) modulo 991:
+
+\( \sum_{k=0}^{989} 10^k \mod 991 \)
+
+We can use the formula for the sum of a geometric series:
+
+\( S = \frac{a(1 - r^n)}{1 - r} \)
+
+where \( a \) is the first term, \( r \) is the common ratio, and \( n \) is the number of terms. In our case, \( a = 1 \), \( r = 10 \), and \( n = 990 \). However, since \( 10^{990} \equiv 1 \mod 991 \), we can simplify the formula:
+
+\( S \equiv \frac{1(1 - 1)}{1 - 10} \mod 991 \)
+\( S \equiv 0 \mod 991 \)
+
+This means that the sum of the powers of 10 up to \( 10^{989} \) is congruent to 0 modulo 991. Therefore, we can conclude that:
+
+\( n \equiv 2 \times 0 \mod 991 \)
+\( n \equiv 0 \mod 991 \)
+
+Now, we have \( n \equiv 0 \mod 2 \) and \( n \equiv 0 \mod 991 \). Since 2 and 991 are coprime, we can use the Chinese Remainder Theorem to combine these congruences:
+
+\( n \equiv 0 \mod 1982 \)
+
+Therefore, \( n \) is divisible by 1982, and \( n \mod 1982 \) is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer \( n \), which is the number 22...22 with 1980 digits, is divisible by 1982, so \( n \mod 1982 \) is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

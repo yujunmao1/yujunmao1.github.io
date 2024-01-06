@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_65</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> p=3, q=2 and p=5, q=3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_65']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+In how many ways can you take an odd number of objects from n (distinct) objects?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let U be the set of objects.
+2. For a specific object m in the collection, we can partition the set of all subsets into two sets, A={S⊆U: m∈S} and B={S⊆U: m∉S}.
+3. We can construct a one-to-one mapping between A and B by pairing up sets that only differ in m, so |A|=|B|.
+4. Thus, one of the sets has an odd number of objects and the other has an even number of objects.
+5. Since there are 2^n subsets, there are 2^(n-1) subsets with an odd number of objects.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Along a one-way street there are n parking lots. One-by-one n cars numbered 1 to n enter the street. Each driver i heads to his favorite parking lot a_i, and, if it is free, he occupies it. Otherwise, he continues to the next free lot and occupies it. But if all succeeding lots are occupied, he leaves for good. How many sequences {a_1, ..., a_n} are such that every driver can park, as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Make the parking lot arrangement a circle, by connecting the n-th lot to a new (n+1)-th lot, which connects back to the 1st lot.
+2. Thus, every car will have somewhere to park because there are n cars in the (n+1)-lot circle.
+3. In addition, satisfying the original parking configuration is equivalent to the (n+1)-th lot being empty after all cars have parked (because an occupied (n+1)-th lot means that the car on that lot would have left for good originally).
+4. Let each driver choose his favorite lot number from 1 to n+1, so there are (n+1)^n sequences.
+5. Due to symmetry, we can split the set of all sequences into (n+1)^(n-1) groups of n sequences each, where the parking configurations of the n sequences are cyclic shifts of others.
+6. In each group, only one is valid (i.e., the one with (n+1)-th lot unoccupied).
+7. Thus, we have (n+1)^(n-1) valid sequences.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a string consist of digit 1, 2, 3. How many such strings of length 6 have adjacent digit differing by less than or equal to 1?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let x_n, y_n, z_n be the number of length-n strings that end with digit 1, 2, 3 respectively.
+2. Thus, we have x_1=y_1=z_1=1.
+3. For a string ending with 1, we can append 1 and 2; for a string ending with 2, we can append 1, 2 and 3; for a string ending with 3, we can append 2 and 3.
+4. Thus, we have x_(n+1)=x_n+y_n, y_(n+1)=x_n+y_n+z_n, and z_(n+1)=y_n+z_n.
+5. Starting from (1, 1, 1), we have the sequence of (x_n, y_n, z_n) to be (1, 1, 1), (2, 3, 2), (5, 7, 5), (12, 17, 12), (29, 41, 29), (70, 99, 70).
+6. Thus, in total, there are x_6+y_6+z_6=70+99+70=239 such strings.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b&gt;0. What is the smallest value of (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. The expression can be simplified to (a^4*b+a*b^4)-(a^3*b^2+a^2*b^3)=ab((a^3+b^3)-(a^2*b+a*b^2)).
+2. Let u=a^3+b^3 and v=a^2*b+a*b^2.
+3. Consider the two sequences (a^2, b^2) and (a, b) which are sorted in the same way.
+4. u is the sum of products of elements between these two sequences, and v is the sum of products of elements between the first sequence and the reverse of the second sequence.
+5. Thus, u≥v.
+6. So the smallest value of (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3) is 0, achieved when a=b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x)=x^4+x^3+x^2+x+1. Find the remainder of f(x^5) divided by f(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have f(x^5)=x^20+x^15+x^10+x^5+1=(x^20-1)+(x^15-1)+(x^10-1)+(x^5-1)+5.
+2. We have x^20-1, x^15-1, x^10-1, x^5-1 all divisible by x^5-1.
+3. We also have f(x) | x^5-1 because (x-1)(x^4+x^3+x^2+x+1)=x^5-1.
+4. Thus, (x^20-1)+(x^15-1)+(x^10-1)+(x^5-1) is divisible by f(x).
+5. So the remainder of f(x^5) divided by f(x) is 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all prime number solutions to the equation p^2-2*q^2=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation \( p^2 - 2q^2 = 1 \) for prime numbers \( p \) and \( q \), we can use the fact that \( p \) and \( q \) must be integers and that \( p \) must be odd (since the only even prime is 2, and \( 2^2 - 2q^2 \) would not equal 1 for any integer \( q \)).
+
+Let&#x27;s rearrange the equation to isolate \( p^2 \):
+
+\[ p^2 = 2q^2 + 1 \]
+
+Since \( p \) is odd, \( p^2 \) is also odd. The right side of the equation, \( 2q^2 + 1 \), is also odd because \( 2q^2 \) is even and adding 1 to an even number results in an odd number.
+
+Now, let&#x27;s consider the possible values of \( q \). If \( q \) is even, then \( 2q^2 \) is divisible by 4, and \( 2q^2 + 1 \) would be of the form \( 4k + 1 \), which is not a square of an odd prime because the square of any odd integer is of the form \( 4k + 1 \) or \( 4k + 9 \). Therefore, \( q \) must be odd.
+
+If \( q \) is odd, then \( q^2 \) is also odd, and \( 2q^2 \) is of the form \( 4k + 2 \). Adding 1 to this gives us \( 4k + 3 \), which cannot be a perfect square because all perfect squares are either \( 0 \) or \( 1 \) modulo 4.
+
+However, we have a contradiction here because we initially stated that \( p^2 \) must be odd and thus of the form \( 4k + 1 \). Therefore, there are no odd primes \( q \) that satisfy the equation \( p^2 = 2q^2 + 1 \).
+
+The only remaining possibility is that \( q = 1 \), which is not a prime number. However, if we relax the condition that \( q \) must be prime and allow \( q = 1 \), then we have:
+
+\[ p^2 = 2(1)^2 + 1 \]
+\[ p^2 = 2 + 1 \]
+\[ p^2 = 3 \]
+
+Since 3 is a prime number and the square root of 3 is not an integer, there are no prime number solutions \( p \) for \( q = 1 \).
+
+In conclusion, there are no prime number solutions \( p \) and \( q \) to the equation \( p^2 - 2q^2 = 1 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no prime number solutions to the equation \( p^2 - 2q^2 = 1 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

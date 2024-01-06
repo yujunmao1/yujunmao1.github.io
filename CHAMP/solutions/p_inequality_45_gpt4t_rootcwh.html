@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_45</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_45']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a, b, c&gt;0, are there possible values of them to make (a^3*b+b^3*c+c^3*a)/(a+b+c) less than abc?
+
+You may find the following information useful:
+
+1. Consider two sequences of real numbers (a/sqrt(c), b/sqrt(a), c/sqrt(b)) and (sqrt(c), sqrt(a), sqrt(b)).
+2. For real numbers a_1, ..., a_n and b_1, ..., b_n, (a_1*b_1+...+a_n*b_n)^2≤(a_1^2+...+a_n^2)(b_1^2+...+b_n^2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the information provided, which hints at applying the Cauchy-Schwarz inequality. The Cauchy-Schwarz inequality states that for any sequences of real numbers \( a_1, a_2, \ldots, a_n \) and \( b_1, b_2, \ldots, b_n \), we have:
+
+\[ (a_1b_1 + a_2b_2 + \ldots + a_nb_n)^2 \leq (a_1^2 + a_2^2 + \ldots + a_n^2)(b_1^2 + b_2^2 + \ldots + b_n^2) \]
+
+Let&#x27;s define two sequences as suggested:
+
+Sequence 1: \( \left( \frac{a}{\sqrt{c}}, \frac{b}{\sqrt{a}}, \frac{c}{\sqrt{b}} \right) \)
+Sequence 2: \( \left( \sqrt{c}, \sqrt{a}, \sqrt{b} \right) \)
+
+Applying the Cauchy-Schwarz inequality to these sequences, we get:
+
+\[ \left( \frac{a}{\sqrt{c}} \cdot \sqrt{c} + \frac{b}{\sqrt{a}} \cdot \sqrt{a} + \frac{c}{\sqrt{b}} \cdot \sqrt{b} \right)^2 \leq \left( \left( \frac{a}{\sqrt{c}} \right)^2 + \left( \frac{b}{\sqrt{a}} \right)^2 + \left( \frac{c}{\sqrt{b}} \right)^2 \right) \left( c + a + b \right) \]
+
+Simplifying the left side, we have:
+
+\[ (a + b + c)^2 \leq \left( \frac{a^2}{c} + \frac{b^2}{a} + \frac{c^2}{b} \right) (a + b + c) \]
+
+Since \( a, b, c &gt; 0 \), we can divide both sides by \( a + b + c \) without changing the inequality:
+
+\[ a + b + c \leq \frac{a^2}{c} + \frac{b^2}{a} + \frac{c^2}{b} \]
+
+Now, let&#x27;s look at the original expression we want to analyze:
+
+\[ \frac{a^3b + b^3c + c^3a}{a + b + c} \]
+
+We want to know if this can be less than \( abc \). Let&#x27;s rewrite the inequality we want to prove:
+
+\[ a^3b + b^3c + c^3a &lt; abc(a + b + c) \]
+
+Dividing both sides by \( a + b + c \), we get:
+
+\[ \frac{a^3b + b^3c + c^3a}{a + b + c} &lt; abc \]
+
+Now, let&#x27;s compare this with the inequality we derived from the Cauchy-Schwarz inequality:
+
+\[ a + b + c \leq \frac{a^2}{c} + \frac{b^2}{a} + \frac{c^2}{b} \]
+
+Multiplying both sides by \( abc \), we get:
+
+\[ abc(a + b + c) \leq a^3b + b^3c + c^3a \]
+
+This is the opposite of what we want to prove. It shows that \( abc(a + b + c) \) is less than or equal to \( a^3b + b^3c + c^3a \), which means that the original expression \( \frac{a^3b + b^3c + c^3a}{a + b + c} \) cannot be less than \( abc \) for \( a, b, c &gt; 0 \).
+
+Therefore, there are no possible values of \( a, b, c &gt; 0 \) that make \( \frac{a^3b + b^3c + c^3a}{a + b + c} \) less than \( abc \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no possible values of \( a, b, c &gt; 0 \) that make \( \frac{a^3b + b^3c + c^3a}{a + b + c} \) less than \( abc \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

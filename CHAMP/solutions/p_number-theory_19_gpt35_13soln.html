@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_19</td>
+            <td>GPT-3.5</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_19']
+messages = problem.conversations['GPT-3.5|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of n^5-5*n^3+4n mod 120 for integer n.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have n^5-5n^3+4n=n(n^4-5n^2+4)=n(n^2-1)(n^2-4)=(n-2)(n-1)n(n+1)(n+2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all possible values of n^5-5*n^3+4n mod 120, we need to consider the factors of 120 and see which values of n satisfy the equation.
+
+First, let&#x27;s factorize 120: 120 = 2^3 * 3 * 5.
+
+Now, let&#x27;s consider each factor separately:
+
+1. (n-2): If n-2 is a factor of 120, then n = 2 + k, where k is an integer. Substituting this into the equation, we get:
+(n-2)(n-1)n(n+1)(n+2) = (2+k-2)(2+k-1)(2+k)(2+k+1)(2+k+2)
+= k(k+1)(k+2)(k+3)(k+4)
+
+We need to find values of k such that k(k+1)(k+2)(k+3)(k+4) is divisible by 2^3 * 3 * 5 = 120. By checking different values of k, we find that k = 0, 3, 4, 7, 8, 11, 12, ... satisfy the condition.
+
+2. (n-1): If n-1 is a factor of 120, then n = 1 + k, where k is an integer. Substituting this into the equation, we get:
+(n-2)(n-1)n(n+1)(n+2) = (1+k-2)(1+k-1)(1+k)(1+k+1)(1+k+2)
+= (k-1)k(k+1)(k+2)(k+3)
+
+We need to find values of k such that (k-1)k(k+1)(k+2)(k+3) is divisible by 2^3 * 3 * 5 = 120. By checking different values of k, we find that k = 1, 4, 5, 8, 9, 12, 13, ... satisfy the condition.
+
+3. n: If n is a factor of 120, then n = k, where k is an integer. Substituting this into the equation, we get:
+(n-2)(n-1)n(n+1)(n+2) = (k-2)(k-1)k(k+1)(k+2)
+
+We need to find values of k such that (k-2)(k-1)k(k+1)(k+2) is divisible by 2^3 * 3 * 5 = 120. By checking different values of k, we find that k = 2, 5, 6, 9, 10, 13, 14, ... satisfy the condition.
+
+4. (n+1): If n+1 is a factor of 120, then n = -1 + k, where k is an integer. Substituting this into the equation, we get:
+(n-2)(n-1)n(n+1)(n+2) = (-1+k-2)(-1+k-1)(-1+k)(-1+k+1)(-1+k+2)
+= (-k-3)(-k-2)(-k-1)(-k)(-k+1)
+
+We need to find values of k such that (-k-3)(-k-2)(-k-1)(-k)(-k+1) is divisible by 2^3 * 3 * 5 = 120. By checking different values of k, we find that k = -3, -6, -7, -10, -11, -14, -15, ... satisfy the condition.
+
+5. (n+2): If n+2 is a factor of 120, then n = -2 + k, where k is an integer. Substituting this into the equation, we get:
+(n-2)(n-1)n(n+1)(n+2) = (-2+k-2)(-2+k-1)(-2+k)(-2+k+1)(-2+k+2)
+= (-k-4)(-k-3)(-k-2)(-k-1)(-k)
+
+We need to find values of k such that (-k-4)(-k-3)(-k-2)(-k-1)(-k) is divisible by 2^3 * 3 * 5 = 120. By checking different values of k, we find that k = -4, -7, -8, -11, -12, -15, -16, ... satisfy the condition.
+
+Therefore, the possible values of n^5-5*n^3+4n mod 120 are given by the values of n obtained from the above cases:
+
+n = 2 + k, 1 + k, k, -1 + k, -2 + k, where k is an integer.
+
+Note: The above solution assumes that n can take any integer value. If there are any additional constraints on the range of n, those constraints should be considered while finding the possible values.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of n^5-5*n^3+4n mod 120 for integer n are n = 2 + k, 1 + k, k, -1 + k, -2 + k, where k is an integer.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

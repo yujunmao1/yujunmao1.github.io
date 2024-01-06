@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_10</td>
+            <td>PaLM 2 Medium</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_10']
+messages = problem.conversations['PaLM 2 Medium|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For an antisymmetric polynomial f(x, y) (i.e., f(x, y)=-f(y, x)) of total degree n (i.e., the maximum value of i+j in x^i*y^j is n), what are possible values of the remainder of f(x, y) divided by x-y?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j.
+2. Thus, f(y, x)=sum_(i, j) c_ij*y^i*x^j=sum_(i, j) (-c_ij)*x^i*y^j=sum_(i, j) (-c_ji)*x^j*y^i.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x, y)$ be an antisymmetric polynomial of total degree $n$. Then, we can write
+
+$$f(x, y) = \sum_{i=0}^n \sum_{j=0}^i c_{ij} x^i y^j$$
+
+where $c_{ij} = -c_{ji}$.
+
+We can also write
+
+$$f(x, y) = \sum_{i=0}^n \left( \sum_{j=0}^i c_{ij} \right) x^i y^i$$
+
+where the sum in parentheses is the coefficient of $x^i y^i$ in $f(x, y)$.
+
+Now, let&#x27;s consider the remainder of $f(x, y)$ divided by $x-y$. This remainder is the same as the remainder of $f(x, y)$ divided by $x$, since $x-y$ is a factor of $x$.
+
+The remainder of $f(x, y)$ divided by $x$ is the coefficient of $x^0$ in $f(x, y)$, which is
+
+$$\sum_{i=0}^n \left( \sum_{j=0}^i c_{ij} \right) = \sum_{i=0}^n c_{ii}$$
+
+Since $f(x, y)$ is antisymmetric, $c_{ii} = 0$ for all $i$ except $i=0$. Therefore, the remainder of $f(x, y)$ divided by $x$ is $c_{00}$.
+
+In conclusion, the possible values of the remainder of $f(x, y)$ divided by $x-y$ are $0$, $x$, $x^2$, $\dots$, $x^{n-1}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of the remainder of an antisymmetric polynomial $f(x, y)$ of total degree $n$ divided by $x-y$ are $0$, $x$, $x^2$, $\dots$, $x^{n-1}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

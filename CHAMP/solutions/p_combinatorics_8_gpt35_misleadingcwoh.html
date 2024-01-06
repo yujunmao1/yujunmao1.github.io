@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_8</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 634</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_8']
+messages = problem.conversations['GPT-3.5|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many strings of length 5 and consisting solely of the digits 1, 2, 3 and 4 have the property that any 1 and 2 are never neighbors (i.e., the string does not contain &quot;12&quot; or &quot;21&quot; as substrings).
+
+You may find the following information useful:
+
+1. sum_(k=1)^n C(n, k)=2^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the principle of inclusion-exclusion.
+
+Let&#x27;s consider the total number of strings of length 5 using the digits 1, 2, 3, and 4. Since each digit has 4 choices, there are 4^5 = 1024 possible strings.
+
+Now, let&#x27;s count the number of strings that contain &quot;12&quot; or &quot;21&quot; as substrings. We can treat &quot;12&quot; and &quot;21&quot; as a single unit, let&#x27;s call it &quot;X&quot;. So, we need to count the number of strings of length 5 that contain &quot;X&quot;.
+
+Since &quot;X&quot; is a single unit, we have 4 choices for each of the remaining 3 positions. Therefore, there are 4^3 = 64 strings that contain &quot;X&quot;.
+
+However, we have counted some strings twice. For example, the string &quot;12123&quot; is counted twice, once for &quot;12&quot; and once for &quot;21&quot;. To correct for this, we need to subtract the number of strings that contain &quot;12&quot; and &quot;21&quot; as substrings.
+
+To count the number of strings that contain both &quot;12&quot; and &quot;21&quot;, we can treat &quot;12&quot; and &quot;21&quot; as two separate units, let&#x27;s call them &quot;X&quot; and &quot;Y&quot;. So, we need to count the number of strings of length 5 that contain &quot;X&quot; and &quot;Y&quot;.
+
+Since &quot;X&quot; and &quot;Y&quot; are two separate units, we have 4 choices for each of the remaining 2 positions. Therefore, there are 4^2 = 16 strings that contain &quot;X&quot; and &quot;Y&quot;.
+
+Now, we can apply the principle of inclusion-exclusion. The number of strings that do not have &quot;12&quot; or &quot;21&quot; as substrings is given by:
+
+Total number of strings - Number of strings that contain &quot;X&quot; - Number of strings that contain &quot;Y&quot; + Number of strings that contain both &quot;X&quot; and &quot;Y&quot;
+
+= 4^5 - 2 * 4^3 + 4^2
+= 1024 - 2 * 64 + 16
+= 1024 - 128 + 16
+= 912
+
+Therefore, there are 912 strings of length 5 consisting solely of the digits 1, 2, 3, and 4 that do not have &quot;12&quot; or &quot;21&quot; as substrings.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 912 strings of length 5 consisting solely of the digits 1, 2, 3, and 4 that do not have &quot;12&quot; or &quot;21&quot; as substrings.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

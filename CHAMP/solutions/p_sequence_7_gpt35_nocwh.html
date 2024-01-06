@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_7</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_7']
+messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(6+a_n), and if so, find it.
+
+You may find the following information useful:
+
+1. A sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.
+2. For non-negative x, y, sqrt(x)≥sqrt(y) if and only if x≥y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the limit exists for the given sequence, we will first check if the sequence is monotonic and bounded.
+
+Let&#x27;s start by finding the first few terms of the sequence:
+
+a_0 = 0
+a_1 = sqrt(6 + a_0) = sqrt(6 + 0) = sqrt(6) ≈ 2.449
+a_2 = sqrt(6 + a_1) = sqrt(6 + 2.449) ≈ 2.783
+a_3 = sqrt(6 + a_2) ≈ 2.898
+a_4 = sqrt(6 + a_3) ≈ 2.944
+...
+
+From the initial terms, it appears that the sequence is increasing. To prove this, we can use induction.
+
+Base case: a_0 = 0 ≤ a_1 = sqrt(6 + a_0)
+
+Inductive step: Assume a_k ≤ a_(k+1) for some k ≥ 0. We want to show that a_(k+1) ≤ a_(k+2).
+
+a_(k+1) = sqrt(6 + a_k) ≤ sqrt(6 + a_(k+1)) = a_(k+2)
+
+Therefore, by induction, the sequence is monotonically increasing.
+
+Next, let&#x27;s check if the sequence is bounded. We can see that a_0 = 0 is the lower bound. To find an upper bound, we can assume a_n ≤ M for some M &gt; 0 and try to find a condition for a_(n+1) in terms of M.
+
+a_(n+1) = sqrt(6 + a_n) ≤ sqrt(6 + M)
+
+If we assume sqrt(6 + M) ≤ M, then we have a_(n+1) ≤ M, which means the sequence is bounded from above.
+
+To verify if sqrt(6 + M) ≤ M, we can square both sides:
+
+6 + M ≤ M^2
+
+Rearranging the inequality:
+
+M^2 - M - 6 ≥ 0
+
+Factoring the quadratic:
+
+(M - 3)(M + 2) ≥ 0
+
+This inequality holds true for M ≥ 3 or M ≤ -2. Since M &gt; 0, we have M ≥ 3.
+
+Therefore, the sequence is monotonically increasing and bounded from above by 3. By the Monotone Convergence Theorem, the limit of the sequence exists.
+
+To find the limit, we can set up the equation:
+
+L = sqrt(6 + L)
+
+Squaring both sides:
+
+L^2 = 6 + L
+
+Rearranging the equation:
+
+L^2 - L - 6 = 0
+
+Factoring the quadratic:
+
+(L - 3)(L + 2) = 0
+
+This gives us two possible values for L: L = 3 or L = -2. However, since the sequence is monotonically increasing, the limit must be the larger value, L = 3.
+
+Therefore, the limit of the sequence is 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by a_0=0, a_(n+1)=sqrt(6+a_n) exists and is equal to 3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

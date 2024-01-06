@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_33</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 512</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_33']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest positive integer a, so that 1971 | 50^n+23^n*a for odd n.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Since 1971=27*73, we need 27 | 50^n+23^n*a and 73 | 50^n+23^n*a.
+2. We have 50^n+23^n*a mod 27=23^n+23^n*a mod 27=23^n*(a+1) mod 27=0.
+3. In addition, for odd n, we have 50^n+23^n*a mod 73=(-23)^n+23^n*a mod 73=23^n*(a-1) mod 73=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the smallest positive integer \( a \) such that \( 1971 \) divides \( 50^n + 23^n \cdot a \) for odd \( n \). We know that \( 1971 = 27 \cdot 73 \), so we need to find \( a \) such that both \( 27 \) and \( 73 \) divide \( 50^n + 23^n \cdot a \).
+
+From the partial solution, we have two congruences to satisfy:
+
+1. \( 23^n \cdot (a+1) \equiv 0 \mod 27 \)
+2. \( 23^n \cdot (a-1) \equiv 0 \mod 73 \)
+
+Let&#x27;s solve each congruence separately.
+
+For the first congruence, we need to find \( a \) such that \( 23^n \cdot (a+1) \) is divisible by \( 27 \). Since \( 23 \) and \( 27 \) are coprime, we can use Euler&#x27;s theorem, which states that \( a^{\phi(m)} \equiv 1 \mod m \) for any integer \( a \) that is coprime with \( m \), where \( \phi(m) \) is Euler&#x27;s totient function. The totient of \( 27 \) is \( \phi(27) = 27 \cdot (1 - \frac{1}{3}) = 18 \). Since \( n \) is odd, \( 23^n \) will not be congruent to \( 1 \) modulo \( 27 \), but we can find the remainder when \( 23^n \) is divided by \( 27 \).
+
+Since \( 23 \equiv -4 \mod 27 \), we have \( 23^n \equiv (-4)^n \mod 27 \). For odd \( n \), \( (-4)^n \) is negative, so we need to find the positive remainder when \( (-4)^n \) is divided by \( 27 \). We can calculate \( (-4)^1, (-4)^3, (-4)^5, \ldots \) modulo \( 27 \) until we find a pattern.
+
+\( (-4)^1 \equiv -4 \equiv 23 \mod 27 \)
+\( (-4)^3 \equiv -64 \equiv 8 \mod 27 \)
+\( (-4)^5 \equiv -1024 \equiv 26 \mod 27 \)
+\( (-4)^7 \equiv -16384 \equiv 1 \mod 27 \)
+
+We see that \( (-4)^7 \equiv 1 \mod 27 \), which means that \( 23^n \) will cycle through these remainders as \( n \) increases. Since we want \( 23^n \cdot (a+1) \equiv 0 \mod 27 \), we need to find the value of \( a+1 \) that, when multiplied by one of these remainders, gives a multiple of \( 27 \). The only remainder that will work is \( 1 \), so we need \( n \) to be a multiple of \( 7 \) (since \( 23^n \equiv 1 \mod 27 \) when \( n \) is a multiple of \( 7 \)). Therefore, \( a+1 \) must be a multiple of \( 27 \), and the smallest positive integer \( a \) for which \( a+1 \) is a multiple of \( 27 \) is \( 26 \).
+
+For the second congruence, we need to find \( a \) such that \( 23^n \cdot (a-1) \) is divisible by \( 73 \). Since \( 23 \) and \( 73 \) are coprime, we can again use Euler&#x27;s theorem. The totient of \( 73 \) is \( \phi(73) = 72 \). We need to find the remainder when \( 23^n \) is divided by \( 73 \).
+
+Since \( 50 \equiv -23 \mod 73 \), for odd \( n \), \( 50^n \equiv (-23)^n \mod 73 \), and we have \( (-23)^n + 23^n \cdot a \equiv 0 \mod 73 \). This simplifies to \( (-1)^n \cdot 23^n + 23^n \cdot a \equiv 0 \mod 73 \), which further simplifies to \( -23^n + 23^n \cdot a \equiv 0 \mod 73 \) because \( n \) is odd. This gives us \( 23^n \cdot (a - 1) \equiv 0 \mod 73 \).
+
+Since \( 23 \) is a primitive root modulo \( 73 \), its powers will cycle through all non-zero remainders modulo \( 73 \) before repeating. We need to find the value of \( a-1 \) that, when multiplied by \( 23^n \), gives a multiple of \( 73 \). The smallest such \( a-1 \) is \( 0 \), which corresponds to \( a = 1 \).
+
+However, we need to satisfy both congruences simultaneously. Since \( a = 26 \) satisfies the first congruence and \( a = 1 \) satisfies the second, we need to find a common value of \( a \) that works for both. The least common multiple of \( 26 \) and \( 1 \) is \( 26 \), so the smallest positive integer \( a \) that satisfies both congruences is \( 26 \).
+
+Therefore, the smallest positive integer \( a \) such that \( 1971 \) divides \( 50^n + 23^n \cdot a \) for odd \( n \) is \( \boxed{26} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer \( a \) such that \( 1971 \) divides \( 50^n + 23^n \cdot a \) for odd \( n \) is \( 26 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

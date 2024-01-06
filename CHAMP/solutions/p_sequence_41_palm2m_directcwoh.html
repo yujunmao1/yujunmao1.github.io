@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_41</td>
+            <td>PaLM 2 Medium</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (1+sqrt(4a+1))/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_41']
+messages = problem.conversations['PaLM 2 Medium|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a&gt;0, does the limit of the sequence defined by a_0=sqrt(a), a_(n+1)=sqrt(a+a_n) exist, and if so, find it as an expression of a.
+
+You may find the following information useful:
+
+1. A sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.
+2. For non-negative x, y, sqrt(x)≥sqrt(y) if and only if x≥y.
+3. A polynomial of degree n with root x_1, ..., x_n can be written as a(x-x_1)(x-x_2)...(x-x_n) for some value of a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_0 = \sqrt{a}$ and $a_{n+1} = \sqrt{a + a_n}$. We will show that the sequence $\\{a_n\\}$ is monotonically increasing and bounded from above, and hence has a limit.
+
+To show that the sequence is monotonically increasing, we will show that $a_{n+1} \ge a_n$ for all $n$. We have
+\begin{align*}
+a_{n+1} &amp;= \sqrt{a + a_n} \\
+&amp;\ge \sqrt{a} \\
+&amp;= a_0.
+\end{align*}
+Therefore, the sequence is monotonically increasing.
+
+To show that the sequence is bounded from above, we will show that there exists a constant $M$ such that $a_n \le M$ for all $n$. We have
+\begin{align*}
+a_n &amp;= \sqrt{a + a_{n-1}} \\
+&amp;\le \sqrt{a + M} \\
+&amp;= \sqrt{a} + \sqrt{M}.
+\end{align*}
+Therefore, the sequence is bounded from above by $\sqrt{a} + \sqrt{M}$.
+
+Since the sequence is monotonically increasing and bounded from above, it has a limit. Let $L$ be the limit of the sequence. Then, for any $\epsilon &gt; 0$, there exists an $N$ such that $n \ge N$ implies $|a_n - L| &lt; \epsilon$. We have
+\begin{align*}
+|a_n - L| &amp;= |a_n - a_{n+1} + a_{n+1} - L| \\
+&amp;\le |a_n - a_{n+1}| + |a_{n+1} - L| \\
+&amp;\le \sqrt{a + a_n} - \sqrt{a + a_{n+1}} + \sqrt{a + a_{n+1}} - L \\
+&amp;= \sqrt{a + a_n} - \sqrt{a + a_{n+1}} + \sqrt{a + a_{n+1}} - \sqrt{a + L} \\
+&amp;= \sqrt{a + a_n} - \sqrt{a + a_{n+1}} + \sqrt{a + L} - \sqrt{a + a_{n+1}} \\
+&amp;= \sqrt{a + L} - \sqrt{a + a_{n+1}}.
+\end{align*}
+Since $a_n \le \sqrt{a} + \sqrt{M}$, we have
+\begin{align*}
+|a_n - L| &amp;\le \sqrt{a + L} - \sqrt{a + \sqrt{a} + \sqrt{M}} \\
+&amp;= \sqrt{L - \sqrt{a} - \sqrt{M}}.
+\end{align*}
+Since $L$ is the limit of the sequence, we have $L \ge \sqrt{a}$. Therefore, we can choose $\epsilon = \sqrt{L - \sqrt{a} - \sqrt{M}}$ to get $|a_n - L| &lt; \epsilon$. This contradicts the fact that $|a_n - L| &lt; \epsilon$ for all $n \ge N$. Therefore, our assumption must be wrong, and the sequence cannot have a limit.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $\\{a_n\\}$ defined by $a_0 = \sqrt{a}$ and $a_{n+1} = \sqrt{a + a_n}$ does not have a limit.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

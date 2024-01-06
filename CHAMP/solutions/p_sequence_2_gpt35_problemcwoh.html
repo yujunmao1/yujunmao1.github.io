@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_2</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Always greater than 20</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_2']
+messages = problem.conversations['GPT-3.5|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: What&#x27;s the smallest value of (x^2+2)/sqrt(x^2+1) for real x?
+Step-wise solution:
+1. We have (x^2+2)/sqrt(x^2+1)=(x^2+1)/sqrt(x^2+1)+1/sqrt(x^2+1)=sqrt(x^2+1)+1/sqrt(x^2+1).
+2. In addition, sqrt(x^2+1)+1/sqrt(x^2+1)≥2*sqrt(sqrt(x^2+1)*1/sqrt(x^2+1))=sqrt(1)=1.
+3. So the minimum value of sqrt(x^2+1)+1/sqrt(x^2+1) is 2, which can be achieved at x=0.
+
+Problem: Find all positive integer solutions to the equation m^2+(m+1)^2=n^4+(n+1)^4.
+Step-wise solution:
+1. We have 2m^2+2m+1=2n^4+4n^3+6n^2+4n+1, which gives m^2+m=n^4+2n^3+3n^2+2n.
+2. Thus, m^2+m+1=n^4+2n^3+3n^2+2n+1.
+3. n^4+2n^3+n^2+2n^2+2n+1=(n^2+n)^2+2(n^2+n)+1=(n^2+n+1)^2, which is a perfect square.
+4. However, for m≥1, m^2&lt;m^2+m+1&lt;m^2+2m+1=(m+1)^2.
+5. So m^2+m+1 is strictly between two consecutive perfect squares.
+6. Thus, the equation has no positive integer solution.
+
+Problem: For a, b, c&gt;0, are there possible values of them to make (a^3*b+b^3*c+c^3*a)/(a+b+c) less than abc?
+Step-wise solution:
+1. We have (a/sqrt(c)*sqrt(c)+b/sqrt(a)*sqrt(a)+c/sqrt(b)*sqrt(b))^2≤((a/sqrt(c))^2+(b/sqrt(a))^2+(c/sqrt(b))^2)((sqrt(a))^2+(sqrt(b))^2+(sqrt(c))^2), which simplifies to (a+b+c)^2≤(a^2/c+b^2/a+c^2/b)(a+b+c).
+2. Thus, a+b+c≤(a^3*b+b^3*c+c^3*a)/(abc).
+3. So (a^3*b+b^3*c+c^3*a)/(a+b+c) is always at least abc, and there are no possible such values.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let {x_n}, {y_n}, {z_n} be three sequences with positive initial terms x_1, y_1, z_1, defined as x_(n+1)=y_n+1/z_n, y_(n+1)=z_n+1/x_n, z_(n+1)=x_n+1/y_n. Let w_n be the maximum value of x_n, y_n, z_n. For different values of x_1, y_1, z_1, do we have w_200 always greater than 20, always smaller than 20, or sometimes greater and sometimes smaller than 20?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can analyze the behavior of the sequences {x_n}, {y_n}, and {z_n} and determine the possible values of w_200.
+
+First, let&#x27;s consider the relationship between x_n, y_n, and z_n. From the given definitions, we can see that x_(n+1) is obtained by adding the next term of the sequence y_n to the previous term of the sequence z_n. Similarly, y_(n+1) is obtained by adding the next term of the sequence z_n to the previous term of the sequence x_n, and z_(n+1) is obtained by adding the next term of the sequence x_n to the previous term of the sequence y_n.
+
+Based on this relationship, we can observe that the values of x_n, y_n, and z_n are cyclic. In other words, the sequences {x_n}, {y_n}, and {z_n} repeat after a certain number of terms. Let&#x27;s denote this period as P.
+
+Now, let&#x27;s consider the behavior of the maximum value, w_n. Since the sequences {x_n}, {y_n}, and {z_n} are cyclic, the maximum value, w_n, will also repeat after every P terms. In other words, w_n has a periodic behavior with a period of P.
+
+To determine whether w_200 is always greater than 20, always smaller than 20, or sometimes greater and sometimes smaller than 20, we need to examine the values of w_n within one period, P.
+
+Let&#x27;s assume that within one period, the maximum value of the sequences {x_n}, {y_n}, and {z_n} is M. We can then analyze the behavior of w_n within one period as follows:
+
+- If M &gt; 20, then w_n will always be greater than 20 within one period, and therefore, w_200 will also be greater than 20.
+- If M &lt; 20, then w_n will always be smaller than 20 within one period, and therefore, w_200 will also be smaller than 20.
+- If M = 20, then w_n can be either greater than 20 or smaller than 20 within one period, depending on the specific values of x_1, y_1, and z_1. In this case, w_200 can also be either greater than 20 or smaller than 20, depending on the specific values of x_1, y_1, and z_1.
+
+Therefore, the answer to the problem is that w_200 can be sometimes greater and sometimes smaller than 20, depending on the specific values of x_1, y_1, and z_1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of w_200 can be sometimes greater and sometimes smaller than 20, depending on the specific values of x_1, y_1, and z_1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

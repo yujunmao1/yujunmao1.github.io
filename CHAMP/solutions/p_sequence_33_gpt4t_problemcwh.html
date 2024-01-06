@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_33</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 8</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_33']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Let a, b, c be the lengths of the three sides of a (possibly degenerate) triangle. What is the largest value of (a^2+b^2+c^2)/(ab+bc+ac)?
+Step-wise solution:
+1. From a≥|b-c|, b≥|a-c| and c≥|a-b|, we get a^2≥(b-c)^2, b^2≥(a-c)^2 and c^2≥(a-b)^2.
+2. Adding them up, we get a^2+b^2+c^2≥2a^2+2b^2+2c^2-2ab-2bc-2ac.
+3. Thus, a^2+b^2+c^2≤2(ab+bc+ac), and (a^2+b^2+c^2)/(ab+bc+ac)≤2.
+4. So the largest value is 2, which can be achieved by, e.g., a=1, b=1, c=0.
+
+Problem: Find all positive integer solutions to the equation 2^x+1=3^y.
+Step-wise solution:
+1. The obvious solutions are x=1, y=1 and x=3, y=2.
+2. For x≥4 and odd y, we have 2^x=3^y-1=(3-1)(3^(y-1)+3^(y-2)+...+3+1).
+3. The second term in the product is a sum of odd number of odd values, and not divisible by 2.
+4. Thus, the product is not divisible by 4, which contradicts with the fact that 2^x is divisible by 4 for x≥4.
+5. So we have no solution here.
+6. For x≥4 and even y, let y=2k and we have 2^x=3^(2k)-1=(3^k)^2-1.
+7. Since 3^k is odd, we let 3^k=2a+1, which means 2^x=(2a+1)^2-1=(2a+2)(2a)=4a(a+1).
+8. Since either a or a+1 must be odd, when a&gt;1, the right hand side contains an odd factor greater than 1, which is not present in 2^x. 
+9. The case of a=1 corresponds k=1, x=3, y=2.
+10. Thus, the only solutions are x=1, y=1 and x=3, y=2.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. What is the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the properties of the sequences {a_n} and {b_n} and some algebraic manipulation.
+
+First, let&#x27;s express \( a_{n+1} \) and \( b_{n+1} \) in terms of \( a_n \) and \( b_n \):
+
+\( a_{n+1} = \sqrt{a_n b_n} \)
+\( b_{n+1} = \frac{a_n + b_n}{2} \)
+
+Now, let&#x27;s find \( b_{n+2} \):
+
+\( b_{n+2} = \frac{a_{n+1} + b_{n+1}}{2} \)
+\( b_{n+2} = \frac{\sqrt{a_n b_n} + \frac{a_n + b_n}{2}}{2} \)
+\( b_{n+2} = \frac{2\sqrt{a_n b_n} + a_n + b_n}{4} \)
+
+Next, we need to find \( b_{n+1} - a_{n+1} \):
+
+\( b_{n+1} - a_{n+1} = \frac{a_n + b_n}{2} - \sqrt{a_n b_n} \)
+
+Now, we want to find the value of \( (b_{n+1} - a_{n+1}) \cdot b_{n+2} / (b_n - a_n)^2 \):
+
+\( \frac{(b_{n+1} - a_{n+1}) \cdot b_{n+2}}{(b_n - a_n)^2} = \frac{\left(\frac{a_n + b_n}{2} - \sqrt{a_n b_n}\right) \cdot \left(\frac{2\sqrt{a_n b_n} + a_n + b_n}{4}\right)}{(b_n - a_n)^2} \)
+
+Now, let&#x27;s simplify the numerator:
+
+\( \left(\frac{a_n + b_n}{2} - \sqrt{a_n b_n}\right) \cdot \left(\frac{2\sqrt{a_n b_n} + a_n + b_n}{4}\right) \)
+\( = \frac{1}{8} \left((a_n + b_n) - 2\sqrt{a_n b_n}\right) \cdot \left(2\sqrt{a_n b_n} + a_n + b_n\right) \)
+\( = \frac{1}{8} \left((a_n + b_n)^2 - 4a_n b_n\right) \)
+\( = \frac{1}{8} \left(a_n^2 + 2a_n b_n + b_n^2 - 4a_n b_n\right) \)
+\( = \frac{1}{8} \left(a_n^2 - 2a_n b_n + b_n^2\right) \)
+\( = \frac{1}{8} (b_n - a_n)^2 \)
+
+Now, we divide by \( (b_n - a_n)^2 \):
+
+\( \frac{\frac{1}{8} (b_n - a_n)^2}{(b_n - a_n)^2} \)
+\( = \frac{1}{8} \)
+
+Therefore, the value of \( (b_{n+1} - a_{n+1}) \cdot b_{n+2} / (b_n - a_n)^2 \) is \( \frac{1}{8} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of \( (b_{n+1} - a_{n+1}) \cdot b_{n+2} / (b_n - a_n)^2 \) is \( \frac{1}{8} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

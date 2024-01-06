@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_12</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 76</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_12']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+An integer a is called automorphic if a^2 ends in a. For example, 5 is automorphic because 5^2=25 ends in 5. 25 is also automorphic because 25^2=625 ends in 25. Find all two-digit automorphic numbers besides 25.
+
+You may find the following information useful:
+
+1. If a | bc and gcd(b, c)=1, then we can find integer m, n, p, q such that b=mp, c=nq, gcd(m, n)=gcd(p, q)=1 and pq=a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all two-digit automorphic numbers, we need to find integers \( a \) such that the last two digits of \( a^2 \) are \( a \) itself. Let&#x27;s denote \( a \) as a two-digit number \( 10x + y \), where \( x \) is the tens digit and \( y \) is the units digit.
+
+The square of \( a \) is:
+\[ (10x + y)^2 = 100x^2 + 20xy + y^2 \]
+
+We are interested in the last two digits of \( a^2 \), which are affected by the terms \( 20xy \) and \( y^2 \). The term \( 100x^2 \) contributes nothing to the last two digits since it is a multiple of 100.
+
+So, we need to find \( x \) and \( y \) such that:
+\[ 20xy + y^2 \equiv 10x + y \mod 100 \]
+
+This simplifies to:
+\[ 20xy + y^2 - 10x - y \equiv 0 \mod 100 \]
+\[ 20xy + y(y - 1) - 10x \equiv 0 \mod 100 \]
+
+Since \( y \) is a digit, \( y(y - 1) \) is a multiple of 10 (because either \( y \) or \( y - 1 \) is even), and thus we can ignore \( y(y - 1) \) when considering the last two digits. We are left with:
+\[ 20xy - 10x \equiv 0 \mod 100 \]
+\[ 2xy - x \equiv 0 \mod 10 \]
+
+Now, we can split this into two cases based on the value of \( x \):
+
+Case 1: \( x \) is even. If \( x \) is even, then \( 2xy \) is a multiple of 10, and \( x \) is a multiple of 10, so the equation is satisfied for any \( y \). However, since \( x \) is the tens digit of a two-digit number, \( x \) can only be 1, 2, 3, ..., 9. So, in this case, there are no solutions because \( x \) cannot be an even number that is a multiple of 10.
+
+Case 2: \( x \) is odd. If \( x \) is odd, then \( 2xy - x \) must be a multiple of 10. This means that \( 2y - 1 \) must be a multiple of 5 because \( x \) is relatively prime to 10. The possible values for \( y \) that satisfy \( 2y - 1 \equiv 0 \mod 5 \) are \( y = 3 \) and \( y = 8 \) (since \( 2 \cdot 3 - 1 = 5 \) and \( 2 \cdot 8 - 1 = 15 \)).
+
+Now, we need to check these values of \( y \) with odd values of \( x \) to find the two-digit automorphic numbers:
+
+For \( y = 3 \):
+\[ (10x + 3)^2 = 100x^2 + 60x + 9 \]
+The last two digits are \( 60x + 9 \). We need \( 60x + 9 \) to end with \( 3 \), which is not possible because \( 60x \) will always end with a 0 when \( x \) is an integer.
+
+For \( y = 8 \):
+\[ (10x + 8)^2 = 100x^2 + 160x + 64 \]
+The last two digits are \( 60x + 64 \). We need \( 60x + 64 \) to end with \( 8 \). This happens when \( x = 6 \) because \( 60 \cdot 6 + 64 = 424 \), and the last two digits are \( 24 \), which matches the original number \( 68 \).
+
+Therefore, the only two-digit automorphic number besides 25 is 76 (since \( 76^2 = 5776 \)).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only two-digit automorphic number besides 25 is 76.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

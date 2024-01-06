@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_50</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_50']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b, c&gt;0. What is the minimum value of a^3+b^3+c^3-(a^2*b+b^2*c+c^2*a)?
+
+You may find the following information useful:
+
+1. Consider the two sequences (a^2, b^2, c^2) and (a, b, c).
+2. a, b, c are three sides of a (possibly degenerate) triangle if and only if |b-c|≤a≤b+c, |a-c|≤b≤a+c, |a-b|≤c≤a+b. The triangle is not degenerate if and only if all inequalities are strict.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c$ be three positive numbers. We want to find the minimum value of $a^3+b^3+c^3-(a^2b+b^2c+c^2a)$.
+
+We can write this as $$a^3+b^3+c^3-(a^2b+b^2c+c^2a)=(a+b+c)(a^2-ab+b^2+c^2-ac+ca)-(a^2b+b^2c+c^2a).$$
+
+By the Cauchy-Schwarz inequality, we have $$(a+b+c)^2\ge(a^2+b^2+c^2)(2ab+2bc+2ca).$$
+
+Squaring both sides, we get $$a^2+b^2+c^2+2(ab+bc+ca)\ge(a^2b+b^2c+c^2a)^2.$$
+
+Substituting $a^2+b^2+c^2=1$, we get $$2(ab+bc+ca)\ge(a^2b+b^2c+c^2a)^2.$$
+
+This implies that $$(a^2b+b^2c+c^2a)\le2(ab+bc+ca).$$
+
+Substituting this into our expression for $a^3+b^3+c^3-(a^2b+b^2c+c^2a)$, we get $$a^3+b^3+c^3-(a^2b+b^2c+c^2a)\ge(a+b+c)(1-2(ab+bc+ca)).$$
+
+Now, we can use the triangle inequality to get $$|a-b|\le a+b,$$ $$|a-c|\le a+c,$$ and $$|b-c|\le b+c.$$
+
+Squaring both sides, we get $$a^2-2ab+b^2\le a^2+2ab+b^2,$$ $$a^2-2ac+c^2\le a^2+2ac+c^2,$$ and $$b^2-2bc+c^2\le b^2+2bc+c^2.$$
+
+Adding these three inequalities, we get $$2(a^2-ab+b^2)+2(a^2-ac+c^2)+2(b^2-bc+c^2)\le2(a^2+b^2+c^2).$$
+
+Simplifying, we get $$2(ab+bc+ca)\le2(a^2+b^2+c^2).$$
+
+Substituting this into our previous inequality, we get $$a^3+b^3+c^3-(a^2b+b^2c+c^2a)\ge(a+b+c)(1-2(a^2+b^2+c^2)).$$
+
+But $a+b+c=1$, so this simplifies to $$a^3+b^3+c^3-(a^2b+b^2c+c^2a)\ge1-2(a^2+b^2+c^2).$$
+
+Now, we can use the arithmetic mean-geometric mean inequality to get $$a^2+b^2+c^2\ge3\sqrt[3]{(a^2b^2c^2)}.$$
+
+Squaring both sides, we get $$a^4+b^4+c^4+2(a^2b^2+b^2c^2+c^2a^2)\ge27(a^2b^2c^2).$$
+
+Substituting this into our previous inequality, we get $$a^3+b^3+c^3-(a^2b+b^2c+c^2a)\ge1-2\cdot27(a^2b^2c^2).$$
+
+Simplifying, we get $$a^3+b^3+c^3-(a^2b+b^2c+c^2a)\ge-54(a^2b^2c^2).$$
+
+But $a^2b^2c^2\ge0$, so this simplifies to $$a^3+b^3+c^3-(a^2b+b</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of $a^3+b^3+c^3-(a^2b+b^2c+c^2a)$ is $-54$, which occurs when $a=b=c=0$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

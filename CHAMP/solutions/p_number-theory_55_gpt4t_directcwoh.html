@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_55</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At least 1 number</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_55']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let (x, y, z) be an integer solution to the equation x^2+y^2=z^2. At least how many of the three numbers must be divisible by 4?
+
+You may find the following information useful:
+
+1. (x±y)^2=x^2±2xy+y^2.
+2. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).
+3. For odd x, x^2 mod 8=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The equation x^2 + y^2 = z^2 represents a Pythagorean triple, which are integer solutions to the Pythagorean theorem. We are asked to determine how many of the three numbers x, y, and z must be divisible by 4.
+
+First, let&#x27;s consider the parity of x and y. There are two cases: either both x and y are even, or one is even and the other is odd.
+
+Case 1: Both x and y are even.
+If both x and y are even, then x^2 and y^2 are also even, and thus z^2 is even, which means z is even. Since x and y are even, we can write x = 2a and y = 2b for some integers a and b. Then the equation becomes:
+
+(2a)^2 + (2b)^2 = z^2
+4a^2 + 4b^2 = z^2
+4(a^2 + b^2) = z^2
+
+This implies that z^2 is divisible by 4, and since z is an integer, z must be even. However, this does not guarantee that z is divisible by 4, only that z^2 is. If z were even but not divisible by 4 (e.g., z = 2), then z^2 would be divisible by 4 but not by 16. So, in this case, we cannot conclude that any of the numbers must be divisible by 4.
+
+Case 2: One of x and y is even, and the other is odd.
+Without loss of generality, let&#x27;s assume x is even and y is odd. Then x^2 is even, and y^2 is odd. Since the sum of an even and an odd number is odd, z^2 must be odd, which is a contradiction because a square of an integer cannot be odd if the integer itself is even. Therefore, this case is not possible.
+
+Now, let&#x27;s consider the properties of squares modulo 8 for odd integers. If x is odd, then x^2 mod 8 = 1. This is because the square of any odd number is congruent to 1 modulo 8 (e.g., 1^2 = 1, 3^2 = 9 ≡ 1 mod 8, 5^2 = 25 ≡ 1 mod 8, 7^2 = 49 ≡ 1 mod 8).
+
+If both x and y are odd, then x^2 + y^2 mod 8 = 1 + 1 = 2. However, for z to be an integer, z^2 must be congruent to 0, 1, or 4 modulo 8 because these are the only quadratic residues modulo 8. Since 2 is not a quadratic residue modulo 8, we have a contradiction, which means that both x and y cannot be odd.
+
+Therefore, we are left with the situation where both x and y are even, which means they are both divisible by 2. However, this does not guarantee that either is divisible by 4. We need to show that at least one of them must be divisible by 4 to satisfy the equation.
+
+Let&#x27;s assume that neither x nor y is divisible by 4. Then we can write x = 2a and y = 2b, where a and b are odd. Then:
+
+x^2 = (2a)^2 = 4a^2
+y^2 = (2b)^2 = 4b^2
+
+Since a and b are odd, a^2 mod 8 = 1 and b^2 mod 8 = 1. Therefore:
+
+x^2 mod 8 = 4a^2 mod 8 = 4(1) mod 8 = 4
+y^2 mod 8 = 4b^2 mod 8 = 4(1) mod 8 = 4
+
+Adding these, we get:
+
+x^2 + y^2 mod 8 = 4 + 4 mod 8 = 8 mod 8 = 0
+
+This means that z^2 is divisible by 8, and since z is an integer, z must be divisible by 4. However, we have not shown that either x or y must be divisible by 4, only that their squares sum to a number divisible by 8.
+
+To resolve this, we need to consider the fact that if neither x nor y is divisible by 4, then z^2 is divisible by 8 but not necessarily by 16. For z to be divisible by 4, z^2 must be divisible by 16. This can only happen if one of x or y is divisible by 4, which would make one of the squares divisible by 16, ensuring that z^2 is also divisible by 16.
+
+Therefore, at least one of the numbers x or y must be divisible by 4 to ensure that z^2 is divisible by 16 and thus that z is divisible by 4. Since we have already established that z must be divisible by 4, we can conclude that at least one of the three numbers x, y, or z must be divisible by 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At least one of the three numbers x, y, or z must be divisible by 4 in an integer solution to the equation x^2 + y^2 = z^2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

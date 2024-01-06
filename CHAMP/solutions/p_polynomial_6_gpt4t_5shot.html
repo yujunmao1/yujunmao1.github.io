@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_6</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x=1, y=2) and (x=2, y=1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_6']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What is the largest integer n for which n^3+100 is divisible by n+10?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have n^3+100=n^3+1000-900=(n+10)(n^2-10n+100)-900.
+2. Since n+10 | (n+10)(n^2-10n+100), we need n+10 | 900.
+3. The largest value for such n+10 is 900, which means that n=890.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, what is the smallest value of (a^2+b^2)/(a+b)^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since (a+b)/2≤sqrt((a^2+b^2)/2), we have (a+b)^2/4≤(a^2+b^2)/2.
+2. This means that (a^2+b^2)/(a+b)^2≥1/2.
+3. So the smallest value is 1/2, achieved at a=b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many sequences of positive numbers a_0, a_1, a_2, ... satisfy the conditions of a_0=1, a_(n+2)=a_n-a_(n+1) for all n≥0?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let a_1=t.
+2. Thus, a_2=a_0-a_1=1-t&gt;0, a_3=a_1-a_2=2t-1&gt;0, a_4=2-3t&gt;0, a_5=5t-3&gt;0...
+3. Let F_0, F_1, F_2, ... be the Fibonacci sequence of 0, 1, 1, 2, 3, 5, ...
+4. We can see that a_1=F_1*t-F_0, a_2=F_1-F_2*t, a_3=F_3*t-F_2, a_4=F_3-F_4*t, ...
+5. We show that for integer k, a_(2k)=F_(2k-1)-F_(2k)*t and a_(2k+1)=F_(2k+1)*t-F_(2k).
+6. The conditions are satisfied for k=0.
+7. If it is satisfied by k, then a_(2(k+1))=a_(2k+2)=a_(2k)-a_(2k+1)=F_(2k-1)-F_(2k)*t-F_(2k+1)*t+F_(2k)=F_(2k+1)-F_(2k+2)*t, and a_(2(k+1)+1)=a_(2k+3)=a_(2k+1)-a_(2k+2)=F_(2k+1)*t-F_(2k)-F_(2k+1)+F_(2k+2)*t=F_(2k+3)*t-F_(2k+2).
+8. So the relationship is valid for k+1 as well.
+9. Since all terms are positive, we have F_(2k-1)-F_(2k)*t&gt;0 and F_(2k+1)*t-F_(2k)&gt;0, which means that F_(2k)/F_(2k+1)&lt;t&lt;F_(2k-1)/F_(2k) for all k.
+10. Thus, the only possible value t is the limit of the ratio of terms in F_n.
+11. We first show that the limit of F_n/F_(n+1) exists.
+12. We have |F_(n+1)/F_n-F_n/F_(n-1)|=|(F_(n+1)*F_(n-1)-F_n^2)/(F_n*F_(n-1))|.
+13. Then F_(n+1)*F_(n-1)-F_n^2=(F_n+F_(n-1))F_(n-1)-F_n^2=-(F_n*(F_n-F_(n-1))-F_(n-1)^2)=-(F_n*F_(n-2)-F_(n-1)^2).
+14. Since We have F0*F_2-F_1=1, the sequence of F_(n+1)*F_(n-1)-F_n^2 alternates between 1 and -1.
+15. Thus, |F_(n+1)/F_n-F_n/F_(n-1)|=|(F_(n+1)*F_(n-1)-F_n^2)/(F_n*F_(n-1))| approaches zero as n→∞, which means that the limit exists.
+16. To find the limit L of F_n/F_(n+1), we have L=F_(n+1)/F_(n)=(F_(n)+F_(n-1))/F_(n)=1+F_(n-1)/F_n=1+1/L.
+17. Thus, L=1-1/L, or L^2-L-1=0, with the only positive solution being (1+sqrt(5))/2.
+18. So we have a_1=t=(1+sqrt(5))/2 being the only possible value, and there is 1 unique sequence.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Is 4^545+545^4 a prime number?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. 4^545+545^4=545^4+4^(136*4+1)=545^4+4*(4^136)^4.
+2. 545^4+4*(4^136)^4=(545^2+2*(4^136)^2+2*545*4^136)(545^2+2*(4^136)^2-2*545*4^136).
+3. The last expression gives a factorization of 4^545+545^4.
+4. So 4^545+545^4 is not a prime number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers x_1, ..., x_n, what is the smallest value of x_1^(n+1)+x_2^(n+1)+...+x_n^(n+1)-x_1*x_2*...*x_n*(x_1+x_2+...+x_n)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let A_1=A_2=...=A_(n+1)=(x_1, x_2, ..., x_n), which are all sorted the same way.
+2. Thus, x_1^(n+1)+x_2^(n+1)+...+x_n^(n+1) is the sum of products of n+1 elements, each selected from one sequence and sorted in the same way.
+3. We have x_1*x_2*...*x_n*(x_1+x_2+...+x_n)=(x_1*x_2*...*x_(n-1)*x_n)*x_1+(x_2*x_3*...*x_n*x_1)*x_2+...+(x_3*x_4*...*x_1*x_2)*x_3+...+(x_n*x_1*...*x_(n-2)*x_(n-1))*x_n, which the sum of products of elements, each selected from (x_1, x_2, ..., x_n), (x_2, x_3, ..., x_1), (x_3, x_4, ..., x_2), ..., (x_n, x_1, ..., x_(n-1)), and (x_1, x_2, ..., x_n).
+4. Each of the sequence is a permutation of A_i, so their sum of products is at most x_1^(n+1)+x_2^(n+1)+...+x_n^(n+1).
+5. Thus, We have x_1^(n+1)+x_2^(n+1)+...+x_n^(n+1)-x_1*x_2*...*x_n*(x_1+x_2+...+x_n)≥0, where 0 is achieved when all x_i&#x27;s are equal.
+6. So the smallest value is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equations x^5+y^5=33, x+y=3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all integer solutions to the system of equations:
+
+x^5 + y^5 = 33
+x + y = 3
+
+We can use the second equation to express y in terms of x:
+
+y = 3 - x
+
+Now we substitute this expression for y into the first equation:
+
+x^5 + (3 - x)^5 = 33
+
+Expanding the second term using the binomial theorem:
+
+x^5 + (3^5 - 5*3^4*x + 10*3^3*x^2 - 10*3^2*x^3 + 5*3*x^4 - x^5) = 33
+
+Simplify and combine like terms:
+
+x^5 + 243 - 405x + 270x^2 - 90x^3 + 15x^4 - x^5 = 33
+
+The x^5 terms cancel out:
+
+243 - 405x + 270x^2 - 90x^3 + 15x^4 = 33
+
+Subtract 33 from both sides:
+
+15x^4 - 90x^3 + 270x^2 - 405x + 210 = 0
+
+Divide the entire equation by 15 to simplify:
+
+x^4 - 6x^3 + 18x^2 - 27x + 14 = 0
+
+Now we need to find integer solutions for this quartic equation. Since the equation has integer coefficients, any rational root must be a divisor of the constant term (14) by the Rational Root Theorem. The divisors of 14 are ±1, ±2, ±7, ±14.
+
+We can use the synthetic division or direct substitution to test these possible roots. Let&#x27;s test them:
+
+For x = 1:
+1 - 6 + 18 - 27 + 14 ≠ 0
+
+For x = -1:
+1 - 6 + 18 - 27 + 14 ≠ 0
+
+For x = 2:
+16 - 48 + 72 - 54 + 14 ≠ 0
+
+For x = -2:
+16 + 48 + 72 + 54 + 14 ≠ 0
+
+For x = 7:
+2401 - 1029 + 882 - 189 + 14 ≠ 0
+
+For x = -7:
+2401 + 1029 + 882 + 189 + 14 ≠ 0
+
+For x = 14:
+38416 - 14112 + 7056 - 378 + 14 ≠ 0
+
+For x = -14:
+38416 + 14112 + 7056 + 378 + 14 ≠ 0
+
+None of the divisors of 14 satisfy the equation, so there are no rational roots, and thus no integer solutions to the original system of equations. Therefore, there are no integer solutions to the system:
+
+x^5 + y^5 = 33
+x + y = 3</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no integer solutions to the system of equations x^5 + y^5 = 33 and x + y = 3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

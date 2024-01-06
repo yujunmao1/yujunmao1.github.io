@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_36</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_36']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For non-negative a, b, c, d, what is the smallest value of sqrt((a+c)(b+d))-sqrt(ab)-sqrt(cd)-1?
+
+You may find the following information useful:
+
+1. Compare sqrt((a+c)(b+d)) with sqrt(ab)+sqrt(cd) by squaring both terms.
+2. x^2-y^2=(x+y)(x-y).
+3. Let (a_1, ..., a_n) and (b_1, ..., b_n) be two similarly sorted sequences (e.g., both increasing or both decreasing). Then ((a_1+...+a_n)/n)*((b_1+...+b_n)/n)≤(a_1*b_1+...+a_n*b_n)/n.
+4. a, b, c are sides of a 90-degree triangle and c being the hypotenuse if and only if a^2+b^2=c^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the expression we want to minimize as \( f(a, b, c, d) \):
+
+\[ f(a, b, c, d) = \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \]
+
+To find the minimum value of this expression, we can follow the hints provided.
+
+1. Compare \( \sqrt{(a+c)(b+d)} \) with \( \sqrt{ab} + \sqrt{cd} \) by squaring both terms:
+
+\[ (\sqrt{(a+c)(b+d)})^2 = (a+c)(b+d) \]
+\[ (\sqrt{ab} + \sqrt{cd})^2 = ab + 2\sqrt{ab}\sqrt{cd} + cd \]
+
+We can see that \( (a+c)(b+d) \) is not necessarily equal to \( ab + 2\sqrt{ab}\sqrt{cd} + cd \), so we cannot directly compare the square roots without further manipulation.
+
+2. Use the identity \( x^2 - y^2 = (x + y)(x - y) \):
+
+Let&#x27;s consider \( x = \sqrt{(a+c)(b+d)} \) and \( y = \sqrt{ab} + \sqrt{cd} \). Then we have:
+
+\[ x^2 - y^2 = (\sqrt{(a+c)(b+d)})^2 - (\sqrt{ab} + \sqrt{cd})^2 \]
+\[ x^2 - y^2 = (a+c)(b+d) - (ab + 2\sqrt{ab}\sqrt{cd} + cd) \]
+\[ x^2 - y^2 = ab + ad + bc + cd - ab - 2\sqrt{ab}\sqrt{cd} - cd \]
+\[ x^2 - y^2 = ad + bc - 2\sqrt{ab}\sqrt{cd} \]
+
+Now, we can apply the AM-GM inequality to the terms \( ad \) and \( bc \):
+
+\[ \frac{ad + bc}{2} \geq \sqrt{ad \cdot bc} \]
+\[ ad + bc \geq 2\sqrt{ad \cdot bc} \]
+
+Since \( a, b, c, d \) are non-negative, we can also apply the AM-GM inequality to \( \sqrt{ab} \) and \( \sqrt{cd} \):
+
+\[ \frac{\sqrt{ab} + \sqrt{cd}}{2} \geq \sqrt{\sqrt{ab} \cdot \sqrt{cd}} \]
+\[ \sqrt{ab} + \sqrt{cd} \geq 2\sqrt{\sqrt{ab} \cdot \sqrt{cd}} \]
+\[ \sqrt{ab} + \sqrt{cd} \geq 2\sqrt{ab \cdot cd} \]
+
+Combining the two inequalities, we get:
+
+\[ ad + bc \geq 2\sqrt{ad \cdot bc} \geq 2\sqrt{ab \cdot cd} \]
+
+This implies that:
+
+\[ x^2 - y^2 = ad + bc - 2\sqrt{ab}\sqrt{cd} \geq 0 \]
+
+Therefore, \( x \geq y \), or:
+
+\[ \sqrt{(a+c)(b+d)} \geq \sqrt{ab} + \sqrt{cd} \]
+
+3. Now, let&#x27;s consider the expression \( f(a, b, c, d) \) again:
+
+\[ f(a, b, c, d) = \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \]
+
+Since \( \sqrt{(a+c)(b+d)} \geq \sqrt{ab} + \sqrt{cd} \), the smallest value of \( f(a, b, c, d) \) occurs when \( \sqrt{(a+c)(b+d)} = \sqrt{ab} + \sqrt{cd} \), which gives us:
+
+\[ f(a, b, c, d) = \sqrt{ab} + \sqrt{cd} - \sqrt{ab} - \sqrt{cd} - 1 \]
+\[ f(a, b, c, d) = -1 \]
+
+Therefore, the smallest value of \( f(a, b, c, d) \) is \( -1 \), which occurs when \( \sqrt{(a+c)(b+d)} = \sqrt{ab} + \sqrt{cd} \). This is the case when \( a = b = c = d = 0 \), but it can also occur for other non-negative values of \( a, b, c, d \) that satisfy the equality \( \sqrt{(a+c)(b+d)} = \sqrt{ab} + \sqrt{cd} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \) for non-negative \( a, b, c, d \) is \( -1 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

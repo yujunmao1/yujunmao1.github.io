@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_36</td>
+            <td>PaLM 2 Medium</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Monotonically increasing</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_36']
+messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. Is the sequence a_n/b_n monotonically increasing, monotonically decreasing, or neither?
+
+You may find the following information useful:
+
+1. Study the monotonicity of a_n and b_n separately.
+2. For non-negative x, y, we have (x+y)≥2*sqrt(xy) and (x+y)/2≥sqrt(xy), with equality if and only if x=y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $0&lt;a&lt;b$. Define two sequences $\\{a_n\\}$ and $\\{b_n\\}$ as $a_0=a$, $b_0=b$, $a_{n+1}=\sqrt{a_n b_n}$, and $b_{n+1}=(a_n+b_n)/2$.
+
+We will first show that $\\{a_n\\}$ is monotonically increasing. To do this, we will prove by induction that $a_n\leq a_{n+1}$ for all $n\geq 0$.
+
+The base case is $n=0$. We have $a_0=a$ and $a_1=\sqrt{a_0 b_0}=\sqrt{a^2}=a$. Therefore, $a_0\leq a_1$.
+
+Now assume that $a_k\leq a_{k+1}$ for some $k\geq 0$. We want to show that $a_{k+1}\leq a_{k+2}$. We have
+\begin{align*}
+a_{k+2} &amp;= \sqrt{a_{k+1} b_{k+1}} \\
+&amp;= \sqrt{\left(\frac{a_k+b_k}{2}\right) \left(\frac{a_k+b_k}{2}\right)} \\
+&amp;= \frac{1}{2} \sqrt{(a_k+b_k)^2} \\
+&amp;= \frac{1}{2} \left(a_k^2+2 a_k b_k+b_k^2\right)^{1/2} \\
+&amp;\leq \frac{1}{2} \left(a_k^2+2 a_k a_{k+1}+a_{k+1}^2\right)^{1/2} \\
+&amp;= \frac{1}{2} \left(a_k+a_{k+1}\right) \\
+&amp;= \frac{a_k+a_{k+1}}{2} \\
+&amp;= \frac{a_k+b_k}{2} \\
+&amp;= b_{k+1}.
+\end{align*}
+Therefore, by the principle of mathematical induction, $a_n\leq a_{n+1}$ for all $n\geq 0$.
+
+Next, we will show that $\\{b_n\\}$ is monotonically increasing. To do this, we will prove by induction that $b_n\leq b_{n+1}$ for all $n\geq 0$.
+
+The base case is $n=0$. We have $b_0=b$ and $b_1=(a_0+b_0)/2=(a+b)/2$. Therefore, $b_0\leq b_1$.
+
+Now assume that $b_k\leq b_{k+1}$ for some $k\geq 0$. We want to show that $b_{k+1}\leq b_{k+2}$. We have
+\begin{align*}
+b_{k+2} &amp;= \frac{a_{k+1}+b_{k+1}}{2} \\
+&amp;= \frac{\sqrt{a_k b_k}+b_{k+1}}{2} \\
+&amp;\leq \frac{a_k+b_{k+1}}{2} \\
+&amp;= \frac{a_k+b_k}{2} \\
+&amp;= b_{k+1}.
+\end{align*}
+Therefore, by the principle of mathematical induction, $b_n\leq b_{n+1}$ for all $n\geq 0$.
+
+Now, we can answer the question. We have shown that $\\{a_n\\}$ is monotonically increasing and $\\{b_n\\}$ is monotonically increasing. Therefore, the sequence $\\{a_n/b_n\\}$ is monotonically increasing.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $\\{a_n/b_n\\}$ is monotonically increasing, where $a_0=a$, $b_0=b$, $a_{n+1}=\sqrt{a_n b_n}$, and $b_{n+1}=(a_n+b_n)/2$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_33</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 512</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_33']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest positive integer a, so that 1971 | 50^n+23^n*a for odd n.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Since 1971=27*73, we need 27 | 50^n+23^n*a and 73 | 50^n+23^n*a.
+2. We have 50^n+23^n*a mod 27=23^n+23^n*a mod 27=23^n*(a+1) mod 27=0.
+3. In addition, for odd n, we have 50^n+23^n*a mod 73=(-23)^n+23^n*a mod 73=23^n*(a-1) mod 73=0.
+4. Since gcd(27, 23)=gcd(73, 23)=1, we must have gcd(27, 23^n)=gcd(73, 23^n)=1, so 27 | a+1 and 73 | a-1.
+5. In other words, a mod 27=-1 and a mod 73=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the smallest positive integer \( a \) such that \( 1971 \) divides \( 50^n + 23^n \cdot a \) for odd \( n \). We have already established that \( 1971 = 27 \cdot 73 \), and we need both \( 27 \) and \( 73 \) to divide \( 50^n + 23^n \cdot a \).
+
+From the partial solution, we have two congruences:
+
+1. \( a \equiv -1 \mod 27 \)
+2. \( a \equiv 1 \mod 73 \)
+
+We need to find the smallest positive integer \( a \) that satisfies both of these congruences simultaneously. This is a classic application of the Chinese Remainder Theorem (CRT), which states that if one is given congruences of the form:
+
+\( x \equiv a_1 \mod m_1 \)
+\( x \equiv a_2 \mod m_2 \)
+
+where \( gcd(m_1, m_2) = 1 \), then there is a unique solution modulo \( m_1 \cdot m_2 \).
+
+In our case, \( m_1 = 27 \) and \( m_2 = 73 \), and since \( gcd(27, 73) = 1 \), we can apply the CRT.
+
+Let&#x27;s find the solution to the system of congruences:
+
+1. \( a \equiv -1 \mod 27 \) can be rewritten as \( a \equiv 26 \mod 27 \) because \( -1 \) and \( 26 \) are congruent modulo \( 27 \).
+
+2. \( a \equiv 1 \mod 73 \)
+
+Now, we need to find an integer \( a \) that satisfies both congruences. To do this, we can use the method of constructing the solution using the CRT.
+
+Let \( M = 27 \cdot 73 \), \( M_1 = M / 27 = 73 \), and \( M_2 = M / 73 = 27 \).
+
+We need to find the multiplicative inverses of \( M_1 \) modulo \( 27 \) and \( M_2 \) modulo \( 73 \).
+
+For \( M_1 = 73 \), we need to find an integer \( n_1 \) such that \( 73 \cdot n_1 \equiv 1 \mod 27 \). By testing values, we find that \( n_1 = 1 \) works because \( 73 \cdot 1 \equiv 19 \mod 27 \), and \( 19 \) is the multiplicative inverse of \( 73 \) modulo \( 27 \).
+
+For \( M_2 = 27 \), we need to find an integer \( n_2 \) such that \( 27 \cdot n_2 \equiv 1 \mod 73 \). By testing values, we find that \( n_2 = 3 \) works because \( 27 \cdot 3 \equiv 81 \equiv 8 \mod 73 \), and \( 8 \) is the multiplicative inverse of \( 27 \) modulo \( 73 \).
+
+Now we can construct the solution:
+
+\( a = (26 \cdot M_1 \cdot n_1 + 1 \cdot M_2 \cdot n_2) \mod M \)
+\( a = (26 \cdot 73 \cdot 1 + 1 \cdot 27 \cdot 3) \mod 1971 \)
+\( a = (1898 + 81) \mod 1971 \)
+\( a = 1979 \mod 1971 \)
+\( a = 8 \)
+
+Therefore, the smallest positive integer \( a \) such that \( 1971 \) divides \( 50^n + 23^n \cdot a \) for odd \( n \) is \( a = 8 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer \( a \) such that \( 1971 \) divides \( 50^n + 23^n \cdot a \) for odd \( n \) is \( a = 8 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

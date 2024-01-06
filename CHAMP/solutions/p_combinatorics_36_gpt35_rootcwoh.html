@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_36</td>
+            <td>GPT-3.5</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n!/(2n)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_36']
+messages = problem.conversations['GPT-3.5|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+n people sit around a circular table. How many of the n! arrangements are distinct (i.e., do not have the same neighboring relations), as an expression of n?
+
+You may find the following information useful:
+
+1. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
+2. If we count each object d times and get a total of n counts, then there are n/d objects.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of &quot;Burnside&#x27;s Lemma&quot; from group theory. Burnside&#x27;s Lemma allows us to count the number of distinct arrangements by considering the symmetries of the circular table.
+
+Let&#x27;s denote the number of distinct arrangements as D(n). We will consider the following symmetries:
+
+1. Identity: No rotation or reflection. This leaves all arrangements unchanged. There is only one identity symmetry.
+
+2. Rotations: We can rotate the table by 1/n, 2/n, 3/n, ..., (n-1)/n of a full circle. Each rotation will leave some arrangements unchanged, depending on the number of steps in the rotation. For example, a rotation by 1/n will leave n arrangements unchanged (each person stays in their original position). Similarly, a rotation by 2/n will leave n/2 arrangements unchanged, and so on.
+
+3. Reflections: We can reflect the table across a line passing through two opposite seats. Each reflection will leave some arrangements unchanged. For example, a reflection across the line passing through two opposite seats will leave n/2 arrangements unchanged (each person switches places with their opposite neighbor). Similarly, a reflection across the line passing through two adjacent seats will leave n/2 arrangements unchanged, and so on.
+
+Now, let&#x27;s calculate the number of arrangements left unchanged by each symmetry:
+
+1. Identity: All n! arrangements are left unchanged.
+
+2. Rotations: For a rotation by k/n, the number of arrangements left unchanged is given by the formula n/d, where d is the greatest common divisor of n and k. So, for each rotation, the number of arrangements left unchanged is n/d.
+
+3. Reflections: For a reflection across a line passing through two seats, the number of arrangements left unchanged is n/2.
+
+Now, we can apply Burnside&#x27;s Lemma to count the number of distinct arrangements:
+
+D(n) = (1/n!) * (n! + n/1 + n/2 + n/3 + ... + n/n + n/2)
+
+Simplifying the expression:
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!) * (n! * (1 + 1/1 + 1/2 + 1/3 + ... + 1/n + 1/2))
+
+D(n) = (1/n!)</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>LENGTH EXCEED</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

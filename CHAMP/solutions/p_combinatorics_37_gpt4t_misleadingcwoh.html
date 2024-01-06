@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_37</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> sum_(i=1)^n i^2, or equivalently n(n+1)(2n+1)/6</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_37']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+From the set {1, 2, 3, ..., n+1}, select triple (x, y, z), with duplicate allowed, such that z&gt;max(x, y). In how many ways can this be done, as an expression of n?
+
+You may find the following information useful:
+
+1. If we count each object d times and get a total of n counts, then there are n/d objects.
+2. C(n, k)=n/k*C(n-1, k-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of ways to select a triple (x, y, z) from the set {1, 2, 3, ..., n+1} such that z &gt; max(x, y). Since duplicates are allowed, x and y can be the same, but z must be strictly greater than both.
+
+Let&#x27;s consider the possible values for z first. Since z must be the largest number in the triple, z can take any value from 2 to n+1 (because if z were 1, there would be no values left for x and y that are less than z).
+
+For a given value of z, we can choose any number from 1 to z-1 for both x and y. Since z can range from 2 to n+1, for each specific z, there are (z-1) choices for x and (z-1) choices for y. Therefore, for a given z, there are (z-1)^2 ways to choose x and y.
+
+Now, we need to sum this over all possible values of z:
+
+Total number of ways = sum_{z=2}^{n+1} (z-1)^2
+                      = sum_{z=1}^{n} z^2  (by substituting z with z+1)
+
+We can use the formula for the sum of the first n squares to evaluate this sum:
+
+sum_{z=1}^{n} z^2 = (n(n+1)(2n+1))/6
+
+Therefore, the total number of ways to select the triple (x, y, z) such that z &gt; max(x, y) is given by:
+
+(n(n+1)(2n+1))/6
+
+This is the final expression in terms of n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to select a triple (x, y, z) from the set {1, 2, 3, ..., n+1} such that z &gt; max(x, y) is given by the expression (n(n+1)(2n+1))/6.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_16</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_16']
+messages = problem.conversations['GPT-3.5|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A be a string of n binary digits (leading 0s are allowed). How many such strings have the substring &quot;01&quot; appearing exactly m times, as an expression of m and n?
+
+You may find the following information useful:
+
+1. For any string, add the digit 1 to the beginning and digit 0 to the end.
+2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither.
+3. If there are m &quot;0-1&quot; transitions in the original string, how many &quot;1-0&quot; transitions are there in the new string, and what is their ordering?
+4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?
+5. If we count each object d times and get a total of n counts, then there are n/d objects.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of generating functions. Let&#x27;s define a generating function F(x, y) where the coefficient of x^m * y^n represents the number of strings with m occurrences of &quot;01&quot; and length n.
+
+First, let&#x27;s consider the case where n = 0. In this case, there are no binary digits, so the generating function is F(x, y) = 1.
+
+Next, let&#x27;s consider the case where n &gt; 0. We can break down the problem into two subproblems:
+
+1. The first subproblem is when the first digit is 0. In this case, we have a string of length n-1 with m occurrences of &quot;01&quot;. The generating function for this subproblem is x * F(x, y).
+
+2. The second subproblem is when the first digit is 1. In this case, we have a string of length n-1 with m-1 occurrences of &quot;01&quot;. The generating function for this subproblem is y * x * F(x, y).
+
+To get the generating function for the entire problem, we sum up the generating functions for the two subproblems:
+
+F(x, y) = x * F(x, y) + y * x * F(x, y)
+
+Now, let&#x27;s solve for F(x, y):
+
+F(x, y) - x * F(x, y) - y * x * F(x, y) = 0
+
+F(x, y) * (1 - x - y * x) = 0
+
+Dividing both sides by (1 - x - y * x), we get:
+
+F(x, y) = 0 / (1 - x - y * x)
+
+Using the formula for the sum of a geometric series, we can simplify the expression:
+
+F(x, y) = 0 / (1 - x - y * x) = 0
+
+Therefore, the generating function for the number of strings with m occurrences of &quot;01&quot; and length n is 0.
+
+To find the coefficient of x^m * y^n in the generating function, we can use the formula:
+
+Coefficient of x^m * y^n = [x^m * y^n] F(x, y)
+
+Since the generating function is 0, the coefficient of x^m * y^n is also 0.
+
+Therefore, the number of strings with m occurrences of &quot;01&quot; and length n is 0.
+
+In conclusion, there are no such strings that satisfy the given conditions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings with m occurrences of &quot;01&quot; and length n is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

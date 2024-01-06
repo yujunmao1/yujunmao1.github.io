@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_40</td>
+            <td>GPT-4</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_40']
+messages = problem.conversations['GPT-4|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest value of a^2+ab+b^2-3a-3b for real numbers a, b.
+
+You may find the following information useful:
+
+1. Let the smallest value be m and define a non-negative expression.
+2. Consider the expression as a quadratic polynomial in the variable a.
+3. For positive a, the polynomial ax^2+bx+c≥0 for all x if and only if b^2-4ac≤0. One inequality is strict if and only if the other is also strict.
+4. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.
+5. For any real number a, a^2≥0. </code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s consider the expression as a quadratic polynomial in the variable a:
+
+a^2 + ab + b^2 - 3a - 3b
+
+We can rewrite this as:
+
+a^2 + a(b - 3) + (b^2 - 3b)
+
+This is a quadratic in the form ax^2 + bx + c, where a = 1, b = (b - 3), and c = (b^2 - 3b).
+
+The minimum value of a quadratic function ax^2 + bx + c is given by -b^2/4a when b^2 - 4ac ≥ 0. 
+
+So, we need to check if (b - 3)^2 - 4*1*(b^2 - 3b) ≥ 0.
+
+Solving this inequality:
+
+(b - 3)^2 - 4b^2 + 12b ≥ 0
+b^2 - 6b + 9 - 4b^2 + 12b ≥ 0
+-3b^2 + 6b + 9 ≥ 0
+b^2 - 2b - 3 ≤ 0
+(b - 3)(b + 1) ≤ 0
+
+The roots of the equation are b = 3 and b = -1. According to the properties of quadratic functions, the expression is less than or equal to zero between the roots for a quadratic with a positive leading coefficient. Therefore, the inequality holds for -1 ≤ b ≤ 3.
+
+Now, we substitute b = 3 and b = -1 into the original expression to find the minimum value:
+
+For b = 3:
+a^2 + a(3 - 3) + (3^2 - 3*3) = a^2 = 0 (since a^2 ≥ 0)
+
+For b = -1:
+a^2 + a(-1 - 3) + ((-1)^2 - 3*(-1)) = a^2 - 4a + 4
+
+The minimum value of a quadratic function ax^2 + bx + c is given by -b^2/4a = -(-4)^2/4*1 = -4.
+
+Therefore, the smallest value of the expression a^2 + ab + b^2 - 3a - 3b for real numbers a, b is -4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression a^2 + ab + b^2 - 3a - 3b for real numbers a, b is -4.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

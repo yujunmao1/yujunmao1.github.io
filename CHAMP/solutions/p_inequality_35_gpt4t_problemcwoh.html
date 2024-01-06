@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_35</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 900 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_35']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {101, ..., 1000} is 1/(n+1)+1/(n+2)+...+1/(2n)&lt;3/4?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can start by examining the sum and looking for patterns or ways to estimate it. The sum in question is:
+
+S(n) = 1/(n+1) + 1/(n+2) + ... + 1/(2n)
+
+This is a sum of n terms, and each term is a fraction with a denominator between n+1 and 2n. We can notice that each term is less than 1/n (since n+1 &gt; n, n+2 &gt; n, ..., 2n &gt; n), so we can write:
+
+S(n) &lt; n * (1/n) = 1
+
+This tells us that the sum is less than 1 for all n, but we need to find out for how many n it is less than 3/4.
+
+To get a better estimate, we can compare the sum to an integral. The function 1/x is decreasing, and each term 1/(n+k) in the sum can be seen as an approximation for the area under 1/x from n+k to n+k+1. This means that the sum S(n) is an approximation for the integral of 1/x from n+1 to 2n+1:
+
+∫(from n+1 to 2n+1) 1/x dx
+
+This integral can be evaluated as the natural logarithm:
+
+∫(from n+1 to 2n+1) 1/x dx = ln(x) | (from n+1 to 2n+1) = ln(2n+1) - ln(n+1)
+
+Now, we want to find when this integral is less than 3/4. We can use the inequality:
+
+ln(2n+1) - ln(n+1) &lt; 3/4
+
+Using properties of logarithms, we can combine the terms:
+
+ln((2n+1)/(n+1)) &lt; 3/4
+
+Exponentiating both sides to remove the logarithm, we get:
+
+(2n+1)/(n+1) &lt; e^(3/4)
+
+Now, we need to solve for n:
+
+2n+1 &lt; e^(3/4) * (n+1)
+2n+1 &lt; e^(3/4) * n + e^(3/4)
+
+Rearrange the terms to isolate n:
+
+2n - e^(3/4) * n &lt; e^(3/4) - 1
+n * (2 - e^(3/4)) &lt; e^(3/4) - 1
+
+Now, we divide by (2 - e^(3/4)) to solve for n, noting that since e^(3/4) is less than 2, the term (2 - e^(3/4)) is positive, so the inequality direction remains the same:
+
+n &lt; (e^(3/4) - 1) / (2 - e^(3/4))
+
+Now we can calculate the right-hand side using a calculator:
+
+n &lt; (e^(3/4) - 1) / (2 - e^(3/4))
+n &lt; (2.117 - 1) / (2 - 2.117)
+n &lt; 1.117 / (-0.117)
+n &lt; -9.55 (approximately)
+
+Since n must be a positive integer, this result doesn&#x27;t make sense in our context. This suggests that our estimate might be too rough or that we&#x27;ve made a mistake. Let&#x27;s go back and check our work.
+
+We have the inequality:
+
+ln((2n+1)/(n+1)) &lt; 3/4
+
+Exponentiating both sides:
+
+(2n+1)/(n+1) &lt; e^(3/4)
+
+We can see that as n increases, the fraction (2n+1)/(n+1) approaches 2, because the +1 becomes less significant. Since e^(3/4) is approximately 2.117, there will be a certain point where (2n+1)/(n+1) is less than e^(3/4), and for all larger n, the inequality will hold.
+
+To find the exact value of n where the inequality starts to hold, we would need to test values of n starting from the smallest in the set {101, ..., 1000} and moving upwards until we find the smallest n for which the inequality holds. Then, we would count all the values from that n up to 1000.
+
+However, this approach is quite tedious without a computer. Instead, let&#x27;s try to refine our estimate. We know that the sum S(n) is less than the integral, and we also know that the sum is greater than the integral from n to 2n:
+
+∫(from n to 2n) 1/x dx = ln(x) | (from n to 2n) = ln(2n) - ln(n) = ln(2)
+
+Since ln(2) is approximately 0.693, which is less than 3/4, we know that for all n, the sum S(n) is greater than ln(2). Therefore, we need to find the values of n for which the sum S(n) is between ln(2) and 3/4.
+
+To find the exact values of n that satisfy the inequality, we would need to test individual values of n. However, we can make an educated guess that as n increases, the sum S(n) will decrease and approach ln(2) from above. Therefore, there will be a range of values of n for which S(n) is less than 3/4, starting from some minimum n and going up to 1000.
+
+To find the exact number of values of n that satisfy the inequality, we would need to perform a more detailed analysis or use numerical methods. Without further tools, we cannot give an exact answer to the original question.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The exact number of values of n in the set {101, ..., 1000} for which 1/(n+1)+1/(n+2)+...+1/(2n) &lt; 3/4 cannot be determined without a more detailed analysis or numerical methods.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

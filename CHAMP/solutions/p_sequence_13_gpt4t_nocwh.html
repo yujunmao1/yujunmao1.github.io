@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_13</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Such a sequence is not possible</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_13']
+messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence of positive integers a_0, a_1, ..., a_100 is defined as a_1&gt;a_0, a_n=3a_(n-1)-2a_(n-2). Is it possible to have a_100&lt;2^99 for certain such sequences, and if so, find the sequence with the largest sum a_0+a_1+...+a_100.
+
+You may find the following information useful:
+
+1. Study the difference a_(n+1)-a_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s first study the difference \( a_{n+1} - a_n \) as suggested.
+
+Given the recurrence relation \( a_n = 3a_{n-1} - 2a_{n-2} \), we can find the difference between consecutive terms:
+
+\( a_{n+1} - a_n = (3a_n - 2a_{n-1}) - (3a_{n-1} - 2a_{n-2}) \)
+\( a_{n+1} - a_n = 3a_n - 3a_{n-1} - 2a_{n-1} + 2a_{n-2} \)
+\( a_{n+1} - a_n = 3(a_n - a_{n-1}) - 2(a_{n-1} - a_{n-2}) \)
+
+Let&#x27;s denote \( d_n = a_n - a_{n-1} \), then we have:
+
+\( d_{n+1} = 3d_n - 2d_{n-1} \)
+
+Now, let&#x27;s find the first few terms of \( d_n \):
+
+\( d_1 = a_1 - a_0 \) (which is positive by definition)
+\( d_2 = a_2 - a_1 = 3a_1 - 2a_0 - a_1 = 2a_1 - 2a_0 = 2d_1 \)
+
+We can see that \( d_2 \) is twice \( d_1 \), and since \( d_1 \) is positive, \( d_2 \) is also positive and larger than \( d_1 \).
+
+Now, let&#x27;s assume that \( d_n \) is positive for all \( n \). If this is true, then \( d_{n+1} \) will also be positive because it is a linear combination of positive terms \( 3d_n \) and \( -2d_{n-1} \), where \( 3d_n \) is larger than \( 2d_{n-1} \) (since \( d_n \) is increasing).
+
+This implies that \( a_n \) is strictly increasing, and \( a_{n+1} &gt; a_n \) for all \( n \).
+
+Now, let&#x27;s look at the growth of \( a_n \). We want to know if it&#x27;s possible for \( a_{100} &lt; 2^{99} \).
+
+We can see that the difference \( d_n \) is growing exponentially because each term is a multiple of the previous term minus a smaller term. This suggests that \( a_n \) itself is growing exponentially.
+
+To maximize the sum \( a_0 + a_1 + ... + a_{100} \), we want to start with the smallest possible values of \( a_0 \) and \( a_1 \) that still satisfy the conditions \( a_1 &gt; a_0 \) and \( a_n = 3a_{n-1} - 2a_{n-2} \).
+
+Let&#x27;s start with \( a_0 = 1 \) and \( a_1 = 2 \) (the smallest integers satisfying \( a_1 &gt; a_0 \)):
+
+\( a_2 = 3a_1 - 2a_0 = 3(2) - 2(1) = 6 - 2 = 4 \)
+\( a_3 = 3a_2 - 2a_1 = 3(4) - 2(2) = 12 - 4 = 8 \)
+\( a_4 = 3a_3 - 2a_2 = 3(8) - 2(4) = 24 - 8 = 16 \)
+
+We can see a pattern here: \( a_n = 2^n \) for \( n \geq 1 \).
+
+Let&#x27;s prove this by induction:
+
+Base case: For \( n = 1 \), \( a_1 = 2^1 \).
+Inductive step: Assume \( a_k = 2^k \) for some \( k \geq 1 \). Then for \( n = k + 1 \), we have:
+
+\( a_{k+1} = 3a_k - 2a_{k-1} \)
+\( a_{k+1} = 3(2^k) - 2(2^{k-1}) \)
+\( a_{k+1} = 3 \cdot 2^k - 2^k \)
+\( a_{k+1} = 2^k(3 - 1) \)
+\( a_{k+1} = 2^k \cdot 2 \)
+\( a_{k+1} = 2^{k+1} \)
+
+This confirms that \( a_n = 2^n \) for all \( n \geq 1 \).
+
+Now, let&#x27;s check if \( a_{100} &lt; 2^{99} \):
+
+\( a_{100} = 2^{100} \)
+
+Clearly, \( 2^{100} \) is not less than \( 2^{99} \), so it is not possible to have \( a_{100} &lt; 2^{99} \) for this sequence.
+
+Since we started with the smallest possible values for \( a_0 \) and \( a_1 \), and the sequence grows exponentially, any other sequence with larger starting values will also not satisfy \( a_{100} &lt; 2^{99} \).
+
+Therefore, it is not possible to have \( a_{100} &lt; 2^{99} \) for any sequence defined by the given recurrence relation with the condition \( a_1 &gt; a_0 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>It is not possible to have \( a_{100} &lt; 2^{99} \) for any sequence defined by the recurrence relation \( a_n = 3a_{n-1} - 2a_{n-2} \) with \( a_1 &gt; a_0 \), and the sequence starting with \( a_0 = 1 \) and \( a_1 = 2 \) has the largest sum \( a_0 + a_1 + \ldots + a_{100} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

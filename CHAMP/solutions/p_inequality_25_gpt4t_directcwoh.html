@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_25</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_25']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {1, 2, ..., 100}, do we have (1/2)*(3/4)*(5/6)*...*(2n-1)/(2n)≤1/sqrt(3n+1)?
+
+You may find the following information useful:
+
+1. (x±y)^2=x^2±2xy+y^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to compare the product (1/2)(3/4)(5/6)...(2n-1)/(2n) with 1/√(3n+1). Let&#x27;s first simplify the product by pairing the terms in the numerator with those in the denominator:
+
+(1/2)(3/4)(5/6)...(2n-1)/(2n) = (1*3*5*...*(2n-1)) / (2*4*6*...*2n)
+
+Notice that each term in the denominator is twice the corresponding term in the numerator. We can factor out the 2s from the denominator:
+
+= 1/(2^n) * (1*3*5*...*(2n-1)) / (1*2*3*...*n)
+= 1/(2^n) * (1*3*5*...*(2n-1)) / n!
+
+Now, let&#x27;s consider the inequality:
+
+(1/2^n) * (1*3*5*...*(2n-1)) / n! ≤ 1/√(3n+1)
+
+We can square both sides of the inequality to get rid of the square root and make the comparison easier:
+
+((1/2^n) * (1*3*5*...*(2n-1)) / n!)^2 ≤ (1/√(3n+1))^2
+(1/2^(2n)) * ((1*3*5*...*(2n-1))^2) / (n!)^2 ≤ 1/(3n+1)
+
+Now, let&#x27;s look at the left side of the inequality. We have a product of odd numbers squared. We can write this as:
+
+((1*3*5*...*(2n-1))^2) = (1^2 * 3^2 * 5^2 * ... * (2n-1)^2)
+
+Now, let&#x27;s compare the terms on both sides of the inequality:
+
+(1/2^(2n)) * (1^2 * 3^2 * 5^2 * ... * (2n-1)^2) / (n!)^2 ≤ 1/(3n+1)
+
+We can see that the left side is a product of squares of odd numbers divided by the square of 2 raised to the power of 2n and divided by the square of n factorial. The right side is a simple fraction.
+
+To find the number of values of n for which the inequality holds, we need to test the values of n from 1 to 100. However, this direct approach is not practical. Instead, we can look for a pattern or a way to simplify the inequality further.
+
+Notice that as n increases, the left side of the inequality becomes smaller because we are dividing by larger and larger factorials and powers of 2. On the other hand, the right side of the inequality becomes larger because the denominator (3n+1) grows more slowly than the factorial or the powers of 2.
+
+This suggests that there will be a certain value of n after which the inequality will always hold. To find this value, we can look for the smallest n such that the inequality is true and then test the subsequent values to ensure the pattern holds.
+
+Let&#x27;s start with n = 1:
+
+(1/2^2) * (1^2) / (1!)^2 ≤ 1/(3*1+1)
+(1/4) * (1) / (1) ≤ 1/4
+1/4 ≤ 1/4
+
+The inequality holds for n = 1.
+
+Now, let&#x27;s try n = 2:
+
+(1/2^4) * (1^2 * 3^2) / (2!)^2 ≤ 1/(3*2+1)
+(1/16) * (1 * 9) / (2 * 2) ≤ 1/7
+9/64 ≤ 1/7
+
+Since 9/64 is greater than 1/7, the inequality does not hold for n = 2.
+
+We can see that the inequality holds for n = 1 but not for n = 2. Since the left side of the inequality decreases faster than the right side as n increases, the inequality will not hold for any n &gt; 2.
+
+Therefore, the inequality holds for exactly 1 value of n in the set {1, 2, ..., 100}.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality (1/2)(3/4)(5/6)...(2n-1)/(2n) ≤ 1/√(3n+1) holds for exactly 1 value of n in the set {1, 2, ..., 100}.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

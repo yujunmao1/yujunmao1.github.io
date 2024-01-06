@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_43</td>
+            <td>GPT-4 Turbo</td>
+            <td>Example w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes, and the sequence is 1/2^3, 1/2^6, 1/2^9, ...</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_43']
+messages = problem.conversations['GPT-4 Turbo|Example w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Please give an example that applies the following concept:
+
+a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The concept you&#x27;re referring to is the formula for the sum of a geometric series. A geometric series is a series of numbers where each term after the first is found by multiplying the previous one by a fixed, non-zero number called the common ratio (r). The formula you&#x27;ve provided gives the sum of the first n+1 terms of a geometric series (finite geometric series) and the sum of an infinite geometric series, respectively.
+
+Let&#x27;s apply this concept with an example:
+
+Suppose we have a geometric series where the first term (a) is 3 and the common ratio (r) is 1/2. We want to find the sum of the first 5 terms and the sum of the series as it goes to infinity.
+
+First, let&#x27;s find the sum of the first 5 terms (n=4, because we start counting from n=0):
+
+a + a*r + a*r^2 + a*r^3 + a*r^4 = a(1 - r^(n+1)) / (1 - r)
+
+Plugging in the values we have:
+
+3 + 3*(1/2) + 3*(1/2)^2 + 3*(1/2)^3 + 3*(1/2)^4 = 3(1 - (1/2)^(4+1)) / (1 - 1/2)
+
+Now, calculate the right side:
+
+= 3(1 - (1/2)^5) / (1 - 1/2)
+= 3(1 - 1/32) / (1/2)
+= 3(31/32) / (1/2)
+= 3 * 31/32 * 2/1
+= 93/16
+= 5.8125
+
+So, the sum of the first 5 terms of the series is 5.8125.
+
+Now, let&#x27;s find the sum of the series as it goes to infinity. This is possible because the common ratio is between -1 and 1 (|r| &lt; 1), which means the terms get smaller and smaller, allowing the series to converge to a finite sum.
+
+a + a*r + a*r^2 + ... = a / (1 - r)
+
+Again, plugging in the values we have:
+
+3 + 3*(1/2) + 3*(1/2)^2 + ... = 3 / (1 - 1/2)
+
+Calculate the right side:
+
+= 3 / (1/2)
+= 3 * 2/1
+= 6
+
+So, the sum of the series to infinity is 6.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Is it possible to select an infinite geometric sequence from the sequence 1, 1/2, 1/4, 1/8, 1/16, ... such that the sum is 1/7, and if so, what is the sequence?
+
+Besides the concept above, you may also find the following information useful:
+
+1. Assume that the geometric sequence starts with 1/2^a and has a ratio of 1/2^b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find values of \( a \) and \( b \) such that the infinite geometric sequence starting with \( \frac{1}{2^a} \) and having a common ratio of \( \frac{1}{2^b} \) sums up to \( \frac{1}{7} \).
+
+The sum of an infinite geometric series with the first term \( a \) and common ratio \( r \) (where \( |r| &lt; 1 \)) is given by:
+
+\[ S = \frac{a}{1 - r} \]
+
+In our case, the first term of the sequence is \( \frac{1}{2^a} \) and the common ratio is \( \frac{1}{2^b} \). Plugging these into the formula for the sum of an infinite geometric series, we get:
+
+\[ \frac{1}{7} = \frac{\frac{1}{2^a}}{1 - \frac{1}{2^b}} \]
+
+Solving for \( a \) and \( b \), we get:
+
+\[ \frac{1}{7} = \frac{1}{2^a} \cdot \frac{2^b}{2^b - 1} \]
+
+\[ 2^a = 7 \cdot \frac{2^b}{2^b - 1} \]
+
+\[ 2^a(2^b - 1) = 7 \cdot 2^b \]
+
+\[ 2^{a+b} - 2^a = 7 \cdot 2^b \]
+
+\[ 2^a(2^b - 1) = 7 \cdot 2^b \]
+
+Since \( 2^a \) and \( 2^b \) are both powers of 2, and 7 is not a power of 2, we need to find a way to make the left side of the equation a multiple of 7. This can only happen if \( 2^b - 1 \) is a multiple of 7, because \( 2^a \) will never be a multiple of 7 as it is a power of 2.
+
+Let&#x27;s try to find the smallest \( b \) such that \( 2^b - 1 \) is a multiple of 7. We can do this by testing values of \( b \):
+
+For \( b = 1 \): \( 2^1 - 1 = 1 \) (not a multiple of 7)
+For \( b = 2 \): \( 2^2 - 1 = 3 \) (not a multiple of 7)
+For \( b = 3 \): \( 2^3 - 1 = 7 \) (a multiple of 7)
+
+So, \( b = 3 \) is the smallest value for which \( 2^b - 1 \) is a multiple of 7. Now we can solve for \( a \):
+
+\[ 2^a(2^3 - 1) = 7 \cdot 2^3 \]
+
+\[ 2^a \cdot 7 = 7 \cdot 8 \]
+
+\[ 2^a = 8 \]
+
+\[ 2^a = 2^3 \]
+
+Therefore, \( a = 3 \).
+
+So, the sequence starts with \( \frac{1}{2^3} \) and has a common ratio of \( \frac{1}{2^3} \). The sequence is:
+
+\[ \frac{1}{8}, \frac{1}{64}, \frac{1}{512}, \ldots \]
+
+And indeed, the sum of this infinite geometric sequence is \( \frac{1}{7} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, it is possible to select an infinite geometric sequence from the given sequence such that the sum is 1/7, and the sequence is \( \frac{1}{8}, \frac{1}{64}, \frac{1}{512}, \ldots \) with the first term \( \frac{1}{2^3} \) and a common ratio of \( \frac{1}{2^3} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_9</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x(n)&lt;y(n-1) for all n≥3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_9']
+messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x(n)=2^2^2^...^2 with n 2&#x27;s, and y(n)=3^3^3^...^3 with n 3&#x27;s. Among integer values of n≥3, what is the relationship between x(n) and y(n-1): x(n)&gt;y(n-1) for all n≥3, x(n)&lt;y(n-1) for all n≥3, or x(n)&gt;y(n-1) for some n and x(n)&lt;y(n-1) for some other n?
+
+You may find the following information useful:
+
+1. Study the relationship between x(n+1) and y(n) given the relationship between x(n) and y(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To compare \( x(n) \) and \( y(n-1) \), let&#x27;s first understand the growth of these functions.
+
+\( x(n) = 2^{2^{2^{\cdot^{\cdot^{\cdot^{2}}}}}} \) with n 2&#x27;s is a power tower of 2&#x27;s, also known as a tetration. This grows extremely fast, even for small values of n.
+
+\( y(n-1) = 3^{3^{3^{\cdot^{\cdot^{\cdot^{3}}}}}} \) with (n-1) 3&#x27;s is a power tower of 3&#x27;s, which also grows very quickly, but it has one less 3 in the tower compared to the number of 2&#x27;s in \( x(n) \).
+
+Let&#x27;s compare \( x(3) \) and \( y(2) \):
+
+\( x(3) = 2^{2^2} = 2^4 = 16 \)
+\( y(2) = 3^3 = 27 \)
+
+So for n=3, we have \( x(3) &lt; y(2) \).
+
+Now let&#x27;s consider what happens as we increase n. The growth rate of these functions is so fast that adding one more exponent to the tower increases the value by an incomprehensibly large amount. 
+
+For \( x(n+1) \), we are adding another 2 to the top of the tower, which squares the already massive number \( x(n) \). For \( y(n) \), we are adding another 3 to the top of the tower, which cubes the already massive number \( y(n-1) \).
+
+Given that \( x(3) &lt; y(2) \), let&#x27;s see what happens when we go to \( x(4) \) and \( y(3) \):
+
+\( x(4) = 2^{2^{2^2}} = 2^{16} \), which is a very large number.
+\( y(3) = 3^{3^3} = 3^{27} \), which is an even larger number.
+
+However, the difference in the base of the exponentiation (2 versus 3) starts to become less significant as the towers grow taller because the operation of exponentiation is so powerful. The additional layer of exponentiation in \( x(n) \) compared to \( y(n-1) \) will eventually overtake the larger base of 3 in \( y(n-1) \).
+
+To determine the relationship for all \( n \geq 3 \), we need to consider the rate at which these functions grow. The function \( x(n) \) grows at a rate of \( 2^{x(n-1)} \), while \( y(n-1) \) grows at a rate of \( 3^{y(n-2)} \). As n increases, the effect of the base becomes less significant compared to the height of the power tower.
+
+For sufficiently large n, the extra layer of exponentiation in \( x(n) \) will outpace the larger base in \( y(n-1) \), because the operation of exponentiation to the power of 2 will eventually surpass the effect of having a base of 3 with one less exponentiation.
+
+Therefore, while \( x(3) &lt; y(2) \), there will be some value of n where \( x(n) &gt; y(n-1) \). This means that for some n, \( x(n) \) will be greater than \( y(n-1) \), and for some other n (specifically smaller values), \( x(n) \) will be less than \( y(n-1) \).
+
+The relationship is: \( x(n) &gt; y(n-1) \) for some n and \( x(n) &lt; y(n-1) \) for some other n, specifically when n is small.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The relationship is that \( x(n) &gt; y(n-1) \) for some values of \( n \) and \( x(n) &lt; y(n-1) \) for other values of \( n \), specifically when \( n \) is small.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

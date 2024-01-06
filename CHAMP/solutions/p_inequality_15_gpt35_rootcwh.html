@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_15</td>
+            <td>GPT-3.5</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_15']
+messages = problem.conversations['GPT-3.5|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the minimum value of a^4+b^4+c^4-a^2*bc-b^2*ac-c^2*ab for positive numbers a, b, c.
+
+You may find the following information useful:
+
+1. Consider a^4=(a^2)*a*a, b^4=(b^2)*b*b, c^4=(c^2)*c*c.
+2. For real numbers a_(1,1)≤...≤a_(1,n), a_(2,1)≤...≤a_(2,n), ..., a_(m,1)≤...≤a_(m,n), we have a_(1,1)*a_(2,1)*...*a_(m,1)+...+a_(1,n)*a_(2,n)*...*a_(m,n)≥a_(1,1)*b_(2,1)*...*b_(m,1)+...+a_(1,n)*b_(2,n)*...*b_(m,n), where (b_(i,1), ..., b_(i, n)) is a permutation of (a_(i,1), ..., a_(i, n)) for i=2, 3, ..., m. More generally, the sum achieves the maximum value when all the sequences (a_(i,1),..., a_(i,n)) are sorted in the same way.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the minimum value of the expression, we can rewrite it as a sum of squares:
+
+a^4 + b^4 + c^4 - a^2bc - ab^2c - abc^2
+= (a^4 - 2a^2bc + b^2c^2) + (b^4 - 2ab^2c + a^2c^2) + (c^4 - 2abc^2 + a^2b^2)
+= (a^2 - bc)^2 + (b^2 - ac)^2 + (c^2 - ab)^2
+
+Now, we want to minimize the sum of squares (a^2 - bc)^2 + (b^2 - ac)^2 + (c^2 - ab)^2. 
+
+Using the information given, we can see that the expression is of the form (a^2 - bc)^2 + (b^2 - ac)^2 + (c^2 - ab)^2, which is a sum of squares. 
+
+By the Trivial Inequality, we know that the square of any real number is non-negative, and it is equal to zero if and only if the number itself is zero. 
+
+Therefore, each term in the sum (a^2 - bc)^2 + (b^2 - ac)^2 + (c^2 - ab)^2 is non-negative, and the sum is equal to zero if and only if each term is zero. 
+
+To minimize the sum, we need to make each term equal to zero. This means that a^2 - bc = 0, b^2 - ac = 0, and c^2 - ab = 0. 
+
+Solving these equations, we find that a = bc, b = ac, and c = ab. 
+
+Substituting these values back into the original expression, we have:
+
+a^4 + b^4 + c^4 - a^2bc - ab^2c - abc^2
+= (bc)^4 + (ac)^4 + (ab)^4 - (bc)^2(bc) - (ac)^2(ac) - (ab)^2(ab)
+= b^4c^4 + a^4c^4 + a^4b^4 - b^3c^3 - a^3c^3 - a^3b^3
+
+Now, we can use the given information to rearrange the terms in the expression to achieve the minimum value. 
+
+Using the fact that a ≤ b ≤ c, we can rewrite the expression as:
+
+b^4c^4 + a^4c^4 + a^4b^4 - b^3c^3 - a^3c^3 - a^3b^3
+= a^4b^4 + a^4c^4 + b^4c^4 - a^3b^3 - a^3c^3 - b^3c^3
+
+Now, we can apply the given inequality to rearrange the terms:
+
+a^4b^4 + a^4c^4 + b^4c^4 - a^3b^3 - a^3c^3 - b^3c^3
+≥ a^4b^4 + a^4c^4 + b^4c^4 - a^4bc - ab^4c - abc^4
+
+Now, we can factor out the common terms:
+
+a^4b^4 + a^4c^4 + b^4c^4 - a^4bc - ab^4c - abc^4
+= a^4(b^4 + c^4 - bc) + bc(b^4 + c^4 - bc)
+= (a^4 + bc)(b^4 + c^4 - bc)
+
+Since a, b, and c are positive numbers, we know that a^4 + bc &gt; 0 and b^4 + c^4 - bc &gt; 0. 
+
+Therefore, the minimum value of the expression is achieved when a^4 + bc = 0 and b^4 + c^4 - bc = 0. 
+
+Solving these equations, we find that a = 0 and b = c = 0. 
+
+Substituting these values back into the original expression, we have:
+
+(a^4 + b^4 + c^4 - a^2bc - ab^2c - abc^2)min = (0^4 + 0^4 + 0^4 - 0^2(0)(0) - 0^2(0)(0) - 0(0)(0))min = 0
+
+Therefore, the minimum value of the expression is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

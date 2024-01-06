@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (a+3b)/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_30']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a≤b, define the sequence as a_1=a, a_2=b, a_(n+2)=(a_(n+1)+a_n)/2. Does the limit exist for this sequence, and if so, find it as an expression in terms of a and b.
+
+You may find the following information useful:
+
+1. Study the relationship between |a_(n+2)-a_(n+1)| and |a_(n+1)-a_n|.
+2. A sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.
+3. 1+2+...+n=n(n+1)/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the sequence has a limit, let&#x27;s first examine the relationship between consecutive terms of the sequence.
+
+Given the sequence definition:
+\[ a_1 = a \]
+\[ a_2 = b \]
+\[ a_{n+2} = \frac{a_{n+1} + a_n}{2} \]
+
+Let&#x27;s consider the absolute difference between consecutive terms:
+\[ |a_{n+2} - a_{n+1}| = \left|\frac{a_{n+1} + a_n}{2} - a_{n+1}\right| \]
+\[ |a_{n+2} - a_{n+1}| = \left|\frac{a_n - a_{n+1}}{2}\right| \]
+\[ |a_{n+2} - a_{n+1}| = \frac{1}{2}|a_{n+1} - a_n| \]
+
+This shows that the absolute difference between consecutive terms is halved with each step. This implies that the sequence is Cauchy, and since we are working within the real numbers which is a complete space, the sequence must converge to a limit.
+
+Now, let&#x27;s determine the behavior of the sequence. Since \( a \leq b \), we have \( a_1 \leq a_2 \). Now, let&#x27;s see what happens with \( a_3 \):
+\[ a_3 = \frac{a_2 + a_1}{2} \]
+
+Since \( a_1 \leq a_2 \), it follows that \( a_3 \) is also between \( a_1 \) and \( a_2 \), and specifically, \( a_1 \leq a_3 \leq a_2 \). This pattern continues for all subsequent terms, meaning that the sequence is bounded by \( a \) and \( b \), and it is also monotonic because each term is an average of the previous two terms.
+
+Now, let&#x27;s assume the sequence converges to a limit \( L \). Then, taking the limit on both sides of the recursive formula, we get:
+\[ \lim_{n \to \infty} a_{n+2} = \lim_{n \to \infty} \frac{a_{n+1} + a_n}{2} \]
+
+Since the sequence converges to \( L \), we have:
+\[ L = \frac{L + L}{2} \]
+\[ L = L \]
+
+This is a tautology and doesn&#x27;t give us information about \( L \) directly. However, since the sequence is bounded and monotonic, we know that the limit \( L \) exists. To find \( L \) in terms of \( a \) and \( b \), we need to find an expression that satisfies the recursive formula and the initial conditions.
+
+Let&#x27;s consider the sequence after a large number of terms, where \( a_n \) and \( a_{n+1} \) are both very close to \( L \). Then the recursive formula becomes:
+\[ L = \frac{L + L}{2} \]
+
+This equation is satisfied for any \( L \), so we need to use the initial conditions to find the specific value of \( L \). Since the sequence is bounded by \( a \) and \( b \) and is monotonic, the limit \( L \) must be between \( a \) and \( b \). Moreover, since each term is an average of the previous terms, the limit must be a value that equally &quot;balances&quot; \( a \) and \( b \).
+
+The only value that satisfies this condition is the average of \( a \) and \( b \):
+\[ L = \frac{a + b}{2} \]
+
+Therefore, the limit of the sequence as \( n \) approaches infinity is \( L = \frac{a + b}{2} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence \( a_{n+2} = \frac{a_{n+1} + a_n}{2} \) with \( a_1 = a \) and \( a_2 = b \) exists and is \( L = \frac{a + b}{2} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

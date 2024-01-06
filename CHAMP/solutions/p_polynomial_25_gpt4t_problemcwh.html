@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_25</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_25']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Find all possible values of 2(1^k+2^k+...+n^k) mod n(n+1) for odd k.
+Step-wise solution:
+1. Let S=2(1^k+2^k+...+n^k).
+2. We have S=(1^k+n^k)+(2^k+(n-1)^k)+...+(n^k+1^k).
+3. Since k is odd, each term is divisible by n+1, so n+1 | S.
+4. We further have S=(1^k+(n-1)^k)+(2^k+(n-2)^k)+...+((n-1)^k+1^k)+2n^k.
+5. Again since k is odd, each term except for the last one is divisible by n, and n | 2n^k.
+6. Thus, n | S.
+7. Since gcd(n, n+1)=1, we have n(n+1) | S, and S mod n(n+1)=0.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {2, 3, 4, ..., 1993} can f(x)=x^n+5x^(n−1)+3 be written as g(x)h(x) where g(x) and h(x) are both polynomials of integer coefficients with degree at least 1?
+
+In addition, you may also find the following information helpful:
+
+1. Let f(x)=a_n*x^n+a_(n-1)*x^(n-1)+...+a_0, g(x)=b_m*x^m+b_(m-1)*x^(m-1)+...+b_0, h(x)=c_(n-m)*x^(n-m)+c_(n-m-1)*x^(n-m-1)+...+c_0, and find the values of a_i.
+2. Assume that |b_0|=3, let i be the smallest i such that 3 ∤ b_i, and find the expression on this a_i and its divisibility by 3.
+3. Find the condition on i and study f(x)=g(x)h(x) at x=±1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to determine for which values of \( n \) the polynomial \( f(x) = x^n + 5x^{n-1} + 3 \) can be factored into two polynomials \( g(x) \) and \( h(x) \) with integer coefficients and degrees at least 1.
+
+Let&#x27;s start by considering the polynomial \( f(x) \) at \( x = 1 \) and \( x = -1 \):
+
+For \( x = 1 \):
+\[ f(1) = 1^n + 5 \cdot 1^{n-1} + 3 = 1 + 5 + 3 = 9 \]
+
+For \( x = -1 \):
+\[ f(-1) = (-1)^n + 5 \cdot (-1)^{n-1} + 3 \]
+
+Since \( n \) is an integer, \( (-1)^n \) will be 1 if \( n \) is even and -1 if \( n \) is odd. Similarly, \( (-1)^{n-1} \) will be -1 if \( n \) is even and 1 if \( n \) is odd. Therefore, \( f(-1) \) will be either 1 - 5 + 3 = -1 (for even \( n \)) or -1 + 5 + 3 = 7 (for odd \( n \)).
+
+Now, if \( f(x) \) can be factored into \( g(x) \) and \( h(x) \), then \( f(1) \) and \( f(-1) \) must be the product of \( g(1) \) and \( h(1) \), and \( g(-1) \) and \( h(-1) \), respectively. Since \( f(1) = 9 \), which is a product of two integers (1 and 9, or 3 and 3), we can see that \( f(x) \) can be factored at \( x = 1 \) for any \( n \).
+
+However, \( f(-1) \) is either -1 or 7, depending on whether \( n \) is even or odd. Since -1 is not the product of two positive integers with degrees at least 1, \( f(x) \) cannot be factored when \( n \) is even. When \( n \) is odd, \( f(-1) = 7 \), which is a prime number and thus can only be factored as 1 and 7, meaning that \( f(x) \) can be factored when \( n \) is odd.
+
+Therefore, \( f(x) \) can be factored into two polynomials with integer coefficients and degrees at least 1 only when \( n \) is odd.
+
+Now, we need to count the number of odd values of \( n \) in the set {2, 3, 4, ..., 1993}. Since the set starts with 2 and ends with 1993, and every other number is odd, we can calculate the number of odd numbers in this set by taking the total number of integers in the set and dividing by 2:
+
+\[ \text{Number of odd values of } n = \frac{1993 - 2 + 1}{2} = \frac{1992}{2} = 996 \]
+
+So, there are 996 values of \( n \) for which \( f(x) \) can be factored into two polynomials \( g(x) \) and \( h(x) \) with integer coefficients and degrees at least 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 996 values of \( n \) in the set {2, 3, 4, ..., 1993} for which the polynomial \( f(x) = x^n + 5x^{n-1} + 3 \) can be factored into two polynomials \( g(x) \) and \( h(x) \) with integer coefficients and degrees at least 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

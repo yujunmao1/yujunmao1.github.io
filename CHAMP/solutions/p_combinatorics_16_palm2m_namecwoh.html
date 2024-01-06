@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_16</td>
+            <td>PaLM 2 Medium</td>
+            <td>Name w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_16']
+messages = problem.conversations['PaLM 2 Medium|Name w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A be a string of n binary digits (leading 0s are allowed). How many such strings have the substring &quot;01&quot; appearing exactly m times, as an expression of m and n?
+
+You may find the following information useful:
+
+1. For any string, add the digit 1 to the beginning and digit 0 to the end.
+2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither.
+3. If there are m &quot;0-1&quot; transitions in the original string, how many &quot;1-0&quot; transitions are there in the new string, and what is their ordering?
+4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?
+5. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $A$ be a string of $n$ binary digits (leading 0s are allowed). We want to count the number of such strings that have the substring &quot;01&quot; appearing exactly $m$ times.
+
+To do this, we will first consider the case where $m=0$. In this case, the only string that satisfies the condition is the empty string.
+
+Now, let&#x27;s consider the case where $m=1$. In this case, the string must have the form $01x$, where $x$ is any string of $n-1$ binary digits. There are $2^{n-1}$ such strings, so there are $2^{n-1}$ strings that satisfy the condition.
+
+Now, let&#x27;s consider the case where $m=2$. In this case, the string must have the form $010x$ or $101x$, where $x$ is any string of $n-2$ binary digits. There are $2^{n-2}$ such strings, so there are $2^{n-2}+2^{n-2}=2^{n-1}$ strings that satisfy the condition.
+
+In general, if $m=k$, then the string must have the form $0101\dots01x$, where $x$ is any string of $n-k$ binary digits. There are $2^{n-k}$ such strings, so there are $2^{n-k}$ strings that satisfy the condition.
+
+Therefore, the total number of strings that satisfy the condition is
+
+$$\sum_{k=0}^m 2^{n-k} = 2^n - 1.$$
+
+Here is a diagram that illustrates the solution:
+
+[asy]
+unitsize(1 cm);
+
+draw((0,0)--(10,0));
+draw((0,1)--(10,1));
+draw((0,2)--(10,2));
+draw((0,3)--(10,3));
+draw((0,4)--(10,4));
+draw((0,5)--(10,5));
+draw((0,6)--(10,6));
+draw((0,7)--(10,7));
+draw((0,8)--(10,8));
+draw((0,9)--(10,9));
+draw((0,10)--(10,10));
+
+label(&quot;$0$&quot;, (0,0), S);
+label(&quot;$1$&quot;, (0,1), S);
+label(&quot;$0$&quot;, (0,2), S);
+label(&quot;$1$&quot;, (0,3), S);
+label(&quot;$0$&quot;, (0,4), S);
+label(&quot;$1$&quot;, (0,5), S);
+label(&quot;$0$&quot;, (0,6), S);
+label(&quot;$1$&quot;, (0,7), S);
+label(&quot;$0$&quot;, (0,8), S);
+label(&quot;$1$&quot;, (0,9), S);
+label(&quot;$0$&quot;, (0,10), S);
+
+label(&quot;$n$&quot;, (10,0), E);
+label(&quot;$n$&quot;, (10,1), E);
+label(&quot;$n$&quot;, (10,2), E);
+label(&quot;$n$&quot;, (10,3), E);
+label(&quot;$n$&quot;, (10,4), E);
+label(&quot;$n$&quot;, (10,5), E);
+label(&quot;$n$&quot;, (10,6), E);
+label(&quot;$n$&quot;, (10,7), E);
+label(&quot;$n$&quot;, (10,8), E);
+label(&quot;$n$&quot;, (10,9), E);
+label(&quot;$n$&quot;, (10,10), E);
+
+for (int i=0; i&lt;10; i++) {
+  for (int j=0; j&lt;10; j++) {
+    if (i == 0 &amp;&amp; j == 0) {
+      continue;
+    }
+    if (i == 0 &amp;&amp; j == 1) {
+      draw((i,j)--(i+1,j));
+    } else if (i == 1 &amp;&amp; j == 0) {
+      draw((i,j)--(i,j+1));
+    } else if (i == 0</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of $n$ binary digits that have the substring &quot;01&quot; appearing exactly $m$ times is $2^n-1$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

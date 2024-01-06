@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_33</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> sum_(i=1)^n i^3, or equivalently (n(n+1)/2)^2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_33']
+messages = problem.conversations['GPT-3.5|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+From the set {1, 2, 3, ..., n+1}, select quadruple (x, y, z, u), with duplicate allowed, such that u&gt;max(x, y, z). In how many ways can this be done?
+
+You may find the following information useful:
+
+1. C(n, r)=n!/(r!*(n-r)!)=n*(n-1)*(n-2)*...*(n-r+1)/r!.
+2. C(n, k)=n/k*C(n-1, k-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the different cases for the values of x, y, z, and u.
+
+Case 1: u = n+1
+In this case, x, y, and z can be any value from the set {1, 2, 3, ..., n}. So, the number of ways to select x, y, and z is C(n, 3) = n*(n-1)*(n-2)/3!.
+
+Case 2: u = n
+In this case, x, y, and z can be any value from the set {1, 2, 3, ..., n-1}. So, the number of ways to select x, y, and z is C(n-1, 3) = (n-1)*(n-2)*(n-3)/3!.
+
+Case 3: u = n-1
+In this case, x, y, and z can be any value from the set {1, 2, 3, ..., n-2}. So, the number of ways to select x, y, and z is C(n-2, 3) = (n-2)*(n-3)*(n-4)/3!.
+
+Continuing this pattern, we can see that for each value of u from n+1 to 4, the number of ways to select x, y, and z is C(n-u+3, 3) = (n-u+3)*(n-u+2)*(n-u+1)/3!.
+
+Now, we need to sum up the number of ways for each case:
+
+Total number of ways = C(n, 3) + C(n-1, 3) + C(n-2, 3) + ... + C(4, 3)
+
+Using the formula C(n, r) = n!/((n-r)!*r!), we can simplify this expression:
+
+Total number of ways = n*(n-1)*(n-2)/3! + (n-1)*(n-2)*(n-3)/3! + (n-2)*(n-3)*(n-4)/3! + ... + 4*3*2/3!
+
+Factoring out 1/3! from each term, we get:
+
+Total number of ways = (1/3!)(n*(n-1)*(n-2) + (n-1)*(n-2)*(n-3) + (n-2)*(n-3)*(n-4) + ... + 4*3*2)
+
+Simplifying further, we have:
+
+Total number of ways = (1/6)(n*(n-1)*(n-2) + (n-1)*(n-2)*(n-3) + (n-2)*(n-3)*(n-4) + ... + 4*3*2)
+
+Now, we can use the formula C(n, k) = n/k*C(n-1, k-1) to simplify the expression inside the parentheses:
+
+Total number of ways = (1/6)(n*(n-1)*(n-2) + (n-1)*(n-2)*(n-3) + (n-2)*(n-3)*(n-4) + ... + 4*3*2)
+                    = (1/6)(n*(n-1)*(n-2) + (n-1)*(n-2)*(n-3) + (n-2)*(n-3)*(n-4) + ... + 4*3*2)
+                    = (1/6)(n/3*3*(n-1)/2*2*(n-2) + (n-1)/2*2*(n-2)/1*1*(n-3) + (n-2)/1*1*(n-3)/0*0*(n-4) + ... + 4*3*2)
+
+Simplifying further, we have:
+
+Total number of ways = (1/6)(n/3*3*(n-1)/2*2*(n-2) + (n-1)/2*2*(n-2)/1*1*(n-3) + (n-2)/1*1*(n-3)/0*0*(n-4) + ... + 4*3*2)
+                    = (1/6)(n/3*C(n-1, 2) + (n-1)/2*C(n-2, 2) + (n-2)/1*C(n-3, 2) + ... + 4*3*2)
+
+Using the formula C(n, r) = n/r*C(n-1, r-1), we can simplify further:
+
+Total number of ways = (1/6)(n/3*C(n-1, 2) + (n-1)/2*C(n-2, 2) + (n-2)/1*C(n-3, 2) + ... + 4*3*2)
+                    = (1/6)(n/3*n-1/2*2 + (n-1)/2*(n-2)/1*2 + (n-2)/1*(n-3)/0*2 + ... + 4*3*2)
+
+Simplifying further, we have:
+
+Total number of ways = (1/6)(n/3*n-1/2*2 + (n-1)/2*(n-2)/1*2 + (n-2)/1*(n-3)/0*2 + ... + 4*3*2)
+                    = (1/6)(n(n-1) + (n-1)(n-2) + (n-2)(n-3) + ... + 4*3*2)
+
+Now, we can simplify the expression inside the parentheses:
+
+Total number of ways = (1/6)(n(n-1) + (n-1)(n-2) + (n-2)(n-3) + ... + 4*3*2)
+                    = (1/6)(n^2 - n + n^2 - 3n + 2 + n^2 - 5n + 6 + ... + 4*3*2)
+
+Simplifying further, we have:
+
+Total number of ways = (1/6)(n^2 - n + n^2 - 3n + 2 + n^2 - 5n + 6 + ... + 4*3*2)
+                    = (1/6)(n^2 + n^2 + n^2 + ... + n^2 - (n + 3n + 5n + ... + (n-2)*n))
+
+The sum of the terms in the parentheses is an arithmetic series with a common difference of 2 and n/2 terms. Using the formula for the sum of an arithmetic series, we have:
+
+Total number of ways = (1/6)(n^2 + n^2 + n^2 + ... + n^2 - (n + 3n + 5n + ... + (n-2)*n))
+                    = (1/6)(n^2*n/2 - (n + (n-2)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n-2)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^2 - 2n)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^3 - 2n^2)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^4 - 2n^3)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^5 - 2n^4)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^6 - 2n^5)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^7 - 2n^6)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^8 - 2n^7)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^9 - 2n^8)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^10 - 2n^9)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^11 - 2n^10)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^12 - 2n^11)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^13 - 2n^12)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^14 - 2n^13)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^15 - 2n^14)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^16 - 2n^15)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^17 - 2n^16)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^18 - 2n^17)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^19 - 2n^18)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^20 - 2n^19)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^21 - 2n^20)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^22 - 2n^21)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^23 - 2n^22)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^24 - 2n^23)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^25 - 2n^24)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^26 - 2n^25)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^27 - 2n^26)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^28 - 2n^27)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^29 - 2n^28)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^30 - 2n^29)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^31 - 2n^30)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^32 - 2n^31)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^33 - 2n^32)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^34 - 2n^33)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^35 - 2n^34)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^36 - 2n^35)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^37 - 2n^36)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^38 - 2n^37)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^39 - 2n^38)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^40 - 2n^39)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^41 - 2n^40)*n/2)*n/2)
+                    = (1/6)(n^3/2 - (n + (n^42 - 2n^41)*n/2)*n/</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>LENGTH EXCEED</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

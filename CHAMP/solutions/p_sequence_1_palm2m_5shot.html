@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_1</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_1']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a_n be the number of all permutations p of {1, ..., n} with min(n-|p(i)−i|, |p(i)−i|)≤1 for all i. Find a_10.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We note that the condition min(n-|p(i)−i|, |p(i)−i|)≤1 is equivalent to keep each number within its left and right neighbor positions when these numbers are arranged in a circle.
+2. Let f_n be the number of permutations which satisfies |p(i)−i|≤1 (i.e., not involving the wrap-around along the circle).
+3. To permute n numbers, we can fix the location of n at the n-th location, which results in the permutation of n-1 numbers that cannot be wrapped around, or f_(n-1).
+4. We can also change the location of n and n-1, or n and 1, and arrange the remaining n-2 numbers without wrap-around.
+5. There are f_(n-2) permutations each.
+6. Finally, we can shift the entire {1, 2, ..., n} sequence clockwise and counterclockwise, which results in two permutations.
+7. So a_n=f_(n-1)+2f(n-2)+2.
+8. To find f_n, we see that the number n can either stay at the n-th location, or be swapped with n-1.
+9. In the first case, we have f_(n-1) possible choices.
+10. In the second case, we have f_(n-2) possible choices.
+11. Thus, we have f_n=f_(n-1)+f_(n-2), with f_1=1, f_2=2.
+12. So the sequence f_1, f_2, f_3, ... is 1, 2, 3, 5, 8, 13, 21, 34, 55, 89.
+13. We have a_10=f_9+2f_8+2=55+2*34+2=125.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, what is the smallest value of (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2))?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since a, b, c&gt;0, we have the two sequences (a, b, c) and (a^2, b^2, c^2) being similarly sorted.
+2. Thus, we have ((a+b+c)/3)*((a^2+b^2+c^2)/3)≤(a^3+b^3+c^3)/3, which gives (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2))≥1/3.
+3. So the smallest value of (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2)) is 1/3, achieved when a=b=c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For x, y, z&gt;0, what is the smallest value of x^2/y^2+y^2/z^2+z^2/x^2-(x/y+y/z+z/x)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let f(x, y, z)=x^2/y^2+y^2/z^2+z^2/x^2-(x/y+y/z+z/x).
+2. Thus, x^2*y^2*z^2*f(x, y, z)=x^4*z^2+y^4*x^2+z^4*y^2-(x^3*y*z^2+y^3*z*x^2+z^3*x*y^2)=x^3*z^2*(x-y)+y^3*x^2*(y-z)+z^3*y^2*(z-x).
+3. Without loss of generality, we can assume that x≥y≥z due to symmetry.
+4. Thus, x^3*z^2*(x-y)+y^3*x^2*(y-z)+z^3*y^2*(z-x)=x^3*z^2*(x-y)+y^3*x^2*(y-z)+z^3*y^2*(z-y)+z^3*y^2*(y-x)=(x^3*z^2-z^3*y^2)(x-y)+(y^3*x^2-z^3*y^2)(y-z)=z^2(x^3-z*y^2)(x-y)+y^2(x^2*y-z^3)(y-z).
+5. Due to the relationship of x≥y≥z, we can see that each factor in each term is non-negative.
+6. Thus, x^2*y^2*z^2*f(x, y, z)≥0, and we have f(x, y, z)≥0.
+7. So the minimum value is 0, achieved when x=y=z.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Does a polyhedron exists with an odd number of faces, each face having an odd number of edges?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We sum up all the edges of all the faces, and get an odd number (sum of an odd number of odd numbers).
+2. However, each edge is counted twice, so we should get an even number.
+3. Thus, no such polyhedron exists.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We let a_n be the number of ways to tile a 2 x n rectangle.
+2. For a 2 x (n+1) rectangle, let 2 be the vertical dimension and n+1 be the horizontal direction.
+3. Thus, it could have one vertical tile in the last column, two horizontal tiles in the last two columns, or one square 2 x 2 tile in the last two columns.
+4. Without these new tiles, we have 2 x n, 2 x (n-1) or 2 x (n-1) rectangles.
+5. Thus, we have a_(n+1)=a_n+2*a_(n-1).
+6. Starting from a_1=1 and a_2=3, we have the sequence of number of ways as 5, 11, 21, 43, 85, with a_7=85.
+7. Thus, there are 85 ways to tile a 2 x 7 rectangle.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let binary string w_1=0, and w_(n+1) is generated by replacing each 0 in w_n by 001, and each 1 in w_n by 0. Thus, we have w_2=001, w_3=0010010, etc. Does this operation result in a periodic binary string in the infinite limit, and if so, what is its period?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, the operation results in a periodic binary string in the infinite limit, and the period is 3.
+
+To see this, we can consider the following recurrence relation:
+
+$$w_{n+1} = \begin{cases} 001 &amp; \text{if } w_n = 0 \\\ 0 &amp; \text{if } w_n = 1 \end{cases}$$
+
+We can then write the sequence $w_n$ as a linear combination of the eigenvectors of the matrix $A$, which is the matrix that represents the recurrence relation:
+
+$$A = \begin{bmatrix} 0 &amp; 1 \\\ 0 &amp; 0 \end{bmatrix}$$
+
+The eigenvalues of $A$ are 0 and 1, with eigenvectors $(1, 0)$ and $(0, 1)$, respectively. Thus, we can write $w_n$ as follows:
+
+$$w_n = a_0(0, 1) + a_1(1, 0)$$
+
+where $a_0$ and $a_1$ are constants.
+
+We can then find $a_0$ and $a_1$ by using the initial conditions $w_1 = 0$ and $w_2 = 001$. This gives us the following system of equations:
+
+$$\begin{cases} a_0 + a_1 = 0 \\\ a_0 + 3a_1 = 1 \end{cases}$$
+
+Solving this system of equations gives us $a_0 = -1$ and $a_1 = 1$.
+
+Therefore, we can write $w_n$ as follows:
+
+$$w_n = (-1, 1) + (1, 0) = 001$$
+
+This shows that the sequence $w_n$ is periodic with period 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The binary string $w_n$ is periodic with period 3, because $w_{n+3} = w_n$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_25</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_25']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {1, 2, ..., 100}, do we have (1/2)*(3/4)*(5/6)*...*(2n-1)/(2n)≤1/sqrt(3n+1)?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We can see that the inequality holds for n=1.
+2. Assuming that the inequality holds for an arbitrary n, we want to see if it holds for n+1.
+3. This means that we need to compare (2n+1)/(2n+2) with sqrt(3n+1)/sqrt(3(n+1)+1)=sqrt(3n+1)/sqrt(3n+4).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to determine for how many values of \( n \) in the set \( \{1, 2, \ldots, 100\} \), the inequality
+
+\[ \left(\frac{1}{2}\right)\left(\frac{3}{4}\right)\left(\frac{5}{6}\right)\cdots\left(\frac{2n-1}{2n}\right) \leq \frac{1}{\sqrt{3n+1}} \]
+
+holds true. We are given that the inequality holds for \( n = 1 \), and we want to see if it holds for \( n + 1 \). To do this, we need to compare the additional factor \( \frac{2n+1}{2n+2} \) with the change in the right side of the inequality when \( n \) is replaced by \( n + 1 \), which is \( \sqrt{\frac{3n+1}{3n+4}} \).
+
+Let&#x27;s first simplify the inequality we need to check:
+
+\[ \frac{2n+1}{2n+2} \leq \sqrt{\frac{3n+1}{3n+4}} \]
+
+Squaring both sides to eliminate the square root, we get:
+
+\[ \left(\frac{2n+1}{2n+2}\right)^2 \leq \frac{3n+1}{3n+4} \]
+
+Expanding and simplifying, we have:
+
+\[ \frac{(2n+1)^2}{(2n+2)^2} \leq \frac{3n+1}{3n+4} \]
+
+\[ \frac{4n^2 + 4n + 1}{4n^2 + 8n + 4} \leq \frac{3n+1}{3n+4} \]
+
+Cross-multiplying to clear the denominators, we get:
+
+\[ (4n^2 + 4n + 1)(3n+4) \leq (3n+1)(4n^2 + 8n + 4) \]
+
+Expanding both sides:
+
+\[ 12n^3 + 16n^2 + 4n + 12n^2 + 16n + 4 \leq 12n^3 + 24n^2 + 12n + 4n^2 + 8n + 4 \]
+
+Simplifying by combining like terms:
+
+\[ 12n^3 + 28n^2 + 20n + 4 \leq 12n^3 + 28n^2 + 20n + 4 \]
+
+We see that the inequality is actually an equality for all \( n \). This means that the additional factor \( \frac{2n+1}{2n+2} \) is exactly equal to the change in the right side of the inequality when \( n \) is replaced by \( n + 1 \). Therefore, if the inequality holds for some \( n \), it will also hold for \( n + 1 \).
+
+Since we know the inequality holds for \( n = 1 \), by induction, it holds for all \( n \) in the set \( \{1, 2, \ldots, 100\} \).
+
+Thus, the inequality holds for all 100 values of \( n \) in the given set.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality \( \left(\frac{1}{2}\right)\left(\frac{3}{4}\right)\left(\frac{5}{6}\right)\cdots\left(\frac{2n-1}{2n}\right) \leq \frac{1}{\sqrt{3n+1}} \) holds for all 100 values of \( n \) in the set \( \{1, 2, \ldots, 100\} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

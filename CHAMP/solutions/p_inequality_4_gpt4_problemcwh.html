@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_4</td>
+            <td>GPT-4</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_4']
+messages = problem.conversations['GPT-4|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Let {x_n}, {y_n}, {z_n} be three sequences with positive initial terms x_1, y_1, z_1, defined as x_(n+1)=y_n+1/z_n, y_(n+1)=z_n+1/x_n, z_(n+1)=x_n+1/y_n. At most how many of the three sequences can be bounded?
+Step-wise solution:
+1. When {x_n} is not bounded, {z_n} is not bounded since z_(n+1)&gt;x_n, and thus {y_n} is not bounded either since y_(n+1)&gt;z_n.
+2. The same reasoning applies when {y_n} or {z_n} is not bounded, due to symmetry.
+3. Thus, we cannot have only one or two sequences being bounded.
+4. To see if all three sequences can be bounded at the same time, let a_n=x_n+y_n+z_n.
+5. We have a_2^2=(x_1+1/x_1+y_1+1/y_1+z_1+1/z_1)^2/geq (2+2+2)^2=36=2*18.
+6. If a_n^2≥18n, then we have a_(n+1)^2=(x_n+1/x_n+y_n+1/y_n+z_n+1/z_n)^2≥a_n^2+2(x_n+y_n+z_n)(1/x_n+1/y_n+1/z_n)≥a_n^2+2*9≥18n+18=18(n+1).
+7. So we have a_n^2≥18n, which means that a_n=x_n+y_n+z_n is unbounded.
+8. Thus, at least one of x_n, y_n, z_n is unbounded, and by the earlier reasoning, all three are unbounded.
+9. So there cannot be any unbounded sequences.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+What&#x27;s the smallest value of (x^2+2)/sqrt(x^2+1) for real x?
+
+In addition, you may also find the following information helpful:
+
+1. Write x^2+2 as (x^2+1)+1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. Write the expression as ((x^2+1)+1)/sqrt(x^2+1).
+2. This can be rewritten as sqrt(x^2+1) + 1/sqrt(x^2+1).
+3. Now, we can apply the AM-GM inequality (Arithmetic Mean-Geometric Mean inequality), which states that the arithmetic mean of a set of non-negative numbers is always greater than or equal to the geometric mean. In this case, we apply it to the two terms sqrt(x^2+1) and 1/sqrt(x^2+1).
+4. The arithmetic mean of these two terms is [sqrt(x^2+1) + 1/sqrt(x^2+1)]/2.
+5. The geometric mean of these two terms is sqrt[sqrt(x^2+1) * 1/sqrt(x^2+1)] = sqrt[1] = 1.
+6. Therefore, by the AM-GM inequality, we have [sqrt(x^2+1) + 1/sqrt(x^2+1)]/2 &gt;= 1.
+7. Multiplying both sides by 2, we get sqrt(x^2+1) + 1/sqrt(x^2+1) &gt;= 2.
+8. Therefore, the smallest value of (x^2+2)/sqrt(x^2+1) for real x is 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of (x^2+2)/sqrt(x^2+1) for real x is 2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

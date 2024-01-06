@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_1</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> [-1, 1]</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_1']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x be a root of the polynomial ax^2+bx+c, with a&gt;0, a+b+c≥0, a-b+c≥0, a-c≥0. What is the range of x, expressed as an interval?
+
+You may find the following information useful:
+
+1. a^4+4b^4=(a^2+2b^2+2ab)(a^2+2b^2-2ab).
+2. Express the last three inequality conditions in terms of the root x_1, x_2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x_1$ and $x_2$ be the two roots of the polynomial $ax^2+bx+c$. Then, by Vieta&#x27;s formulas, $x_1+x_2=-b/a$ and $x_1x_2=c/a$.
+
+We are given that $a&gt;0$, $a+b+c\ge 0$, $a-b+c\ge 0$, and $a-c\ge 0$. We can express these conditions in terms of the roots $x_1$ and $x_2$ as follows:
+
+* $x_1+x_2=-b/a\ge 0$, which implies that $x_1,x_2\in(-\infty,-b/a]$.
+* $x_1x_2=c/a\ge 0$, which implies that $x_1,x_2\in[0,\infty)$.
+* $x_1-x_2=b/a\ge 0$, which implies that $x_1,x_2\in[-b/a,b/a]$.
+* $x_1+c/a=a-b\ge 0$, which implies that $x_1\ge -b/a$.
+* $x_2+c/a=a-b\ge 0$, which implies that $x_2\ge -b/a$.
+
+Combining these conditions, we see that the roots $x_1$ and $x_2$ must lie in the interval $(-b/a,b/a]$. Therefore, the range of $x$ is $\boxed{[-b/a,b/a]}$.
+
+Here is a diagram that illustrates the solution:
+
+[asy]
+unitsize(1 cm);
+
+draw((-2,0)--(2,0));
+draw((0,-2)--(0,2));
+
+label(&quot;$x$&quot;, (2,0), S);
+label(&quot;$y$&quot;, (0,2), E);
+
+draw((0,-1)--(0,1));
+draw((-1,0)--(1,0));
+
+label(&quot;$-b/a$&quot;, (-1,0), S);
+label(&quot;$b/a$&quot;, (1,0), S);
+
+label(&quot;$-c/a$&quot;, (0,-1), W);
+label(&quot;$c/a$&quot;, (0,1), E);
+
+draw((-b/a,0)--(b/a,0), dashed);
+
+draw((-b/a,-c/a)--(b/a,c/a), dashed);
+[/asy]</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The range of $x$ is $[-b/a,b/a]$, where $a&gt;0$, $a+b+c\ge 0$, $a-b+c\ge 0$, and $a-c\ge 0$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_4</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (none of the values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_4']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let P(x)=x^(2n)-2x^(2n-1)+3x^(2n-2)-4x^(2n-3)+...-2nx+2n+1. For how many values of n∈{1, 2, ..., 100} does P(x) has at least one real-valued root?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We see that each odd-powered x term has a negative coefficient and each even-powered x term has a positive coefficient.
+2. Thus, P(x)&gt;0 for x≤0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the polynomial P(x) = x^(2n) - 2x^(2n-1) + 3x^(2n-2) - 4x^(2n-3) + ... - 2nx + 2n + 1, we want to determine for how many values of n ∈ {1, 2, ..., 100} the polynomial has at least one real-valued root.
+
+From the partial solution, we have two observations:
+
+1. Each odd-powered x term has a negative coefficient, and each even-powered x term has a positive coefficient.
+2. P(x) &gt; 0 for x ≤ 0.
+
+Let&#x27;s analyze the behavior of P(x) as x approaches positive infinity. Since the leading term is x^(2n) and it has a positive coefficient, P(x) will approach positive infinity as x approaches positive infinity.
+
+Now, we have established that P(x) is positive for x ≤ 0 and P(x) approaches positive infinity as x approaches positive infinity. This means that if P(x) has a real root, it must cross the x-axis at some point for x &gt; 0.
+
+To determine if P(x) has a real root, we need to check if there is a change in sign for P(x) as x increases from 0 to positive infinity. Since the polynomial is continuous, if P(x) decreases below zero for some x &gt; 0, then by the Intermediate Value Theorem, there must be at least one real root.
+
+Let&#x27;s consider P(1) = 1^(2n) - 2*1^(2n-1) + 3*1^(2n-2) - ... - 2n*1 + 2n + 1.
+
+P(1) simplifies to:
+P(1) = 1 - 2 + 3 - 4 + ... + (-1)^(2n-1)*2n + 2n + 1.
+
+This is a telescoping series where consecutive terms cancel each other out, and we are left with the last term and the constant term:
+P(1) = (-1)^(2n-1)*2n + 2n + 1.
+
+Since 2n is even, (-1)^(2n-1) is -1, so we have:
+P(1) = -2n + 2n + 1 = 1.
+
+Since P(1) = 1, which is greater than 0, and P(x) &gt; 0 for x ≤ 0, we need to find if there exists an x &gt; 1 such that P(x) &lt; 0 to ensure there is a root.
+
+Let&#x27;s consider the derivative of P(x), P&#x27;(x), to determine the behavior of P(x). The derivative will tell us if there are any local maxima or minima for x &gt; 0.
+
+P&#x27;(x) = 2n*x^(2n-1) - 2*(2n-1)*x^(2n-2) + 3*(2n-2)*x^(2n-3) - ... - 2n.
+
+The derivative P&#x27;(x) is a polynomial of degree 2n-1, and it alternates signs for the coefficients, similar to P(x). Since the leading term of P&#x27;(x) is 2n*x^(2n-1), which is positive for x &gt; 0, P&#x27;(x) will eventually be positive for sufficiently large x, indicating that P(x) is increasing at that point.
+
+However, we need to determine if there is a point x &gt; 1 where P&#x27;(x) is negative, which would indicate that P(x) is decreasing and could potentially cross the x-axis.
+
+The behavior of P&#x27;(x) for small values of x &gt; 1 is not immediately clear, and we need to analyze it further. We can look for sign changes in P&#x27;(x) by evaluating it at x = 1, just as we did for P(x).
+
+P&#x27;(1) = 2n*1^(2n-1) - 2*(2n-1)*1^(2n-2) + 3*(2n-2)*1^(2n-3) - ... - 2n.
+
+This is another telescoping series, and evaluating it gives us:
+P&#x27;(1) = 2n - 2*(2n-1) + 3*(2n-2) - ... - 2n.
+
+We can see that P&#x27;(1) will be negative because the first term 2n is canceled by the last term -2n, and the remaining terms are an alternating series with decreasing absolute values and the first term negative. This means that P&#x27;(1) &lt; 0, indicating that P(x) is decreasing just after x = 1.
+
+Since P(1) &gt; 0 and P(x) is decreasing just after x = 1, there must be a point where P(x) crosses the x-axis and becomes negative. Therefore, for each n ∈ {1, 2, ..., 100}, there is at least one value of x &gt; 1 where P(x) &lt; 0, which implies that P(x) has at least one real-valued root.
+
+The final answer is that for all 100 values of n ∈ {1, 2, ..., 100}, P(x) has at least one real-valued root.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For all 100 values of n ∈ {1, 2, ..., 100}, the polynomial P(x) has at least one real-valued root.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

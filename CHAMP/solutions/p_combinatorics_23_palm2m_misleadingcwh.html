@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_23</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (4^n+2^n)/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_23']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of them have an even number of 1s, as an expression of n?
+
+You may find the following information useful:
+
+1. Let P(k) be the number of strings with k number of 1s and find its value.
+2. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
+3. sum_(k=1)^n C(n, k)=2^n.
+4. Let E(n) and O(n) be the number of length-n strings with even and ood numbers of 1s respectively, and express them in terms of P(k).
+5. Study E(n)+O(n) and E(n)-O(n).
+6. a^n-1=(a-1)(a^(n-1)+a^(n-2)+...+a+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $P(k)$ be the number of strings of length $n$ consisting of digits 1, 2, 3, and 4 that have $k$ 1s. We can find $P(k)$ by considering the following cases:
+
+* Case 1: The string starts with a 1. There are $n-1$ remaining positions, and we can fill each of these positions with any of the digits 2, 3, or 4. This gives $3^{n-1}$ strings.
+* Case 2: The string starts with a 2, 3, or 4. There are $n-1$ remaining positions, and we can fill each of these positions with any of the digits 1, 2, or 3. This gives $3^{n-1}$ strings.
+
+Therefore, the total number of strings of length $n$ consisting of digits 1, 2, 3, and 4 is $P(0)+P(1)+P(2)+P(3)+P(4)=3^n+3^n+3^n+3^n+3^n=5\cdot3^n$.
+
+Now, let $E(n)$ be the number of length-$n$ strings with even numbers of 1s, and let $O(n)$ be the number of length-$n$ strings with odd numbers of 1s. Then $E(n)+O(n)=5\cdot3^n$.
+
+We can also express $E(n)$ and $O(n)$ in terms of $P(k)$. For example, $E(n)$ is the sum of $P(0)$, $P(2)$, $P(4)$, and $P(6)$, since these are the only cases where the number of 1s is even. Therefore, we have $E(n)=P(0)+P(2)+P(4)+P(6)$.
+
+Similarly, $O(n)$ is the sum of $P(1)$, $P(3)$, $P(5)$, and $P(7)$. Therefore, we have $O(n)=P(1)+P(3)+P(5)+P(7)$.
+
+Finally, we can study $E(n)+O(n)$ and $E(n)-O(n)$. We have $E(n)+O(n)=5\cdot3^n$, and $E(n)-O(n)=P(0)+P(2)+P(4)+P(6)-P(1)-P(3)-P(5)-P(7)$.
+
+We can see that $E(n)+O(n)$ is always even, since it is a multiple of 2. We can also see that $E(n)-O(n)$ is always even, since it is the sum of an even number of even numbers.
+
+Therefore, we can conclude that the number of length-$n$ strings with even numbers of 1s is always a multiple of 4, and the number of length-$n$ strings with odd numbers of 1s is always a multiple of 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of length-$n$ strings with even numbers of 1s is a multiple of 4.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

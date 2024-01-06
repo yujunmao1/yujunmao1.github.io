@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_51</td>
+            <td>GPT-4</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (20*10^15-2)/17, or equivalently 1176470588235294</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_51']
+messages = problem.conversations['GPT-4|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one.
+
+You may find the following information useful:
+
+1. Let the original number has k+1 digits, with the first digit d, and the last k digits representing the number r.
+2. Set up the equation of digit manipulation involving k, d, r.
+3. Find the smallest value for k by considering the equation modulo 17.
+4. If p is a prime and p | ab, then p | a or p | b (or both). More generally, if p | a_1*a_2*...*a_n, then p | a_i for at least one a_i.
+5. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the original number as N and the new number as M. 
+
+We know that M = 1.5N. 
+
+From the problem, we know that M is obtained by moving the first digit of N to the end. 
+
+If N has k+1 digits, with the first digit d, and the last k digits representing the number r, then we can write N = 10^k * d + r and M = r * 10 + d.
+
+Substituting these into the equation M = 1.5N, we get:
+
+r * 10 + d = 1.5 * (10^k * d + r)
+
+Solving this equation for r, we get:
+
+r = (10^k - 1.5) * d / (15 - 10)
+
+This equation tells us that r must be an integer, since both N and M are integers. 
+
+To find the smallest positive integer N, we need to find the smallest k for which r is an integer. 
+
+We can do this by considering the equation modulo 17, since 17 is the smallest prime number greater than 10. 
+
+The equation modulo 17 is:
+
+r mod 17 = ((10^k - 1.5) * d / (15 - 10)) mod 17
+
+Using the properties of modulo arithmetic, we can simplify this to:
+
+r mod 17 = ((10^k mod 17 - 1.5 mod 17) * d mod 17 / (15 mod 17 - 10 mod 17)) mod 17
+
+Solving this equation for r mod 17, we get:
+
+r mod 17 = ((10^k mod 17 - 1.5 mod 17) * d mod 17 / 5) mod 17
+
+Since r must be an integer, the right-hand side of this equation must be an integer. 
+
+Therefore, the smallest k for which r is an integer is the smallest k for which (10^k mod 17 - 1.5 mod 17) * d mod 17 / 5 is an integer. 
+
+By trying different values of k, we find that the smallest such k is 16. 
+
+Therefore, the smallest positive integer N with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 142857.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 142857.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

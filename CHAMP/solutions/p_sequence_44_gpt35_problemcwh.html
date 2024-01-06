@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_44</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Exactly one sequence</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_44']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many sequences of positive numbers a_0, a_1, a_2, ... satisfy the conditions of a_0=1, a_(n+2)=a_n-a_(n+1) for all n≥0?
+
+You may find the following information useful:
+
+1. Let a_1=t, and find the expressions for a_2, a_3, ....
+2. Find a general formula for a_n related to the Fibonacci sequence.
+3. Study the condition for t to make all expressions positive.
+4. To determine if the sequence of the ratio of Fibonacci sequence exists, study |F_(n+1)/F_n-F_n/F_(n-1)| and express F_(n+1)*F_(n-1)-F_n^2 in terms of F_n*F_(n-2)-F_(n-1)^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s follow the given steps:
+
+1. Let a_1 = t, and find the expressions for a_2, a_3, ....
+
+Using the given recurrence relation, we can find the expressions for a_2, a_3, and so on:
+
+a_2 = a_0 - a_1 = 1 - t
+a_3 = a_1 - a_2 = t - (1 - t) = 2t - 1
+a_4 = a_2 - a_3 = (1 - t) - (2t - 1) = 2 - 3t
+a_5 = a_3 - a_4 = (2t - 1) - (2 - 3t) = 5t - 3
+a_6 = a_4 - a_5 = (2 - 3t) - (5t - 3) = -8t + 5
+a_7 = a_5 - a_6 = (5t - 3) - (-8t + 5) = 13t - 8
+
+We can observe a pattern here. The expressions for a_n alternate between 2t - 1 and -3t + 2, where n is odd or even, respectively.
+
+2. Find a general formula for a_n related to the Fibonacci sequence.
+
+To find a general formula for a_n, let&#x27;s consider the Fibonacci sequence. The Fibonacci sequence is defined as F_0 = 0, F_1 = 1, and F_n = F_(n-1) + F_(n-2) for n ≥ 2.
+
+We can express the Fibonacci sequence in terms of a_n as follows:
+
+F_0 = a_0 = 1
+F_1 = a_1 = t
+F_2 = a_2 = 1 - t
+F_3 = a_3 = 2t - 1
+F_4 = a_4 = 2 - 3t
+F_5 = a_5 = 5t - 3
+F_6 = a_6 = -8t + 5
+F_7 = a_7 = 13t - 8
+
+We can see that the Fibonacci sequence and the sequence a_n are related. In fact, a_n = F_(n+1) for n ≥ 0.
+
+3. Study the condition for t to make all expressions positive.
+
+To ensure that all expressions a_n are positive, we need to find the range of values for t.
+
+From the expressions we derived earlier, we can see that a_n is positive when n is odd and negative when n is even.
+
+For a_n to be positive for all n, t must be such that the expressions 2t - 1 and 5t - 3 are positive.
+
+For 2t - 1 &gt; 0, we have 2t &gt; 1, which implies t &gt; 1/2.
+For 5t - 3 &gt; 0, we have 5t &gt; 3, which implies t &gt; 3/5.
+
+Therefore, t must be greater than both 1/2 and 3/5, so the range of values for t is t &gt; 3/5.
+
+4. To determine if the sequence of the ratio of the Fibonacci sequence exists, study |F_(n+1)/F_n - F_n/F_(n-1)| and express F_(n+1)*F_(n-1) - F_n^2 in terms of F_n*F_(n-2) - F_(n-1)^2.
+
+Let&#x27;s study the expression |F_(n+1)/F_n - F_n/F_(n-1)|:
+
+|F_(n+1)/F_n - F_n/F_(n-1)| = |(F_(n+1)*F_(n-1) - F_n^2)/(F_n*F_(n-1))|
+
+Now, let&#x27;s express F_(n+1)*F_(n-1) - F_n^2 in terms of F_n*F_(n-2) - F_(n-1)^2:
+
+F_(n+1)*F_(n-1) - F_n^2 = (F_n + F_(n-1))*(F_(n-1) - F_n) - F_n^2
+= F_n*F_(n-1) - F_n^2 + F_(n-1)^2 - F_n*F_(n-1)
+= F_(n-1)^2 - F_n^2
+
+Therefore, |F_(n+1)/F_n - F_n/F_(n-1)| = |F_(n-1)^2 - F_n^2|/|F_n*F_(n-1)|
+
+We can simplify this expression further using the identity |a/b| = |a|/|b|:
+
+|F_(n+1)/F_n - F_n/F_(n-1)| = |F_(n-1)^2 - F_n^2|/|F_n*F_(n-1)|
+= |(F_(n-1) - F_n)(F_(n-1) + F_n)|/|F_n*F_(n-1)|
+= |F_(n-1) - F_n|/|F_n|
+
+Therefore, the sequence of the ratio of the Fibonacci sequence exists, and it is given by |F_(n-1) - F_n|/|F_n|.
+
+To summarize:
+
+- The general formula for a_n is a_n = F_(n+1) for n ≥ 0.
+- The range of values for t to make all expressions a_n positive is t &gt; 3/5.
+- The sequence of the ratio of the Fibonacci sequence exists and is given by |F_(n-1) - F_n|/|F_n|.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences satisfying the given conditions is determined by the Fibonacci sequence, with a general formula of a_n = F_(n+1), and the range of values for t is t &gt; 3/5.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

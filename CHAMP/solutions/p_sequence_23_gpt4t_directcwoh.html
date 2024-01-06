@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_23</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -1/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_23']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence is defined as a_1=0, |a_n|=|a_(n-1)+1|. What is the smallest value of (a_1+a_2+...+a_n)/n for even n?
+
+You may find the following information useful:
+
+1. (x±y)^2=x^2±2xy+y^2.
+2. For any real number a, a^2≥0. </code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s first understand the sequence defined by \( a_1 = 0 \) and \( |a_n| = |a_{n-1} + 1| \).
+
+Since \( a_1 = 0 \), we have:
+
+\( a_2 = |a_1 + 1| = |0 + 1| = 1 \) or \( a_2 = -1 \) (since the absolute value of both 1 and -1 is 1).
+
+Now, for \( a_3 \), we have two possibilities:
+
+1. If \( a_2 = 1 \), then \( a_3 = |a_2 + 1| = |1 + 1| = 2 \) or \( a_3 = -2 \).
+2. If \( a_2 = -1 \), then \( a_3 = |a_2 + 1| = |-1 + 1| = 0 \).
+
+We can see that the sequence will alternate in signs, and the absolute value of the terms will increase by 1 each time. So, the sequence will look like this:
+
+\( a_1 = 0 \)
+\( a_2 = \pm 1 \)
+\( a_3 = \pm 2 \)
+\( a_4 = \pm 3 \)
+\( a_5 = \pm 4 \)
+\( \vdots \)
+
+Now, we want to find the smallest value of \( \frac{a_1 + a_2 + \ldots + a_n}{n} \) for even \( n \). Since we are looking for the smallest value, we should consider the negative values for the terms of the sequence, as they will decrease the sum.
+
+For even \( n \), the sequence will have an equal number of positive and negative terms (except for the first term, which is 0). This is because the terms alternate in sign, and we start with a zero. So, for \( n = 2k \) (where \( k \) is a positive integer), the sum of the sequence will be:
+
+\( a_1 + a_2 + \ldots + a_{2k} = 0 - 1 + 2 - 3 + \ldots + (-1)^{2k-1}(2k-1) \)
+
+Notice that the sum of the first \( 2k \) terms will be the sum of the first \( k \) negative odd numbers, which is:
+
+\( -1 - 3 - 5 - \ldots - (2k-1) \)
+
+The sum of an arithmetic series is given by:
+
+\( S = \frac{n}{2}(a_1 + a_n) \)
+
+In our case, \( a_1 = -1 \), \( a_n = -(2k-1) \), and \( n = k \). So the sum is:
+
+\( S = \frac{k}{2}(-1 - (2k-1)) \)
+\( S = \frac{k}{2}(-2k) \)
+\( S = -k^2 \)
+
+Now, we divide this sum by \( 2k \) to find the average:
+
+\( \frac{S}{2k} = \frac{-k^2}{2k} \)
+\( \frac{S}{2k} = \frac{-k}{2} \)
+
+Since \( k \) is a positive integer, \( \frac{-k}{2} \) is negative, and the smallest value of \( \frac{a_1 + a_2 + \ldots + a_n}{n} \) for even \( n \) is \( \frac{-k}{2} \), where \( k \) is the largest possible integer such that \( n = 2k \). This is the smallest average value we can obtain for the given sequence when \( n \) is even.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of \( \frac{a_1 + a_2 + \ldots + a_n}{n} \) for even \( n \) is \( \frac{-n}{4} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

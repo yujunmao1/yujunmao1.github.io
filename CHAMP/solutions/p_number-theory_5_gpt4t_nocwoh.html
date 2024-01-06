@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_5</td>
+            <td>GPT-4 Turbo</td>
+            <td>No C w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 9376</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_5']
+messages = problem.conversations['GPT-4 Turbo|No C w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+An integer a is called automorphic if a^2 ends in a. For example, 5 is automorphic because 5^2=25 ends in 5. 25 is also automorphic because 25^2=625 ends in 25. Find all four-digit automorphic numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all four-digit automorphic numbers, we need to find integers \( a \) such that when \( a \) is squared, the last four digits of \( a^2 \) are \( a \) itself.
+
+Let&#x27;s denote the four-digit number \( a \) as \( a = 1000d + 100c + 10b + a \), where \( d, c, b, \) and \( a \) are the digits of the number from the thousandth place to the unit place, respectively.
+
+When we square \( a \), we get \( a^2 = (1000d + 100c + 10b + a)^2 \). We are interested in the last four digits of this expansion, which means we are looking at the terms that contribute to the units, tens, hundreds, and thousands places when expanded. Higher place values will not affect the last four digits.
+
+Let&#x27;s consider the expansion modulo 10000, which will give us the last four digits directly:
+
+\( a^2 \equiv (1000d + 100c + 10b + a)^2 \mod 10000 \)
+
+Expanding this, we get a lot of terms, but we can ignore any terms that will contribute to place values higher than the thousands place. This is because, for example, \( (1000d)^2 = 1000000d^2 \) will contribute to place values beyond the fourth digit from the right and thus will be eliminated when taken modulo 10000.
+
+So we only need to consider the terms that involve \( a \), \( 10b \), \( 100c \), and \( 1000d \) to the first power when multiplied by each other, as higher powers will contribute to higher place values that we are not interested in.
+
+\( a^2 \equiv (a + 10b + 100c + 1000d)(a + 10b + 100c + 1000d) \mod 10000 \)
+
+\( a^2 \equiv a^2 + 20ab + 200ac + 2000ad + 100b^2 + 2000bc + 20000bd + 10000c^2 + 200000cd + 1000000d^2 \mod 10000 \)
+
+Now, we can eliminate the terms that have a factor of 10000 or more, as they will not affect the last four digits:
+
+\( a^2 \equiv a^2 + 20ab + 200ac + 2000ad + 100b^2 + 2000bc \mod 10000 \)
+
+Now, we want the last four digits of \( a^2 \) to be \( a \) itself, which means:
+
+\( a^2 \equiv a \mod 10000 \)
+
+Substituting the expanded form, we get:
+
+\( a^2 + 20ab + 200ac + 2000ad + 100b^2 + 2000bc \equiv a \mod 10000 \)
+
+Simplifying, we get:
+
+\( a^2 + 20ab + 200ac + 2000ad + 100b^2 + 2000bc - a \equiv 0 \mod 10000 \)
+
+Now, we can try to find a pattern or use a brute force approach to find all \( a \) that satisfy this condition. Since \( a \) is a four-digit number, we can start by checking numbers from 1000 to 9999.
+
+However, there is a more systematic way to approach this problem. We can look for a pattern by examining the last few automorphic numbers:
+
+- \( 5^2 = 25 \) (ends in 5)
+- \( 6^2 = 36 \) (ends in 6)
+- \( 25^2 = 625 \) (ends in 25)
+- \( 76^2 = 5776 \) (ends in 76)
+- \( 376^2 = 141376 \) (ends in 376)
+
+We can see that the last digit of the automorphic number is critical in determining the next digits. For example, the last digit of 5 is 5, and the last digit of 25 is also 5. Similarly, the last digit of 6 is 6, and the last digit of 76 is also 6.
+
+Let&#x27;s try to find the last digit of our four-digit automorphic number. It must be a number whose square ends in the same digit. The possibilities are 0, 1, 5, and 6, as these are the only digits that satisfy this condition:
+
+- \( 0^2 = 0 \)
+- \( 1^2 = 1 \)
+- \( 5^2 = 25 \)
+- \( 6^2 = 36 \)
+
+Since we are looking for a four-digit number, it cannot end in 0 (as it would then be a three-digit number). So we only need to consider 1, 5, and 6.
+
+Let&#x27;s start with the last digit being 1:
+
+If \( a \) ends in 1, then \( a^2 \) will end in 1. The second-to-last digit of \( a \) must be such that when squared and added to twice the product of the last digit (1) and the second-to-last digit, it still results in a number ending in 1. This is only possible if the second-to-last digit is also 1, as \( 1^2 + 2 \cdot 1 \cdot 1 = 1 + 2 = 3 \), which does not end in 1. So, the second-to-last digit cannot be 1.
+
+Let&#x27;s try the last digit being 5:
+
+If \( a \) ends in 5, then \( a^2 \) will end in 25. The second-to-last digit of \( a \) must be such that when squared and added to twice the product of the last digit (5) and the second-to-last digit, it still results in a number ending in 25. This is only possible if the second-to-last digit is 2, as \( 2^2 + 2 \cdot 5 \cdot 2 = 4 + 20 = 24 \), and when we add the 25 from the last digit squared, we get 49, which ends in 9, not 25. So, the second-to-last digit cannot be 2.
+
+Let&#x27;s try the last digit being 6:
+
+If \( a \) ends in 6, then \( a^2 \) will end in 36. The second-to-last digit of \( a \) must be such that when squared and added to twice the product of the last digit (6) and the second-to-last digit, it still results in a number ending in 36. This is only possible if the second-to-last digit is 7, as \( 7^2 + 2 \cdot 6 \cdot 7 = 49 + 84 = 133 \), and when we add the 36 from the last digit squared, we get 169, which ends in 69, not 36. So, the second-to-last digit cannot be 7.
+
+At this point, we can see that the pattern is not straightforward, and we may need to use a brute force approach to find the four-digit automorphic numbers. We can write a simple computer program to check all numbers from 1000 to 9999 to see which ones are automorphic. However, since this is a mathematical explanation, we will not use a computer program here.
+
+Instead, let&#x27;s continue with the pattern we&#x27;ve observed in smaller automorphic numbers and try to extend it to four digits. We&#x27;ve seen that the last two digits of automorphic numbers ending in 5 follow the pattern 25, 625, ... and those ending in 6 follow the pattern 76, 376, ... This suggests that the next automorphic number ending in 5 might have the last three digits 625, and the one ending in 6 might have the last three digits 376.
+
+Let&#x27;s test these hypotheses:
+
+For the number ending in 5:
+- \( 625^2 = 390625 \) (ends in 625)
+- \( 0625^2 = 390625 \) (ends in 0625)
+
+For the number ending in 6:
+- \( 376^2 = 141376 \) (ends in 376)
+- \( 9376^2 = 87909376 \) (ends in 9376)
+
+So, the four-digit automorphic numbers are 0625 and 9376.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The four-digit automorphic numbers are 0625 and 9376.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

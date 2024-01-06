@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_35</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1000 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_35']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: A sequence {x_n} is defined by x_1=2, x_(n+1)=(x_n^4+9)/(10x_n). For how many values of x_1, x_2, ..., x_1000 do we have x_n≤5/4?
+Step-wise solution:
+1. We have x_1&gt;5/4 and x_2=(2^4+9)/20=5/4≤5/4.
+2. For x_(n+1)≤x_n, we need (x_n^4+9)/(10x_n)≤x_n, or a^2+9≤10a for a=x_n^2.
+3. This means that (a-1)(a-9)≤0, or 1≤a≤9.
+4. Thus, when x_n is in the range of [1, 3] (since all x_n&#x27;s are positive), we have x_(n+1)≤x_n.
+5. In addition, when x_n&lt;1, we have x_(n+1)=(x_n^4+9)/(10x_n)&lt;10/(10x_n)=1/x_n.
+6. To find a lower bound for x_n, we have x_n=(x_(n-1)^4+9)/(10x_(n-1))=x_(n-1)^3/10+3/(10x_(n-1))+3/(10x_(n-1))+3/(10x_(n-1))≥4((x_(n-1)^3/10)*3/(10x_(n-1))*3/(10x_(n-1))*3/(10x_(n-1)))^(1/4)=4*(27/10^4)^(1/4)=2/5*(27)^(1/4).
+7. We have 2^4=16, so (27)^(1/4)&gt;2, and x_n=2/5*(27)^(1/4)&gt;4/5.
+8. Thus, when x_n&lt;1, we know that it still must be greater than 4/5, which means that x_(n+1)&lt;1/x_n&lt;5/4.
+9. So we have that x_n≤5/4 for all n≥2, and we have 999 such values in x_1, ..., x_1000.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {x_n} is defined by x_1=2, x_(n+1)=(x_n^4+9)/(10x_n). For how many values of x_1, x_2, ..., x_1000 do we have x_n&gt;4/5?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the behavior of the sequence {x_n} given by the recursive formula x_(n+1) = (x_n^4 + 9) / (10x_n) and determine for how many terms x_n &gt; 4/5.
+
+From the previous solution, we know that:
+- x_1 = 2 &gt; 4/5
+- x_2 = (2^4 + 9) / 20 = 5/4 &gt; 4/5
+- For x_n in the range [1, 3], x_(n+1) ≤ x_n
+- For x_n &lt; 1, x_(n+1) &lt; 1/x_n
+- x_n has a lower bound of 4/5
+
+Now, let&#x27;s analyze the behavior of the sequence further to determine when x_n &gt; 4/5.
+
+1. We have already established that x_1 = 2 &gt; 4/5 and x_2 = 5/4 &gt; 4/5.
+
+2. We need to show that once x_n drops below 5/4, it will never fall below 4/5. We have already shown that x_n is bounded below by 4/5, so we need to show that it remains above 4/5 for all subsequent terms.
+
+3. From the previous solution, we know that if x_n &lt; 1, then x_(n+1) &lt; 1/x_n. Since the lower bound for x_n is 4/5, we have x_(n+1) &lt; 1/(4/5) = 5/4. This means that if x_n is less than 1, x_(n+1) will still be less than 5/4 but greater than 4/5.
+
+4. If x_n is in the range [1, 3], then x_(n+1) ≤ x_n. Since x_2 = 5/4 and is in this range, we can expect the sequence to decrease or stay the same as long as x_n is within this range. However, since we have a lower bound of 4/5, x_n will not drop below this bound.
+
+5. Therefore, for all n ≥ 2, x_n will always be greater than 4/5.
+
+Since we have established that x_n &gt; 4/5 for all n ≥ 2, and we know that x_1 = 2 &gt; 4/5, we can conclude that x_n &gt; 4/5 for all 1 ≤ n ≤ 1000.
+
+Thus, there are 1000 values of x_1, x_2, ..., x_1000 for which x_n &gt; 4/5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 1000 values of x_1, x_2, ..., x_1000 for which x_n &gt; 4/5 in the given sequence.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

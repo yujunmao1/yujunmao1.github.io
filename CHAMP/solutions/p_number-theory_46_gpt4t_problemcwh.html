@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_46</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_46']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: If positive integers x and y are such that x^2+2y^2 is a prime number, what are all possible values of x^2+2y^2 mod 8?
+Step-wise solution:
+1. Since x^2+2y^2≥3 is a prime, x must be odd.
+2. So x^2 mod 8=1.
+3. If y is odd, 2y^2 mod 8=2(y^2 mod 8) mod 8=2 mod 8.
+4. So x^2+2y^2 mod 8=3.
+5. If y is even, let y=2k, so 2y^2 mod 8=2(4k^2) mod 8=8k^2 mod 8=0.
+6. So x^2+2y^2 mod 8=1.
+7. To verify that both are indeed possible, we can find 1^2+2*3^2 mod 8=19 mod 8=3 and 3^2+2*2^2 mod 8=17 mod 8=1.
+
+Problem: Find all positive integer solutions to the equation 2^x-1=3^y.
+Step-wise solution:
+1. Obviously, x=2, y=1 is an solution.
+2. For x≥3 and even y, let y=2k.
+3. So 2^x=3^y+1=3^(2k)+1=9^k+1.
+4. We have 2^x mod 8=0 but 9^k+1 mod 8=1^k+1 mod 8=2.
+5. So the equation has no solution with x&gt;2 and even y.
+6. For x≥3 and odd y, let y=2k+1.
+7. So 2^x=3^y+1=3^(2k+1)+1=3*9^k+1.
+8. We have 2^x mod 8=0 but 3*9^k+1 mod 8=3*1^k+1 mod 8=4.
+9. So the equation has no solution with x&gt;2 and odd y.
+10. So the only solution is x=2, y=1.
+
+Problem: Find all integer solutions to the equation 19x^3-84y^2=1984.
+Step-wise solution:
+1. We can rearrange the equation as 19(x^3-100)=84(y^2+1).
+2. We have 7 | 84 so need 19(x^3-100) mod 7=0.
+3. Since gcd(7, 19)=1, we need 7 | x^3-100, which means x^3 mod 7=2.
+4. However, for integer x (modulo 7 being 1, 2, ..., 6), x^3 mod 7∈{1, 6}.
+5. Thus, the equation has no integer solution.
+
+Problem: What are possible values of 20^n+16^n-3^n-1 mod 323 for even n?
+Step-wise solution:
+1. Since 323=17*19, we study 20^n+16^n-3^n-1 mod 17 and 20^n+16^n-3^n-1 mod 19.
+2. For 17, we have 17 | 20^n-3^n.
+3. Furthermore, for even n, we have 16^n-1=(-16)^n-1, which is divisible by -16-1=-17, and hence 17.
+4. Thus, 17 | 20^n+16^n-3^n-1.
+5. For 19, we have 19 | 20^n-1 because 19 | 20^n-1^n.
+6. Furthermore, for even n, we have 16^n-3^n=(-16)^n-3^n, which is divisible by -16-3=-19 and hence 19.
+7. Thus, 19 | 20^n+16^n-3^n-1.
+8. Combining the above two results, we have 323 | 20^n+16^n-3^n-1 and 20^n+16^n-3^n-1 mod 323=0.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive integer n for which 2n+1 and 3n+1 are both perfect squares, what are possible values of n mod 40?
+
+In addition, you may also find the following information helpful:
+
+1. Find possible values of n mod 8 by considering 2n mod 8 and 3n mod 8.
+2. Find possible values of n mod 5 by considering possible values of u^2 mod 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, we need to find the possible values of n mod 40 for which 2n+1 and 3n+1 are both perfect squares. We will approach this by first considering the constraints modulo 8 and modulo 5, and then combining the results to find the possible values modulo 40.
+
+**Modulo 8 Analysis:**
+
+Let&#x27;s denote the perfect squares 2n+1 and 3n+1 as a^2 and b^2, respectively. We know that a square number can only be congruent to 0, 1, or 4 modulo 8.
+
+For 2n+1 to be a perfect square (a^2), we have:
+2n ≡ a^2 - 1 (mod 8)
+
+The possible values of a^2 modulo 8 are 0, 1, or 4. Therefore, a^2 - 1 can be -1, 0, or 3 modulo 8. However, since 2n must be even, we can only have:
+2n ≡ 0 (mod 8) or 2n ≡ -1 (mod 8)
+
+Since 2n is even, the only possibility is:
+2n ≡ 0 (mod 8)
+n ≡ 0 (mod 4)
+
+For 3n+1 to be a perfect square (b^2), we have:
+3n ≡ b^2 - 1 (mod 8)
+
+The possible values of b^2 modulo 8 are again 0, 1, or 4. Therefore, b^2 - 1 can be -1, 0, or 3 modulo 8. Since 3n must be a multiple of 3, the only possible congruence is:
+3n ≡ 3 (mod 8)
+n ≡ 1 (mod 8)
+
+Combining the results from modulo 8, we have:
+n ≡ 0 (mod 4) and n ≡ 1 (mod 8)
+
+However, these two congruences are contradictory, as n cannot be both 0 modulo 4 and 1 modulo 8. Therefore, there are no possible values of n modulo 8 that satisfy both conditions.
+
+**Modulo 5 Analysis:**
+
+Now let&#x27;s consider the constraints modulo 5. The possible values of a square number modulo 5 are 0, 1, or 4.
+
+For 2n+1 to be a perfect square (a^2), we have:
+2n ≡ a^2 - 1 (mod 5)
+
+The possible values of a^2 modulo 5 are 0, 1, or 4. Therefore, a^2 - 1 can be -1, 0, or 3 modulo 5, which simplifies to 4, 0, or 3 modulo 5. Thus, we have:
+2n ≡ 0, 3, or 4 (mod 5)
+
+For 3n+1 to be a perfect square (b^2), we have:
+3n ≡ b^2 - 1 (mod 5)
+
+The possible values of b^2 modulo 5 are again 0, 1, or 4. Therefore, b^2 - 1 can be -1, 0, or 3 modulo 5, which simplifies to 4, 0, or 3 modulo 5. Thus, we have:
+3n ≡ 0, 3, or 4 (mod 5)
+
+Since 2n ≡ 0 (mod 5) implies n ≡ 0 (mod 5), and 3n ≡ 0 (mod 5) also implies n ≡ 0 (mod 5), the only possible value for n that satisfies both conditions is:
+n ≡ 0 (mod 5)
+
+**Combining Modulo 8 and Modulo 5 Results:**
+
+Since we found no possible values of n modulo 8 that satisfy both conditions, we cannot combine the results with the modulo 5 analysis. Therefore, there are no positive integer values of n for which 2n+1 and 3n+1 are both perfect squares.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no positive integer values of n for which 2n+1 and 3n+1 are both perfect squares, and thus no possible values of n mod 40 that satisfy the given conditions.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

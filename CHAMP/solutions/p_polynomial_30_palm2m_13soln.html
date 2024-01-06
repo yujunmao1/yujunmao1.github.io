@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_30</td>
+            <td>PaLM 2 Medium</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_30']
+messages = problem.conversations['PaLM 2 Medium|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What are possible values of n mod k if x^n-y^n is divisible by x^k-y^k for integer n, k?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let n=kq+r for integer q, r and r&lt;k.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x^n-y^n$ be divisible by $x^k-y^k$. We can write this as $$x^n-y^n = (x^k-y^k)(ax^{n-k}+bx^{n-2k}+\cdots+dx^k+e)$$ for some integers $a,b,c,\dots,e$.
+
+Now, let $n=kq+r$ for some integers $q$ and $r$, where $0\le r&lt;k$. Then $$x^n-y^n = x^{kq+r}-y^{kq+r} = x^k(x^q-y^q) = (x^k-y^k)(x^q+x^{q-1}y+\cdots+xy^{q-1}+y^q)$$
+
+Since $x^k-y^k$ divides $x^n-y^n$, it must also divide $x^q+x^{q-1}y+\cdots+xy^{q-1}+y^q$. But this means that $x^q+x^{q-1}y+\cdots+xy^{q-1}+y^q$ is divisible by $x^k-y^k$, and therefore by $x-y$.
+
+Therefore, $x^q+x^{q-1}y+\cdots+xy^{q-1}+y^q$ must be of the form $ax-by$ for some integers $a$ and $b$.
+
+But $x^q+x^{q-1}y+\cdots+xy^{q-1}+y^q = (x+y)(x^{q-1}-xy^{q-2}+\cdots+y^{q-1})$.
+
+Therefore, $(x+y)(x^{q-1}-xy^{q-2}+\cdots+y^{q-1})$ must be of the form $ax-by$ for some integers $a$ and $b$.
+
+This means that $x+y$ must be a factor of $ax-by$.
+
+Therefore, $x+y$ must be a factor of $x-y$.
+
+Therefore, $x+y$ must be equal to $x-y$ or $x+y$ must be equal to $0$.
+
+Therefore, $x=y$ or $x=-y$.
+
+Therefore, the possible values of $n$ mod $k$ are $0$, $k$, $2k$, $\dots$, $(k-1)k$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $n$ mod $k$ if $x^n-y^n$ is divisible by $x^k-y^k$ are $0$, $k$, $2k$, $\dots$, $(k-1)k$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

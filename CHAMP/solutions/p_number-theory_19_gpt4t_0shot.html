@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_19</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_19']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of n^5-5*n^3+4n mod 120 for integer n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find all possible values of the expression \( n^5 - 5n^3 + 4n \) modulo 120 for integer \( n \). Since we are working modulo 120, we can simplify the problem by considering the prime factorization of 120, which is \( 120 = 2^3 \cdot 3 \cdot 5 \).
+
+We can then consider the expression modulo each of these prime powers and use the Chinese Remainder Theorem to combine the results.
+
+Let&#x27;s start by considering the expression modulo 8, 3, and 5 separately.
+
+**Modulo 8:**
+
+The expression \( n^5 - 5n^3 + 4n \) modulo 8 can be simplified by considering the powers of \( n \) modulo 8. Since \( n^5 \equiv n \) (mod 8) for any integer \( n \) (because \( n^5 \) and \( n \) have the same last three bits in their binary representation), we can simplify the expression to:
+
+\( n - 5n + 4n \equiv 0 \) (mod 8)
+
+So, the expression is always 0 modulo 8 for any integer \( n \).
+
+**Modulo 3:**
+
+We can use Fermat&#x27;s Little Theorem, which states that if \( p \) is a prime and \( a \) is not divisible by \( p \), then \( a^{p-1} \equiv 1 \) (mod \( p \)). Since 3 is prime, we have \( n^2 \equiv 1 \) (mod 3) for any \( n \) not divisible by 3. This simplifies our expression to:
+
+\( n^5 - 5n^3 + 4n \equiv n(n^4 - 5n^2 + 4) \equiv n(n^2 - 1)(n^2 - 4) \equiv n(n - 1)(n + 1)(n - 2)(n + 2) \) (mod 3)
+
+Since \( (n - 1)n(n + 1) \) is always a multiple of 3 (it represents three consecutive integers), the expression is always 0 modulo 3 for any integer \( n \).
+
+**Modulo 5:**
+
+Using Fermat&#x27;s Little Theorem again, we have \( n^4 \equiv 1 \) (mod 5) for any \( n \) not divisible by 5. This simplifies our expression to:
+
+\( n^5 - 5n^3 + 4n \equiv n(n^4 - 5n^2 + 4) \equiv n(1 - 5n^2 + 4) \) (mod 5)
+
+\( n^5 - 5n^3 + 4n \equiv n(1 - n^2 + 4) \) (mod 5)
+
+\( n^5 - 5n^3 + 4n \equiv n(5 - n^2) \) (mod 5)
+
+\( n^5 - 5n^3 + 4n \equiv 0 \) (mod 5)
+
+So, the expression is always 0 modulo 5 for any integer \( n \).
+
+Combining the results using the Chinese Remainder Theorem, we see that the expression \( n^5 - 5n^3 + 4n \) is always 0 modulo 8, 3, and 5. Since these moduli are relatively prime, the expression is always 0 modulo their product, which is 120.
+
+Therefore, the only possible value of \( n^5 - 5n^3 + 4n \) modulo 120 for integer \( n \) is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only possible value of \( n^5 - 5n^3 + 4n \) modulo 120 for integer \( n \) is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

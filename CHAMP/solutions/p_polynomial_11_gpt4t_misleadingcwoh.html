@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_11</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 20</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_11']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If x_1, x_2 are the two roots of the polynomial x^2-6x+1, for how many integer n in {61, 62, ..., 120} does x_1^n+x_2^n divided by 5 give a remainder of 4?
+
+You may find the following information useful:
+
+1. x^n is an even function (i.e., f(x)=f(-x)) if n is even, and is an odd function (i.e., f(x)=-f(-x)) if n is odd.
+2. A polynomial of degree n with root x_1, ..., x_n can be written as a(x-x_1)(x-x_2)...(x-x_n) for some value of a.
+3. If a | bc and gcd(b, c)=1, then we can find integer m, n, p, q such that b=mp, c=nq, gcd(m, n)=gcd(p, q)=1 and pq=a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to understand the relationship between the roots of a polynomial and their powers. The polynomial given is:
+
+\[ x^2 - 6x + 1 = 0 \]
+
+Let \( x_1 \) and \( x_2 \) be the roots of this polynomial. By Vieta&#x27;s formulas, we know that:
+
+\[ x_1 + x_2 = 6 \quad \text{and} \quad x_1x_2 = 1 \]
+
+We are interested in the expression \( x_1^n + x_2^n \) and its remainder when divided by 5. To find this, we can use the properties of the roots of the polynomial and the fact that \( x_1 \) and \( x_2 \) are conjugates in the complex plane (since the discriminant \( (6)^2 - 4(1) = 36 - 4 = 32 \) is positive, the roots are real and distinct).
+
+The key to solving this problem is to notice that \( x_1^n + x_2^n \) is a sequence that follows a recurrence relation based on the characteristic equation of the polynomial. This is because:
+
+\[ (x_1^n + x_2^n) - (x_1 + x_2)(x_1^{n-1} + x_2^{n-1}) + (x_1x_2)(x_1^{n-2} + x_2^{n-2}) = 0 \]
+
+Using the values from Vieta&#x27;s formulas, we get:
+
+\[ (x_1^n + x_2^n) - 6(x_1^{n-1} + x_2^{n-1}) + (x_1^{n-2} + x_2^{n-2}) = 0 \]
+
+This is a linear homogeneous recurrence relation with constant coefficients. The initial conditions are:
+
+\[ x_1^0 + x_2^0 = 2 \quad \text{(since } x_1^0 = x_2^0 = 1 \text{)} \]
+\[ x_1^1 + x_2^1 = 6 \quad \text{(from Vieta&#x27;s formulas)} \]
+
+Now, we can compute the first few terms of the sequence \( x_1^n + x_2^n \) modulo 5:
+
+- For \( n = 0 \): \( x_1^0 + x_2^0 = 2 \equiv 2 \mod 5 \)
+- For \( n = 1 \): \( x_1^1 + x_2^1 = 6 \equiv 1 \mod 5 \)
+- For \( n = 2 \): \( x_1^2 + x_2^2 = 6^2 - 2 = 36 - 2 = 34 \equiv 4 \mod 5 \)
+
+Now we can use the recurrence relation to find the next terms:
+
+- For \( n = 3 \): \( x_1^3 + x_2^3 = 6(x_1^2 + x_2^2) - (x_1^1 + x_2^1) \equiv 6 \cdot 4 - 1 \equiv 24 - 1 \equiv 3 \mod 5 \)
+- For \( n = 4 \): \( x_1^4 + x_2^4 = 6(x_1^3 + x_2^3) - (x_1^2 + x_2^2) \equiv 6 \cdot 3 - 4 \equiv 18 - 4 \equiv 14 \equiv 4 \mod 5 \)
+
+We can see a pattern emerging here. The sequence modulo 5 is repeating every 4 terms after the initial two terms. The sequence of remainders modulo 5 is:
+
+\[ 2, 1, 4, 3, 4, 3, 4, \ldots \]
+
+We are interested in the terms that give a remainder of 4 when divided by 5. From the pattern, we can see that for \( n \geq 2 \), every even \( n \) will give us a remainder of 4.
+
+Now, we need to count the number of even integers \( n \) in the set {61, 62, ..., 120} that will give us the desired remainder. The first even integer in this set is 62, and the last one is 120. The number of even integers in this range is:
+
+\[ \frac{120 - 62}{2} + 1 = \frac{58}{2} + 1 = 29 + 1 = 30 \]
+
+Therefore, there are 30 even integers \( n \) in the set {61, 62, ..., 120} for which \( x_1^n + x_2^n \) gives a remainder of 4 when divided by 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 30 integers \( n \) in the set {61, 62, ..., 120} for which \( x_1^n + x_2^n \) gives a remainder of 4 when divided by 5.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

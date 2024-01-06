@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_73</td>
+            <td>GPT-3.5</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_73']
+messages = problem.conversations['GPT-3.5|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What are possible values of 20^n+16^n-3^n-1 mod 323 for even n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Since 323=17*19, we study 20^n+16^n-3^n-1 mod 17 and 20^n+16^n-3^n-1 mod 19.
+2. For 17, we have 17 | 20^n-3^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n, we need to consider the remainders when this expression is divided by 17 and 19 separately.
+
+1. Mod 17:
+We have 17 | (20^n - 3^n) since 17 is a factor of both 20 and 3.
+Using Fermat&#x27;s Little Theorem, we know that for any prime number p and any integer a not divisible by p, a^(p-1) ≡ 1 (mod p).
+Therefore, 20^16 ≡ 1 (mod 17) and 3^16 ≡ 1 (mod 17).
+So, 20^n ≡ 1 (mod 17) and 3^n ≡ 1 (mod 17) for any even n.
+Thus, (20^n - 3^n) ≡ (1 - 1) ≡ 0 (mod 17).
+
+2. Mod 19:
+We need to find the remainders of 20^n, 16^n, and 3^n - 1 when divided by 19.
+To simplify the calculations, we can use Euler&#x27;s Totient Theorem, which states that for any integer a and any positive integer n coprime to a, a^φ(n) ≡ 1 (mod n), where φ(n) is Euler&#x27;s totient function.
+Since 19 is a prime number, φ(19) = 19 - 1 = 18.
+Using Euler&#x27;s Totient Theorem, we have:
+20^18 ≡ 1 (mod 19)
+16^18 ≡ 1 (mod 19)
+3^18 ≡ 1 (mod 19)
+
+Now, let&#x27;s consider the remainders of n when divided by 18:
+If n ≡ 0 (mod 18), then 20^n ≡ 1 (mod 19), 16^n ≡ 1 (mod 19), and 3^n ≡ 1 (mod 19).
+If n ≡ 2 (mod 18), then 20^n ≡ 4 (mod 19), 16^n ≡ 4 (mod 19), and 3^n ≡ 9 (mod 19).
+If n ≡ 4 (mod 18), then 20^n ≡ 16 (mod 19), 16^n ≡ 16 (mod 19), and 3^n ≡ 16 (mod 19).
+If n ≡ 6 (mod 18), then 20^n ≡ 7 (mod 19), 16^n ≡ 7 (mod 19), and 3^n ≡ 7 (mod 19).
+If n ≡ 8 (mod 18), then 20^n ≡ 9 (mod 19), 16^n ≡ 9 (mod 19), and 3^n ≡ 11 (mod 19).
+If n ≡ 10 (mod 18), then 20^n ≡ 5 (mod 19), 16^n ≡ 5 (mod 19), and 3^n ≡ 6 (mod 19).
+If n ≡ 12 (mod 18), then 20^n ≡ 6 (mod 19), 16^n ≡ 6 (mod 19), and 3^n ≡ 18 (mod 19).
+If n ≡ 14 (mod 18), then 20^n ≡ 17 (mod 19), 16^n ≡ 17 (mod 19), and 3^n ≡ 17 (mod 19).
+If n ≡ 16 (mod 18), then 20^n ≡ 11 (mod 19), 16^n ≡ 11 (mod 19), and 3^n ≡ 4 (mod 19).
+
+Combining the results from mod 17 and mod 19, we can use the Chinese Remainder Theorem to find the possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n.
+
+Since 17 | (20^n - 3^n) and 19 | (20^n - 3^n), we have:
+20^n ≡ 3^n (mod 17)
+20^n ≡ 3^n (mod 19)
+
+Using the Chinese Remainder Theorem, we can find a unique solution modulo 323.
+
+Let&#x27;s solve the system of congruences:
+20^n ≡ 3^n (mod 17)
+20^n ≡ 3^n (mod 19)
+
+From the first congruence, we know that 20^n - 3^n ≡ 0 (mod 17).
+From the second congruence, we know that 20^n - 3^n ≡ 0 (mod 19).
+
+Using the Chinese Remainder Theorem, we can find a unique solution modulo 323.
+
+Let&#x27;s solve the system of congruences:
+20^n - 3^n ≡ 0 (mod 17)
+20^n - 3^n ≡ 0 (mod 19)
+
+Since 17 and 19 are coprime, we can combine these congruences into a single congruence modulo 323.
+
+Let&#x27;s solve the congruence:
+20^n - 3^n ≡ 0 (mod 323)
+
+To find the possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n, we need to consider the remainders when this expression is divided by 323.
+
+Now, let&#x27;s simplify the expression:
+20^n + 16^n - 3^n - 1 ≡ (20^n - 3^n) + 16^n - 1 (mod 323)
+
+Since we know that 20^n - 3^n ≡ 0 (mod 323), we can simplify further:
+20^n + 16^n - 3^n - 1 ≡ 16^n - 1 (mod 323)
+
+Now, we need to find the remainders of 16^n - 1 when divided by 323.
+
+To do this, we can use the concept of modular exponentiation.
+
+Let&#x27;s calculate the remainders of 16^n - 1 when divided by 323 for different values of n:
+
+For n = 2:
+16^2 - 1 = 256 - 1 = 255 ≡ 255 (mod 323)
+
+For n = 4:
+16^4 - 1 = 65536 - 1 = 65535 ≡ 289 (mod 323)
+
+For n = 6:
+16^6 - 1 = 16777216 - 1 = 16777215 ≡ 1 (mod 323)
+
+For n = 8:
+16^8 - 1 = 4294967296 - 1 = 4294967295 ≡ 1 (mod 323)
+
+For n = 10:
+16^10 - 1 = 1099511627776 - 1 = 1099511627775 ≡ 1 (mod 323)
+
+For n = 12:
+16^12 - 1 = 281474976710656 - 1 = 281474976710655 ≡ 1 (mod 323)
+
+For n = 14:
+16^14 - 1 = 72057594037927936 - 1 = 72057594037927935 ≡ 1 (mod 323)
+
+For n = 16:
+16^16 - 1 = 18446744073709551616 - 1 = 18446744073709551615 ≡ 1 (mod 323)
+
+From the pattern observed, we can conclude that for any even n, 16^n - 1 ≡ 1 (mod 323).
+
+Therefore, the possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n are given by:
+20^n + 16^n - 3^n - 1 ≡ 16^n - 1 ≡ 1 (mod 323)
+
+So, the final answer is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n are 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

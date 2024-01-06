@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_19</td>
+            <td>GPT-4 Turbo</td>
+            <td>No C w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2 inequalities</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_19']
+messages = problem.conversations['GPT-4 Turbo|No C w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, d, at most how many of the three inequalities a+b&lt;c+d, (a+b)(c+d)&lt;ab+cd, (a+b)cd&lt;ab(c+d) can be true at the same time?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s analyze each inequality one by one and see if we can find a relationship between them.
+
+1. \( a + b &lt; c + d \)
+
+This inequality simply states that the sum of \( a \) and \( b \) is less than the sum of \( c \) and \( d \).
+
+2. \( (a + b)(c + d) &lt; ab + cd \)
+
+Expanding the left side of the inequality, we get:
+
+\( ac + ad + bc + bd &lt; ab + cd \)
+
+Now, let&#x27;s rearrange the terms to see if we can find a relationship:
+
+\( ac + ad + bc + bd - ab - cd &lt; 0 \)
+
+\( ac + bc - ab + ad + bd - cd &lt; 0 \)
+
+Grouping terms, we get:
+
+\( c(a + b - d) + a(d + b - c) &lt; 0 \)
+
+For this inequality to hold, at least one of the terms \( a + b - d \) or \( d + b - c \) must be negative, since \( a \), \( b \), \( c \), and \( d \) are all positive.
+
+3. \( (a + b)cd &lt; ab(c + d) \)
+
+Dividing both sides by \( cd \) (which is positive), we get:
+
+\( a + b &lt; \frac{ab(c + d)}{cd} \)
+
+Simplifying the right side, we get:
+
+\( a + b &lt; \frac{ab}{d} + \frac{ab}{c} \)
+
+This inequality suggests that \( a + b \) is less than the sum of two positive terms, which means that \( a + b \) must be less than both \( \frac{ab}{d} \) and \( \frac{ab}{c} \).
+
+Now, let&#x27;s see if all three inequalities can be true at the same time.
+
+If \( a + b &lt; c + d \) is true, then the first inequality holds.
+
+For the second inequality to hold, we need \( c(a + b - d) + a(d + b - c) &lt; 0 \). If \( a + b &lt; c + d \), then \( a + b - d &lt; c \) and \( d + b - c &lt; a \), which means both terms \( c(a + b - d) \) and \( a(d + b - c) \) are negative, making the entire expression negative. Thus, the second inequality can also be true.
+
+For the third inequality, \( a + b &lt; \frac{ab}{d} + \frac{ab}{c} \), if \( a + b &lt; c + d \), it doesn&#x27;t necessarily mean that \( a + b \) is less than \( \frac{ab}{d} + \frac{ab}{c} \). However, if \( a + b &lt; c + d \), we can&#x27;t directly conclude anything about the third inequality without additional information.
+
+To summarize, the first and second inequalities can be true simultaneously if \( a + b &lt; c + d \). The third inequality requires that \( a + b \) is less than the sum of two fractions, which is not directly related to the first inequality. However, if the first inequality is true, it does not prevent the third inequality from being true.
+
+Therefore, it is possible for all three inequalities to be true at the same time under the right conditions. The answer to the question &quot;At most how many of the three inequalities can be true at the same time?&quot; is three.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most, all three of the inequalities \(a+b&lt;c+d\), \((a+b)(c+d)&lt;ab+cd\), and \((a+b)cd&lt;ab(c+d)\) can be true at the same time.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

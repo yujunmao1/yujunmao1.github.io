@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_35</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (2n)!/(2^n*n!)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_35']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+2n players are participating in a tennis tournament. Find the number of ways that n pairs can be constructed for the first round, as an expression of n.
+
+You may find the following information useful:
+
+1. C(n, k)=n/k*C(n-1, k-1).
+2. Order the 2n players in a row, and make the pairing (1, 2), (3, 4), (5, 6), ..., (2n-1, 2n). In how many ways can this be done?
+3. There are two types of multiple counting, one is the order within each pair, such as (1, 2) and (2, 1), and the second is ordering of the pairs, such as [(1, 2), (3, 4)] and [(3, 4), (1, 2)].
+4. C(n, k)=C(n, n-k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the number of ways to pair up 2n players into n pairs for the first round of a tennis tournament.
+
+First, let&#x27;s consider the total number of ways to arrange 2n players in a row. This is simply (2n)!, which is the number of permutations of 2n distinct objects.
+
+However, we are not interested in the order of the pairs themselves, nor are we interested in the order within each pair. We need to account for this overcounting.
+
+For each pair, there are 2 ways to arrange the two players (since (player A, player B) is the same pair as (player B, player A)). Since there are n pairs, we need to divide by 2^n to correct for this overcounting within each pair.
+
+Next, we need to account for the overcounting of the order of the pairs. The n pairs can be arranged in n! different ways, but the order of the pairs does not matter for our problem. Therefore, we need to divide by n! to correct for this overcounting of pair order.
+
+Putting it all together, the number of ways to pair up the players is:
+
+(2n)! / (2^n * n!)
+
+Now, let&#x27;s simplify this expression using the properties of combinations:
+
+C(2n, 2) = (2n)! / (2! * (2n - 2)!) = (2n)! / (2 * (2n - 2)!)
+
+We can see that the denominator of our original expression (2^n * n!) is related to the denominator of the combination formula. Specifically, 2^n * n! is the product of n terms of 2 (for the overcounting within pairs) and n! (for the overcounting of pair order).
+
+So, we can rewrite our expression in terms of combinations:
+
+Number of ways = (2n)! / (2^n * n!) = C(2n, 2) * C(2n-2, 2) * ... * C(2, 2) / n!
+
+There are n terms in the numerator, each term corresponding to the selection of a pair from the remaining players. The denominator n! cancels out the overcounting of the order of the pairs.
+
+Therefore, the final expression for the number of ways to pair up 2n players into n pairs for the first round of a tennis tournament is:
+
+C(2n, 2) * C(2n-2, 2) * ... * C(2, 2) / n!
+
+This is the product of n combinations, each choosing 2 out of a decreasing number of players, divided by n! to account for the ordering of the pairs.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to pair up 2n players into n pairs for the first round of a tennis tournament is given by the expression C(2n, 2) * C(2n-2, 2) * ... * C(2, 2) / n!.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

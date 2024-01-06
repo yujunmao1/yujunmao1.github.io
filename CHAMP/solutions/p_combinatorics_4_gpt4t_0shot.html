@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_4</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 76</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_4']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A one-to-one mapping p: {1, 2, ..., n}-&gt;{1, 2, ..., n} is called an involution, if p∘p=identity (i.e., p(p(i))=i for all i∈{1, ..., n}). Find the number of involutions on {1, 2, 3, 4, 5, 6}.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the number of involutions on the set {1, 2, 3, 4, 5, 6}, we need to consider the properties of an involution. An involution is its own inverse, so for each element in the set, it either maps to itself or pairs up with another element to swap places.
+
+Let&#x27;s break down the possibilities:
+
+1. Each element maps to itself. There is only 1 way this can happen, where p(i) = i for all i.
+
+2. One pair of elements swap places, and the rest map to themselves. We can choose the pair in C(6,2) ways (which is the number of ways to choose 2 elements out of 6). After choosing the pair, there are 4 elements left, which must map to themselves. So there are C(6,2) * 1 ways for this case.
+
+3. Two pairs of elements swap places, and the rest map to themselves. We can choose the first pair in C(6,2) ways, and the second pair in C(4,2) ways from the remaining 4 elements. After choosing the pairs, there are 2 elements left, which must map to themselves. However, we must divide by 2! to correct for overcounting, since the order in which we choose the pairs does not matter. So there are C(6,2) * C(4,2) / 2! ways for this case.
+
+4. Three pairs of elements swap places. We can choose the first pair in C(6,2) ways, the second pair in C(4,2) ways from the remaining 4 elements, and the third pair in C(2,2) ways from the remaining 2 elements. We must divide by 3! to correct for overcounting, since the order in which we choose the pairs does not matter. So there are C(6,2) * C(4,2) * C(2,2) / 3! ways for this case.
+
+Now let&#x27;s calculate the number of ways for each case:
+
+1. 1 way.
+
+2. C(6,2) = 6! / (2!(6-2)!) = 6! / (2!4!) = (6*5) / (2*1) = 15 ways.
+
+3. C(6,2) * C(4,2) / 2! = (15 * 6) / 2 = 45 ways.
+
+4. C(6,2) * C(4,2) * C(2,2) / 3! = (15 * 6 * 1) / 6 = 15 ways.
+
+Adding up all the ways from the different cases, we get:
+
+1 + 15 + 45 + 15 = 76.
+
+Therefore, there are 76 involutions on the set {1, 2, 3, 4, 5, 6}.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 76 involutions on the set {1, 2, 3, 4, 5, 6}.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_17</td>
+            <td>PaLM 2 Medium</td>
+            <td>Example w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The sequence is not periodic</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_17']
+messages = problem.conversations['PaLM 2 Medium|Example w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let the sequence a_1, a_2, ... be defined as a_(4n+1)=1, a_(4n+3)=0, a_(2n)=a_n. Is this sequence periodic, and if so, find its period.
+
+You may find the following information useful:
+
+1. Find the value of a_(2^k).
+2. Suppose that the sequence is periodic, with period T=2^r*q for odd q.
+3. When q=4u+1, for k≥r+2, compare the value of a_(2^k+3T) with a_(2^k) and with a_(4w+3) for a suitably chosen w.
+4. When q=4u+3, for k≥r+2, compare the value of a_(2^k+T) with a_(2^k) and with a_(4w+3) for a suitably chosen w.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $a_1, a_2, ...$ is defined as $a_{4n+1}=1$, $a_{4n+3}=0$, and $a_{2n}=a_n$. We will show that this sequence is periodic with period $2^r$ for some integer $r$.
+
+First, we will show that $a_{2^k}=1$ for all $k\geq 0$. This is because $a_{2^0}=1$ and $a_{2^k+1}=a_{2^{k-1}}$, which is always equal to $1$.
+
+Next, we will show that $a_{2^k+3T}=0$ for all $k\geq r$, where $T$ is the period of the sequence. This is because $a_{2^k+3T}=a_{2^{k-r}+3T}=a_{2^{k-r}+3(2^r)}=a_{2^{k-r+1}}$, which is always equal to $0$.
+
+Therefore, the sequence $a_1, a_2, ...$ is periodic with period $2^r$.
+
+* * *
+
+To prove that the sequence is periodic, we can use the following theorem:
+
+&gt; **Theorem.** Let $a_1, a_2, ...$ be a sequence of real numbers. If there exists a positive integer $T$ such that $a_{n+T}=a_n$ for all $n$, then the sequence is periodic with period $T$.
+
+In our case, we have $a_{n+2^r}=a_n$ for all $n$. Therefore, the sequence is periodic with period $2^r$.
+
+* * *
+
+To find the value of $r$, we can use the following theorem:
+
+&gt; **Theorem.** Let $a_1, a_2, ...$ be a sequence of real numbers. If the sequence is periodic with period $T$, then there exists an integer $r$ such that $a_{n+T}=a_n$ for all $n$ with $n\equiv r\pmod{T}$.
+
+In our case, we have $a_{n+2^r}=a_n$ for all $n$. Therefore, there exists an integer $r$ such that $a_{n+2^r}=a_n$ for all $n$ with $n\equiv r\pmod{2^r}$.
+
+To find $r$, we can start with $n=0$ and then increment $n$ by $2^r$ until we find a value of $n$ such that $a_n=a_{n+2^r}$. In this case, we find that $r=1$, since $a_0=1$ and $a_{2^1}=1$.
+
+Therefore, the period of the sequence is $2^r=2$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The period of the sequence $a_1, a_2, ...$ defined as $a_{4n+1}=1$, $a_{4n+3}=0$, and $a_{2n}=a_n$ is $2$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

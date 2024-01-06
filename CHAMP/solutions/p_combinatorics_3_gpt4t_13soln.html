@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_3</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^floor(n/2)*floor(n/2)!</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_3']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+On a chess board, two rooks are placed peacefully if they are not on the same row or column. For an n x n chess board, find the number of ways that n rooks can be placed peacefully (i.e., any two are placed peacefully) and the placing is also invariant to a 180-degree rotation.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We need one rook per row and one rook per column.
+2. If n is odd, for a 180-degree rotation-invariant placement, we must have the center of the board being occupied by a rook.
+3. Thus, the number of placement of a 2k+1 x 2k+1 board is the same as that of a 2k x 2k board.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the constraints imposed by the 180-degree rotational invariance on the placement of the rooks. Let&#x27;s break down the solution based on whether \( n \) is even or odd.
+
+**Case 1: \( n \) is even, \( n = 2k \)**
+
+For an even \( n \), the board can be divided into two halves such that when the board is rotated 180 degrees, the positions in one half correspond to the positions in the other half. Since we need to place \( n \) rooks peacefully, we can place \( k \) rooks in the first half, and their positions will determine the positions of the remaining \( k \) rooks in the other half due to the rotational invariance.
+
+For the first rook, we have \( 2k \) choices (any of the \( 2k \) rows). After placing the first rook, we have \( 2k - 2 \) choices for the second rook (it cannot be in the same row or column as the first rook, and it cannot be in the row or column that will be occupied by the first rook after a 180-degree rotation). Continuing this pattern, for the \( k \)-th rook, we have \( 2 \) choices.
+
+Therefore, the number of ways to place \( k \) rooks on a \( 2k \times 2k \) board with 180-degree rotational invariance is:
+
+\[ 2k \times (2k - 2) \times (2k - 4) \times \ldots \times 2 = 2^k \times k! \]
+
+**Case 2: \( n \) is odd, \( n = 2k + 1 \)**
+
+For an odd \( n \), as stated in the partial solution, the center of the board must be occupied by a rook. This leaves us with a \( 2k \times 2k \) board around the center, which reduces to the even case we just solved.
+
+So, the number of ways to place \( n \) rooks on a \( (2k + 1) \times (2k + 1) \) board with 180-degree rotational invariance is the same as the number of ways to place \( k \) rooks on a \( 2k \times 2k \) board:
+
+\[ 2^k \times k! \]
+
+**Final Answer:**
+
+The number of ways that \( n \) rooks can be placed peacefully on an \( n \times n \) chess board with 180-degree rotational invariance is:
+
+- \( 2^k \times k! \) if \( n = 2k \) (even)
+- \( 2^k \times k! \) if \( n = 2k + 1 \) (odd)
+
+In both cases, \( k \) is the integer part of \( n/2 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways that \( n \) rooks can be placed peacefully on an \( n \times n \) chess board with 180-degree rotational invariance is \( 2^{\lfloor n/2 \rfloor} \times \lfloor n/2 \rfloor! \), where \( \lfloor \cdot \rfloor \) denotes the floor function.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

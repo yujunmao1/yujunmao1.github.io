@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_36</td>
+            <td>GPT-4 Turbo</td>
+            <td>No C w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_36']
+messages = problem.conversations['GPT-4 Turbo|No C w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For non-negative a, b, c, d, what is the smallest value of sqrt((a+c)(b+d))-sqrt(ab)-sqrt(cd)-1?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the fact that for non-negative real numbers, the square root function is concave. This means that for any non-negative real numbers \( x \) and \( y \), and for any \( \lambda \) such that \( 0 \leq \lambda \leq 1 \), we have:
+
+\[ \sqrt{\lambda x + (1 - \lambda)y} \geq \lambda \sqrt{x} + (1 - \lambda) \sqrt{y} \]
+
+This is known as the concavity property of the square root function, which follows from Jensen&#x27;s inequality.
+
+Let&#x27;s apply this property to the expression \( \sqrt{(a+c)(b+d)} \). We can rewrite \( (a+c)(b+d) \) as a convex combination of \( ab \) and \( cd \):
+
+\[ (a+c)(b+d) = ab + ad + bc + cd \]
+
+Now, let&#x27;s consider \( \lambda \) such that \( \lambda = \frac{ab}{ab + cd} \) and \( 1 - \lambda = \frac{cd}{ab + cd} \), so that \( \lambda ab + (1 - \lambda) cd = ab + cd \). Then, by the concavity of the square root function, we have:
+
+\[ \sqrt{(a+c)(b+d)} = \sqrt{ab + ad + bc + cd} \geq \sqrt{ab + cd} \]
+
+Now, let&#x27;s apply the concavity property to \( \sqrt{ab + cd} \):
+
+\[ \sqrt{ab + cd} \geq \lambda \sqrt{ab} + (1 - \lambda) \sqrt{cd} \]
+
+Substituting \( \lambda \) and \( 1 - \lambda \) back in, we get:
+
+\[ \sqrt{ab + cd} \geq \frac{ab}{ab + cd} \sqrt{ab} + \frac{cd}{ab + cd} \sqrt{cd} \]
+\[ \sqrt{ab + cd} \geq \frac{ab}{ab + cd} \sqrt{ab} + \frac{cd}{ab + cd} \sqrt{cd} \]
+\[ \sqrt{ab + cd} \geq \frac{ab \sqrt{ab} + cd \sqrt{cd}}{ab + cd} \]
+\[ \sqrt{ab + cd} \geq \frac{ab^2 + cd^2}{ab + cd} \]
+\[ \sqrt{ab + cd} \geq \sqrt{ab} + \sqrt{cd} \]
+
+Now, let&#x27;s look at the original expression:
+
+\[ \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \]
+
+Using the inequality we derived, we have:
+
+\[ \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \geq \sqrt{ab} + \sqrt{cd} - \sqrt{ab} - \sqrt{cd} - 1 \]
+\[ \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \geq -1 \]
+
+Therefore, the smallest value of the expression \( \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \) is \( -1 \), which occurs when \( a = c = 0 \) and \( b = d = 0 \), or any other combination where \( ab = cd = 0 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \) for non-negative \( a, b, c, d \) is \( -1 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

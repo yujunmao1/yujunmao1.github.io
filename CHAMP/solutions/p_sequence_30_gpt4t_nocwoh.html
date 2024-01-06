@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>No C w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (a+3b)/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_30']
+messages = problem.conversations['GPT-4 Turbo|No C w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a≤b, define the sequence as a_1=a, a_2=b, a_(n+2)=(a_(n+1)+a_n)/2. Does the limit exist for this sequence, and if so, find it as an expression in terms of a and b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the limit exists for the sequence defined by \( a_1 = a \), \( a_2 = b \), and \( a_{n+2} = \frac{a_{n+1} + a_n}{2} \), we can try to find a pattern or a closed-form expression for the general term \( a_n \).
+
+Let&#x27;s first calculate a few terms to see if we can spot a pattern:
+
+\( a_1 = a \)
+\( a_2 = b \)
+\( a_3 = \frac{a_2 + a_1}{2} = \frac{b + a}{2} \)
+\( a_4 = \frac{a_3 + a_2}{2} = \frac{\frac{b + a}{2} + b}{2} = \frac{a + 2b}{4} \)
+\( a_5 = \frac{a_4 + a_3}{2} = \frac{\frac{a + 2b}{4} + \frac{b + a}{2}}{2} = \frac{2a + 3b}{8} \)
+
+We can see that each term is a weighted average of \( a \) and \( b \), with the weights being powers of \( \frac{1}{2} \). The sequence appears to be converging, with the weights on \( a \) and \( b \) becoming more balanced as \( n \) increases.
+
+Let&#x27;s denote the limit of the sequence as \( L \). If the limit exists, then the sequence must satisfy the property that \( a_{n+2} \) approaches \( L \) as \( n \) goes to infinity. Since the sequence is defined recursively, we can express \( L \) in terms of itself:
+
+\( L = \frac{L + L}{2} \)
+
+This equation simplifies to:
+
+\( L = L \)
+
+This tautology indicates that the sequence does indeed have a limit, but it doesn&#x27;t tell us what the limit is in terms of \( a \) and \( b \). To find the limit, we need to consider the recursive definition of the sequence and the fact that as \( n \) goes to infinity, \( a_{n+1} \) and \( a_n \) both approach \( L \). Thus, we can write:
+
+\( L = \frac{a_{n+1} + a_n}{2} \)
+
+Taking the limit on both sides as \( n \) approaches infinity, we get:
+
+\( L = \frac{L + L}{2} \)
+
+Simplifying, we have:
+
+\( L = L \)
+
+This confirms that the sequence has a limit, but we still need to express it in terms of \( a \) and \( b \). To do this, let&#x27;s look at the pattern we&#x27;ve observed in the terms we&#x27;ve computed. We can see that as \( n \) increases, the sequence is averaging the previous two terms, which means that the sequence is converging to the average of \( a \) and \( b \). Therefore, the limit \( L \) of the sequence is the average of \( a \) and \( b \):
+
+\( L = \frac{a + b}{2} \)
+
+So, the limit of the sequence exists and is equal to the average of \( a \) and \( b \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence exists and is \( L = \frac{a + b}{2} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

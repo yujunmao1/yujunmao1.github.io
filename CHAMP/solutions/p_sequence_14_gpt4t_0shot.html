@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_14</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_14']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let the sequence be defined as a_n=1/C(n, 0)+1/C(n, 1)+...+1/C(n, n). Does the limit of the sequence exist, and if so, what is it?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the given sequence:
+
+\[ a_n = \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n)} \]
+
+where \( C(n, k) \) is the binomial coefficient, defined as:
+
+\[ C(n, k) = \frac{n!}{k!(n-k)!} \]
+
+The sequence \( a_n \) is the sum of the reciprocals of the binomial coefficients for a fixed \( n \). Let&#x27;s try to simplify this expression by using the properties of binomial coefficients.
+
+First, note that \( C(n, k) = C(n, n-k) \). This means that for every term \( \frac{1}{C(n, k)} \) in the sum, there is a corresponding term \( \frac{1}{C(n, n-k)} \), and they are equal. This will be useful for pairing terms in the sum.
+
+Now, let&#x27;s consider the binomial expansion of \( (1 + x)^n \):
+
+\[ (1 + x)^n = C(n, 0) + C(n, 1)x + C(n, 2)x^2 + \ldots + C(n, n)x^n \]
+
+If we take the derivative of both sides with respect to \( x \), we get:
+
+\[ n(1 + x)^{n-1} = C(n, 1) + 2C(n, 2)x + \ldots + nC(n, n)x^{n-1} \]
+
+Now, let&#x27;s set \( x = 1 \). The left-hand side becomes \( n(1 + 1)^{n-1} = n2^{n-1} \), and the right-hand side becomes:
+
+\[ C(n, 1) + 2C(n, 2) + \ldots + nC(n, n) \]
+
+So we have:
+
+\[ n2^{n-1} = C(n, 1) + 2C(n, 2) + \ldots + nC(n, n) \]
+
+Now, let&#x27;s divide both sides by \( n \) and by the corresponding binomial coefficients:
+
+\[ 2^{n-1} = \frac{1}{C(n, 0)} + \frac{2}{C(n, 1)} + \ldots + \frac{n}{C(n, n-1)} + \frac{n}{C(n, n)} \]
+
+Notice that the right-hand side is almost the sum we are interested in, except each term is multiplied by \( k \) (where \( k \) is the index of the sum). To get the sum we want, we can add \( \frac{1}{C(n, 0)} \) to both sides:
+
+\[ 2^{n-1} + \frac{1}{C(n, 0)} = \frac{1}{C(n, 0)} + \frac{2}{C(n, 1)} + \ldots + \frac{n}{C(n, n-1)} + \frac{n+1}{C(n, n)} \]
+
+Now, subtract the original sum \( a_n \) from both sides:
+
+\[ 2^{n-1} + \frac{1}{C(n, 0)} - a_n = \left( \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n)} \right) + \left( \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n-1)} + \frac{1}{C(n, n)} \right) \]
+
+\[ 2^{n-1} + \frac{1}{C(n, 0)} - a_n = a_n + \left( \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n-1)} \right) \]
+
+Now, we can solve for \( a_n \):
+
+\[ 2a_n = 2^{n-1} + \frac{1}{C(n, 0)} - \left( \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n-1)} \right) \]
+
+\[ a_n = 2^{n-2} + \frac{1}{2C(n, 0)} - \frac{1}{2} \left( \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n-1)} \right) \]
+
+Since \( C(n, 0) = 1 \), we have:
+
+\[ a_n = 2^{n-2} + \frac{1}{2} - \frac{1}{2} \left( \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n-1)} \right) \]
+
+Now, let&#x27;s consider the limit as \( n \) goes to infinity. The term \( 2^{n-2} \) will dominate, and the remaining terms will become negligible. Therefore, the limit of \( a_n \) as \( n \) approaches infinity does not exist because it grows without bound:
+
+\[ \lim_{n \to \infty} a_n = \infty \]</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence \( a_n = \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n)} \) as \( n \) approaches infinity does not exist because it grows without bound.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

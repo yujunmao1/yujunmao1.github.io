@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_20</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 87</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_20']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 5 rectangle with 1 x 1 tiles and three-cell L-shaped tiles (i.e., a 2 x 2 tile without a corner).
+
+You may find the following information useful:
+
+1. Let a_n be the number of ways to tile a 2 x n rectangle.
+2. Find the expression for a_(n+1) in terms of a_n, a_(n-1) and a_(n-2).
+3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
+4. Find a_1, a_2 and a_3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will first find the expressions for a_1, a_2, and a_3, which represent the number of ways to tile a 2 x 1, 2 x 2, and 2 x 3 rectangle, respectively. Then we will derive a recursive formula for a_(n+1) in terms of a_n, a_(n-1), and a_(n-2).
+
+1. a_1: There is only one way to tile a 2 x 1 rectangle with 1 x 1 tiles, as the L-shaped tiles cannot fit in such a small space. So, a_1 = 1.
+
+2. a_2: There are two ways to tile a 2 x 2 rectangle. We can either use four 1 x 1 tiles or one L-shaped tile. So, a_2 = 2.
+
+3. a_3: For a 2 x 3 rectangle, we can tile it in the following ways:
+   - Three L-shaped tiles, each occupying one corner of the rectangle and the center, which gives us two possibilities (the L-shaped tile in the center can be oriented in two different ways).
+   - Two L-shaped tiles and two 1 x 1 tiles, which gives us two possibilities (the L-shaped tiles can be at either end).
+   - Six 1 x 1 tiles, which gives us one possibility.
+   So, a_3 = 2 + 2 + 1 = 5.
+
+Now, let&#x27;s find the recursive formula for a_(n+1). To tile a 2 x (n+1) rectangle, we can consider the following cases:
+
+- Place a 1 x 1 tile at the end of a 2 x n rectangle. There are a_n ways to tile the remaining 2 x n rectangle.
+- Place an L-shaped tile at the end, which covers a 2 x 2 area at the end of the rectangle. There are a_(n-1) ways to tile the remaining 2 x (n-1) rectangle.
+- Place two L-shaped tiles at the end, which cover a 2 x 3 area at the end of the rectangle. There are a_(n-2) ways to tile the remaining 2 x (n-2) rectangle.
+
+Therefore, the recursive formula is:
+a_(n+1) = a_n + a_(n-1) + a_(n-2)
+
+Now we can find a_4 and a_5 using the recursive formula:
+
+a_4 = a_3 + a_2 + a_1 = 5 + 2 + 1 = 8
+a_5 = a_4 + a_3 + a_2 = 8 + 5 + 2 = 15
+
+So, there are 15 ways to fill a 2 x 5 rectangle with 1 x 1 tiles and three-cell L-shaped tiles.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 15 ways to fill a 2 x 5 rectangle with 1 x 1 tiles and three-cell L-shaped tiles.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

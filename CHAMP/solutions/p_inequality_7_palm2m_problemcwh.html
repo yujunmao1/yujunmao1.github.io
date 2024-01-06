@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_7</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_7']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If a, b, c are side lengths of a (possibly degenerate) triangle, then what is the largest value of a/(b+c)+b/(a+c)+c/(a+b)?
+
+You may find the following information useful:
+
+1. a, b, c are the sides of a (possibly degenerate) triangle if and only if a+b≥s, b+c≥s, a+c≥s for semi-perimeter s=(a+b+c)/2. The triangle is not degenerate if and only if all inequalities are strict.
+2. Compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c$ be the side lengths of a (possibly degenerate) triangle. By the Triangle Inequality, we have $a+b \ge c, b+c \ge a, c+a \ge b$. Adding these three inequalities, we get $2(a+b+c) \ge a+b+c$, so $a+b+c \ge 0$. Dividing both sides by 2, we get $a+b+c \ge 0$.
+
+Let $s = \frac{a+b+c}{2}$. Then $a+b+c = 2s$.
+
+We want to maximize the value of the sum $a/(b+c)+b/(a+c)+c/(a+b)$.
+
+We can write this sum as follows:
+
+$$a/(b+c)+b/(a+c)+c/(a+b) = \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b}.$$
+
+Let $x = \frac{a}{b+c}$. Then $b+c = \frac{a}{x}$.
+
+Let $y = \frac{b}{a+c}$. Then $a+c = \frac{b}{y}$.
+
+Let $z = \frac{c}{a+b}$. Then $a+b = \frac{c}{z}$.
+
+Substituting these expressions into the sum, we get:
+
+$$a/(b+c)+b/(a+c)+c/(a+b) = x + y + z.$$
+
+We want to maximize this expression.
+
+We can use the AM-GM inequality to bound this expression. The AM-GM inequality states that for any non-negative numbers $a_1, a_2, \dots, a_n$, we have:
+
+$$\frac{a_1 + a_2 + \dots + a_n}{n} \ge \sqrt[n]{a_1 a_2 \dots a_n}.$$
+
+In our case, we have $n = 3$ and $a_1 = x, a_2 = y, a_3 = z$. So, the AM-GM inequality states that:
+
+$$\frac{x + y + z}{3} \ge \sqrt[3]{x y z}.$$
+
+Multiplying both sides by 3, we get:
+
+$$x + y + z \ge 3 \sqrt[3]{x y z}.$$
+
+We can rearrange this inequality as follows:
+
+$$x + y + z - 3 \sqrt[3]{x y z} \ge 0.$$
+
+Squaring both sides, we get:
+
+$$(x + y + z - 3 \sqrt[3]{x y z})^2 \ge 0.$$
+
+Expanding the square, we get:
+
+$$x^2 + y^2 + z^2 + 2xy + 2xz + 2yz - 6xyz + 9 \sqrt[3]{x y z}^2 \ge 0.$$
+
+Factoring out $x+y+z$, we get:
+
+$$(x+y+z)(x^2 + y^2 + z^2 - 2xy - 2xz - 2yz + 3 \sqrt[3]{x y z}^2) \ge 0.$$
+
+Since $x+y+z \ge 0$, we know that $(x+y+z)(x^2 + y^2 + z^2 - 2xy - 2xz - 2yz + 3 \sqrt[3]{x y z}^2) \ge 0$.
+
+Therefore, we have:
+
+$$x^2 + y^2 + z^2 - 2xy - 2xz - 2yz + 3 \sqrt[3]{x y z}^2 \ge 0.$$
+
+We can write this as follows:
+
+$$(x-y)^2 + (y-z)^2 + (z-x)^2 + 2 \sqrt[3]{x y z}(x-y)(y-z)(z-x) \ge 0.$$
+
+Let $u = x-y, v = y-z, w = z-x$. Then $x = u+y, y = v+z, z = w+x$. Substituting these expressions into the inequality, we</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of $a/(b+c)+b/(a+c)+c/(a+b)$ is $3$, which is achieved when $a=b=c$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

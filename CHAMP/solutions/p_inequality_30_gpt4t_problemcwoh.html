@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_30']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: For x, y, z&gt;0, what is the smallest value of x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y+x/z)?
+Step-wise solution:
+1. We have x^2/y^2+y^2/z^2+z^2/x^2=(x/y)(x/y)+(y/z)(y/z)+(z/x)(z/x), and y/x+z/y+x/z=(y/z)(z/x)+(z/x)(x/y)+(x/y)(y/z).
+2. Thus, the former is the sum of products of elements between the sequences (x/y, y/z, x/z) and (x/y, y/z, x/z), which are similarly sorted.
+3. By contrast, the latter is the sum of the products of elements between the same two sequences but permuted differently.
+4. So we have x^2/y^2+y^2/z^2+z^2/x^2≥y/x+z/y+x/z, with equality achieved when a=b=c.
+5. Thus, the smallest value is 0.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the Cauchy-Schwarz inequality, which states that for any sequences of real numbers \( (b_1, b_2, \ldots, b_n) \) and \( (c_1, c_2, \ldots, c_n) \), the following inequality holds:
+
+\[ \left( \sum_{i=1}^n b_i c_i \right)^2 \leq \left( \sum_{i=1}^n b_i^2 \right) \left( \sum_{i=1}^n c_i^2 \right) \]
+
+Let&#x27;s apply this inequality to our problem. We can rewrite the given expression as a sum of fractions:
+
+\[ \sum_{i=1}^n \frac{a_i}{s - a_i} \]
+
+Now, let&#x27;s consider \( b_i = \sqrt{a_i} \) and \( c_i = \frac{\sqrt{a_i}}{s - a_i} \). Applying the Cauchy-Schwarz inequality, we get:
+
+\[ \left( \sum_{i=1}^n b_i c_i \right)^2 \leq \left( \sum_{i=1}^n b_i^2 \right) \left( \sum_{i=1}^n c_i^2 \right) \]
+
+Substituting \( b_i \) and \( c_i \) into the inequality, we have:
+
+\[ \left( \sum_{i=1}^n \frac{a_i}{s - a_i} \right)^2 \leq \left( \sum_{i=1}^n a_i \right) \left( \sum_{i=1}^n \frac{a_i}{(s - a_i)^2} \right) \]
+
+Since \( \sum_{i=1}^n a_i = s \), we can simplify the inequality to:
+
+\[ \left( \sum_{i=1}^n \frac{a_i}{s - a_i} \right)^2 \leq s \left( \sum_{i=1}^n \frac{a_i}{(s - a_i)^2} \right) \]
+
+Now, let&#x27;s consider the right-hand side of the inequality. We can apply the AM-HM inequality (Arithmetic Mean - Harmonic Mean inequality), which states that for positive real numbers \( x_1, x_2, \ldots, x_n \):
+
+\[ \frac{x_1 + x_2 + \ldots + x_n}{n} \geq \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \ldots + \frac{1}{x_n}} \]
+
+Let \( x_i = s - a_i \), then the AM-HM inequality becomes:
+
+\[ \frac{(s - a_1) + (s - a_2) + \ldots + (s - a_n)}{n} \geq \frac{n}{\frac{1}{s - a_1} + \frac{1}{s - a_2} + \ldots + \frac{1}{s - a_n}} \]
+
+Simplifying, we get:
+
+\[ \frac{ns - s}{n} \geq \frac{n}{\sum_{i=1}^n \frac{1}{s - a_i}} \]
+
+\[ s - \frac{s}{n} \geq \frac{n}{\sum_{i=1}^n \frac{1}{s - a_i}} \]
+
+\[ \frac{(n-1)s}{n} \geq \frac{n}{\sum_{i=1}^n \frac{1}{s - a_i}} \]
+
+Taking the reciprocal of both sides, we have:
+
+\[ \frac{n}{(n-1)s} \leq \sum_{i=1}^n \frac{1}{s - a_i} \]
+
+Multiplying both sides by \( s \), we get:
+
+\[ \frac{n}{n-1} \leq s \sum_{i=1}^n \frac{1}{s - a_i} \]
+
+Now, we can see that the right-hand side of this inequality is the same as the right-hand side of the Cauchy-Schwarz inequality we derived earlier. Therefore, we have:
+
+\[ \left( \sum_{i=1}^n \frac{a_i}{s - a_i} \right)^2 \leq \frac{n}{n-1} \]
+
+Taking the square root of both sides, we get:
+
+\[ \sum_{i=1}^n \frac{a_i}{s - a_i} \leq \sqrt{\frac{n}{n-1}} \]
+
+Since we are looking for the smallest value, we can see that the expression achieves its minimum when the inequality becomes an equality. This happens when all \( a_i \) are equal (by the equality condition of the Cauchy-Schwarz inequality). When all \( a_i \) are equal, each \( a_i = \frac{s}{n} \), and the expression simplifies to:
+
+\[ \sum_{i=1}^n \frac{\frac{s}{n}}{s - \frac{s}{n}} = \sum_{i=1}^n \frac{1}{n-1} = \frac{n}{n-1} \]
+
+Therefore, the smallest value of the given expression, as an expression of \( n \), is:
+
+\[ \frac{n}{n-1} \]</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( a_1/(s-a_1) + a_2/(s-a_2) + \ldots + a_n/(s-a_n) \) for positive numbers \( a_1, \ldots, a_n \) is \( n/(n-1) \), where \( s \) is the sum of all \( a_i \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

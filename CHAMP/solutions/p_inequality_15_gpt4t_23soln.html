@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_15</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_15']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the minimum value of a^4+b^4+c^4-a^2*bc-b^2*ac-c^2*ab for positive numbers a, b, c.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We consider three sequences R=(a^2, b^2, c^2), S=(a, b, c), T=(a, b, c), which are all sorted in the same way.
+2. Thus, both A=a^4+b^4+c^4 and B=a^2*bc+b^2*ac+c^2*ab can be considered as the sum of products of three elements, each selected from one of three sequences.
+3. The elements in A are sorted in the same way, while those in B are not necessarily.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the rearrangement inequality, which states that if two sequences are similarly ordered (both increasing or both decreasing), then the sum of the products of the corresponding terms is maximized, and if one sequence is increasing while the other is decreasing, then the sum is minimized.
+
+Given the sequences R=(a^2, b^2, c^2), S=(a, b, c), and T=(a, b, c), all sorted in the same way (without loss of generality, let&#x27;s assume they are all non-decreasing), we can apply the rearrangement inequality.
+
+The sum A = a^4 + b^4 + c^4 is the sum of the products of the corresponding terms of R and S, which are similarly ordered. Therefore, A is already maximized and cannot be increased by any rearrangement.
+
+The sum B = a^2*bc + b^2*ac + c^2*ab is not the sum of the products of corresponding terms of R and T, because the terms are not multiplied by their corresponding pairs. To minimize B, we should pair the largest terms of one sequence with the smallest terms of the other sequence, according to the rearrangement inequality.
+
+So, to minimize B, we should pair the terms as follows:
+
+- Pair the largest term of R (which is c^2 if the sequences are non-decreasing) with the smallest terms of S and T (which are a and a, respectively).
+- Pair the middle term of R (which is b^2) with the middle terms of S and T (which are b and b, respectively).
+- Pair the smallest term of R (which is a^2) with the largest terms of S and T (which are c and c, respectively).
+
+This gives us the rearranged sum B&#x27; = c^2*a*a + b^2*b*b + a^2*c*c = c^2*a^2 + b^4 + a^2*c^2.
+
+Now, we want to find the minimum value of A - B. Since A is already maximized, we want to minimize B to maximize the difference A - B. The minimum value of B is achieved by B&#x27;, so we have:
+
+Minimum value of A - B = A - B&#x27;
+= (a^4 + b^4 + c^4) - (c^2*a^2 + b^4 + a^2*c^2)
+= a^4 + b^4 + c^4 - c^2*a^2 - b^4 - a^2*c^2
+= a^4 - a^2*c^2 + c^4 - c^2*a^2
+= a^4 + c^4 - 2*a^2*c^2
+= (a^2 - c^2)^2
+= (a - c)^2 * (a + c)^2
+
+Since a and c are positive numbers, the minimum value of (a - c)^2 is 0, which occurs when a = c. Therefore, the minimum value of A - B is 0, and this occurs when a = c.
+
+The final answer is that the minimum value of a^4 + b^4 + c^4 - a^2*bc - b^2*ac - c^2*ab for positive numbers a, b, c is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression \(a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab\) for positive numbers \(a\), \(b\), and \(c\) is \(0\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

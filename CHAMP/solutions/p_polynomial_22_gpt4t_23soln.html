@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_22</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=±1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_22']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all real-valued solutions to the equation x^8+4x^6−10x^4+4x^2+1=0.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let f(x)=x^8+4x^6−10x^4+4x^2+1.
+2. We have f(x)=x^4*g(z) where z=x+1/x and g(z)=x^4+4x^2-10+4/x^2+1/x^4 should be a polynomial of degree 4 in z.
+3. We have z^4=(x+1/x)^4=x^4+4x^2+6+4/x^2+1/x^4, so g(z)=z^4-16.
+4. Thus, we have f(x)=x^4*(z^4-16), and since x≠0, we must have z^4=16.
+5. This gives us z^2=±4, and z=±2, ±2i.
+6. With z=x+1/x, we do not have real-valued x for z=±2i.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The partial solution provided is on the right track, but there is a mistake in the transformation of the original equation into a polynomial in terms of \( z \). Let&#x27;s go through the steps again and correct the mistake.
+
+1. Let \( f(x) = x^8 + 4x^6 - 10x^4 + 4x^2 + 1 \).
+
+2. We want to express \( f(x) \) in terms of \( z = x + \frac{1}{x} \). To do this, we need to express \( x^8 \), \( x^6 \), \( x^4 \), and \( x^2 \) in terms of \( z \).
+
+3. We know that \( z = x + \frac{1}{x} \), so \( z^2 = \left(x + \frac{1}{x}\right)^2 = x^2 + 2 + \frac{1}{x^2} \). Therefore, \( x^2 + \frac{1}{x^2} = z^2 - 2 \).
+
+4. To find \( x^4 + \frac{1}{x^4} \), we square \( x^2 + \frac{1}{x^2} \) to get \( \left(x^2 + \frac{1}{x^2}\right)^2 = x^4 + 2 + \frac{1}{x^4} \). Therefore, \( x^4 + \frac{1}{x^4} = (z^2 - 2)^2 - 2 = z^4 - 4z^2 + 2 \).
+
+5. Now we can express \( f(x) \) in terms of \( z \):
+\[ f(x) = x^8 + 4x^6 - 10x^4 + 4x^2 + 1 \]
+\[ f(x) = (x^4 + \frac{1}{x^4}) + 4(x^2 + \frac{1}{x^2}) - 10 + 4(x^2 + \frac{1}{x^2}) + 1 \]
+\[ f(x) = (z^4 - 4z^2 + 2) + 4(z^2 - 2) - 10 + 4(z^2 - 2) + 1 \]
+\[ f(x) = z^4 - 4z^2 + 2 + 4z^2 - 8 - 10 + 4z^2 - 8 + 1 \]
+\[ f(x) = z^4 + 4z^2 - 25 \]
+
+6. We now have \( f(x) = z^4 + 4z^2 - 25 \). Setting this equal to zero gives us the equation \( z^4 + 4z^2 - 25 = 0 \).
+
+7. This is a quadratic equation in terms of \( z^2 \). Let \( y = z^2 \), then we have \( y^2 + 4y - 25 = 0 \).
+
+8. Solving this quadratic equation using the quadratic formula \( y = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \), we get:
+\[ y = \frac{-4 \pm \sqrt{16 + 100}}{2} \]
+\[ y = \frac{-4 \pm \sqrt{116}}{2} \]
+\[ y = \frac{-4 \pm 2\sqrt{29}}{2} \]
+\[ y = -2 \pm \sqrt{29} \]
+
+9. Since \( y = z^2 \), we have \( z^2 = -2 \pm \sqrt{29} \). We are looking for real-valued solutions, so we discard the negative root because it would lead to an imaginary number when taking the square root. We only consider \( z^2 = -2 + \sqrt{29} \).
+
+10. Now we go back to \( z = x + \frac{1}{x} \) and solve for \( x \). We have:
+\[ z = x + \frac{1}{x} \]
+\[ x^2 - zx + 1 = 0 \]
+
+11. We use the quadratic formula to solve for \( x \):
+\[ x = \frac{z \pm \sqrt{z^2 - 4}}{2} \]
+\[ x = \frac{-2 + \sqrt{29} \pm \sqrt{(-2 + \sqrt{29})^2 - 4}}{2} \]
+\[ x = \frac{-2 + \sqrt{29} \pm \sqrt{29 - 4\sqrt{29} + 4 - 4}}{2} \]
+\[ x = \frac{-2 + \sqrt{29} \pm \sqrt{25 - 4\sqrt{29}}}{2} \]
+\[ x = \frac{-2 + \sqrt{29} \pm (\sqrt{29} - 2)}{2} \]
+
+12. This gives us two possible values for \( x \):
+\[ x = \frac{-2 + \sqrt{29} + \sqrt{29} - 2}{2} = \sqrt{29} - 2 \]
+\[ x = \frac{-2 + \sqrt{29} - \sqrt{29} + 2}{2} = 0 \]
+
+However, \( x = 0 \) is not a valid solution because we cannot divide by zero in the original substitution \( z = x + \frac{1}{x} \). Therefore, the only real-valued solutions for \( x \) are \( x = \sqrt{29} - 2 \) and its negative counterpart \( x = -(\sqrt{29} - 2) \) because the equation is even in \( x \) (symmetric with respect to the y-axis).
+
+So the real-valued solutions to the equation \( x^8 + 4x^6 - 10x^4 + 4x^2 + 1 = 0 \) are \( x = \sqrt{29} - 2 \) and \( x = -(\sqrt{29} - 2) \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The real-valued solutions to the equation \(x^8 + 4x^6 - 10x^4 + 4x^2 + 1 = 0\) are \(x = \sqrt{29} - 2\) and \(x = -(\sqrt{29} - 2)\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

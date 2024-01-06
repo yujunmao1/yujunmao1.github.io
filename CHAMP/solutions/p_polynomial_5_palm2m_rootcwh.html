@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_5</td>
+            <td>PaLM 2 Medium</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x=8, y=2), (x=2, y=8)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_5']
+messages = problem.conversations['PaLM 2 Medium|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation x^3+x^2*y+x*y^2+y^3=8(x^2+xy+y^2+1).
+
+You may find the following information useful:
+
+1. Let u=x+y, v=xy and write the equation in terms of u, v.
+2. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.
+3. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.
+4. Study the parity of u and write u=2t or u=2t+1 accordingly.
+5. Solve v as a division of two polynomials and study the integer solutions of (t, v).
+6. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Sure, I can help you with that.
+
+Let $u=x+y$ and $v=xy$. Then the equation $x^3+x^2y+xy^2+y^3=8(x^2+xy+y^2+1)$ can be rewritten as
+
+$$u^3-8u^2+8uv-v^3=0.$$
+
+We can factor this equation as
+
+$$(u-v)(u^2+uv+v^2-8)=0.$$
+
+If $u=v$, then $x=y$ and the equation becomes $x^3=8$, which has no integer solutions.
+
+If $u\neq v$, then $u^2+uv+v^2-8=(u+v)^2-9=-1$. This means that $u+v=i$ or $u+v=-i$, where $i$ is the imaginary unit.
+
+If $u+v=i$, then $u=i-v$ and the equation becomes
+
+$$(i-v)^3-8(i-v)^2+8(i-v)v-v^3=0.$$
+
+This simplifies to
+
+$$-v^3+3iv^2-3v+i=0.$$
+
+We can solve this equation for $v$ as follows:
+
+$$v=\frac{3i\pm\sqrt{9-4(-3)(-1)}}{3}=\frac{3i\pm\sqrt{13}}{3}.$$
+
+Since $v$ is an integer, we must have $\sqrt{13}=3k$ for some integer $k$. This means that $k$ must be odd, since $\sqrt{13}$ is irrational and cannot be an integer.
+
+If $k=1$, then $v=\frac{3i+3}{3}=i$. This gives the solution $(x,y)=(i,0)$.
+
+If $k=3$, then $v=\frac{3i+9}{3}=3i$. This gives the solution $(x,y)=(3i,0)$.
+
+If $k=5$, then $v=\frac{3i+15}{3}=5i$. This gives the solution $(x,y)=(5i,0)$.
+
+If $k=7$, then $v=\frac{3i+21}{3}=7i$. This gives the solution $(x,y)=(7i,0)$.
+
+If $k=9$, then $v=\frac{3i+27}{3}=9i$. This gives the solution $(x,y)=(9i,0)$.
+
+If $u+v=-i$, then $u=-v-i$ and the equation becomes
+
+$$(-v-i)^3-8(-v-i)^2+8(-v-i)v-v^3=0.$$
+
+This simplifies to
+
+$$v^3-3iv^2-3v-i=0.$$
+
+We can solve this equation for $v$ as follows:
+
+$$v=\frac{3i\pm\sqrt{9-4(-3)(-1)}}{3}=\frac{3i\pm\sqrt{13}}{3}.$$
+
+Since $v$ is an integer, we must have $\sqrt{13}=3k$ for some integer $k$. This means that $k$ must be odd, since $\sqrt{13}$ is irrational and cannot be an integer.
+
+If $k=1$, then $v=\frac{3i-3}{3}=-i$. This gives the solution $(x,y)=(-i,0)$.
+
+If $k=3$, then $v=\frac{3i-9}{3}=-3i$. This gives the solution $(x,y)=(-3i,0)$.
+
+If $k=5$, then $v=\frac{3i-15}{3}=-5i$. This gives the solution $(x,y)=(-5i,0)$.
+
+If $k=7$, then $v=\frac{3i-21}{3}=-7i$. This gives the solution $(x,y)=(-7i,0)$.
+
+If $k=9$, then $v=\</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only integer solutions to the equation $x^3+x^2y+xy^2+y^3=8(x^2+xy+y^2+1)$ are $(x,y)=(i,0)$, $(x,y)=(-i,0)$, $(x,y)=(3i,0)$, $(x,y)=(-3i,0)$, $(x,y)=(5i,0)$, $(x,y)=(-5i,0)$, $(x,y)=(7i,0)$, and $(x,y)=(-7i,0)$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

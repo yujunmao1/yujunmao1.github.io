@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_21</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> a=3, b=-7, c=4</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_21']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a, b, c such that (x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3).
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have x+5=a(x-2)(x-3)+b(x-1)(x-3)+c(x-1)(x-2).
+2. Substituting x=1 in, we get 6=2a, and a=3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We have the following equation:
+
+$$\frac{x+5}{(x-1)(x-2)(x-3)} = \frac{a}{x-1} + \frac{b}{x-2} + \frac{c}{x-3}$$
+
+Multiplying both sides of the equation by $(x-1)(x-2)(x-3)$, we get:
+
+$$x+5 = a(x-2)(x-3) + b(x-1)(x-3) + c(x-1)(x-2)$$
+
+Substituting $x=1$ into the equation, we get:
+
+$$6 = a(1-2)(1-3) + b(1-1)(1-3) + c(1-1)(1-2)$$
+
+$$6 = -4a - 2b - 3c$$
+
+Solving for $a$, we get:
+
+$$a = \frac{6+2b+3c}{4} = \frac{15+2b+3c}{4}$$
+
+Substituting $x=2$ into the equation, we get:
+
+$$7 = a(2-2)(2-3) + b(2-1)(2-3) + c(2-1)(2-2)$$
+
+$$7 = -4a - 2b - 3c$$
+
+Solving for $b$, we get:
+
+$$b = \frac{7-2a-3c}{4} = \frac{3-a-c}{4}$$
+
+Substituting $x=3$ into the equation, we get:
+
+$$8 = a(3-2)(3-3) + b(3-1)(3-3) + c(3-1)(3-2)$$
+
+$$8 = -4a - 2b - 3c$$
+
+Solving for $c$, we get:
+
+$$c = \frac{8-2a-3b}{4} = \frac{1-a-b}{4}$$
+
+Substituting $a=\frac{15+2b+3c}{4}$, $b=\frac{3-a-c}{4}$, and $c=\frac{1-a-b}{4}$ into the equation $x+5=a(x-2)(x-3) + b(x-1)(x-3) + c(x-1)(x-2)$, we get:
+
+$$x+5 = \left(\frac{15+2b+3c}{4}\right)\left(x-2\right)\left(x-3\right) + \left(\frac{3-a-c}{4}\right)\left(x-1\right)\left(x-3\right) + \left(\frac{1-a-b}{4}\right)\left(x-1\right)\left(x-2\right)$$
+
+$$x+5 = \frac{1}{4}(15x^2 - 39x + 30) + \frac{1}{4}(3x^2 - 11x + 3) + \frac{1}{4}(x^2 - 3x + 1)$$
+
+$$x+5 = \frac{1}{4}(15x^2 - 39x + 30 + 3x^2 - 11x + 3 + x^2 - 3x + 1)$$
+
+$$x+5 = \frac{1}{4}(20x^2 - 53x + 34)$$
+
+$$4(x+5) = 20x^2 - 53x + 136$$
+
+$$4x+20 = 20x^2 - 53x + 136$$
+
+$$0 = 19x^2 - 73x + 116$$
+
+$$0 = (19x-16)(x-7)$$
+
+$$x=16\text{ or }x=7$$
+
+Substituting $x=16$ and $x=7$ into the equation $\frac{x+5}{(x-1)(x-2)(x-3)} = \frac{a}{x-1} + \frac{b}{x-2} + \frac{c}{x-3}$, we get:
+
+$$\frac{16+</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The values of $a$, $b$, and $c$ that satisfy the equation $\frac{x+5}{(x-1)(x-2)(x-3)} = \frac{a}{x-1} + \frac{b}{x-2} + \frac{c}{x-3}$ are $a=3$, $b=-1$, and $c=-2$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

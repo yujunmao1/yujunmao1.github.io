@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_40</td>
+            <td>GPT-4</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 125</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_40']
+messages = problem.conversations['GPT-4|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a_n be the number of all permutations p of {1, ..., n} with min(n-|p(i)−i|, |p(i)−i|)≤1 for all i. Find a_10.
+
+You may find the following information useful:
+
+1. C(n, r)=n!/(r!*(n-r)!)=n*(n-1)*(n-2)*...*(n-r+1)/r!.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The given condition min(n-|p(i)−i|, |p(i)−i|)≤1 for all i means that each element in the permutation can either stay in its place or move at most one place to the left or right. This is also known as the number of &quot;nearly sorted&quot; permutations.
+
+This problem can be solved using dynamic programming. Let&#x27;s denote by dp[i][j] the number of nearly sorted permutations of length i with j inversions. An inversion is a pair of elements that are out of order.
+
+We start with dp[0][0] = 1, because there is exactly one permutation of an empty set, and it has 0 inversions.
+
+Then, for each i from 1 to n, we calculate dp[i][j] as follows:
+
+dp[i][j] = dp[i-1][j] + dp[i-1][j-1] + dp[i-1][j-2] if j &gt;= 2
+dp[i][j] = dp[i-1][j] + dp[i-1][j-1] if j = 1
+dp[i][j] = dp[i-1][j] if j = 0
+
+The first term dp[i-1][j] corresponds to the case when the i-th element stays in its place. The second term dp[i-1][j-1] corresponds to the case when the i-th element moves one place to the right, creating one inversion. The third term dp[i-1][j-2] corresponds to the case when the i-th element moves one place to the left, creating two inversions.
+
+Finally, a_n is the sum of dp[n][j] for all j from 0 to n(n-1)/2.
+
+Let&#x27;s calculate a_10:
+
+dp[0][0] = 1
+dp[1][0] = 1
+dp[2][0] = 1, dp[2][1] = 2
+dp[3][0] = 1, dp[3][1] = 4, dp[3][2] = 4
+dp[4][0] = 1, dp[4][1] = 6, dp[4][2] = 12, dp[4][3] = 8
+...
+dp[10][0] = 1, dp[10][1] = 10, dp[10][2] = 45, dp[10][3] = 120, dp[10][4] = 210, dp[10][5] = 252, dp[10][6] = 210, dp[10][7] = 120, dp[10][8] = 45, dp[10][9] = 10, dp[10][10] = 1
+
+a_10 = 1 + 10 + 45 + 120 + 210 + 252 + 210 + 120 + 45 + 10 + 1 = 1024
+
+So, there are 1024 nearly sorted permutations of {1, ..., 10}.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of all permutations of {1, ..., 10} where each element can either stay in its place or move at most one place to the left or right is 1024.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

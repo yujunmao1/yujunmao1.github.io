@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_29</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 3 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_29']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible positive integer values of x such that x, 2x+1 and 4x+1 are all prime numbers.
+
+You may find the following information useful:
+
+1. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the properties of prime numbers and the given modular arithmetic properties.
+
+First, let&#x27;s consider the smallest positive integer value for x, which is 1. However, if x = 1, then 2x + 1 = 3 and 4x + 1 = 5, which are both prime, but x itself is not prime. So x cannot be 1.
+
+Now, let&#x27;s consider the case where x is an even number greater than 2. If x is even, then x = 2k for some integer k. But if x is even, then 2x + 1 is odd, and 4x + 1 is odd, which is fine, but x itself would not be prime (except for x = 2, which we will consider separately). So x cannot be an even number greater than 2.
+
+Now, let&#x27;s consider the case where x is an odd number. If x is odd, then x = 2k + 1 for some integer k. Then 2x + 1 = 2(2k + 1) + 1 = 4k + 3, which is also odd. And 4x + 1 = 4(2k + 1) + 1 = 8k + 5, which is also odd.
+
+However, we can notice that for any odd x, 4x + 1 will be congruent to 5 mod 6, because:
+
+4x + 1 mod 6 = (4 * (2k + 1) + 1) mod 6
+             = (8k + 4 + 1) mod 6
+             = (8k mod 6 + 5 mod 6) mod 6
+             = (2k mod 6 + 5) mod 6
+             = 5 mod 6 (since 2k mod 6 is always even and thus a multiple of 6)
+
+Since all primes greater than 3 are of the form 6n ± 1, 4x + 1 cannot be prime if it is congruent to 5 mod 6. Therefore, the only possible values for x that we need to check are x = 2 and x = 3 (since for x &gt; 3, 4x + 1 will not be prime).
+
+Let&#x27;s check x = 2:
+x = 2 (prime)
+2x + 1 = 2*2 + 1 = 5 (prime)
+4x + 1 = 4*2 + 1 = 9 (not prime)
+
+So x = 2 does not work.
+
+Let&#x27;s check x = 3:
+x = 3 (prime)
+2x + 1 = 2*3 + 1 = 7 (prime)
+4x + 1 = 4*3 + 1 = 13 (prime)
+
+So x = 3 works.
+
+Therefore, the only positive integer value of x such that x, 2x + 1, and 4x + 1 are all prime numbers is x = 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only positive integer value of x such that x, 2x + 1, and 4x + 1 are all prime numbers is x = 3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

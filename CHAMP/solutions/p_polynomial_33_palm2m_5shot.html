@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_33</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_33']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Are there integer solutions to the equation (x^2-1)(y^2-1)+1981=z^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. If the equation has a solution, we have (x^2-1)(y^2-1)=z^2-1981.
+2. Since u^2 mod 8∈{0, 1, 4}, we have u^2-1 mod 8∈{0, 3, 7} and (x^2-1)(y^2-1) mod 8∈{0, 1, 5}.
+3. However, since 1981 mod 8=5, z^2-1981 mod 8∈{3, 4, 7}.
+4. Since there is no overlapping values, we conclude that the equation has no solution.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many integers n in {1, 2, ..., 99} is n^4+4^n a prime number?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have n^4+4^n=5 being a prime number when n=1.
+2. For n&gt;1, if n is even, obviously n^4+4^n is even and greater than two.
+3. Thus, we only need to consider the case of odd n.
+4. We let n=2k+1.
+5. n^4+4^n=n^4+4^(2k+1)=n^4+4*4^(2k)=n^4+4*2^(4k)=n^4+4*(2^k)^4.
+6. n^4+4*(2^k)^4=(n^2+2*(2^k)^2+2n(2^k))(n^2+2*(2^k)^2-2n(2^k)).
+7. The last expression gives a factorization of n^4+4^n.
+8. So n^4+4^n cannot be a prime number for any n&gt;1.
+9. Thus, there is 1 prime number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial 1-x+x^2-x^3+...+x^8-x^9 may be written in the form a_0+a_1*y+a_2*y^2+...+a_9*y^9, where y=x+1 and each a_i is a constant. Find the value of a_2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have f(x)=1-x+x^2-x^3+...+x^8-x^9=(1-x^10)/(1+x).
+2. Substituting x=y-1, we have f(x)=(1-(y-1)^10)/y.
+3. We have the coefficient C(10, 3)*y^3*(-1)^7=-120 for the term y^3 in (y-1)^10.
+4. Thus, the coefficient a_2 for y^2 in (1-(y-1)^10)/y is -(-120)=120.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find 3^105+4^105 mod 13.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. 3^105+4^105 mod 13=(3^3)^35+(4^3)^35 mod 13=1^35+(-1)^35 mod 13=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b, c&gt;0. What is the largest value of ((a+b+c)/(abc))/(1/a^2+1/b^2+1/c^2)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have (a+b+c)/(abc)=1/(ab)+1/(bc)+1/(ac)=(1/a)(1/b)+(1/b)(1/c)+(1/a)(1/c).
+2. We also have 1/a^2+1/b^2+1/c^2=(1/a)(1/a)+(1/b)(1/b)+(1/c)(1/c).
+3. Since the latter is a sum of products between the sequences (1/a, 1/b, 1/c) and (1/a, 1/b, 1/c) where the two sequences are sorted in the same way, and the former is a sum of products between the two sequences of the same elements but are not sorted in the same way, we have 1/a^2+1/b^2+1/c^2≥(a+b+c)/(abc).
+4. Thus, the largest value of ((a+b+c)/(abc))/(1/a^2+1/b^2+1/c^2) is 1, achieved when a=b=c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial p(x)=ax^4+bx^3+cx^2+dx+e with integer coefficients is divisible by 7 for every integer x. What are possible values of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $p(x) = ax^4 + bx^3 + cx^2 + dx + e$ be a polynomial with integer coefficients such that $p(x)$ is divisible by 7 for all integers $x$. Then, for any integer $x$, we have $p(x) = 7q(x)$ for some polynomial $q(x)$ with integer coefficients. This implies that $a, b, c, d, e$ are all divisible by 7. Therefore, $(a \bmod 7) + (b \bmod 7) + (c \bmod 7) + (d \bmod 7) + (e \bmod 7) = 7$.
+
+The only possible values of $(a \bmod 7) + (b \bmod 7) + (c \bmod 7) + (d \bmod 7) + (e \bmod 7)$ are therefore 7, 14, 21, 28, 35, 42, 49, 56, 63, and 70.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sum of the remainders when $a$, $b$, $c$, $d$, and $e$ are divided by 7 is 7.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

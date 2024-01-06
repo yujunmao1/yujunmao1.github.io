@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_1</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> [-1, 1]</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_1']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x be a root of the polynomial ax^2+bx+c, with a&gt;0, a+b+c≥0, a-b+c≥0, a-c≥0. What is the range of x, expressed as an interval?
+
+You may find the following information useful:
+
+1. a^4+4b^4=(a^2+2b^2+2ab)(a^2+2b^2-2ab).
+2. Express the last three inequality conditions in terms of the root x_1, x_2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the given inequalities and use the properties of the roots of a quadratic equation. The roots of the polynomial \( ax^2 + bx + c \) can be found using the quadratic formula:
+
+\[ x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \]
+
+Let \( x_1 \) and \( x_2 \) be the roots of the polynomial. Then, by Vieta&#x27;s formulas, we have:
+
+\[ x_1 + x_2 = -\frac{b}{a} \]
+\[ x_1 \cdot x_2 = \frac{c}{a} \]
+
+Now, let&#x27;s analyze the given inequalities in terms of \( x_1 \) and \( x_2 \):
+
+1. \( a + b + c \geq 0 \)
+2. \( a - b + c \geq 0 \)
+3. \( a - c \geq 0 \)
+
+Using Vieta&#x27;s formulas, we can rewrite these inequalities as:
+
+1. \( a + (-a(x_1 + x_2)) + a(x_1 \cdot x_2) \geq 0 \)
+2. \( a - (-a(x_1 + x_2)) + a(x_1 \cdot x_2) \geq 0 \)
+3. \( a - a(x_1 \cdot x_2) \geq 0 \)
+
+Simplifying, we get:
+
+1. \( a(1 - (x_1 + x_2) + (x_1 \cdot x_2)) \geq 0 \)
+2. \( a(1 + (x_1 + x_2) + (x_1 \cdot x_2)) \geq 0 \)
+3. \( a(1 - (x_1 \cdot x_2)) \geq 0 \)
+
+Since \( a &gt; 0 \), we can divide through by \( a \) without changing the direction of the inequalities:
+
+1. \( 1 - (x_1 + x_2) + (x_1 \cdot x_2) \geq 0 \)
+2. \( 1 + (x_1 + x_2) + (x_1 \cdot x_2) \geq 0 \)
+3. \( 1 - (x_1 \cdot x_2) \geq 0 \)
+
+Now, let&#x27;s analyze these inequalities:
+
+1. \( 1 + x_1x_2 \geq x_1 + x_2 \)
+2. \( 1 + x_1x_2 \geq -(x_1 + x_2) \)
+3. \( 1 \geq x_1x_2 \)
+
+From inequality (3), we know that the product of the roots is less than or equal to 1. This means that if one root is positive, the other must be less than or equal to 1, and if one root is negative, the other must be non-positive.
+
+Inequalities (1) and (2) can be combined to give us:
+
+\[ |x_1 + x_2| \leq 1 + x_1x_2 \]
+
+Since \( x_1x_2 \leq 1 \), we have:
+
+\[ |x_1 + x_2| \leq 2 \]
+
+This means that the sum of the roots is between -2 and 2.
+
+Now, let&#x27;s consider the discriminant \( \Delta = b^2 - 4ac \). For real roots, we need \( \Delta \geq 0 \). If \( \Delta = 0 \), then the roots are equal, and we have \( x_1 = x_2 \). If \( \Delta &gt; 0 \), then we have two distinct real roots.
+
+Given that \( a &gt; 0 \), the parabola opens upwards, and the vertex of the parabola will be at the minimum point. The x-coordinate of the vertex is given by \( -\frac{b}{2a} \), which is the average of the roots \( x_1 \) and \( x_2 \). Since the sum of the roots is between -2 and 2, the average of the roots (and thus the x-coordinate of the vertex) must be between -1 and 1.
+
+Therefore, the range of \( x \) (which includes both \( x_1 \) and \( x_2 \)) must be within the interval that includes the vertex and extends to the roots. Since the sum of the roots is constrained and the product is non-positive, the roots must lie within the interval \([-1, 1]\). This is because if one root were greater than 1, the other would have to be less than 1 to maintain the sum constraint, and vice versa.
+
+In conclusion, the range of \( x \) is:
+
+\[ x \in [-1, 1] \]</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The range of x, which is a root of the polynomial \( ax^2 + bx + c \) with the given conditions, is the interval \([-1, 1]\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

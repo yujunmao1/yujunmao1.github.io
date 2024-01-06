@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_30']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What are possible values of n mod k if x^n-y^n is divisible by x^k-y^k for integer n, k?
+
+You may find the following information useful:
+
+1. Let n=kq+r.
+2. Add and subtract y^(kq)*x^r to x^n-y^n.
+3. The polynomial ax^2+bx+c has two different real roots if and only if b^2&gt;4ac, two same real roots if and only if b^2=4ac, and no real roots if b^2&lt;4ac.
+4. All prime numbers greater than 3 has the form of 6n±1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, we need to find the possible values of \( n \mod k \) such that \( x^n - y^n \) is divisible by \( x^k - y^k \) for integers \( n \) and \( k \).
+
+Let&#x27;s follow the steps provided:
+
+1. Express \( n \) as \( n = kq + r \), where \( q \) and \( r \) are integers and \( 0 \leq r &lt; k \).
+
+2. Add and subtract \( y^{kq}x^r \) to \( x^n - y^n \):
+\[ x^n - y^n = x^{kq+r} - y^{kq+r} = (x^{kq}x^r - y^{kq}x^r) + (y^{kq}x^r - y^{kq}y^r) \]
+
+3. Factor out common terms:
+\[ x^n - y^n = x^r(x^{kq} - y^{kq}) + y^{kq}(x^r - y^r) \]
+
+Notice that \( x^{kq} - y^{kq} \) is divisible by \( x^k - y^k \) because \( x^{kq} - y^{kq} \) can be factored into a product of terms, each of which is \( x^k - y^k \) times a polynomial in \( x^k \) and \( y^k \). This is due to the fact that \( x^k - y^k \) divides \( x^{km} - y^{km} \) for any integer \( m \).
+
+Now, for \( x^n - y^n \) to be divisible by \( x^k - y^k \), the second term \( y^{kq}(x^r - y^r) \) must also be divisible by \( x^k - y^k \). Since \( y^{kq} \) is not related to \( x^k - y^k \), the divisibility condition depends on \( x^r - y^r \).
+
+For \( x^r - y^r \) to be divisible by \( x^k - y^k \), we must have \( r = 0 \) because if \( r &gt; 0 \), \( x^r - y^r \) is a polynomial of a lower degree than \( x^k - y^k \) and cannot be divisible by it unless it is the zero polynomial (which occurs when \( r = 0 \)).
+
+Therefore, the possible values of \( n \mod k \) are such that \( r = 0 \), which means \( n \) must be a multiple of \( k \). In other words, \( n \mod k = 0 \).
+
+The information provided in points 3 and 4 is not directly relevant to solving this problem, as we are dealing with divisibility and not the nature of roots of polynomials or properties of prime numbers. The key to the solution is understanding the divisibility of polynomials and the remainder when \( n \) is divided by \( k \).
+
+Final answer: The possible values of \( n \mod k \) are \( 0 \), meaning \( n \) must be a multiple of \( k \) for \( x^n - y^n \) to be divisible by \( x^k - y^k \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of \( n \mod k \) are \( 0 \), meaning \( n \) must be a multiple of \( k \) for \( x^n - y^n \) to be divisible by \( x^k - y^k \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

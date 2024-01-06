@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_31</td>
+            <td>GPT-4 Turbo</td>
+            <td>Name w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (a^3+2b)/(3a)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_31']
+messages = problem.conversations['GPT-4 Turbo|Name w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Suppose that for x, y we have x+y=a and x^3+y^3=b. Find x^2+y^2, as an expression of a and b.
+
+You may find the following information useful:
+
+1. Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the identities x + y = a and x^3 + y^3 = b, we want to find x^2 + y^2.
+
+First, let&#x27;s use the given information that s_n = u * s_(n-1) - v * s_(n-2), where u = x + y and v = xy.
+
+We know that s_1 = x + y = a.
+
+We also know that s_3 = x^3 + y^3 = b.
+
+We want to find s_2 = x^2 + y^2.
+
+Using the recursive formula, we can express s_2 in terms of s_1 and s_0:
+
+s_2 = u * s_1 - v * s_0
+
+But we need to find s_0 and v. We know that s_0 = x^0 + y^0 = 1 + 1 = 2 since any non-zero number raised to the power of 0 is 1.
+
+Now, we need to find v = xy. We can do this by using the fact that (x + y)^2 = x^2 + 2xy + y^2. We know x + y = a, so:
+
+a^2 = (x + y)^2 = x^2 + 2xy + y^2
+
+We want to find x^2 + y^2, which is s_2, so we need to isolate 2xy:
+
+2xy = a^2 - (x^2 + y^2)
+
+2xy = a^2 - s_2
+
+Now, we can solve for xy (which is v):
+
+v = xy = (a^2 - s_2) / 2
+
+We can now use the recursive formula to find s_2:
+
+s_2 = u * s_1 - v * s_0
+s_2 = a * a - ((a^2 - s_2) / 2) * 2
+s_2 = a^2 - (a^2 - s_2)
+s_2 = a^2 - a^2 + s_2
+s_2 = s_2
+
+This doesn&#x27;t help us find s_2 directly, so we need to find another way to express s_2 in terms of a and b.
+
+We can use the identity x^3 + y^3 = (x + y)(x^2 - xy + y^2) to relate b to s_2:
+
+b = x^3 + y^3 = (x + y)(x^2 - xy + y^2)
+b = a(x^2 - xy + y^2)
+b = a(s_2 - xy)
+b = a(s_2 - v)
+
+Now we can solve for s_2:
+
+b = a(s_2 - (a^2 - s_2) / 2)
+2b = 2a(s_2 - (a^2 - s_2) / 2)
+2b = 2as_2 - a(a^2 - s_2)
+2b = 2as_2 - a^3 + as_2
+2b = 3as_2 - a^3
+3as_2 = 2b + a^3
+s_2 = (2b + a^3) / (3a)
+
+So, x^2 + y^2, which is s_2, is given by:
+
+x^2 + y^2 = (2b + a^3) / (3a)</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The expression for x^2 + y^2 in terms of a and b is (2b + a^3) / (3a).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

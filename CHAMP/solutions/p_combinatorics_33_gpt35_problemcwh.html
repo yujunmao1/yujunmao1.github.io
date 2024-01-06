@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_33</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> sum_(i=1)^n i^3, or equivalently (n(n+1)/2)^2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_33']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Among all sequences of positive integer numbers have sum n, for integer k&lt;n-1, how many times does the number k appear, as an expression of n and k?
+Step-wise solution:
+1. Consider a row of n points, with n-1 gaps.
+2. For each of the n-1 gaps, we can choose to insert a divider or not, and we count the number of points in each group, which forms a sequence (a_1, ..., a_(m+1)) for m dividers that sum up to n.
+3. Thus, the number of times that k appears among all the sequences is the number of times that a group of k points appear among all the divider configurations.
+4. To get this number, we can find a k-point group and isolate it.
+5. We need one divider if the group is at the two ends of the row, in which case we have n-k-1 remaining gaps to fill.
+6. We need two dividers if the group is at the middle, where we have n-k-1 possible group locations, and for each location, we have n-k-2 remaining gaps to fill.
+7. Thus, we have 2*2^(n-k-1)+(n-k-1)*2^(n-k-2)=(n-k+3)*2^(n-k-2) groups of k, which is also the number of times that k appear in sequences that sum up to n.
+
+Problem: Find the number of ways to fill a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles.
+Step-wise solution:
+1. We let a_n be the number of ways to tile a 2 x n rectangle.
+2. For a 2 x (n+1) rectangle, let 2 be the vertical dimension and n+1 be the horizontal direction.
+3. Thus, it could have one vertical tile in the last column, two horizontal tiles in the last two columns, or one square 2 x 2 tile in the last two columns.
+4. Without these new tiles, we have 2 x n, 2 x (n-1) or 2 x (n-1) rectangles.
+5. Thus, we have a_(n+1)=a_n+2*a_(n-1).
+6. Starting from a_1=1 and a_2=3, we have the sequence of number of ways as 5, 11, 21, 43, 85, with a_7=85.
+7. Thus, there are 85 ways to tile a 2 x 7 rectangle.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+From the set {1, 2, 3, ..., n+1}, select quadruple (x, y, z, u), with duplicate allowed, such that u&gt;max(x, y, z). In how many ways can this be done?
+
+In addition, you may also find the following information helpful:
+
+1. Consider the number of ways to choose the quadruple when u=i.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can consider the number of ways to choose the quadruple when u=i, for each value of i.
+
+Let&#x27;s start by considering the case when u=1. In this case, x, y, and z can each take any value from 1 to n+1. Therefore, there are (n+1)^3 ways to choose the quadruple when u=1.
+
+Next, let&#x27;s consider the case when u=2. In this case, x, y, and z can each take any value from 1 to 2. However, we need to ensure that u&gt;max(x, y, z), so we cannot have any of x, y, or z equal to 2. Therefore, there are 2^3 - 2 = 6 ways to choose the quadruple when u=2.
+
+Similarly, for each value of i from 3 to n+1, there are (i-1)^3 - (i-2)^3 ways to choose the quadruple when u=i.
+
+To find the total number of ways to choose the quadruple, we can sum up the number of ways for each value of i:
+
+Total number of ways = (n+1)^3 + (2^3 - 2) + ((3^3 - 2^3) + (4^3 - 3^3) + ... + ((n+1)^3 - n^3))
+
+Simplifying this expression, we get:
+
+Total number of ways = (n+1)^3 + 6 + (3^3 - 2^3) + (4^3 - 3^3) + ... + ((n+1)^3 - n^3)
+
+Using the formula for the sum of cubes, we can further simplify this expression:
+
+Total number of ways = (n+1)^3 + 6 + (3^2 + 3*2 + 2^2) + (4^2 + 4*3 + 3^2) + ... + ((n+1)^2 + (n+1)*n + n^2)
+
+Total number of ways = (n+1)^3 + 6 + (3^2 + 4^2 + ... + (n+1)^2) + (3*2 + 4*3 + ... + (n+1)*n) + (2^2 + 3^2 + ... + n^2)
+
+Using the formulas for the sum of squares and the sum of consecutive integers, we can simplify further:
+
+Total number of ways = (n+1)^3 + 6 + [(n+1)(n+2)(2n+3)/6 - 1] + [(n+1)(n)(n+2)/2 - 3] + [(n)(n+1)(2n+1)/6 - 2]
+
+Total number of ways = (n+1)^3 + (n+1)(n+2)(2n+3)/6 + (n+1)(n)(n+2)/2 + (n)(n+1)(2n+1)/6 - 6
+
+Total number of ways = (n+1)[(n+1)^2 + (n+2)(2n+3)/6 + (n)(n+2)/2 + (n)(2n+1)/6] - 6
+
+Total number of ways = (n+1)[(n+1)^2 + (n+2)(2n+3) + 3n(n+2) + n(2n+1)]/6 - 6
+
+Total number of ways = (n+1)[(n+1)^2 + 2(n+2)(n+1) + 3n(n+2) + 2n^2 + n]/6 - 6
+
+Total number of ways = (n+1)[(n+1)^2 + 2(n+1)(n+2) + 3n(n+2) + 2n^2 + n]/6 - 6
+
+Total number of ways = (n+1)(n+1)(n+2 + 2(n+2) + 3n + 2n^2 + n)/6 - 6
+
+Total number of ways = (n+1)(n+1)(2n^2 + 6n + 4)/6 - 6
+
+Total number of ways = (n+1)(n+1)(n+2)/3 - 6
+
+Therefore, the final answer is (n+1)(n+1)(n+2)/3 - 6.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to select a quadruple (x, y, z, u) from the set {1, 2, 3, ..., n+1}, with duplicate allowed and u&gt;max(x, y, z), is given by (n+1)(n+1)(n+2)/3 - 6.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

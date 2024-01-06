@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_15</td>
+            <td>PaLM 2 Medium</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_15']
+messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Does there exist a positive sequence {a_n}, such that both sum a_n and sum 1/(n^2*a_n) converge to finite values?
+
+You may find the following information useful:
+
+1. Pair up the terms from the two sums.
+2. For non-negative x, y, we have (x+y)≥2*sqrt(xy) and (x+y)/2≥sqrt(xy), with equality if and only if x=y.
+3. The harmonic series 1+1/2+1/3+... diverges (i.e., the sum is not a finite value).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n = \frac{1}{n^2}$. Then,
+
+\begin{align*}
+\sum_{n=1}^{\infty} a_n &amp;= \sum_{n=1}^{\infty} \frac{1}{n^2} \\
+&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n} - \frac{1}{n^2} + \frac{1}{n^3} - \frac{1}{n^4} + \cdots \right) \\
+&amp;= 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots \\
+&amp;= \frac{1}{2}.
+\end{align*}
+
+Also,
+
+\begin{align*}
+\sum_{n=1}^{\infty} \frac{1}{n^2 a_n} &amp;= \sum_{n=1}^{\infty} \frac{1}{n^4} \\
+&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n^2} - \frac{2}{n^3} + \frac{3}{n^4} - \frac{4}{n^5} + \cdots \right) \\
+&amp;= 1 - \frac{2}{3} + \frac{3}{5} - \frac{4}{7} + \cdots \\
+&amp;= \frac{1}{2}.
+\end{align*}
+
+Therefore, both $\sum a_n$ and $\sum \frac{1}{n^2 a_n}$ converge to finite values.
+
+* * *
+
+Here is a more detailed solution.
+
+We can pair up the terms from the two sums as follows:
+
+\begin{align*}
+\sum_{n=1}^{\infty} a_n &amp;= \sum_{n=1}^{\infty} \frac{1}{n^2} \\
+&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n} - \frac{1}{n^2} + \frac{1}{n^3} - \frac{1}{n^4} + \cdots \right) \\
+&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n} \right) + \sum_{n=1}^{\infty} \left( -\frac{1}{n^2} \right) + \sum_{n=1}^{\infty} \left( \frac{1}{n^3} \right) - \sum_{n=1}^{\infty} \left( \frac{1}{n^4} \right) + \cdots \\
+&amp;= 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots \\
+&amp;= \frac{1}{2}.
+\end{align*}
+
+Also, we can pair up the terms from the two sums as follows:
+
+\begin{align*}
+\sum_{n=1}^{\infty} \frac{1}{n^2 a_n} &amp;= \sum_{n=1}^{\infty} \frac{1}{n^4} \\
+&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n^2} - \frac{2}{n^3} + \frac{3}{n^4} - \frac{4}{n^5} + \cdots \right) \\
+&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n^2} \right) + \sum_{n=1}^{\infty} \left( -\frac{2}{n^3} \right) + \sum_{n=1}^{\infty} \left( \frac{3}{n^4} \right) - \sum_{n=1}^{\infty} \left( \frac{4}{n^5} \right) + \cdots \\
+&amp;= 1 - \frac{2}{3} + \frac{3}{5} - \frac{4}{7} + \cdots \\
+&amp;= \frac{1}{2}.
+\end{align*}
+
+Therefore, both $\sum a_n$ and $\sum \frac{1}{n^2 a_n}$ converge to finite values.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there exists a positive sequence $\\{a_n\\}$ such that both $\sum a_n$ and $\sum \frac{1}{n^2 a_n}$ converge to finite values.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

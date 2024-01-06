@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_49</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_49']
+messages = problem.conversations['GPT-3.5|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence {x_n} is defined by x_1=2, x_(n+1)=(2+x_n)/(1−2x_n), and it is known that there are no x_n=0. Could x_p=x_q for any p≠q, and if so, find the smallest possible value of p+q.
+
+You may find the following information useful:
+
+1. Let a=arctan(2) and find the relationship between x_n and tan(na).
+2. tan(2a)=2tan(a)/(1-tan(a)^2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will first find a relationship between x_n and tan(na) using the given information.
+
+1. Let a = arctan(2).
+   This means tan(a) = 2.
+
+2. We want to find a relationship between x_n and tan(na).
+   Let&#x27;s consider the first few terms of the sequence {x_n}:
+
+   x_1 = 2
+   x_2 = (2 + x_1) / (1 - 2x_1)
+       = (2 + 2) / (1 - 2(2))
+       = 4 / (-3)
+       = -4/3
+
+   x_3 = (2 + x_2) / (1 - 2x_2)
+       = (2 - 4/3) / (1 - 2(-4/3))
+       = (6/3 - 4/3) / (1 + 8/3)
+       = 2/3 / (11/3)
+       = 2/3 * 3/11
+       = 2/11
+
+   x_4 = (2 + x_3) / (1 - 2x_3)
+       = (2 + 2/11) / (1 - 2(2/11))
+       = (22/11 + 2/11) / (1 - 4/11)
+       = 24/11 / (7/11)
+       = 24/11 * 11/7
+       = 24/7
+
+   From these calculations, we can observe that x_2 = -4/3, x_3 = 2/11, and x_4 = 24/7.
+
+   Now, let&#x27;s consider the values of tan(na):
+
+   tan(a) = 2
+   tan(2a) = 2tan(a) / (1 - tan(a)^2)
+           = 2(2) / (1 - 2^2)
+           = 4 / (1 - 4)
+           = 4 / (-3)
+           = -4/3
+
+   Comparing the values of x_2, x_3, x_4 with tan(2a), we can see that x_2 = tan(2a), x_3 = tan(3a), and x_4 = tan(4a).
+
+   Therefore, we can conclude that x_n = tan(na) for all positive integers n.
+
+Now, let&#x27;s address the second part of the problem: Could x_p = x_q for any p ≠ q?
+
+If x_p = x_q for some p ≠ q, then tan(pa) = tan(qa).
+
+Using the properties of tangent function, we know that tan(pa) = tan(qa) if and only if pa = qa + kπ, where k is an integer.
+
+Therefore, we have pa - qa = kπ.
+
+Since p and q are positive integers, pa - qa cannot be equal to kπ unless p = q.
+
+Hence, x_p = x_q if and only if p = q.
+
+Therefore, there are no distinct values of p and q for which x_p = x_q.
+
+As a result, the smallest possible value of p + q is undefined since there are no such values.
+
+Final Answer: There are no distinct values of p and q for which x_p = x_q.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence {x_n} defined by x_1=2, x_(n+1)=(2+x_n)/(1−2x_n) does not have any distinct values of p and q for which x_p = x_q, so the smallest possible value of p + q is undefined.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

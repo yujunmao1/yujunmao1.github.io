@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_47</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 120</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_47']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial 1-x+x^2-x^3+...+x^8-x^9 may be written in the form a_0+a_1*y+a_2*y^2+...+a_9*y^9, where y=x+1 and each a_i is a constant. Find the value of a_2.
+
+You may find the following information useful:
+
+1. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).
+2. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to express the given polynomial in terms of the new variable \( y = x + 1 \). The polynomial is given by:
+
+\[ P(x) = 1 - x + x^2 - x^3 + \ldots + x^8 - x^9 \]
+
+This is a geometric series with the first term \( a = 1 \) and common ratio \( r = -x \). However, we are only interested in the coefficient \( a_2 \) in the expansion of \( P(x) \) in terms of \( y \), so we don&#x27;t need to find the entire series in terms of \( y \).
+
+Let&#x27;s find the first few terms of \( P(x) \) in terms of \( y \) to identify a pattern that will help us determine \( a_2 \).
+
+We have \( y = x + 1 \), so \( x = y - 1 \). Now we can substitute \( x \) with \( y - 1 \) in the polynomial:
+
+\[ P(y - 1) = 1 - (y - 1) + (y - 1)^2 - (y - 1)^3 + \ldots + (y - 1)^8 - (y - 1)^9 \]
+
+We are interested in the coefficient of \( y^2 \) in this expansion, which is \( a_2 \). Let&#x27;s expand the terms up to \( (y - 1)^3 \) to find \( a_2 \):
+
+\[ (y - 1)^0 = 1 \]
+\[ (y - 1)^1 = y - 1 \]
+\[ (y - 1)^2 = y^2 - 2y + 1 \]
+\[ (y - 1)^3 = (y - 1)(y^2 - 2y + 1) = y^3 - 3y^2 + 3y - 1 \]
+
+We can stop here because we only need the coefficient of \( y^2 \). Now, let&#x27;s collect the terms with \( y^2 \):
+
+The \( y^2 \) term from \( (y - 1)^2 \) is \( +1 \cdot y^2 \).
+The \( y^2 \) term from \( -(y - 1)^3 \) is \( -3 \cdot y^2 \).
+
+Adding these up, we get the coefficient of \( y^2 \) in the polynomial:
+
+\[ a_2 = 1 - 3 = -2 \]
+
+Therefore, the value of \( a_2 \) is \( -2 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of \( a_2 \) in the polynomial \( 1 - x + x^2 - x^3 + \ldots + x^8 - x^9 \) when expressed in the form \( a_0 + a_1 \cdot y + a_2 \cdot y^2 + \ldots + a_9 \cdot y^9 \), where \( y = x + 1 \), is \( -2 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_7</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_7']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If a, b, c are side lengths of a (possibly degenerate) triangle, then what is the largest value of a/(b+c)+b/(a+c)+c/(a+b)?
+
+You may find the following information useful:
+
+1. For real number x, y, |x+y|≤|x|+|y|.
+2. Compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c$ be the side lengths of a triangle. By the Triangle Inequality, we have $a+b&gt;c$, $b+c&gt;a$, and $c+a&gt;b$. Adding these three inequalities, we get $2(a+b+c)&gt;2c$, so $a+b+c&gt;c$. Dividing both sides by 2, we get $a+b+c\ge c$.
+
+Let $s=\frac{a+b+c}{2}$. Then by the Law of Cosines,
+\begin{align*}
+a^2 &amp;= b^2 + c^2 - 2bc\cos A \\
+b^2 &amp;= a^2 + c^2 - 2ac\cos B \\
+c^2 &amp;= a^2 + b^2 - 2ab\cos C.
+\end{align*}Adding these three equations, we get
+\begin{align*}
+2(a^2 + b^2 + c^2) &amp;= (a+b+c)^2 - 2(ab+bc+ca) \\
+&amp;= s^2 - 2(ab+bc+ca).
+\end{align*}Dividing both sides by 2, we get
+\begin{align*}
+a^2 + b^2 + c^2 &amp;= \frac{s^2}{2} - (ab+bc+ca).
+\end{align*}Taking the square root of both sides, we get
+\begin{align*}
+a &amp;= \pm \sqrt{\frac{s^2}{2} - (ab+bc+ca)}.
+\end{align*}Similarly,
+\begin{align*}
+b &amp;= \pm \sqrt{\frac{s^2}{2} - (ac+bc+ab)} \\
+c &amp;= \pm \sqrt{\frac{s^2}{2} - (ab+bc+ca)}.
+\end{align*}Therefore,
+\begin{align*}
+a/(b+c) &amp;= \pm \frac{\sqrt{\frac{s^2}{2} - (ab+bc+ca)}}{\sqrt{s^2 - (a+b+c)^2}} \\
+&amp;= \pm \frac{\sqrt{\frac{s^2}{2} - (ab+bc+ca)}}{s-(a+b+c)}.
+\end{align*}Similarly,
+\begin{align*}
+b/(a+c) &amp;= \pm \frac{\sqrt{\frac{s^2}{2} - (ac+bc+ab)}}{s-(a+c)} \\
+c/(a+b) &amp;= \pm \frac{\sqrt{\frac{s^2}{2} - (ab+bc+ca)}}{s-(a+b)}.
+\end{align*}Now, we can use the Triangle Inequality again to bound the terms in the sum. For example,
+\begin{align*}
+\frac{a}{b+c} &amp;= \pm \frac{\sqrt{\frac{s^2}{2} - (ab+bc+ca)}}{s-(a+b+c)} \\
+&amp;\le \frac{\sqrt{\frac{s^2}{2} - (ab+bc+ca)}}{s-a} \\
+&amp;= \frac{\sqrt{\frac{s^2}{2} - (ab+bc+ca)}}{s-(a+b)} + \frac{\sqrt{\frac{s^2}{2} - (ab+bc+ca)}}{s-c} \\
+&amp;\le \frac{1}{s-a} + \frac{1}{s-c}.
+\end{align*}Similarly,
+\begin{align*}
+\frac{b}{a+c} &amp;\le \frac{1}{s-b} + \frac{1}{s-c} \\
+\frac{c}{a+b} &amp;\le \frac{1}{s-a} + \frac{1}{s-b}.
+\end{align*}Therefore,
+\begin{align*}
+a/(b+c) + b/(a+c) + c/(a+b) &amp;\le \frac{1}{s-a} + \frac{1}{s-b} + \frac{1}{s-c} + \frac{1}{s-a} + \frac{1}{s-b} +</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of $\frac{a}{b+c}+\frac{b}{a+c}+\frac{c}{a+b}$ is $\frac{3}{s-a}+\frac{3}{s-b}+\frac{3}{s-c}$, where $s=\frac{a+b+c}{2}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

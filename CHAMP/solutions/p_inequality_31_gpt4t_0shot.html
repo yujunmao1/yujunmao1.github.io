@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_31</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n^2/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_31']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_i&gt;0, and s=x_1+x_2+···+x_n. What is the smallest value of s/(s-x_1)+s/(s-x_2)+...+s/(s-x_n) in terms of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the given expression, we can use the Cauchy-Schwarz inequality. The expression we are given is:
+
+\[ \frac{s}{s-x_1} + \frac{s}{s-x_2} + \ldots + \frac{s}{s-x_n} \]
+
+Let&#x27;s rewrite this expression by factoring out s from the numerator:
+
+\[ \frac{s}{s-x_1} = 1 + \frac{x_1}{s-x_1} \]
+
+Applying this to the entire expression, we get:
+
+\[ \sum_{i=1}^{n} \left(1 + \frac{x_i}{s-x_i}\right) = n + \sum_{i=1}^{n} \frac{x_i}{s-x_i} \]
+
+Now, we want to minimize the second term:
+
+\[ \sum_{i=1}^{n} \frac{x_i}{s-x_i} \]
+
+We can apply the Cauchy-Schwarz inequality to the sequences \(a_i = \sqrt{x_i}\) and \(b_i = \frac{\sqrt{x_i}}{s-x_i}\). The Cauchy-Schwarz inequality states that for any sequences of real numbers \(a_i\) and \(b_i\), the following holds:
+
+\[ \left(\sum_{i=1}^{n} a_i b_i\right)^2 \leq \left(\sum_{i=1}^{n} a_i^2\right) \left(\sum_{i=1}^{n} b_i^2\right) \]
+
+Let&#x27;s calculate the terms:
+
+\[ \sum_{i=1}^{n} a_i b_i = \sum_{i=1}^{n} \frac{x_i}{s-x_i} \]
+
+\[ \sum_{i=1}^{n} a_i^2 = \sum_{i=1}^{n} x_i = s \]
+
+\[ \sum_{i=1}^{n} b_i^2 = \sum_{i=1}^{n} \frac{x_i}{(s-x_i)^2} \]
+
+Applying the Cauchy-Schwarz inequality:
+
+\[ \left(\sum_{i=1}^{n} \frac{x_i}{s-x_i}\right)^2 \leq s \left(\sum_{i=1}^{n} \frac{x_i}{(s-x_i)^2}\right) \]
+
+Now, let&#x27;s use the AM-HM inequality for the terms \(s-x_i\):
+
+\[ \frac{1}{n} \sum_{i=1}^{n} (s-x_i) \geq \frac{n}{\sum_{i=1}^{n} \frac{1}{s-x_i}} \]
+
+Since \( \sum_{i=1}^{n} x_i = s \), we have:
+
+\[ \frac{1}{n} \sum_{i=1}^{n} (s-x_i) = \frac{1}{n} (ns - s) = \frac{s(n-1)}{n} \]
+
+So:
+
+\[ \frac{s(n-1)}{n} \geq \frac{n}{\sum_{i=1}^{n} \frac{1}{s-x_i}} \]
+
+Taking the reciprocal of both sides:
+
+\[ \frac{n}{s(n-1)} \leq \sum_{i=1}^{n} \frac{1}{s-x_i} \]
+
+Now, we square both sides:
+
+\[ \left(\frac{n}{s(n-1)}\right)^2 \leq \left(\sum_{i=1}^{n} \frac{1}{s-x_i}\right)^2 \]
+
+And since \( \sum_{i=1}^{n} \frac{1}{s-x_i} \) is the denominator of our original terms, we can relate this to our Cauchy-Schwarz inequality result:
+
+\[ \left(\sum_{i=1}^{n} \frac{x_i}{s-x_i}\right)^2 \leq s \left(\sum_{i=1}^{n} \frac{x_i}{(s-x_i)^2}\right) \]
+
+\[ \left(\sum_{i=1}^{n} \frac{x_i}{s-x_i}\right)^2 \leq s \left(\frac{n}{s(n-1)}\right)^2 \]
+
+Taking the square root of both sides:
+
+\[ \sum_{i=1}^{n} \frac{x_i}{s-x_i} \leq \frac{n}{n-1} \]
+
+Now, we add back the n we factored out at the beginning:
+
+\[ n + \sum_{i=1}^{n} \frac{x_i}{s-x_i} \leq n + \frac{n}{n-1} \]
+
+\[ n + \frac{n}{n-1} = n + \frac{n}{n-1} \cdot \frac{n-1}{n-1} \]
+
+\[ n + \frac{n}{n-1} = n + \frac{n}{n-1} \cdot \frac{n-1}{n-1} \]
+
+\[ n + \frac{n}{n-1} = n + \frac{n}{n-1} \]
+
+\[ n + \frac{n}{n-1} = n + 1 + \frac{1}{n-1} \]
+
+So the smallest value of the given expression in terms of n is:
+
+\[ n + 1 + \frac{1}{n-1} \]
+
+This is the smallest value that the expression can take, given the constraints of the problem.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( s/(s-x_1) + s/(s-x_2) + \ldots + s/(s-x_n) \) in terms of \( n \) is \( n + 1 + \frac{1}{n-1} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

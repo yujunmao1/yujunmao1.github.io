@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_6</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x=1, y=2) and (x=2, y=1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_6']
+messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equations x^5+y^5=33, x+y=3.
+
+You may find the following information useful:
+
+1. Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the given system of equations, we can use the substitution method. Let&#x27;s solve the second equation for x in terms of y:
+
+x + y = 3
+x = 3 - y
+
+Now, substitute this expression for x in the first equation:
+
+(3 - y)^5 + y^5 = 33
+
+Expand the binomial using the binomial theorem:
+
+(3^5 - 5*3^4*y + 10*3^3*y^2 - 10*3^2*y^3 + 5*3*y^4 - y^5) + y^5 = 33
+
+Simplify:
+
+243 - 405y + 270y^2 - 90y^3 + 15y^4 = 33
+
+Rearrange the equation:
+
+15y^4 - 90y^3 + 270y^2 - 405y + 210 = 0
+
+Divide both sides by 15 to simplify:
+
+y^4 - 6y^3 + 18y^2 - 27y + 14 = 0
+
+Now, we need to find the integer solutions for y. We can use synthetic division to test possible integer roots. Let&#x27;s start with y = 1:
+
+1 | 1 - 6  18 - 27  14
+    |    1  -5  13 -14
+    |_________________
+       1 -5  13 -14   0
+
+Since the remainder is 0, y = 1 is a root. Therefore, (y - 1) is a factor of the polynomial. We can use synthetic division again to find the remaining quadratic equation:
+
+(y - 1)(y^3 - 5y^2 + 13y - 14) = 0
+
+Now, let&#x27;s solve the remaining cubic equation:
+
+y^3 - 5y^2 + 13y - 14 = 0
+
+We can use the Rational Root Theorem to test possible rational roots. The possible rational roots are ±1, ±2, ±7, ±14. Testing these values, we find that y = 2 is a root:
+
+2 | 1 - 5  13 - 14
+    |    2  -6  14
+    |_________________
+       1 -3   7    0
+
+Since the remainder is 0, y = 2 is a root. Therefore, (y - 2) is a factor of the cubic equation. We can use synthetic division again to find the remaining quadratic equation:
+
+(y - 2)(y^2 - 3y + 7) = 0
+
+Now, let&#x27;s solve the remaining quadratic equation:
+
+y^2 - 3y + 7 = 0
+
+We can use the quadratic formula to find the roots:
+
+y = (3 ± √(3^2 - 4*1*7)) / 2
+y = (3 ± √(-19)) / 2
+
+Since the discriminant is negative, there are no real solutions for y. Therefore, there are no integer solutions for the given system of equations x^5 + y^5 = 33 and x + y = 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no integer solutions to the equations x^5 + y^5 = 33 and x + y = 3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_66</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_66']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If n is a composite number, find all possible values of 1*2*...*(n-2)*(n-1) mod 1+2+...+(n-2)+(n-1).
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have Q(n)=1*2*...*(n-2)*(n-1)/(1+2+...+(n-1))=1*2*...*(n-2)*(n-1)/(n(n-1)/2)=2*2*3*...*(n-2)/n.
+2. Since n is composite, we let n=pq, where 1&lt;p≤q&lt;n.
+3. We further have q&lt;n-1 since gcd(n,n-1)=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s continue from where the partial solution left off:
+
+We have the expression for \( Q(n) \) as:
+
+\[ Q(n) = \frac{2 \cdot 2 \cdot 3 \cdot \ldots \cdot (n-2)}{n} \]
+
+Given that \( n \) is composite, we can write \( n = pq \) where \( 1 &lt; p \leq q &lt; n \) and \( p, q \) are integers. We also know that \( q &lt; n-1 \) because \( \gcd(n, n-1) = 1 \) (any two consecutive integers are coprime).
+
+Now, we want to find the value of \( Q(n) \) modulo the sum of the integers from \( 1 \) to \( n-1 \), which is \( \frac{n(n-1)}{2} \).
+
+First, let&#x27;s simplify \( Q(n) \) further. Since \( n = pq \), we can write:
+
+\[ Q(n) = \frac{2 \cdot 2 \cdot 3 \cdot \ldots \cdot (n-2)}{pq} \]
+
+Now, we need to consider the factors of \( n \) in the product \( 2 \cdot 2 \cdot 3 \cdot \ldots \cdot (n-2) \). Since \( n \) is composite, at least one of \( p \) or \( q \) (or both) will appear in the product. This means that \( Q(n) \) will be an integer because the product in the numerator will contain the factors of \( n \).
+
+However, we are interested in the value of \( Q(n) \) modulo \( \frac{n(n-1)}{2} \). Since \( Q(n) \) is an integer and \( n \) divides the numerator of \( Q(n) \), the value of \( Q(n) \) modulo \( \frac{n(n-1)}{2} \) will be \( 0 \) because \( n \) is a factor of both the numerator of \( Q(n) \) and \( \frac{n(n-1)}{2} \).
+
+Therefore, the value of \( 1 \cdot 2 \cdot \ldots \cdot (n-2) \cdot (n-1) \) modulo \( 1+2+ \ldots +(n-2)+(n-1) \) is \( 0 \) for any composite number \( n \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of \(1 \cdot 2 \cdot \ldots \cdot (n-2) \cdot (n-1)\) modulo \(1+2+ \ldots +(n-2)+(n-1)\) is \(0\) for any composite number \(n\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

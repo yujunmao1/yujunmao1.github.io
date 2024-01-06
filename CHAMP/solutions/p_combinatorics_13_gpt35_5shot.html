@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_13</td>
+            <td>GPT-3.5</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 4^n</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_13']
+messages = problem.conversations['GPT-3.5|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation 2^x-1=3^y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Obviously, x=2, y=1 is an solution.
+2. For x≥3 and even y, let y=2k.
+3. So 2^x=3^y+1=3^(2k)+1=9^k+1.
+4. We have 2^x mod 8=0 but 9^k+1 mod 8=1^k+1 mod 8=2.
+5. So the equation has no solution with x&gt;2 and even y.
+6. For x≥3 and odd y, let y=2k+1.
+7. So 2^x=3^y+1=3^(2k+1)+1=3*9^k+1.
+8. We have 2^x mod 8=0 but 3*9^k+1 mod 8=3*1^k+1 mod 8=4.
+9. So the equation has no solution with x&gt;2 and odd y.
+10. So the only solution is x=2, y=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 1≤r≤n and consider all subsets of r elements of the set {1, 2, ..., n}. What is the arithmetic mean of the smallest element of these subsets, as an expression of n and r?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Consider the subsets of {0, 1, ..., n} with r+1 elements.
+2. We define a mapping f from the latter subset and the former subset to be the operation that removes the smallest element in the subset, such as f({0, 2, 3, 5})={2, 3, 5}.
+3. Thus, for a set y with smallest element k, there are k sets x such that f(x)=y (e.g., the set {2, 3, 5} is mapped to from {0, 2, 3, 5} and {1, 2, 3, 5}).
+4. There are C(n+1, r+1) size-r subsets of {0, 1, ..., n}, which can also be obtained repeating each set y for min(y) times.
+5. The second counting method is the sum of smallest element of all y⊆{1, 2, ..., n}, which is C(n, r)*A(n, r), where A(n, r) is the arithmetic mean that we need to find.
+6. Thus, we have A(n, r)=C(n+1, r+1)/C(n, r)=(n+1)/(r+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What is the minimum value of the sum of squares of the zeros of x^2-(a-2)x-a-1 for real number a?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let the two roots be x_1 and x_2.
+2. Thus, we have x_1+x_2=a-2 and x_1*x_2=-(a+1).
+3. We have x_1^2+x_2^2=(x_1+x_2)^2-2*x_1*x_2=(a-2)^2+2(a+1)=a^2-2a+6=(a-1)^2+5≥5.
+4. So the minimum value of x_1^2+x_2^2 is 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b, c&gt;0. What is the minimum value of abc-(a+b-c)(a+c-b)(b+c-a)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let a=x+y, b=y+z, c=x+z.
+2. The expression becomes (x+y)(y+z)(x+z)-8xyz≥2sqrt(xy)*2sqrt(yz)*2sqrt(xz)-8xyz=8xyz-8xyz=0, with equality achieved at x=y=z.
+3. So the minimum value is 0, which is achieved at a=b=c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all real-valued solutions to the equation 4x^11+4x^10−21x^9-21x^8+17x^7+17x^6+17x^5+17x^4−21x^3-21x^2+4x+4=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let the polynomial be f(x) and we recognize it to be a reciprocal polynomial of an odd degree.
+2. Thus, one root is x=-1 and we can write f(x)=(x+1)g(x).
+3. We can find g(x)=4x^10-21x^8+17x^6+17x^4-21x^2+4 by collecting every other term of f(x).
+4. This g(x) is a reciprocal polynomial of degree 2n where n=5.
+5. This means that g(x)=x^5*h(z) where h(z) is a polynomial of degree 5 in z=x+1/x.
+6. We have h(z)=4x^5-21x^3+17x+17/x-21/x^3+4/x^5.
+7. We have 4z^5=4(x+1/x)^5=4x^5+20x^3+40x+40/x+20/x^3+4, so h(z)=4z^5-41x^3-23x-23/x-41/x^3.
+8. We have -41z^3=-41(x+1/x)^3=-41x^3-123x-123/x-41/x^3, so h(z)=4z^5-41z^3+100x+100/x=4z^5-41z^3+100z=z(4z^4-41z^2+100).
+9. We know that z=x+1/x≠0 for real-valued x, so we need 4z^4-41z^2+100.
+10. Let u=z^2, we have 4u^2-41u+100=(4u-25)(u-4)=100.
+11. So u=25/4 or u=4.
+12. This means that z=x+1/x=±5/2 or z=x+1/x=±2.
+13. These two solutions result in x=±2, ±1/2 for z=±5/2 and x=±1 for z=±2.
+14. Thus, all solutions to the equation are x=±1, ±2, ±1/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Of 3n+1 objects, n are indistinguishable, and the remaining ones are distinct. In how many ways can we choose n objects, as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. We can choose n objects from 3n+1 objects in C(3n+1, n) ways.
+2. However, since n of the objects are indistinguishable, we need to divide by n! to account for the overcounting.
+3. Therefore, the number of ways to choose n objects is C(3n+1, n) / n!.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose n objects from 3n+1 objects, where n are indistinguishable and the remaining ones are distinct, is given by C(3n+1, n) / n!.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

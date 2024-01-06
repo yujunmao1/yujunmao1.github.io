@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_9</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no such values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_9']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let n&gt;1 be an integer. There are n lamps L_0, ..., L_(n−1) arranged in a circle. Each lamp is either ON or OFF. A sequence of steps S_0, ..., S_i, ... is carried out. Step S_j affects the state of L_j only (leaving the states of all other lamps unaltered) as follows: if L_(j−1) is ON, S_j changes the state of L_j from ON to OFF or from OFF to ON; if L_(j−1) is OFF, S_j leaves the state L_j unchanged. The lamps are labeled modulo n, that is, L_(−1)=L_(n−1), L_0=L_n, L_1=L_(n+1). Initially all lamps are ON. For n in {2, 3, ..., 100}, how many of them result in a the sequence of switching not being able to return all lamps to the ON state ever again?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the effect of the sequence of steps on the state of the lamps. Let&#x27;s consider the sequence of steps and the rules given:
+
+1. If L_(j-1) is ON, then S_j will toggle the state of L_j.
+2. If L_(j-1) is OFF, then S_j will leave the state of L_j unchanged.
+
+We need to determine for which values of n the sequence of steps will never return all lamps to the ON state.
+
+Let&#x27;s start by considering small values of n to see if we can find a pattern:
+
+For n = 2:
+- Initially, both L_0 and L_1 are ON.
+- S_0 toggles L_0 (since L_1 is ON), so L_0 is now OFF and L_1 is ON.
+- S_1 does not change L_1 (since L_0 is OFF), so L_0 is OFF and L_1 is ON.
+- S_2 (which is the same as S_0) does not change L_0 (since L_1 is ON), so L_0 remains OFF and L_1 remains ON.
+- We can see that we will never return to the state where both lamps are ON.
+
+For n = 3:
+- Initially, L_0, L_1, and L_2 are ON.
+- S_0 toggles L_0, so L_0 is now OFF, L_1 and L_2 are ON.
+- S_1 toggles L_1 (since L_0 is OFF), so L_0 is OFF, L_1 is OFF, and L_2 is ON.
+- S_2 does not change L_2 (since L_1 is OFF), so L_0 is OFF, L_1 is OFF, and L_2 is ON.
+- S_3 (which is the same as S_0) does not change L_0 (since L_2 is ON), so L_0 remains OFF, L_1 remains OFF, and L_2 remains ON.
+- Again, we will never return to the state where all lamps are ON.
+
+For n = 4:
+- Initially, all lamps are ON.
+- S_0 toggles L_0, so L_0 is now OFF, and the others are ON.
+- S_1 toggles L_1, so L_0 is OFF, L_1 is OFF, and the others are ON.
+- S_2 toggles L_2, so L_0 is OFF, L_1 is OFF, L_2 is OFF, and L_3 is ON.
+- S_3 toggles L_3, so all lamps are now OFF.
+- S_4 (which is the same as S_0) does not change L_0 (since L_3 is OFF), so all lamps remain OFF.
+- However, now that all lamps are OFF, no further steps will change any lamp&#x27;s state, so we are stuck in this configuration.
+
+From these examples, we can see that for n = 2 and n = 3, we never return to the state where all lamps are ON, and for n = 4, we end up in a state where all lamps are OFF and no further changes occur.
+
+Let&#x27;s generalize this for any n &gt; 1:
+
+- On the first pass (steps S_0 to S_(n-1)), we will toggle each lamp except for the last one, L_(n-1), because L_(n-2) will be OFF when we reach step S_(n-1).
+- After the first pass, L_0 to L_(n-2) will be OFF, and L_(n-1) will be ON.
+- On the second pass, no lamps will change state because each S_j will find L_(j-1) to be OFF.
+- Therefore, we are left with L_0 to L_(n-2) OFF and L_(n-1) ON, and no further changes will occur.
+
+This means that for any n &gt; 1, we will never be able to return all lamps to the ON state after the sequence of steps has been carried out. The only exception is when n = 1, which is not considered in this problem since we are looking at n in {2, 3, ..., 100}.
+
+Thus, for all n in {2, 3, ..., 100}, the sequence of switching will not be able to return all lamps to the ON state ever again. The answer is 99, since it includes all integers from 2 to 100.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For all integers n in the set {2, 3, ..., 100}, the sequence of switching will not be able to return all lamps to the ON state ever again, resulting in a total of 99 such values of n.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

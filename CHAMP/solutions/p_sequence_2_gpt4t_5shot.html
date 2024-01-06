@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_2</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Always greater than 20</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_2']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Of 3n+1 objects, n are indistinguishable, and the remaining ones are distinct. In how many ways can we choose n objects, as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have 2n+1 distinguishable objects and n indistinguishable objects.
+2. Thus, to choose a collection contains k distinguishable objects, there are C(2n+1, k) ways.
+3. So the total number of ways is C(2n+1, 0)+C(2n+1, 1)+...+C(2n+1, n).
+4. Denote C(2n+1, k) as c_k.
+5. We have c_0+c_1+...+c_(2n)+c_(2n+1)=2^(2n+1).
+6. Furthermore, we have c_0=c_(2n+1), c_1=c_(2n), ..., c_n=c_(n+1).
+7. Thus, we have c_0+c_1+...+c_n=2^(2n+1)/2=4^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x(n)=3^3^3^...^3 with n 3&#x27;s, and y(n)=4^4^4^...^4 with n 4&#x27;s. Among integer values of n≥2, what is the relationship between x(n) and y(n-1): x(n)&gt;y(n-1) for all n≥2, x(n)&lt;y(n-1) for all n≥2, or x(n)&gt;y(n-1) for some n and x(n)&lt;y(n-1) for some other n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For n=2, we have x(2)=3^3=27&gt;2*4=2y(1).
+2. Assume that x(n)&gt;2y(n-1), then we have x(n+1)=3^x(n)&gt;3^(2y(n-1))=9^y(n-1)=(9/4)^y(n-1)*4^y(n-1)&gt;2*4^y(n-1)=2y(n).
+3. Thus, for n≥3, x(n) is always greater than y(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Are there integer solutions to the equation (x^2-1)(y^2-1)+1985=z^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. If the equation has a solution, we have (x^2-1)(y^2-1)=z^2-1985.
+2. Since u^2 mod 9∈{0, 1, 4, 7}, we have u^2-1 mod 9∈{0, 3, 6, 8} and (x^2-1)(y^2-1) mod 9∈{0, 1, 3, 6}.
+3. However, since 1985 mod 9=5, z^2-1985 mod 9∈{2, 4, 5, 8}.
+4. Since there is no overlapping values, we conclude that the equation has no solution.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial 1-x+x^2-x^3+...+x^8-x^9 may be written in the form a_0+a_1*y+a_2*y^2+...+a_9*y^9, where y=x+1 and each a_i is a constant. Find the value of a_2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have f(x)=1-x+x^2-x^3+...+x^8-x^9=(1-x^10)/(1+x).
+2. Substituting x=y-1, we have f(x)=(1-(y-1)^10)/y.
+3. We have the coefficient C(10, 3)*y^3*(-1)^7=-120 for the term y^3 in (y-1)^10.
+4. Thus, the coefficient a_2 for y^2 in (1-(y-1)^10)/y is -(-120)=120.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many pairs of positive odd integer (a, b) both under 100 make a^2+b^2 be a perfect square?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since a and b are both odd, a mod 4=b mod 4=1 or 3.
+2. Thus, a^2 mod 4=b^2 mod 4=1.
+3. So a^2+b^2 mod 4=2.
+4. Since an even perfect square is divisible by 4, a^2+b^2 cannot be a perfect square.
+5. Thus, there are 0 pairs of such (a, b).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let {x_n}, {y_n}, {z_n} be three sequences with positive initial terms x_1, y_1, z_1, defined as x_(n+1)=y_n+1/z_n, y_(n+1)=z_n+1/x_n, z_(n+1)=x_n+1/y_n. Let w_n be the maximum value of x_n, y_n, z_n. For different values of x_1, y_1, z_1, do we have w_200 always greater than 20, always smaller than 20, or sometimes greater and sometimes smaller than 20?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To analyze the behavior of the sequences {x_n}, {y_n}, {z_n}, and {w_n}, we can look at the recursive relationships and try to understand how the sequences evolve.
+
+Given:
+x_(n+1) = y_n + 1/z_n
+y_(n+1) = z_n + 1/x_n
+z_(n+1) = x_n + 1/y_n
+
+We can see that each term in the sequence is the sum of the previous term from another sequence and the reciprocal of the previous term from the third sequence. This means that if any of the terms x_n, y_n, or z_n is greater than 1, the next term in its respective sequence will be greater than 1 as well, since adding the reciprocal of a positive number to another positive number will result in a number greater than the original.
+
+Now, let&#x27;s consider the initial terms x_1, y_1, z_1. If all of them are greater than 1, then all subsequent terms will also be greater than 1. This is because adding a number greater than 1 to the reciprocal of a number greater than 1 will always yield a sum greater than 1.
+
+Let&#x27;s analyze the behavior of w_n, which is the maximum value of x_n, y_n, z_n at each step. If all initial terms are greater than 1, then w_n will also be greater than 1 for all n. However, we need to determine if w_200 is always greater than 20, always smaller than 20, or sometimes greater and sometimes smaller than 20.
+
+Notice that if x_n, y_n, and z_n are all greater than 1, then their reciprocals are less than 1. This means that the increase from one term to the next in each sequence is less than 2 (since we&#x27;re adding a number less than 1 to another number). Therefore, the sequences are increasing, but they are bounded above by the initial term plus 2 times the number of terms.
+
+Let&#x27;s assume that the initial terms are large enough such that w_1 (the maximum of x_1, y_1, z_1) is greater than 20. Then, since the increase is less than 2 for each term, w_200 will also be greater than 20.
+
+However, if the initial terms are small, it&#x27;s possible that w_200 could be less than 20. For example, if x_1, y_1, z_1 are all just slightly greater than 1, then w_200 could still be less than 20 because the increase at each step is not sufficient to reach 20 within 200 steps.
+
+Therefore, the value of w_200 can be sometimes greater and sometimes smaller than 20, depending on the initial values of x_1, y_1, z_1. If the initial terms are large enough, w_200 will be greater than 20; if they are small, w_200 could be less than 20.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of w_200 can be sometimes greater and sometimes smaller than 20, depending on the initial values of x_1, y_1, z_1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

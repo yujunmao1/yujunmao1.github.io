@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_7</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_7']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Each of the faces of a cube is painted by a different color. How many of the colorings are distinct up to rotations?
+Step-wise solution:
+1. We paint a face and put it on the bottom, and consider painting the second face.
+2. We can paint it on top, the remaining four faces have 4! colorings, but we can rotate the cube four times, which makes four colorings the same, so we 4!/4=6 distinct colorings.
+3. If the second face is on the side, we can put it on the front, and the two faces uniquely fix the rotation.
+4. Thus, any coloring of the remaining four faces is distinct, and we have 4!=24 colorings.
+5. In total, we have 30 colorings.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Consider a row of 11 seats. A child sits on each. Each child may move by at most one seat. How many possible rearrangements are there (including the original one)?
+
+In addition, you may also find the following information helpful:
+
+1. Let a(n) be the number of possible rearrangements (including the original one) for n seats, and consider the movement of the first child in the row.
+2. If the first child does not move, how many rearrangements do we have?
+3. If the first child moves, how many rearrangements do we have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a(n)$ be the number of possible rearrangements (including the original one) for $n$ seats. We can solve this problem by considering the movement of the first child in the row.
+
+If the first child does not move, then the remaining $10$ children can be rearranged in $10!$ ways.
+
+If the first child moves, then the remaining $10$ children can be rearranged in $9!$ ways. The first child can then move to any of the $11$ seats, for a total of $11 \cdot 9!$ ways.
+
+Therefore, the total number of possible rearrangements is $a(11) = 10! + 11 \cdot 9!$.
+
+We can also solve this problem by using a recurrence relation. Let $a(n)$ be the number of possible rearrangements (including the original one) for $n$ seats. Then, we have the following recurrence relation:
+
+$$a(n) = a(n-1) + n$$
+
+The base case is $a(1) = 1$. This is because there is only one way to rearrange one seat.
+
+To prove the recurrence relation, we can consider the movement of the first child in the row. If the first child does not move, then the remaining $n-1$ children can be rearranged in $a(n-1)$ ways. The first child can then stay in the same seat, for a total of $a(n-1)$ ways.
+
+If the first child moves, then the remaining $n-1$ children can be rearranged in $a(n-2)$ ways. The first child can then move to any of the $n$ seats, for a total of $n \cdot a(n-2)$ ways.
+
+Therefore, the total number of possible rearrangements is $a(n) = a(n-1) + n$.
+
+We can use this recurrence relation to compute $a(11)$. We have:
+
+$$a(11) = a(10) + 11 = a(9) + 11 + 10 = a(8) + 11 + 10 + 9 = \cdots = 1 + 2 + 3 + \cdots + 11 = 55 \cdot 11 = 605$$
+
+Therefore, there are $605$ possible rearrangements of $11$ seats.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $605$ possible rearrangements of $11$ seats, including the original one.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

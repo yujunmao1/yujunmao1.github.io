@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_14</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_14']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let the sequence be defined as a_n=1/C(n, 0)+1/C(n, 1)+...+1/C(n, n). Does the limit of the sequence exist, and if so, what is it?
+
+You may find the following information useful:
+
+1. sum_(k=1)^n C(n, k)=2^n.
+2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
+3. The harmonic series 1+1/2+1/3+... diverges (i.e., the sum is not a finite value).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the sequence \( a_n \) defined by
+
+\[ a_n = \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n)} \]
+
+where \( C(n, k) \) is the binomial coefficient representing the number of ways to choose a set of \( k \) items from \( n \) items, and is given by
+
+\[ C(n, k) = \frac{n!}{k!(n-k)!} \]
+
+First, let&#x27;s look at the terms of the sequence \( a_n \) for \( n \geq 1 \):
+
+\[ a_n = \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n)} \]
+
+We know that \( C(n, 0) = 1 \) and \( C(n, n) = 1 \), so the first and last terms of the sequence are both 1. For \( 1 \leq k \leq n-1 \), we have
+
+\[ C(n, k) = C(n, n-k) \]
+
+This means that each term in the sequence from \( k = 1 \) to \( k = n-1 \) has a corresponding term that is its reciprocal, and they will pair up to sum to a value greater than 1. Specifically, for each \( k \), we have
+
+\[ \frac{1}{C(n, k)} + \frac{1}{C(n, n-k)} = \frac{2}{C(n, k)} \]
+
+Since \( C(n, k) \) is at least \( n \) for \( 1 \leq k \leq n-1 \), each of these pairs contributes at least \( \frac{2}{n} \) to the sum. There are \( \frac{n-1}{2} \) such pairs if \( n \) is odd, and \( \frac{n}{2} - 1 \) pairs if \( n \) is even (since the middle term when \( n \) is even does not have a pair).
+
+Now, let&#x27;s consider the limit of \( a_n \) as \( n \) approaches infinity. As \( n \) increases, the number of terms in the sequence that are greater than \( \frac{2}{n} \) also increases. Since the harmonic series diverges, and the terms of \( a_n \) are bounded below by terms that resemble the harmonic series (but with a finite number of terms), it suggests that \( a_n \) will also diverge.
+
+To be more precise, we can see that for \( n \) even, \( a_n \) includes the term \( \frac{1}{C(n, n/2)} \), which is the smallest term other than the first and last ones. As \( n \) grows, \( C(n, n/2) \) becomes very large, but not as fast as \( n! \), so the sum of the reciprocals of the binomial coefficients will grow without bound.
+
+Therefore, the limit of the sequence \( a_n \) as \( n \) approaches infinity does not exist; in other words, \( a_n \) diverges.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence \( a_n = \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \ldots + \frac{1}{C(n, n)} \) does not exist as \( n \) approaches infinity; the sequence diverges.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

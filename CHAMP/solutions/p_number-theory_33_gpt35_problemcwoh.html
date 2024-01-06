@@ -1,0 +1,221 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_33</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 512</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_33']
+messages = problem.conversations['GPT-3.5|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Which is the smallest positive integer that becomes 57 times smaller when its first digit is removed?
+Step-wise solution:
+1. We let d be the first digit of the k+1 digit number and r be the last k digits.
+2. Thus, the original number is 10^k*d+r and the new number is r.
+3. So we have 10^k*d+r=57r, which is 10^k*d=56r.
+4. Thus, 56 | 10^k*d, which means 7 | 10^k*d and 8 | 10^k*d.
+5. Since 10^k only has prime factors 2 and 5 and is not divisible by 7, we must have d=7.
+6. So we need 8 | 10^k and the smallest k is 3.
+7. Thus, we have 7000+r=57r, and r=125.
+8. So the number that we are finding is 7125.
+
+Problem: What is the smallest value of |36^m-5^n| for positive integers m and n?
+Step-wise solution:
+1. Since 36^m always ends in 6 and 5^n always ends in 5, |36^m-5^n| can only end in 1 or 9.
+2. If |36^m-5^n|=1, we need 36^m-5^n=1.
+3. 5^n=36^m-1=(6^m)^2-1=(6^m+1)(6^m-1).
+4. However, 6^m+1 is not divisible by 5 since it ends with 7, but 5^n only has prime factors of 5.
+5. Thus, the equation has no solution.
+6. If |36^m-5^n|=9, we need 5^n-36^m=9.
+7. We have 5^n-36^m mod 6=(-1)^n-0 mod 6=±1, which is not equal to 9 mod 6=3.
+8. Thus, the equation again has no solution.
+9. |36^m-5^n|=11 can be solved by m=1, n=2.
+10. So 11 is the smallest possible value.
+
+Problem: What is the smallest value of |12^m-5^n| for positive integers m and n?
+Step-wise solution:
+1. We see that |12^m-5^n| cannot be 0 for positive m, n due to different parity.
+2. Since gcd(12, 5)=1, we have gcd(12^m, 5^n)=1, so 12^m-5^n will not be divisible by factor of 12 or 5 (other than 1), i.e., 2, 3, 4, 5, 6.
+3. We first check if |12^m-5^n|=1 has a solution.
+4. If 12^m-5^n=1, we have 5^n=12^m-1=(6^m+1)(6^m-1), but 6^m+1 ends in 7 and thus is not divisible by 5.
+5. Since 5^n only has prime factor of 5, the equation has no solution.
+6. If 5^n-12^m=1, we need 5^n mod 3=1, which is true only if n is even.
+7. Thus, let n=2k, we have 12^m=(5^k+1)(5^k-1) and 5^k+1 mod 4=1^k+1 mod 4=2.
+8. We have 12^m=2^(2m)*3^m.
+9. Thus, we must have 5^k+1=2*3^v, which means we need 5^k-1=2^(2m-1)3^(m-v).
+10. Since (5^k+1)-(5^k-1)=2, at most one of them is divisible by 3.
+11. Thus, v=0 or v=m.
+12. If v=0, we have 5^k+1=2, which means k=0 and n=2k=0 is not positive.
+13. If v=m, we have (5^k+1)-(5^k-1)=2*3^m-2^(2m-1)=2(3^m-4^(m-1))=2.
+14. So 3^m-4^(m-1)=1, which is not satisfied for any positive integer m.
+15. Thus, we cannot have |5^n-12^m|.
+16. Skipping all the impossible values from 2 to 6, we see that |12^m-5^n|=7 can be solved with m=n=1.
+17. Thus, the answer is 7.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest positive integer a, so that 1971 | 50^n+23^n*a for odd n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest positive integer a such that 1971 divides 50^n + 23^n * a for odd n, we can use the concept of modular arithmetic.
+
+Let&#x27;s start by considering the remainder when dividing 50^n by 1971. We can use Euler&#x27;s theorem, which states that if a and m are coprime (i.e., their greatest common divisor is 1), then a^phi(m) ≡ 1 (mod m), where phi(m) is Euler&#x27;s totient function.
+
+Since 50 and 1971 are coprime, we have 50^phi(1971) ≡ 1 (mod 1971).
+
+To find phi(1971), we need to factorize 1971. We can see that 1971 = 3 * 7 * 47. Since these prime factors are distinct, phi(1971) = (3-1) * (7-1) * (47-1) = 2 * 6 * 46 = 552.
+
+Therefore, 50^552 ≡ 1 (mod 1971).
+
+Now, let&#x27;s consider the remainder when dividing 23^n by 1971. Similarly, we have 23^phi(1971) ≡ 1 (mod 1971).
+
+Using the same factorization, phi(1971) = 552.
+
+Therefore, 23^552 ≡ 1 (mod 1971).
+
+Now, let&#x27;s consider the expression 50^n + 23^n * a (mod 1971).
+
+Since 50^552 ≡ 1 (mod 1971) and 23^552 ≡ 1 (mod 1971), we can rewrite the expression as:
+
+(50^552)^k * 50^(n mod 552) + (23^552)^k * 23^(n mod 552) * a (mod 1971),
+
+where k is an integer.
+
+Since 50^552 ≡ 1 (mod 1971) and 23^552 ≡ 1 (mod 1971), we can simplify the expression further:
+
+1^k * 50^(n mod 552) + 1^k * 23^(n mod 552) * a (mod 1971),
+
+which becomes:
+
+50^(n mod 552) + 23^(n mod 552) * a (mod 1971).
+
+Now, we want to find the smallest positive integer a such that 1971 divides 50^n + 23^n * a for odd n.
+
+Since 1971 = 3 * 7 * 47, we need to find the smallest positive integer a such that 3, 7, and 47 divide 50^(n mod 552) + 23^(n mod 552) * a.
+
+Let&#x27;s consider each prime factor separately:
+
+1. For 3 to divide the expression, we need 50^(n mod 552) + 23^(n mod 552) * a ≡ 0 (mod 3).
+
+Since 50 ≡ 2 (mod 3) and 23 ≡ 2 (mod 3), we have 2^(n mod 552) + 2^(n mod 552) * a ≡ 0 (mod 3).
+
+Simplifying, we get 2^(n mod 552) * (1 + a) ≡ 0 (mod 3).
+
+For this congruence to hold, either 2^(n mod 552) ≡ 0 (mod 3) or 1 + a ≡ 0 (mod 3).
+
+Since 2^(n mod 552) cannot be divisible by 3 (as 2 and 3 are coprime), we must have 1 + a ≡ 0 (mod 3).
+
+The smallest positive integer a that satisfies this congruence is a = 2.
+
+2. For 7 to divide the expression, we need 50^(n mod 552) + 23^(n mod 552) * a ≡ 0 (mod 7).
+
+Since 50 ≡ 1 (mod 7) and 23 ≡ 2 (mod 7), we have 1^(n mod 552) + 2^(n mod 552) * a ≡ 0 (mod 7).
+
+Simplifying, we get 2^(n mod 552) * a ≡ 6 (mod 7).
+
+To find the smallest positive integer a that satisfies this congruence, we can check the values of 2^(n mod 552) * a modulo 7 for n = 1, 3, 5, 7, etc.
+
+For n = 1, we have 2^(1 mod 552) * a ≡ 2 * a ≡ 6 (mod 7).
+For n = 3, we have 2^(3 mod 552) * a ≡ 8 * a ≡ 6 (mod 7).
+For n = 5, we have 2^(5 mod 552) * a ≡ 32 * a ≡ 6 (mod 7).
+For n = 7, we have 2^(7 mod 552) * a ≡ 128 * a ≡ 6 (mod 7).
+
+We can see that a = 4 satisfies the congruence for all odd values of n.
+
+3. For 47 to divide the expression, we need 50^(n mod 552) + 23^(n mod 552) * a ≡ 0 (mod 47).
+
+Since 50 ≡ 3 (mod 47) and 23 ≡ -24 (mod 47), we have 3^(n mod 552) - 24^(n mod 552) * a ≡ 0 (mod 47).
+
+Simplifying, we get (-24)^(n mod 552) * a ≡ 3^(n mod 552) (mod 47).
+
+To find the smallest positive integer a that satisfies this congruence, we can check the values of (-24)^(n mod 552) * a modulo 47 for n = 1, 3, 5, 7, etc.
+
+For n = 1, we have (-24)^(1 mod 552) * a ≡ -24 * a ≡ 3 (mod 47).
+For n = 3, we have (-24)^(3 mod 552) * a ≡ 24 * a ≡ 3 (mod 47).
+For n = 5, we have (-24)^(5 mod 552) * a ≡ -24 * a ≡ 3 (mod 47).
+For n = 7, we have (-24)^(7 mod 552) * a ≡ 24 * a ≡ 3 (mod 47).
+
+We can see that a = 16 satisfies the congruence for all odd values of n.
+
+Therefore, the smallest positive integer a that satisfies 1971 divides 50^n + 23^n * a for odd n is a = 16.
+
+Final Answer: a = 16.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer a such that 1971 divides 50^n + 23^n * a for odd n is a = 16.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

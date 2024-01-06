@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_10</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_10']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Finding the remainder when p(x^7) is divided by p(x), where p(x)=x^6+x^5+...+x+1?
+Step-wise solution:
+1. We have p(x)=x^6+x^5+...+x+1=(x^7-1)/(x-1).
+2. Thus, p(x) | x^7-1.
+3. Let y=x^7.
+4. In addition, since y-1 | y^n-1^n for any n, we have y-1 | p(y)-p(1) for the polynomial p.
+5. Since p(x) | y-1, we have p(x) | p(y)-p(1).
+6. Thus, the remainder when p(y)=p(x^7) divides p(x) is p(1)=7.
+
+Problem: Can there exist a polynomial f(x) of integer coefficients with f(7)=11 and f(11)=13?
+Step-wise solution:
+1. Let the polynomial be m_n*x^n+m_(n-1)*x^(n-1)+...+m_1*x_1+m_0.
+2. Thus, f(a)-f(b)=m_n*(a^n-b^n)+m_(n-1)*(a^(n-1)-b^(n-1))+...+m_1*(a_1-b_1)+m_0.
+3. Since a-b divides each of a^i-b^i, we have a-b | f(a)-f(b).
+4. However, if we let a, b be 11 and 7, we get 4 | 2, which is a contradiction.
+5. Thus, such a polynomial does not exist.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For an antisymmetric polynomial f(x, y) (i.e., f(x, y)=-f(y, x)) of total degree n (i.e., the maximum value of i+j in x^i*y^j is n), what are possible values of the remainder of f(x, y) divided by x-y?
+
+In addition, you may also find the following information helpful:
+
+1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j. What is the relationship between c_ij and c_ji if f(x, y) is antisymmetric?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, let&#x27;s first understand the properties of an antisymmetric polynomial f(x, y). An antisymmetric polynomial satisfies the condition f(x, y) = -f(y, x). This implies that for each term c_ij * x^i * y^j in f(x, y), there must be a corresponding term -c_ij * x^j * y^i in f(y, x). Therefore, the coefficients must satisfy the relationship c_ij = -c_ji.
+
+Now, let&#x27;s consider the remainder when f(x, y) is divided by x - y. When we perform the division, we are essentially evaluating the polynomial at the point where x = y. For an antisymmetric polynomial, if we substitute x = y, we get:
+
+f(y, y) = sum_(i, j) c_ij * y^i * y^j
+
+However, due to the antisymmetry, we know that c_ij = -c_ji, which means that for every term where i ≠ j, the term will cancel out with its corresponding term. The only terms that will not cancel are those where i = j, which would require c_ii = -c_ii, implying that c_ii = 0 for the polynomial to remain antisymmetric.
+
+Therefore, all terms with i ≠ j will cancel out, and terms with i = j will be zero. This means that the polynomial f(x, y) evaluated at x = y will always be zero. Hence, the remainder of f(x, y) divided by x - y is 0 for any antisymmetric polynomial f(x, y) of total degree n.
+
+In summary, the possible value of the remainder of an antisymmetric polynomial f(x, y) divided by x - y is always 0, regardless of the total degree n of the polynomial.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of an antisymmetric polynomial f(x, y) divided by x - y is always 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_21</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1/(n+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_21']
+messages = problem.conversations['GPT-3.5|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: A sequence {x_n} is defined by x_1=2, x_(n+1)=(x_n^4+9)/(10x_n). For how many values of x_1, x_2, ..., x_1000 do we have x_n≤5/4?
+Step-wise solution:
+1. We have x_1&gt;5/4 and x_2=(2^4+9)/20=5/4≤5/4.
+2. For x_(n+1)≤x_n, we need (x_n^4+9)/(10x_n)≤x_n, or a^2+9≤10a for a=x_n^2.
+3. This means that (a-1)(a-9)≤0, or 1≤a≤9.
+4. Thus, when x_n is in the range of [1, 3] (since all x_n&#x27;s are positive), we have x_(n+1)≤x_n.
+5. In addition, when x_n&lt;1, we have x_(n+1)=(x_n^4+9)/(10x_n)&lt;10/(10x_n)=1/x_n.
+6. To find a lower bound for x_n, we have x_n=(x_(n-1)^4+9)/(10x_(n-1))=x_(n-1)^3/10+3/(10x_(n-1))+3/(10x_(n-1))+3/(10x_(n-1))≥4((x_(n-1)^3/10)*3/(10x_(n-1))*3/(10x_(n-1))*3/(10x_(n-1)))^(1/4)=4*(27/10^4)^(1/4)=2/5*(27)^(1/4).
+7. We have 2^4=16, so (27)^(1/4)&gt;2, and x_n=2/5*(27)^(1/4)&gt;4/5.
+8. Thus, when x_n&lt;1, we know that it still must be greater than 4/5, which means that x_(n+1)&lt;1/x_n&lt;5/4.
+9. So we have that x_n≤5/4 for all n≥2, and we have 999 such values in x_1, ..., x_1000.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive real number a, b and positive integer n, what is the largest value of (a*b^n)^(1/(n+1))/(a+bn) as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the largest value of the expression, we can take the derivative with respect to n and set it equal to zero. Let&#x27;s start by simplifying the expression:
+
+E = (a*b^n)^(1/(n+1))/(a+bn)
+
+Taking the natural logarithm of both sides:
+
+ln(E) = ln((a*b^n)^(1/(n+1))/(a+bn))
+
+Using the properties of logarithms:
+
+ln(E) = (1/(n+1))*ln(a*b^n) - ln(a+bn)
+
+Now, let&#x27;s differentiate both sides with respect to n:
+
+d/dn [ln(E)] = d/dn [(1/(n+1))*ln(a*b^n) - ln(a+bn)]
+
+Using the chain rule and the derivative of ln(x):
+
+d/dn [ln(E)] = (1/(n+1))*d/dn [ln(a*b^n)] - d/dn [ln(a+bn)]
+
+d/dn [ln(E)] = (1/(n+1))*(1/(a*b^n))*d/dn [a*b^n] - (b/(a+bn))
+
+d/dn [ln(E)] = (1/(n+1))*(1/(a*b^n))*[a*b^n*ln(b)] - (b/(a+bn))
+
+Simplifying:
+
+d/dn [ln(E)] = (1/(n+1))*ln(b) - (b/(a+bn))
+
+Setting the derivative equal to zero:
+
+(1/(n+1))*ln(b) - (b/(a+bn)) = 0
+
+(1/(n+1))*ln(b) = (b/(a+bn))
+
+ln(b)/(n+1) = b/(a+bn)
+
+Cross-multiplying:
+
+ln(b)*(a+bn) = b*(n+1)
+
+Expanding:
+
+a*ln(b) + b*ln(b)*n = b*n + b
+
+Rearranging:
+
+b*ln(b)*n - b*n = b - a*ln(b)
+
+Factoring out n:
+
+n*(b*ln(b) - b) = b - a*ln(b)
+
+Dividing both sides by (b*ln(b) - b):
+
+n = (b - a*ln(b))/(b*ln(b) - b)
+
+Now, we have an expression for n in terms of a and b. To find the largest value of n, we need to maximize the numerator and minimize the denominator. Since a and b are positive real numbers, we can see that the numerator is maximized when b is maximized and ln(b) is minimized. Similarly, the denominator is minimized when b is minimized and ln(b) is maximized.
+
+Therefore, to maximize n, we need to choose the largest possible value for b and the smallest possible value for ln(b). Since b is a positive real number, the largest possible value for b is infinity (∞). And since ln(b) approaches negative infinity as b approaches zero, the smallest possible value for ln(b) is negative infinity (-∞).
+
+Plugging these values into the expression for n:
+
+n = (∞ - a*(-∞))/((∞*ln(∞)) - ∞)
+
+Simplifying:
+
+n = (∞ + ∞)/(-∞)
+
+Since we have an indeterminate form (∞/∞), we can apply L&#x27;Hôpital&#x27;s rule:
+
+n = lim (b - a*ln(b))/(b*ln(b) - b) as b approaches ∞
+
+Taking the derivative of the numerator and denominator with respect to b:
+
+n = lim (1 - a/b)/(ln(b) + b*1/b - 1) as b approaches ∞
+
+Simplifying:
+
+n = lim (1 - a/b)/(ln(b) + 1 - 1) as b approaches ∞
+
+n = lim (1 - a/b)/ln(b) as b approaches ∞
+
+Since a is a positive real number and b approaches infinity, the term a/b approaches zero. Therefore, we have:
+
+n = lim (1 - 0)/ln(b) as b approaches ∞
+
+n = 1/ln(b) as b approaches ∞
+
+As b approaches infinity, ln(b) also approaches infinity. Therefore, the value of 1/ln(b) approaches zero.
+
+Hence, the largest value of n is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of n is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

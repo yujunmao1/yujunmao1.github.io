@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_10</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_10']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let n&gt;1 be an integer. There are n lamps L_0, ..., L_(n−1) arranged in a circle. Each lamp is either ON or OFF. A sequence of steps S_0, ..., S_i, ... is carried out. Step S_j affects the state of L_j only (leaving the states of all other lamps unaltered) as follows: if L_(j−1) is ON, S_j changes the state of L_j from ON to OFF or from OFF to ON; if L_(j−1) is OFF, S_j leaves the state L_j unchanged. The lamps are labeled modulo n, that is, L_(−1)=L_(n−1), L_0=L_n, L_1=L_(n+1). Initially all lamps are ON. For n in {2, 3, ..., 100}, how many of them result in a the sequence of switching not being able to return all lamps to the ON state ever again?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let x_j∈{0, 1} represent the initial state of lamp L_j (0 for OFF, 1 for ON) for 0≤j≤n-1.
+2. We append to this sequence the new state of the lamp after each step.
+3. So for example, x_n is the new state of lamp L_0 after the first step S_0.
+4. We see that S_j computes x_j from x_(j-n) and x_(j-1): x_j=(x_(j-n)+x_(j-1)) mod 2.
+5. Thus, every consecutive n numbers in the sequence corresponds to a state of the lamp, and the initial state is x_0, x_1, ..., x_(n-1).
+6. Let the binary vector v_j=[x_j, x_(j+1), ..., x_(j+n-1)] and there are 2^n possible vectors.
+7. Thus, some vector values have to repeat.
+8. In addition, the operation from v_j to v_(j+1) is invertible: to get v_j from v_(j+1), we have x_j=(x_(j+n-1)+x_(j+n)) mod 2 and the rest of v_j overlap with v_(j+1).
+9. Thus, when we have a repetition of v_(j+m)=v_j, we know that v_m=v_0=[1, 1, ..., 1].
+10. So immediately before the m-th step, we have all lamps being in the ON state.
+11. This reasoning applies for all values of n, which means that all 99 values in {2, 3, ..., 100}, the condition is satisfied.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a closed-form formula of sum_(k=1)^n C(n, k)*k^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For n people, C(n, k) corresponds to the number of possible ways to choose k people, and k^2 correponds to the number of ways to assign two roles, one per person, with one person holding two roles allowed.
+2. Thus, we can consider the full expression as the number of ways to choose a committee of any number of people from n people, while at the same time selecting a president and a secretary (who can be the same person) from the chosen committee.
+3. If the president and the secretary are the same person, we can first choose this person, with n possibilties, and then choose the rest of the committee as the subset of the remaining n-1 people, with 2^(n-1) possibilities.
+4. If the president and the secretary are different people, we can first choose those two, with n(n-1) possibilities, and then choose the rest of the committee as the subset of the remaining n-2 people, with 2^(n-2) possibilities.
+5. Thus, the total number of choices is n*2^(n-1)+n(n-1)*2^(n-2)=2n*2^(n-2)+n(n-1)*2^(n-2)=n(n+1)*2^(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of p^2 mod 24 for prime number p.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For p≤3, we have 2^2 mod 24=4 and 3^2 mod 24=9.
+2. For p&gt;3, we have p=6n±1.
+3. So (6n±1)^2=36n^2±12n+1=12n(3n±1)+1.
+4. Either n or 3n±1 is even, so 12n(3n±1) mod 24=0.
+5. Thus, (6n±1)^2 mod 24=1.
+6. So we have all possible values of p^2 mod 24 being 1, 4, and 9.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence of positive integers a_0, a_1, ..., a_100 is defined as a_1&gt;a_0, a_n=3a_(n-1)-2a_(n-2). Is it possible to have a_100&lt;2^99 for certain such sequences, and if so, find the sequence with the largest sum a_0+a_1+...+a_100.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_1-a_0≥1.
+2. We also have a_(n+1)-a_n=3a_n-2a_(n-1)-a_n=2(a_n-a_(n-1)) and all the differences are positive.
+3. Thus, a_2-a_1=2(a_1-a_0)≥2, a_3-a_2=2(a_2-a_1)≥2^2, a_4-a_3=2(a_3-a_2)≥2^3, ..., a_100-a_99=2(a_99-a_98)≥2^99.
+4. So a_100≥a_99+2^99&gt;2^99.
+5. Thus, there does not exist such a sequence.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The terms of the sequence a_1, a_2, a_3, ... are all positive, and a_(n+1)=sqrt(1+a_n) for all n. Does there exist such a sequence with all a_n being rational numbers, and if so, find the smallest possible value of a_1 such that the sequence satisfies the condition.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Assume that each a_n is rational and write a_n=p_n/q_n with integer p_n, q_n&gt;0 and gcd(p_n, q_n)=1.
+2. Thus, p_(n+1)^2/q_(n+1)^2=a_(n+1)^2=1+a_n=(p_n+q_n)/q_n.
+3. We have gcd(p_n+q_n, q_n)=gcd(p_n, q_n)=1, so the right hand side fraction is in its reduced form.
+4. We also have gcd(p_(n+1)^2, q_(n+1)^2)=1 from gcd(p_(n+1), q_(n+1))=1, so the left hand side fraction is also in its reduced form.
+5. Thus, we have q_n=q_(n+1)^2 for all n.
+6. With q_n&gt;0 being an integer, this equation is only possible when q_n=1 for all n.
+7. Thus, the sequence of numbers are all integers.
+8. We know that a_1=1 is impossible since a_2=sqrt(2) is an irrational number.
+9. For a_1&gt;1, all of a_n are greater than 1.
+10. However, we have a_(n+1)^2-a_n^2=1+a_n-a_n^2=1-a_n*(a_n-1)&lt;0.
+11. Thus, we have a_(n+1)&lt;a_n for all n, which is impossible if a_1 is finite and all terms are positive integers.
+12. So there does not exist a rational number sequence that satisfy the given condition.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many sequences of positive integer numbers have sum n, as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $n!$ ways to order $n$ positive integers. For each order, there are $\binom{n+1}{k}$ ways to choose $k$ of the numbers to be the first term, $\binom{n-1}{k-1}$ ways to choose $k-1$ of the remaining numbers to be the second term, and so on. Thus, the total number of sequences is $$\sum_{k=0}^n \binom{n+1}{k} \binom{n-1}{k-1} \cdots \binom{2}{1} \binom{1}{0} = \frac{n!}{(n-1)!} = n!.$$</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences of positive integer numbers with sum $n$ is $n!$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

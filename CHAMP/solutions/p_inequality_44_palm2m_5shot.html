@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_44</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Exactly one</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_44']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For the first 100 numbers in the sequence a_1=a_2=1, a_3=2, a_(n+3)=(a_(n+1)*a_(n+2)+5)/a_n, how many of them are integers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_n*a_(n+3)=a_(n+1)*a_(n+2)+5, which means that a_(n-1)*a_(n+2)=a_n*a_(n+1)+5.
+2. Thus, we have a_n*a_(n+3)+a_n*a_(n+1)+5=a_(n-1)*a_(n+2)+a_(n+1)*a_(n+2)+5.
+3. So (a_(n-1)+a_(n+1))*a_(n+2)=(a_(n+1)+a_(n+3))*a_n.
+4. (a_(n-1)+a_(n+1))/a_n=(a_(n+1)+a_(n+3))/a_(n+2)=c.
+5. Note that the two groups skip the group a_n, a_(n+1), a_(n+2) in the middle.
+6. Thus, we could potentially have a different value for (a_n+a_(n+2))/a_(n+1)=(a_(n+2)+a_(n+4))/a_(n+3)=d.
+7. The first few terms of the sequence is 1, 1, 2, 7, 19, 69.
+8. Thus, we see that (a_(n-1)+a_(n+1))/a_n=3, or a_(n+1)=3a_n-a_(n-1), when n is even, and (a_(n-1)+a_(n+1))/a_n=4, or a_(n+1)=4a_n-a_(n-1), when n is odd.
+9. In both cases, a_(n+1) is an integer value.
+10. Thus, all 100 numbers are integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation x(x+1)=y^z for x&gt;0, y&gt;0, z&gt;1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since gcd(x, x+1)=gcd(x, 1)=1, we have x=u^z, x+1=v^z with gcd(u, v)=1 and u,v≥1.
+2. However, this means v^z-u^z=1.
+3. Since v^z-u^z=(v-u)(v^(z-1)+v^(z-2)*u+...+v*u^(z-2)+u^(z-1)) and the second factor has at least 2 terms, the difference must be greater than 1.
+4. So the equation has no solution.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Consider all 2^n−1 nonempty subsets of the set {1, 2,..., n}. For every such subset, we find the product of the reciprocals of each of its elements. Find the sum of all these products, as an expression of n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We define P=(1+1/1)(1+1/2)(1+1/3)+...+(1+1/n) and it is a sum of 2^n terms.
+2. Each term is a product of n numbers, chosen from either 1 or 1/i in the (1+1/i) factor.
+3. Thus, P represents the sum of all subset recriprocal products, including the empty subset (where we choose 1 from each of the n factors in P).
+4. So the answer we want is P-1.
+5. We have P=(2/1)*(3/2)*(4/3)*...*(n+1)/n=n+1 due to telescoping, so P-1=n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What&#x27;s the smallest value of (x^2+2)/sqrt(x^2+1) for real x?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have (x^2+2)/sqrt(x^2+1)=(x^2+1)/sqrt(x^2+1)+1/sqrt(x^2+1)=sqrt(x^2+1)+1/sqrt(x^2+1).
+2. In addition, sqrt(x^2+1)+1/sqrt(x^2+1)≥2*sqrt(sqrt(x^2+1)*1/sqrt(x^2+1))=sqrt(1)=1.
+3. So the minimum value of sqrt(x^2+1)+1/sqrt(x^2+1) is 2, which can be achieved at x=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b&gt;0. What is the smallest value of (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. The expression can be simplified to (a^4*b+a*b^4)-(a^3*b^2+a^2*b^3)=ab((a^3+b^3)-(a^2*b+a*b^2)).
+2. Let u=a^3+b^3 and v=a^2*b+a*b^2.
+3. Consider the two sequences (a^2, b^2) and (a, b) which are sorted in the same way.
+4. u is the sum of products of elements between these two sequences, and v is the sum of products of elements between the first sequence and the reverse of the second sequence.
+5. Thus, u≥v.
+6. So the smallest value of (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3) is 0, achieved when a=b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The product of three positive real numbers is 1, and their sum is greater than the sum of their reciprocals. How many of them can be greater than 1?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c$ be the three positive real numbers. We are given that $abc = 1$ and $a + b + c &gt; \frac{1}{a} + \frac{1}{b} + \frac{1}{c}$.
+
+We can write the inequality as $a^2 + b^2 + c^2 - ab - ac - bc &gt; 0$.
+
+By Cauchy-Schwarz inequality, we have $a^2 + b^2 + c^2 - ab - ac - bc \ge 2 \sqrt{(a^2 + ab + b^2)(a^2 + ac + c^2)(b^2 + bc + c^2)}$.
+
+We can further simplify the inequality as $a^2 + b^2 + c^2 - ab - ac - bc \ge 2 \sqrt{(a^2 + b^2 + c^2)^2 - 2(a^2 + ab + b^2)(a^2 + ac + c^2)(b^2 + bc + c^2)}$.
+
+We can further simplify the inequality as $a^2 + b^2 + c^2 - ab - ac - bc \ge 2 \sqrt{(a^2 + b^2 + c^2)^2 - 2(a^2 + b^2 + c^2)(1)}$.
+
+We can further simplify the inequality as $a^2 + b^2 + c^2 - ab - ac - bc \ge 2 \sqrt{(a^2 + b^2 + c^2 - 1)^2}$.
+
+We can further simplify the inequality as $a^2 + b^2 + c^2 - ab - ac - bc \ge 2(a^2 + b^2 + c^2 - 1)$.
+
+We can further simplify the inequality as $a^2 + b^2 + c^2 - 2ab - 2ac - 2bc \ge 4(a^2 + b^2 + c^2 - 1)$.
+
+We can further simplify the inequality as $a^2 + b^2 + c^2 - 2ab - 2ac - 2bc \ge 4$.
+
+We can further simplify the inequality as $a^2 + b^2 + c^2 \ge 2ab + 2ac + 2bc + 4$.
+
+We can further simplify the inequality as $a^2 + b^2 + c^2 - (a + b + c)^2 \ge 4$.
+
+We can further simplify the inequality as $(a - b)^2 + (b - c)^2 + (c - a)^2 \ge 4$.
+
+We can further simplify the inequality as $|a - b|^2 + |b - c|^2 + |c - a|^2 \ge 4$.
+
+We can further simplify the inequality as $|a - b| + |b - c| + |c - a| \ge 2$.
+
+We can further simplify the inequality as $|a - b| + |b - c| + |c - a| \ge 2$.
+
+We can further simplify the inequality as $|a - b| \ge 1$ or $|b - c| \ge 1$ or $|c - a| \ge 1$.
+
+Therefore, at least one of the three numbers $a, b, c$ must be greater than 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At least one of the three numbers $a, b, c$ must be greater than 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

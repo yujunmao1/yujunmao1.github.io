@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_48</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The function is periodic, with a period of 8</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_48']
+messages = problem.conversations['GPT-3.5|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A function f(x) satisfies f(x+1)+f(x-1)=sqrt(2)*f(x). Determine whether the function is periodic, and if so, find its period.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine whether the function is periodic, we need to check if there exists a positive number T such that f(x+T) = f(x) for all x.
+
+Let&#x27;s assume that such a T exists. Then, we have:
+
+f(x+T+1) + f(x+T-1) = sqrt(2)*f(x+T)
+
+Expanding the equation using the assumption that f(x+T) = f(x), we get:
+
+f(x+1) + f(x-1) = sqrt(2)*f(x)
+
+Comparing this equation with the given equation f(x+1) + f(x-1) = sqrt(2)*f(x), we can see that they are the same. This implies that the function is indeed periodic with a period of T.
+
+Now, let&#x27;s find the period T. We can rewrite the given equation as:
+
+f(x+1) - sqrt(2)*f(x) + f(x-1) = 0
+
+This is a linear homogeneous recurrence relation. We can solve it by assuming a solution of the form f(x) = r^x, where r is a constant. Substituting this into the equation, we get:
+
+r^(x+1) - sqrt(2)*r^x + r^(x-1) = 0
+
+Dividing through by r^(x-1), we obtain:
+
+r^2 - sqrt(2)*r + 1 = 0
+
+This is a quadratic equation in r. Solving it, we find two possible values for r:
+
+r = (sqrt(2) ± sqrt(2-4))/2 = (sqrt(2) ± sqrt(-2))/2
+
+Since the discriminant is negative, we have complex roots:
+
+r = (sqrt(2) ± i*sqrt(2))/2
+
+The general solution to the recurrence relation is then given by:
+
+f(x) = A*(sqrt(2)/2 + i*sqrt(2)/2)^x + B*(sqrt(2)/2 - i*sqrt(2)/2)^x
+
+Using Euler&#x27;s formula, we can rewrite the complex roots as:
+
+f(x) = A*e^(i*pi/4*x) + B*e^(-i*pi/4*x)
+
+Since the function is real-valued, the imaginary parts of the complex exponentials must cancel out. This implies that A and B must be complex conjugates of each other. Let&#x27;s assume A = a + bi and B = a - bi, where a and b are real numbers.
+
+f(x) = (a + bi)*e^(i*pi/4*x) + (a - bi)*e^(-i*pi/4*x)
+
+Expanding and simplifying, we get:
+
+f(x) = 2a*cos(pi/4*x) - 2b*sin(pi/4*x)
+
+This is the general solution to the recurrence relation. To find the period T, we need to find the smallest positive integer k such that f(x+k) = f(x) for all x.
+
+Setting x = 0, we have:
+
+f(k) = 2a*cos(pi/4*k) - 2b*sin(pi/4*k)
+
+For f(k) to be equal to f(0), we need the cosine and sine terms to cancel out. This implies that pi/4*k must be a multiple of pi/2, which means k must be a multiple of 2.
+
+Therefore, the period T is 2.
+
+In conclusion, the function f(x) is periodic with a period of 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The function f(x) is periodic with a period of 2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

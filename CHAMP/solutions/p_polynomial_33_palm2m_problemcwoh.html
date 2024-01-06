@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_33</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_33']
+messages = problem.conversations['PaLM 2 Medium|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: The polynomial f(x) has integer coefficients and there exists an integer k such that f(k), f(k+1), f(k+2) are all divisible by 3. For integer m in {k+3, k+4, ..., 2k}, at least how many of them have f(m) divisible by 3, as an expression of k?
+Step-wise solution:
+1. For any integer m&gt;k+2, we have m-k | f(m)-f(k), m-k-1 | f(m)-f(k+1) and m-k-2 | f(m)-f(k+2).
+2. The three divisors are three consecutive integers, so one of them must be divisible by 3.
+3. Thus, one of f(m)-f(k), f(m)-f(k+1) and f(m)-f(k+2) must be divisible by 3.
+4. Since f(k), f(k+1), f(k+2) are all divisible by 3, we must have 3 | f(m).
+5. Thus, all k-2 elements of {k+3, k+4, ..., 2k} have f(m) divisible by 3.
+
+Problem: Starting from a number x_1, form a sequence x_2, x_3, x_4... by appending one digit from 0 to 8 (i.e., 9 is not allowed) to the previous number. Can there be finitely many composite numbers in this sequence?
+Step-wise solution:
+1. Assume that there are only finitely many composite numbers.
+2. This means that we can only use 0, 2, 4, 5, 6, 8 finitely many times since numbers ending in them are composite.
+3. In addition, number 1 and 7 can also only be used finitely many times since they increase the digit sum mod 3 by one, which means that adding them at most three times will result in a multiple of 3.
+4. So we can only append 3 after a certain place.
+5. We want to show that starting from a prime p, appending a certain number of 3s would produce a number that is a multiple of p.
+6. For p, we have p | 10^p-10, and since gcd(10, p)=1, we have p | 10^(p-1)-1, which is 99...99 (with p-1 9s).
+7. Thus, we have p | 33...33 since gcd(p, 3)=1.
+8. So appending this sequence to p would result in a composite number, and repeating this process means that we have infinitely many composite numbers.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial p(x)=ax^4+bx^3+cx^2+dx+e with integer coefficients is divisible by 7 for every integer x. What are possible values of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $p(x) = ax^4 + bx^3 + cx^2 + dx + e$ be a polynomial with integer coefficients such that $p(x)$ is divisible by 7 for all integers $x$. We can write $p(x)$ as follows:
+
+$$p(x) = 7q(x) + r$$
+
+where $q(x)$ is a polynomial with integer coefficients and $r$ is a constant. Since $p(x)$ is divisible by 7 for all integers $x$, we must have $r = 0$. Therefore, $p(x)$ is a multiple of 7.
+
+Now, let $p(x) = 7f(x)$, where $f(x)$ is a polynomial with integer coefficients. We can write $f(x)$ as follows:
+
+$$f(x) = a_0 + a_1x + a_2x^2 + a_3x^3 + a_4x^4$$
+
+where $a_0, a_1, a_2, a_3, a_4$ are integers. We can then write $p(x)$ as follows:
+
+$$p(x) = 7(a_0 + a_1x + a_2x^2 + a_3x^3 + a_4x^4) = 7a_0 + 7a_1x + 7a_2x^2 + 7a_3x^3 + 7a_4x^4$$
+
+We can see that the coefficients of $p(x)$ are all multiples of 7. Therefore, we must have $a_0 \equiv a_1 \equiv a_2 \equiv a_3 \equiv a_4 \equiv 0 \pmod{7}$.
+
+Therefore, the possible values of $(a \bmod 7) + (b \bmod 7) + (c \bmod 7) + (d \bmod 7) + (e \bmod 7)$ are all of the forms $0 + 0 + 0 + 0 + 0 = 0$, $0 + 0 + 0 + 0 + 1 = 1$, $0 + 0 + 0 + 0 + 2 = 2$, $0 + 0 + 0 + 0 + 3 = 3$, $0 + 0 + 0 + 0 + 4 = 4$, $0 + 0 + 0 + 0 + 5 = 5$, $0 + 0 + 0 + 0 + 6 = 6$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $(a \bmod 7) + (b \bmod 7) + (c \bmod 7) + (d \bmod 7) + (e \bmod 7)$ are all of the forms $0, 1, 2, 3, 4, 5, 6$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

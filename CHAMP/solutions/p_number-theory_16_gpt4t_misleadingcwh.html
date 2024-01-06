@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_16</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_16']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Can n+2 be a factor of 1^1987+2^1987+...+n^1987 for some n?
+
+You may find the following information useful:
+
+1. Let s=1^1987+2^1987+...+n^1987 and express 2s=2+t for some t.
+2. Check if 2+n | t.
+3. For integer x, x^2 mod 8 can take values of 0, 1 and 4.
+4. A number is a multiple of 9 if and only if its digit sum is divisible by 9.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote \( s = 1^{1987} + 2^{1987} + \ldots + n^{1987} \). We want to find out if \( n+2 \) can be a factor of \( s \).
+
+First, let&#x27;s express \( 2s \) as \( 2s = 2 + t \) for some integer \( t \). We can write \( t \) as:
+
+\[ t = 2s - 2 = 2(1^{1987} + 2^{1987} + \ldots + n^{1987}) - 2 \]
+\[ t = 2 + 2 \cdot 2^{1987} + 2 \cdot 3^{1987} + \ldots + 2 \cdot n^{1987} - 2 \]
+\[ t = 2 \cdot 2^{1987} + 2 \cdot 3^{1987} + \ldots + 2 \cdot n^{1987} \]
+
+Now, we need to check if \( n+2 \) divides \( t \). To do this, we can look at the terms of \( t \) modulo \( n+2 \).
+
+Since \( 1987 \) is odd, we can use the fact that for any integer \( x \), \( x^{1987} \equiv x \mod n+2 \) (because \( x^{1987} \) and \( x \) have the same remainder when divided by \( n+2 \)). This is due to Fermat&#x27;s little theorem, which states that if \( p \) is prime and does not divide \( x \), then \( x^{p-1} \equiv 1 \mod p \). In our case, \( n+2 \) is not necessarily prime, but the property that \( x^{1987} \equiv x \mod n+2 \) still holds because the exponent is odd.
+
+So, we can rewrite \( t \) modulo \( n+2 \) as:
+
+\[ t \equiv 2 \cdot 2 + 2 \cdot 3 + \ldots + 2 \cdot n \mod n+2 \]
+\[ t \equiv 4 + 6 + \ldots + 2n \mod n+2 \]
+\[ t \equiv 2(2 + 3 + \ldots + n) \mod n+2 \]
+
+Now, let&#x27;s consider the sum \( 2 + 3 + \ldots + n \). This is an arithmetic series with \( n-1 \) terms, the first term being \( 2 \) and the last term being \( n \). The sum of an arithmetic series is given by:
+
+\[ \text{Sum} = \frac{\text{Number of terms} \cdot (\text{First term} + \text{Last term})}{2} \]
+\[ \text{Sum} = \frac{(n-1) \cdot (2 + n)}{2} \]
+\[ \text{Sum} = \frac{n^2 + n - 2}{2} \]
+
+Multiplying this sum by \( 2 \) to get \( t \), we have:
+
+\[ t = n^2 + n - 2 \]
+
+Now, we want to check if \( n+2 \) divides \( t \). Let&#x27;s substitute \( t \) with \( n^2 + n - 2 \) and see if \( n+2 \) is a factor:
+
+\[ t = n^2 + n - 2 \]
+\[ t + 4 = n^2 + n + 2 \]
+\[ t + 4 = (n+2)(n-1) + 4 \]
+
+We can see that \( t + 4 \) is not necessarily divisible by \( n+2 \) because the \( +4 \) at the end disrupts the divisibility. However, we need to check if \( t \) itself is divisible by \( n+2 \), not \( t + 4 \).
+
+Let&#x27;s go back to \( t \):
+
+\[ t = n^2 + n - 2 \]
+\[ t = (n+2)(n-1) - (n+2) + n \]
+
+Now, \( (n+2)(n-1) \) is clearly divisible by \( n+2 \), but we have \( - (n+2) + n \) left over, which simplifies to \( -2 \). So, \( t \) is not divisible by \( n+2 \) because we have a remainder of \( -2 \) when we try to divide \( t \) by \( n+2 \).
+
+Therefore, \( n+2 \) cannot be a factor of \( s \), which is \( 1^{1987} + 2^{1987} + \ldots + n^{1987} \), for any integer \( n \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>No, \(n+2\) cannot be a factor of \(1^{1987} + 2^{1987} + \ldots + n^{1987}\) for any integer \(n\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

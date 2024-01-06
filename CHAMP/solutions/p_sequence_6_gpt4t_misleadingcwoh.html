@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_6</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no sequence is bounded)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_6']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let {x_n}, {y_n}, {z_n} be three sequences with positive initial terms x_1, y_1, z_1, defined as x_(n+1)=y_n+1/z_n, y_(n+1)=z_n+1/x_n, z_(n+1)=x_n+1/y_n. At most how many of the three sequences can be bounded?
+
+You may find the following information useful:
+
+1. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.
+2. The cube root of unity w=e^(i*pi/3) satisfies w+w^2+1=0 and w^n=w^(n mod 3).
+3. Let (a_1, ..., a_n) and (b_1, ..., b_n) be two similarly sorted sequences (e.g., both increasing or both decreasing). Then ((a_1+...+a_n)/n)*((b_1+...+b_n)/n)≤(a_1*b_1+...+a_n*b_n)/n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the behavior of the sequences {x_n}, {y_n}, and {z_n} given their recursive definitions. We want to determine if any of these sequences can be bounded.
+
+Let&#x27;s start by examining the recursive definitions:
+
+x_(n+1) = y_n + 1/z_n
+y_(n+1) = z_n + 1/x_n
+z_(n+1) = x_n + 1/y_n
+
+We can see that each term in a sequence is defined by the previous term of the other two sequences. Since the initial terms x_1, y_1, z_1 are positive, all subsequent terms will also be positive because the sum of positive numbers and the reciprocal of a positive number are both positive.
+
+Now, let&#x27;s assume that all three sequences are bounded. This means there exist positive constants M_x, M_y, and M_z such that for all n:
+
+x_n ≤ M_x
+y_n ≤ M_y
+z_n ≤ M_z
+
+Let&#x27;s consider the sum of the terms of the sequences at the (n+1)-th position:
+
+x_(n+1) + y_(n+1) + z_(n+1) = (y_n + 1/z_n) + (z_n + 1/x_n) + (x_n + 1/y_n)
+
+Using the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), we have:
+
+1/x_n + 1/y_n + 1/z_n ≥ 3 * (1/x_n * 1/y_n * 1/z_n)^(1/3)
+
+Since x_n, y_n, and z_n are positive, their product is positive, and we can take the cube root. Now, let&#x27;s substitute this inequality into the sum of the (n+1)-th terms:
+
+x_(n+1) + y_(n+1) + z_(n+1) ≥ y_n + z_n + x_n + 3 * (1/x_n * 1/y_n * 1/z_n)^(1/3)
+
+Now, let&#x27;s assume that the sequences are bounded and see if we reach a contradiction. If the sequences are bounded, then the terms x_n, y_n, and z_n are all less than or equal to some maximum values M_x, M_y, and M_z, respectively. This implies that 1/x_n, 1/y_n, and 1/z_n are all greater than or equal to the reciprocals of these maximum values.
+
+However, if we look at the inequality we derived:
+
+x_(n+1) + y_(n+1) + z_(n+1) ≥ y_n + z_n + x_n + 3 * (1/x_n * 1/y_n * 1/z_n)^(1/3)
+
+We can see that the right-hand side will always be strictly greater than y_n + z_n + x_n because the cube root of the product of the reciprocals is a positive number (since x_n, y_n, and z_n are positive). This means that the sum of the terms of the sequences is strictly increasing.
+
+If the sum of the terms is strictly increasing, then at least one of the sequences must be unbounded, because if all were bounded, their sum would also be bounded, which contradicts the fact that the sum is strictly increasing.
+
+Therefore, at most two of the sequences can be bounded. If two sequences were bounded, the third would necessarily be unbounded to account for the increasing sum. However, due to the symmetric nature of the definitions of the sequences, if one sequence is unbounded, the others must also be unbounded, as they all depend on each other.
+
+In conclusion, at most one of the sequences can be bounded. If one sequence were bounded, the other two would necessarily be unbounded to account for the increasing sum. However, due to the symmetric nature of the definitions, it is not possible for just one sequence to be bounded while the other two are not. Therefore, the answer is that at most one of the sequences can be bounded, but in reality, none of them can be bounded given the recursive definitions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most one of the sequences {x_n}, {y_n}, {z_n} can be bounded, but due to the interdependence in their definitions, in reality, none of them can be bounded.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

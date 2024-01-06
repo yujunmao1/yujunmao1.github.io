@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_34</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n-k+3)*2^(n-k-2)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_34']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all sequences of positive integer numbers have sum n, for integer k&lt;n-1, how many times does the number k appear, as an expression of n and k?
+
+You may find the following information useful:
+
+1. C(n, r)=n!/(r!*(n-r)!)=n*(n-1)*(n-2)*...*(n-r+1)/r!.
+2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the number of times the integer \( k \) appears in all sequences of positive integers that sum to \( n \). We can think of this as a problem of partitioning the number \( n \) into a sum of positive integers, where one of the integers in the partition is \( k \).
+
+Let&#x27;s break down the problem into steps:
+
+1. We first choose the number \( k \) to be part of our sequence. This is a given, so there&#x27;s only one way to do this.
+
+2. We then need to partition the remaining \( n - k \) into a sequence of positive integers. However, since we are considering sequences (which are ordered), we need to use the concept of &quot;stars and bars&quot; (also known as &quot;balls and bins&quot;) to count the number of ways to do this.
+
+The &quot;stars and bars&quot; method is a way to distribute \( n \) indistinguishable items into \( k \) distinguishable bins. In our case, we want to distribute \( n - k \) stars (representing the remaining sum) into \( k \) bins (representing the places in the sequence before and after the chosen \( k \)).
+
+However, since we are dealing with positive integers, we cannot have any bin empty. To ensure this, we place one star in each bin to start with, leaving us with \( n - k - (k - 1) = n - 2k + 1 \) stars to distribute freely among the \( k \) bins.
+
+Now, we can use the &quot;stars and bars&quot; method to distribute these \( n - 2k + 1 \) stars into \( k \) bins. The number of ways to do this is the number of ways to place \( k - 1 \) bars to create \( k \) sections among \( n - 2k + 1 \) stars. This is equivalent to choosing \( k - 1 \) positions from \( n - 2k + 1 + k - 1 = n - k \) positions (the \( n - 2k + 1 \) stars plus the \( k - 1 \) bars).
+
+Using the combination formula, the number of ways to choose \( k - 1 \) items from \( n - k \) items is \( C(n - k, k - 1) \).
+
+Therefore, the number of times the number \( k \) appears in all sequences of positive integers that sum to \( n \) is given by:
+
+\[ C(n - k, k - 1) = \frac{(n - k)!}{(k - 1)!((n - k) - (k - 1))!} \]
+
+\[ = \frac{(n - k)!}{(k - 1)!(n - 2k + 1)!} \]
+
+This is the expression for the number of times \( k \) appears in all sequences of positive integers that sum to \( n \), for \( k &lt; n - 1 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of times the number \( k \) appears in all sequences of positive integers that sum to \( n \), for \( k &lt; n - 1 \), is given by \( C(n - k, k - 1) = \frac{(n - k)!}{(k - 1)!(n - 2k + 1)!} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

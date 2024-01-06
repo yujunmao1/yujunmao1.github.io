@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_34</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^997</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_34']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The positive real numbers x_0, x_1, ..., x_1995 satisfy x_0=x_1995 and x_i+2/x_i=2x_(i+1)+1/x_(i+1) for i=0, ..., 1994. Find the maximum value that x_0 can have.
+
+You may find the following information useful:
+
+1. From x_i+2/x_i=2x_(i+1)+1/x_(i+1), solve for x_(i+1) in terms of x_i.
+2. Study if x_i=2^k_i*x_0^e_i can be true for some k_i and e_i.
+3. Find a upper bound on the absolute value of k_i.
+4. Find a formula for e_i as an expression of k_i and i.
+5. Study the parity of k_1995.
+6. Find the largest possible value of k_1995, and see if a sequence could be constructed satisfying that value.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by solving for \( x_{i+1} \) in terms of \( x_i \) using the given relation:
+
+\[ \frac{x_{i+2}}{x_i} = 2x_{i+1} + \frac{1}{x_{i+1}} \]
+
+Rearrange the equation to solve for \( x_{i+1} \):
+
+\[ x_{i+1}^2 - \frac{x_{i+2}}{x_i}x_{i+1} + 1 = 0 \]
+
+This is a quadratic equation in \( x_{i+1} \). Using the quadratic formula:
+
+\[ x_{i+1} = \frac{\frac{x_{i+2}}{x_i} \pm \sqrt{\left(\frac{x_{i+2}}{x_i}\right)^2 - 4}}{2} \]
+
+Since \( x_{i+1} \) is a positive real number, we discard the negative root and keep the positive root. Now, let&#x27;s consider the possibility that \( x_i = 2^{k_i}x_0^{e_i} \) for some \( k_i \) and \( e_i \). We need to find a relationship between \( k_i \) and \( e_i \) that satisfies the given conditions.
+
+We can substitute \( x_i = 2^{k_i}x_0^{e_i} \) into the relation:
+
+\[ \frac{2^{k_{i+2}}x_0^{e_{i+2}}}{2^{k_i}x_0^{e_i}} = 2 \cdot 2^{k_{i+1}}x_0^{e_{i+1}} + \frac{1}{2^{k_{i+1}}x_0^{e_{i+1}}} \]
+
+Simplifying, we get:
+
+\[ 2^{k_{i+2}-k_i}x_0^{e_{i+2}-e_i} = 2^{k_{i+1}+1}x_0^{e_{i+1}} + 2^{-k_{i+1}}x_0^{-e_{i+1}} \]
+
+This suggests that \( e_{i+2} - e_i = e_{i+1} \) and \( e_{i+1} = -e_{i+1} \), which implies \( e_{i+1} = 0 \). This is a contradiction since \( x_{i+1} \) cannot be zero. Therefore, our initial assumption that \( x_i = 2^{k_i}x_0^{e_i} \) may not be correct.
+
+Instead, let&#x27;s look for a pattern in the sequence of \( x_i \) values. We know that \( x_0 = x_{1995} \), and we have a recursive relation that relates each term to the previous one. We can try to find a pattern by examining the first few terms.
+
+Let&#x27;s start with \( x_0 \) and \( x_1 \) as arbitrary positive real numbers and see if we can find a relationship between them using the given recursive relation. We can then use this relationship to find the maximum value of \( x_0 \).
+
+However, the problem as stated is quite complex and may not have a straightforward solution. It&#x27;s possible that the problem requires a deeper insight or a different approach to find the maximum value of \( x_0 \). Without additional information or constraints on the \( x_i \) values, it&#x27;s challenging to proceed further.
+
+Given the complexity of the problem, it may be necessary to revisit the assumptions and look for additional patterns or properties that can help us find the maximum value of \( x_0 \). If there are any additional hints or constraints on the problem, they could be crucial in finding the solution.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The solution to the problem as stated is complex and requires additional information or constraints to determine the maximum value of \( x_0 \), and the initial approach provided does not lead to a conclusive answer.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

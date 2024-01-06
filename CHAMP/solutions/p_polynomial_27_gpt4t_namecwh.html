@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_27</td>
+            <td>GPT-4 Turbo</td>
+            <td>Name w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At most 0 values (i.e., no such values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_27']
+messages = problem.conversations['GPT-4 Turbo|Name w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x) be a polynomial with integer coefficients, with f(x)=5 at four distinct integers x=a, b, c, d. If f(x) has degree n, then at most how many integer values k are there with f(k)=8?
+
+You may find the following information useful:
+
+1. Study the root of the polynomial g(x)=f(x)-5.
+2. A polynomial f(x) of degree n with roots x_1, ..., x_i (along with other roots) can be written as f(x)=(x-x_1)(x-x_2)...(x-x_i)g(x), where g(x) is a polynomial of degree n-i.
+3. Study the factorization of g(k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given that f(x) = 5 at four distinct integers x = a, b, c, d, we can consider the polynomial g(x) = f(x) - 5. This polynomial g(x) has roots at x = a, b, c, d, because g(a) = f(a) - 5 = 0, and similarly for b, c, and d.
+
+Since g(x) has these four roots, we can express it as:
+
+g(x) = (x - a)(x - b)(x - c)(x - d) * h(x),
+
+where h(x) is a polynomial with integer coefficients and the degree of h(x) is n - 4, because the degree of g(x) is the same as the degree of f(x), which is n.
+
+Now, we want to find the number of integer values k for which f(k) = 8. This is equivalent to finding the number of integer solutions to g(k) = f(k) - 5 = 3.
+
+Let&#x27;s consider the polynomial g(k) - 3:
+
+g(k) - 3 = (k - a)(k - b)(k - c)(k - d) * h(k) - 3.
+
+We are looking for integer solutions to g(k) - 3 = 0, which means:
+
+(k - a)(k - b)(k - c)(k - d) * h(k) = 3.
+
+Since 3 is a prime number, its only divisors are ±1 and ±3. This means that the product of the terms on the left-hand side must equal one of these divisors. Each factor (k - a), (k - b), (k - c), (k - d), and h(k) must be an integer, and their product must be either 1, -1, 3, or -3.
+
+Now, let&#x27;s consider the possibilities for h(k). If h(k) is not constant (i.e., if n &gt; 4), then h(k) can take on infinitely many values as k varies over the integers. However, since we are looking for integer solutions, h(k) must be such that the entire product is one of the divisors of 3.
+
+If h(k) is constant (i.e., n = 4), then h(k) must be ±1 or ±3 to satisfy the equation. But since h(k) is a polynomial of degree n - 4, if n = 4, then h(k) is a constant polynomial of degree 0, which means it is just a constant.
+
+In either case, we have a finite number of possibilities for the product of the four factors (k - a), (k - b), (k - c), (k - d) to be ±1 or ±3. Each of these factors is an integer, and since they are factors of 3, they must be among the divisors of 3.
+
+Therefore, for each factor, we have at most two possibilities: it can be either 1 or -1 if the product is to be ±1, or it can be either 3 or -3 if the product is to be ±3. Since there are four factors, and each factor has at most two possible values that can contribute to a product of 3 or -3, we have at most 2^4 = 16 combinations of the factors (k - a), (k - b), (k - c), (k - d).
+
+However, not all of these combinations will necessarily yield distinct integer values of k, because some combinations may lead to the same value of k or may not be possible given the specific values of a, b, c, and d. Therefore, the maximum number of integer values k for which f(k) = 8 is at most 16, but it could be fewer depending on the specific values of a, b, c, and d.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most, there are 16 integer values of k for which f(k) = 8, given that f(x) = 5 at four distinct integers x = a, b, c, d, and f(x) is a polynomial with integer coefficients.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

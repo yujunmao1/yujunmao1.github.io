@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_30']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: For x, y, z&gt;0, what is the smallest value of x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y+x/z)?
+Step-wise solution:
+1. We have x^2/y^2+y^2/z^2+z^2/x^2=(x/y)(x/y)+(y/z)(y/z)+(z/x)(z/x), and y/x+z/y+x/z=(y/z)(z/x)+(z/x)(x/y)+(x/y)(y/z).
+2. Thus, the former is the sum of products of elements between the sequences (x/y, y/z, x/z) and (x/y, y/z, x/z), which are similarly sorted.
+3. By contrast, the latter is the sum of the products of elements between the same two sequences but permuted differently.
+4. So we have x^2/y^2+y^2/z^2+z^2/x^2≥y/x+z/y+x/z, with equality achieved when a=b=c.
+5. Thus, the smallest value is 0.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?
+
+In addition, you may also find the following information helpful:
+
+1. Let A=a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n), and write each term as a_i*(1/(s-a_i)).
+2. Let B_k=a_1/(s-a_(1+k))+a_2/(s-a_(2+k))+...+a_n/(s-a_(n+k)) for k=1, ..., n-1 (where we wrap around the index of a_i&#x27;s at n).
+3. Compare A with B_k and compare (n-1)A with B_2+B_3+...+B_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, we will use the concept of rearrangement inequality, which states that for any two sequences of real numbers, the sum of the products of corresponding terms is maximized when the sequences are similarly sorted and minimized when they are oppositely sorted.
+
+Let&#x27;s denote the sum \( s = a_1 + a_2 + \ldots + a_n \) and the expression we want to minimize as \( A \):
+
+\[ A = \frac{a_1}{s - a_1} + \frac{a_2}{s - a_2} + \ldots + \frac{a_n}{s - a_n} \]
+
+We can rewrite each term as \( a_i \cdot \frac{1}{s - a_i} \).
+
+Now, let&#x27;s consider the expressions \( B_k \) for \( k = 1, \ldots, n-1 \), where the indices are taken modulo \( n \):
+
+\[ B_k = \frac{a_1}{s - a_{1+k}} + \frac{a_2}{s - a_{2+k}} + \ldots + \frac{a_n}{s - a_{n+k}} \]
+
+By the rearrangement inequality, since the \( a_i \)&#x27;s are fixed and the \( s - a_i \)&#x27;s are permuted, \( A \) is the smallest of all the \( B_k \)&#x27;s because it corresponds to the situation where the \( a_i \)&#x27;s and \( s - a_i \)&#x27;s are oppositely sorted (the largest \( a_i \) is paired with the smallest \( s - a_i \), etc.).
+
+Now, let&#x27;s compare \( (n-1)A \) with the sum of all \( B_k \)&#x27;s except \( B_1 \), which is \( B_2 + B_3 + \ldots + B_n \):
+
+\[ (n-1)A = (n-1)\left(\frac{a_1}{s - a_1} + \frac{a_2}{s - a_2} + \ldots + \frac{a_n}{s - a_n}\right) \]
+
+\[ B_2 + B_3 + \ldots + B_n = \sum_{k=2}^{n} \left(\frac{a_1}{s - a_{1+k}} + \frac{a_2}{s - a_{2+k}} + \ldots + \frac{a_n}{s - a_{n+k}}\right) \]
+
+Notice that each \( a_i \) appears exactly \( (n-1) \) times in the numerator on the right-hand side, and every term \( s - a_j \) appears exactly once in the denominator for each \( a_i \). Therefore, the sum of all \( B_k \)&#x27;s except \( B_1 \) is equal to \( (n-1)A \).
+
+Since \( A \) is the smallest of the \( B_k \)&#x27;s, we have:
+
+\[ (n-1)A \leq B_2 + B_3 + \ldots + B_n \]
+
+But we have just shown that \( (n-1)A = B_2 + B_3 + \ldots + B_n \), so we must have equality throughout. This means that \( A \) is equal to each \( B_k \), and thus \( A \) is minimized when all the \( a_i \)&#x27;s are equal.
+
+When all \( a_i \)&#x27;s are equal, we have \( a_i = \frac{s}{n} \) for all \( i \). Substituting this into \( A \), we get:
+
+\[ A = \frac{\frac{s}{n}}{s - \frac{s}{n}} + \frac{\frac{s}{n}}{s - \frac{s}{n}} + \ldots + \frac{\frac{s}{n}}{s - \frac{s}{n}} \]
+
+\[ A = n \cdot \frac{\frac{s}{n}}{s - \frac{s}{n}} \]
+
+\[ A = n \cdot \frac{1}{n - 1} \]
+
+\[ A = \frac{n}{n - 1} \]
+
+Therefore, the smallest value of \( A \) as an expression of \( n \) is \( \frac{n}{n - 1} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) \) for positive numbers \( a_1, ..., a_n \) is \( \frac{n}{n-1} \), where \( s \) is the sum of all \( a_i \)&#x27;s.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

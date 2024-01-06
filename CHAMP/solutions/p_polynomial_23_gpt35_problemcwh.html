@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_23</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 7</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_23']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Is it possible to select an infinite geometric sequence from the sequence 1, 1/2, 1/4, 1/8, 1/16, ... such that the sum is 1/7, and if so, what is the sequence?
+Step-wise solution:
+1. Assume that the geometric sequence starts with 1/2^a and has a ratio of 1/2^b.
+2. Thus, its sum is 1/(2^a*(1-1/2^b))=2^(b-a)/(2^b-1).
+3. We see the sum is equal to 1/7 when a=b=3.
+4. So the sequence is 1/2^3, 1/2^6, 1/2^9, ...
+
+Problem: If polynomial f(x, y) is symmetric (i.e., f(x, y)=f(y, x)) and x-y | f(x, y), can we always find h(x, y) with f(x, y)=(x-y)^2*h(x, y) such that h(x, y) is a polynomial function?
+Step-wise solution:
+1. We can write f(x, y)=(x-y)g(x, y) for some polynomial g(x, y) and from f(x, y)=f(y, x) we have (x-y)g(x, y)=(y-x)g(y, x).
+2. This means that g(x, y)=-g(y, x).
+3. Let g(x, y)=sum_(i, j) c_ij*x^i*y^j.
+4. Thus, g(y, x)=sum_(i, j) c_ij*y^i*x^j=sum_(i, j) (-c_ij)*x^i*y^j=sum_(i, j) (-c_ji)*x^j*y^i.
+5. So we need to have c_ij=-c_ji for all i, j, which means c_ii=0 for all i.
+6. Thus, we can write g(x, y)=sum_(i&gt;j) c_ij(x^i*y^j-x^j*y*i).
+7. Let k=i-j, and we have x^i*y^j-x^j*y*i=(x^k-y^k)(x^j*y^j).
+8. Since x-y | x^k-y^k, we have x-y | x^i*y^j-x^j*y*i and x-y | g(x, y).
+9. So we have g(x, y)=(x-y)h(x, y) for some polynomial h(x, y), which means that f(x, y)=(x-y)^2*h(x, y).
+
+Problem: Find all integer values of m such that 1000^m-1 is a factor of 1978^m-1.
+Step-wise solution:
+1. We have 1978^m-1000^m=(2*989)^m-(2*500)^m=2^m*(989^m-500^m).
+2. Since 1000^m-1 is an odd number, gcd(2^m, 1000^m-1)=1.
+3. Thus, if 1000^m-1 | 1978^m-1000^m, we must have 1000^m-1 | 989^m-500^m.
+4. But the divisibility cannot be true since 989^m-500^m&lt;1000^m-1.
+5. So 1000^m-1 ∤ 1978^m-1000^m.
+6. Since 1978^m-1000^m=(1978^m-1)-(1000^m-1), we have 1000^m-1 ∤ 1978^m-1.
+7. Thus, there is no such integer m.
+
+Problem: If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?
+Step-wise solution:
+1. Let S(m)=12^m+9^m+8^m+6^m.
+2. We have S(m)=(3^m)(4^m)+(3^m)(3^m)+(2^m)(4^m)+(2^m)(3^m)=(2^m+3^m)(3^m+4^m).
+3. Since m=5(2k+1), S(m)=((2^5)^(2k+1)+(3^5)^(2k+1))((3^5)^(2k+1)+(4^5)^(2k+1)).
+4. Since 2k+1 is odd, we have 2^5+3^5 | (2^5)^(2k+1)+(3^5)^(2k+1) and 3^5 + 4^5 | (3^5)^(2k+1)+(4^5)^(2k+1).
+5. So (2^5+3^5)(3^5 + 4^5) | S(m), which means 11*25*181*7 | S(m).
+6. Since 1991=11*181, we have 1991 | S(m).
+7. So S(m) mod 1991=0.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Finding the remainder when p(x^7) is divided by p(x), where p(x)=x^6+x^5+...+x+1?
+
+In addition, you may also find the following information helpful:
+
+1. Let y=x^7 and study the divisibility of p(y)-p(1) by y-1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the remainder when p(x^7) is divided by p(x), we can use the Remainder Theorem. The Remainder Theorem states that if we divide a polynomial f(x) by x-a, the remainder is equal to f(a).
+
+Let&#x27;s substitute y=x^7 into p(y) and p(1):
+
+p(y) = y^6 + y^5 + ... + y + 1
+p(1) = 1^6 + 1^5 + ... + 1 + 1 = 6
+
+Now, let&#x27;s study the divisibility of p(y) - p(1) by y - 1:
+
+p(y) - p(1) = (y^6 + y^5 + ... + y + 1) - 6
+
+Since y = x^7, we can rewrite this as:
+
+p(x^7) - 6
+
+Now, let&#x27;s divide p(x^7) - 6 by p(x):
+
+(p(x^7) - 6) ÷ p(x)
+
+Using the Remainder Theorem, the remainder will be equal to p(1^7) - 6:
+
+p(1^7) - 6 = p(1) - 6 = 6 - 6 = 0
+
+Therefore, the remainder when p(x^7) is divided by p(x) is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder when p(x^7) is divided by p(x) is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

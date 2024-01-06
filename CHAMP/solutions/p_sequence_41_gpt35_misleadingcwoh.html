@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_41</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (1+sqrt(4a+1))/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_41']
+messages = problem.conversations['GPT-3.5|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a&gt;0, does the limit of the sequence defined by a_0=sqrt(a), a_(n+1)=sqrt(a+a_n) exist, and if so, find it as an expression of a.
+
+You may find the following information useful:
+
+1. The harmonic series 1+1/2+1/3+... diverges (i.e., the sum is not a finite value).
+2. Let (a_1, ..., a_n) and (b_1, ..., b_n) be two similarly sorted sequences (e.g., both increasing or both decreasing). Then ((a_1+...+a_n)/n)*((b_1+...+b_n)/n)≤(a_1*b_1+...+a_n*b_n)/n.
+3. a^4+4b^4=(a^2+2b^2+2ab)(a^2+2b^2-2ab).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the limit of the sequence exists, we can examine the behavior of the terms as n approaches infinity.
+
+Let&#x27;s start by finding the first few terms of the sequence:
+
+a_0 = sqrt(a)
+a_1 = sqrt(a + a_0) = sqrt(a + sqrt(a))
+a_2 = sqrt(a + a_1) = sqrt(a + sqrt(a + sqrt(a)))
+a_3 = sqrt(a + a_2) = sqrt(a + sqrt(a + sqrt(a + sqrt(a))))
+
+We can observe that each term in the sequence is obtained by taking the square root of the sum of a and the previous term. This suggests that the terms are increasing.
+
+To prove this, we can use mathematical induction. Let&#x27;s assume that a_n &lt; a_(n+1) for some n. We want to show that a_(n+1) &lt; a_(n+2).
+
+Assuming a_n &lt; a_(n+1), we have:
+a_(n+1) = sqrt(a + a_n) &gt; sqrt(a + a_(n+1))
+
+Squaring both sides, we get:
+a + a_(n+1) &gt; a + a_n
+
+Since a &gt; 0, we can cancel it out:
+a_(n+1) &gt; a_n
+
+Therefore, we have shown that if a_n &lt; a_(n+1), then a_(n+1) &lt; a_(n+2). By induction, we can conclude that the terms of the sequence are increasing.
+
+Now, let&#x27;s consider the upper bound of the sequence. We can use the given information (2) to compare the terms of the sequence to a geometric sequence.
+
+Let b_n = sqrt(a) for all n. Then, we have:
+a_n = sqrt(a + a_(n-1)) &lt; sqrt(a + b_(n-1))
+
+Using the given information (3), we can rewrite the right side as:
+sqrt(a + b_(n-1)) = sqrt((sqrt(a))^2 + (sqrt(a))^2 - 2*sqrt(a)*sqrt(a)) = sqrt(2a - 2a) = 0
+
+Therefore, we have:
+a_n &lt; 0
+
+Since the terms of the sequence are increasing and bounded above by 0, the limit of the sequence exists.
+
+To find the limit, let&#x27;s assume that the limit is L. Taking the limit as n approaches infinity, we have:
+L = sqrt(a + L)
+
+Squaring both sides, we get:
+L^2 = a + L
+
+Rearranging the equation, we have:
+L^2 - L - a = 0
+
+Using the quadratic formula, we can solve for L:
+L = (1 ± sqrt(1 + 4a))/2
+
+Since a &gt; 0, the expression inside the square root is positive. Therefore, we can simplify the expression to:
+L = (1 + sqrt(1 + 4a))/2
+
+Thus, the limit of the sequence is given by (1 + sqrt(1 + 4a))/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by a_0=sqrt(a), a_(n+1)=sqrt(a+a_n) exists and is given by (1 + sqrt(1 + 4a))/2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

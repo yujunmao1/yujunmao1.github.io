@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_44</td>
+            <td>GPT-4</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Exactly one sequence</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_44']
+messages = problem.conversations['GPT-4|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many integers n in {1, 2, ..., 99} is n^4+4^n a prime number?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have n^4+4^n=5 being a prime number when n=1.
+2. For n&gt;1, if n is even, obviously n^4+4^n is even and greater than two.
+3. Thus, we only need to consider the case of odd n.
+4. We let n=2k+1.
+5. n^4+4^n=n^4+4^(2k+1)=n^4+4*4^(2k)=n^4+4*2^(4k)=n^4+4*(2^k)^4.
+6. n^4+4*(2^k)^4=(n^2+2*(2^k)^2+2n(2^k))(n^2+2*(2^k)^2-2n(2^k)).
+7. The last expression gives a factorization of n^4+4^n.
+8. So n^4+4^n cannot be a prime number for any n&gt;1.
+9. Thus, there is 1 prime number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial f(x) has integer coefficients and there exists an integer k such that f(k), f(k+1), f(k+2) are all divisible by 3. For integer m in {k+3, k+4, ..., 2k}, at least how many of them have f(m) divisible by 3, as an expression of k?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For any integer m&gt;k+2, we have m-k | f(m)-f(k), m-k-1 | f(m)-f(k+1) and m-k-2 | f(m)-f(k+2).
+2. The three divisors are three consecutive integers, so one of them must be divisible by 3.
+3. Thus, one of f(m)-f(k), f(m)-f(k+1) and f(m)-f(k+2) must be divisible by 3.
+4. Since f(k), f(k+1), f(k+2) are all divisible by 3, we must have 3 | f(m).
+5. Thus, all k-2 elements of {k+3, k+4, ..., 2k} have f(m) divisible by 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible positive integer values of x such that x, x+10 and x+14 are all prime numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let x mod 3=m.
+2. Thus, x+10 mod 3=m+1 and x+14 mod 3=x+2.
+3. So one of x, x+10 and x+14 must be a multiple of 3.
+4. Since the only prime multiple of 3 is 3 itself, we have x=3, which is valid because both 13 and 17 are primes.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+n people sit around a circular table. How many of the n! arrangements are distinct (i.e., do not have the same neighboring relations), as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For each arrangement, a total of n rotations and 2 reflections all preserve the neighoring relationship.
+2. Thus, the distinct number of arrangement is n!/(2n).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What is the minimum value of the sum of squares of the zeros of x^2-(a-2)x-a-1 for real number a?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let the two roots be x_1 and x_2.
+2. Thus, we have x_1+x_2=a-2 and x_1*x_2=-(a+1).
+3. We have x_1^2+x_2^2=(x_1+x_2)^2-2*x_1*x_2=(a-2)^2+2(a+1)=a^2-2a+6=(a-1)^2+5≥5.
+4. So the minimum value of x_1^2+x_2^2 is 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many sequences of positive numbers a_0, a_1, a_2, ... satisfy the conditions of a_0=1, a_(n+2)=a_n-a_(n+1) for all n≥0?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. We have a_2=a_0-a_1=1-a_1.
+2. Thus, a_1 must be less than or equal to 1.
+3. We have a_3=a_1-a_2=a_1-(1-a_1)=2a_1-1.
+4. Thus, a_1 must be greater than or equal to 1/2.
+5. We have a_4=a_2-a_3=1-a_1-(2a_1-1)=1-3a_1.
+6. Thus, a_1 must be less than or equal to 1/3.
+7. We have a_5=a_3-a_4=2a_1-1-(1-3a_1)=5a_1-2.
+8. Thus, a_1 must be greater than or equal to 2/5.
+9. We have a_6=a_4-a_5=1-3a_1-(5a_1-2)=1-8a_1+2=3-8a_1.
+10. Thus, a_1 must be less than or equal to 5/8.
+11. We have a_7=a_5-a_6=5a_1-2-(3-8a_1)=13a_1-5.
+12. Thus, a_1 must be greater than or equal to 5/13.
+13. We have a_8=a_6-a_7=3-8a_1-(13a_1-5)=8-21a_1.
+14. Thus, a_1 must be less than or equal to 8/21.
+15. We have a_9=a_7-a_8=13a_1-5-(8-21a_1)=34a_1-13.
+16. Thus, a_1 must be greater than or equal to 13/34.
+17. We have a_10=a_8-a_9=8-21a_1-(34a_1-13)=21-55a_1.
+18. Thus, a_1 must be less than or equal to 21/55.
+19. We have a_11=a_9-a_10=34a_1-13-(21-55a_1)=89a_1-34.
+20. Thus, a_1 must be greater than or equal to 34/89.
+21. We have a_12=a_10-a_11=21-55a_1-(89a_1-34)=55-144a_1.
+22. Thus, a_1 must be less than or equal to 55/144.
+23. We have a_13=a_11-a_12=89a_1-34-(55-144a_1)=233a_1-89.
+24. Thus, a_1 must be greater than or equal to 89/233.
+25. We have a_14=a_12-a_13=55-144a_1-(233a_1-89)=144-377a_1.
+26. Thus, a_1 must be less than or equal to 144/377.
+27. We have a_15=a_13-a_14=233a_1-89-(144-377a_1)=610a_1-233.
+28. Thus, a_1 must be greater than or equal to 233/610.
+29. We have a_16=a_14-a_15=144-377a_1-(610a_1-233)=377-987a_1.
+30. Thus, a_1 must be less than or equal to 377/987.
+31. We have a_17=a_15-a_16=610a_1-233-(377-987a_1)=1597a_1-610.
+32. Thus, a_1 must be greater than or equal to 610/1597.
+33. We have a_18=a_16-a_17=377-987a_1-(1597a_1-610)=987-2584a_1.
+34. Thus, a_1 must be less than or equal to 987/2584.
+35. We have a_19=a_17-a_18=1597a_1-610-(987-2584a_1)=4181a_1-1597.
+36. Thus, a_1 must be greater than or equal to 1597/4181.
+37. We have a_20=a_18-a_19=987-2584a_1-(4181a_1-1597)=2584-6765a_1.
+38. Thus, a_1 must be less than or equal to 2584/6765.
+39. We have a_21=a_19-a_20=4181a_1-1597-(2584-6765a_1)=10946a_1-4181.
+40. Thus, a_1 must be greater than or equal to 4181/10946.
+41. We have a_22=a_20-a_21=2584-6765a_1-(10946a_1-4181)=6765-17711a_1.
+42. Thus, a_1 must be less than or equal to 6765/17711.
+43. We have a_23=a_21-a_22=10946a_1-4181-(6765-17711a_1)=28657a_1-10946.
+44. Thus, a_1 must be greater than or equal to 10946/28657.
+45. We have a_24=a_22-a_23=6765-17711a_1-(28657a_1-10946)=17711-46368a_1.
+46. Thus, a_1 must be less than or equal to 17711/46368.
+47. We have a_25=a_23-a_24=28657a_1-10946-(17711-46368a_1)=75025a_1-28657.
+48. Thus, a_1 must be greater than or equal to 28657/75025.
+49. We have a_26=a_24-a_25=17711-46368a_1-(75025a_1-28657)=46368-121393a_1.
+50. Thus, a_1 must be less than or equal to 46368/121393.
+51. We have a_27=a_25-a_26=75025a_1-28657-(46368-121393a_1)=196418a_1-75025.
+52. Thus, a_1 must be greater than or equal to 75025/196418.
+53. We have a_28=a_26-a_27=46368-121393a_1-(196418a_1-75025)=121393-317811a_1.
+54. Thus, a_1 must be less than or equal to 121393/317811.
+55. We have a_29=a_27-a_28=196418a_1-75025-(121393-317811a_1)=514229a_1-196418.
+56. Thus, a_1 must be greater than or equal to 196418/514229.
+57. We have a_30=a_28-a_29=121393-317811a_1-(514229a_1-196418)=317811-832040a_1.
+58. Thus, a_1 must be less than or equal to 317811/832040.
+59. We have a_31=a_29-a_30=514229a_1-196418-(317811-832040a_1)=1346269a_1-514229.
+60. Thus, a_1 must be greater than or equal to 514229/1346269.
+61. We have a_32=a_30-a_31=317811-832040a_1-(1346269a_1-514229)=832040-2178309a_1.
+62. Thus, a_1 must be less than or equal to 832040/2178309.
+63. We have a_33=a_31-a_32=1346269a_1-514229-(832040-2178309a_1)=3524578a_1-1346269.
+64. Thus, a_1 must be greater than or equal to 1346269/3524578.
+65. We have a_34=a_32-a_33=832040-2178309a_1-(3524578a_1-1346269)=2178309-5702887a_1.
+66. Thus, a_1 must be less than or equal to 2178309/5702887.
+67. We have a_35=a_33-a_34=3524578a_1-1346269-(2178309-5702887a_1)=9227465a_1-3524578.
+68. Thus, a_1 must be greater than or equal to 3524578/9227465.
+69. We have a_36=a_34-a_35=2178309-5702887a_1-(9227465a_1-3524578)=5702887-14930352a_1.
+70. Thus, a_1 must be less than or equal to 5702887/14930352.
+71. We have a_37=a_35-a_36=9227465a_1-3524578-(5702887-14930352a_1)=24157817a_1-9227465.
+72. Thus, a_1 must be greater than or equal to 9227465/24157817.
+73. We have a_38=a_36-a_37=5702887-14930352a_1-(24157817a_1-9227465)=14930352-39088169a_1.
+74. Thus, a_1 must be less than or equal to 14930352/39088169.
+75. We have a_39=a_37-a_38=24157817a_1-9227465-(14930352-39088169a_1)=63245986a_1-24157817.
+76. Thus, a_1 must be greater than or equal to 24157817/63245986.
+77. We have a_40=a_38-a_39=14930352-39088169a_1-(63245986a_1-24157817)=39088169-102334155a_1.
+78. Thus, a_1 must be less than or equal to 39088169/102334155.
+79. We have a_41=a_39-a_40=63245986a_1-24157817-(39088169-102334155a_1)=165580141a_1-63245986.
+80. Thus, a_1 must be greater than or equal to 63245986/165580141.
+81. We have a_42=a_40-a_41=39088169-102334155a_1-(165580141a_1-63245986)=102334155-267914296a_1.
+82. Thus, a_1 must be less than or equal to 102334155/267914296.
+83. We have a_43=a_41-a_42=165580141a_1-63245986-(102334155-267914296a_1)=433494437a_1-165580141.
+84. Thus, a_1 must be greater than or equal to 165580141/433494437.
+85. We have a_44=a_42-a_43=102334155-267914296a_1-(433494437a_1-165580141)=267914296-701408733a_1.
+86. Thus, a_1 must be less than or equal to 267914296/701408733.
+87. We have a_45=a_43-a_44=433494437a_1-165580141-(267914296-701408733a_1)=1134903170a_1-433494437.
+88. Thus, a_1 must be greater than or equal to 433494437/1134903170.
+89. We have a_46=a_44-a_45=267914296-701408733a_1-(1134903170a_1-433494437)=701408733-1836311903a_1.
+90. Thus, a_1 must be less than or equal to 701408733/1836311903.
+91. We have a_47=a_45-a_46=1134903170a_1-433494437-(701408733-1836311903a_1)=2971215073a_1-1134903170.
+92. Thus, a_1 must be greater than or equal to 1134903170/2971215073.
+93. We have a_48=a_46-a_47=701408733-1836311903a_1-(2971215073a_1-1134903170)=1836311903-4807526976a_1.
+94. Thus, a_1 must be less than or equal to 1836311903/4807526976.
+95. We have a_49=a_47-a_48=2971215073a_1-1134903170-(1836311903-4807526976a_1)=7778742049a_1-2971215073.
+96. Thus, a_1 must be greater than or equal to 2971215073/7778742049.
+97. We have a_50</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>LENGTH EXCEED</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

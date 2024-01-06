@@ -1,0 +1,174 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_11</td>
+            <td>GPT-3.5</td>
+            <td>Example w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_11']
+messages = problem.conversations['GPT-3.5|Example w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?
+
+You may find the following information useful:
+
+1. Express 1/(x_k+1) in terms of 1/x_k and 1/x_(k+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the expression for 1/(x_k+1) in terms of 1/x_k and 1/x_(k+1), we can start by expressing x_(k+1) in terms of x_k:
+
+x_(k+1) = x_k^2 + x_k
+
+Now, let&#x27;s find the reciprocal of both sides:
+
+1/(x_(k+1)) = 1/(x_k^2 + x_k)
+
+Next, we can use the fact that 1/(a + b) = 1/a - 1/b:
+
+1/(x_(k+1)) = 1/x_k - 1/(x_k + 1)
+
+Now, let&#x27;s solve the problem using this information.
+
+We are given x_1 = 1/2, and we need to find the integer part of the sum:
+
+S = 1/(x_1 + 1) + 1/(x_2 + 1) + 1/(x_3 + 1) + ... + 1/(x_100 + 1)
+
+Using the expression we found earlier, we can rewrite this sum as:
+
+S = 1/x_1 - 1/(x_2 + 1) + 1/x_2 - 1/(x_3 + 1) + 1/x_3 - 1/(x_4 + 1) + ... + 1/x_99 - 1/(x_100 + 1) + 1/x_100
+
+Notice that most terms cancel out:
+
+S = 1/x_1 - 1/(x_2 + 1) + 1/x_2 - 1/(x_3 + 1) + 1/x_3 - 1/(x_4 + 1) + ... + 1/x_99 - 1/(x_100 + 1) + 1/x_100
+  = 1/x_1 + 1/x_2 + 1/x_3 + ... + 1/x_99 + 1/x_100 - 1/(x_2 + 1) - 1/(x_3 + 1) - ... - 1/(x_100 + 1)
+
+Now, let&#x27;s group the terms:
+
+S = (1/x_1 - 1/(x_2 + 1)) + (1/x_2 - 1/(x_3 + 1)) + ... + (1/x_99 - 1/(x_100 + 1)) + 1/x_100
+
+Using the expression we found earlier, we can simplify each term:
+
+S = (1/x_1 - 1/(x_2 + 1)) + (1/x_2 - 1/(x_3 + 1)) + ... + (1/x_99 - 1/(x_100 + 1)) + 1/x_100
+  = 1/(x_1 + 1) + 1/(x_2 + 1) + ... + 1/(x_99 + 1) + 1/(x_100 + 1)
+
+Now, we can substitute the given values:
+
+S = 1/(1/2 + 1) + 1/(1/2^2 + 1) + ... + 1/(1/2^100 + 1)
+
+Simplifying each term:
+
+S = 1/(3/2) + 1/(5/4) + ... + 1/(2^100 + 1)
+
+To find the integer part of this sum, we can calculate the sum and then take the integer part.
+
+Now, let&#x27;s calculate the sum:
+
+S = 1/(3/2) + 1/(5/4) + ... + 1/(2^100 + 1)
+  = 2/3 + 4/5 + ... + (2^100)/(2^100 + 1)
+
+To simplify the sum, we can find a common denominator:
+
+S = (2/3)(5/5) + (4/5)(3/3) + ... + [(2^100)/(2^100 + 1)][(2^100 + 1)/(2^100 + 1)]
+  = (10/15) + (12/15) + ... + [(2^100)(2^100)]/(2^100 + 1)
+
+Now, we can combine the numerators:
+
+S = (10 + 12 + ... + 2^200)/(2^100 + 1)
+
+To find the sum of the numerators, we can use the formula for the sum of an arithmetic series:
+
+Sum = (n/2)(first term + last term)
+
+In this case, the first term is 10 and the last term is 2^200. The number of terms is (2^100 + 1)/2, since we are adding up to 2^100.
+
+Sum = [(2^100 + 1)/2](10 + 2^200)
+
+Now, we can substitute this back into the expression for S:
+
+S = [(2^100 + 1)/2](10 + 2^200)/(2^100 + 1)
+  = (10 + 2^200)/2
+
+Finally, we can take the integer part of this expression:
+
+Integer part of S = floor((10 + 2^200)/2)
+
+This is the final answer.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1) is equal to the floor((10 + 2^200)/2).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

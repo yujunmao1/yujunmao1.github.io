@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_33</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 98 values</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_33']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If a, b, c are sides of a non-degenerate 90-degree triangle with c being the hypotenuse, then for how many values of n in {1, 2, 3, ..., 100} do we have c^n&gt;a^n+b^n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. For n=1, we have a+b&gt;c.
+2. For n=2, we have a^2+b^2=c^2.
+3. For n&gt;2, we have a^n+b^n≤(a^2+b^2)*max(a, b)^(n-2)&lt;(a^2+b^2)*c^(n-2)&lt;c^2*c^(n-2)=c^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The partial solution provided gives us a good starting point to solve the problem. Let&#x27;s analyze each step and then conclude the number of values for n.
+
+1. For n=1, the triangle inequality tells us that the sum of the lengths of any two sides of a triangle must be greater than the length of the remaining side. Therefore, a + b &gt; c.
+
+2. For n=2, by the Pythagorean theorem, we know that in a right-angled triangle with sides a, b, and hypotenuse c, a^2 + b^2 = c^2.
+
+3. For n&gt;2, we need to show that a^n + b^n &lt; c^n. The partial solution suggests that a^n + b^n ≤ (a^2 + b^2) * max(a, b)^(n-2). Since c is the hypotenuse, c &gt; max(a, b), and thus max(a, b)^(n-2) &lt; c^(n-2). Multiplying both sides of the inequality a^2 + b^2 = c^2 by c^(n-2), we get (a^2 + b^2) * c^(n-2) &lt; c^2 * c^(n-2) = c^n.
+
+Putting it all together, we have:
+
+a^n + b^n ≤ (a^2 + b^2) * max(a, b)^(n-2) &lt; (a^2 + b^2) * c^(n-2) &lt; c^n.
+
+This inequality holds for all n &gt; 2.
+
+Now, let&#x27;s count the values of n for which c^n &gt; a^n + b^n:
+
+- For n=1, we have a + b &gt; c, so c^n is not greater than a^n + b^n.
+- For n=2, we have a^2 + b^2 = c^2, so c^n is not greater than a^n + b^n.
+- For n&gt;2, as shown above, c^n &gt; a^n + b^n.
+
+Since the set of n we are considering is {1, 2, 3, ..., 100}, we have already checked n=1 and n=2. Therefore, we need to count the numbers from 3 to 100, inclusive.
+
+There are 100 - 2 = 98 numbers in the set {3, 4, 5, ..., 100}.
+
+Thus, there are 98 values of n for which c^n &gt; a^n + b^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 98 values of n in the set {1, 2, 3, ..., 100} for which c^n &gt; a^n + b^n in a non-degenerate 90-degree triangle with c being the hypotenuse.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_30</td>
+            <td>GPT-4</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (a+3b)/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_30']
+messages = problem.conversations['GPT-4|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: The polynomial 1-x+x^2-x^3+...+x^8-x^9 may be written in the form a_0+a_1*y+a_2*y^2+...+a_9*y^9, where y=x+1 and each a_i is a constant. Find the value of a_2.
+Step-wise solution:
+1. We have f(x)=1-x+x^2-x^3+...+x^8-x^9=(1-x^10)/(1+x).
+2. Substituting x=y-1, we have f(x)=(1-(y-1)^10)/y.
+3. We have the coefficient C(10, 3)*y^3*(-1)^7=-120 for the term y^3 in (y-1)^10.
+4. Thus, the coefficient a_2 for y^2 in (1-(y-1)^10)/y is -(-120)=120.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For a≤b, define the sequence as a_1=a, a_2=b, a_(n+2)=(a_(n+1)+a_n)/2. Does the limit exist for this sequence, and if so, find it as an expression in terms of a and b.
+
+In addition, you may also find the following information helpful:
+
+1. If an (infinite) sequence converges to a limit, then all (infinite) subsequences converge, and converge to the same limit.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. The given sequence is a_1=a, a_2=b, a_(n+2)=(a_(n+1)+a_n)/2. This is a recursive sequence where each term is the average of the two preceding terms.
+2. Let&#x27;s consider the first few terms of the sequence: a, b, (a+b)/2, (a+2b)/4, (2a+3b)/8, ...
+3. We can see that the sequence is getting closer and closer to the average of a and b. This is because each term is the average of the two preceding terms, so the sequence is &quot;smoothing out&quot; the differences between a and b.
+4. Therefore, we can conjecture that the limit of the sequence is (a+b)/2.
+5. To prove this, we can use the fact that if a sequence converges to a limit, then all subsequences also converge to the same limit.
+6. Consider the subsequence a_(2n), which is the sequence of even-indexed terms. This subsequence is a, (a+b)/2, (2a+3b)/8, ...
+7. Similarly, consider the subsequence a_(2n+1), which is the sequence of odd-indexed terms. This subsequence is b, (a+2b)/4, ...
+8. Both of these subsequences are getting closer and closer to (a+b)/2, so by the fact mentioned in step 5, the entire sequence must also converge to (a+b)/2.
+9. Therefore, the limit of the sequence is (a+b)/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence a_1=a, a_2=b, a_(n+2)=(a_(n+1)+a_n)/2, for a≤b, exists and is equal to (a+b)/2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

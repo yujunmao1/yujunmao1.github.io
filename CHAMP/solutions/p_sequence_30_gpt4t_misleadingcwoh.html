@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (a+3b)/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_30']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a≤b, define the sequence as a_1=a, a_2=b, a_(n+2)=(a_(n+1)+a_n)/2. Does the limit exist for this sequence, and if so, find it as an expression in terms of a and b.
+
+You may find the following information useful:
+
+1. A sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.
+2. 1+2+...+n=n(n+1)/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the limit exists for the sequence defined by \( a_1 = a \), \( a_2 = b \), and \( a_{n+2} = \frac{a_{n+1} + a_n}{2} \), we need to check if the sequence is monotonic and bounded.
+
+First, let&#x27;s look at the first few terms of the sequence to get an idea of its behavior:
+
+\( a_1 = a \) (given)
+\( a_2 = b \) (given)
+\( a_3 = \frac{a_2 + a_1}{2} = \frac{b + a}{2} \)
+\( a_4 = \frac{a_3 + a_2}{2} = \frac{\frac{b + a}{2} + b}{2} = \frac{a + 2b}{4} \)
+
+We can see that each term is the average of the two preceding terms. Since \( a \leq b \), the sequence will be non-decreasing if \( a_n \leq a_{n+1} \) for all \( n \). Let&#x27;s assume that this is true for some \( n \) and prove it by induction.
+
+Base case: For \( n = 1 \), we have \( a_1 = a \) and \( a_2 = b \), and by assumption, \( a \leq b \), so the base case holds.
+
+Inductive step: Assume that \( a_n \leq a_{n+1} \) for some \( n \geq 1 \). We need to show that \( a_{n+1} \leq a_{n+2} \).
+
+Since \( a_{n+2} = \frac{a_{n+1} + a_n}{2} \), we have \( 2a_{n+2} = a_{n+1} + a_n \). By the inductive hypothesis, \( a_n \leq a_{n+1} \), so \( 2a_{n+2} \geq 2a_{n+1} \), which implies \( a_{n+2} \geq a_{n+1} \).
+
+Thus, the sequence is non-decreasing.
+
+Now, let&#x27;s show that the sequence is bounded above. Since \( a \leq b \), all terms of the sequence will be less than or equal to \( b \) because each term is an average of previous terms, and none of the terms can exceed \( b \). Therefore, the sequence is bounded above by \( b \).
+
+Since the sequence is non-decreasing and bounded above, it must have a limit by the Monotone Convergence Theorem.
+
+To find the limit, let&#x27;s denote it by \( L \). Since the limit of the sequence as \( n \) approaches infinity must satisfy the same recurrence relation, we have:
+
+\( L = \frac{L + L}{2} \)
+
+Solving for \( L \), we get:
+
+\( 2L = 2L \)
+
+This equation is true for any \( L \), which means that the limit does not depend on \( L \) itself but must be consistent with the sequence&#x27;s definition. Since the sequence is bounded between \( a \) and \( b \) and is non-decreasing, the limit \( L \) must be the value that the terms are approaching from below, which is \( b \).
+
+Therefore, the limit of the sequence \( a_n \) as \( n \) approaches infinity is \( L = b \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence \( a_n \) as \( n \) approaches infinity is \( L = b \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

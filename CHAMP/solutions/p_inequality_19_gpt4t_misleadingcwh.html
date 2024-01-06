@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_19</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2 inequalities</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_19']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, d, at most how many of the three inequalities a+b&lt;c+d, (a+b)(c+d)&lt;ab+cd, (a+b)cd&lt;ab(c+d) can be true at the same time?
+
+You may find the following information useful:
+
+1. Find an assignment of a, b, c that makes two inequalities true.
+2. Study whether all inequalities can be true by multiplying the first two together, and then the last two together.
+3. Let (a_1, ..., a_n) and (b_1, ..., b_n) be two similarly sorted sequences (e.g., both increasing or both decreasing). Then ((a_1+...+a_n)/n)*((b_1+...+b_n)/n)≤(a_1*b_1+...+a_n*b_n)/n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s analyze the three inequalities one by one:
+
+1. \( a + b &lt; c + d \)
+2. \( (a + b)(c + d) &lt; ab + cd \)
+3. \( (a + b)cd &lt; ab(c + d) \)
+
+First, let&#x27;s see if we can find an assignment of \( a, b, c, \) and \( d \) that makes two of the inequalities true.
+
+For the first inequality to be true, we need \( a + b \) to be less than \( c + d \). Let&#x27;s assume \( a = 1, b = 1, c = 2, \) and \( d = 2 \). This gives us \( 1 + 1 &lt; 2 + 2 \), which is true.
+
+Now let&#x27;s check the second inequality with these values:
+
+\( (a + b)(c + d) = (1 + 1)(2 + 2) = 2 \cdot 4 = 8 \)
+\( ab + cd = 1 \cdot 1 + 2 \cdot 2 = 1 + 4 = 5 \)
+
+So, \( 8 &lt; 5 \) is not true. Therefore, the second inequality is not satisfied with these values.
+
+Let&#x27;s check the third inequality with the same values:
+
+\( (a + b)cd = (1 + 1) \cdot 2 \cdot 2 = 2 \cdot 4 = 8 \)
+\( ab(c + d) = 1 \cdot 1 \cdot (2 + 2) = 1 \cdot 4 = 4 \)
+
+So, \( 8 &lt; 4 \) is not true. Therefore, the third inequality is not satisfied with these values either.
+
+Now, let&#x27;s study whether all inequalities can be true by multiplying the first two together, and then the last two together.
+
+Multiplying the first two inequalities:
+
+\( (a + b &lt; c + d) \) and \( (a + b)(c + d) &lt; ab + cd \)
+
+If we multiply the left sides and the right sides, we get:
+
+\( (a + b)^2(c + d) &lt; (c + d)(ab + cd) \)
+
+Since \( a + b &lt; c + d \), we can cancel \( c + d \) from both sides (since \( c + d \) is positive), and we get:
+
+\( (a + b)^2 &lt; ab + cd \)
+
+Now, let&#x27;s multiply the last two inequalities:
+
+\( (a + b)(c + d) &lt; ab + cd \) and \( (a + b)cd &lt; ab(c + d) \)
+
+Multiplying the left sides and the right sides, we get:
+
+\( (a + b)^2cd &lt; ab(c + d)^2 \)
+
+Since \( (a + b)cd &lt; ab(c + d) \), we can cancel \( ab \) from both sides (since \( ab \) is positive), and we get:
+
+\( (a + b)cd &lt; (c + d)^2 \)
+
+Now, let&#x27;s use the information provided in point 3:
+
+Let \( (a_1, ..., a_n) \) and \( (b_1, ..., b_n) \) be two similarly sorted sequences. Then:
+
+\( \left(\frac{a_1 + ... + a_n}{n}\right)\left(\frac{b_1 + ... + b_n}{n}\right) \leq \frac{a_1b_1 + ... + a_nb_n}{n} \)
+
+Applying this to our case with \( n = 2 \), we have:
+
+\( \left(\frac{a + b}{2}\right)\left(\frac{c + d}{2}\right) \leq \frac{ac + bd}{2} \)
+
+Multiplying both sides by 4, we get:
+
+\( (a + b)(c + d) \leq 2(ac + bd) \)
+
+This implies that:
+
+\( (a + b)(c + d) \leq ab + ac + bd + cd \)
+
+Which contradicts our second inequality \( (a + b)(c + d) &lt; ab + cd \) because \( ac + bd \) is positive for positive \( a, b, c, \) and \( d \).
+
+Therefore, it is not possible for all three inequalities to be true at the same time. At most, only one of the inequalities can be true at any given time.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most, only one of the given inequalities can be true at the same time for positive values of a, b, c, and d.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

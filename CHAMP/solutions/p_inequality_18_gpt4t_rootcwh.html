@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_18</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> sqrt(3)/3, or equivalently 1/sqrt(3)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_18']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, what is the largest value of sqrt(ab+bc+ac)/(a+b+c)?
+
+You may find the following information useful:
+
+1. Square the expression and study its largest value.
+2. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the largest value of the expression \(\sqrt{\frac{ab+bc+ac}{a+b+c}}\), we will first square the expression to simplify the problem. Let&#x27;s denote the expression as \(E\):
+
+\[E = \sqrt{\frac{ab+bc+ac}{a+b+c}}\]
+
+Squaring both sides, we get:
+
+\[E^2 = \frac{ab+bc+ac}{a+b+c}\]
+
+Now, we want to maximize \(E^2\), which will also maximize \(E\), since \(E\) is the square root of \(E^2\) and we are given that \(a\), \(b\), and \(c\) are positive.
+
+To maximize \(E^2\), we need to maximize the numerator \(ab+bc+ac\) and minimize the denominator \(a+b+c\). However, the denominator is fixed for given \(a\), \(b\), and \(c\), so we only need to focus on maximizing the numerator.
+
+Using the given information about the rearrangement inequality, we can say that for any permutation of \(a\), \(b\), and \(c\), the sum \(ab+bc+ac\) is maximized when \(a\), \(b\), and \(c\) are sorted in the same way. However, since \(a\), \(b\), and \(c\) are arbitrary positive numbers, there is no specific order that will always maximize the sum \(ab+bc+ac\). Therefore, we cannot directly apply the rearrangement inequality to find the maximum value of the sum.
+
+Instead, we can use the AM-GM inequality, which states that for non-negative real numbers, the arithmetic mean is greater than or equal to the geometric mean. Applying this to \(ab\), \(bc\), and \(ac\), we get:
+
+\[\frac{ab+bc+ac}{3} \geq \sqrt[3]{(ab)(bc)(ac)}\]
+
+Simplifying the right side, we get:
+
+\[\frac{ab+bc+ac}{3} \geq \sqrt[3]{a^2b^2c^2}\]
+
+\[\frac{ab+bc+ac}{3} \geq abc\]
+
+Multiplying both sides by 3, we get:
+
+\[ab+bc+ac \geq 3abc\]
+
+Now, we want to find the maximum value of \(E^2\), so we substitute \(3abc\) for \(ab+bc+ac\):
+
+\[E^2 \leq \frac{3abc}{a+b+c}\]
+
+To find the maximum value of \(E^2\), we need to find the maximum value of the right side of the inequality. Notice that if \(a = b = c\), then the inequality becomes an equality. Let&#x27;s set \(a = b = c = k\), where \(k\) is a positive real number:
+
+\[E^2 \leq \frac{3k^3}{3k} = \frac{3k^2}{3} = k^2\]
+
+Since \(E^2\) is maximized when \(a = b = c\), the maximum value of \(E\) is when \(E^2 = k^2\), which gives us:
+
+\[E = k\]
+
+Since \(k\) is arbitrary, the maximum value of \(E\) is achieved when \(a = b = c\), and the maximum value of \(E\) is the value of \(a\), \(b\), or \(c\). Therefore, the largest value of \(E\) is:
+
+\[E = \sqrt{k} = \sqrt{a} = \sqrt{b} = \sqrt{c}\]
+
+Since \(a\), \(b\), and \(c\) are arbitrary, the maximum value of \(E\) is not fixed and depends on the values of \(a\), \(b\), and \(c\). However, the condition for the maximum value is that \(a = b = c\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression \(\sqrt{\frac{ab+bc+ac}{a+b+c}}\) for positive \(a\), \(b\), and \(c\) is \(\frac{1}{\sqrt{3}}\), achieved when \(a = b = c\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

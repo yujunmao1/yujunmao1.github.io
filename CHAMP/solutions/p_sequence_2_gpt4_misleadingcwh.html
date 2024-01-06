@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_2</td>
+            <td>GPT-4</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Always greater than 20</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_2']
+messages = problem.conversations['GPT-4|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let {x_n}, {y_n}, {z_n} be three sequences with positive initial terms x_1, y_1, z_1, defined as x_(n+1)=y_n+1/z_n, y_(n+1)=z_n+1/x_n, z_(n+1)=x_n+1/y_n. Let w_n be the maximum value of x_n, y_n, z_n. For different values of x_1, y_1, z_1, do we have w_200 always greater than 20, always smaller than 20, or sometimes greater and sometimes smaller than 20?
+
+You may find the following information useful:
+
+1. Let a_n=x_n+y_n+z_n.
+2. Derive a lower bound on a_2.
+3. For non-negative x, y, we have sqrt(xy)≤sqrt((x^2+y^2)/2), or 2xy≤x^2+y^2, with equality if and only if x=y.
+4. Compare a_n with 18n for all n.
+5. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).
+6. a, b, c are the sides of a (possibly degenerate) triangle if and only if a+b≥s, b+c≥s, a+c≥s for semi-perimeter s=(a+b+c)/2. The triangle is not degenerate if and only if all inequalities are strict.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This is a complex problem that requires a deep understanding of sequences and inequalities. Let&#x27;s break it down step by step.
+
+First, let&#x27;s consider the initial terms x_1, y_1, z_1. We know that they are positive, but we don&#x27;t know their exact values. 
+
+Next, let&#x27;s consider the sequences {x_n}, {y_n}, {z_n}. They are defined as follows:
+
+x_(n+1) = y_n + 1/z_n,
+y_(n+1) = z_n + 1/x_n,
+z_(n+1) = x_n + 1/y_n.
+
+We can see that each term in the sequence is the sum of the previous term in the other sequence and the reciprocal of the previous term in the third sequence. 
+
+Now, let&#x27;s consider the sequence {w_n}, which is the maximum value of x_n, y_n, z_n. We want to know whether w_200 is always greater than 20, always smaller than 20, or sometimes greater and sometimes smaller than 20.
+
+To answer this question, we need to find a lower bound on a_2, where a_n = x_n + y_n + z_n. 
+
+From the given information, we know that for non-negative x, y, we have sqrt(xy) ≤ sqrt((x^2 + y^2)/2), or 2xy ≤ x^2 + y^2, with equality if and only if x = y. 
+
+This inequality tells us that the geometric mean of two non-negative numbers is always less than or equal to their arithmetic mean. 
+
+We can use this inequality to find a lower bound on a_2. 
+
+a_2 = x_2 + y_2 + z_2 
+    = (y_1 + 1/z_1) + (z_1 + 1/x_1) + (x_1 + 1/y_1)
+    = (x_1 + y_1 + z_1) + (1/x_1 + 1/y_1 + 1/z_1)
+    = a_1 + 1/a_1.
+
+Since a_1 is positive, we know that a_2 is greater than a_1. 
+
+Next, we need to compare a_n with 18n for all n. 
+
+We can use the formula for the sum of a geometric series to find a_n:
+
+a_n = a_1 + a_2 + a_3 + ... + a_n 
+    = a_1 + a_1 + 1/a_1 + a_1 + 1/(a_1 + 1/a_1) + ... 
+    = a_1(1 - (1/a_1)^(n+1))/(1 - 1/a_1).
+
+Since a_1 is positive, we know that (1/a_1)^(n+1) is less than 1 for all n. Therefore, a_n is greater than a_1/(1 - 1/a_1) for all n. 
+
+If we set a_1/(1 - 1/a_1) equal to 18n, we get a_1 = 18n(1 - 1/a_1). Solving for a_1, we get a_1 = sqrt(18n). 
+
+Therefore, for a_n to be greater than 18n for all n, we need a_1 to be greater than sqrt(18n). 
+
+Finally, we need to consider the condition that a, b, c are the sides of a (possibly degenerate) triangle if and only if a + b ≥ s, b + c ≥ s, a + c ≥ s for semi-perimeter s = (a + b + c)/2. 
+
+In our case, a, b, c are x_n, y_n, z_n, and s is a_n/2. 
+
+Therefore, for x_n, y_n, z_n to be the sides of a triangle, we need x_n + y_n ≥ a_n/2, y_n + z_n ≥ a_n/2, and x_n + z_n ≥ a_n/2. 
+
+Since a_n is greater than 18n for all n, we know that x_n, y_n, z_n are all greater than 9n. 
+
+Therefore, w_n, the maximum value of x_n, y_n, z_n, is also greater than 9n. 
+
+In particular, w_200 is greater than 9*200 = 1800, which is greater than 20. 
+
+Therefore, w_200 is always greater than 20, regardless of the values of x_1, y_1, z_1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Regardless of the initial values x_1, y_1, z_1, the maximum value of the sequences x_n, y_n, z_n at the 200th term, denoted as w_200, is always greater than 20.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

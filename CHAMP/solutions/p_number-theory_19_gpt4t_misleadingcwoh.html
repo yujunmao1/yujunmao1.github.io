@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_19</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_19']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of n^5-5*n^3+4n mod 120 for integer n.
+
+You may find the following information useful:
+
+1. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.
+2. For odd x, x^2 mod 8=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find all possible values of the expression \( n^5 - 5n^3 + 4n \) modulo 120 for integer \( n \). We can simplify the expression by factoring it:
+
+\( n^5 - 5n^3 + 4n = n(n^4 - 5n^2 + 4) = n(n^2 - 1)(n^2 - 4) = n(n - 1)(n + 1)(n - 2)(n + 2) \)
+
+This is the product of five consecutive integers, which means that among them, there will be multiples of 2 and 5, and thus the product will be divisible by 10. Since we are looking for the expression modulo 120, we can focus on the factors of 120 that are not covered by the factor of 10, which are 2 and 3 (since \( 120 = 2^3 * 3 * 5 \)).
+
+We know that one of the five consecutive numbers \( n, n-1, n+1, n-2, n+2 \) will be a multiple of 3, so the entire product will be divisible by 3.
+
+Now, let&#x27;s consider the factor of 2. Since we already have a factor of 10, we need to ensure that the product is divisible by \( 2^3 = 8 \) to be divisible by 120. We know that among five consecutive integers, at least one of them will be even, giving us a factor of 2. If \( n \) is odd, then \( n-1 \) and \( n+1 \) will be even, and one of them will be divisible by 4, giving us a factor of \( 2^2 \). If \( n \) is even, then \( n \) itself is divisible by 2. If \( n \) is a multiple of 4, we get a factor of \( 2^2 \), and if \( n \) is a multiple of 8, we get the full \( 2^3 \). Therefore, we are guaranteed to have a factor of \( 2^3 \) in the product.
+
+Since the expression is divisible by both 3 and \( 2^3 \), and we already have a factor of 10 from the five consecutive numbers, the expression \( n^5 - 5n^3 + 4n \) is divisible by 120 for any integer \( n \).
+
+Therefore, \( n^5 - 5n^3 + 4n \mod 120 = 0 \) for all integers \( n \). There is only one possible value for the expression modulo 120, and that is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The expression \( n^5 - 5n^3 + 4n \) modulo 120 is always 0 for any integer \( n \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

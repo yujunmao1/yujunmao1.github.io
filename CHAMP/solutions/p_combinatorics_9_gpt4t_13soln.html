@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_9</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_9']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Consider all 2^n−1 nonempty subsets of the set {1, 2,..., n}. For every such subset, we find the product of the reciprocals of each of its elements. Find the sum of all these products, as an expression of n.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We define P=(1+1/1)(1+1/2)(1+1/3)+...+(1+1/n) and it is a sum of 2^n terms.
+2. Each term is a product of n numbers, chosen from either 1 or 1/i in the (1+1/i) factor.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the partial solution provided and expand upon it.
+
+We have the expression P defined as:
+
+\[ P = (1 + \frac{1}{1}) (1 + \frac{1}{2}) (1 + \frac{1}{3}) \ldots (1 + \frac{1}{n}) \]
+
+This can be expanded as:
+
+\[ P = (2) (1 + \frac{1}{2}) (1 + \frac{1}{3}) \ldots (1 + \frac{1}{n}) \]
+
+When we expand this product, we get a sum of terms, each of which is a product of n numbers, where each number is either 1 or \(\frac{1}{i}\) for some i in {1, 2, ..., n}. This means that each term in the expanded product corresponds to a subset of {1, 2, ..., n}, where we take the reciprocal of the elements in the subset and multiply them together.
+
+For example, the term corresponding to the subset {2, 3} would be \(\frac{1}{2} \cdot \frac{1}{3}\), and the term corresponding to the subset {1, 4, 5} would be \(\frac{1}{1} \cdot \frac{1}{4} \cdot \frac{1}{5}\).
+
+Since we are considering all nonempty subsets of {1, 2, ..., n}, we are actually considering all possible products of the form \(\frac{1}{i_1} \cdot \frac{1}{i_2} \cdot \ldots \cdot \frac{1}{i_k}\) where \(1 \leq i_1 &lt; i_2 &lt; \ldots &lt; i_k \leq n\) and \(1 \leq k \leq n\).
+
+Now, let&#x27;s look at the expression for P again. We can see that the term 2 corresponds to the subset {1}, and the rest of the terms correspond to all other nonempty subsets of {1, 2, ..., n}. Therefore, P is actually the sum of the reciprocals of all nonempty subsets of {1, 2, ..., n} plus 1 (since the subset {1} contributes an extra 1 to the product).
+
+However, we want to find the sum of the reciprocals of all nonempty subsets without the extra 1. To do this, we can subtract 1 from P:
+
+\[ \text{Sum of reciprocals} = P - 1 \]
+
+Now, let&#x27;s calculate P:
+
+\[ P = 2 \cdot \left(1 + \frac{1}{2}\right) \cdot \left(1 + \frac{1}{3}\right) \cdot \ldots \cdot \left(1 + \frac{1}{n}\right) \]
+
+\[ P = 2 \cdot \frac{2}{2} \cdot \frac{3}{3} \cdot \ldots \cdot \frac{n+1}{n} \]
+
+\[ P = 2 \cdot \frac{n+1}{n} \]
+
+\[ P = \frac{2(n+1)}{n} \]
+
+Now, subtract 1 to get the sum of the reciprocals:
+
+\[ \text{Sum of reciprocals} = \frac{2(n+1)}{n} - 1 \]
+
+\[ \text{Sum of reciprocals} = \frac{2(n+1) - n}{n} \]
+
+\[ \text{Sum of reciprocals} = \frac{2n + 2 - n}{n} \]
+
+\[ \text{Sum of reciprocals} = \frac{n + 2}{n} \]
+
+So the sum of the products of the reciprocals of all nonempty subsets of {1, 2, ..., n} is \(\frac{n + 2}{n}\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sum of the products of the reciprocals of all nonempty subsets of the set {1, 2, ..., n} is \(\frac{n + 2}{n}\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_29</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x+1)(x-1)(x^2+1)(x^3−x^2+1)(x^2+x+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_29']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Factorize x^9+x^4-x-1 into terms of integer coefficients.
+
+You may find the following information useful:
+
+1. x^2-y^2=(x+y)(x-y).
+2. a^3±b^3=(a+b)(a^2∓ab+b^2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To factorize the given polynomial \( x^9 + x^4 - x - 1 \), we can start by looking for rational roots using the Rational Root Theorem. However, this might not be straightforward due to the high degree of the polynomial. Instead, let&#x27;s try to find a pattern or use polynomial identities to help us factorize the expression.
+
+We can try to group terms to see if we can apply the given identities. Let&#x27;s look at the polynomial and see if we can group terms in a way that allows us to use the identities:
+
+\( x^9 + x^4 - x - 1 \)
+
+Notice that \( x^9 - 1 \) and \( x^4 - x \) can be grouped separately:
+
+\( (x^9 - 1) + (x^4 - x) \)
+
+Now, we can apply the identity \( a^3 - b^3 = (a - b)(a^2 + ab + b^2) \) to the first group by thinking of it as \( (x^3)^3 - 1^3 \):
+
+\( (x^3 - 1)((x^3)^2 + x^3 \cdot 1 + 1^2) + (x^4 - x) \)
+
+\( (x^3 - 1)(x^6 + x^3 + 1) + (x^4 - x) \)
+
+Now, let&#x27;s factor \( x^3 - 1 \) using the identity \( a^3 - b^3 = (a - b)(a^2 + ab + b^2) \):
+
+\( (x - 1)(x^2 + x + 1)(x^6 + x^3 + 1) + (x^4 - x) \)
+
+We can also factor \( x^4 - x \) by taking out a common factor of \( x \):
+
+\( (x - 1)(x^2 + x + 1)(x^6 + x^3 + 1) + x(x^3 - 1) \)
+
+Now, notice that \( x^3 - 1 \) can also be factored using the same identity:
+
+\( (x - 1)(x^2 + x + 1)(x^6 + x^3 + 1) + x(x - 1)(x^2 + x + 1) \)
+
+We can now factor out the common factor \( (x - 1)(x^2 + x + 1) \):
+
+\( (x - 1)(x^2 + x + 1)[(x^6 + x^3 + 1) + x] \)
+
+Simplify the expression inside the brackets:
+
+\( (x - 1)(x^2 + x + 1)(x^6 + x^4 + x^3 + x) \)
+
+Now, let&#x27;s see if we can factor \( x^6 + x^4 + x^3 + x \) further. We can factor out an \( x \) from this expression:
+
+\( (x - 1)(x^2 + x + 1)x(x^5 + x^3 + x^2 + 1) \)
+
+At this point, it&#x27;s not immediately clear how to factor \( x^5 + x^3 + x^2 + 1 \) further, and it might not be factorable over the integers. We can try to find a root to factor it, but this could be difficult without a computer algebra system due to the high degree of the polynomial.
+
+Given the complexity of the polynomial, it&#x27;s possible that the polynomial \( x^9 + x^4 - x - 1 \) is not easily factorable into terms with integer coefficients without further insight or computational tools. If we are allowed to use numerical methods or a computer algebra system, we could find an approximate root and then use polynomial division to factor the polynomial further. However, without such tools, we are left with the partial factorization:
+
+\( (x - 1)(x^2 + x + 1)x(x^5 + x^3 + x^2 + 1) \)
+
+This is the best we can do with the given information and without resorting to numerical methods.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial \( x^9 + x^4 - x - 1 \) can be partially factorized into \( (x - 1)(x^2 + x + 1)x(x^5 + x^3 + x^2 + 1) \) with integer coefficients.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

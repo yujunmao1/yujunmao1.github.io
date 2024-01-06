@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_26</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_26']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For real number a, b, what is the largest value of |a+b|/(1+|a+b|)-|a|/(1+|a|)-|b|/(1+|b|)?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let x=|a|, y=|b|, z=|a+b|, so the expression is z/(1+z)-x/(1+x)-y/(1+y).
+2. Multiply the expression by (1+x)(1+y)(1+z), we get z(1+x)(1+y)-x(1+y)(1+z)-y(1+x)(1+z)=z+xz+yz+xyz-x-xy-xz-xyz-y-xy-yz-xyz=z-x-y-2xy-xyz.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s continue from the partial solution provided:
+
+We have the expression simplified to \( z - x - y - 2xy - xyz \) after multiplying by \( (1+x)(1+y)(1+z) \). Now, we need to find the maximum value of this expression under the given constraints.
+
+First, let&#x27;s rewrite the expression to make it easier to analyze:
+
+\[ z - x - y - 2xy - xyz = z(1 - x - y - xy) - x - y \]
+
+Now, let&#x27;s analyze the term \( 1 - x - y - xy \). Since \( x \) and \( y \) are non-negative (because they are absolute values), \( 1 - x - y - xy \) will be less than or equal to 1. This is because the smallest value of \( x \) and \( y \) is 0, which makes \( 1 - x - y - xy = 1 \), and any positive values of \( x \) and \( y \) will make the expression smaller.
+
+Now, let&#x27;s consider the term \( z(1 - x - y - xy) \). Since \( z \) is also non-negative and \( 1 - x - y - xy \) is less than or equal to 1, the maximum value of \( z(1 - x - y - xy) \) will occur when \( z \) is maximized. The maximum value of \( z \) is when \( z = x + y \), because \( z = |a + b| \) and the maximum value of \( |a + b| \) is when \( a \) and \( b \) have the same sign, so \( |a + b| = |a| + |b| \).
+
+So, the maximum value of \( z(1 - x - y - xy) \) is when \( z = x + y \), which gives us:
+
+\[ (x + y)(1 - x - y - xy) = x + y - x^2 - xy - y^2 - xy^2 - x^2y - xy \]
+
+Now, let&#x27;s consider the entire expression:
+
+\[ z - x - y - 2xy - xyz = x + y - x^2 - xy - y^2 - xy^2 - x^2y - xy - x - y \]
+
+Simplifying, we get:
+
+\[ - x^2 - xy - y^2 - xy^2 - x^2y - 2xy \]
+
+This expression is always non-positive because it is a sum of non-positive terms (since \( x \), \( y \), and \( z \) are non-negative). Therefore, the maximum value of the original expression \( |a+b|/(1+|a+b|)-|a|/(1+|a|)-|b|/(1+|b|) \) is 0, which occurs when \( a \) and \( b \) are both 0 or have the same sign.
+
+Thus, the largest value of the given expression is \( \boxed{0} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression \( \frac{|a+b|}{1+|a+b|} - \frac{|a|}{1+|a|} - \frac{|b|}{1+|b|} \) for real numbers \( a \) and \( b \) is \( \boxed{0} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

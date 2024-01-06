@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_41</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (1+sqrt(4a+1))/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_41']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a&gt;0, does the limit of the sequence defined by a_0=sqrt(a), a_(n+1)=sqrt(a+a_n) exist, and if so, find it as an expression of a.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have a_1=sqrt(a+a_0)&gt;sqrt(a)=a_0.
+2. If a_n&gt;a_(n-1), then a_(n+1)=sqrt(a+a_n)&gt;sqrt(a+a_(n-1))&gt;a_n.
+3. So the sequence is monotonically increasing.
+4. In addition, we have a_(n+1)^2=a+a_n, which means that a_(n+1)^2-a_n-a=0.
+5. Since a_n&lt;a_(n+1) and both are positive, we have a_n^2-a_n-a&lt;0.
+6. The root of a_n^2-a_n-a is (1±sqrt(4a+1))/2, so we have a_n^2-a_n-a=(a_n-(1+sqrt(4a+1))/2)(a_n-(1-sqrt(4a+1))/2)&lt;0, or (a_n-(sqrt(4a+1)+1)/2)(a_n+(sqrt(4a+1)-1)/2)&lt;0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The partial solution has established that the sequence \((a_n)\) is monotonically increasing and bounded above. To show that it is bounded above, we can use the fact that \(a_n^2 - a_n - a &lt; 0\), which implies that \(a_n\) is less than the larger root of the quadratic equation \(x^2 - x - a = 0\). The larger root is \(\frac{1 + \sqrt{4a+1}}{2}\), so we have \(a_n &lt; \frac{1 + \sqrt{4a+1}}{2}\) for all \(n\).
+
+Since the sequence is monotonically increasing and bounded above, it must converge to some limit \(L\). Let&#x27;s find \(L\) in terms of \(a\).
+
+Taking the limit on both sides of the recursive definition \(a_{n+1} = \sqrt{a + a_n}\), we get:
+
+\[\lim_{n \to \infty} a_{n+1} = \lim_{n \to \infty} \sqrt{a + a_n}\]
+
+Since the sequence converges, we can replace \(a_{n+1}\) and \(a_n\) with \(L\), the limit of the sequence:
+
+\[L = \sqrt{a + L}\]
+
+Squaring both sides of the equation, we get:
+
+\[L^2 = a + L\]
+
+This is a quadratic equation in \(L\):
+
+\[L^2 - L - a = 0\]
+
+Using the quadratic formula to solve for \(L\), we get:
+
+\[L = \frac{1 \pm \sqrt{1 + 4a}}{2}\]
+
+However, since \(L\) must be greater than \(\sqrt{a}\), we must choose the positive sign in the quadratic formula. Therefore, the limit of the sequence is:
+
+\[L = \frac{1 + \sqrt{1 + 4a}}{2}\]
+
+This is the expression for the limit of the sequence in terms of \(a\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by \(a_0 = \sqrt{a}\) and \(a_{n+1} = \sqrt{a + a_n}\) for \(a &gt; 0\) exists and is given by \(L = \frac{1 + \sqrt{1 + 4a}}{2}\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

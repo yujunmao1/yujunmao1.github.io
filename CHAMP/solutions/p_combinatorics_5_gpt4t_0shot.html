@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_5</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_5']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many subsets of {1, 2,..., 10} have no two successive numbers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use a combinatorial argument. We want to count the number of subsets of the set {1, 2, ..., 10} that contain no two successive numbers.
+
+Let&#x27;s denote by S the set {1, 2, ..., 10}. We can approach this problem by considering the binary representation of subsets of S, where each element in S can either be included (1) or not included (0) in a subset. For example, the subset {1, 3, 5} can be represented as 1010100000, where the 1s represent the inclusion of the corresponding element in the subset.
+
+Now, we want to count the number of binary strings of length 10 that have no two consecutive 1s. We can do this by constructing the strings from left to right and keeping track of the possibilities at each step.
+
+Let&#x27;s define:
+- A(n) as the number of valid strings of length n that end with a 1.
+- B(n) as the number of valid strings of length n that end with a 0.
+
+For n = 1, we have:
+- A(1) = 1 (the string &quot;1&quot;)
+- B(1) = 1 (the string &quot;0&quot;)
+
+For n = 2, we have:
+- A(2) = 1 (the string &quot;10&quot;, since we cannot have two consecutive 1s)
+- B(2) = 2 (the strings &quot;00&quot; and &quot;01&quot;)
+
+For n &gt; 2, we can construct the strings ending in 1 by adding a &quot;1&quot; to all strings of length n-1 that end in 0. Similarly, we can construct the strings ending in 0 by adding a &quot;0&quot; to all strings of length n-1, regardless of whether they end in 0 or 1. Therefore, we have the following recursive relations:
+- A(n) = B(n-1)
+- B(n) = A(n-1) + B(n-1)
+
+We can now compute A(n) and B(n) for n up to 10:
+
+For n = 3:
+- A(3) = B(2) = 2
+- B(3) = A(2) + B(2) = 1 + 2 = 3
+
+For n = 4:
+- A(4) = B(3) = 3
+- B(4) = A(3) + B(3) = 2 + 3 = 5
+
+Continuing this process:
+
+For n = 5:
+- A(5) = B(4) = 5
+- B(5) = A(4) + B(4) = 3 + 5 = 8
+
+For n = 6:
+- A(6) = B(5) = 8
+- B(6) = A(5) + B(5) = 5 + 8 = 13
+
+For n = 7:
+- A(7) = B(6) = 13
+- B(7) = A(6) + B(6) = 8 + 13 = 21
+
+For n = 8:
+- A(8) = B(7) = 21
+- B(8) = A(7) + B(7) = 13 + 21 = 34
+
+For n = 9:
+- A(9) = B(8) = 34
+- B(9) = A(8) + B(8) = 21 + 34 = 55
+
+For n = 10:
+- A(10) = B(9) = 55
+- B(10) = A(9) + B(9) = 34 + 55 = 89
+
+The total number of valid subsets is the sum of the number of strings ending in 1 and the number of strings ending in 0 for n = 10:
+Total = A(10) + B(10) = 55 + 89 = 144
+
+Therefore, there are 144 subsets of the set {1, 2, ..., 10} that contain no two successive numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 144 subsets of the set {1, 2, ..., 10} that contain no two successive numbers.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

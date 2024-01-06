@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_16</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_16']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A be a string of n binary digits (leading 0s are allowed). How many such strings have the substring &quot;01&quot; appearing exactly m times, as an expression of m and n?
+
+You may find the following information useful:
+
+1. If we count each object d times and get a total of n counts, then there are n/d objects.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of binary strings of length n that contain the substring &quot;01&quot; exactly m times. We can approach this problem by considering the placement of the &quot;01&quot; substrings and the remaining digits.
+
+Let&#x27;s break down the string into parts. Each &quot;01&quot; substring is a fixed part, and we have m such substrings. Now, we need to distribute the remaining n - 2m digits (since each &quot;01&quot; takes up 2 spaces) around these m &quot;01&quot; substrings.
+
+We can think of the remaining n - 2m digits as either &#x27;0&#x27;s or &#x27;1&#x27;s. These digits can be placed in the following positions:
+
+1. Before the first &quot;01&quot;
+2. Between the m &quot;01&quot; substrings (which gives us m - 1 positions)
+3. After the last &quot;01&quot;
+
+This gives us a total of m + 1 positions where we can place the remaining digits.
+
+Now, we need to distribute n - 2m digits into m + 1 positions. This is a problem of distributing indistinguishable objects (the remaining digits) into distinguishable boxes (the positions around the &quot;01&quot; substrings), which can be done using the stars and bars method.
+
+The number of ways to do this is given by the binomial coefficient:
+
+C(n - 2m + m, m) = C(n - m, m)
+
+This is because we have n - 2m stars (the remaining digits) and m bars (which separate the positions around the &quot;01&quot; substrings), giving us a total of n - 2m + m objects to choose positions for the m bars.
+
+However, we must also consider that the string cannot start with &#x27;1&#x27; and end with &#x27;0&#x27; without having a &quot;01&quot; substring at the beginning or end, respectively. To account for this, we need to subtract the cases where the string starts with &#x27;1&#x27; or ends with &#x27;0&#x27; without the &quot;01&quot; substring.
+
+If the string starts with &#x27;1&#x27;, we have one less position to place the remaining digits, so we have:
+
+C(n - 2m + m - 1, m) = C(n - m - 1, m)
+
+Similarly, if the string ends with &#x27;0&#x27;, we also have:
+
+C(n - 2m + m - 1, m) = C(n - m - 1, m)
+
+Since these two cases are mutually exclusive, we need to subtract them both from the total:
+
+C(n - m, m) - 2 * C(n - m - 1, m)
+
+This gives us the number of binary strings of length n that contain the substring &quot;01&quot; exactly m times.
+
+However, we must also consider the case where the string starts with &#x27;1&#x27; and ends with &#x27;0&#x27; simultaneously. In this case, we have subtracted this case twice, so we need to add it back once. This case has m - 2 positions to place the remaining digits:
+
+C(n - 2m + m - 2, m) = C(n - m - 2, m)
+
+Adding this back in, the final expression for the number of binary strings of length n that contain the substring &quot;01&quot; exactly m times is:
+
+C(n - m, m) - 2 * C(n - m - 1, m) + C(n - m - 2, m)
+
+This is the expression in terms of m and n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of binary strings of length n that contain the substring &quot;01&quot; exactly m times is given by the expression C(n - m, m) - 2 * C(n - m - 1, m) + C(n - m - 2, m), where C represents the binomial coefficient.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

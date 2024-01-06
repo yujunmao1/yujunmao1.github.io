@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_45</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_45']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {a_n} is defined by a_1=1, a_(n+1)=a_n+1/a_n^2. Do we have a_9000&gt;30?
+
+You may find the following information useful:
+
+1. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the behavior of the sequence {a_n} defined by the recursive formula:
+
+a_1 = 1,
+a_(n+1) = a_n + 1/a_n^2.
+
+We want to determine if a_9000 &gt; 30. To do this, we need to understand how quickly the sequence grows. Let&#x27;s try to find a pattern or a way to estimate the growth of the sequence.
+
+First, let&#x27;s look at the first few terms to get a sense of the sequence:
+
+a_1 = 1,
+a_2 = a_1 + 1/a_1^2 = 1 + 1/1^2 = 2,
+a_3 = a_2 + 1/a_2^2 = 2 + 1/2^2 = 2 + 1/4 = 2.25,
+a_4 = a_3 + 1/a_3^2 = 2.25 + 1/2.25^2.
+
+We can see that each term is greater than the previous term, so the sequence is increasing. However, we need a more efficient way to estimate the growth without calculating each term.
+
+Notice that for large n, the term 1/a_n^2 becomes very small compared to a_n, so the sequence&#x27;s growth rate is primarily determined by the value of a_n itself. This suggests that the sequence grows without bound, but we need to prove that it grows fast enough to ensure that a_9000 &gt; 30.
+
+Let&#x27;s try to find a lower bound for a_n that grows sufficiently quickly. We can use the inequality:
+
+a_n &gt; a_(n-1) &gt; ... &gt; a_1 = 1.
+
+This implies that:
+
+1/a_n^2 &lt; 1.
+
+So we can write:
+
+a_(n+1) = a_n + 1/a_n^2 &gt; a_n + 1.
+
+This means that each term is at least 1 greater than the previous term. Let&#x27;s use this to establish a lower bound for a_9000.
+
+If we apply this inequality repeatedly, we get:
+
+a_2 &gt; a_1 + 1 = 2,
+a_3 &gt; a_2 + 1 &gt; 3,
+...
+a_n &gt; a_(n-1) + 1 &gt; ... &gt; n.
+
+So by induction, we can say that:
+
+a_n &gt; n for all n.
+
+Now, let&#x27;s apply this to n = 9000:
+
+a_9000 &gt; 9000.
+
+Since 9000 is much greater than 30, we can conclude that:
+
+a_9000 &gt; 30.
+
+Therefore, without calculating the exact value of a_9000, we can confidently say that a_9000 is indeed greater than 30.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence {a_n} defined by a_1=1 and a_(n+1)=a_n+1/a_n^2 grows such that a_9000 &gt; 9000, and therefore a_9000 &gt; 30.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

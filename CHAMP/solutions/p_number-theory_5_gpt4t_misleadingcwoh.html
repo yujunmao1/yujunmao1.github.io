@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_5</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 9376</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_5']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+An integer a is called automorphic if a^2 ends in a. For example, 5 is automorphic because 5^2=25 ends in 5. 25 is also automorphic because 25^2=625 ends in 25. Find all four-digit automorphic numbers.
+
+You may find the following information useful:
+
+1. A number is a multiple of 9 if and only if its digit sum is divisible by 9.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all four-digit automorphic numbers, we need to find integers \( a \) such that when squared, \( a^2 \), the last four digits of the result are \( a \) itself.
+
+Let&#x27;s denote the four-digit number as \( a = d_3d_2d_1d_0 \), where \( d_3 \) is the thousands digit, \( d_2 \) is the hundreds digit, \( d_1 \) is the tens digit, and \( d_0 \) is the units digit. We are looking for \( a \) such that \( a^2 \) mod 10000 = \( a \).
+
+We can start by considering the last digit of \( a \), which is \( d_0 \). The last digit of \( a^2 \) will be determined by the last digit of \( a \). We know that the last digit of \( a^2 \) must be the same as the last digit of \( a \), so \( d_0 \) must be either 0, 1, 5, or 6, because these are the only digits that remain the same when squared:
+
+- \( 0^2 = 0 \)
+- \( 1^2 = 1 \)
+- \( 5^2 = 25 \)
+- \( 6^2 = 36 \)
+
+Now, let&#x27;s consider the last two digits of \( a \), which are \( d_1d_0 \). If \( d_0 \) is 0, then \( d_1 \) can be any digit, but the number \( a \) would not be a four-digit number. So, \( d_0 \) cannot be 0.
+
+If \( d_0 \) is 1, then \( d_1 \) must also be 1 because \( (d_1d_0)^2 \) must end in \( d_1d_0 \). So, \( d_1d_0 \) could be 01, but again, this would not be a four-digit number.
+
+If \( d_0 \) is 5, then \( d_1 \) must be 2 because \( (25)^2 = 625 \), and the last two digits are 25.
+
+If \( d_0 \) is 6, then \( d_1 \) must be 7 or 8 because \( (76)^2 = 5776 \) and \( (76)^2 \) ends in 76, and \( (86)^2 = 7396 \) and \( (86)^2 \) ends in 86. However, \( (86)^2 \) does not end in 86, so \( d_1d_0 \) cannot be 86.
+
+Now we have two possibilities for the last two digits of \( a \): 25 and 76.
+
+Let&#x27;s consider the last three digits of \( a \), which are \( d_2d_1d_0 \). For \( a \) to be automorphic, \( (d_2d_1d_0)^2 \) must end in \( d_2d_1d_0 \).
+
+For \( d_1d_0 = 25 \), we need to find \( d_2 \) such that \( (d_225)^2 \) ends in 225. Squaring 225 gives us 50625, which ends in 225. So, \( d_2 \) must be 0, and the last three digits of \( a \) are 025.
+
+For \( d_1d_0 = 76 \), we need to find \( d_2 \) such that \( (d_276)^2 \) ends in 276. Squaring 376 gives us 141376, which ends in 376. So, \( d_2 \) must be 3, and the last three digits of \( a \) are 376.
+
+Now we have two possibilities for the last three digits of \( a \): 025 and 376.
+
+Finally, let&#x27;s consider the four-digit number \( a \), which are \( d_3d_2d_1d_0 \). For \( a \) to be automorphic, \( a^2 \) must end in \( a \).
+
+For \( d_2d_1d_0 = 025 \), we need to find \( d_3 \) such that \( (d_3025)^2 \) ends in 3025. Squaring 3025 gives us 9150625, which ends in 3025. So, \( d_3 \) must be 3, and the four-digit automorphic number is 3025.
+
+For \( d_2d_1d_0 = 376 \), we need to find \( d_3 \) such that \( (d_3376)^2 \) ends in 3376. Squaring 9376 gives us 87909376, which ends in 9376. So, \( d_3 \) must be 9, and the four-digit automorphic number is 9376.
+
+Therefore, the four-digit automorphic numbers are 3025 and 9376.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The four-digit automorphic numbers are 3025 and 9376.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

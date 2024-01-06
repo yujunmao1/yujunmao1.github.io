@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_8</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 634</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_8']
+messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many strings of length 5 and consisting solely of the digits 1, 2, 3 and 4 have the property that any 1 and 2 are never neighbors (i.e., the string does not contain &quot;12&quot; or &quot;21&quot; as substrings).
+
+You may find the following information useful:
+
+1. Let a_n, b_n, c_n, d_n be the numbers of length-n strings that end with 1, 2, 3, 4 respectively.
+2. Express a_(n+1), b_(n+1), c_(n+1), d_(n+1) in terms of a_n, b_n, c_n, d_n.
+3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the principle of inclusion-exclusion.
+
+Let&#x27;s consider the number of strings of length 5 without any restrictions. Each digit in the string can be chosen from the set {1, 2, 3, 4}, so there are 4 choices for each position. Therefore, there are 4^5 = 1024 possible strings of length 5.
+
+Now, let&#x27;s count the number of strings that violate the given property. We will count the number of strings that contain &quot;12&quot; as a substring and the number of strings that contain &quot;21&quot; as a substring separately.
+
+1. Counting the number of strings that contain &quot;12&quot; as a substring:
+To count this, we can fix the position of &quot;12&quot; in the string and count the number of choices for the remaining positions. There are 4 choices for the first digit, 3 choices for the second digit (excluding 2), and 4 choices for each of the remaining 3 digits. Therefore, there are 4 * 3 * 4^3 = 768 strings that contain &quot;12&quot; as a substring.
+
+2. Counting the number of strings that contain &quot;21&quot; as a substring:
+Similarly, there are 4 choices for the first digit, 3 choices for the second digit (excluding 1), and 4 choices for each of the remaining 3 digits. Therefore, there are also 4 * 3 * 4^3 = 768 strings that contain &quot;21&quot; as a substring.
+
+However, we have double-counted the strings that contain both &quot;12&quot; and &quot;21&quot; as substrings. To correct for this, we need to subtract the number of such strings.
+
+3. Counting the number of strings that contain both &quot;12&quot; and &quot;21&quot; as substrings:
+To count this, we can fix the position of &quot;12&quot; in the string and count the number of choices for the remaining positions. There are 4 choices for the first digit, 3 choices for the second digit (excluding 2), and 3 choices for each of the remaining 3 digits (excluding 1). Therefore, there are 4 * 3 * 3^3 = 324 strings that contain both &quot;12&quot; and &quot;21&quot; as substrings.
+
+Now, we can apply the principle of inclusion-exclusion to find the number of strings that satisfy the given property:
+
+Number of strings = Total number of strings - Number of strings that contain &quot;12&quot; - Number of strings that contain &quot;21&quot; + Number of strings that contain both &quot;12&quot; and &quot;21&quot;
+                 = 1024 - 768 - 768 + 324
+                 = 812
+
+Therefore, there are 812 strings of length 5 that satisfy the given property.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 812 strings of length 5 consisting solely of the digits 1, 2, 3, and 4, where any 1 and 2 are never neighbors.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

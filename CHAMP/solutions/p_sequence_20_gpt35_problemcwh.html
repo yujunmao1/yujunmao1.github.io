@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_20</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_20']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Each of the faces of a cube is painted by a different color. How many of the colorings are distinct up to rotations?
+Step-wise solution:
+1. We paint a face and put it on the bottom, and consider painting the second face.
+2. We can paint it on top, the remaining four faces have 4! colorings, but we can rotate the cube four times, which makes four colorings the same, so we 4!/4=6 distinct colorings.
+3. If the second face is on the side, we can put it on the front, and the two faces uniquely fix the rotation.
+4. Thus, any coloring of the remaining four faces is distinct, and we have 4!=24 colorings.
+5. In total, we have 30 colorings.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a_n be the number of all permutations p of {1, ..., n} with |p(i)−i|≤1 for all i. Find a_10.
+
+In addition, you may also find the following information helpful:
+
+1. Find an expression for a_n in terms of a_(n-1) and a_(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find a_n, let&#x27;s consider the possible positions for the number n in the permutation p.
+
+Case 1: n is in position n
+In this case, the remaining numbers {1, ..., n-1} can be arranged in a_(n-1) ways, since the condition |p(i)−i|≤1 is satisfied for all i except n.
+
+Case 2: n is in position n-1
+In this case, the remaining numbers {1, ..., n-2} can be arranged in a_(n-2) ways, since the condition |p(i)−i|≤1 is satisfied for all i except n-1.
+
+Case 3: n is in any other position
+In this case, the remaining numbers {1, ..., n-1} can be arranged in a_(n-1) ways, since the condition |p(i)−i|≤1 is satisfied for all i except n.
+
+Therefore, we can express a_n in terms of a_(n-1) and a_(n-2) as follows:
+a_n = a_(n-1) + a_(n-2) + a_(n-1)
+
+Simplifying the expression, we have:
+a_n = 2a_(n-1) + a_(n-2)
+
+Using this recursive formula, we can calculate a_10 by starting with the base cases:
+a_1 = 1 (only one possible permutation: {1})
+a_2 = 2 (two possible permutations: {1, 2} and {2, 1})
+
+Now, we can use the recursive formula to find a_10:
+a_3 = 2a_2 + a_1 = 2(2) + 1 = 5
+a_4 = 2a_3 + a_2 = 2(5) + 2 = 12
+a_5 = 2a_4 + a_3 = 2(12) + 5 = 29
+a_6 = 2a_5 + a_4 = 2(29) + 12 = 70
+a_7 = 2a_6 + a_5 = 2(70) + 29 = 169
+a_8 = 2a_7 + a_6 = 2(169) + 70 = 408
+a_9 = 2a_8 + a_7 = 2(408) + 169 = 985
+a_10 = 2a_9 + a_8 = 2(985) + 408 = 2378
+
+Therefore, a_10 = 2378.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of all permutations p of {1, ..., 10} with |p(i)−i|≤1 for all i is 2378.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

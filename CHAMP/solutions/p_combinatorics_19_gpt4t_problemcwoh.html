@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_19</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n(n+1)*2^(n-2)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_19']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: A diagnoal in a convex polygon is any line connecting two non-adjacent vertices. For a convex polygon of n vertices, we draw all possible diagonals and suppose that no three diagonals pass through the same point. How many such intersection points do we have in the interior of the polygon, as an expression of n?
+Step-wise solution:
+1. Every intersection point is created by two diagnoals constructed from a set of four vertex points, and every set of four vertex points creates exactly two diagonals that have exactly one intersection point.
+2. Thus, the number of intersection points is the number of four-vertex-set from the n vertices, which is C(n, 4).
+
+Problem: 2n players are participating in a tennis tournament. Find the number of ways that n pairs can be constructed for the first round, as an expression of n.
+Step-wise solution:
+1. We can order the 2n players in a row, and make the pairing (1, 2), (3, 4), (5, 6), ..., (2n-1, 2n), which can be done in (2n)! ways.
+2. The different order of the two players within each pair (e.g., (1, 2) and (2, 1)) result in the same pairing.
+3. Thus, we need divide the number of ways by 2^n, since we have n pairs.
+4. In addition, the ordering of the pairs also results in duplicate pairing, and there are n! ordering.
+5. So in total, we have (2n)!/(2^n*n!) distinct pairings.
+
+Problem: Of 3n+1 objects, n are indistinguishable, and the remaining ones are distinct. In how many ways can we choose n objects, as an expression of n?
+Step-wise solution:
+1. We have 2n+1 distinguishable objects and n indistinguishable objects.
+2. Thus, to choose a collection contains k distinguishable objects, there are C(2n+1, k) ways.
+3. So the total number of ways is C(2n+1, 0)+C(2n+1, 1)+...+C(2n+1, n).
+4. Denote C(2n+1, k) as c_k.
+5. We have c_0+c_1+...+c_(2n)+c_(2n+1)=2^(2n+1).
+6. Furthermore, we have c_0=c_(2n+1), c_1=c_(2n), ..., c_n=c_(n+1).
+7. Thus, we have c_0+c_1+...+c_n=2^(2n+1)/2=4^n.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a closed-form formula of sum_(k=1)^n C(n, k)*k^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find a closed-form formula for the sum \(\sum_{k=1}^{n} C(n, k) k^2\), we can start by considering the combinatorial interpretation of the terms in the sum.
+
+The term \(C(n, k) k^2\) can be thought of as the number of ways to choose a committee of \(k\) people from a group of \(n\) and then select a president and a vice-president (who may be the same person) from among those \(k\) people. This is because there are \(C(n, k)\) ways to choose the committee and \(k\) ways to choose the president, and \(k\) ways to choose the vice-president (including the possibility that the president and vice-president are the same person).
+
+To find a closed-form formula, we can use the identities involving binomial coefficients and the sums of powers of integers. We will use the following known identities:
+
+1. \(\sum_{k=0}^{n} C(n, k) = 2^n\)
+2. \(\sum_{k=0}^{n} C(n, k) k = n 2^{n-1}\)
+3. \(\sum_{k=0}^{n} C(n, k) k(k-1) = n(n-1) 2^{n-2}\)
+
+Now, let&#x27;s express \(k^2\) as \(k(k-1) + k\) and substitute it into the sum:
+
+\(\sum_{k=1}^{n} C(n, k) k^2 = \sum_{k=1}^{n} C(n, k) [k(k-1) + k]\)
+
+Split the sum into two parts:
+
+\(= \sum_{k=1}^{n} C(n, k) k(k-1) + \sum_{k=1}^{n} C(n, k) k\)
+
+Now, we can use the identities (2) and (3) to evaluate these sums:
+
+\(\sum_{k=1}^{n} C(n, k) k(k-1) = n(n-1) 2^{n-2}\) (using identity 3)
+
+\(\sum_{k=1}^{n} C(n, k) k = n 2^{n-1}\) (using identity 2)
+
+However, we need to adjust these sums because they include the term for \(k=0\), which we don&#x27;t have in our original sum. For the first sum, the term for \(k=0\) is 0, so no adjustment is needed. For the second sum, the term for \(k=0\) is also 0, so again, no adjustment is needed.
+
+Therefore, the closed-form formula for the sum is:
+
+\(\sum_{k=1}^{n} C(n, k) k^2 = n(n-1) 2^{n-2} + n 2^{n-1}\)
+
+This can be simplified by factoring out \(n 2^{n-2}\):
+
+\(= n 2^{n-2} [(n-1) + 2]\)
+
+\(= n 2^{n-2} (n+1)\)
+
+So the closed-form formula for the sum is:
+
+\(\sum_{k=1}^{n} C(n, k) k^2 = n(n+1) 2^{n-2}\)</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The closed-form formula for the sum \(\sum_{k=1}^{n} C(n, k) k^2\) is \(n(n+1) 2^{n-2}\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

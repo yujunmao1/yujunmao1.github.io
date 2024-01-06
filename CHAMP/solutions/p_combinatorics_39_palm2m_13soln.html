@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_39</td>
+            <td>PaLM 2 Medium</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 85</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_39']
+messages = problem.conversations['PaLM 2 Medium|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We let a_n be the number of ways to tile a 2 x n rectangle.
+2. For a 2 x (n+1) rectangle, let 2 be the vertical dimension and n+1 be the horizontal direction.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x n rectangle with 2 x 1 and 2 x 2 tiles is given by the following recurrence relation:
+
+$$a_n = a_{n-1} + 2a_{n-2}$$
+
+with initial conditions $a_0 = 1$ and $a_1 = 2$.
+
+To see why this is the case, consider the following diagram:
+
+[Diagram of a 2 x n rectangle with 2 x 1 and 2 x 2 tiles]
+
+The first row of the rectangle can be filled in $a_{n-1}$ ways, since there are $n-1$ spaces to fill with 2 x 1 tiles. Once the first row is filled, there are $n$ spaces left to fill in the second row. The first space can be filled with a 2 x 1 tile, in which case the remaining $n-1$ spaces can be filled in $a_{n-2}$ ways. Alternatively, the first space can be filled with a 2 x 2 tile, in which case the remaining $n-2$ spaces can be filled in $a_{n-1}$ ways. This gives a total of $a_{n-1} + 2a_{n-2}$ ways to tile the 2 x n rectangle.
+
+To solve the recurrence relation, we can use the following generating function:
+
+$$A(x) = \sum_{n=0}^{\infty} a_n x^n$$
+
+Substituting the recurrence relation into the generating function gives:
+
+$$A(x) = 1 + 2x + x^2 \sum_{n=0}^{\infty} a_n x^n = 1 + 2x + x^2 A(x)$$
+
+Solving for $A(x)$ gives:
+
+$$A(x) = \frac{1}{1 - x - 2x^2}$$
+
+The coefficient of $x^n$ in $A(x)$ is $a_n$, so the number of ways to tile a 2 x n rectangle with 2 x 1 and 2 x 2 tiles is given by:
+
+$$a_n = \frac{1}{(n+1)(n+2)}$$
+
+For a 2 x 7 rectangle, there are $\frac{1}{14} = \boxed{\frac{1}{7}}$ ways to tile it with 2 x 1 and 2 x 2 tiles.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles is $\boxed{\frac{1}{7}}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

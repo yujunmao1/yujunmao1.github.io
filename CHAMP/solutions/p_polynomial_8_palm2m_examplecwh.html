@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_8</td>
+            <td>PaLM 2 Medium</td>
+            <td>Example w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no real-valued zeros)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_8']
+messages = problem.conversations['PaLM 2 Medium|Example w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Please give an example that applies the following concept:
+
+A polynomial f(x) of an even degree with a positive leading coefficient has a global minimum, at which location f&#x27;(x)=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Sure. Consider the polynomial $f(x) = x^4 - 2x^2 + 1$. This polynomial has a positive leading coefficient, so it has a global minimum. The derivative of $f(x)$ is $f&#x27;(x) = 4x^3 - 4x = 4x(x^2 - 1)$. This derivative is equal to zero when $x = 0$ or $x = \pm 1$. However, $f(0) = 1$ and $f(\pm 1) = -3$, so the global minimum of $f(x)$ is at $x = 0$.
+
+Here is a graph of $f(x)$:
+
+[asy]
+unitsize(1 cm);
+
+real ticklen = 3;
+real tickspace = 1;
+real axisarrowsize = 0.14inch;
+real tickdown = -0.1;
+real tickdownlength = 0.14inch;
+real tickdownbase = 0.12inch;
+real wholetickdown = tickdown + tickdownlength;
+real wholetickdownbase = wholetickdown + tickdownbase;
+real tickdownlengthshort = 0.07inch;
+real wholetickdownlengthshort = wholetickdown + tickdownlengthshort;
+real axisdown = -2.5;
+real axisdownlength = 5;
+real axisdownbase = axisdown - 0.12inch;
+real wholeaxisdown = axisdown + axisdownbase;
+real axisdownlengthshort = 3.5;
+real wholeaxisdownlengthshort = wholeaxisdown + axisdownlengthshort;
+real xleft = -2.5;
+real xright = 2.5;
+real ybottom = -2.5;
+real ytop = 2.5;
+
+real ticklength = 0.14inch;
+real wholeticklength = ticklength + 0.12inch;
+real wholetickdownlength = wholetickdownlength + 0.12inch;
+real wholetickdownlengthshort = wholetickdownlengthshort + 0.12inch;
+real tickdownbase = 0.12inch;
+real wholetickdownbase = wholetickdownbase + 0.12inch;
+real axisarrowsize = 0.14inch;
+real wholeaxisarrowsize = axisarrowsize + 0.12inch;
+
+draw((axisdown,-2.5)--(axisdown,2.5),Arrows(wholeaxisarrowsize));
+draw((xleft,-2.5)--(xright,-2.5),Arrows(wholeaxisarrowsize));
+
+label(&quot;$x$&quot;,(xright,-0.1),SE);
+label(&quot;$y$&quot;,(-0.1,ytop),NW);
+
+real i;
+for (i=-2.5; i&lt;=2.5; i+=0.5) {
+  draw((i,-0.1)--(i,0.1));
+}
+
+real j;
+for (j=-2.5; j&lt;=2.5; j+=0.5) {
+  draw((0.1,j)--(-0.1,j));
+}
+
+draw(graph(x^4 - 2*x^2 + 1, xleft, xright),red);
+
+dot(&quot;$0$&quot;,(0,0),SW);
+dot(&quot;$1$&quot;,(1,0),SE);
+dot(&quot;$-1$&quot;,(-1,0),NW);
+[/asy]
+
+As you can see, the global minimum of $f(x)$ is at $x = 0$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many real-valued zeros does the polynomial 1+x+x^2/2!+x^3/3!+...+x^(2n)/(2n)! have?
+
+Besides the concept above, you may also find the following information useful:
+
+1. Study the positivity of the global minimum of f(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial $1+x+x^2/2!+x^3/3!+...+x^{2n}/(2n)!$ has exactly $\lfloor \frac{n}{2} \rfloor$ real-valued zeros.
+
+To prove this, we will use the following theorem:
+
+&gt; **Theorem.** Let $f(x)$ be a polynomial with real coefficients. If $f&#x27;(x) &gt; 0$ for all real numbers $x$, then $f(x)$ has at most one real-valued zero.
+
+In our case, $f(x) = 1+x+x^2/2!+x^3/3!+...+x^{2n}/(2n)!$ is a polynomial with real coefficients, and its derivative is $f&#x27;(x) = 1+2x+3x^2+...+(2n)x^{2n-1} &gt; 0$ for all real numbers $x$. Therefore, $f(x)$ has at most one real-valued zero.
+
+Now, we will show that $f(x)$ has at least $\lfloor \frac{n}{2} \rfloor$ real-valued zeros. To do this, we will use the following lemma:
+
+&gt; **Lemma.** Let $f(x)$ be a polynomial with real coefficients. If $f(x)$ has a real-valued zero, then $f&#x27;(x)$ has at least one real-valued zero.
+
+In our case, $f(x)$ has a real-valued zero, since it is continuous and takes the value $1$ at $x = 0$. Therefore, $f&#x27;(x)$ has at least one real-valued zero.
+
+Now, let $x_1, x_2, ..., x_k$ be all the real-valued zeros of $f&#x27;(x)$. Then, $f(x)$ can be written as $$f(x) = (x-x_1)(x-x_2)...(x-x_k)g(x)$$ for some polynomial $g(x)$. Since $f(x)$ has a real-valued zero, $g(x)$ must also have a real-valued zero. Therefore, $f(x)$ has at least $\lfloor \frac{k}{2} \rfloor$ real-valued zeros.
+
+Since $k = \deg f&#x27;(x) = 2n-1$, we have $\lfloor \frac{k}{2} \rfloor = \lfloor \frac{2n-1}{2} \rfloor = \lfloor \frac{n}{2} \rfloor$. Therefore, $f(x)$ has at least $\lfloor \frac{n}{2} \rfloor$ real-valued zeros.
+
+Combining the above two results, we conclude that $f(x)$ has exactly $\lfloor \frac{n}{2} \rfloor$ real-valued zeros.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial $1+x+x^2/2!+x^3/3!+...+x^{2n}/(2n)!$ has exactly $\lfloor \frac{n}{2} \rfloor$ real-valued zeros.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

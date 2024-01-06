@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_40</td>
+            <td>GPT-4</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2 inequalities</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_40']
+messages = problem.conversations['GPT-4|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, at most how many of the three inequalities a(1-b)&gt;1/4, b(1-c)&gt;1/4, c(1-a)&gt;1/4 can be true at the same time?
+
+You may find the following information useful:
+
+1. For any real number a, a^2≥0. </code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by adding all three inequalities:
+
+a(1-b) + b(1-c) + c(1-a) &gt; 1/4 + 1/4 + 1/4
+a - ab + b - bc + c - ac &gt; 3/4
+a + b + c - ab - bc - ac &gt; 3/4
+
+Now, let&#x27;s rearrange the left side of the inequality to group the terms:
+
+(a - ac) + (b - ab) + (c - bc) &gt; 3/4
+a(1 - c) + b(1 - a) + c(1 - b) &gt; 3/4
+
+Now, let&#x27;s square both sides of the inequality:
+
+[a(1 - c) + b(1 - a) + c(1 - b)]^2 &gt; (3/4)^2
+[a^2(1 - c)^2 + b^2(1 - a)^2 + c^2(1 - b)^2 + 2ab(1 - a)(1 - c) + 2bc(1 - b)(1 - a) + 2ca(1 - c)(1 - b)] &gt; 9/16
+
+Since a, b, c are positive, and for any real number a, a^2≥0, all terms on the left side of the inequality are nonnegative. Therefore, for the inequality to hold, each term on the left side must be greater than or equal to 9/16.
+
+However, since a, b, c are positive and less than or equal to 1 (because 1 - a, 1 - b, 1 - c are also positive), the maximum value of each term a(1 - c), b(1 - a), c(1 - b) is 1/4 (which occurs when a, b, c are 1/2). Therefore, each term a(1 - c), b(1 - a), c(1 - b) is less than 9/16.
+
+So, at most one of the three inequalities a(1-b)&gt;1/4, b(1-c)&gt;1/4, c(1-a)&gt;1/4 can be true at the same time.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most, only one of the three inequalities a(1-b)&gt;1/4, b(1-c)&gt;1/4, c(1-a)&gt;1/4 can be true at the same time.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

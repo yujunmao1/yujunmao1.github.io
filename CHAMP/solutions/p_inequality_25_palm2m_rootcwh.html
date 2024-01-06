@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_25</td>
+            <td>PaLM 2 Medium</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_25']
+messages = problem.conversations['PaLM 2 Medium|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {1, 2, ..., 100}, do we have (1/2)*(3/4)*(5/6)*...*(2n-1)/(2n)≤1/sqrt(3n+1)?
+
+You may find the following information useful:
+
+1. Assuming that the inequality hold for n, study the condition for it to hold for n+1.
+2. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can prove by induction that the inequality holds for all $n \in \\{1, 2, ..., 100\\}$.
+
+The base case is $n=1$. In this case, the inequality is trivially true, since the left-hand side is equal to $1$ and the right-hand side is equal to $\sqrt{2}$.
+
+Now assume that the inequality holds for some $n \in \\{1, 2, ..., 100\\}$. We want to show that it holds for $n+1$.
+
+We have
+
+\begin{align*}
+\frac{1}{2} \cdot \frac{3}{4} \cdot \frac{5}{6} \cdots \frac{2n-1}{2n} \cdot \frac{2n+1}{2n+2} &amp;\leq \frac{1}{\sqrt{3n+1}} \cdot \frac{2n+1}{2n+2} \\
+&amp;= \frac{2n+1}{\sqrt{(3n+1)(2n+2)}} \\
+&amp;= \frac{(2n+1)^{3/2}}{3n+1 + 2n + 2} \\
+&amp;= \frac{(2n+1)^{3/2}}{5n+3}.
+\end{align*}
+
+By the binomial theorem, we have
+
+\begin{align*}
+(2n+1)^{3/2} &amp;= (2n+1)^{1/2} \cdot (2n+1)^{1/2} \\
+&amp;= \sqrt{2n+1} \cdot \sqrt{2n+1} \\
+&amp;= 2 \sqrt{(2n+1)^2} \\
+&amp;= 2 \sqrt{4n^2 + 6n + 1} \\
+&amp;= 2 \sqrt{(2n+1)^2 + 3n + 1} \\
+&amp;= 2 \sqrt{(2n+1)^2 + 3(2n+1) + 1^2 - 3} \\
+&amp;= 2 \sqrt{(2n+1+3)^2 - 4} \\
+&amp;= 2 \sqrt{(2n+4)^2 - 4} \\
+&amp;= 2(2n+4) - 2 \\
+&amp;= 4n + 8 - 2 \\
+&amp;= 4n + 6.
+\end{align*}
+
+Therefore, we have
+
+\begin{align*}
+\frac{1}{2} \cdot \frac{3}{4} \cdot \frac{5}{6} \cdots \frac{2n-1}{2n} \cdot \frac{2n+1}{2n+2} &amp;\leq \frac{(2n+1)^{3/2}}{5n+3} \\
+&amp;\leq \frac{4n+6}{5n+3} \\
+&amp;= \frac{4(n+1) + 2}{5n+3} \\
+&amp;= \frac{4}{5} + \frac{1}{5n+3}.
+\end{align*}
+
+Since $n \in \\{1, 2, ..., 100\\}$, we have $5n+3 \geq 5 \cdot 100 + 3 = 503$. Therefore,
+
+\begin{align*}
+\frac{1}{2} \cdot \frac{3}{4} \cdot \frac{5}{6} \cdots \frac{2n-1}{2n} \cdot \frac{2n+1}{2n+2} &amp;\leq \frac{4}{5} + \frac{1}{503} \\
+&amp;&lt; \frac{4}{5} + \frac{1}{100} \\
+&amp;= \frac{41}{50}.
+\end{align*}
+
+Finally, we note that $\frac{1}{2} \cdot \frac{3}{4} \cdot \frac{5}{6} \cdots \frac{2n-1}{2n} \cdot \frac{2n+1}{2n+2} = \frac{1}{2^{n+1}}$. Therefore, we have
+
+$$\frac{1}{2^{n+1}} \leq \frac{41}{50}.$$
+
+This inequality holds for</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality $\frac{1}{2} \cdot \frac{3}{4} \cdot \frac{5}{6} \cdots \frac{2n-1}{2n} \leq \frac{1}{\sqrt{3n+1}}$ holds for all $n \in \\{1, 2, ..., 100\\}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_8</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1/18</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_8']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the limit of the expression 1/(1*2*3*4)+1/(2*3*4*5)+...+1/(n(n+1)(n+2)(n+3)) as n→∞.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the limit of the given expression as \( n \to \infty \), we can try to find a pattern or a simplification that will help us sum the series. The expression is a sum of terms of the form:
+
+\[ \frac{1}{k(k+1)(k+2)(k+3)} \]
+
+for \( k \) ranging from 1 to \( n \). To simplify this, we can try to perform partial fraction decomposition. We want to express the term as a sum of simpler fractions:
+
+\[ \frac{1}{k(k+1)(k+2)(k+3)} = \frac{A}{k} + \frac{B}{k+1} + \frac{C}{k+2} + \frac{D}{k+3} \]
+
+Multiplying both sides by the denominator \( k(k+1)(k+2)(k+3) \) gives:
+
+\[ 1 = A(k+1)(k+2)(k+3) + Bk(k+2)(k+3) + Ck(k+1)(k+3) + Dk(k+1)(k+2) \]
+
+To find the coefficients \( A, B, C, \) and \( D \), we can plug in specific values for \( k \) that will eliminate all but one of the terms on the right side. Let&#x27;s do that for each coefficient:
+
+For \( A \), let \( k = 0 \):
+\[ 1 = A(0+1)(0+2)(0+3) \]
+\[ 1 = 6A \]
+\[ A = \frac{1}{6} \]
+
+For \( B \), let \( k = -1 \):
+\[ 1 = B(-1+0)(-1+2)(-1+3) \]
+\[ 1 = 2B \]
+\[ B = \frac{1}{2} \]
+
+For \( C \), let \( k = -2 \):
+\[ 1 = C(-2+0)(-2+1)(-2+3) \]
+\[ 1 = -6C \]
+\[ C = -\frac{1}{6} \]
+
+For \( D \), let \( k = -3 \):
+\[ 1 = D(-3+0)(-3+1)(-3+2) \]
+\[ 1 = -2D \]
+\[ D = -\frac{1}{2} \]
+
+Now we can rewrite the original term using these coefficients:
+
+\[ \frac{1}{k(k+1)(k+2)(k+3)} = \frac{1/6}{k} - \frac{1/2}{k+1} - \frac{1/6}{k+2} + \frac{1/2}{k+3} \]
+
+Let&#x27;s look at the sum of the first few terms to see if there&#x27;s a telescoping pattern:
+
+\[ \frac{1}{1 \cdot 2 \cdot 3 \cdot 4} + \frac{1}{2 \cdot 3 \cdot 4 \cdot 5} + \ldots + \frac{1}{n(n+1)(n+2)(n+3)} \]
+\[ = \left( \frac{1/6}{1} - \frac{1/2}{2} - \frac{1/6}{3} + \frac{1/2}{4} \right) + \left( \frac{1/6}{2} - \frac{1/2}{3} - \frac{1/6}{4} + \frac{1/2}{5} \right) + \ldots + \left( \frac{1/6}{n} - \frac{1/2}{n+1} - \frac{1/6}{n+2} + \frac{1/2}{n+3} \right) \]
+
+Notice that many terms cancel out because they appear with opposite signs in consecutive fractions. The sum simplifies to:
+
+\[ \left( \frac{1/6}{1} - \frac{1/2}{n+1} - \frac{1/6}{n+2} + \frac{1/2}{n+3} \right) \]
+
+Now, as \( n \to \infty \), the terms \( \frac{1/2}{n+1}, \frac{1/6}{n+2}, \) and \( \frac{1/2}{n+3} \) all approach 0. Therefore, the limit of the sum is simply the term that does not vanish:
+
+\[ \lim_{n \to \infty} \left( \frac{1/6}{1} - \frac{1/2}{n+1} - \frac{1/6}{n+2} + \frac{1/2}{n+3} \right) = \frac{1/6}{1} = \frac{1}{6} \]
+
+So the limit of the given expression as \( n \to \infty \) is \( \frac{1}{6} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the expression \( \frac{1}{1 \cdot 2 \cdot 3 \cdot 4} + \frac{1}{2 \cdot 3 \cdot 4 \cdot 5} + \ldots + \frac{1}{n(n+1)(n+2)(n+3)} \) as \( n \to \infty \) is \( \frac{1}{6} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

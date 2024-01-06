@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_37</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> sum_(i=1)^n i^2, or equivalently n(n+1)(2n+1)/6</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_37']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: On a chess board, two rooks are placed peacefully if they are not on the same row or column. For an n x n chess board, find the number of ways that n rooks can be placed peacefully (i.e., any two are placed peacefully) and the placing is also invariant to a 180-degree rotation.
+Step-wise solution:
+1. We need one rook per row and one rook per column.
+2. If n is odd, for a 180-degree rotation-invariant placement, we must have the center of the board being occupied by a rook.
+3. Thus, the number of placement of a 2k+1 x 2k+1 board is the same as that of a 2k x 2k board.
+4. For a 2k x 2k board, for any placement on the first row, the corresponding placement on the last row is fully determined.
+5. By removing the two rows and two columns, we get a 2k-2 x 2k-2 board.
+6. Since there are 2k possible placement on the first row, we have P(2k)=2k*P(2k-2), where P(2k) is the number of placements on the 2k x 2k board.
+7. We have P(2)=2, because the two rooks need to be on opposite corners.
+8. Thus, P(2k)=(2k)(2k-2)(2k-4)...(2)=2^k*k!.
+9. Substituing n=2k, we have P(n)=2^(n/2)*(n/2)! for even n.
+10. Since P(2k+1)=P(2k), we have P(n)=2^floor(n/2)*floor(n/2)! for all n.
+
+Problem: There are three different toys. We give one toy to each child, selected among four boys and six girls. We want to make sure that at least two boys are selected. In how many ways can this be done?
+Step-wise solution:
+1. For the three children, we can select two boys and one girl, or three boys.
+2. There are C(4, 2)*C(6, 1) ways to perform the first selection.
+3. We can also select three boys.
+4. There are C(4, 3) ways to select three boys.
+5. For each selection, there are 3! ways to give the three toys.
+6. Thus, the total number of ways is (C(4, 2)*C(6, 1)+C(4, 3))*3!=(6*6+4)*6=240.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+From the set {1, 2, 3, ..., n+1}, select triple (x, y, z), with duplicate allowed, such that z&gt;max(x, y). In how many ways can this be done, as an expression of n?
+
+In addition, you may also find the following information helpful:
+
+1. Consider the number of ways to choose the triple when z=i.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose the triple when $z=i$ is the number of ways to choose two numbers from the set $\\{1, 2, 3, ..., i\\}$, which is $\binom{i+1}{2}$.
+
+To find the total number of ways to choose the triple, we need to sum this over all possible values of $z$, from $i+1$ to $n+1$. This gives us the following expression:
+
+$$\sum_{i=1}^n \binom{i+1}{2} = \frac{1}{2}(n+1)(n+2)$$
+
+This is the answer to the problem.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose a triple (x, y, z) from the set {1, 2, 3, ..., n+1}, with duplicate allowed, such that z&gt;max(x, y), is $\frac{1}{2}(n+1)(n+2)$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

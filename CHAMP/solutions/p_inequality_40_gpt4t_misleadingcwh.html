@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_40</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2 inequalities</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_40']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, at most how many of the three inequalities a(1-b)&gt;1/4, b(1-c)&gt;1/4, c(1-a)&gt;1/4 can be true at the same time?
+
+You may find the following information useful:
+
+1. Find an assignment of a, b, c that makes two inequalities true.
+2. Study whether all inequalities can be true by multiplying all of them together.
+3. Find the maximum value of a(1-a), b(1-b), c(1-c).
+4. For non-negative x, y, we have sqrt(xy)≤sqrt((x^2+y^2)/2), or 2xy≤x^2+y^2, with equality if and only if x=y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s first address each of the given inequalities:
+
+1. \( a(1-b) &gt; \frac{1}{4} \)
+2. \( b(1-c) &gt; \frac{1}{4} \)
+3. \( c(1-a) &gt; \frac{1}{4} \)
+
+To find an assignment of \( a, b, c \) that makes two inequalities true, we can simply choose values that satisfy two of them and check if the third one is not satisfied. For example, let&#x27;s choose \( a = b = \frac{3}{4} \) and \( c = \frac{1}{2} \). Then:
+
+1. \( a(1-b) = \frac{3}{4} \cdot \frac{1}{4} = \frac{3}{16} \), which is less than \( \frac{1}{4} \), so the first inequality is not satisfied.
+2. \( b(1-c) = \frac{3}{4} \cdot \frac{1}{2} = \frac{3}{8} \), which is greater than \( \frac{1}{4} \), so the second inequality is satisfied.
+3. \( c(1-a) = \frac{1}{2} \cdot \frac{1}{4} = \frac{1}{8} \), which is less than \( \frac{1}{4} \), so the third inequality is not satisfied.
+
+This shows that it is possible to satisfy at least one of the inequalities, but we need to check if we can satisfy two or all three simultaneously.
+
+Next, let&#x27;s multiply all three inequalities together to see if they can all be true at the same time:
+
+\( a(1-b) \cdot b(1-c) \cdot c(1-a) &gt; \left(\frac{1}{4}\right)^3 \)
+
+\( abc(1-b)(1-c)(1-a) &gt; \frac{1}{64} \)
+
+Now, let&#x27;s find the maximum value of \( x(1-x) \) for \( x \in \{a, b, c\} \). The function \( f(x) = x(1-x) \) is a parabola that opens downward with its vertex at \( x = \frac{1}{2} \). The maximum value of \( f(x) \) is \( f\left(\frac{1}{2}\right) = \frac{1}{2} \cdot \frac{1}{2} = \frac{1}{4} \).
+
+So, the maximum value of \( a(1-a) \), \( b(1-b) \), and \( c(1-c) \) is \( \frac{1}{4} \). Therefore, the product of the maximum values of these three terms is \( \left(\frac{1}{4}\right)^3 = \frac{1}{64} \).
+
+However, for the inequalities to be strictly greater than \( \frac{1}{4} \), the product of \( a(1-a) \), \( b(1-b) \), and \( c(1-c) \) would have to be strictly greater than \( \frac{1}{64} \), which is not possible since we have already established that the maximum product is \( \frac{1}{64} \).
+
+Therefore, it is not possible for all three inequalities to be true at the same time.
+
+Finally, let&#x27;s consider the inequality \( 2xy \leq x^2 + y^2 \), which holds for non-negative \( x \) and \( y \), with equality if and only if \( x = y \). This inequality is a form of the AM-GM inequality, which states that the arithmetic mean is greater than or equal to the geometric mean.
+
+Since we have established that not all three inequalities can be true at the same time, and we have found an assignment that makes one of the inequalities true, we need to determine if there is an assignment that makes exactly two inequalities true.
+
+Let&#x27;s assume that two inequalities are true, say:
+
+1. \( a(1-b) &gt; \frac{1}{4} \)
+2. \( b(1-c) &gt; \frac{1}{4} \)
+
+If we multiply these two together, we get:
+
+\( a(1-b)b(1-c) &gt; \frac{1}{16} \)
+
+Now, let&#x27;s use the inequality \( 2xy \leq x^2 + y^2 \) with \( x = a(1-b) \) and \( y = b(1-c) \):
+
+\( 2a(1-b)b(1-c) \leq a^2(1-b)^2 + b^2(1-c)^2 \)
+
+Since \( a(1-b)b(1-c) &gt; \frac{1}{16} \), we have:
+
+\( \frac{1}{8} &lt; a^2(1-b)^2 + b^2(1-c)^2 \)
+
+This suggests that the sum of the squares of the left-hand sides of the first two inequalities is greater than \( \frac{1}{8} \), which is a larger bound than the individual inequalities themselves.
+
+However, we still need to consider the third inequality, \( c(1-a) &gt; \frac{1}{4} \), and whether it can be true simultaneously with one of the other two. If we assume that the first and third inequalities are true, we can perform a similar analysis:
+
+\( a(1-b)c(1-a) &gt; \frac{1}{16} \)
+
+Using the inequality \( 2xy \leq x^2 + y^2 \) with \( x = a(1-b) \) and \( y = c(1-a) \), we get:
+
+\( 2a(1-b)c(1-a) \leq a^2(1-b)^2 + c^2(1-a)^2 \)
+
+Since \( a(1-b)c(1-a) &gt; \frac{1}{16} \), we have:
+
+\( \frac{1}{8} &lt; a^2(1-b)^2 + c^2(1-a)^2 \)
+
+This again suggests that the sum of the squares of the left-hand sides of the first and third inequalities is greater than \( \frac{1}{8} \).
+
+Given these considerations, it seems that at most two of the inequalities can be true at the same time. To satisfy two inequalities, we need to choose \( a, b, c \) such that two products are greater than \( \frac{1}{4} \) while ensuring that the third product does not exceed \( \frac{1}{4} \) when considering the maximum value of \( x(1-x) \).
+
+In conclusion, at most two of the three inequalities can be true at the same time.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most two of the three inequalities \(a(1-b)&gt;\frac{1}{4}\), \(b(1-c)&gt;\frac{1}{4}\), and \(c(1-a)&gt;\frac{1}{4}\) can be true at the same time for positive \(a, b, c\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

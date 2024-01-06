@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_18</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x^2+x+1)(x^2-x+1)(x^4-x^2+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_18']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Factorize x^8+x^4+1 into terms of integer coefficients.
+
+You may find the following information useful:
+
+1. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.
+2. x^2-y^2=(x+y)(x-y).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To factorize the expression \( x^8 + x^4 + 1 \), we can look for patterns or use known identities to help us. One such identity is the sum of cubes:
+
+\[ a^3 + b^3 = (a + b)(a^2 - ab + b^2) \]
+
+We can try to apply a similar structure to our problem by considering the expression as a sum of two cubes plus an additional term. Let&#x27;s rewrite \( x^8 \) as \( (x^4)^2 \) and \( x^4 \) as \( (x^2)^2 \), and then try to see if we can find a cube structure:
+
+\[ x^8 + x^4 + 1 = (x^4)^2 + (x^2)^2 + 1^2 \]
+
+Now, this doesn&#x27;t immediately look like a sum of cubes, but we can try to force it into a sum of cubes by adding and subtracting a term to complete the cube. We can add and subtract \( 3x^4 \) to create a sum of cubes plus an extra term:
+
+\[ x^8 + x^4 + 1 = (x^8 + 3x^4 + 1) - 3x^4 \]
+
+Now, we can rewrite the first part as a cube:
+
+\[ (x^8 + 3x^4 + 1) = (x^4 + 1)^2 \]
+
+So we have:
+
+\[ x^8 + x^4 + 1 = (x^4 + 1)^2 - 3x^4 \]
+
+Now, let&#x27;s try to factor this expression by recognizing it as a difference of squares:
+
+\[ (x^4 + 1)^2 - ( \sqrt{3}x^2 )^2 = (x^4 + 1 + \sqrt{3}x^2)(x^4 + 1 - \sqrt{3}x^2) \]
+
+However, we are looking for integer coefficients, and we have introduced a square root. This is not the correct approach for integer coefficients. Let&#x27;s try a different approach.
+
+We can use the fact that \( x^8 + x^4 + 1 \) is a part of the cyclotomic polynomial \( x^{12} - 1 \), which factors as:
+
+\[ x^{12} - 1 = (x^6 - 1)(x^6 + 1) \]
+
+We can further factor \( x^6 - 1 \) using the difference of squares:
+
+\[ x^6 - 1 = (x^3 - 1)(x^3 + 1) \]
+
+Now, \( x^3 - 1 \) and \( x^3 + 1 \) are the difference and sum of cubes, respectively:
+
+\[ x^3 - 1 = (x - 1)(x^2 + x + 1) \]
+\[ x^3 + 1 = (x + 1)(x^2 - x + 1) \]
+
+So, \( x^{12} - 1 \) can be written as:
+
+\[ x^{12} - 1 = (x - 1)(x + 1)(x^2 + x + 1)(x^2 - x + 1)(x^6 + 1) \]
+
+Now, \( x^8 + x^4 + 1 \) is a factor of \( x^{12} - 1 \) when \( x^4 \) is substituted for \( x \):
+
+\[ x^{12} - 1 = (x^4 - 1)(x^4 + 1)(x^8 + x^4 + 1) \]
+
+We already know that \( x^4 - 1 \) factors as \( (x^2 - 1)(x^2 + 1) \), and \( x^4 + 1 \) does not factor over the integers. So, we are left with \( x^8 + x^4 + 1 \) as an irreducible polynomial over the integers.
+
+Therefore, the expression \( x^8 + x^4 + 1 \) is already in its factored form with integer coefficients, and it cannot be factored further over the integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The expression \( x^8 + x^4 + 1 \) is irreducible over the integers and cannot be factored further into terms with integer coefficients.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

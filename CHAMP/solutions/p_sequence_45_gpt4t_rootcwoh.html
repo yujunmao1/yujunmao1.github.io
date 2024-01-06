@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_45</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_45']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {a_n} is defined by a_1=1, a_(n+1)=a_n+1/a_n^2. Do we have a_9000&gt;30?
+
+You may find the following information useful:
+
+1. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the behavior of the sequence {a_n} defined by the recursive formula:
+
+a_1 = 1,
+a_(n+1) = a_n + 1/a_n^2.
+
+We want to determine if a_9000 &gt; 30. To do this, we need to understand how quickly the sequence grows. Let&#x27;s look at the first few terms to get a sense of the sequence&#x27;s behavior:
+
+a_1 = 1,
+a_2 = a_1 + 1/a_1^2 = 1 + 1/1^2 = 2,
+a_3 = a_2 + 1/a_2^2 = 2 + 1/2^2 = 2 + 1/4 = 2.25,
+a_4 = a_3 + 1/a_3^2 = 2.25 + 1/2.25^2.
+
+We can see that each term is greater than the previous term, so the sequence is increasing. However, we need a more efficient way to determine the behavior of the sequence rather than computing each term individually.
+
+Let&#x27;s try to find a lower bound for the sequence that grows faster than the sequence itself. We can start by noticing that for all n &gt;= 1, we have:
+
+a_n &gt; 1.
+
+This is true because a_1 = 1 and each subsequent term is the previous term plus a positive number. Now, let&#x27;s assume that a_n &gt; k for some k &gt; 1 and all n. Then we have:
+
+a_(n+1) = a_n + 1/a_n^2 &gt; k + 1/k^2.
+
+We want to find a k such that k + 1/k^2 is still greater than k, which would mean the sequence grows at least as fast as this new function of k. Let&#x27;s choose k = 30 and see if this works:
+
+k + 1/k^2 = 30 + 1/30^2 = 30 + 1/900.
+
+Since 1/900 is a positive number, we have:
+
+k + 1/k^2 &gt; 30.
+
+This means that once the sequence {a_n} surpasses 30, every subsequent term will be greater than 30. Now, we need to find an n such that a_n &gt; 30. We can do this by bounding the sequence from below by a continuous function that is easier to analyze.
+
+Consider the function f(x) = x + 1/x^2. We know that a_(n+1) &gt; a_n + 1/a_n^2, so if we can find an x such that f(x) &gt; 30, we can argue that the sequence will eventually surpass 30.
+
+Let&#x27;s solve the inequality f(x) &gt; 30:
+
+x + 1/x^2 &gt; 30
+1/x^2 &gt; 30 - x
+1 &gt; x^2(30 - x)
+1 &gt; 30x^2 - x^3.
+
+This is a cubic inequality, and it&#x27;s not easy to solve algebraically. However, we can use calculus to find when the function f(x) = x + 1/x^2 starts to be greater than 30. We can look for the minimum of the function f(x) because once the minimum is greater than 30, the function will always be greater than 30 for larger x.
+
+To find the minimum, we take the derivative of f(x) and set it equal to zero:
+
+f&#x27;(x) = 1 - 2/x^3 = 0
+1 = 2/x^3
+x^3 = 2
+x = 2^(1/3).
+
+Now we evaluate f(x) at x = 2^(1/3):
+
+f(2^(1/3)) = 2^(1/3) + 1/(2^(1/3))^2
+= 2^(1/3) + 1/2^(2/3)
+= 2^(1/3) + 1/2^(2/3).
+
+This value is clearly less than 30, so we need to find when f(x) will be greater than 30. Since f(x) is increasing for x &gt; 2^(1/3), we can numerically find an x such that f(x) &gt; 30. However, this approach is not practical for our sequence because we are dealing with discrete terms, not a continuous function.
+
+Instead, let&#x27;s use the fact that the sequence is increasing and that each term adds at least 1/k^2 to the previous term once a_n &gt; k. We can estimate the number of terms needed to increase by at least 29 (since a_1 = 1 and we want to reach 30) by using the smallest increment, which occurs at k = 30:
+
+29 &lt; (1/30^2) * N,
+
+where N is the number of terms needed. Solving for N gives us:
+
+N &gt; 29 * 30^2
+N &gt; 29 * 900
+N &gt; 26100.
+
+This means that, in the worst-case scenario, it would take more than 26100 terms for the sequence to exceed 30. Since 9000 is much less than 26100, we cannot guarantee that a_9000 &gt; 30 based on this rough estimate.
+
+To determine whether a_9000 &gt; 30, we would need a more precise analysis or computational approach to calculate the terms of the sequence up to n = 9000. However, based on the rough estimate above, it seems unlikely that a_9000 would be greater than 30.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Based on the rough estimate above, it seems unlikely that a_9000 would be greater than 30, but a precise analysis or computational approach is needed to determine the exact value of a_9000.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

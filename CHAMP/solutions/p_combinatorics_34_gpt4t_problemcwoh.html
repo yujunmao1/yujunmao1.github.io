@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_34</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n-k+3)*2^(n-k-2)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_34']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of them have an even number of 1s, as an expression of n?
+Step-wise solution:
+1. We define P(k) as the number of strings with k number of 1s, so P(k)=C(n, k)*3^(n-k).
+2. Thus, the number of length-n strings with an even number of 1s is E(n)=P(0)+P(2)+...=C(n, 0)*3^n+C(n, 2)*3^(n-2)....
+3. The number of length-n strings with an odd number of 1s is O(n)=P(1)+P(3)+...=C(n, 1)*3^(n-1)+C(n, 3)*3^(n-3)....
+4. We have E(n)+O(n)=sum_(k=0)^n C(n, k)*3^(n-k)=sum_(k=0)^n C(n, k)*3^(n-k)*1^k=(3+1)^n=4^n.
+5. In addition, E(n)-O(n)=sum_(k=0)^n C(n, k)*3^(n-k)*(-1)^k=(3-1)^n=2^n.
+6. Thus, E(n)=(4^n+2^n)/2.
+
+Problem: Let a string consist of digit 1, 2, 3. How many such strings of length 6 have adjacent digit differing by less than or equal to 1?
+Step-wise solution:
+1. Let x_n, y_n, z_n be the number of length-n strings that end with digit 1, 2, 3 respectively.
+2. Thus, we have x_1=y_1=z_1=1.
+3. For a string ending with 1, we can append 1 and 2; for a string ending with 2, we can append 1, 2 and 3; for a string ending with 3, we can append 2 and 3.
+4. Thus, we have x_(n+1)=x_n+y_n, y_(n+1)=x_n+y_n+z_n, and z_(n+1)=y_n+z_n.
+5. Starting from (1, 1, 1), we have the sequence of (x_n, y_n, z_n) to be (1, 1, 1), (2, 3, 2), (5, 7, 5), (12, 17, 12), (29, 41, 29), (70, 99, 70).
+6. Thus, in total, there are x_6+y_6+z_6=70+99+70=239 such strings.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all sequences of positive integer numbers have sum n, for integer k&lt;n-1, how many times does the number k appear, as an expression of n and k?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the number of partitions of the integer n that include the integer k at least once. A partition of an integer is a way of writing the integer as a sum of positive integers, where the order of the addends does not matter.
+
+Let&#x27;s denote the number of times k appears in all partitions of n as T(n, k). To find T(n, k), we can use a combinatorial argument.
+
+First, we partition the integer n into two parts: k and n-k. Now, we need to count the number of partitions of n-k that can be combined with k to form a partition of n. However, since we are interested in the number of times k appears, we need to consider that k can appear more than once in the partition of n.
+
+Let&#x27;s consider the partitions of n-k and how we can add k to them:
+
+1. If a partition of n-k does not contain k, we can simply add k to this partition, and k will appear once.
+2. If a partition of n-k already contains k, then adding another k will increase the count of k&#x27;s in that partition.
+
+To count the partitions of n-k, we can use the stars and bars method. However, since we are not interested in the actual partitions but rather the count of k&#x27;s, we need to modify our approach.
+
+For each partition of n-k, we can add k to it in exactly one way, so the number of times k appears in the partitions of n-k is equal to the number of partitions of n-k.
+
+The number of partitions of an integer is a complex problem, and there is no simple formula for it. However, we can use generating functions to find a recurrence relation for the number of partitions. The generating function for the number of partitions of an integer is given by the infinite product:
+
+P(x) = (1/(1-x)) * (1/(1-x^2)) * (1/(1-x^3)) * ...
+
+But this approach is not practical for our problem, as we are not asked for the number of partitions but rather the count of k&#x27;s in all partitions.
+
+Since the problem is asking for an expression involving n and k, and given the complexity of partition functions, it&#x27;s likely that a simple closed-form expression may not exist or the problem might be misstated or incomplete.
+
+If we had a function p(m) that gives the number of partitions of m, then we could say that T(n, k) is at least p(n-k), since we can add k to each partition of n-k. However, this would only count the partitions where k appears exactly once. To count all appearances of k, we would need to consider partitions of n-k, n-2k, n-3k, and so on, where k appears 1, 2, 3, ... times, respectively.
+
+Without additional constraints or a more specific problem statement, we cannot provide a simple expression for T(n, k). The problem of counting the number of times a number appears in all partitions of an integer is related to partition theory, which is a deep and complex area of number theory.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of times the number k appears in all partitions of the integer n is a complex problem in partition theory without a simple closed-form expression, and it generally requires considering all partitions of n-k, n-2k, n-3k, etc., to account for multiple appearances of k.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_31</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n^2/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_31']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_i&gt;0, and s=x_1+x_2+···+x_n. What is the smallest value of s/(s-x_1)+s/(s-x_2)+...+s/(s-x_n) in terms of n?
+
+You may find the following information useful:
+
+1. Study the expression (s-x_1)/s+(s-x_2)/s+...+(s-x_n)/s and multiply it with the expression in the problem.
+2. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s first simplify the given expression:
+
+\[ \frac{s}{s-x_1} + \frac{s}{s-x_2} + \ldots + \frac{s}{s-x_n} \]
+
+We can rewrite each term as:
+
+\[ \frac{s}{s-x_i} = 1 + \frac{x_i}{s-x_i} \]
+
+So the expression becomes:
+
+\[ n + \left( \frac{x_1}{s-x_1} + \frac{x_2}{s-x_2} + \ldots + \frac{x_n}{s-x_n} \right) \]
+
+Now, let&#x27;s consider the expression mentioned in the hint:
+
+\[ \frac{s-x_1}{s} + \frac{s-x_2}{s} + \ldots + \frac{s-x_n}{s} \]
+
+This simplifies to:
+
+\[ n - \left( \frac{x_1}{s} + \frac{x_2}{s} + \ldots + \frac{x_n}{s} \right) \]
+
+Since \( s = x_1 + x_2 + \ldots + x_n \), we have:
+
+\[ \frac{x_1}{s} + \frac{x_2}{s} + \ldots + \frac{x_n}{s} = 1 \]
+
+So the expression simplifies to:
+
+\[ n - 1 \]
+
+Now, let&#x27;s multiply the two expressions:
+
+\[ \left( n + \left( \frac{x_1}{s-x_1} + \frac{x_2}{s-x_2} + \ldots + \frac{x_n}{s-x_n} \right) \right) \times (n - 1) \]
+
+Expanding this, we get a sum of terms of the form:
+
+\[ \frac{x_i}{s-x_i} \times (n - 1) \]
+
+Now, let&#x27;s apply the inequality mentioned in the hint. We want to minimize the sum of products of the terms \( \frac{x_i}{s-x_i} \) and \( (n - 1) \). According to the hint, the minimum value is achieved when the sequences are sorted in the opposite way. However, since \( (n - 1) \) is a constant for all terms, the sorting does not affect the outcome. Therefore, we can consider the terms \( \frac{x_i}{s-x_i} \) independently.
+
+To minimize \( \frac{x_i}{s-x_i} \), we want to make \( x_i \) as small as possible, since \( x_i &gt; 0 \). However, we cannot make all \( x_i \) arbitrarily small because their sum is \( s \). The smallest value for each \( x_i \) is when all \( x_i \) are equal, i.e., \( x_i = \frac{s}{n} \) for all \( i \).
+
+Substituting \( x_i = \frac{s}{n} \) into \( \frac{x_i}{s-x_i} \), we get:
+
+\[ \frac{\frac{s}{n}}{s - \frac{s}{n}} = \frac{\frac{s}{n}}{\frac{(n-1)s}{n}} = \frac{1}{n-1} \]
+
+So the minimum value of the original expression is:
+
+\[ n + n \cdot \frac{1}{n-1} = n + \frac{n}{n-1} = n + 1 + \frac{1}{n-1} \]
+
+Since \( n \) is fixed, the minimum value of the expression is:
+
+\[ n + 1 + \frac{1}{n-1} \]
+
+This is the smallest value of the given expression in terms of \( n \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( s/(s-x_1)+s/(s-x_2)+...+s/(s-x_n) \) in terms of \( n \) is \( n + 1 + \frac{1}{n-1} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

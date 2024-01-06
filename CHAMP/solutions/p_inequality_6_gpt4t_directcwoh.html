@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_6</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_6']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A=(1/2)*(3/4)*(5/6)*...*(99/100). Is A greater than 0.1?
+
+You may find the following information useful:
+
+1. For non-negative x, y, sqrt(x)≥sqrt(y) if and only if x≥y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine whether A is greater than 0.1, we can simplify the expression for A by pairing the terms in the product in a clever way. Notice that each term in the product is of the form (odd number)/(even number). We can pair each term with its subsequent term to see a pattern:
+
+A = (1/2) * (3/4) * (5/6) * ... * (99/100)
+
+Let&#x27;s look at the first few pairs:
+
+(1/2) * (3/4) = 3/8
+(5/6) * (7/8) = 35/48
+(9/10) * (11/12) = 99/120
+
+We can see that the numerator of each pair is the product of two consecutive odd numbers, and the denominator is the product of two consecutive even numbers. The numerator is always 1 less than the product of the even numbers in the denominator because (odd - 1)(odd + 1) = odd^2 - 1, which is 1 less than the even^2.
+
+Now, let&#x27;s consider the square root of A and compare it to the square root of 0.1:
+
+√A = √[(1/2) * (3/4) * (5/6) * ... * (99/100)]
+
+If we can show that √A &gt; √0.1, then it follows that A &gt; 0.1 because the square root function is increasing for non-negative numbers.
+
+√0.1 = √(1/10) = 1/√10 ≈ 1/3.162 ≈ 0.316
+
+Now, let&#x27;s estimate √A by looking at the first and last few terms:
+
+√A ≈ √[(1/2) * (3/4) * (5/6) * (7/8) * ... * (95/96) * (97/98) * (99/100)]
+
+Notice that each term is less than 1, so the product is decreasing as we multiply more terms. However, each term is getting closer to 1 as the numbers get larger. The first term (1/2) is the smallest, and it has the most significant impact on the product. To estimate conservatively, we can ignore all terms after the first one, which gives us an overestimate of the square root of the product:
+
+√A &gt; √(1/2) = 1/√2 ≈ 1/1.414 ≈ 0.707
+
+Since 0.707 is much greater than 0.316, we can confidently say that √A &gt; √0.1, and therefore A &gt; 0.1.
+
+So, yes, A is greater than 0.1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, A is greater than 0.1 because the square root of A is greater than the square root of 0.1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

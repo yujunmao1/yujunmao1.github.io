@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_79</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_79']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let integer p, q satisfy p/q=1-1/2+1/3-1/4+...-1/1318+1/1319 with gcd(p,q)=1. What is p mod 1979?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Denote the expression by s.
+2. Then s=1+1/2+1/3+...+1/1319-2(1/2+1/4+1/6+...+1/1318)=1+1/2+1/3+...+1/1319-(1+1/2+1/3+...+1/659)=1/660+1/661+...+1/1319.
+3. Since 1979=660+1319, we have s=(1/660+1/(1979-660))+(1/661+1/(1979-661))+...+(1/989+1/(1979-989))=1979(1/(660*(1979-660))+1/(661*(1979-661))+...+1/(989*(1979-989))).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The given expression can be written as $s = 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \dots + \frac{1}{1318} - \frac{1}{1319}$. We can group the terms as follows:
+
+$$s = \left(1 + \frac{1}{2} + \frac{1}{3} + \dots + \frac{1}{659}\right) - \left(\frac{1}{2} + \frac{1}{4} + \frac{1}{6} + \dots + \frac{1}{1318}\right) = 1 - \frac{1}{660} + \frac{1}{661} - \frac{1}{662} + \dots + \frac{1}{1318} - \frac{1}{1319}$$
+
+Since $1979 = 660 + 1319$, we can write this as
+
+$$s = 1 - \frac{1}{660} + \frac{1}{1979 - 660} + \frac{1}{661} - \frac{1}{1979 - 661} + \dots + \frac{1}{1318} - \frac{1}{1979 - 1318} = 1979 \left(\frac{1}{660(1979 - 660)} + \frac{1}{661(1979 - 661)} + \dots + \frac{1}{1318(1979 - 1318)}\right)$$
+
+Now, we can use the fact that $\frac{1}{a(b-a)} = \frac{1}{a} - \frac{1}{b}$ to simplify the expression further:
+
+$$s = 1979 \left(\frac{1}{660} - \frac{1}{1979} + \frac{1}{661} - \frac{1}{1979} + \dots + \frac{1}{1318} - \frac{1}{1979}\right) = 1979 \left(\frac{1}{660} - \frac{1}{1979}\right)$$
+
+Finally, we can simplify this expression by canceling the $1979$:
+
+$$s = \boxed{\frac{1}{660}}$$</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The answer is $\boxed{\frac{1}{660}}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

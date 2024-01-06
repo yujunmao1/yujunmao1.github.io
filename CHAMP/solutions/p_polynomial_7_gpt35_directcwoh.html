@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_7</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -2x+2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_7']
+messages = problem.conversations['GPT-3.5|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the remainder of x^100-2x^51+1 divided by x^2-1.
+
+You may find the following information useful:
+
+1. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the remainder of x^100 - 2x^51 + 1 divided by x^2 - 1, we can use polynomial long division.
+
+First, let&#x27;s set up the long division:
+
+            _______________________
+x^2 - 1 | x^100 - 2x^51 + 1
+
+To start, we divide the highest degree term of the dividend (x^100) by the highest degree term of the divisor (x^2). This gives us x^98.
+
+            x^98
+            _______________________
+x^2 - 1 | x^100 - 2x^51 + 1
+
+Next, we multiply the divisor (x^2 - 1) by the quotient term (x^98) and subtract it from the dividend:
+
+            x^98
+            _______________________
+x^2 - 1 | x^100 - 2x^51 + 1
+            - (x^100 - x^98)
+
+Simplifying, we get:
+
+            x^98
+            _______________________
+x^2 - 1 | x^100 - 2x^51 + 1
+            - (x^100 - x^98)
+            _______________________
+                      - x^98 - 2x^51 + 1
+
+Now, we repeat the process with the new dividend (-x^98 - 2x^51 + 1) and the same divisor (x^2 - 1).
+
+Dividing the highest degree term of the new dividend (-x^98) by the highest degree term of the divisor (x^2), we get -x^96.
+
+            x^98 - x^96
+            _______________________
+x^2 - 1 | x^100 - 2x^51 + 1
+            - (x^100 - x^98)
+            _______________________
+                      - x^98 - 2x^51 + 1
+                      + (x^98 - x^96)
+
+Simplifying, we get:
+
+            x^98 - x^96
+            _______________________
+x^2 - 1 | x^100 - 2x^51 + 1
+            - (x^100 - x^98)
+            _______________________
+                      - x^98 - 2x^51 + 1
+                      + (x^98 - x^96)
+            _______________________
+                      - x^96 - 2x^51 + 1
+
+We continue this process until the degree of the new dividend is less than the degree of the divisor.
+
+Continuing the long division, we eventually get:
+
+            x^98 - x^96 - x^94 - x^92 - x^90 - x^88 - x^86 - x^84 - x^82 - x^80 - x^78 - x^76 - x^74 - x^72 - x^70 - x^68 - x^66 - x^64 - x^62 - x^60 - x^58 - x^56 - x^54 - x^52 - x^50 - x^48 - x^46 - x^44 - x^42 - x^40 - x^38 - x^36 - x^34 - x^32 - x^30 - x^28 - x^26 - x^24 - x^22 - x^20 - x^18 - x^16 - x^14 - x^12 - x^10 - x^8 - x^6 - x^4 - x^2 - 1
+            _______________________
+x^2 - 1 | x^100 - 2x^51 + 1
+            - (x^100 - x^98)
+            _______________________
+                      - x^98 - 2x^51 + 1
+                      + (x^98 - x^96)
+            _______________________
+                      - x^96 - 2x^51 + 1
+                      + (x^96 - x^94)
+            _______________________
+                      - x^94 - 2x^51 + 1
+                      + (x^94 - x^92)
+            _______________________
+                      - x^92 - 2x^51 + 1
+                      + (x^92 - x^90)
+            _______________________
+                      - x^90 - 2x^51 + 1
+                      + (x^90 - x^88)
+            _______________________
+                      - x^88 - 2x^51 + 1
+                      + (x^88 - x^86)
+            _______________________
+                      - x^86 - 2x^51 + 1
+                      + (x^86 - x^84)
+            _______________________
+                      - x^84 - 2x^51 + 1
+                      + (x^84 - x^82)
+            _______________________
+                      - x^82 - 2x^51 + 1
+                      + (x^82 - x^80)
+            _______________________
+                      - x^80 - 2x^51 + 1
+                      + (x^80 - x^78)
+            _______________________
+                      - x^78 - 2x^51 + 1
+                      + (x^78 - x^76)
+            _______________________
+                      - x^76 - 2x^51 + 1
+                      + (x^76 - x^74)
+            _______________________
+                      - x^74 - 2x^51 + 1
+                      + (x^74 - x^72)
+            _______________________
+                      - x^72 - 2x^51 + 1
+                      + (x^72 - x^70)
+            _______________________
+                      - x^70 - 2x^51 + 1
+                      + (x^70 - x^68)
+            _______________________
+                      - x^68 - 2x^51 + 1
+                      + (x^68 - x^66)
+            _______________________
+                      - x^66 - 2x^51 + 1
+                      + (x^66 - x^64)
+            _______________________
+                      - x^64 - 2x^51 + 1
+                      + (x^64 - x^62)
+            _______________________
+                      - x^62 - 2x^51 + 1
+                      + (x^62 - x^60)
+            _______________________
+                      - x^60 - 2x^51 + 1
+                      + (x^60 - x^58)
+            _______________________
+                      - x^58 - 2x^51 + 1
+                      + (x^58 - x^56)
+            _______________________
+                      - x^56 - 2x^51 + 1
+                      + (x^56 - x^54)
+            _______________________
+                      - x^54 - 2x^51 + 1
+                      + (x^54 - x^52)
+            _______________________
+                      - x^52 - 2x^51 + 1
+                      + (x^52 - x^50)
+            _______________________
+                      - x^50 - 2x^51 + 1
+                      + (x^50 - x^48)
+            _______________________
+                      - x^48 - 2x^51 + 1
+                      + (x^48 - x^46)
+            _______________________
+                      - x^46 - 2x^51 + 1
+                      + (x^46 - x^44)
+            _______________________
+                      - x^44 - 2x^51 + 1
+                      + (x^44 - x^42)
+            _______________________
+                      - x^42 - 2x^51 + 1
+                      + (x^42 - x^40)
+            _______________________
+                      - x^40 - 2x^51 + 1
+                      + (x^40 - x^38)
+            _______________________
+                      - x^38 - 2x^51 + 1
+                      + (x^38 - x^36)
+            _______________________
+                      - x^36 - 2x^51 + 1
+                      + (x^36 - x^34)
+            _______________________
+                      - x^34 - 2x^51 + 1
+                      + (x^34 - x^32)
+            _______________________
+                      - x^32 - 2x^51 + 1
+                      + (x^32 - x^30)
+            _______________________
+                      - x^30 - 2x^51 + 1
+                      + (x^30 - x^28)
+            _______________________
+                      - x^28 - 2x^51 + 1
+                      + (x^28 - x^26)
+            _______________________
+                      - x^26 - 2x^51 + 1
+                      + (x^26 - x^24)
+            _______________________
+                      - x^24 - 2x^51 + 1
+                      + (x^24 - x^22)
+            _______________________
+                      - x^22 - 2x^51 + 1
+                      + (x^22 - x^20)
+            _______________________
+                      - x^20 - 2x^51 + 1
+                      + (x^20 - x^18)
+            _______________________
+                      - x^18 - 2x^51 + 1
+                      + (x^18 - x^16)
+            _______________________
+                      - x^16 - 2x^51 + 1
+                      + (x^16 - x^14)
+            _______________________
+                      - x^14 - 2x^51 + 1
+                      + (x^14 - x^12)
+            _______________________
+                      - x^12 - 2x^51 + 1
+                      + (x^12 - x^10)
+            _______________________
+                      - x^10 - 2x^51 + 1
+                      + (x^10 - x^8)
+            _______________________
+                      - x^8 - 2x^51 + 1
+                      + (x^8 - x^6)
+            _______________________
+                      - x^6 - 2x^51 + 1
+                      + (x^6 - x^4)
+            _______________________
+                      - x^4 - 2x^51 + 1
+                      + (x^4 - x^2)
+            _______________________
+                      - x^2 - 2x^51 + 1
+                      + (x^2 - 1)
+            _______________________
+                      - 2x^51 + 2
+
+Since the degree of the new dividend (-2x^51 + 2) is less than the degree of the divisor (x^2 - 1), we have found the remainder.
+
+Therefore, the remainder of x^100 - 2x^51 + 1 divided by x^2 - 1 is -2x^51 + 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of x^100 - 2x^51 + 1 divided by x^2 - 1 is -2x^51 + 2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

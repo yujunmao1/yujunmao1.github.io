@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_12</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_12']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: n people sit around a circular table. How many of the n! arrangements are distinct (i.e., do not have the same neighboring relations), as an expression of n?
+Step-wise solution:
+1. For each arrangement, a total of n rotations and 2 reflections all preserve the neighoring relationship.
+2. Thus, the distinct number of arrangement is n!/(2n).
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Along a one-way street there are n parking lots. One-by-one n cars numbered 1 to n enter the street. Each driver i heads to his favorite parking lot a_i, and, if it is free, he occupies it. Otherwise, he continues to the next free lot and occupies it. But if all succeeding lots are occupied, he leaves for good. How many sequences {a_1, ..., a_n} are such that every driver can park, as an expression of n?
+
+In addition, you may also find the following information helpful:
+
+1. Convert the street parking lot into a circle by adding an (n+1)-th lot that connects to both the n-th lot and the 1st lot.
+2. Establish the condition on the circular lot equivalent to every car being able to park on the street parking lot.
+3. Consider all driver preference sequences of length n but taking values in 1 to n+1. How many of the satisfy the condition?
+4. For each sequence {a}, consider its n cyclically shifted version (including itself), and study how many lead to a valid parking configuration.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, let&#x27;s follow the steps provided:
+
+Step 1: Convert the street parking lot into a circle by adding an (n+1)-th lot that connects to both the n-th lot and the 1st lot.
+
+By adding the (n+1)-th lot, we create a circular arrangement of the parking lots.
+
+Step 2: Establish the condition on the circular lot equivalent to every car being able to park on the street parking lot.
+
+For every driver to be able to park, we need to ensure that there are no consecutive occupied lots. In other words, we want to avoid situations where two neighboring lots are both occupied.
+
+Step 3: Consider all driver preference sequences of length n but taking values in 1 to n+1. How many of them satisfy the condition?
+
+Since each driver has n+1 choices for their favorite parking lot (including the (n+1)-th lot), there are (n+1)^n possible sequences {a_1, ..., a_n}.
+
+Step 4: For each sequence {a}, consider its n cyclically shifted versions (including itself), and study how many lead to a valid parking configuration.
+
+To determine the number of valid parking configurations for each sequence, we need to count the number of cyclically shifted versions that satisfy the condition of no consecutive occupied lots.
+
+Let&#x27;s consider a specific sequence {a_1, ..., a_n}. We can cyclically shift it by moving the last element to the front, resulting in a new sequence. If this new sequence has consecutive occupied lots, it is not a valid parking configuration. Otherwise, it is valid.
+
+To count the number of valid parking configurations for a specific sequence, we need to count the number of cyclically shifted versions that do not have consecutive occupied lots.
+
+Let&#x27;s denote the number of valid cyclically shifted versions for a specific sequence {a_1, ..., a_n} as V({a_1, ..., a_n}).
+
+Now, let&#x27;s calculate V({a_1, ..., a_n}) for a specific sequence:
+
+- If the first and last elements of the sequence are both occupied, there are no valid cyclically shifted versions. So, V({a_1, ..., a_n}) = 0.
+
+- If either the first or last element is occupied, but not both, there is exactly one valid cyclically shifted version. So, V({a_1, ..., a_n}) = 1.
+
+- If neither the first nor last element is occupied, there are two valid cyclically shifted versions. So, V({a_1, ..., a_n}) = 2.
+
+Now, let&#x27;s consider all possible sequences {a_1, ..., a_n}:
+
+- If the first and last elements of the sequence are both occupied, there are (n+1) sequences with this property.
+
+- If either the first or last element is occupied, but not both, there are 2n sequences with this property.
+
+- If neither the first nor last element is occupied, there are (n+1)^(n-2) sequences with this property.
+
+Therefore, the total number of valid parking configurations is:
+
+(n+1) * (n+1)^(n-2) + 2n
+
+Simplifying this expression, we get:
+
+(n+1)^n + 2n
+
+So, the final answer is (n+1)^n + 2n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences {a_1, ..., a_n} where every driver can park is (n+1)^n + 2n.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_14</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x^2+x+1)(x^2-x+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_14']
+messages = problem.conversations['GPT-3.5|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: What is the minimum value of the sum of squares of the zeros of x^2-(a-2)x-a-1 for real number a?
+Step-wise solution:
+1. Let the two roots be x_1 and x_2.
+2. Thus, we have x_1+x_2=a-2 and x_1*x_2=-(a+1).
+3. We have x_1^2+x_2^2=(x_1+x_2)^2-2*x_1*x_2=(a-2)^2+2(a+1)=a^2-2a+6=(a-1)^2+5≥5.
+4. So the minimum value of x_1^2+x_2^2 is 5.
+
+Problem: What is the smallest value of |12^m-5^n| for positive integers m and n?
+Step-wise solution:
+1. We see that |12^m-5^n| cannot be 0 for positive m, n due to different parity.
+2. Since gcd(12, 5)=1, we have gcd(12^m, 5^n)=1, so 12^m-5^n will not be divisible by factor of 12 or 5 (other than 1), i.e., 2, 3, 4, 5, 6.
+3. We first check if |12^m-5^n|=1 has a solution.
+4. If 12^m-5^n=1, we have 5^n=12^m-1=(6^m+1)(6^m-1), but 6^m+1 ends in 7 and thus is not divisible by 5.
+5. Since 5^n only has prime factor of 5, the equation has no solution.
+6. If 5^n-12^m=1, we need 5^n mod 3=1, which is true only if n is even.
+7. Thus, let n=2k, we have 12^m=(5^k+1)(5^k-1) and 5^k+1 mod 4=1^k+1 mod 4=2.
+8. We have 12^m=2^(2m)*3^m.
+9. Thus, we must have 5^k+1=2*3^v, which means we need 5^k-1=2^(2m-1)3^(m-v).
+10. Since (5^k+1)-(5^k-1)=2, at most one of them is divisible by 3.
+11. Thus, v=0 or v=m.
+12. If v=0, we have 5^k+1=2, which means k=0 and n=2k=0 is not positive.
+13. If v=m, we have (5^k+1)-(5^k-1)=2*3^m-2^(2m-1)=2(3^m-4^(m-1))=2.
+14. So 3^m-4^(m-1)=1, which is not satisfied for any positive integer m.
+15. Thus, we cannot have |5^n-12^m|.
+16. Skipping all the impossible values from 2 to 6, we see that |12^m-5^n|=7 can be solved with m=n=1.
+17. Thus, the answer is 7.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Factorize x^4+x^2+1 into terms of integer coefficients.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To factorize x^4+x^2+1, we can use a technique called completing the square.
+
+Let&#x27;s start by considering the expression x^4+x^2+1. Notice that this expression resembles a quadratic equation in terms of x^2. So, let&#x27;s rewrite it as:
+
+(x^2)^2 + x^2 + 1
+
+Now, we can treat this as a quadratic equation in terms of x^2. To complete the square, we need to add and subtract (1/2)^2 = 1/4 inside the parentheses:
+
+(x^2)^2 + x^2 + 1 + 1/4 - 1/4
+
+Rearranging the terms, we have:
+
+(x^2)^2 + x^2 + 1/4 + 1 - 1/4
+
+Now, we can group the terms:
+
+[(x^2)^2 + x^2 + 1/4] + [1 - 1/4]
+
+The first group can be factored as a perfect square:
+
+[(x^2 + 1/2)^2] + [3/4]
+
+Now, we have:
+
+(x^2 + 1/2)^2 + 3/4
+
+This expression cannot be factored further into terms of integer coefficients.
+
+Therefore, the factorization of x^4+x^2+1 is:
+
+(x^2 + 1/2)^2 + 3/4</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The factorization of x^4+x^2+1 is (x^2 + 1/2)^2 + 3/4.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

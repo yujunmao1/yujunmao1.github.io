@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_37</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_37']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence {x_n} is defined by x_1=2, x_(n+1)=(2+x_n)/(1−2x_n). Must x_n≠0 for all n in the sequence?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine whether \( x_n \neq 0 \) for all \( n \) in the sequence, we can analyze the recursive formula given for \( x_{n+1} \):
+
+\[ x_{n+1} = \frac{2 + x_n}{1 - 2x_n} \]
+
+We are given that \( x_1 = 2 \), which is not equal to zero. Now, let&#x27;s assume for the sake of induction that \( x_n \neq 0 \) for some \( n \). We want to show that \( x_{n+1} \neq 0 \) as well.
+
+The denominator of the recursive formula is \( 1 - 2x_n \). If \( x_n \neq 0 \), then \( 2x_n \neq 0 \) as well, and \( 1 - 2x_n \neq 1 \), which means the denominator is not zero. This is important because division by zero is undefined, and we want to ensure that the sequence is well-defined for all \( n \).
+
+Now, let&#x27;s consider the possibility of \( x_{n+1} = 0 \). If \( x_{n+1} \) were zero, the equation would look like this:
+
+\[ 0 = \frac{2 + x_n}{1 - 2x_n} \]
+
+This would imply that the numerator must be zero:
+
+\[ 2 + x_n = 0 \]
+
+\[ x_n = -2 \]
+
+However, we need to check if this situation can actually occur in our sequence. If \( x_n = -2 \) for some \( n \), then \( x_{n-1} \) must have satisfied the recursive formula:
+
+\[ -2 = \frac{2 + x_{n-1}}{1 - 2x_{n-1}} \]
+
+Solving for \( x_{n-1} \), we get:
+
+\[ -2(1 - 2x_{n-1}) = 2 + x_{n-1} \]
+
+\[ -2 + 4x_{n-1} = 2 + x_{n-1} \]
+
+\[ 3x_{n-1} = 4 \]
+
+\[ x_{n-1} = \frac{4}{3} \]
+
+This shows that if \( x_n = -2 \), then \( x_{n-1} \) must have been \( \frac{4}{3} \), which is not equal to zero. Therefore, starting with \( x_1 = 2 \), there is no way to reach \( x_n = -2 \) through the recursive formula, because the previous term would not satisfy the recursion.
+
+Since \( x_1 \neq 0 \) and assuming \( x_n \neq 0 \) implies \( x_{n+1} \neq 0 \), we can conclude by induction that \( x_n \neq 0 \) for all \( n \) in the sequence.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence \( \{x_n\} \) defined by \( x_1=2 \) and \( x_{n+1}=\frac{2+x_n}{1−2x_n} \) satisfies \( x_n \neq 0 \) for all \( n \) because the recursive formula cannot yield zero without a prior term being zero, which is impossible starting from \( x_1 = 2 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

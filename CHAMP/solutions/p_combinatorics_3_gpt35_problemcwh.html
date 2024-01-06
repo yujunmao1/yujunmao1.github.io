@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_3</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^floor(n/2)*floor(n/2)!</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_3']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Find a closed-form formula of sum_(k=1)^n C(n, k)*k^2.
+Step-wise solution:
+1. For n people, C(n, k) corresponds to the number of possible ways to choose k people, and k^2 correponds to the number of ways to assign two roles, one per person, with one person holding two roles allowed.
+2. Thus, we can consider the full expression as the number of ways to choose a committee of any number of people from n people, while at the same time selecting a president and a secretary (who can be the same person) from the chosen committee.
+3. If the president and the secretary are the same person, we can first choose this person, with n possibilties, and then choose the rest of the committee as the subset of the remaining n-1 people, with 2^(n-1) possibilities.
+4. If the president and the secretary are different people, we can first choose those two, with n(n-1) possibilities, and then choose the rest of the committee as the subset of the remaining n-2 people, with 2^(n-2) possibilities.
+5. Thus, the total number of choices is n*2^(n-1)+n(n-1)*2^(n-2)=2n*2^(n-2)+n(n-1)*2^(n-2)=n(n+1)*2^(n-2).
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+On a chess board, two rooks are placed peacefully if they are not on the same row or column. For an n x n chess board, find the number of ways that n rooks can be placed peacefully (i.e., any two are placed peacefully) and the placing is also invariant to a 180-degree rotation.
+
+In addition, you may also find the following information helpful:
+
+1. If n is odd, what position must be occupied by a rook?
+2. For even n=2k, consider a board of size 2k x 2k. If a rook is placed on the first row, which other position is also determined?
+3. Let P(2k) be the number of placements on a 2k x 2k board. Express P(2k) in terms of P(2k-2).
+4. Find P(2) as the base case.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, let&#x27;s consider the cases separately for odd and even values of n.
+
+Case 1: n is odd
+In this case, we know that one rook must be placed in the center of the chessboard. This is because if we rotate the chessboard by 180 degrees, the center position remains fixed. Therefore, there is only one possible position for the rook.
+
+Now, we need to place the remaining (n-1) rooks on the remaining (n-1) positions. Since no two rooks can be on the same row or column, we can think of this as placing (n-1) rooks on an (n-1) x (n-1) chessboard. Using the same logic, the number of ways to do this is given by P(n-1).
+
+Therefore, the total number of ways to place n rooks peacefully on an n x n chessboard, invariant to a 180-degree rotation, when n is odd, is P(n) = 1 * P(n-1).
+
+Case 2: n is even
+In this case, we know that one rook must be placed in the center of the top row. This is because if we rotate the chessboard by 180 degrees, the center position of the top row remains fixed. Therefore, there is only one possible position for the rook.
+
+Now, we need to place the remaining (n-1) rooks on the remaining (n-1) positions. Since no two rooks can be on the same row or column, we can think of this as placing (n-1) rooks on an (n-1) x (n-1) chessboard. Using the same logic, the number of ways to do this is given by P(n-1).
+
+However, we also need to consider the position of the rook in the center of the top row. If we rotate the chessboard by 180 degrees, this rook must remain fixed. Therefore, the position of the rook in the center of the top row determines the position of the rook in the center of the bottom row.
+
+Therefore, the total number of ways to place n rooks peacefully on an n x n chessboard, invariant to a 180-degree rotation, when n is even, is P(n) = 1 * P(n-1) * P(n-1).
+
+Now, let&#x27;s use the given information to find P(2) as the base case.
+
+For a 2 x 2 chessboard, there are two possible positions for the first rook. The second rook can be placed in the remaining position. Therefore, P(2) = 2.
+
+Using this base case, we can now find P(4), P(6), P(8), and so on, by using the recursive formula P(n) = 1 * P(n-1) * P(n-1).
+
+P(4) = 1 * P(2) * P(2) = 1 * 2 * 2 = 4
+P(6) = 1 * P(4) * P(4) = 1 * 4 * 4 = 16
+P(8) = 1 * P(6) * P(6) = 1 * 16 * 16 = 256
+
+Therefore, the number of ways to place n rooks peacefully on an n x n chessboard, invariant to a 180-degree rotation, is given by P(n) = 2^(n/2) for even values of n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to place n rooks peacefully on an n x n chessboard, invariant to a 180-degree rotation, is 2^(n/2) for even values of n, and 1 * P(n-1) for odd values of n.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

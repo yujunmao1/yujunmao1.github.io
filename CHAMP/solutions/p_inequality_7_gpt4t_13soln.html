@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_7</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_7']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If a, b, c are side lengths of a (possibly degenerate) triangle, then what is the largest value of a/(b+c)+b/(a+c)+c/(a+b)?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let s=(a+b+c)/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the given partial solution as a starting point. Let&#x27;s denote \( s \) as the semi-perimeter of the triangle, so \( s = \frac{a+b+c}{2} \).
+
+We want to find the largest value of the expression \( \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \).
+
+First, let&#x27;s apply the triangle inequality, which states that for any triangle with sides \( a \), \( b \), and \( c \), the following must hold:
+
+\[ a &lt; b + c \]
+\[ b &lt; a + c \]
+\[ c &lt; a + b \]
+
+This implies that \( \frac{a}{b+c} &lt; 1 \), \( \frac{b}{a+c} &lt; 1 \), and \( \frac{c}{a+b} &lt; 1 \).
+
+Now, let&#x27;s use the Ravi substitution, which is a common technique in olympiad problems involving triangle inequalities. We set:
+
+\[ x = s - a = \frac{b+c-a}{2} \]
+\[ y = s - b = \frac{a+c-b}{2} \]
+\[ z = s - c = \frac{a+b-c}{2} \]
+
+With this substitution, we have:
+
+\[ a = s - x = \frac{b+c-a}{2} \]
+\[ b = s - y = \frac{a+c-b}{2} \]
+\[ c = s - z = \frac{a+b-c}{2} \]
+
+And our expression becomes:
+
+\[ \frac{s-x}{y+z} + \frac{s-y}{x+z} + \frac{s-z}{x+y} \]
+
+Since \( x \), \( y \), and \( z \) are all positive (because they represent half the difference between the sum of two sides and the third side of a triangle), we can apply the AM-HM inequality (Arithmetic Mean - Harmonic Mean inequality):
+
+\[ \frac{\frac{s-x}{y+z} + \frac{s-y}{x+z} + \frac{s-z}{x+y}}{3} \geq \frac{3}{\frac{y+z}{s-x} + \frac{x+z}{s-y} + \frac{x+y}{s-z}} \]
+
+The equality holds when \( \frac{s-x}{y+z} = \frac{s-y}{x+z} = \frac{s-z}{x+y} \), which happens when \( x = y = z \), or equivalently, when \( a = b = c \), meaning the triangle is equilateral.
+
+Now, let&#x27;s simplify the right-hand side of the inequality:
+
+\[ \frac{y+z}{s-x} + \frac{x+z}{s-y} + \frac{x+y}{s-z} = \frac{2s-(x+y+z)}{s-x} + \frac{2s-(x+y+z)}{s-y} + \frac{2s-(x+y+z)}{s-z} \]
+
+Since \( x + y + z = s \), this simplifies to:
+
+\[ \frac{s}{s-x} + \frac{s}{s-y} + \frac{s}{s-z} = \frac{s}{x} + \frac{s}{y} + \frac{s}{z} \]
+
+Now, we know that \( x + y + z = s \), so by the AM-HM inequality:
+
+\[ \frac{\frac{s}{x} + \frac{s}{y} + \frac{s}{z}}{3} \geq \frac{3}{\frac{x}{s} + \frac{y}{s} + \frac{z}{s}} \]
+
+\[ \frac{s}{x} + \frac{s}{y} + \frac{s}{z} \geq \frac{9s}{x+y+z} \]
+
+\[ \frac{s}{x} + \frac{s}{y} + \frac{s}{z} \geq \frac{9s}{s} \]
+
+\[ \frac{s}{x} + \frac{s}{y} + \frac{s}{z} \geq 9 \]
+
+So, the original expression is bounded above by 3:
+
+\[ \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \leq 3 \]
+
+The maximum value of the expression is 3, which occurs when the triangle is equilateral (i.e., when \( a = b = c \)).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression \( \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \) for the side lengths \( a \), \( b \), and \( c \) of a (possibly degenerate) triangle is 3, which occurs when the triangle is equilateral.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_4</td>
+            <td>GPT-4</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=6, y=5</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_4']
+messages = problem.conversations['GPT-4|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: What is the largest integer n for which n^3+100 is divisible by n+10?
+Step-wise solution:
+1. We have n^3+100=n^3+1000-900=(n+10)(n^2-10n+100)-900.
+2. Since n+10 | (n+10)(n^2-10n+100), we need n+10 | 900.
+3. The largest value for such n+10 is 900, which means that n=890.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation x^3-y^3=xy+61.
+
+In addition, you may also find the following information helpful:
+
+1. Let x=d+y and find the expression f(d, y) with f(d, y)=61.
+2. Write the left hand side as a quadratic polynomial of y with coefficients in terms of d.
+3. Find the maximum value of d.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s solve the equation step by step:
+
+1. Rewrite the equation as x^3 - y^3 - xy - 61 = 0.
+2. Let x = d + y, then the equation becomes (d+y)^3 - y^3 - (d+y)y - 61 = 0.
+3. Simplify the equation to get d^3 + 3d^2y + 3dy^2 + y^3 - y^3 - dy - y^2 - 61 = 0.
+4. Further simplify to get d^3 + 3d^2y + 2dy^2 - dy - y^2 - 61 = 0.
+5. Now, we can write the left hand side as a quadratic polynomial of y with coefficients in terms of d: (3d^2 + 2d - 1)y^2 + (d^3 - d)y - 61 = 0.
+6. For this quadratic equation to have integer solutions, the discriminant must be a perfect square. The discriminant is (d^3 - d)^2 - 4*(3d^2 + 2d - 1)*(-61).
+7. Simplify the discriminant to get d^6 - 2d^4 + d^2 + 4*183d^2 + 4*122d - 244.
+8. This is a quadratic equation in d^2, so we can solve it to find the maximum value of d. The roots of this equation are d^2 = (2 ± sqrt(4 - 4*1*(-732)))/2 = 1 ± sqrt(733).
+9. Since d must be an integer, the maximum value of d is floor(sqrt(733)) = 27.
+10. Substitute d = 27 into the equation (3d^2 + 2d - 1)y^2 + (d^3 - d)y - 61 = 0 to find the corresponding values of y. The solutions are y = 1, 2, 3, ..., 27.
+11. Finally, the solutions to the original equation x^3 - y^3 = xy + 61 are (x, y) = (d + y, y) for y = 1, 2, 3, ..., 27 and d = 27.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The solutions to the equation x^3 - y^3 = xy + 61 are (x, y) pairs where x = d + y for y = 1, 2, 3, ..., 27 and d = 27.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

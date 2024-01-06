@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_15</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_15']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Since the tiling needs to be symmetric, we must have a vertical 2 x 1 tile in the middle column (i.e., the 11th column).
+2. Then, the number of symmetric tilings of the 2 x 21 rectangle is the same as the number of unrestricted tilings of the 2 x 10 rectangle.
+3. We let a_n be the number of ways to tile a 2 x n rectangle.
+4. For a 2 x (n+1) rectangle, let 2 be the vertical dimension and n+1 be the horizontal direction.
+5. Thus, it could have one vertical tile in the last column, or two horizontal tiles in the last two columns.
+6. Without these new tiles, we have 2 x n or 2 x (n-1) rectangles.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n$ be the number of ways to tile a 2 x $n$ rectangle with 2 x 1 tiles. We know that $a_0 = 1$, since there is only one way to tile a 2 x 0 rectangle. For $n &gt; 0$, we can tile a 2 x $n$ rectangle by tiling a 2 x $(n-1)$ rectangle with 2 x 1 tiles, then adding a vertical tile in the last column, or by tiling a 2 x $(n-2)$ rectangle with 2 x 1 tiles, then adding two horizontal tiles in the last two columns. This gives the recurrence relation $a_n = a_{n-1} + a_{n-2}$.
+
+To solve this recurrence relation, we can use the method of generating functions. The generating function for the sequence $a_n$ is defined as $$A(x) = \sum_{n=0}^{\infty} a_n x^n.$$ We can write the recurrence relation as $$A(x) = x A(x) + x^2 A(x) + (1-x-x^2) A(x).$$ Solving this equation, we get $$A(x) = \frac{x}{1-x-x^2}.$$
+
+To find the number of ways to tile a 2 x 21 rectangle, we need to evaluate $A(2)$. This gives $$A(2) = \frac{2}{3}.$$ Therefore, there are $\frac{2}{3}$ ways to tile a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is the same when the rectangle is flipped around the middle column.
+
+Here is a diagram showing one of the possible tilings:
+
+[asy]
+unitsize(1 cm);
+
+draw((0,0)--(2,0));
+draw((0,1)--(2,1));
+
+draw((0,0)--(0,2));
+draw((1,0)--(1,2));
+draw((2,0)--(2,2));
+
+fill((0,0)--(0,1)--(1,1)--(1,0)--cycle, gray(.8));
+fill((0,1)--(0,2)--(1,2)--(1,1)--cycle, gray(.8));
+fill((1,0)--(1,1)--(2,1)--(2,0)--cycle, gray(.8));
+fill((1,1)--(1,2)--(2,2)--(2,1)--cycle, gray(.8));
+
+label(&quot;$2$&quot;, (0,0), E);
+label(&quot;$2$&quot;, (1,0), E);
+label(&quot;$2$&quot;, (2,0), E);
+label(&quot;$2$&quot;, (0,1), N);
+label(&quot;$2$&quot;, (1,1), N);
+label(&quot;$2$&quot;, (2,1), N);
+label(&quot;$2$&quot;, (0,2), S);
+label(&quot;$2$&quot;, (1,2), S);
+label(&quot;$2$&quot;, (2,2), S);
+[/asy]</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $\frac{2}{3}$ ways to tile a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is the same when the rectangle is flipped around the middle column.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

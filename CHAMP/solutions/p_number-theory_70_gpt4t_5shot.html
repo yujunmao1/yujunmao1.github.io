@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_70</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=1, y=1 and x=3, y=2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_70']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For the first 100 numbers in the sequence a_1=a_2=1, a_3=2, a_(n+3)=(a_(n+1)*a_(n+2)+5)/a_n, how many of them are integers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_n*a_(n+3)=a_(n+1)*a_(n+2)+5, which means that a_(n-1)*a_(n+2)=a_n*a_(n+1)+5.
+2. Thus, we have a_n*a_(n+3)+a_n*a_(n+1)+5=a_(n-1)*a_(n+2)+a_(n+1)*a_(n+2)+5.
+3. So (a_(n-1)+a_(n+1))*a_(n+2)=(a_(n+1)+a_(n+3))*a_n.
+4. (a_(n-1)+a_(n+1))/a_n=(a_(n+1)+a_(n+3))/a_(n+2)=c.
+5. Note that the two groups skip the group a_n, a_(n+1), a_(n+2) in the middle.
+6. Thus, we could potentially have a different value for (a_n+a_(n+2))/a_(n+1)=(a_(n+2)+a_(n+4))/a_(n+3)=d.
+7. The first few terms of the sequence is 1, 1, 2, 7, 19, 69.
+8. Thus, we see that (a_(n-1)+a_(n+1))/a_n=3, or a_(n+1)=3a_n-a_(n-1), when n is even, and (a_(n-1)+a_(n+1))/a_n=4, or a_(n+1)=4a_n-a_(n-1), when n is odd.
+9. In both cases, a_(n+1) is an integer value.
+10. Thus, all 100 numbers are integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many integers n in {1, 2, ..., 99} is n^4+4^n a prime number?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have n^4+4^n=5 being a prime number when n=1.
+2. For n&gt;1, if n is even, obviously n^4+4^n is even and greater than two.
+3. Thus, we only need to consider the case of odd n.
+4. We let n=2k+1.
+5. n^4+4^n=n^4+4^(2k+1)=n^4+4*4^(2k)=n^4+4*2^(4k)=n^4+4*(2^k)^4.
+6. n^4+4*(2^k)^4=(n^2+2*(2^k)^2+2n(2^k))(n^2+2*(2^k)^2-2n(2^k)).
+7. The last expression gives a factorization of n^4+4^n.
+8. So n^4+4^n cannot be a prime number for any n&gt;1.
+9. Thus, there is 1 prime number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+From the set {1, 2, 3, ..., n+1}, select triple (x, y, z), with duplicate allowed, such that z&gt;max(x, y). In how many ways can this be done, as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For z=i, there are i-1 values of x and y satisfying z&gt;max(x, y), so we have (i-1)^2 triples of valid (x, y, z).
+2. Thus, the total number of choices is sum_(i=1)^(n+1) (i-1)^2=sum_(i=1)^n i^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What is the remainder of nx^(n+1)−(n+1)x^n+1 divided by (x−1)^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have f(x)=(x-1)^2*q(x)+r(x) where r(x) is a polynomial of degree at most 1 (i.e., r(x)=ax+b).
+2. Thus, f(1)=0=r(1).
+3. We have f&#x27;(x)=2(x-1)*q(x)+(x-1)^2*q(x)+r&#x27;(x), so f&#x27;(1)=r&#x27;(1)=0.
+4. Since r(x) has the form of ax+b, we have a+b=0, a=0, so b=0.
+5. Thus, r(x)=0 is the remainder.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {x_n} is defined by x_1=2, x_(n+1)=(x_n^4+9)/(10x_n). For how many values of x_1, x_2, ..., x_1000 do we have x_n&gt;4/5?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have x_(n+1)=(x_n^4+9)/(10x_n)=x_n^3/10+3/(10x_n)+3/(10x_n)+3/(10x_n)≥4((x_n^3/10)*3/(10x_n)*3/(10x_n)*3/(10x_n))^(1/4)=4*(27/10^4)^(1/4)=2/5*(27)^(1/4).
+2. We have 2^4=16, so (27)^(1/4)&gt;2, and x_(n+1)=2/5*(27)^(1/4)&gt;4/5.
+3. Since x_1=2 is also greater than 4/5, we know that all 1000 numbers are greater than 4/5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation 2^x+1=3^y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation \(2^x + 1 = 3^y\) for positive integer solutions, we can analyze the equation modulo some small numbers to find patterns or restrictions on \(x\) and \(y\).
+
+First, let&#x27;s consider the equation modulo 3:
+\[2^x + 1 \equiv 3^y \pmod{3}\]
+Since any power of 3 is congruent to 0 modulo 3, we have:
+\[3^y \equiv 0 \pmod{3}\]
+And since \(2^x\) is not divisible by 3, we have:
+\[2^x \equiv 1 \text{ or } 2 \pmod{3}\]
+Thus, for \(2^x + 1\) to be divisible by 3, \(2^x\) must be congruent to 2 modulo 3. This happens when \(x\) is odd.
+
+Now, let&#x27;s consider the equation modulo 4:
+\[2^x + 1 \equiv 3^y \pmod{4}\]
+For \(y \geq 1\), \(3^y\) is always odd, so \(3^y \equiv 1 \pmod{4}\). For \(x \geq 2\), \(2^x\) is always even, so \(2^x \equiv 0 \pmod{4}\). However, since \(x\) must be odd (as we found earlier), the smallest odd \(x\) is 1, which gives \(2^x = 2\), and \(2^x + 1 = 3\), which is congruent to 3 modulo 4.
+
+So, we have two cases:
+1. \(x = 1\), which gives \(2^x + 1 = 3\), and \(y = 1\).
+2. \(x\) is odd and greater than 1.
+
+For the second case, let&#x27;s look at the equation modulo 8 for \(x \geq 3\):
+\[2^x + 1 \equiv 3^y \pmod{8}\]
+Since \(x\) is odd and at least 3, \(2^x\) is divisible by 8, so \(2^x \equiv 0 \pmod{8}\). Therefore, \(2^x + 1 \equiv 1 \pmod{8}\). However, for \(y \geq 2\), \(3^y\) is never congruent to 1 modulo 8 (it cycles through 1, 3, 1, 3, ... when \(y\) is even or odd).
+
+Thus, the only solution in positive integers for the equation \(2^x + 1 = 3^y\) is \(x = 1\) and \(y = 1\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only positive integer solution to the equation \(2^x + 1 = 3^y\) is \(x = 1\) and \(y = 1\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

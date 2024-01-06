@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_31</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 120</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_31']
+messages = problem.conversations['GPT-3.5|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+8 dogs fight over 3 cookies. It is possible that a dog gets more than one cookie or no cookies. However, no two dogs would share the same cookie and there are no cookies left unclaimed. If the cookies are the same but the dogs are different (e.g., dog A, B, C each getting one cookie is one result but dog B, C, D each getting one cookie is a different result), how many possible results are there?
+
+You may find the following information useful:
+
+1. Consider possible configurations of a row of 10 dots, with 7 being black and 3 being white, and count the number of white dots in between the black dots, as well as on the two sides.
+2. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
+3. sum_(k=1)^n C(n, k)=2^n.
+4. C(n, k)=n/k*C(n-1, k-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of combinations (C) and apply it to the given scenario.
+
+Let&#x27;s consider the 8 dogs as 8 distinct objects and the 3 cookies as 3 distinct objects. We want to distribute the cookies among the dogs in such a way that no two dogs share the same cookie.
+
+We can think of this problem as placing the 3 cookies in between the 8 dogs. We can represent this visually using dots. Let&#x27;s use black dots to represent the dogs and white dots to represent the cookies.
+
+We have 8 dogs, so we need to place 7 black dots. We have 3 cookies, so we need to place 3 white dots. We can arrange these dots in a row, like this:
+
+. . . . . . . .
+
+Now, we need to count the number of white dots in between the black dots, as well as on the two sides. This will give us the number of ways to distribute the cookies among the dogs.
+
+Using the formula mentioned in point 1, we can see that there are C(10, 7) ways to place the black dots among the 10 available positions. This is because we have 10 positions (including the ends) and we need to choose 7 of them to place the black dots.
+
+C(10, 7) = 10! / (7! * (10-7)!) = 10! / (7! * 3!) = (10 * 9 * 8) / (3 * 2 * 1) = 120.
+
+Therefore, there are 120 ways to distribute the cookies among the dogs.
+
+However, we need to consider that the dogs are distinct, meaning that the order in which they receive the cookies matters. For example, if dog A, B, C each get one cookie, it is considered a different result from dog B, C, D each getting one cookie.
+
+Using the formula mentioned in point 2, we can calculate the total number of ways to distribute the cookies among the dogs, considering the order:
+
+p_1 = 8 (number of ways to choose the dog for the first cookie)
+p_2 = 7 (number of ways to choose the dog for the second cookie)
+p_3 = 6 (number of ways to choose the dog for the third cookie)
+
+Total number of ways = p_1 + p_2 + p_3 = 8 + 7 + 6 = 21.
+
+Therefore, there are 21 possible results when considering the order in which the dogs receive the cookies.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 21 possible results when distributing 3 cookies among 8 dogs, considering that no two dogs can share the same cookie and the order in which the dogs receive the cookies matters.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

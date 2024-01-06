@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_35</td>
+            <td>GPT-4</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 900 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_35']
+messages = problem.conversations['GPT-4|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Which is the smallest positive integer that becomes 57 times smaller when its first digit is removed?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We let d be the first digit of the k+1 digit number and r be the last k digits.
+2. Thus, the original number is 10^k*d+r and the new number is r.
+3. So we have 10^k*d+r=57r, which is 10^k*d=56r.
+4. Thus, 56 | 10^k*d, which means 7 | 10^k*d and 8 | 10^k*d.
+5. Since 10^k only has prime factors 2 and 5 and is not divisible by 7, we must have d=7.
+6. So we need 8 | 10^k and the smallest k is 3.
+7. Thus, we have 7000+r=57r, and r=125.
+8. So the number that we are finding is 7125.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If n is a composite number, find all possible values of 1*2*...*(n-2)*(n-1) mod 1+2+...+(n-2)+(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have Q(n)=1*2*...*(n-2)*(n-1)/(1+2+...+(n-1))=1*2*...*(n-2)*(n-1)/(n(n-1)/2)=2*2*3*...*(n-2)/n.
+2. Since n is composite, we let n=pq, where 1&lt;p≤q&lt;n.
+3. We further have q&lt;n-1 since gcd(n,n-1)=1.
+4. Thus, if p≠q, then p,q are two factors less than n-1 and thus separately appear among the terms of 2*3*...*(n-2).
+5. If p=q, when p=q=2, we have n=4 and Q(n)=2*2/4=1.
+6. For p=q≥3, then n-2=q^2-2&gt;2q.
+7. Thus, factors p and 2q appear among the terms of 2*3*...*(n-2).
+8. So in all cases, we have Q(n) as a whole integer.
+9. Thus, 1*2*...*(n-2)*(n-1) mod 1+2+...+(n-2)+(n-1)=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If x_1, x_2 are the two roots of the polynomial x^2-6x+1, for how many integer n in {61, 62, ..., 120} does x_1^n+x_2^n divided by 5 give a remainder of 4?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have x_1+x_2=6, x_1*x_2=1.
+2. Define u=x_1+x_2, v=x_1*x_2 and s_n=x_1^n+x_2^n.
+3. Thus, we have s_0=2, s_1=6 and s_n=u^s_(n-1)-v*s_(n-2)=6s_(n-1)-s_(n-2).
+4. Modulo 5, we have s_n mod 5=(s_(n-1)-s(n-2) mod 5).
+5. The sequence of s_n modulo 5 is 2, 1, 4, 3, 4, 1, 2, 1.
+6. We see that the sequence becomes periodic after the occurrence of 2, 1 in the end, with a period of 6.
+7. In one period, the remainder of 4 appears 2 times.
+8. So for n=61, 62, ..., 120, there are 60 values, or 10 periods, and the remainder of 4 appears 20 times.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, at most how many integer-valued zeros can it have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Suppose that there is an integer-valued zero at x=a.
+2. Then f(x)=(x-a)g(x) for some polynomial g(x) of degree n-1.
+3. Let g(x)=c_(n-1)*x^(n-1)+c_(n-2)*x^(n-2)+...+c_1*x+c_0.
+4. So f(x)=c_(n-1)*x^n+(c_(n-2)-a*c_(n-1))*x^(n-1)+(c_(n-3)-a*c_(n-2))*x^(n-2)+...+(c_0-a*c_1)*x-a*c_0.
+5. We need every coefficient of f(x) to be an integer, which means that c_(n-1) is an integer, thus c_(n-2) is an integer, thus c_(n-3) is an integer, and so on for all c_i.
+6. So g(x) is a polynomial of integer coefficients.
+7. Thus, we have f(0)=-a*g(x) and f(1)=(1-a)*g(x).
+8. Since -a and 1-a are of opposite parities (i.e., one even and one odd), we cannot have f(0) and f(1) both being odd.
+9. Thus, such an integer root a does not exist.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What is the smallest value of |36^m-5^n| for positive integers m and n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since 36^m always ends in 6 and 5^n always ends in 5, |36^m-5^n| can only end in 1 or 9.
+2. If |36^m-5^n|=1, we need 36^m-5^n=1.
+3. 5^n=36^m-1=(6^m)^2-1=(6^m+1)(6^m-1).
+4. However, 6^m+1 is not divisible by 5 since it ends with 7, but 5^n only has prime factors of 5.
+5. Thus, the equation has no solution.
+6. If |36^m-5^n|=9, we need 5^n-36^m=9.
+7. We have 5^n-36^m mod 6=(-1)^n-0 mod 6=±1, which is not equal to 9 mod 6=3.
+8. Thus, the equation again has no solution.
+9. |36^m-5^n|=11 can be solved by m=1, n=2.
+10. So 11 is the smallest possible value.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {101, ..., 1000} is 1/(n+1)+1/(n+2)+...+1/(2n)&lt;3/4?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. We have 1/(n+1)+1/(n+2)+...+1/(2n)&lt;3/4.
+2. We can rewrite this as (1/(n+1)+1/(n+2)+...+1/(2n))*2n&lt;3/2.
+3. This is equivalent to 2/(n+1)+2/(n+2)+...+1&lt;3/2.
+4. We can rewrite this as 2/(n+1)+2/(n+2)+...+1-3/2&lt;0.
+5. This is equivalent to 2/(n+1)+2/(n+2)+...+1-3/2-1&lt;0.
+6. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+7. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+8. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+9. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+10. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+11. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+12. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+13. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+14. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+15. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+16. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+17. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+18. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+19. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+20. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+21. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+22. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+23. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+24. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+25. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+26. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+27. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+28. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+29. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+30. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+31. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+32. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+33. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+34. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+35. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+36. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+37. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+38. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+39. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+40. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+41. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+42. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+43. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+44. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+45. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+46. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+47. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+48. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+49. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+50. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+51. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+52. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+53. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+54. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+55. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+56. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+57. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+58. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+59. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+60. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+61. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+62. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+63. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+64. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+65. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+66. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+67. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+68. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+69. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+70. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+71. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+72. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+73. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+74. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+75. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+76. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+77. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+78. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+79. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+80. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+81. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+82. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+83. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+84. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+85. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+86. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+87. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+88. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+89. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+90. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+91. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+92. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+93. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+94. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+95. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+96. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+97. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+98. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+99. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+100. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+101. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+102. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+103. This is equivalent to 2/(n+1)+2/(n+2)+...+1/2-2&lt;0.
+104. This is</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>LENGTH EXCEED</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

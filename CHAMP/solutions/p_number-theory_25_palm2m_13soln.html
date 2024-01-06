@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_25</td>
+            <td>PaLM 2 Medium</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 3 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_25']
+messages = problem.conversations['PaLM 2 Medium|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive integer n, if 2^n and 5^n start with the same digit, what are possible values of this digit?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let 2^n be an (r+1)-digit number and 5^n be an (s+1)-digit number, both starting with digit d.
+2. Thus, we have d*10^r&lt;2^n&lt;(d+1)*10^r and d*10^s&lt;5^n&lt;(d+1)*10^s.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $2^n$ be an $(r+1)$-digit number and $5^n$ be an $(s+1)$-digit number, both starting with digit $d$. Thus, we have $d\cdot10^r&lt;2^n&lt;(d+1)\cdot10^r$ and $d\cdot10^s&lt;5^n&lt;(d+1)\cdot10^s$.
+
+We can write $2^n$ as $2^n = 2\cdot2^{n-1} = 2\cdot(2^{n-2}\cdot2) = 2\cdot(2^{n-3}\cdot2^2) = \cdots = 2\cdot(2^2\cdot2^{n-2}) = 2\cdot(2^3\cdot2^{n-3}) = \cdots = 2\cdot(2^{r-1}\cdot2^{n-r+1}) = 2^{r+1}$.
+
+Similarly, we can write $5^n$ as $5^n = 5\cdot5^{n-1} = 5\cdot(5^{n-2}\cdot5) = 5\cdot(5^{n-3}\cdot5^2) = \cdots = 5\cdot(5^2\cdot5^{n-2}) = 5\cdot(5^3\cdot5^{n-3}) = \cdots = 5\cdot(5^{r-1}\cdot5^{n-r+1}) = 5^{r+1}$.
+
+Since $2^n$ and $5^n$ both start with digit $d$, we must have $d\cdot10^r&lt;2^{r+1}&lt;(d+1)\cdot10^r$ and $d\cdot10^s&lt;5^{r+1}&lt;(d+1)\cdot10^s$.
+
+Simplifying the first inequality, we get $d\cdot10^r&lt;2^{r+1}&lt;(d+1)\cdot10^r$. Dividing both sides by $2$, we get $d\cdot5^r&lt;2^r&lt;(d+1)\cdot5^r$.
+
+Simplifying the second inequality, we get $d\cdot10^s&lt;5^{r+1}&lt;(d+1)\cdot10^s$. Dividing both sides by $5$, we get $d\cdot2^s&lt;5^r&lt;(d+1)\cdot2^s$.
+
+Comparing the two inequalities, we get $d\cdot5^r&lt;2^r&lt;(d+1)\cdot5^r$ and $d\cdot2^s&lt;5^r&lt;(d+1)\cdot2^s$.
+
+Since $2^r$ and $5^r$ are both positive, we must have $d\cdot5^r&lt;2^r&lt;d\cdot2^s$. This implies that $5^r&lt;2^r&lt;2^s$.
+
+Taking the logarithm of both sides, we get $\log(5^r)&lt;\log(2^r)&lt;\log(2^s)$.
+
+Simplifying, we get $r\log(5)&lt;r\log(2)&lt;s\log(2)$.
+
+Dividing both sides by $r$, we get $\log(5)&lt;\log(2)&lt;\frac{s\log(2)}{r}$.
+
+Since $\log(5)&lt;\log(2)$, we must have $\frac{s\log(2)}{r}&lt;\log(2)$.
+
+In other words, $s&lt;2^r$.
+
+Since $r$ is a positive integer, we must have $s&lt;2^r&lt;2^{r+1}$.
+
+Therefore, the possible values of $d$ are the digits of $2^r$ and $5^r$, which are $2$ and $5$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $d$ are the digits of $2^r$ and $5^r$, which are $2$ and $5$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

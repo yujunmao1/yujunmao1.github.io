@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_11</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 20</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_11']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Let x be a root of the polynomial ax^2+bx+c, with a&gt;0, a+b+c≥0, a-b+c≥0, a-c≥0. What is the range of x, expressed as an interval?
+Step-wise solution:
+1. Let x_1, x_2 be the two roots.
+2. Thus, we have b/a=-x_1-x_2 and c/a=x_1*x_2.
+3. For a+b+c≥0, we have 1+b/a+c/a≥0, or 1-x_1-x_2+x_1*x_2=(1-x_1)(1-x_2)≥0.
+4. For a-b+c≥0, we have 1-b/a+c/a≥0, or 1+x_1+x_2+x_1*x_2=(1+x_1)(1+x_2)≥0.
+5. For a-c≥0, we have 1-c/a≥0, or 1-x_1*x_2≥0.
+6. We see that -1≤x_1, x_2≤1 satisfies all three conditions.
+7. If x_1&gt;1, then (1-x_1)(1-x_2)≥0 requires x_2&gt;1, which violates 1-x_1*x_2≥0.
+8. If x_1&lt;-1, then (1+x_1)(1+x_2)≥0 requires x_2&lt;-1, which violates 1-x_1*x_2≥0.
+9. The same reasoning can be applied to x_2.
+10. Thus, we have the range for the root being [-1, 1], and the two extreme values can be achieved by the polynomial x(1+x) and x(1-x) respectively.
+
+Problem: Find all integer solutions to the equations x^5+y^5=33, x+y=3.
+Step-wise solution:
+1. Let s_n=x^n+y^n, u=x+y, v=xy.
+2. We have s_0=2, s_1=u.
+3. Thus, s_2=u^2-2v, s_3=u^3-3uv, s_4=u^4-4u^2*v+2v^2 and s_5=u^5-5u^3*v+5u*v^2.
+4. Since s_5=33 and u=3, we have v^2-9v+14=0, and v=2 or v=7.
+5. For v=2, we need to find the integer solutions to x+y=3 and xy=2, which are (x=1, y=2) and (x=2, y=1).
+6. For v=7, we need to find the integer solutions to x+y=3 and xy=7, which has no solution.
+7. Thus, the solutions are (x=1, y=2) and (x=2, y=1).
+
+Problem: Are there integer solutions to the equation (x^2-1)(y^2-1)+1985=z^2?
+Step-wise solution:
+1. If the equation has a solution, we have (x^2-1)(y^2-1)=z^2-1985.
+2. Since u^2 mod 9∈{0, 1, 4, 7}, we have u^2-1 mod 9∈{0, 3, 6, 8} and (x^2-1)(y^2-1) mod 9∈{0, 1, 3, 6}.
+3. However, since 1985 mod 9=5, z^2-1985 mod 9∈{2, 4, 5, 8}.
+4. Since there is no overlapping values, we conclude that the equation has no solution.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+If x_1, x_2 are the two roots of the polynomial x^2-6x+1, for how many integer n in {61, 62, ..., 120} does x_1^n+x_2^n divided by 5 give a remainder of 4?
+
+In addition, you may also find the following information helpful:
+
+1. Study x^n+y^n mod 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the remainder when x_1^n + x_2^n is divided by 5, we need to consider the possible values of x_1 and x_2 modulo 5.
+
+1. Let&#x27;s find the roots of the polynomial x^2 - 6x + 1 = 0.
+Using the quadratic formula, we have:
+x = (6 ± √(6^2 - 4*1*1)) / 2
+x = (6 ± √(36 - 4)) / 2
+x = (6 ± √32) / 2
+x = 3 ± √8
+
+2. Simplifying the roots modulo 5:
+x_1 = 3 + √8 ≈ 3 + 2.83 ≈ 5.83 ≡ 0 (mod 5)
+x_2 = 3 - √8 ≈ 3 - 2.83 ≈ 0.17 ≡ 0 (mod 5)
+
+Both roots, x_1 and x_2, are congruent to 0 modulo 5.
+
+3. Now, let&#x27;s consider x_1^n + x_2^n modulo 5.
+Since both x_1 and x_2 are congruent to 0 modulo 5, we have:
+x_1^n ≡ 0^n ≡ 0 (mod 5)
+x_2^n ≡ 0^n ≡ 0 (mod 5)
+
+Therefore, x_1^n + x_2^n ≡ 0 + 0 ≡ 0 (mod 5) for any positive integer n.
+
+4. We need to find the values of n in {61, 62, ..., 120} for which x_1^n + x_2^n divided by 5 gives a remainder of 4.
+Since x_1^n + x_2^n ≡ 0 (mod 5), there are no values of n in the given range that satisfy the condition.
+
+Therefore, there are no values of n in {61, 62, ..., 120} for which x_1^n + x_2^n divided by 5 gives a remainder of 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no values of n in the range {61, 62, ..., 120} for which the expression x_1^n + x_2^n divided by 5 gives a remainder of 4, where x_1 and x_2 are the roots of the polynomial x^2 - 6x + 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

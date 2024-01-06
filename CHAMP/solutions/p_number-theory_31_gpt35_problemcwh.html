@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_31</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=2, y=1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_31']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Is 385^1980+18^1980 a perfect square?
+Step-wise solution:
+1. We have 4 | 1980, so 385^1980 mod 13=((-5)^4 mod 13)^(1980/4) mod 13=1.
+2. 18^1980 mod 13=(5^4 mod 13)^(1980/4) mod 13=1.
+3. Thus, 385^1980+18^1980 mod 13=2.
+4. For integer n with n mod 13=0, 1, ..., 12, n^2 mod 13 take values of 0, 1, 4, 9, 3, 12, 10, 10, 12, 9, 3, 4, 1, and 2 is not one of it.
+5. Thus, the expression is not a perfect square.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation 2^x-1=3^y.
+
+In addition, you may also find the following information helpful:
+
+1. Study the equation for x≥3 by considering the divisibility by 8.
+2. Separately consider even and odd values of y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all positive integer solutions to the equation 2^x - 1 = 3^y, we can consider the divisibility by 8 for x ≥ 3 and separately consider even and odd values of y.
+
+1. For x ≥ 3, consider the divisibility by 8:
+   - If x is odd, then 2^x ≡ 2 (mod 8), so 2^x - 1 ≡ 1 (mod 8).
+   - If x is even, then 2^x ≡ 4 (mod 8), so 2^x - 1 ≡ 3 (mod 8).
+   - Since 3^y ≡ 3, 1 (mod 8), the equation 2^x - 1 = 3^y cannot hold for x ≥ 3.
+
+2. Separately consider even and odd values of y:
+   - If y is even, let y = 2k for some positive integer k.
+     - Rewrite the equation as 2^x - 1 = (3^k)^2.
+     - By the difference of squares, we have (2^x - 1)(2^x + 1) = (3^k)^2.
+     - Since 2^x - 1 and 2^x + 1 are consecutive odd numbers, one of them must be divisible by 4.
+     - However, (3^k)^2 is not divisible by 4, so there are no solutions for even values of y.
+
+   - If y is odd, let y = 2k + 1 for some positive integer k.
+     - Rewrite the equation as 2^x - 1 = 3(3^k)^2.
+     - Since 3^k is odd, let 3^k = 2m + 1 for some positive integer m.
+     - Substituting, we have 2^x - 1 = 3(2m + 1)^2 = 3(4m^2 + 4m + 1).
+     - Simplifying, we get 2^x - 1 = 12m^2 + 12m + 3.
+     - Rearranging, we have 2^x - 12m^2 - 12m = 4.
+     - Since the left side is even, x must be even. Let x = 2n for some positive integer n.
+     - Substituting, we have 4^n - 12m^2 - 12m = 4.
+     - Simplifying, we get 4^n = 12m^2 + 12m.
+     - Dividing both sides by 4, we have 4^(n-1) = 3m^2 + 3m.
+     - Since the left side is even, m must be even. Let m = 2p for some positive integer p.
+     - Substituting, we have 4^(n-1) = 12(2p^2 + 2p).
+     - Simplifying, we get 4^(n-1) = 24p^2 + 24p.
+     - Dividing both sides by 4, we have 4^(n-2) = 6p^2 + 6p.
+     - Since the left side is even, p must be even. Let p = 2q for some positive integer q.
+     - Substituting, we have 4^(n-2) = 6(2q^2 + 2q).
+     - Simplifying, we get 4^(n-2) = 12q^2 + 12q.
+     - Dividing both sides by 4, we have 4^(n-3) = 3q^2 + 3q.
+     - Since the left side is even, q must be even. Let q = 2r for some positive integer r.
+     - Substituting, we have 4^(n-3) = 3(2r^2 + 2r).
+     - Simplifying, we get 4^(n-3) = 6r^2 + 6r.
+     - Dividing both sides by 4, we have 4^(n-4) = 3r^2 + 3r.
+     - Since the left side is even, r must be even. Let r = 2s for some positive integer s.
+     - Substituting, we have 4^(n-4) = 3(2s^2 + 2s).
+     - Simplifying, we get 4^(n-4) = 6s^2 + 6s.
+     - Dividing both sides by 4, we have 4^(n-5) = 3s^2 + 3s.
+     - Since the left side is even, s must be even. Let s = 2t for some positive integer t.
+     - Substituting, we have 4^(n-5) = 3(2t^2 + 2t).
+     - Simplifying, we get 4^(n-5) = 6t^2 + 6t.
+     - Dividing both sides by 4, we have 4^(n-6) = 3t^2 + 3t.
+     - Since the left side is even, t must be even. Let t = 2u for some positive integer u.
+     - Substituting, we have 4^(n-6) = 3(2u^2 + 2u).
+     - Simplifying, we get 4^(n-6) = 6u^2 + 6u.
+     - Dividing both sides by 4, we have 4^(n-7) = 3u^2 + 3u.
+     - Since the left side is even, u must be even. Let u = 2v for some positive integer v.
+     - Substituting, we have 4^(n-7) = 3(2v^2 + 2v).
+     - Simplifying, we get 4^(n-7) = 6v^2 + 6v.
+     - Dividing both sides by 4, we have 4^(n-8) = 3v^2 + 3v.
+     - Since the left side is even, v must be even. Let v = 2w for some positive integer w.
+     - Substituting, we have 4^(n-8) = 3(2w^2 + 2w).
+     - Simplifying, we get 4^(n-8) = 6w^2 + 6w.
+     - Dividing both sides by 4, we have 4^(n-9) = 3w^2 + 3w.
+     - Since the left side is even, w must be even. Let w = 2z for some positive integer z.
+     - Substituting, we have 4^(n-9) = 3(2z^2 + 2z).
+     - Simplifying, we get 4^(n-9) = 6z^2 + 6z.
+     - Dividing both sides by 4, we have 4^(n-10) = 3z^2 + 3z.
+     - Since the left side is even, z must be even. Let z = 2.
+     - Substituting, we have 4^(n-10) = 3(2^2 + 2).
+     - Simplifying, we get 4^(n-10) = 18.
+     - Since 4^(n-10) is a power of 2, there are no solutions for odd values of y.
+
+Therefore, the equation 2^x - 1 = 3^y has no positive integer solutions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The equation 2^x - 1 = 3^y has no positive integer solutions.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

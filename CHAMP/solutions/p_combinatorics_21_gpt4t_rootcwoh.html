@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_21</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 30</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_21']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Each of the faces of a cube is painted by a different color. How many of the colorings are distinct up to rotations?
+
+You may find the following information useful:
+
+1. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
+2. If we count each object d times and get a total of n counts, then there are n/d objects.
+3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use Burnside&#x27;s Lemma, which is a tool in group theory that allows us to count the number of orbits (in this case, distinct colorings) under a group action (in this case, rotations of the cube).
+
+Burnside&#x27;s Lemma states that the number of distinct colorings up to rotation is the average number of colorings that are fixed by each element of the group of rotations. The group of rotations of a cube has 24 elements: 6 for rotations about an axis through the centers of opposite faces (90°, 180°, and 270° for each axis), 8 for rotations about an axis through the midpoints of opposite edges (180°), and 8 for rotations about an axis through opposite vertices (120° and 240°).
+
+Let&#x27;s denote the number of colors by \( c \). We will consider each type of rotation and count the number of colorings that are fixed by that rotation.
+
+1. Identity rotation (1 rotation): Every coloring is fixed by doing nothing, so there are \( c^6 \) fixed colorings.
+
+2. Face rotations (6 rotations of 90°, 180°, or 270° about an axis through the centers of opposite faces): A 90° or 270° rotation about a face will cycle 4 faces, leaving 2 faces fixed. However, since all faces are distinct, there is no way to keep the coloring the same after such a rotation. For a 180° rotation, two opposite faces will remain the same, and the other 4 faces will form two pairs that swap. This means we have \( c^3 \) fixed colorings for each of the 3 axes, for a total of \( 3c^3 \) fixed colorings.
+
+3. Edge rotations (8 rotations of 180° about an axis through the midpoints of opposite edges): Each rotation will fix 2 faces and swap the other 4 faces in pairs. This is similar to the 180° face rotations, so we have \( c^3 \) fixed colorings for each of the 4 axes, for a total of \( 4c^3 \) fixed colorings.
+
+4. Vertex rotations (8 rotations of 120° or 240° about an axis through opposite vertices): Each rotation will cycle 4 faces around the vertex, and no face will remain in its original position. Since all faces are distinct, there are no fixed colorings for these rotations.
+
+Now, we can apply Burnside&#x27;s Lemma to find the average number of fixed colorings:
+
+\[
+\text{Number of distinct colorings} = \frac{1 \cdot c^6 + 3 \cdot c^3 + 4 \cdot c^3 + 0}{24}
+\]
+
+\[
+= \frac{c^6 + 3c^3 + 4c^3}{24}
+\]
+
+\[
+= \frac{c^6 + 7c^3}{24}
+\]
+
+Since we have 6 faces and each face is painted with a different color, \( c = 6 \). Plugging this into our formula, we get:
+
+\[
+\text{Number of distinct colorings} = \frac{6^6 + 7 \cdot 6^3}{24}
+\]
+
+\[
+= \frac{46656 + 7 \cdot 216}{24}
+\]
+
+\[
+= \frac{46656 + 1512}{24}
+\]
+
+\[
+= \frac{48168}{24}
+\]
+
+\[
+= 2007
+\]
+
+Therefore, there are 2007 distinct colorings of a cube with each face painted a different color, up to rotations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 2007 distinct colorings of a cube with each face painted a different color, up to rotations.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

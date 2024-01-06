@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_19</td>
+            <td>GPT-3.5</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x+y+z)(x^2+y^2+z^2-xy-yz-xz)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_19']
+messages = problem.conversations['GPT-3.5|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Factorize x^3+y^3+z^3-3xyz.
+
+You may find the following information useful:
+
+1. Let u=x+y+z, v=xy+yz+xz, w=xyz and s_n=x^n+y^n+z^n. Then we have s_0=1, s_1=u, s_2=u^2-2v, s_3=u^3-3uv+3w and s_4=u^4-4u^2*v+2v^2+4uw.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To factorize the expression x^3 + y^3 + z^3 - 3xyz, we can use the identity s_3 = u^3 - 3uv + 3w, where u = x + y + z, v = xy + yz + xz, and w = xyz.
+
+Let&#x27;s substitute these values into the expression:
+
+x^3 + y^3 + z^3 - 3xyz = s_3 - 3w
+
+Now, we need to find the values of u, v, and w.
+
+From the given information, we know that s_0 = 1, s_1 = u, s_2 = u^2 - 2v, and s_3 = u^3 - 3uv + 3w.
+
+Since s_0 = 1, we have:
+1 = x^0 + y^0 + z^0
+1 = 1 + 1 + 1
+1 = 3
+
+This implies that u = 3.
+
+Next, we can find v using s_2 = u^2 - 2v:
+s_2 = u^2 - 2v
+u^2 - 2v = s_2
+3^2 - 2v = s_2
+9 - 2v = s_2
+
+Now, we need to find s_2. Let&#x27;s substitute the values of x, y, and z into the expression for s_2:
+
+s_2 = x^2 + y^2 + z^2 + 2(xy + yz + xz)
+s_2 = x^2 + y^2 + z^2 + 2v
+
+Since we know that s_2 = 9 - 2v, we can substitute this into the equation:
+
+9 - 2v = x^2 + y^2 + z^2 + 2v
+
+Rearranging the equation, we get:
+
+4v = 9 - (x^2 + y^2 + z^2)
+
+Now, let&#x27;s find w using s_3 = u^3 - 3uv + 3w:
+s_3 = u^3 - 3uv + 3w
+s_3 = 3^3 - 3(3)(v) + 3w
+s_3 = 27 - 9v + 3w
+
+Since we know that s_3 = x^3 + y^3 + z^3 - 3xyz, we can substitute this into the equation:
+
+x^3 + y^3 + z^3 - 3xyz = 27 - 9v + 3w
+
+Now, let&#x27;s substitute the expressions for v and w that we found earlier:
+
+x^3 + y^3 + z^3 - 3xyz = 27 - 9(4v) + 3w
+x^3 + y^3 + z^3 - 3xyz = 27 - 36v + 3w
+
+Finally, we can substitute this expression back into the original equation:
+
+x^3 + y^3 + z^3 - 3xyz = s_3 - 3w
+x^3 + y^3 + z^3 - 3xyz = (27 - 36v + 3w) - 3w
+x^3 + y^3 + z^3 - 3xyz = 27 - 36v
+
+Therefore, the factorization of x^3 + y^3 + z^3 - 3xyz is 27 - 36v.
+
+Note: The final answer may vary depending on the values of x, y, and z.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The factorization of x^3 + y^3 + z^3 - 3xyz is 27 - 36v.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

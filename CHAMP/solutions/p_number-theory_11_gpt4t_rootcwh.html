@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_11</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 7125</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_11']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Which is the smallest positive integer that becomes 57 times smaller when its first digit is removed?
+
+You may find the following information useful:
+
+1. Let the original number has k+1 digits, with the first digit d, and the last k digits representing the number r.
+2. Set up the equation of digit manipulation involving k, d, r.
+3. If ab | c, then a | c and b | c.
+4. If p is a prime and p | ab, then p | a or p | b (or both). More generally, if p | a_1*a_2*...*a_n, then p | a_i for at least one a_i.
+5. If a | bc and gcd(a, b)=1, then a | c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the original number as \( N \) and it has \( k+1 \) digits. The first digit is \( d \) and the remaining \( k \) digits form the number \( r \). We can express \( N \) as:
+
+\[ N = d \cdot 10^k + r \]
+
+When the first digit is removed, we are left with the number \( r \). According to the problem, removing the first digit makes the number 57 times smaller, so we have:
+
+\[ r = \frac{N}{57} \]
+
+Substituting \( N \) from the first equation into the second equation, we get:
+
+\[ r = \frac{d \cdot 10^k + r}{57} \]
+
+Multiplying both sides by 57 to clear the fraction, we have:
+
+\[ 57r = d \cdot 10^k + r \]
+
+Now, let&#x27;s isolate \( r \) on one side:
+
+\[ 56r = d \cdot 10^k \]
+
+This tells us that \( 56r \) is a multiple of \( 10^k \). Since \( 56 = 2^3 \cdot 7 \), and \( 10^k = 2^k \cdot 5^k \), we can see that \( r \) must be a multiple of \( 5^k \) to satisfy the equation (because \( 56 \) and \( 10^k \) share the factor \( 2^k \), but \( 56 \) does not have a factor of 5).
+
+Now, we also know that \( r \) has \( k \) digits, so the smallest possible value for \( r \) with \( k \) digits is \( 10^{k-1} \). Since \( r \) must be a multiple of \( 5^k \), the smallest such \( r \) is \( 5^k \). But \( 5^k \) is only equal to \( 10^{k-1} \) when \( k = 1 \), because for \( k &gt; 1 \), \( 5^k \) would have more than \( k \) digits.
+
+So, we have \( k = 1 \) and \( r = 5 \). Now we can solve for \( d \):
+
+\[ 56 \cdot 5 = d \cdot 10^1 \]
+\[ 280 = 10d \]
+\[ d = 28 \]
+
+However, \( d \) must be a single digit, so we&#x27;ve made a mistake. Let&#x27;s re-evaluate our approach.
+
+We know that \( 56r = d \cdot 10^k \), and \( r \) has \( k \) digits. Since \( d \) is a digit, \( d \) must be between 1 and 9. Also, \( r \) must be divisible by \( 56 \), and the smallest \( k \)-digit number divisible by \( 56 \) is \( 56 \) itself, which is a two-digit number. So, \( k = 2 \) and \( r = 56 \).
+
+Let&#x27;s plug these values back into the equation:
+
+\[ 56 \cdot 56 = d \cdot 10^2 \]
+\[ 3136 = 100d \]
+\[ d = 31.36 \]
+
+Again, \( d \) must be a single digit, so this is not correct. We need to find a value of \( r \) that is a \( k \)-digit number divisible by \( 56 \) and when multiplied by \( 56 \) gives us a number with \( k+1 \) digits where the first digit is between 1 and 9.
+
+Let&#x27;s try a different approach. We know that \( r \) must be divisible by \( 56 \), and \( r \) is the original number with the first digit removed. Let&#x27;s try to find a number \( r \) that when multiplied by \( 57 \) gives us a number that starts with a digit from 1 to 9 followed by the number \( r \).
+
+We can write this as:
+
+\[ 57r = d \cdot 10^k + r \]
+
+Since \( r \) is divisible by \( 56 \), let&#x27;s try multiples of \( 56 \) and see which, when multiplied by \( 57 \), gives us a number that fits the pattern we&#x27;re looking for.
+
+Starting with \( r = 56 \), we multiply by \( 57 \):
+
+\[ 57 \cdot 56 = 3192 \]
+
+This doesn&#x27;t work because \( 3192 \) does not start with a single digit followed by \( 56 \). Let&#x27;s try the next multiple of \( 56 \), which is \( 112 \):
+
+\[ 57 \cdot 112 = 6384 \]
+
+This works because \( 6384 \) starts with \( 6 \) followed by \( 384 \), and \( 384 \) is \( 112 \) with the first digit removed. So, the smallest positive integer that becomes 57 times smaller when its first digit is removed is \( 6384 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer that becomes 57 times smaller when its first digit is removed is 6384.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

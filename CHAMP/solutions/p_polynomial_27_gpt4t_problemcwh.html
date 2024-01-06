@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_27</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At most 0 values (i.e., no such values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_27']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Find a monic polynomial (i.e. a polynomial with the leading coefficient being 1) p(x) of degree greater than 1 that satisfies x*p(x-1)=(x-2023)*p(x).
+Step-wise solution:
+1. Plugging x=0 into the equation, we get -2023p(0)=0, so p(0)=0 and 0 is a root of p(x).
+2. Plugging x=1 into the equation, we get -2022p(1)=p(0)=0, so p(1)=0 and 1 is a root.
+3. Plugging x=2 into the equation, we get -2021p(2)=2p(1)=0, so p(2)=0 and 2 is a root.
+4. This process can continue to x=2022, where we get -p(2022)=2022p(2021)=0 and 2022 is a root.
+5. We cannot continue because at x=2023, we have 0*p(2023)=0, but p(2023) is not necessarily 0.
+6. So we have identified the roots 0, 1, ..., 2022, which means that p(x)=x(x-1)(x-2)...(x-2022)f(x) for some f(x).
+7. Plugging this into the original equation, we have x(x-1)(x-2)...(x-2023)f(x-1)=(x-2023)x(x-1)...(x-2022)f(x) for all x.
+8. So we need to have f(x)=f(x-1) for all x.
+9. The only possible value of f(x) to make p(x) a monic polynomial of degree more than 1 is thus f(x)=1.
+10. So we have p(x)=x(x-1)(x-2)...(x-2022).
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x) be a polynomial with integer coefficients, with f(x)=5 at four distinct integers x=a, b, c, d. If f(x) has degree n, then at most how many integer values k are there with f(k)=8?
+
+In addition, you may also find the following information helpful:
+
+1. Study the root of the polynomial g(x)=f(x)-5.
+2. Study the factorization of g(k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, let&#x27;s first consider the polynomial g(x) = f(x) - 5. Since f(x) = 5 at four distinct integers x = a, b, c, d, it follows that g(a) = g(b) = g(c) = g(d) = 0. This means that a, b, c, and d are roots of g(x), and we can write g(x) as:
+
+g(x) = (x - a)(x - b)(x - c)(x - d)h(x),
+
+where h(x) is a polynomial with integer coefficients, and the degree of h(x) is n - 4 since g(x) has the same degree as f(x).
+
+Now, let&#x27;s consider the polynomial g(k) = f(k) - 5 for integer values of k. We want to find how many integer values of k make g(k) = 3, which corresponds to f(k) = 8.
+
+g(k) = f(k) - 5 = 8 - 5 = 3.
+
+So we are looking for integer solutions to the equation:
+
+(x - a)(x - b)(x - c)(x - d)h(x) = 3.
+
+Since the polynomial has integer coefficients, the product on the left-hand side must be an integer. The number 3 is prime, so the only integer factorizations of 3 are 1 * 3, -1 * -3, 3 * 1, and -3 * -1. This means that the polynomial (x - a)(x - b)(x - c)(x - d)h(x) can only take the value 3 for integer x if the entire product is equal to one of these factor pairs.
+
+However, since a, b, c, and d are distinct integers, the factors (x - a), (x - b), (x - c), and (x - d) are all different for any integer x. Therefore, the only way the product can equal 3 is if h(x) = ±1 and the remaining factor from (x - a)(x - b)(x - c)(x - d) is ±3.
+
+Since h(x) is a polynomial of degree n - 4 with integer coefficients, it can only take the value ±1 for a finite number of integer x. Specifically, if h(x) is non-constant (degree at least 1), it will have at most n - 4 integer roots by the Fundamental Theorem of Algebra. If h(x) is constant (degree 0), then it can only be ±1 for all x if it is the constant polynomial h(x) = ±1.
+
+Therefore, at most, there are n - 4 + 4 = n integer values of k for which f(k) = 8, considering the roots of h(x) and the four distinct integers a, b, c, and d. However, since we are looking for the maximum number of such k, we must consider the case where h(x) is the constant polynomial h(x) = ±1, which would mean that the product (x - a)(x - b)(x - c)(x - d) must be ±3 for any integer solutions.
+
+In conclusion, the maximum number of integer values k for which f(k) = 8 is n, which includes the four given roots a, b, c, and d, and up to n - 4 additional roots from h(x) if h(x) is non-constant. If h(x) is constant, then the number of solutions is limited by the factorization of 3, which would not add any additional solutions beyond the given four.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most, there are n integer values of k for which f(k) = 8, where n is the degree of the polynomial f(x).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

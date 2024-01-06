@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_2</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> a(1±sqrt(2)), a(1±sqrt(5))/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_2']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Let {x_n}, {y_n}, {z_n} be three sequences with positive initial terms x_1, y_1, z_1, defined as x_(n+1)=y_n+1/z_n, y_(n+1)=z_n+1/x_n, z_(n+1)=x_n+1/y_n. Let w_n be the maximum value of x_n, y_n, z_n. For different values of x_1, y_1, z_1, do we have w_200 always greater than 20, always smaller than 20, or sometimes greater and sometimes smaller than 20?
+Step-wise solution:
+1. Let a_n=x_n+y_n+z_n.
+2. We have a_2^2=(x_1+1/x_1+y_1+1/y_1+z_1+1/z_1)^2/geq (2+2+2)^2=36=2*18.
+3. If a_n^2≥18n, then we have a_(n+1)^2=(x_n+1/x_n+y_n+1/y_n+z_n+1/z_n)^2≥a_n^2+2(x_n+y_n+z_n)(1/x_n+1/y_n+1/z_n)≥a_n^2+2*9≥18n+18=18(n+1).
+4. So we have a_n^2≥18n.
+5. Thus, a_200^2≥18*200=3600, which means that a_200=x_200+y_200+z_200≥60.
+6. So one of x_200, y_200, z_200 must be at least 20.
+7. Thus, w_200 cannot be smaller than 20.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Solve the equation x^4+a^4-3a*x^3+3a^3*x=0 for a≠0 as an expression of a.
+
+In addition, you may also find the following information helpful:
+
+1. Divide the equation by a^2*x^2.
+2. Write the equation as a quadratic equation of u=x/a-a/x.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation x^4 + a^4 - 3a*x^3 + 3a^3*x = 0 for a ≠ 0, we can follow the given steps:
+
+1. Divide the equation by a^2*x^2:
+   (x^4/a^2) + (a^4/a^2) - (3a*x^3/a^2) + (3a^3*x/a^2) = 0
+
+2. Simplify the equation:
+   (x^2/a)^2 + (a^2/x)^2 - 3(x^2/a)(a^2/x) + 3(a^2/x)(x^2/a) = 0
+
+3. Let u = x/a - a/x. This substitution allows us to rewrite the equation as a quadratic equation in terms of u:
+   (u + 2)^2 - 4(u^2 - 4) = 0
+
+4. Expand and simplify the equation:
+   u^2 + 4u + 4 - 4u^2 + 16 = 0
+   -3u^2 + 4u + 20 = 0
+
+5. Solve the quadratic equation for u:
+   Using the quadratic formula, u = (-b ± √(b^2 - 4ac)) / (2a), where a = -3, b = 4, and c = 20.
+   u = (-4 ± √(4^2 - 4(-3)(20))) / (2(-3))
+   u = (-4 ± √(16 + 240)) / (-6)
+   u = (-4 ± √256) / (-6)
+   u = (-4 ± 16) / (-6)
+
+6. Simplify the solutions for u:
+   u = (12 / -6) or u = (-20 / -6)
+   u = -2 or u = 10/3
+
+7. Substitute back u = x/a - a/x and solve for a:
+   For u = -2:
+   -2 = x/a - a/x
+   -2 = (x^2 - a^2) / (ax)
+   -2ax = x^2 - a^2
+   x^2 + 2ax - a^2 = 0
+
+   For u = 10/3:
+   10/3 = x/a - a/x
+   10/3 = (x^2 - a^2) / (ax)
+   10ax = 3x^2 - 3a^2
+   3x^2 - 10ax - 3a^2 = 0
+
+8. The solutions for a are the values that satisfy either equation (x^2 + 2ax - a^2 = 0 or 3x^2 - 10ax - 3a^2 = 0) for a given x.
+
+Therefore, the equation x^4 + a^4 - 3a*x^3 + 3a^3*x = 0 for a ≠ 0 can be expressed as a quadratic equation in terms of u, and the solutions for a depend on the values of x that satisfy the resulting quadratic equations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The equation x^4 + a^4 - 3a*x^3 + 3a^3*x = 0 for a ≠ 0 can be expressed as a quadratic equation in terms of u = x/a - a/x, and the solutions for a depend on the values of x that satisfy the resulting quadratic equations.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

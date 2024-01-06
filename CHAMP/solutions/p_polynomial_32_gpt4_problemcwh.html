@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_32</td>
+            <td>GPT-4</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 5</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_32']
+messages = problem.conversations['GPT-4|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: For an antisymmetric polynomial f(x, y) (i.e., f(x, y)=-f(y, x)) of total degree n (i.e., the maximum value of i+j in x^i*y^j is n), what are possible values of the remainder of f(x, y) divided by x-y?
+Step-wise solution:
+1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j.
+2. Thus, f(y, x)=sum_(i, j) c_ij*y^i*x^j=sum_(i, j) (-c_ij)*x^i*y^j=sum_(i, j) (-c_ji)*x^j*y^i.
+3. So we need to have c_ij=-c_ji for all i, j, which means c_ii=0 for all i.
+4. Thus, we can write f(x, y)=sum_(i&gt;j) c_ij(x^i*y^j-x^j*y*i).
+5. Let k=i-j, and we have x^i*y^j-x^j*y*i=(x^k-y^k)(x^j*y^j).
+6. Since x-y | x^k-y^k, we have x-y | x^i*y^j-x^j*y*i and x-y | f(x, y).
+7. So the remainder of f(x, y) divided by x-y is always zero.
+
+Problem: Find all positive integer solutions to the equation 2^x+1=3^y.
+Step-wise solution:
+1. The obvious solutions are x=1, y=1 and x=3, y=2.
+2. For x≥4 and odd y, we have 2^x=3^y-1=(3-1)(3^(y-1)+3^(y-2)+...+3+1).
+3. The second term in the product is a sum of odd number of odd values, and not divisible by 2.
+4. Thus, the product is not divisible by 4, which contradicts with the fact that 2^x is divisible by 4 for x≥4.
+5. So we have no solution here.
+6. For x≥4 and even y, let y=2k and we have 2^x=3^(2k)-1=(3^k)^2-1.
+7. Since 3^k is odd, we let 3^k=2a+1, which means 2^x=(2a+1)^2-1=(2a+2)(2a)=4a(a+1).
+8. Since either a or a+1 must be odd, when a&gt;1, the right hand side contains an odd factor greater than 1, which is not present in 2^x. 
+9. The case of a=1 corresponds k=1, x=3, y=2.
+10. Thus, the only solutions are x=1, y=1 and x=3, y=2.
+
+Problem: If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?
+Step-wise solution:
+1. Let S(m)=12^m+9^m+8^m+6^m.
+2. We have S(m)=(3^m)(4^m)+(3^m)(3^m)+(2^m)(4^m)+(2^m)(3^m)=(2^m+3^m)(3^m+4^m).
+3. Since m=5(2k+1), S(m)=((2^5)^(2k+1)+(3^5)^(2k+1))((3^5)^(2k+1)+(4^5)^(2k+1)).
+4. Since 2k+1 is odd, we have 2^5+3^5 | (2^5)^(2k+1)+(3^5)^(2k+1) and 3^5 + 4^5 | (3^5)^(2k+1)+(4^5)^(2k+1).
+5. So (2^5+3^5)(3^5 + 4^5) | S(m), which means 11*25*181*7 | S(m).
+6. Since 1991=11*181, we have 1991 | S(m).
+7. So S(m) mod 1991=0.
+
+Problem: Can n+2 be a factor of 1^1987+2^1987+...+n^1987 for some n?
+Step-wise solution:
+1. Let s=1^1987+2^1987+...+n^1987.
+2. Thus, 2s=1^1987+2^1987+...+n^1987+1^1987+2^1987+...+n^1987=2+(2^1987+n^1987)+(3^1987+(n-1)^1987)+...+((n-1)^1987+3^1987)+(n^1987+2^1987).
+3. We have 2s=2+t where t=(2^1987+n^1987)+(3^1987+(n-1)^1987)+...+((n-1)^1987+3^1987)+(n^1987+2^1987).
+4. We know 2+n | 2^1987+n^1987, 3+n-1 | 3^1987+(n-1)^1987...
+5. Thus, 2+n divides each term in t, so 2+n | t.
+6. This means 2+n ∤ 2s so 2+n ∤ s.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x)=x^4+x^3+x^2+x+1. Find the remainder of f(x^5) divided by f(x).
+
+In addition, you may also find the following information helpful:
+
+1. Construct terms of x^(5k)-1 for k=1, 2, 3, 4 in f(x^5).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+
+1. We have f(x^5) = (x^5)^4 + (x^5)^3 + (x^5)^2 + x^5 + 1.
+2. We can rewrite this as x^20 + x^15 + x^10 + x^5 + 1.
+3. Notice that each term in f(x^5) is of the form x^(5k) for k=1, 2, 3, 4, 5.
+4. We know that x^(5k) - 1 is divisible by x^5 - 1 for all k.
+5. Therefore, x^(5k) - 1 is divisible by f(x) for all k, because f(x) = x^4 + x^3 + x^2 + x + 1 = (x^5 - 1)/(x - 1).
+6. We can rewrite f(x^5) as (x^20 - 1) + (x^15 - 1) + (x^10 - 1) + (x^5 - 1) + 5.
+7. Each term in the sum (x^20 - 1) + (x^15 - 1) + (x^10 - 1) + (x^5 - 1) is divisible by f(x), so the remainder of f(x^5) divided by f(x) is the remainder of 5 divided by f(x).
+8. Since f(x) is a polynomial of degree 4, its value is always greater than 5 for x &gt; 1.
+9. Therefore, the remainder of f(x^5) divided by f(x) is 5 for x &gt; 1.
+
+So, the remainder of f(x^5) divided by f(x) is 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of the polynomial f(x^5) divided by f(x) is 5.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

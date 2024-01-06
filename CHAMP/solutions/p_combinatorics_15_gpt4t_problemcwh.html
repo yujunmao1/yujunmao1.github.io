@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_15</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_15']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: How many different ordered triples (a, b, c) of non-negative integers are there such that a+b+c=99?
+Step-wise solution:
+1. For any c, we know that a+b=99-c.
+2. Thus, there are 99-c+1 different values of (a, b), ranging from (0, 99-c) to (99-c, 0).
+3. We know that c can range from 0 to 99.
+4. Thus, the total number of ordered triples is 100+99+...+1=(100+1)*100/2=5050.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column.
+
+In addition, you may also find the following information helpful:
+
+1. How must the middle column be tiled?
+2. Let a_n be the number of ways to tile a 2 x n rectangle without consideration of the symmetry.
+3. Find the expression for a_(n+1) in terms of a_n and a_(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the symmetry constraint imposed by flipping the rectangle around the middle column. Since the rectangle is 2 x 21, the middle column is the 11th column from either side.
+
+1. How must the middle column be tiled?
+The middle column (the 11th column) must be tiled in such a way that it is symmetric upon flipping. This means that either both tiles in the middle column are placed horizontally, or both are placed vertically. Since flipping the rectangle doesn&#x27;t change the orientation of the tiles in the middle column, there are only two ways to tile the middle column: both horizontal or both vertical.
+
+2. Let a_n be the number of ways to tile a 2 x n rectangle without consideration of the symmetry.
+We can find a recursive formula for a_n by considering the last column of the 2 x n rectangle. If the last column is tiled vertically, then the remaining rectangle is a 2 x (n-1) rectangle, which can be tiled in a_n-1 ways. If the last column is tiled horizontally, then we must also tile the second-to-last column horizontally, leaving a 2 x (n-2) rectangle, which can be tiled in a_n-2 ways. Therefore, the recursive formula is:
+a_(n+1) = a_n + a_(n-1)
+
+3. Find the expression for a_(n+1) in terms of a_n and a_(n-1).
+From the recursive formula above, we have:
+a_(n+1) = a_n + a_(n-1)
+
+Now, let&#x27;s find the number of ways to fill the 2 x 21 rectangle with the symmetry constraint. We need to consider two cases for the middle column:
+
+Case 1: The middle column is tiled with two horizontal tiles.
+In this case, the tiling on the left side of the middle column must be mirrored on the right side. Therefore, we only need to consider the tiling of the 2 x 10 rectangle on one side of the middle column. The number of ways to tile a 2 x 10 rectangle is a_10.
+
+Case 2: The middle column is tiled with two vertical tiles.
+Similarly, the tiling on the left side of the middle column must be mirrored on the right side. Again, we only need to consider the tiling of the 2 x 10 rectangle on one side of the middle column. The number of ways to tile a 2 x 10 rectangle is also a_10.
+
+Since there are two ways to tile the middle column, and for each of those ways, there are a_10 ways to tile the rest of the rectangle, the total number of ways to tile the 2 x 21 rectangle with the given symmetry is 2 * a_10.
+
+To find a_10, we need to calculate the values of a_n using the recursive formula, starting with the base cases:
+a_0 = 1 (an empty rectangle has one way to be tiled, by doing nothing)
+a_1 = 1 (there&#x27;s only one way to tile a 2 x 1 rectangle, with one vertical tile)
+
+Using the recursive formula:
+a_2 = a_1 + a_0 = 1 + 1 = 2
+a_3 = a_2 + a_1 = 2 + 1 = 3
+a_4 = a_3 + a_2 = 3 + 2 = 5
+...
+We can continue this process until we find a_10. However, this sequence is actually the Fibonacci sequence, where each term is the sum of the two preceding ones. The first few terms of the Fibonacci sequence are 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, ...
+
+Therefore, a_10 = 89.
+
+The total number of ways to tile the 2 x 21 rectangle with the given symmetry is 2 * a_10 = 2 * 89 = 178.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is the same when the rectangle is flipped around the middle column is 178.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

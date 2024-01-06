@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_37</td>
+            <td>PaLM 2 Medium</td>
+            <td>Example w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=16 and x=81</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_37']
+messages = problem.conversations['PaLM 2 Medium|Example w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Please give an example that applies the following concept:
+
+Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Sure. Let&#x27;s start with some simple examples. When $n=1$, we have $s_1=x+y$. Substituting this into the equation, we get $s_1=u(s_0)-v(s_{-1})$. Since $s_0=x^0+y^0=1$ and $s_{-1}=x^{-1}+y^{-1}=0$, we get $s_1=u(1)-v(0)=x+y$, which is correct.
+
+Now let&#x27;s try $n=2$. We have $s_2=x^2+y^2$. Substituting this into the equation, we get $s_2=u(s_1)-v(s_0)$. Since $s_1=x+y$ and $s_0=1$, we get $s_2=u(x+y)-v(1)$. Expanding the parentheses, we get $s_2=ux+uy+y^2-v$. This can be simplified to $s_2=(x+y)(u-v)+y^2$.
+
+We can continue this process for any value of $n$. For example, when $n=3$, we have $s_3=x^3+y^3$. Substituting this into the equation, we get $s_3=u(s_2)-v(s_1)$. Since $s_2=(x+y)(u-v)+y^2$ and $s_1=x+y$, we get $s_3=u((x+y)(u-v)+y^2)-v(x+y)$. Expanding the parentheses, we get $s_3=ux^2+uy^2+u^2y-vx-v^2y+y^3$. This can be simplified to $s_3=(x+y)(u^2-v^2)+x^2y+uy^2$.
+
+This process can be continued for any value of $n$. The general formula is $s_n=(x+y)(u^n-v^n)+x^{n-1}y+x^{n-2}y^2+\cdots+xy^{n-2}+y^n$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation x^(1/4)+(97-x)^(1/4)=5.
+
+You may find the above concept helpful.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can write the equation as $x^{1/4}+(97-x)^{1/4}=5$. Let $y=x^{1/4}$. Then, we have $y+(97-x)^{1/4}=5$. Raising both sides to the fourth power, we get $y^4+(97-x)^4=25$. Subtracting $25$ from both sides, we get $y^4-97y^2+x^4-97x^2=0$. Factoring the left-hand side, we get $(y^2-25)(y^2-4x^2+25)=0$. Since $y$ is a real number, $y^2-25=0$. This implies that $y=\pm5$. Substituting $y=\pm5$ into the equation $y^2-4x^2+25=0$, we get $x^2=25$ or $x^2=1$. This implies that $x=5$ or $x=-1$. Therefore, the only integer solutions to the equation $x^{1/4}+(97-x)^{1/4}=5$ are $x=5$ and $x=-1$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only integer solutions to the equation $x^{1/4}+(97-x)^{1/4}=5$ are $x=5$ and $x=-1$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

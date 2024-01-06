@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_16</td>
+            <td>GPT-4</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_16']
+messages = problem.conversations['GPT-4|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A be a string of n binary digits (leading 0s are allowed). How many such strings have the substring &quot;01&quot; appearing exactly m times, as an expression of m and n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This is a combinatorics problem, and it&#x27;s quite complex. We need to count the number of binary strings of length n that contain the substring &quot;01&quot; exactly m times. 
+
+Let&#x27;s denote by f(n, m) the number of such strings. 
+
+We can construct a binary string of length n with exactly m occurrences of &quot;01&quot; in two ways:
+
+1. The string ends with &quot;0&quot;. In this case, the last occurrence of &quot;01&quot; can&#x27;t be at the end of the string, so we can just take a string of length n-1 with exactly m occurrences of &quot;01&quot; and append &quot;0&quot; at the end. There are f(n-1, m) such strings.
+
+2. The string ends with &quot;1&quot;. In this case, we can take a string of length n-1 with exactly m-1 occurrences of &quot;01&quot; and append &quot;1&quot; at the end. But we need to be careful here: the string of length n-1 can&#x27;t end with &quot;0&quot;, because in this case we would get an extra occurrence of &quot;01&quot;. So, the string of length n-1 should end with &quot;1&quot;. Let&#x27;s denote by g(n, m) the number of strings of length n with exactly m occurrences of &quot;01&quot; that end with &quot;1&quot;. Then, there are g(n-1, m-1) such strings.
+
+So, we have the following recurrence relation for f(n, m):
+
+f(n, m) = f(n-1, m) + g(n-1, m-1)
+
+Now, let&#x27;s find a recurrence relation for g(n, m). A string of length n with exactly m occurrences of &quot;01&quot; that ends with &quot;1&quot; can be constructed in two ways:
+
+1. The string of length n-1 with exactly m occurrences of &quot;01&quot; ends with &quot;1&quot;. We just append &quot;1&quot; at the end. There are g(n-1, m) such strings.
+
+2. The string of length n-1 with exactly m-1 occurrences of &quot;01&quot; ends with &quot;0&quot;. We append &quot;1&quot; at the end. There are f(n-1, m-1) such strings.
+
+So, we have the following recurrence relation for g(n, m):
+
+g(n, m) = g(n-1, m) + f(n-1, m-1)
+
+The initial conditions are f(n, 0) = 2^n (all binary strings of length n) and f(n, m) = 0 for m &gt; n (it&#x27;s impossible to have more occurrences of &quot;01&quot; than the length of the string). Also, g(n, 0) = 2^(n-1) (all binary strings of length n that end with &quot;1&quot;) and g(n, m) = 0 for m &gt; n.
+
+So, the number of binary strings of length n that contain the substring &quot;01&quot; exactly m times can be found by solving these recurrence relations with the given initial conditions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of binary strings of length n that contain the substring &quot;01&quot; exactly m times can be found by solving the recurrence relations f(n, m) = f(n-1, m) + g(n-1, m-1) and g(n, m) = g(n-1, m) + f(n-1, m-1), with initial conditions f(n, 0) = 2^n, f(n, m) = 0 for m &gt; n, g(n, 0) = 2^(n-1), and g(n, m) = 0 for m &gt; n.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

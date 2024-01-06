@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_16</td>
+            <td>GPT-3.5</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_16']
+messages = problem.conversations['GPT-3.5|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A be a string of n binary digits (leading 0s are allowed). How many such strings have the substring &quot;01&quot; appearing exactly m times, as an expression of m and n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. For the string, we add 1 to the front and 0 to the back, and consider the n+1 gaps between the n+2 digits.
+2. For the two digits around the gap, if they are &quot;01&quot;, we call the gap a &quot;0-1&quot; transition, and analogously a &quot;1-0&quot; transition, or neither.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of generating functions. Let&#x27;s define a generating function F(x, y) where the coefficient of x^m * y^n represents the number of strings with m occurrences of &quot;01&quot; and length n.
+
+Step 1: Consider the first digit of the string. It can be either 0 or 1.
+
+- If the first digit is 0, then the remaining n-1 digits can be any valid string of length n-1. So, the contribution to the generating function is x * F(x, y).
+
+- If the first digit is 1, then the second digit must be 0 to form the substring &quot;01&quot;. The remaining n-2 digits can be any valid string of length n-2. So, the contribution to the generating function is y * x * F(x, y).
+
+Step 2: Combine the contributions from both cases.
+
+F(x, y) = x * F(x, y) + y * x * F(x, y)
+
+Step 3: Solve for F(x, y).
+
+F(x, y) - x * F(x, y) - y * x * F(x, y) = 0
+
+F(x, y) * (1 - x - y * x) = 0
+
+F(x, y) = 0 or (1 - x - y * x)^(-1)
+
+Step 4: Expand the generating function using the binomial series.
+
+(1 - x - y * x)^(-1) = 1 + (x + y * x) + (x + y * x)^2 + (x + y * x)^3 + ...
+
+The coefficient of x^m * y^n in the expansion represents the number of strings with m occurrences of &quot;01&quot; and length n.
+
+Step 5: Simplify the expression.
+
+(1 + (x + y * x) + (x + y * x)^2 + (x + y * x)^3 + ...) = 1 / (1 - (x + y * x))
+
+Step 6: Expand the expression using the geometric series.
+
+1 / (1 - (x + y * x)) = 1 / (1 - x - y * x) = (1 - x - y * x)^(-1)
+
+= 1 + (x + y * x) + (x + y * x)^2 + (x + y * x)^3 + ...
+
+The coefficient of x^m * y^n in the expansion represents the number of strings with m occurrences of &quot;01&quot; and length n.
+
+Therefore, the final answer is (1 + (x + y * x) + (x + y * x)^2 + (x + y * x)^3 + ...).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings with n binary digits and exactly m occurrences of the substring &quot;01&quot; is given by the coefficient of x^m * y^n in the expression (1 + (x + y * x) + (x + y * x)^2 + (x + y * x)^3 + ...).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_34</td>
+            <td>GPT-3.5</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n-k+3)*2^(n-k-2)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_34']
+messages = problem.conversations['GPT-3.5|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all sequences of positive integer numbers have sum n, for integer k&lt;n-1, how many times does the number k appear, as an expression of n and k?
+
+You may find the following information useful:
+
+1. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
+2. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s consider the possible sequences of positive integer numbers that have a sum of n.
+
+We can represent each sequence as a string of n-1 &quot;+&quot; signs and one &quot;=&quot; sign. For example, the sequence 1 + 2 + 3 = 6 can be represented as &quot;+++=&quot;.
+
+Now, let&#x27;s think about how many times the number k can appear in a sequence. We can break this down into two cases:
+
+Case 1: k appears as a number in the sequence.
+In this case, we need to determine the number of ways to choose the positions for k in the sequence. Since there are n-1 &quot;+&quot; signs, there are n-1 possible positions for k. Therefore, the number of times k appears as a number is (n-1) times.
+
+Case 2: k appears as a sum of two or more numbers in the sequence.
+In this case, we need to determine the number of ways to split the sum n into two or more positive integers such that k is one of the numbers. We can use the concept of partitions to solve this.
+
+Let&#x27;s consider the partition of n into k parts. Each part represents a number in the sequence. We can use the formula for the number of partitions of n into k parts, denoted as P(n, k), to find the number of ways to split n into k parts.
+
+Therefore, the number of times k appears as a sum of two or more numbers is P(n, k).
+
+Now, let&#x27;s calculate the final answer by summing up the number of times k appears in both cases:
+
+Total number of times k appears = (n-1) + P(n, k)
+
+Let&#x27;s illustrate this with an example:
+
+Suppose we want to find the number of times the number 2 appears in all sequences of positive integers that have a sum of 5.
+
+Using the formula, we have:
+
+Total number of times 2 appears = (5-1) + P(5, 2)
+
+To calculate P(5, 2), we can use the formula for the number of partitions of n into k parts:
+
+P(5, 2) = P(4, 1) + P(3, 2) + P(2, 3) + P(1, 4) + P(0, 5)
+
+P(4, 1) = 1 (only one way to partition 5 into 1 part)
+P(3, 2) = 1 (only one way to partition 5 into 2 parts: 3 + 2)
+P(2, 3) = 0 (no way to partition 5 into 3 parts)
+P(1, 4) = 0 (no way to partition 5 into 4 parts)
+P(0, 5) = 0 (no way to partition 5 into 5 parts)
+
+Therefore, P(5, 2) = 1 + 1 + 0 + 0 + 0 = 2
+
+Substituting this back into the equation, we have:
+
+Total number of times 2 appears = (5-1) + 2 = 6
+
+So, the number 2 appears 6 times in all sequences of positive integers that have a sum of 5.
+
+In general, you can use this approach to calculate the number of times any number k appears in all sequences of positive integers that have a sum of n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of times the number k appears in all sequences of positive integers that have a sum of n is (n-1) + P(n, k), where P(n, k) represents the number of partitions of n into k parts.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

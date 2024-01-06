@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_22</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)/(r+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_22']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 1≤r≤n and consider all subsets of r elements of the set {1, 2, ..., n}. What is the arithmetic mean of the smallest element of these subsets, as an expression of n and r?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Consider the subsets of {0, 1, ..., n} with r+1 elements.
+2. We define a mapping f from the latter subset and the former subset to be the operation that removes the smallest element in the subset, such as f({0, 2, 3, 5})={2, 3, 5}.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the partial solution provided as a starting point. We will consider the subsets of {0, 1, ..., n} with r+1 elements and use the mapping f to relate these to the subsets of {1, 2, ..., n} with r elements.
+
+1. There are a total of C(n+1, r+1) subsets of {0, 1, ..., n} with r+1 elements, where C(n, k) denotes the binomial coefficient &quot;n choose k&quot;.
+
+2. The mapping f removes the smallest element from each subset of {0, 1, ..., n} with r+1 elements to create a subset of {1, 2, ..., n} with r elements. Since 0 is the smallest element in the set {0, 1, ..., n}, it will be the smallest element in exactly C(n, r) of the subsets (since after removing 0, we choose r elements from the remaining n elements).
+
+3. For each of the other elements 1, 2, ..., n, consider how many subsets of {0, 1, ..., n} with r+1 elements have that element as the smallest. If we fix a particular element k as the smallest, then we must choose the remaining r elements from the set {k+1, k+2, ..., n}, which has n-k elements. Therefore, there are C(n-k, r) subsets with k as the smallest element.
+
+4. To find the arithmetic mean of the smallest elements, we sum the products of each smallest element k by the number of subsets for which it is the smallest, and then divide by the total number of subsets of {1, 2, ..., n} with r elements.
+
+The sum of the products is:
+Sum = 1*C(n-1, r) + 2*C(n-2, r) + ... + (n-r)*C(r, r)
+
+The total number of subsets of {1, 2, ..., n} with r elements is C(n, r).
+
+So the arithmetic mean M is:
+M = Sum / C(n, r)
+
+Now we need to compute the sum. We can use the identity C(n-k, r) = C(n-k, n-k-r) and the hockey-stick identity which states that the sum of consecutive binomial coefficients is another binomial coefficient:
+
+Sum = 1*C(n-1, r) + 2*C(n-2, r) + ... + (n-r)*C(r, r)
+    = 1*C(n-1, n-1-r) + 2*C(n-2, n-2-r) + ... + (n-r)*C(r, 0)
+    = C(n, n-r) - C(r, 0)
+    = C(n, r) - 1
+
+Now we can compute the mean M:
+
+M = (C(n, r) - 1) / C(n, r)
+   = 1 - 1/C(n, r)
+
+So the arithmetic mean of the smallest element of the subsets of {1, 2, ..., n} with r elements, as an expression of n and r, is:
+
+M = 1 - 1/C(n, r)</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The arithmetic mean of the smallest element of all subsets of r elements of the set {1, 2, ..., n} is M = 1 - 1/C(n, r), where C(n, r) is the binomial coefficient &quot;n choose r&quot;.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

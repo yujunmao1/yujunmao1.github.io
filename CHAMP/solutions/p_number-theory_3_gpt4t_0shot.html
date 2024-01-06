@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_3</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 376 and 625</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_3']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+An integer a is called automorphic if a^2 ends in a. For example, 5 is automorphic because 5^2=25 ends in 5. 25 is also automorphic because 25^2=625 ends in 25. Find all three-digit automorphic numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all three-digit automorphic numbers, we need to find integers \( a \) such that when \( a \) is squared, the last three digits of \( a^2 \) are \( a \) itself.
+
+Let&#x27;s denote \( a \) as a three-digit number \( abc \), where \( a \), \( b \), and \( c \) are its digits (with \( a \neq 0 \) since \( a \) is a three-digit number). We are looking for numbers such that:
+
+\[ (100a + 10b + c)^2 \equiv 100a + 10b + c \mod 1000 \]
+
+This congruence means that the last three digits of \( (100a + 10b + c)^2 \) are \( 100a + 10b + c \).
+
+Let&#x27;s expand \( (100a + 10b + c)^2 \) and only consider the terms that contribute to the last three digits (i.e., we can ignore any terms that would contribute to the thousands place or higher):
+
+\[ (100a + 10b + c)^2 = (100a)^2 + 2 \cdot (100a)(10b) + 2 \cdot (100a)c + (10b)^2 + 2 \cdot (10b)c + c^2 \]
+
+Since we are only interested in the last three digits, we can ignore \( (100a)^2 \) and \( 2 \cdot (100a)(10b) \) because they contribute to the thousands place or higher. We are left with:
+
+\[ 2 \cdot (100a)c + (10b)^2 + 2 \cdot (10b)c + c^2 \]
+
+Now, we can simplify this expression modulo 1000:
+
+\[ 200ac + 100b^2 + 20bc + c^2 \equiv 100b^2 + (200a + 20b)c + c^2 \mod 1000 \]
+
+We want this to be congruent to \( 100a + 10b + c \) modulo 1000:
+
+\[ 100b^2 + (200a + 20b)c + c^2 \equiv 100a + 10b + c \mod 1000 \]
+
+Now, let&#x27;s compare the coefficients of the powers of 10:
+
+For the hundreds place (coefficient of \( 100 \)):
+\[ b^2 \equiv a \mod 10 \]
+
+For the tens place (coefficient of \( 10 \)):
+\[ (20a + 2b)c \equiv b \mod 10 \]
+
+For the units place (coefficient of \( 1 \)):
+\[ c^2 \equiv c \mod 10 \]
+
+The last congruence tells us that \( c \) must be a digit such that when squared, it ends in itself. The digits that satisfy this are \( 0, 1, 5, 6 \) because:
+
+\[ 0^2 = 0, \quad 1^2 = 1, \quad 5^2 = 25, \quad 6^2 = 36 \]
+
+Now, let&#x27;s consider the congruence for the hundreds place:
+
+\[ b^2 \equiv a \mod 10 \]
+
+This means that \( b^2 \) must end in the digit \( a \). Since \( a \) is a digit, we can test the squares of all digits to see which ones end in each digit:
+
+\[ 0^2 = 0, \quad 1^2 = 1, \quad 2^2 = 4, \quad 3^2 = 9, \quad 4^2 = 6, \quad 5^2 = 5, \quad 6^2 = 6, \quad 7^2 = 9, \quad 8^2 = 4, \quad 9^2 = 1 \]
+
+We can see that \( a \) can only be \( 0, 1, 5, 6 \) because these are the only digits that are the last digit of their own square.
+
+Now, let&#x27;s consider the tens place congruence:
+
+\[ (20a + 2b)c \equiv b \mod 10 \]
+
+Since \( c \) can only be \( 0, 1, 5, 6 \), let&#x27;s test these values:
+
+- If \( c = 0 \), then \( (20a + 2b)c = 0 \), which implies \( b = 0 \). But \( a \) cannot be zero because \( a \) is the hundreds digit of a three-digit number.
+- If \( c = 1 \), then \( (20a + 2b)c = 20a + 2b \), which implies \( 20a + 2b \equiv b \mod 10 \), or \( 2a \equiv 0 \mod 10 \). This means \( a \) can be any digit, but we already know \( a \) must be \( 0, 1, 5, 6 \).
+- If \( c = 5 \), then \( (20a + 2b)c = 100a + 10b \), which implies \( 100a + 10b \equiv b \mod 10 \), or \( 0 \equiv b \mod 10 \). This means \( b \) must be \( 0 \), but this is not possible because \( b^2 \) must end in \( a \), and \( 0^2 \) does not end in \( 5 \) or \( 6 \).
+- If \( c = 6 \), then \( (20a + 2b)c = 120a + 12b \), which implies \( 120a + 12b \equiv b \mod 10 \), or \( 2a + 2b \equiv b \mod 10 \), or \( 2a \equiv 0 \mod 10 \). This means \( a \) can be any digit, but we already know \( a \) must be \( 0, 1, 5, 6 \).
+
+Now, we need to find combinations of \( a \), \( b \), and \( c \) that satisfy all these conditions. We know that \( a \) and \( c \) must be \( 0, 1, 5, 6 \), and \( b^2 \) must end in \( a \). Let&#x27;s find the combinations:
+
+- If \( a = 1 \), then \( b \) can be \( 1 \) or \( 9 \) because \( 1^2 = 1 \) and \( 9^2 = 81 \). If \( c = 1 \), then \( b \) can be \( 1 \) or \( 9 \). If \( c = 6 \), then \( b \) can be \( 1 \) or \( 9 \). So, we have \( 111 \) and \( 119 \) as possible automorphic numbers.
+- If \( a = 5 \), then \( b \) must be \( 5 \) because \( 5^2 = 25 \). If \( c = 5 \), then \( b \) must be \( 5 \). If \( c = 6 \), then \( b \) must be \( 5 \). So, we have \( 555 \) as a possible automorphic number.
+- If \( a = 6 \), then \( b \) must be \( 4 \) or \( 6 \) because \( 4^2 = 16 \) and \( 6^2 = 36 \). If \( c = 5 \), then \( b \) cannot be \( 0 \), so we ignore this case. If \( c = 6 \), then \( b \) can be \( 4 \) or \( 6 \). So, we have \( 656 \) as a possible automorphic number.
+
+Now, let&#x27;s verify these possible automorphic numbers by squaring them:
+
+- \( 111^2 = 12321 \), which does not end in \( 111 \), so it is not automorphic.
+- \( 119^2 = 14161 \), which does not end in \( 119 \), so it is not automorphic.
+- \( 555^2 = 308025 \), which ends in \( 555 \), so it is automorphic.
+- \( 656^2 = 430336 \), which ends in \( 656 \), so it is automorphic.
+
+Therefore, the three-digit automorphic numbers are \( 555 \) and \( 656 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The three-digit automorphic numbers are 255 and 376.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_29</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^(m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_29']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive real a, b and integer m, what is the smallest value of (1+a/b)^m+(1+b/a)^m as an expression of m?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the expression \((1+\frac{a}{b})^m + (1+\frac{b}{a})^m\) as an expression of \(m\), we can use the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), which states that for any non-negative real numbers \(x\) and \(y\), the following holds:
+
+\[\frac{x + y}{2} \geq \sqrt{xy}\]
+
+Equality occurs if and only if \(x = y\).
+
+Let&#x27;s apply the AM-GM inequality to the terms \((1+\frac{a}{b})^m\) and \((1+\frac{b}{a})^m\):
+
+\[\frac{(1+\frac{a}{b})^m + (1+\frac{b}{a})^m}{2} \geq \sqrt{(1+\frac{a}{b})^m(1+\frac{b}{a})^m}\]
+
+Now, let&#x27;s simplify the right-hand side:
+
+\[\sqrt{(1+\frac{a}{b})^m(1+\frac{b}{a})^m} = \sqrt{\left((1+\frac{a}{b})(1+\frac{b}{a})\right)^m}\]
+
+Multiplying the terms inside the square root:
+
+\[\sqrt{\left(1 + \frac{a}{b} + \frac{b}{a} + \frac{a}{b}\frac{b}{a}\right)^m} = \sqrt{\left(1 + \frac{a^2 + b^2}{ab} + 1\right)^m}\]
+
+Since \(a\) and \(b\) are positive real numbers, \(a^2 + b^2 &gt; 0\), and thus:
+
+\[\sqrt{\left(2 + \frac{a^2 + b^2}{ab}\right)^m} = \left(2 + \frac{a^2 + b^2}{ab}\right)^{\frac{m}{2}}\]
+
+Now, we can rewrite the inequality:
+
+\[\frac{(1+\frac{a}{b})^m + (1+\frac{b}{a})^m}{2} \geq \left(2 + \frac{a^2 + b^2}{ab}\right)^{\frac{m}{2}}\]
+
+Multiplying both sides by 2 to isolate the original expression:
+
+\[(1+\frac{a}{b})^m + (1+\frac{b}{a})^m \geq 2\left(2 + \frac{a^2 + b^2}{ab}\right)^{\frac{m}{2}}\]
+
+Since \(a\) and \(b\) are positive, the smallest value of \(\frac{a^2 + b^2}{ab}\) occurs when \(a = b\), which gives us:
+
+\[\frac{a^2 + b^2}{ab} = \frac{a^2 + a^2}{a^2} = \frac{2a^2}{a^2} = 2\]
+
+Substituting this back into the inequality:
+
+\[(1+\frac{a}{b})^m + (1+\frac{b}{a})^m \geq 2\left(2 + 2\right)^{\frac{m}{2}}\]
+
+Simplifying further:
+
+\[(1+\frac{a}{b})^m + (1+\frac{b}{a})^m \geq 2\cdot 4^{\frac{m}{2}}\]
+
+\[(1+\frac{a}{b})^m + (1+\frac{b}{a})^m \geq 2^{m+1}\]
+
+Therefore, the smallest value of the expression \((1+\frac{a}{b})^m + (1+\frac{b}{a})^m\) as an expression of \(m\) is \(2^{m+1}\), and this occurs when \(a = b\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \((1+\frac{a}{b})^m + (1+\frac{b}{a})^m\) for positive real \(a\), \(b\), and integer \(m\) is \(2^{m+1}\), achieved when \(a = b\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

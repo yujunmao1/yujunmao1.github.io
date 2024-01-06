@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_17</td>
+            <td>PaLM 2 Medium</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1-1/2^(1/n)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_17']
+messages = problem.conversations['PaLM 2 Medium|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1, x_2, ..., x_n&gt;0 and x_1+x_2+...+x_n=1. Let s be the greatest of x_1/(1+x_1), x_2/(1+x_1+x_2), ..., x_n/(1+x_1+x_2+...+x_n). What is the smallest value of s as an expression of n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let y_0=1, y_1=1+x_1, y_2=1+x_1+x_2, ..., y_n=1+x_1+x_2+...+x_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x_1, x_2, ..., x_n&gt;0$ and $x_1+x_2+...+x_n=1$. Let $s$ be the greatest of $x_1/(1+x_1), x_2/(1+x_1+x_2), ..., x_n/(1+x_1+x_2+...+x_n)$. We want to find the smallest value of $s$ as an expression of $n$.
+
+We can write $s$ as follows:
+
+$$s = \max_{1 \leq i \leq n} \frac{x_i}{1+x_1+x_2+...+x_n} = \max_{1 \leq i \leq n} \frac{x_i}{y_n}$$
+
+where $y_n = 1+x_1+x_2+...+x_n$.
+
+Now, we can write $y_n$ as follows:
+
+$$y_n = 1+x_1+x_2+...+x_n = \left(1+\frac{x_1}{1+x_1}\right)\left(1+\frac{x_2}{1+x_1+x_2}\right)...\left(1+\frac{x_n}{1+x_1+x_2+...+x_{n-1}}\right)$$
+
+We can continue to factor $y_n$ in this way until we get the following:
+
+$$y_n = \prod_{i=1}^n \left(1+\frac{x_i}{1+x_1+x_2+...+x_{i-1}}\right)$$
+
+Now, we can write $s$ as follows:
+
+$$s = \max_{1 \leq i \leq n} \frac{x_i}{y_n} = \max_{1 \leq i \leq n} \frac{x_i}{\prod_{j=1}^n \left(1+\frac{x_j}{1+x_1+x_2+...+x_{j-1}}\right)}$$
+
+We can simplify this expression as follows:
+
+$$s = \max_{1 \leq i \leq n} \frac{x_i}{\prod_{j=1}^n \left(1+\frac{x_j}{1+x_1+x_2+...+x_{j-1}}-\frac{x_j}{1+x_1+x_2+...+x_n}\right)}$$
+
+We can further simplify this expression as follows:
+
+$$s = \max_{1 \leq i \leq n} \frac{x_i}{\prod_{j=1}^n \left(1-\frac{x_j^2}{(1+x_1+x_2+...+x_{j-1})(1+x_1+x_2+...+x_n)}\right)}$$
+
+Now, we can see that $s$ is maximized when $x_1=x_2=...=x_n$. In this case, $s$ is equal to the following:
+
+$$s = \max_{1 \leq i \leq n} \frac{x_i}{\prod_{j=1}^n \left(1-\frac{x_i^2}{(1+x_1+x_2+...+x_{j-1})(1+x_1+x_2+...+x_n)}\right)} = \frac{x_1}{\prod_{j=1}^n \left(1-\frac{x_1^2}{(1+x_1+x_2+...+x_{j-1})(1+x_1+x_2+...+x_n)}\right)}$$
+
+We can simplify this expression as follows:
+
+$$s = \frac{x_1}{\prod_{j=1}^n \left(1-\frac{x_1^2}{(1+x_1)^2}\right)} = \frac{x_1}{\left(1-\frac{x_1^2}{(1+x_1)^2}\right)^n} = \frac{x_1}{1-x_1^2}$$
+
+Therefore, the smallest value of $s$ as an expression of $n$ is $\boxed{\frac{x_</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $s$ as an expression of $n$ is $\boxed{\frac{x_1}{1-x_1^2}}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

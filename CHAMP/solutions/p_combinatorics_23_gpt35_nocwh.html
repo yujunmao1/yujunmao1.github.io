@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_23</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (4^n+2^n)/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_23']
+messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of them have an even number of 1s, as an expression of n?
+
+You may find the following information useful:
+
+1. Let P(k) be the number of strings with k number of 1s and find its value.
+2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
+3. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
+4. Let E(n) and O(n) be the number of length-n strings with even and ood numbers of 1s respectively, and express them in terms of P(k).
+5. Study E(n)+O(n) and E(n)-O(n).
+6. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the information provided and break it down step by step.
+
+Step 1: Define P(k)
+Let P(k) be the number of strings with k number of 1s. We need to find the value of P(k).
+
+Step 2: Number of ways to choose k items from n items
+The number of ways to choose a set of (unordered) k items from n items is given by C(n, k).
+
+Step 3: Number of strings with even number of 1s
+Let E(n) be the number of length-n strings with an even number of 1s. We need to express E(n) in terms of P(k).
+
+To find E(n), we need to consider all possible values of k (number of 1s) that can result in an even number of 1s. We can have 0, 2, 4, ..., n-2, n as possible values of k.
+
+For k = 0, there is only one way to have 0 1s in a string of length n, which is not selecting any 1s. Therefore, P(0) = 1.
+
+For k = 2, there are C(n, 2) ways to choose 2 positions for the 1s in a string of length n. Once the positions are chosen, the remaining positions will be filled with digits 2, 3, or 4. Therefore, P(2) = C(n, 2) * (3^(n-2)).
+
+Similarly, for k = 4, there are C(n, 4) ways to choose 4 positions for the 1s in a string of length n. Once the positions are chosen, the remaining positions will be filled with digits 2, 3, or 4. Therefore, P(4) = C(n, 4) * (3^(n-4)).
+
+Continuing this pattern, we can express E(n) as:
+E(n) = P(0) + P(2) + P(4) + ... + P(n-2)
+
+Step 4: Number of strings with odd number of 1s
+Let O(n) be the number of length-n strings with an odd number of 1s. We need to express O(n) in terms of P(k).
+
+To find O(n), we need to consider all possible values of k (number of 1s) that can result in an odd number of 1s. We can have 1, 3, 5, ..., n-1 as possible values of k.
+
+For k = 1, there are C(n, 1) ways to choose 1 position for the 1 in a string of length n. Once the position is chosen, the remaining positions will be filled with digits 2, 3, or 4. Therefore, P(1) = C(n, 1) * (3^(n-1)).
+
+For k = 3, there are C(n, 3) ways to choose 3 positions for the 1s in a string of length n. Once the positions are chosen, the remaining positions will be filled with digits 2, 3, or 4. Therefore, P(3) = C(n, 3) * (3^(n-3)).
+
+Similarly, for k = 5, there are C(n, 5) ways to choose 5 positions for the 1s in a string of length n. Once the positions are chosen, the remaining positions will be filled with digits 2, 3, or 4. Therefore, P(5) = C(n, 5) * (3^(n-5)).
+
+Continuing this pattern, we can express O(n) as:
+O(n) = P(1) + P(3) + P(5) + ... + P(n-1)
+
+Step 5: Express E(n) + O(n) and E(n) - O(n)
+We can express E(n) + O(n) and E(n) - O(n) using the values of P(k) we found.
+
+E(n) + O(n) = (P(0) + P(2) + P(4) + ... + P(n-2)) + (P(1) + P(3) + P(5) + ... + P(n-1))
+
+E(n) - O(n) = (P(0) + P(2) + P(4) + ... + P(n-2)) - (P(1) + P(3) + P(5) + ... + P(n-1))
+
+Step 6: Use the binomial theorem
+We can use the binomial theorem to simplify the expressions E(n) + O(n) and E(n) - O(n).
+
+From the binomial theorem, we know that (x + y)^n = C(n, 0)x^n*y^0 + C(n, 1)x^(n-1)*y^1 + C(n, 2)x^(n-2)*y^2 + ... + C(n, n-1)x^1*y^(n-1) + C(n, n)x^0*y^n
+
+Comparing this with E(n) + O(n) and E(n) - O(n), we can see that:
+E(n) + O(n) = (P(0) + P(1) + P(2) + ... + P(n)) * (1 + 1)^(n-1) = 2^(n-1) * (P(0) + P(1) + P(2) + ... + P(n))
+
+E(n) - O(n) = (P(0) + P(1) + P(2) + ... + P(n)) * (1 - 1)^(n-1) = 0
+
+Since E(n) - O(n) = 0, we can conclude that E(n) = O(n).
+
+Step 7: Final answer
+Since E(n) = O(n), the number of strings with an even number of 1s is equal to the number of strings with an odd number of 1s.
+
+Therefore, the number of strings with an even number of 1s among all strings of length n consisting of digits 1, 2, 3, and 4 is given by:
+E(n) = O(n) = 2^(n-1) * (P(0) + P(1) + P(2) + ... + P(n))
+
+Note: To find the explicit expression for P(k), we would need to calculate the values of C(n, k) for each k and substitute them into the expression for P(k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of length n consisting of digits 1, 2, 3, and 4 that have an even number of 1s is given by E(n) = O(n) = 2^(n-1) * (P(0) + P(1) + P(2) + ... + P(n)).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_34</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n-k+3)*2^(n-k-2)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_34']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all sequences of positive integer numbers have sum n, for integer k&lt;n-1, how many times does the number k appear, as an expression of n and k?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Consider a row of n points, with n-1 gaps.
+2. For each of the n-1 gaps, we can choose to insert a divider or not, and we count the number of points in each group, which forms a sequence (a_1, ..., a_(m+1)) for m dividers that sum up to n.
+3. Thus, the number of times that k appears among all the sequences is the number of times that a group of k points appear among all the divider configurations.
+4. To get this number, we can find a k-point group and isolate it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $n$ be a positive integer. We want to count the number of times that the number $k$ appears in all sequences of positive integers that sum to $n$, for $k&lt;n-1$.
+
+We can solve this problem by considering a row of $n$ points, with $n-1$ gaps. For each of the $n-1$ gaps, we can choose to insert a divider or not. If we insert a divider, then the points to the left of the divider form a group, and the points to the right of the divider form a group. If we do not insert a divider, then the points form a single group.
+
+The number of sequences of positive integers that sum to $n$ is equal to the number of ways to choose which gaps to insert dividers into. This is equal to the number of ways to choose a subset of the $n-1$ gaps, which is equal to $\binom{n-1}{k}$.
+
+For each sequence of positive integers that sums to $n$, the number of times that the number $k$ appears is equal to the number of groups of $k$ points in the sequence. This is equal to the number of ways to choose $k$ gaps to insert dividers into, which is equal to $\binom{n-1}{k}$.
+
+Therefore, the number of times that the number $k$ appears in all sequences of positive integers that sum to $n$ is equal to $\binom{n-1}{k}^2$.
+
+For example, consider the case $n=6$. There are $\binom{6-1}{3}=20$ sequences of positive integers that sum to $6$. The number of times that the number $3$ appears in each of these sequences is equal to $\binom{6-1}{3}=2$. Therefore, the total number of times that the number $3$ appears in all sequences of positive integers that sum to $6$ is $20\cdot2=40$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of times that the number $k$ appears in all sequences of positive integers that sum to $n$ is $\binom{n-1}{k}^2$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

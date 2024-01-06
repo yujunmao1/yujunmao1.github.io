@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_27</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_27']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let n be 22...22, with a total of 1980 digits. What is n mod 1982?
+
+You may find the following information useful:
+
+1. x^2-y^2=(x+y)(x-y).
+2. Let a be a positive integer and p be a prime. Then a^p≡a mod p.
+3. If p is a prime and p | ab, then p | a or p | b (or both). More generally, if p | a_1*a_2*...*a_n, then p | a_i for at least one a_i.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve for n mod 1982, we first need to understand what n looks like. The number n is a sequence of 1980 digits, all of which are 2. We can express n as:
+
+n = 22...22 (1980 times)
+
+We can also write n as a sum of 2&#x27;s, each multiplied by a power of 10:
+
+n = 2 * 10^(1979) + 2 * 10^(1978) + ... + 2 * 10^1 + 2 * 10^0
+
+This is a geometric series where the first term a = 2 and the common ratio r = 10. However, since we are interested in n mod 1982, we can simplify this expression by considering the properties of modular arithmetic.
+
+First, let&#x27;s consider the prime factorization of 1982:
+
+1982 = 2 * 991
+
+Since 1982 is not a prime number, we cannot directly apply Fermat&#x27;s Little Theorem (property 2). However, we can use the Chinese Remainder Theorem to solve n mod 1982 by separately considering n mod 2 and n mod 991.
+
+For n mod 2:
+Since n is composed entirely of the digit 2, it is clear that n is even. Therefore, n mod 2 = 0.
+
+For n mod 991:
+We can use property 2 (Fermat&#x27;s Little Theorem) because 991 is a prime number. According to Fermat&#x27;s Little Theorem, for any integer a not divisible by 991, we have:
+
+a^(991) ≡ a (mod 991)
+
+Since 10 is not divisible by 991, we can apply this theorem to 10^(991):
+
+10^(991) ≡ 10 (mod 991)
+
+Now, let&#x27;s consider the powers of 10 in n. We can write:
+
+10^(1980) = (10^(991))^2 * 10^(-2)
+
+Applying Fermat&#x27;s Little Theorem to 10^(991) and considering the square, we get:
+
+10^(1980) ≡ (10^2) (mod 991)
+10^(1980) ≡ 100 (mod 991)
+
+Now, we can use this result to simplify n mod 991. Since n is a sum of 2&#x27;s multiplied by powers of 10, we can write:
+
+n = 2 * (10^(1979) + 10^(1978) + ... + 10^1 + 10^0)
+
+We can group every 991 powers of 10 together and apply our result:
+
+n ≡ 2 * (10^(1979 mod 991) + 10^(1978 mod 991) + ... + 10^(1 mod 991) + 10^(0 mod 991)) (mod 991)
+
+Since 1979 mod 991 = 997, 1978 mod 991 = 996, ..., 1 mod 991 = 1, 0 mod 991 = 0, we have:
+
+n ≡ 2 * (10^997 + 10^996 + ... + 10^1 + 10^0) (mod 991)
+
+But we know that 10^991 ≡ 10 (mod 991), so we can reduce each term:
+
+n ≡ 2 * (10^(6) + 10^(5) + ... + 10^1 + 10^0) (mod 991)
+
+Now we calculate the sum of the geometric series:
+
+n ≡ 2 * (10^6 + 10^5 + ... + 10^1 + 10^0) (mod 991)
+n ≡ 2 * (10^7 - 1) / (10 - 1) (mod 991)
+n ≡ 2 * (10^7 - 1) / 9 (mod 991)
+
+Now we need to calculate 10^7 mod 991 and then proceed with the calculation. However, this is a very large number to compute directly, so we can use the fact that 10^3 ≡ -1 (mod 991) (since 10^3 - 1 = 999, which is divisible by 991) to simplify the calculation:
+
+10^7 = (10^3)^2 * 10
+10^7 ≡ (-1)^2 * 10 (mod 991)
+10^7 ≡ 10 (mod 991)
+
+Now we can substitute this back into our expression for n:
+
+n ≡ 2 * (10 - 1) / 9 (mod 991)
+n ≡ 2 * 1 / 9 (mod 991)
+n ≡ 2 / 9 (mod 991)
+
+To find the multiplicative inverse of 9 mod 991, we can use the extended Euclidean algorithm or simply test numbers until we find one that satisfies:
+
+9 * x ≡ 1 (mod 991)
+
+By testing, we find that 9 * 110 ≡ 1 (mod 991), so the multiplicative inverse of 9 mod 991 is 110. Now we can find n mod 991:
+
+n ≡ 2 * 110 (mod 991)
+n ≡ 220 (mod 991)
+
+Now we have:
+
+n mod 2 = 0
+n mod 991 = 220
+
+Using the Chinese Remainder Theorem, we can find a number x such that:
+
+x ≡ 0 (mod 2)
+x ≡ 220 (mod 991)
+
+Since 1982 = 2 * 991, we need to find a number that is 0 mod 2 and 220 mod 991. The number 220 already satisfies both conditions because it is even and congruent to 220 mod 991. Therefore, we have:
+
+n mod 1982 = 220
+
+So the final answer is:
+
+n mod 1982 = 220</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number n, which consists of 1980 repeated digits of 2, is congruent to 220 modulo 1982, so n mod 1982 = 220.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

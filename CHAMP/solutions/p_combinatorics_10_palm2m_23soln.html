@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_10</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_10']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many sequences of positive integer numbers have sum n, as an expression of n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Consider a row of n points, with n-1 gaps.
+2. For each of the n-1 gaps, we can choose to insert a divider or not, thus with 2^(n-1) possible divider configurations.
+3. Each divider configuration can be converted into a sequence of sum n whose entries are the number of points in each group separated by the dividers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences of positive integer numbers that have sum $n$ is given by the Bell number $B_n$. The Bell numbers count the number of ways to partition a set of $n$ elements into non-empty subsets.
+
+One way to see this is to consider the following problem. We are given a row of $n$ points, with $n-1$ gaps. For each of the $n-1$ gaps, we can choose to insert a divider or not. This gives $2^{n-1}$ possible divider configurations. Each divider configuration can be converted into a sequence of sum $n$ whose entries are the number of points in each group separated by the dividers.
+
+For example, if $n=3$, we could have the following divider configurations:
+
+* No dividers: This corresponds to the sequence $(1,1,1)$.
+* One divider: This corresponds to the sequences $(1,2)$ and $(2,1)$.
+* Two dividers: This corresponds to the sequences $(1,3)$, $(2,2)$, and $(3,1)$.
+
+The total number of sequences of sum $n$ is therefore $2^{n-1}$.
+
+Another way to see this is to consider the following problem. We are given a set of $n$ objects, and we want to choose $k$ of them to put into a box. This can be done in $\binom{n}{k}$ ways.
+
+Now, suppose that we want to choose $k$ objects from the set and then arrange them in a sequence. This can be done in $k!$ ways.
+
+Therefore, the number of sequences of sum $n$ is given by
+
+$$\sum_{k=0}^n \binom{n}{k} k! = B_n.$$
+
+The Bell numbers have been studied extensively by mathematicians, and they have many interesting properties. For example, it is known that $B_n$ satisfies the recurrence relation
+
+$$B_n = \sum_{k=0}^{n-1} B_k B_{n-1-k}.$$
+
+This recurrence relation can be used to generate the Bell numbers for any $n$.
+
+The Bell numbers also have a number of interesting combinatorial interpretations. For example, they can be used to count the number of ways to partition a set of $n$ elements into non-empty subsets, the number of ways to choose a subset of $k$ elements from a set of $n$ elements, and the number of ways to arrange $n$ objects in a sequence.
+
+The Bell numbers are a fascinating and important object of study in mathematics. They have many interesting properties and combinatorial interpretations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences of positive integer numbers that have sum $n$ is given by the Bell number $B_n$, which counts the number of ways to partition a set of $n$ elements into non-empty subsets.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

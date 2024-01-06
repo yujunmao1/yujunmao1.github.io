@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_30</td>
+            <td>GPT-4</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_30']
+messages = problem.conversations['GPT-4|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?
+
+You may find the following information useful:
+
+1. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem is asking for the smallest value of the sum a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) where s is the sum of all a_i&#x27;s. 
+
+Let&#x27;s denote the sum as S. We have:
+
+S = a_1/(s-a_1) + a_2/(s-a_2) + ... + a_n/(s-a_n)
+
+We can rewrite this as:
+
+S = a_1/(s-a_1) + a_2/(s-a_2) + ... + a_n/(s-a_n)
+  = a_1*s/(s*(s-a_1)) + a_2*s/(s*(s-a_2)) + ... + a_n*s/(s*(s-a_n))
+  = a_1*s/(s^2 - a_1*s) + a_2*s/(s^2 - a_2*s) + ... + a_n*s/(s^2 - a_n*s)
+
+Now, let&#x27;s use the given information. We know that for real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, the sum achieves the minimum value when they are sorted in the opposite way. 
+
+In our case, we can consider a_i&#x27;s as a_1, a_2, ..., a_n and b_i&#x27;s as 1/(s^2 - a_1*s), 1/(s^2 - a_2*s), ..., 1/(s^2 - a_n*s). 
+
+Since a_i&#x27;s are positive and sorted in ascending order, b_i&#x27;s are sorted in descending order. Therefore, to minimize the sum, we should pair the largest a_i with the smallest b_i, the second largest a_i with the second smallest b_i, and so on. 
+
+This gives us:
+
+S_min = a_1/(s^2 - a_n*s) + a_2/(s^2 - a_(n-1)*s) + ... + a_n/(s^2 - a_1*s)
+
+Now, let&#x27;s simplify this. Since s = a_1 + a_2 + ... + a_n, we have s^2 = (a_1 + a_2 + ... + a_n)^2. 
+
+Substituting this into the equation, we get:
+
+S_min = a_1/(a_1 + a_2 + ... + a_n - a_n*a_1) + a_2/(a_1 + a_2 + ... + a_n - a_(n-1)*a_2) + ... + a_n/(a_1 + a_2 + ... + a_n - a_1*a_n)
+
+Simplifying further, we get:
+
+S_min = a_1/(a_2 + ... + a_n) + a_2/(a_1 + a_3 + ... + a_n) + ... + a_n/(a_1 + a_2 + ... + a_(n-1))
+
+This is the smallest value of the sum as an expression of n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the sum a_1/(s-a_1) + a_2/(s-a_2) + ... + a_n/(s-a_n) for positive numbers a_1, ..., a_n is given by a_1/(a_2 + ... + a_n) + a_2/(a_1 + a_3 + ... + a_n) + ... + a_n/(a_1 + a_2 + ... + a_(n-1)).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

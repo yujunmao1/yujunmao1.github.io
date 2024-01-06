@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_40</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 125</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_40']
+messages = problem.conversations['GPT-3.5|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a_n be the number of all permutations p of {1, ..., n} with min(n-|p(i)−i|, |p(i)−i|)≤1 for all i. Find a_10.
+
+You may find the following information useful:
+
+1. Study different ways to construct a permutation of n numbers from permutations of n-1 and n-2 numbers, with the more restrictive condition of |p(i)−i|≤1 (i.e., no wrap-around).
+2. Check if any cyclic shifts are allowed under the definition.
+3. C(n, r)=n!/(r!*(n-r)!)=n*(n-1)*(n-2)*...*(n-r+1)/r!.
+4. Find the number of no-wrap-around permutations of n numbers in terms of such permutations of n-1 and n-2 numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the information provided and break it down into smaller cases.
+
+Case 1: n = 1
+In this case, there is only one number, so there is only one possible permutation. Therefore, a_1 = 1.
+
+Case 2: n = 2
+In this case, we have two numbers, 1 and 2. Let&#x27;s consider the possible permutations:
+
+- If the numbers are in increasing order (1, 2), then |p(1) - 1| = 0 and |p(2) - 2| = 0, so this permutation satisfies the condition.
+- If the numbers are in decreasing order (2, 1), then |p(1) - 1| = 1 and |p(2) - 2| = 1, so this permutation also satisfies the condition.
+
+Therefore, there are 2 possible permutations for n = 2, so a_2 = 2.
+
+Case 3: n &gt; 2
+In this case, we will use the information provided to find a recursive formula for a_n in terms of a_(n-1) and a_(n-2).
+
+Consider a permutation p of {1, ..., n}. Let&#x27;s focus on the first number, p(1). There are two possibilities:
+
+1. p(1) = 1
+In this case, the remaining numbers {2, ..., n} can be permuted in a way that satisfies the condition. This is equivalent to finding a permutation of {1, ..., n-1} that satisfies the condition. Therefore, the number of permutations in this case is a_(n-1).
+
+2. p(1) ≠ 1
+In this case, we have two sub-cases:
+
+2.1. p(1) = n
+In this sub-case, the remaining numbers {1, ..., n-1} can be permuted in a way that satisfies the condition. This is equivalent to finding a permutation of {1, ..., n-1} that satisfies the condition. Therefore, the number of permutations in this sub-case is a_(n-1).
+
+2.2. p(1) ≠ n
+In this sub-case, the remaining numbers {1, ..., n-1} can be permuted in a way that satisfies the condition, but with the additional restriction that the first number must be adjacent to n. This is equivalent to finding a permutation of {1, ..., n-2} that satisfies the condition. Therefore, the number of permutations in this sub-case is a_(n-2).
+
+Therefore, the total number of permutations for n &gt; 2 is a_(n-1) + a_(n-1) + a_(n-2).
+
+Using this recursive formula, we can calculate a_10 as follows:
+
+a_3 = a_2 + a_2 + a_1 = 2 + 2 + 1 = 5
+a_4 = a_3 + a_3 + a_2 = 5 + 5 + 2 = 12
+a_5 = a_4 + a_4 + a_3 = 12 + 12 + 5 = 29
+a_6 = a_5 + a_5 + a_4 = 29 + 29 + 12 = 70
+a_7 = a_6 + a_6 + a_5 = 70 + 70 + 29 = 169
+a_8 = a_7 + a_7 + a_6 = 169 + 169 + 70 = 408
+a_9 = a_8 + a_8 + a_7 = 408 + 408 + 169 = 985
+a_10 = a_9 + a_9 + a_8 = 985 + 985 + 408 = 2378
+
+Therefore, a_10 = 2378.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of permutations of {1, ..., 10} satisfying the given condition is 2378.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

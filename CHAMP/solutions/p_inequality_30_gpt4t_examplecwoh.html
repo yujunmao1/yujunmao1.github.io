@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>Example w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_30']
+messages = problem.conversations['GPT-4 Turbo|Example w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Please give an example that applies the following concept:
+
+For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The concept you&#x27;re referring to is known as the rearrangement inequality. It states that when you have two sequences of real numbers, each sorted in the same order (either both non-decreasing or both non-increasing), the sum of the products of corresponding terms is maximized. Conversely, if one sequence is sorted in ascending order and the other in descending order, the sum of the products is minimized.
+
+Let&#x27;s consider an example with n = 3 to illustrate this concept.
+
+Let \( a_1 = 1, a_2 = 3, a_3 = 5 \) and \( b_1 = 2, b_2 = 4, b_3 = 6 \). Both sequences are sorted in ascending order.
+
+The maximum sum of products, according to the rearrangement inequality, is obtained when both sequences are aligned in the same order:
+
+\( a_1 \cdot b_1 + a_2 \cdot b_2 + a_3 \cdot b_3 = 1 \cdot 2 + 3 \cdot 4 + 5 \cdot 6 = 2 + 12 + 30 = 44 \)
+
+Now, let&#x27;s consider a permutation of \( (b_1, b_2, b_3) \), say \( (c_1, c_2, c_3) = (4, 6, 2) \). The sum of products with this permutation would be:
+
+\( a_1 \cdot c_1 + a_2 \cdot c_2 + a_3 \cdot c_3 = 1 \cdot 4 + 3 \cdot 6 + 5 \cdot 2 = 4 + 18 + 10 = 32 \)
+
+This sum is less than the maximum sum we calculated before.
+
+Finally, the minimum sum of products is obtained when one sequence is in ascending order and the other is in descending order:
+
+\( a_1 \cdot b_3 + a_2 \cdot b_2 + a_3 \cdot b_1 = 1 \cdot 6 + 3 \cdot 4 + 5 \cdot 2 = 6 + 12 + 10 = 28 \)
+
+So, we have shown that:
+
+\( a_1 \cdot b_1 + a_2 \cdot b_2 + a_3 \cdot b_3 \geq a_1 \cdot c_1 + a_2 \cdot c_2 + a_3 \cdot c_3 \geq a_1 \cdot b_3 + a_2 \cdot b_2 + a_3 \cdot b_1 \)
+
+\( 44 \geq 32 \geq 28 \)
+
+This example confirms the rearrangement inequality, demonstrating that the sum of products is maximized when the sequences are aligned in the same order and minimized when they are in opposite orders.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?
+
+You may find the above concept helpful.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the given expression, we can use the Cauchy-Schwarz inequality. The expression we want to minimize is:
+
+\[ \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} \]
+
+Let&#x27;s consider the sequences \( (a_1, a_2, \ldots, a_n) \) and \( \left(\frac{1}{s-a_1}, \frac{1}{s-a_2}, \ldots, \frac{1}{s-a_n}\right) \). Applying the Cauchy-Schwarz inequality to these two sequences, we get:
+
+\[ \left( a_1 \cdot \frac{1}{s-a_1} + a_2 \cdot \frac{1}{s-a_2} + \ldots + a_n \cdot \frac{1}{s-a_n} \right)^2 \leq \left( a_1^2 + a_2^2 + \ldots + a_n^2 \right) \left( \frac{1}{(s-a_1)^2} + \frac{1}{(s-a_2)^2} + \ldots + \frac{1}{(s-a_n)^2} \right) \]
+
+We want to minimize the left-hand side, so we need to find a lower bound for the right-hand side. Notice that by the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), we have:
+
+\[ \frac{a_1^2 + a_2^2 + \ldots + a_n^2}{n} \geq \sqrt[n]{a_1^2 \cdot a_2^2 \cdot \ldots \cdot a_n^2} \]
+
+Since \( a_1, a_2, \ldots, a_n \) are positive, we can take the square root of both sides:
+
+\[ \sqrt{\frac{a_1^2 + a_2^2 + \ldots + a_n^2}{n}} \geq \sqrt[n]{a_1 \cdot a_2 \cdot \ldots \cdot a_n} \]
+
+Now, since \( s = a_1 + a_2 + \ldots + a_n \), we have \( s &gt; a_i \) for all \( i \), and thus \( s - a_i &lt; s \). This implies that \( \frac{1}{s-a_i} &gt; \frac{1}{s} \) for all \( i \). Therefore:
+
+\[ \frac{1}{(s-a_1)^2} + \frac{1}{(s-a_2)^2} + \ldots + \frac{1}{(s-a_n)^2} &gt; \frac{n}{s^2} \]
+
+Combining these inequalities, we get:
+
+\[ \left( \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} \right)^2 \leq n \cdot \frac{n}{s^2} \]
+
+Taking the square root of both sides:
+
+\[ \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} \leq \frac{n}{s} \]
+
+Since we are looking for the smallest value, we can consider the equality case of the AM-GM inequality, which occurs when all \( a_i \) are equal. If \( a_1 = a_2 = \ldots = a_n = \frac{s}{n} \), then:
+
+\[ \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} = n \cdot \frac{\frac{s}{n}}{s - \frac{s}{n}} = n \cdot \frac{\frac{s}{n}}{\frac{(n-1)s}{n}} = n \cdot \frac{1}{n-1} = \frac{n}{n-1} \]
+
+Therefore, the smallest value of the given expression, as an expression of \( n \), is:
+
+\[ \frac{n}{n-1} \]</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} \) for positive numbers \( a_1, \ldots, a_n \) with \( s = a_1 + a_2 + \ldots + a_n \) is \( \frac{n}{n-1} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

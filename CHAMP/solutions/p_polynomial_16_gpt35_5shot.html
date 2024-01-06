@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_16</td>
+            <td>GPT-3.5</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> k-2 (i.e., all of them)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_16']
+messages = problem.conversations['GPT-3.5|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find 3^105+4^105 mod 7.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since 105 is odd, we have 3+4 | 3^105+4^105.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What is the smallest value of |x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z|?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have 2(|x+y-z|+|x-y+z|+|-x+y+z|)=(|x+y-z|+|x-y+z|)+(|x-y+z|+|-x+y+z|)+(|x+y-z|+|-x+y+z|)≥|2x|+|2z|+|2y|=2(|x|+|y|+|z|).
+2. Thus, |x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z|≥0.
+3. So the smallest value is 0, achieved at e.g., x=y=z=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of strings consisting of 5 digits of 1, 2 and 3 where no two 1s are neighbors.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let f(n) be the number of length-n strings that end with 1 and g(n) be the number of length-n strings that end with either 2 or 3.
+2. To construct a length-(n+1) string that ends with 1, we have to append 1 to a length-n string that ends with 2 or 3, so f(n+1)=g(n).
+3. To construct a length-(n+1) string that ends with 2 or 3, we can append 2 or 3 to a length-n string that ends with anything, so g(n+1)=2g(n)+2f(n).
+4. Thus, starting from f(1)=1, g(1)=2, we have f(2)=g(1)=2, f(3)=g(2)=6, f(4)=g(3)=16, f(5)=g(4)=44, f(6)=g(5)=120.
+5. So the number of such strings is f(5)+g(5)=164.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What are possible values of n mod k if x^n-y^n is divisible by x^k-y^k for integer n, k?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let n=kq+r for integer q, r and r&lt;k.
+2. Thus, x^n-y^n=x^(kq+r)-y^(kq+r)=x^(kq)*x^r-y^(kq)*y^r=x^(kq)*x^r-y^(kq)x^r+y^(kq)*x^r-y^(kq)*y^r=x^r*(x^kq-y^kq)+y^(kq)*(x^r-y^r).
+3. We have x^k-y^k | (x^k)^q-(y^k)^q, which means that x^k-y^k | x^r*(x^(kq)-y^(kq)).
+4. So we require x^k-y^k | x^r-y^r, which is only true when r=0.
+5. Thus, the only possible value of n mod k is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If a_i&gt;0 for i=1, 2, ..., n and a_1*a_2*...*a_n=1, what is the smallest value of (1+a_1)(1+a_2)...(1+a_n) as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have 1+a_i≥2*sqrt(1*a_i)=2*sqrt(a_i).
+2. Since all a_i&gt;0, we have (1+a_1)(1+a_2)...(1+a_n)≥2^n*sqrt(a_1)*sqrt(a_2)*...*sqrt(a_n)=2^n*sqrt(a_1*a_2*...*a_n)=2^n.
+3. So the smallest value is 2^n, achieved when a_1=a_2=...=a_n=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial f(x) has integer coefficients and there exists an integer k such that f(k), f(k+1), f(k+2) are all divisible by 3. For integer m in {k+3, k+4, ..., 2k}, at least how many of them have f(m) divisible by 3, as an expression of k?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. Since f(k), f(k+1), f(k+2) are all divisible by 3, we can write f(k)=3a, f(k+1)=3b, f(k+2)=3c for some integers a, b, c.
+2. Consider the polynomial g(x)=f(x)-3a. Since f(x) and 3a have the same remainders when divided by 3, g(x) has the same divisibility properties as f(x) with respect to 3.
+3. We have g(k)=f(k)-3a=3a-3a=0, g(k+1)=f(k+1)-3a=3b-3a=3(b-a), g(k+2)=f(k+2)-3a=3c-3a=3(c-a).
+4. Since g(k)=0, we know that k is a root of g(x). Similarly, k+1 and k+2 are also roots of g(x).
+5. We want to find the number of integers m in {k+3, k+4, ..., 2k} such that g(m) is divisible by 3.
+6. Notice that for any integer m in {k+3, k+4, ..., 2k}, we can write m=k+p for some integer p in {3, 4, ..., k}.
+7. We have g(m)=g(k+p)=f(k+p)-3a. Since k is a root of g(x), we have g(k+p)=f(k+p)-3a=0-3a=-3a, which is divisible by 3.
+8. Therefore, for any integer m in {k+3, k+4, ..., 2k}, g(m) is divisible by 3.
+9. So the minimum number of integers in {k+3, k+4, ..., 2k} that have f(m) divisible by 3 is k-2, achieved when all integers in {k+3, k+4, ..., 2k} are included.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum number of integers in {k+3, k+4, ..., 2k} that have f(m) divisible by 3 is k-2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

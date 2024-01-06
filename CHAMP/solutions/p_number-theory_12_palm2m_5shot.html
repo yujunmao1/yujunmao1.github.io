@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_12</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 76</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_12']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest positive integer a, so that 1971 | 50^n+23^n*a for odd n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since 1971=27*73, we need 27 | 50^n+23^n*a and 73 | 50^n+23^n*a.
+2. We have 50^n+23^n*a mod 27=23^n+23^n*a mod 27=23^n*(a+1) mod 27=0.
+3. In addition, for odd n, we have 50^n+23^n*a mod 73=(-23)^n+23^n*a mod 73=23^n*(a-1) mod 73=0.
+4. Since gcd(27, 23)=gcd(73, 23)=1, we must have gcd(27, 23^n)=gcd(73, 23^n)=1, so 27 | a+1 and 73 | a-1.
+5. In other words, a mod 27=-1 and a mod 73=1.
+6. Thus, a=27x-1=73y+1 and 27 | 73y+2.
+7. We have 73 mod 27=19, so the sequence of 73y+2 mod 27, starting for y=1, 2, 3, ... is 21, 13, 5, 24, 16, 8, 0.
+8. We have 27 | 73y+2 for y=7, and a=73y+2=512.
+9. Thus, a=512.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+When (x+y+z)^1999 is expanded and like terms are collected (e.g., collecting 2*x^2*y*z^3 and 3*x^2*y*z^3 into a single term of 5*x^2*y*z^3), how many terms will there be?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For the term x^a*y^b*z^c to appear in the expansion, we must have a+b+c=1999 and a, b, c≥0.
+2. Thus, for any c, we know that a+b=1999-c, and there are 1999-c+1 different values of (a, b), ranging from (0, 1999-c) to (1999-c, 0).
+3. c can range from 0 to 1999.
+4. Thus, the total number of terms in the expansion is 2000+1999+...+1=(2000+1)*2000/2=2001000.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of x^2 mod 30 for prime number x&gt;30.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We let x=30m+n, and since x is prime, we need gcd(30,n)=1.
+2. Thus, n can be 1, 7, 11, 13, 17, 19, 23, 29.
+3. We have x^2 mod 30=900m^2+60mn+n^2 mod 30=n^2 mod 30.
+4. Substituing each value of n, we see that possible values for n^2 mod 30 are 1 and 19.
+5. These two values are achieved for example by x=31 and x=37.
+6. So all possible values are 1 and 19.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For the polynomial x^3+4x^2+2x+a, what value of a results in one root being equal to the sum of the other two roots?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let the three roots be x_1, x_2, x_3 and suppose that x_3=x_1+x_2.
+2. We have x_1+x_2+x_3=-4, x_1*x_2+x_2*x_3+x_1*x_3=2 and x_1*x_2*x_3=-a.
+3. Thus, we have x_1+x_2=x_3=-2 from the first equation.
+4. From the second equation, we have x_1*x_2=2-x_3*(x_1+x_2)=2-(-2)*(-2)=-2.
+5. Thus, a=-x_1*x_2*x_3=-(-2)*(-2)=-4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1, x_2, x_3 be the roots of x^3+3x^2-7x+1. Find x_1^2+x_2^2+x_3^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have (x_1+x_2+x_3)^2=x_1^2+x_2^2+x_3^2+2(x_1*x_2+x_2*x_3+x_1*x_3).
+2. We also have x_1+x_2+x_3=-3 and x_1*x_2+x_2*x_3+x_1*x_3=-7.
+3. Thus, x_1^2+x_2^2+x_3^2=(x_1+x_2+x_3)^2-2(x_1*x_2+x_2*x_3+x_1*x_3)=(-3)^2-2*(-7)=23.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+An integer a is called automorphic if a^2 ends in a. For example, 5 is automorphic because 5^2=25 ends in 5. 25 is also automorphic because 25^2=625 ends in 25. Find all two-digit automorphic numbers besides 25.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only two-digit automorphic number besides 25 is 50.
+
+To see this, note that any two-digit number $n$ can be written in the form $10a+b$, where $0 \leq b &lt; 10$. Then $n^2 = (10a+b)^2 = 100a^2 + 20ab + b^2$. If $n^2$ ends in $n$, then $b^2$ must end in $n$. This means that $b$ must be either $0$ or $5$.
+
+If $b=0$, then $n^2 = 100a^2$, which means that $n$ must be a multiple of $5$. But the only two-digit multiple of $5$ is $50$.
+
+If $b=5$, then $n^2 = 100a^2 + 100a + 25$. This means that $n$ must be of the form $10a+5$. But the only two-digit number of the form $10a+5$ is $50$.
+
+Therefore, the only two-digit automorphic number besides 25 is 50.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only two-digit automorphic number besides 25 is 50.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

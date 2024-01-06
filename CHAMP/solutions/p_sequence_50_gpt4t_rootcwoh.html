@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_50</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_50']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a sequence be the defined as a_1=a_2=1, and a_n=(a_(n-1)^2+2)/a_(n-2). How many values in a_1, a_2, ..., a_100 are integers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find a pattern in the sequence. Let&#x27;s start by calculating the first few terms using the given recursive formula:
+
+Given:
+a_1 = 1
+a_2 = 1
+
+Now, let&#x27;s calculate a_3 using the formula:
+a_3 = (a_2^2 + 2) / a_1 = (1^2 + 2) / 1 = 3 / 1 = 3
+
+Next, calculate a_4:
+a_4 = (a_3^2 + 2) / a_2 = (3^2 + 2) / 1 = 11 / 1 = 11
+
+Now, calculate a_5:
+a_5 = (a_4^2 + 2) / a_3 = (11^2 + 2) / 3 = 123 / 3 = 41
+
+Let&#x27;s calculate a_6:
+a_6 = (a_5^2 + 2) / a_4 = (41^2 + 2) / 11 = 1683 / 11 = 153
+
+We can see that the sequence is not simply increasing or decreasing, and the terms are not obviously following a simple pattern. However, we can notice that the denominator in each step is a previous term of the sequence, which suggests that if a term is an integer, the next term that uses it as a denominator will also be an integer.
+
+Let&#x27;s try to prove that if a_n is an integer, then a_(n+2) is also an integer.
+
+Assume a_n is an integer. Then, according to the recursive formula, we have:
+a_(n+2) = (a_(n+1)^2 + 2) / a_n
+
+Since a_n is an integer, for a_(n+2) to be an integer, (a_(n+1)^2 + 2) must be a multiple of a_n.
+
+Now, let&#x27;s look at the terms we&#x27;ve calculated:
+a_1 = 1 (integer)
+a_2 = 1 (integer)
+a_3 = 3 (integer)
+a_4 = 11 (integer)
+a_5 = 41 (integer)
+a_6 = 153 (integer)
+
+We can see that every term we&#x27;ve calculated so far is an integer. This suggests that the pattern may continue, and every term in the sequence might be an integer. To prove this, we need to show that if a_n is an integer, then a_(n+1) will also be an integer.
+
+Let&#x27;s assume that a_n is an integer for some n ≥ 3. Then, we have:
+a_(n+1) = (a_n^2 + 2) / a_(n-1)
+
+Since a_(n-1) is also an integer (by our assumption that all previous terms are integers), we need to show that a_n^2 + 2 is a multiple of a_(n-1).
+
+We know that a_(n-1) * a_(n+1) = a_n^2 + 2, which was derived from the recursive formula. This means that a_n^2 + 2 is indeed a multiple of a_(n-1), and thus a_(n+1) is an integer.
+
+Since we have shown that if a_n is an integer, then a_(n+1) is also an integer, and we know that a_1 and a_2 are integers, it follows by induction that all terms in the sequence up to a_100 are integers.
+
+Therefore, all 100 values in the sequence a_1, a_2, ..., a_100 are integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>All 100 values in the sequence a_1, a_2, ..., a_100 are integers.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

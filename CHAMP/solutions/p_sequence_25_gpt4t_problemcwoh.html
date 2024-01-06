@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_25</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> It is not possible</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_25']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: The polynomial 1-x+x^2-x^3+...+x^8-x^9 may be written in the form a_0+a_1*y+a_2*y^2+...+a_9*y^9, where y=x+1 and each a_i is a constant. Find the value of a_2.
+Step-wise solution:
+1. We have f(x)=1-x+x^2-x^3+...+x^8-x^9=(1-x^10)/(1+x).
+2. Substituting x=y-1, we have f(x)=(1-(y-1)^10)/y.
+3. We have the coefficient C(10, 3)*y^3*(-1)^7=-120 for the term y^3 in (y-1)^10.
+4. Thus, the coefficient a_2 for y^2 in (1-(y-1)^10)/y is -(-120)=120.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Is it possible to select an infinite geometric sequence from the sequence 1, 1/2, 1/4, 1/8, 1/16, ... such that the sum is 1/5, and if so, what is the sequence?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if it&#x27;s possible to select an infinite geometric sequence from the given sequence \(1, \frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{16}, \ldots\) such that the sum is \(\frac{1}{5}\), we need to understand the nature of the given sequence and the properties of geometric sequences.
+
+The given sequence is already a geometric sequence with the first term \(a_1 = 1\) and a common ratio \(r = \frac{1}{2}\). The sum \(S\) of an infinite geometric sequence with first term \(a\) and common ratio \(r\) (where \(|r| &lt; 1\)) is given by the formula:
+
+\[ S = \frac{a}{1 - r} \]
+
+In our case, we want to find if there&#x27;s a subsequence that sums to \(\frac{1}{5}\). To form a subsequence, we can start from any term in the original sequence and maintain the common ratio. Let&#x27;s say we start from the \(n\)th term, which is \(\frac{1}{2^{n-1}}\), and maintain the common ratio of \(\frac{1}{2}\). The sum of this new sequence would be:
+
+\[ S_n = \frac{\frac{1}{2^{n-1}}}{1 - \frac{1}{2}} = \frac{\frac{1}{2^{n-1}}}{\frac{1}{2}} = \frac{1}{2^{n-2}} \]
+
+We want this sum to be \(\frac{1}{5}\), so we set up the equation:
+
+\[ \frac{1}{2^{n-2}} = \frac{1}{5} \]
+
+Solving for \(n\):
+
+\[ 2^{n-2} = 5 \]
+
+Since \(2^{n-2}\) is a power of 2, it can never equal 5, which is not a power of 2. Therefore, there is no integer \(n\) such that starting from the \(n\)th term of the original sequence and maintaining the common ratio of \(\frac{1}{2}\) will result in a sum of \(\frac{1}{5}\).
+
+Hence, it is not possible to select an infinite geometric sequence from the given sequence such that the sum is \(\frac{1}{5}\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>It is not possible to select an infinite geometric sequence from the given sequence \(1, \frac{1}{2}, \frac{1}{4}, \frac{1}{8}, \frac{1}{16}, \ldots\) such that the sum is \(\frac{1}{5}\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_35</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_35']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x)=(x^1958+x^1957+2)^1959=a_0+a_1*x+···+a_n*x^n. Find a_0−a_1/2−a_2/2+a_3−a_4/2−a_5/2+a_6-a_7/2-a_8/2+....
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let w to be the cube root of unity e^(i*pi/3).
+2. Thus, f(w)=(w^1958+w^1957+2)^1959=(w^2+w+2)^1959=1^1959=1=a_0+a_1*w+a_2*w^2+a_3+a_4*w+a_5*w^2+....</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x)=(x^{1958}+x^{1957}+2)^{1959}=a_0+a_1x+\cdots+a_nx^n$. We are asked to find $a_0-\frac{a_1}{2}-\frac{a_2}{2}+a_3-\frac{a_4}{2}-\frac{a_5}{2}+\cdots$.
+
+Let $w$ be a cube root of unity, i.e., $w^3=1$. Then $w^2+w+1=0$. We can write $f(x)$ as follows:
+
+$$f(x)=(x^{1958}+x^{1957}+2)^{1959}=(x^{1958}+x^{1957}+1+1)^{1959}=(x^{1958}+x^{1957}+1)^{1959}(1+1)^{1959}$$
+
+Now, using the binomial theorem, we can expand $(x^{1958}+x^{1957}+1)^{1959}$ as follows:
+
+$$(x^{1958}+x^{1957}+1)^{1959}=\sum_{k=0}^{1959}\binom{1959}{k}x^{1959-k}(x^{1958}+x^{1957})^k$$
+
+Similarly, we can expand $(1+1)^{1959}$ as follows:
+
+$$(1+1)^{1959}=\sum_{k=0}^{1959}\binom{1959}{k}1^k$$
+
+Therefore, we can write $f(x)$ as follows:
+
+$$f(x)=\sum_{k=0}^{1959}\binom{1959}{k}x^{1959-k}(x^{1958}+x^{1957})^k\sum_{k=0}^{1959}\binom{1959}{k}1^k$$
+
+$$f(x)=\sum_{k=0}^{1959}\sum_{j=0}^{1959}\binom{1959}{k}\binom{1959}{j}x^{1959-k}(x^{1958}+x^{1957})^j$$
+
+Now, let $w$ be a cube root of unity. Then $w^2+w+1=0$. Therefore, we can write $x^{1958}+x^{1957}$ as follows:
+
+$$x^{1958}+x^{1957}=(x^3)^676+(x^3)^675+1=(w^676+w^675+1)$$
+
+Now, using the binomial theorem, we can expand $(w^676+w^675+1)^{1959}$ as follows:
+
+$$(w^676+w^675+1)^{1959}=\sum_{k=0}^{1959}\binom{1959}{k}w^{676k}(w^675+1)^k$$
+
+Similarly, we can expand $(1+1)^{1959}$ as follows:
+
+$$(1+1)^{1959}=\sum_{k=0}^{1959}\binom{1959}{k}1^k$$
+
+Therefore, we can write $x^{1958}+x^{1957}$ as follows:
+
+$$x^{1958}+x^{1957}=\sum_{k=0}^{1959}\sum_{j=0}^{1959}\binom{1959}{k}\binom{1959}{j}w^{676k}(w^675+1)^j$$
+
+Substituting this into the expression for $f(x)$, we get:
+
+$$f(x)=\sum_{k=0}^{1959}\sum_{j=0}^{</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The answer is $\frac{1}{2}(1+w+w^2)$, where $w$ is a cube root of unity.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

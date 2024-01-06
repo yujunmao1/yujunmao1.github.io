@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_33</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 8</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_33']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. What is the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2?
+
+You may find the following information useful:
+
+1. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.
+2. a^n-1=(a-1)(a^(n-1)+a^(n-2)+...+a+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $0&lt;a&lt;b$ and that the sequences $\\{a_n\\}$ and $\\{b_n\\}$ are defined as follows:
+
+$$a_0 = a, \qquad b_0 = b, \qquad a_{n+1} = \sqrt{a_n b_n}, \qquad b_{n+1} = \frac{a_n + b_n}{2}.$$
+
+We are asked to find the value of
+
+$$\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2}.$$
+
+To do this, we will first find a recurrence relation for the sequence $\\{a_n\\}$. We have
+
+$$a_{n+1}^2 = a_n b_n = a_{n-1} b_{n-1}.$$
+
+Taking the square root of both sides, we get
+
+$$a_{n+1} = \pm \sqrt{a_{n-1} b_{n-1}}.$$
+
+Since $0&lt;a&lt;b$, we know that $a_n &gt; 0$ for all $n$. Therefore, we can write
+
+$$a_{n+1} = \sqrt{a_{n-1} b_{n-1}}.$$
+
+We can now find a recurrence relation for the sequence $\\{b_n\\}$. We have
+
+$$b_{n+1}^2 = \frac{(a_n + b_n)^2}{4} = \frac{a_n^2 + 2 a_n b_n + b_n^2}{4} = \frac{a_{n-1}^2 + 2 a_{n-1} b_{n-1} + b_{n-1}^2}{4}.$$
+
+Taking the square root of both sides, we get
+
+$$b_{n+1} = \pm \frac{\sqrt{a_{n-1}^2 + 2 a_{n-1} b_{n-1} + b_{n-1}^2}}{2}.$$
+
+Since $0&lt;a&lt;b$, we know that $b_n &gt; 0$ for all $n$. Therefore, we can write
+
+$$b_{n+1} = \frac{\sqrt{a_{n-1}^2 + 2 a_{n-1} b_{n-1} + b_{n-1}^2}}{2}.$$
+
+Now we can substitute these expressions for $a_{n+1}$ and $b_{n+1}$ into the expression for $\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2}$ to get
+
+\begin{align*}
+\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2} &amp;= \frac{\left(\sqrt{a_{n-1}^2 + 2 a_{n-1} b_{n-1} + b_{n-1}^2} - \sqrt{a_n b_n}\right) \left(\sqrt{a_{n-1}^2 + 2 a_{n-1} b_{n-1} + b_{n-1}^2} + \sqrt{a_n b_n}\right)}{(b_n - a_n)^2} \\
+&amp;= \frac{\sqrt{a_{n-1}^2 + 2 a_{n-1} b_{n-1} + b_{n-1}^2} - a_n - \sqrt{a_n b_n} + a_n}{(b_n - a_n)^2} \\
+&amp;= \frac{\sqrt{a_{n-1}^2 + 2 a_{n-1} b_{n-1} + b_{n-1}^2} - a_n}{(b_n - a_n)^2} \\
+&amp;= \frac{a_{n-1} + b_{n-1} - a_n}{(b_n - a_n)^2} \\
+&amp;= \frac{b_{n-1}}{(b_n - a_n)^2}.
+\end{align*}
+
+Therefore, the value of $\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of $\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2}$ is $\frac{b_{n-1}}{(b_n - a_n)^2}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

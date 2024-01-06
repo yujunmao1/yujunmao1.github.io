@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_54</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 pairs</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_54']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many pairs of positive odd integer (a, b) both under 100 make a^2+b^2 be a perfect square?
+
+You may find the following information useful:
+
+1. If a | c, b | c and gcd(a, b)=1, then ab | c.
+2. If gcd(a, b)=gcd(a, c)=1, then gcd(a, bc)=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we are looking for Pythagorean triples, which are sets of three positive integers (a, b, c) such that a^2 + b^2 = c^2. Since we are looking for pairs of odd integers (a, b) under 100, we need to find the odd values of a and b for which a^2 + b^2 is a perfect square.
+
+Let&#x27;s start by considering the properties of odd numbers and squares:
+
+1. The square of an odd number is always odd because (2n + 1)^2 = 4n^2 + 4n + 1 = 2(2n^2 + 2n) + 1, which is odd.
+2. The sum of two odd squares is even because odd + odd = even.
+
+So, we are looking for an even perfect square c^2 that can be expressed as the sum of two odd squares (a^2 + b^2).
+
+Let&#x27;s consider the primitive Pythagorean triples, which are triples (a, b, c) where gcd(a, b, c) = 1. For primitive Pythagorean triples, one of a or b is even, and the other is odd. Since we are looking for pairs of odd integers, we are not looking for primitive Pythagorean triples but rather multiples of them.
+
+Let&#x27;s start by listing the squares of odd numbers less than 100:
+
+1^2 = 1
+3^2 = 9
+5^2 = 25
+7^2 = 49
+9^2 = 81
+...
+49^2 = 2401
+
+Now, we need to find pairs (a^2, b^2) such that a^2 + b^2 is a perfect square. We can do this by iterating through the list of odd squares and checking if the sum with another odd square is a perfect square.
+
+However, this brute force method is inefficient. Instead, we can use the fact that all Pythagorean triples can be generated by the following formulas, where m and n are positive integers with m &gt; n:
+
+a = m^2 - n^2
+b = 2mn
+c = m^2 + n^2
+
+Since we are looking for odd a and b, we need m^2 - n^2 and 2mn to be odd. However, 2mn is always even, so we cannot use this formula directly. Instead, we need to find odd multiples of the primitive triples.
+
+Let&#x27;s consider the following approach:
+
+1. Generate all primitive Pythagorean triples with c &lt; 100 using the formula above, but only consider cases where m and n are both odd or both even (since we need a and b to be odd).
+2. For each primitive triple (a, b, c), find all odd multiples k such that ka and kb are both less than 100.
+
+Let&#x27;s start with step 1:
+
+For m and n both odd, a = m^2 - n^2 is even, which we don&#x27;t want.
+For m and n both even, a = m^2 - n^2 is also even, which we don&#x27;t want.
+
+So, we cannot directly use the formula for generating primitive Pythagorean triples. Instead, we need to find odd multiples of a and b from non-primitive triples.
+
+Let&#x27;s consider the smallest Pythagorean triple (3, 4, 5), where a and b are not both odd. If we multiply this triple by an odd number k, we get a new triple (3k, 4k, 5k), where 3k and 4k are not both odd. So, this approach does not work either.
+
+We are left with the brute force method of checking pairs of odd squares. Let&#x27;s write a simple program to do this:
+
+```python
+import math
+
+def is_perfect_square(n):
+    return math.isqrt(n) ** 2 == n
+
+count = 0
+for a in range(1, 100, 2):  # a is odd and less than 100
+    for b in range(a + 2, 100, 2):  # b is odd, greater than a, and less than 100
+        if is_perfect_square(a**2 + b**2):
+            count += 1
+            print(f&quot;({a}, {b})&quot;)
+
+print(f&quot;Total pairs: {count}&quot;)
+```
+
+This Python code will iterate through all pairs of odd numbers less than 100 and count how many pairs satisfy the condition that their squares sum up to a perfect square. It will also print out the pairs that satisfy the condition.
+
+Please note that this is a computational approach and may not be the most efficient way to solve the problem, but it will give us the answer. You can run this code in a Python environment to get the total number of pairs.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of pairs of positive odd integers (a, b) both under 100 that satisfy the condition a^2 + b^2 being a perfect square is 0, as no such pairs exist where both a and b are odd and their squares sum to an even perfect square.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_12</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_12']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Along a one-way street there are n parking lots. One-by-one n cars numbered 1 to n enter the street. Each driver i heads to his favorite parking lot a_i, and, if it is free, he occupies it. Otherwise, he continues to the next free lot and occupies it. But if all succeeding lots are occupied, he leaves for good. How many sequences {a_1, ..., a_n} are such that every driver can park, as an expression of n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Make the parking lot arrangement a circle, by connecting the n-th lot to a new (n+1)-th lot, which connects back to the 1st lot.
+2. Thus, every car will have somewhere to park because there are n cars in the (n+1)-lot circle.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem you&#x27;ve described is a variation of a well-known combinatorial problem in mathematics. The solution involves counting permutations with certain restrictions. The partial solution you&#x27;ve provided suggests transforming the problem into a circular arrangement, which is a clever way to ensure that every car will find a spot. However, we need to be careful with this transformation because it changes the nature of the problem. In a circle, there is no &quot;end&quot; to the parking lot, so the condition that a car leaves if all succeeding lots are occupied doesn&#x27;t apply anymore.
+
+To solve the original problem, we need to count the number of permutations of the sequence {a_1, ..., a_n} such that each car can park. This is equivalent to counting the number of permutations without a fixed point (also known as derangements) because a fixed point would mean a car arrives at its favorite spot and it is already taken.
+
+Let&#x27;s denote D(n) as the number of derangements of n objects. The formula for D(n) is given by:
+
+D(n) = n! * (1 - 1/1! + 1/2! - 1/3! + ... + (-1)^n/n!)
+
+However, the problem as stated doesn&#x27;t exactly match the derangement problem because it allows for cars to park in lots beyond their favorite if their favorite is taken. We need to adjust our approach to account for this.
+
+Let&#x27;s consider the following:
+
+1. The first car has n choices for its favorite lot.
+2. The second car then has n-1 choices (since one lot is taken), and so on, until the last car has only 1 choice.
+
+This would suggest there are n! possible sequences of favorite lots. However, we need to subtract the sequences where at least one car cannot park.
+
+To count the valid sequences, we can use the principle of inclusion-exclusion. We will count the total number of sequences and subtract the sequences where at least one car cannot park.
+
+Let&#x27;s consider the case where exactly one car cannot park. This can happen if and only if the sequence of favorite lots is a derangement of the n-1 lots, and the last car chooses the first car&#x27;s lot. There are D(n-1) such derangements, and each of these can be paired with n-1 choices for the last car&#x27;s favorite lot (any lot except its own).
+
+So, we subtract n-1 * D(n-1) from n! to account for these cases.
+
+However, we&#x27;ve now subtracted too much, because we&#x27;ve subtracted some sequences more than once (those where more than one car cannot park). We would need to add back in the sequences where two specific cars cannot park, subtract sequences where three specific cars cannot park, and so on, following the principle of inclusion-exclusion.
+
+This becomes quite complex to calculate directly, and there isn&#x27;t a simple closed-form expression for the number of valid sequences as a function of n. The problem requires a more detailed combinatorial analysis that takes into account the specific rules of car parking and the order in which cars arrive.
+
+In conclusion, the number of sequences {a_1, ..., a_n} such that every driver can park is not simply given by a direct application of derangements or a simple formula. It requires a more nuanced approach that carefully considers the rules of the parking problem and applies the principle of inclusion-exclusion to count the valid arrangements.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences {a_1, ..., a_n} such that every driver can park is not given by a simple closed-form expression and requires a detailed combinatorial analysis to account for the specific parking rules.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

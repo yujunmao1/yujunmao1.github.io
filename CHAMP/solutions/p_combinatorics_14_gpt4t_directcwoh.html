@@ -1,0 +1,216 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_14</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 5/14, or approximately 35.7%</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_14']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A gardener plants 3 apple trees, 3 peach trees and 2 cherry trees in a row, with a random order. What is the probability that no two apple trees are next two each other?
+
+You may find the following information useful:
+
+1. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
+2. C(n, r)=n!/(r!*(n-r)!)=n*(n-1)*(n-2)*...*(n-r+1)/r!.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the principle of complementary counting. Instead of directly calculating the probability that no two apple trees are next to each other, we can calculate the probability that at least two apple trees are next to each other and subtract that from 1.
+
+First, let&#x27;s calculate the total number of ways to plant the trees without any restrictions. There are 3 apple trees, 3 peach trees, and 2 cherry trees, making a total of 3 + 3 + 2 = 8 trees.
+
+The total number of ways to arrange these 8 trees is given by the multinomial coefficient, which accounts for the fact that there are repeated elements (trees of the same type):
+
+Total arrangements = 8! / (3! * 3! * 2!) = 40320 / (6 * 6 * 2) = 40320 / 72 = 560
+
+Now, let&#x27;s calculate the number of ways in which at least two apple trees are next to each other. We can treat a pair of apple trees as a single entity, and then we have 2 entities (apple tree pairs) + 1 single apple tree + 3 peach trees + 2 cherry trees = 7 entities to arrange.
+
+First, we arrange the pair of apple trees with the other trees, which is like arranging 7 entities:
+
+Arrangements with a pair of apple trees = 7! / (3! * 2!) = 5040 / (6 * 2) = 5040 / 12 = 420
+
+However, we have 3 apple trees, and we can form 3 different pairs (since any two trees can be considered a pair), so we need to multiply this number by 3:
+
+Arrangements with any pair of apple trees = 420 * 3 = 1260
+
+But we have overcounted the scenarios where all three apple trees are together because they can be arranged in 2 ways (A1A2A3 or A3A2A1), and we have counted them as one in the previous step. So we need to subtract the overcounted arrangements.
+
+When all three apple trees are together, we have 1 entity (apple tree trio) + 3 peach trees + 2 cherry trees = 6 entities to arrange:
+
+Arrangements with a trio of apple trees = 6! / (3! * 2!) = 720 / (6 * 2) = 720 / 12 = 60
+
+Since the trio can be arranged in 2 ways, we multiply this by 2:
+
+Arrangements with any trio of apple trees = 60 * 2 = 120
+
+Now we subtract the overcounted arrangements from the total number of arrangements with at least two apple trees together:
+
+Adjusted arrangements with at least two apple trees together = 1260 - 120 = 1140
+
+Finally, we calculate the probability that no two apple trees are next to each other by subtracting the probability of the complementary event from 1:
+
+Probability (no two apple trees together) = 1 - (Number of arrangements with at least two apple trees together / Total arrangements)
+Probability (no two apple trees together) = 1 - (1140 / 560)
+Probability (no two apple trees together) = 1 - 2.0357...
+
+Since the probability cannot be greater than 1, we have made a mistake in our calculations. Let&#x27;s review our steps to find the error.
+
+The mistake is in the calculation of the arrangements with at least two apple trees together. We should not simply multiply by 3 after calculating the arrangements with a pair of apple trees because this would overcount scenarios where all three apple trees are together. Instead, we should consider the cases where exactly two apple trees are together and the case where all three are together separately.
+
+Let&#x27;s correct this:
+
+Case 1: Exactly two apple trees are together.
+We treat the pair of apple trees as one entity, so we have 1 entity (apple tree pair) + 1 single apple tree + 3 peach trees + 2 cherry trees = 7 entities to arrange.
+
+Arrangements with an apple tree pair = 7! / (3! * 2!) = 5040 / 12 = 420
+
+Since there are 3 ways to choose which two of the three apple trees are in the pair, we multiply by 3:
+
+Arrangements with any apple tree pair = 420 * 3 = 1260
+
+Case 2: All three apple trees are together.
+We treat the trio of apple trees as one entity, so we have 1 entity (apple tree trio) + 3 peach trees + 2 cherry trees = 6 entities to arrange.
+
+Arrangements with an apple tree trio = 6! / (3! * 2!) = 720 / 12 = 60
+
+Now we add the two cases together to get the total number of arrangements where apple trees are next to each other:
+
+Total arrangements with apple trees together = 1260 + 60 = 1320
+
+Now we can calculate the correct probability:
+
+Probability (no two apple trees together) = 1 - (Number of arrangements with apple trees together / Total arrangements)
+Probability (no two apple trees together) = 1 - (1320 / 560)
+Probability (no two apple trees together) = 1 - 2.3571...
+
+Again, we have a probability greater than 1, which indicates another mistake. The error lies in the fact that we did not consider the different ways the pair or trio of apple trees can be arranged among themselves when they are treated as a single entity.
+
+Let&#x27;s correct this by considering the internal arrangements of the apple trees:
+
+Case 1: Exactly two apple trees are together.
+We have 2 internal arrangements for each pair (A1A2 or A2A1). So we multiply the previous result by 2:
+
+Arrangements with any apple tree pair, considering internal arrangements = 1260 * 2 = 2520
+
+Case 2: All three apple trees are together.
+We have 3! = 6 internal arrangements for the trio (A1A2A3, A1A3A2, A2A1A3, A2A3A1, A3A1A2, A3A2A1). So we multiply the previous result by 6:
+
+Arrangements with an apple tree trio, considering internal arrangements = 60 * 6 = 360
+
+Now we add the two cases together to get the total number of arrangements where apple trees are next to each other, considering internal arrangements:
+
+Total arrangements with apple trees together, considering internal arrangements = 2520 + 360 = 2880
+
+Finally, we calculate the correct probability:
+
+Probability (no two apple trees together) = 1 - (Number of arrangements with apple trees together, considering internal arrangements / Total arrangements)
+Probability (no two apple trees together) = 1 - (2880 / 560)
+Probability (no two apple trees together) = 1 - 5.142857...
+
+We still have a probability greater than 1, which is impossible. This indicates that there is still a mistake in our calculations. The error lies in the fact that we are not correctly accounting for the different ways to arrange the pairs and trios of apple trees among the other trees.
+
+Let&#x27;s try a different approach to solve the problem correctly:
+
+We will use the original total number of arrangements without restriction, which is 560.
+
+Now, let&#x27;s find the number of valid arrangements where no two apple trees are next to each other. We can do this by first arranging the non-apple trees and then finding the spots where we can insert the apple trees.
+
+We have 3 peach trees and 2 cherry trees, which can be arranged in the following ways:
+
+Arrangements of non-apple trees = 5! / (3! * 2!) = 120 / (6 * 2) = 120 / 12 = 10
+
+Now, with these 5 trees arranged, there are 6 spots where we can place the apple trees (before the first tree, between each pair of trees, and after the last tree). We need to choose 3 of these 6 spots to place the apple trees, which can be done in the following ways:
+
+Ways to choose spots for apple trees = C(6, 3) = 6! / (3! * (6-3)!) = 720 / (6 * 6) = 720 / 36 = 20
+
+Now we multiply the number of arrangements of non-apple trees by the number of ways to choose spots for the apple trees:
+
+Valid arrangements = 10 * 20 = 200
+
+Finally, we calculate the correct probability:
+
+Probability (no two apple trees together) = (Number of valid arrangements / Total arrangements)
+Probability (no two apple trees together) = 200 / 560
+Probability (no two apple trees together) = 5 / 14
+
+So the probability that no two apple trees are next to each other is 5/14.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The probability that no two apple trees are planted next to each other is 5/14.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

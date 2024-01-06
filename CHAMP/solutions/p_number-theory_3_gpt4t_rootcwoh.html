@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_3</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 376 and 625</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_3']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+An integer a is called automorphic if a^2 ends in a. For example, 5 is automorphic because 5^2=25 ends in 5. 25 is also automorphic because 25^2=625 ends in 25. Find all three-digit automorphic numbers.
+
+You may find the following information useful:
+
+1. If a | bc and gcd(b, c)=1, then we can find integer m, n, p, q such that b=mp, c=nq, gcd(m, n)=gcd(p, q)=1 and pq=a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all three-digit automorphic numbers, we need to find integers \( a \) such that \( a^2 \) ends in \( a \). Let&#x27;s denote \( a \) as a three-digit number \( abc \) (where \( a \), \( b \), and \( c \) are digits, and \( a \neq 0 \)).
+
+The condition that \( a^2 \) ends in \( a \) means that \( a^2 \) modulo 1000 is equal to \( a \). In other words, \( a^2 \equiv a \mod 1000 \).
+
+Let&#x27;s denote \( a \) as \( 100a + 10b + c \), where \( a \), \( b \), and \( c \) are the hundreds, tens, and units digits of \( a \), respectively. Then we have:
+
+\( (100a + 10b + c)^2 \equiv 100a + 10b + c \mod 1000 \)
+
+Expanding the left side, we get:
+
+\( (10000a^2 + 2000ab + 200ac + 100b^2 + 20bc + c^2) \equiv 100a + 10b + c \mod 1000 \)
+
+Since we are only interested in the last three digits, we can ignore the terms that contribute to the thousands place or higher. This leaves us with:
+
+\( (200ac + 100b^2 + 20bc + c^2) \equiv 100a + 10b + c \mod 1000 \)
+
+Now, let&#x27;s look at the coefficients of \( a \), \( b \), and \( c \) on both sides of the equation. We can see that:
+
+1. The hundreds digit on the left side comes from \( 100b^2 \), and on the right side, it is \( 100a \). Therefore, \( b^2 \equiv a \mod 10 \).
+2. The tens digit on the left side comes from \( 20bc \), and on the right side, it is \( 10b \). Therefore, \( 2bc \equiv b \mod 10 \), which simplifies to \( 2c \equiv 1 \mod 10 \) if \( b \neq 0 \).
+3. The units digit on the left side is \( c^2 \), and on the right side, it is \( c \). Therefore, \( c^2 \equiv c \mod 10 \).
+
+From the third condition, we know that \( c^2 - c \equiv 0 \mod 10 \), which means \( c(c - 1) \equiv 0 \mod 10 \). This implies that \( c \) must be 0 or 1 because those are the only digits whose square is equal to themselves modulo 10.
+
+If \( c = 0 \), then \( a \) must be a multiple of 10, which is not possible since \( a \) is a three-digit number ending in 0.
+
+If \( c = 1 \), then \( a \) ends in 1, and we have \( b^2 \equiv a \mod 10 \). Since \( a \) ends in 1, \( b \) must be either 1 or 9 because those are the only digits whose square ends in 1 modulo 10.
+
+Now we have two cases to consider:
+
+Case 1: \( b = 1 \)
+Case 2: \( b = 9 \)
+
+For Case 1, we have \( a = 100a + 10 + 1 \), and we need to find \( a \) such that \( (100a + 11)^2 \) ends in \( 100a + 11 \). Expanding this, we get:
+
+\( (100a + 11)^2 = 10000a^2 + 2200a + 121 \)
+
+Looking at the last three digits, we have \( 200a + 121 \), which must be equal to \( 100a + 11 \). This gives us \( 100a + 110 \equiv 0 \mod 1000 \), which simplifies to \( a + 1 \equiv 0 \mod 10 \). This means \( a \) must be 9.
+
+For Case 2, we have \( a = 100a + 90 + 1 \), and we need to find \( a \) such that \( (100a + 91)^2 \) ends in \( 100a + 91 \). Expanding this, we get:
+
+\( (100a + 91)^2 = 10000a^2 + 18200a + 8281 \)
+
+Looking at the last three digits, we have \( 200a + 281 \), which must be equal to \( 100a + 91 \). This gives us \( 100a + 190 \equiv 0 \mod 1000 \), which simplifies to \( a + 1 \equiv 0 \mod 10 \). This means \( a \) must be 9.
+
+Therefore, the three-digit automorphic numbers are 119 and 919.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The three-digit automorphic numbers are 119 and 919.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

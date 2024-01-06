@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_50</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_50']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence of positive integers a_0, a_1, ..., a_100 is defined as a_1&gt;a_0, a_n=3a_(n-1)-2a_(n-2). Is it possible to have a_100&lt;2^99 for certain such sequences, and if so, find the sequence with the largest sum a_0+a_1+...+a_100.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_1-a_0≥1.
+2. We also have a_(n+1)-a_n=3a_n-2a_(n-1)-a_n=2(a_n-a_(n-1)) and all the differences are positive.
+3. Thus, a_2-a_1=2(a_1-a_0)≥2, a_3-a_2=2(a_2-a_1)≥2^2, a_4-a_3=2(a_3-a_2)≥2^3, ..., a_100-a_99=2(a_99-a_98)≥2^99.
+4. So a_100≥a_99+2^99&gt;2^99.
+5. Thus, there does not exist such a sequence.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+From the set {1, 2, 3, ..., n+1}, select quadruple (x, y, z, u), with duplicate allowed, such that u&gt;max(x, y, z). In how many ways can this be done?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For u=i, there are i-1 values of x, y and z satisfying u&gt;max(x, y, z), so we have (i-1)^3 triples of valid (x, y, z, u).
+2. Thus, the total number of choices is sum_(i=1)^(n+1) (i-1)^3=sum_(i=1)^n i^3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For the first 100 numbers in the sequence a_1=a_2=1, a_3=2, a_(n+3)=(a_(n+1)*a_(n+2)+5)/a_n, how many of them are integers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_n*a_(n+3)=a_(n+1)*a_(n+2)+5, which means that a_(n-1)*a_(n+2)=a_n*a_(n+1)+5.
+2. Thus, we have a_n*a_(n+3)+a_n*a_(n+1)+5=a_(n-1)*a_(n+2)+a_(n+1)*a_(n+2)+5.
+3. So (a_(n-1)+a_(n+1))*a_(n+2)=(a_(n+1)+a_(n+3))*a_n.
+4. (a_(n-1)+a_(n+1))/a_n=(a_(n+1)+a_(n+3))/a_(n+2)=c.
+5. Note that the two groups skip the group a_n, a_(n+1), a_(n+2) in the middle.
+6. Thus, we could potentially have a different value for (a_n+a_(n+2))/a_(n+1)=(a_(n+2)+a_(n+4))/a_(n+3)=d.
+7. The first few terms of the sequence is 1, 1, 2, 7, 19, 69.
+8. Thus, we see that (a_(n-1)+a_(n+1))/a_n=3, or a_(n+1)=3a_n-a_(n-1), when n is even, and (a_(n-1)+a_(n+1))/a_n=4, or a_(n+1)=4a_n-a_(n-1), when n is odd.
+9. In both cases, a_(n+1) is an integer value.
+10. Thus, all 100 numbers are integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Finding the remainder when p(x^7) is divided by p(x), where p(x)=x^6+x^5+...+x+1?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have p(x)=x^6+x^5+...+x+1=(x^7-1)/(x-1).
+2. Thus, p(x) | x^7-1.
+3. Let y=x^7.
+4. In addition, since y-1 | y^n-1^n for any n, we have y-1 | p(y)-p(1) for the polynomial p.
+5. Since p(x) | y-1, we have p(x) | p(y)-p(1).
+6. Thus, the remainder when p(y)=p(x^7) divides p(x) is p(1)=7.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If a_i&gt;0 for i=1, 2, ..., n and a_1*a_2*...*a_n=1, what is the smallest value of (1+a_1)(1+a_2)...(1+a_n) as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have 1+a_i≥2*sqrt(1*a_i)=2*sqrt(a_i).
+2. Since all a_i&gt;0, we have (1+a_1)(1+a_2)...(1+a_n)≥2^n*sqrt(a_1)*sqrt(a_2)*...*sqrt(a_n)=2^n*sqrt(a_1*a_2*...*a_n)=2^n.
+3. So the smallest value is 2^n, achieved when a_1=a_2=...=a_n=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a sequence be the defined as a_1=a_2=1, and a_n=(a_(n-1)^2+2)/a_(n-2). How many values in a_1, a_2, ..., a_100 are integers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence is defined as $a_1=a_2=1$ and $a_n=(a_{n-1}^2+2)/a_{n-2}$. We can rewrite this as $a_n^2-a_{n-1}a_{n+1}=2$. This is a Pell equation, which has infinitely many solutions. We can find the first few terms of the sequence by starting with $a_1=a_2=1$ and then repeatedly applying the recurrence relation. We get the following sequence:
+
+$1, 1, 2, 7, 19, 69, 285, 1213, 5039, 21101, 96497, 433491, 1847569, 8128425, 36760919, 175761467, 792281625, 3908816991, 18446744073, 81457817169, 390881699265, 18446744073709551615, 81457817169926502245, 3908816992650224584105, 18446744073709551615792281625, 81457817169926502245841054606846976294895, 39088169926502245841054606846976294895231725360828722375825, 18446744073709551615792281625142643371787214684409012249317675238467481846766940513200000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>All 100 numbers in the sequence are integers.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_10</td>
+            <td>PaLM 2 Medium</td>
+            <td>Example w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_10']
+messages = problem.conversations['PaLM 2 Medium|Example w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Please give an example that applies the following concept:
+
+(a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Sure. Here are some examples:
+
+* $(2+3) \pmod{10} = (5) \pmod{10}$
+* $(2-3) \pmod{10} = (-1) \pmod{10}$
+* $(2\times3) \pmod{10} = (6) \pmod{10}$
+* $(2^2) \pmod{10} = (4) \pmod{10}$
+
+In general, if $a$ and $b$ are integers and $m$ is a positive integer, then the following properties hold:
+
+* $(a+b) \pmod{m} = ((a \pmod{m})+(b \pmod{m})) \pmod{m}$
+* $(a-b) \pmod{m} = ((a \pmod{m})-(b \pmod{m})) \pmod{m}$
+* $(ab) \pmod{m} = ((a \pmod{m})(b \pmod{m})) \pmod{m}$
+* $(a^k) \pmod{m} = ((a \pmod{m})^k) \pmod{m}$
+
+These properties can be used to simplify arithmetic modulo $m$. For example, if we want to find $123456789 \pmod{100}$, we can use the following steps:
+
+* $123456789 = (123456789 \bmod 100) + (100)$
+* $123456789 \bmod 100 = (12345678 \bmod 100) + (98)$
+* $12345678 \bmod 100 = (1234567 \bmod 100) + (2)$
+* $1234567 \bmod 100 = (123456 \bmod 100) + (7)$
+* $123456 \bmod 100 = (12345 \bmod 100) + (4)$
+* $12345 \bmod 100 = (1234 \bmod 100) + (5)$
+* $1234 \bmod 100 = (123 \bmod 100) + (4)$
+* $123 \bmod 100 = (12 \bmod 100) + (3)$
+* $12 \bmod 100 = (10 \bmod 100) + (2)$
+* $10 \bmod 100 = (8 \bmod 100) + (2)$
+* $8 \bmod 100 = (6 \bmod 100) + (2)$
+* $6 \bmod 100 = (4 \bmod 100) + (2)$
+* $4 \bmod 100 = (2 \bmod 100) + (2)$
+* $2 \bmod 100 = (0 \bmod 100) + (2)$
+* $0 \bmod 100 = 0$
+
+Therefore, $123456789 \pmod{100} = 2$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Please give an example that applies the following concept:
+
+A number is a multiple of 3 if and only if its digit sum is divisible by 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Sure. Here are some examples:
+
+* 12 is a multiple of 3 because 1+2=3.
+* 15 is a multiple of 3 because 1+5=6.
+* 21 is a multiple of 3 because 2+1=3.
+* 24 is not a multiple of 3 because 2+4=6, which is not divisible by 3.
+* 30 is a multiple of 3 because 3+0=3.
+* 33 is a multiple of 3 because 3+3=6.
+* 36 is a multiple of 3 because 3+6=9.
+
+In general, if $n$ is a positive integer, then $n$ is a multiple of 3 if and only if the sum of the digits of $n$ is divisible by 3.
+
+For example, the number 123456789 has a digit sum of 30, which is divisible by 3. Therefore, 123456789 is a multiple of 3.
+
+The number 12345678 is also a multiple of 3, because its digit sum is 27, which is divisible by 3.
+
+The number 1234567 is not a multiple of 3, because its digit sum is 24, which is not divisible by 3.
+
+The number 123456 is not a multiple of 3, because its digit sum is 21, which is not divisible by 3.
+
+The number 12345 is not a multiple of 3, because its digit sum is 15, which is not divisible by 3.
+
+The number 1234 is not a multiple of 3, because its digit sum is 12, which is not divisible by 3.
+
+The number 123 is not a multiple of 3, because its digit sum is 6, which is not divisible by 3.
+
+The number 12 is a multiple of 3, because its digit sum is 3, which is divisible by 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a sequence be the defined as a_0=a_1=1, and a_(n+1)=a_(n-1)*a_n+1. What is a_1964 mod 4?
+
+Besides the concepts above, you may also find the following information useful:
+
+1. Study the pattern of the sequence modulo 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $a_n$ is defined as follows:
+
+* $a_0 = a_1 = 1$
+* $a_{n+1} = a_{n-1}a_n + 1$
+
+We can write this recurrence relation as follows:
+
+$$a_n = \begin{cases} 1 &amp; \text{if } n = 0 \text{ or } n = 1 \\\ a_{n-1}a_n + 1 &amp; \text{if } n &gt; 1 \end{cases}$$
+
+We can also write this recurrence relation in matrix form as follows:
+
+$$A = \begin{bmatrix} 1 &amp; 1 \\\ 1 &amp; 0 \end{bmatrix}$$
+
+The characteristic polynomial of $A$ is $p(x) = x^2 - x - 1$. The roots of $p(x)$ are $x = 2 \pm i$. Therefore, the general solution to the recurrence relation is $a_n = c_1(2 + i)^n + c_2(2 - i)^n$.
+
+We can use the initial conditions $a_0 = 1$ and $a_1 = 1$ to find $c_1$ and $c_2$. We get the following system of equations:
+
+$$\begin{cases} c_1 + c_2 = 1 \\\ 2c_1 - 2c_2 = 1 \end{cases}$$
+
+Solving this system of equations, we get $c_1 = \frac{1}{3}$ and $c_2 = \frac{2}{3}$.
+
+Therefore, the general solution to the recurrence relation is $a_n = \frac{1}{3}(2 + i)^n + \frac{2}{3}(2 - i)^n$.
+
+We can use this formula to find $a_{1964}$. We get the following:
+
+$$a_{1964} = \frac{1}{3}(2 + i)^{1964} + \frac{2}{3}(2 - i)^{1964}$$
+
+This is a complex number. We can find the modulus of this number by using the following formula:
+
+$$|z| = \sqrt{z \overline{z}}$$
+
+In this case, we get the following:
+
+$$|a_{1964}| = \sqrt{\left(\frac{1}{3}(2 + i)^{1964}\right) \left(\frac{1}{3}(2 - i)^{1964}\right)} = \frac{1}{3} \sqrt{(2 + i)^{1964}(2 - i)^{1964}}$$
+
+We can simplify this expression by using the following identity:
+
+$$(a + b)^n = a^n + nb^{n-1} + \binom{n}{2}a^{n-2}b^2 + \cdots + ab^{n-1} + b^n$$
+
+In this case, we get the following:
+
+$$(2 + i)^{1964} = 2^{1964} + 1964 \cdot 2^{1963}i + \binom{1964}{2}2^{1962}(-1)^2i^2 + \cdots + 2i^{1964} + i^{1964}$$
+
+Similarly, we get the following:
+
+$$(2 - i)^{1964} = 2^{1964} - 1964 \cdot 2^{1963}i + \binom{1964}{2}2^{1962}(-1)^2i^2 - \cdots - 2i^{1964} + i^{1964}$$
+
+Therefore, we get the following:
+
+$$|a_{1964}| = \frac{1}{3} \sqrt{(2^{1964} + 1964 \cdot 2^{1963}i + \binom{1964}{2}2^{1962}(-1)^2i^2 + \cdots + 2i^{1964} + i^{1964})(2^{1964} - 196</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>$a_{1964} \pmod{4} = 1$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_55</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At least 1 number</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_55']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let (x, y, z) be an integer solution to the equation x^2+y^2=z^2. At least how many of the three numbers must be divisible by 4?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Suppose none of the numbers are divisible by 4.
+2. To ensure parity consistency, we must have x, y, z all even, or one of x, y, z even and the other two odd.
+3. If all three are even (and not multiples of 4), we have x=4u+2, y=4v+2, z=4w+2.
+4. We have x^2 mod 8=(4u+2)^2 mod 8=16u^2+16u+4 mod 8=4, and the same for y^2 and z^2.
+5. Thus, we have x^2+y^2 mod 8=0, which contradicts with z^2 mod 8=4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The partial solution provided is on the right track. Let&#x27;s continue from where it left off:
+
+We have established that if all three numbers x, y, and z are even but not divisible by 4, then we can write them as x = 4u + 2, y = 4v + 2, and z = 4w + 2, where u, v, and w are integers. When we square these, we get:
+
+x^2 = (4u + 2)^2 = 16u^2 + 16u + 4
+y^2 = (4v + 2)^2 = 16v^2 + 16v + 4
+z^2 = (4w + 2)^2 = 16w^2 + 16w + 4
+
+Now, let&#x27;s consider these modulo 8:
+
+x^2 mod 8 = (16u^2 + 16u + 4) mod 8 = 4 mod 8 (since 16u^2 and 16u are multiples of 8 and thus vanish modulo 8)
+y^2 mod 8 = (16v^2 + 16v + 4) mod 8 = 4 mod 8
+z^2 mod 8 = (16w^2 + 16w + 4) mod 8 = 4 mod 8
+
+Adding x^2 and y^2 modulo 8, we get:
+
+x^2 + y^2 mod 8 = (4 + 4) mod 8 = 8 mod 8 = 0
+
+However, we have z^2 mod 8 = 4, which contradicts the Pythagorean equation x^2 + y^2 = z^2 when taken modulo 8. Therefore, it is not possible for all three numbers to be even and not divisible by 4.
+
+Now let&#x27;s consider the case where one of x, y, z is even and the other two are odd. Without loss of generality, let&#x27;s say z is even. Then we can write z = 2k for some integer k. Since x and y are odd, we can write them as x = 2m + 1 and y = 2n + 1, where m and n are integers. Squaring these, we get:
+
+x^2 = (2m + 1)^2 = 4m^2 + 4m + 1
+y^2 = (2n + 1)^2 = 4n^2 + 4n + 1
+
+Now, let&#x27;s consider these modulo 4:
+
+x^2 mod 4 = (4m^2 + 4m + 1) mod 4 = 1 mod 4 (since 4m^2 and 4m are multiples of 4 and thus vanish modulo 4)
+y^2 mod 4 = (4n^2 + 4n + 1) mod 4 = 1 mod 4
+
+Adding x^2 and y^2 modulo 4, we get:
+
+x^2 + y^2 mod 4 = (1 + 1) mod 4 = 2 mod 4
+
+However, since z is even, z^2 will be a multiple of 4, and thus z^2 mod 4 = 0. This again contradicts the Pythagorean equation x^2 + y^2 = z^2 when taken modulo 4. Therefore, it is not possible for one of x, y, z to be even and the other two to be odd.
+
+From the above analysis, we can conclude that at least one of the numbers x, y, or z must be divisible by 4 for the equation x^2 + y^2 = z^2 to hold with integer solutions. However, we have not yet determined the minimum number of these numbers that must be divisible by 4.
+
+To find the minimum number, let&#x27;s consider the well-known parameterization of Pythagorean triples. If (x, y, z) is a primitive Pythagorean triple (meaning that x, y, and z have no common divisor), then we can write:
+
+x = m^2 - n^2
+y = 2mn
+z = m^2 + n^2
+
+where m and n are coprime integers of opposite parity (one even, one odd). Since y = 2mn, y is always even. If m is even and n is odd, then m^2 is divisible by 4, and so is z = m^2 + n^2 since n^2 is odd and thus contributes a remainder of 1 when divided by 4. In this case, both y and z are divisible by 4.
+
+If m is odd and n is even, then m^2 - n^2 is odd, and m^2 + n^2 is odd, so x and z are not divisible by 4, but y = 2mn is still even and could be divisible by 4 if n is a multiple of 2 but not 4.
+
+Therefore, in the case of a primitive Pythagorean triple, at least one number must be divisible by 4. For non-primitive triples (multiples of primitive triples), the same logic applies, and at least one number must be divisible by 4.
+
+In conclusion, at least one of the numbers x, y, or z must be divisible by 4 for the equation x^2 + y^2 = z^2 to have integer solutions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At least one of the numbers x, y, or z must be divisible by 4 for the equation x^2 + y^2 = z^2 to have integer solutions.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

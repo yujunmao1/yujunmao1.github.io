@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_26</td>
+            <td>GPT-4 Turbo</td>
+            <td>No C w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_26']
+messages = problem.conversations['GPT-4 Turbo|No C w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For real number a, b, what is the largest value of |a+b|/(1+|a+b|)-|a|/(1+|a|)-|b|/(1+|b|)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the expression given and find the maximum value of the function:
+
+f(a, b) = |a+b|/(1+|a+b|) - |a|/(1+|a|) - |b|/(1+|b|)
+
+First, let&#x27;s consider the properties of the absolute value and the function f(x) = |x|/(1+|x|) for any real x.
+
+The function f(x) is bounded between 0 and 1 because the numerator is always less than or equal to the denominator (since |x| is always non-negative). Also, f(x) is increasing for x ≥ 0 and decreasing for x ≤ 0 because as x increases, |x| increases, making the ratio increase until it approaches 1 as x approaches infinity.
+
+Now, let&#x27;s analyze the expression term by term:
+
+1. |a+b|/(1+|a+b|) is maximized when |a+b| is maximized.
+2. -|a|/(1+|a|) is minimized (most negative) when |a| is maximized.
+3. -|b|/(1+|b|) is minimized (most negative) when |b| is maximized.
+
+To maximize |a+b|, we want a and b to have the same sign. Without loss of generality, let&#x27;s assume a and b are both non-negative (the case where they are both non-positive is symmetric). In this case, |a+b| = a + b.
+
+Now, let&#x27;s consider the case where a and b are both maximized. Since there are no constraints given on the values of a and b, they can be arbitrarily large. As a and b become very large, the terms |a|/(1+|a|) and |b|/(1+|b|) both approach 1, because the absolute values dominate the +1 in the denominator.
+
+So, as a and b become very large, the expression approaches:
+
+f(a, b) ≈ (a+b)/(1+a+b) - a/(1+a) - b/(1+b)
+
+Now, let&#x27;s take the limit as a and b approach infinity:
+
+lim (a, b → ∞) f(a, b) = lim (a, b → ∞) [(a+b)/(1+a+b) - a/(1+a) - b/(1+b)]
+= 1 - 1 - 1
+= -1
+
+However, this is not the maximum value; it&#x27;s the minimum value when a and b are both very large and positive. To find the maximum value, we need to consider when |a+b| is maximized but |a| and |b| are not too large.
+
+The maximum value of |a+b|/(1+|a+b|) is 1, which occurs when |a+b| is very large. However, we want to minimize the impact of the other two terms, -|a|/(1+|a|) and -|b|/(1+|b|). This happens when a and b are both zero, which makes both terms equal to zero.
+
+Therefore, the largest value of the expression is:
+
+f(a, b) = 1 - 0 - 0 = 1
+
+This is the maximum value of the given expression.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression |a+b|/(1+|a+b|) - |a|/(1+|a|) - |b|/(1+|b|) is 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

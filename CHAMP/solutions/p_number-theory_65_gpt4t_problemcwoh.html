@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_65</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> p=3, q=2 and p=5, q=3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_65']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Find all possible values of p^2 mod 24 for prime number p.
+Step-wise solution:
+1. For p≤3, we have 2^2 mod 24=4 and 3^2 mod 24=9.
+2. For p&gt;3, we have p=6n±1.
+3. So (6n±1)^2=36n^2±12n+1=12n(3n±1)+1.
+4. Either n or 3n±1 is even, so 12n(3n±1) mod 24=0.
+5. Thus, (6n±1)^2 mod 24=1.
+6. So we have all possible values of p^2 mod 24 being 1, 4, and 9.
+
+Problem: Let a, b, c be the lengths of the three sides of a (possibly degenerate) triangle. What is the largest value of (a^2+b^2+c^2)/(ab+bc+ac)?
+Step-wise solution:
+1. From a≥|b-c|, b≥|a-c| and c≥|a-b|, we get a^2≥(b-c)^2, b^2≥(a-c)^2 and c^2≥(a-b)^2.
+2. Adding them up, we get a^2+b^2+c^2≥2a^2+2b^2+2c^2-2ab-2bc-2ac.
+3. Thus, a^2+b^2+c^2≤2(ab+bc+ac), and (a^2+b^2+c^2)/(ab+bc+ac)≤2.
+4. So the largest value is 2, which can be achieved by, e.g., a=1, b=1, c=0.
+
+Problem: Is 385^1980+18^1980 a perfect square?
+Step-wise solution:
+1. We have 4 | 1980, so 385^1980 mod 13=((-5)^4 mod 13)^(1980/4) mod 13=1.
+2. 18^1980 mod 13=(5^4 mod 13)^(1980/4) mod 13=1.
+3. Thus, 385^1980+18^1980 mod 13=2.
+4. For integer n with n mod 13=0, 1, ..., 12, n^2 mod 13 take values of 0, 1, 4, 9, 3, 12, 10, 10, 12, 9, 3, 4, 1, and 2 is not one of it.
+5. Thus, the expression is not a perfect square.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all prime number solutions to the equation p^2-2*q^2=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation \( p^2 - 2q^2 = 1 \) for prime number solutions, we can use a method similar to the one used to solve Pell&#x27;s equation, which is of the form \( x^2 - Dy^2 = 1 \), where \( D \) is a non-square positive integer.
+
+Let&#x27;s analyze the given equation:
+
+\( p^2 - 2q^2 = 1 \)
+
+This equation is indeed a Pell&#x27;s equation with \( D = 2 \). The fundamental solution to \( x^2 - 2y^2 = 1 \) is \( (x, y) = (3, 2) \), because \( 3^2 - 2 \cdot 2^2 = 9 - 8 = 1 \).
+
+However, we are looking for prime solutions for \( p \), so we need to consider the nature of Pell&#x27;s equation solutions. The solutions to Pell&#x27;s equation form an infinite sequence obtained from the fundamental solution using the recurrence relations derived from the continued fraction expansion of \( \sqrt{D} \). In this case, since \( D = 2 \), the continued fraction expansion of \( \sqrt{2} \) is periodic and leads to the sequence of solutions.
+
+For Pell&#x27;s equation, if \( (x_1, y_1) \) is the fundamental solution, then the \( n \)-th solution \( (x_n, y_n) \) can be generated by the recurrence:
+
+\( x_n + y_n \sqrt{2} = (x_1 + y_1 \sqrt{2})^n \)
+
+However, we are only interested in the prime values of \( p \), which correspond to \( x \) in the equation. Since \( p \) must be prime, we can quickly check the first few solutions generated from the fundamental solution to see if they yield prime numbers.
+
+The first solution is \( (3, 2) \), where \( p = 3 \) is indeed prime. Let&#x27;s check if there are any other prime solutions by generating a few more solutions:
+
+\( (x_2, y_2) = (3 + 2\sqrt{2})^2 = (17, 12) \) (not prime)
+\( (x_3, y_3) = (3 + 2\sqrt{2})^3 = (99, 70) \) (not prime)
+\( (x_4, y_4) = (3 + 2\sqrt{2})^4 = (577, 408) \) (not prime)
+
+We can see that as we generate larger solutions, the values of \( x \) (which correspond to \( p \)) are getting larger and are not prime. In fact, for Pell&#x27;s equation with \( D = 2 \), all solutions after the fundamental solution will yield composite numbers for \( x \) because they are generated by squaring or multiplying previous solutions, which means they are products of integers greater than 1.
+
+Therefore, the only prime number solution to the equation \( p^2 - 2q^2 = 1 \) is \( p = 3 \) with corresponding \( q = 2 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only prime number solution to the equation \( p^2 - 2q^2 = 1 \) is \( p = 3 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

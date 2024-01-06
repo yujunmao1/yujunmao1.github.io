@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_33</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 512</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_33']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest positive integer a, so that 1971 | 50^n+23^n*a for odd n.
+
+You may find the following information useful:
+
+1. 1971=27*73.
+2. For prime number p and integer a, n, if p | a^n, then p | a.
+3. Find a mod 27 and a mod 73.
+4. If a | bc and gcd(a, b)=1, then a | c.
+5. If a | c, b | c and gcd(a, b)=1, then ab | c.
+6. Set up the equation of a=27x+p=73y+q for suitable p, q and starting from y=0, increment y to find the smallest value that satisfy the equation.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest positive integer \( a \) such that \( 1971 \) divides \( 50^n + 23^n \cdot a \) for odd \( n \), we can use the given information to solve the problem step by step.
+
+First, we know that \( 1971 = 27 \cdot 73 \), and since \( 27 \) and \( 73 \) are relatively prime (their greatest common divisor is \( 1 \)), we can find \( a \) modulo \( 27 \) and \( 73 \) separately and then combine the results using the Chinese Remainder Theorem.
+
+Let&#x27;s start by finding \( a \) modulo \( 27 \). Since \( n \) is odd, \( 50^n \) is congruent to \( 23^n \) modulo \( 27 \) (because \( 50 \equiv 23 \mod 27 \)). Therefore, we want to find \( a \) such that \( 27 \) divides \( 50^n + 23^n \cdot a \), which simplifies to \( 27 \) dividing \( 23^n + 23^n \cdot a \), or \( 27 \) dividing \( 23^n \cdot (1 + a) \). Since \( 23 \) is not divisible by \( 27 \), we need \( 27 \) to divide \( 1 + a \). The smallest positive integer \( a \) such that \( 27 \) divides \( 1 + a \) is \( a = 26 \) because \( 26 + 1 = 27 \).
+
+Next, we find \( a \) modulo \( 73 \). We want \( 73 \) to divide \( 50^n + 23^n \cdot a \). Since \( n \) is odd, \( 50^n \) is not congruent to \( 23^n \) modulo \( 73 \) (because \( 50 \) is not congruent to \( 23 \) modulo \( 73 \)). We need to find \( a \) such that \( 73 \) divides \( 50^n + 23^n \cdot a \). Let&#x27;s consider the case when \( n = 1 \) (the smallest odd integer), which simplifies our search. We have \( 73 \) dividing \( 50 + 23 \cdot a \), or \( 73 \) dividing \( 23 \cdot a - 23 \). This simplifies to \( 73 \) dividing \( 23 \cdot (a - 1) \). Since \( 23 \) and \( 73 \) are both prime and \( 23 \) is not a multiple of \( 73 \), we need \( 73 \) to divide \( a - 1 \). The smallest positive integer \( a \) such that \( 73 \) divides \( a - 1 \) is \( a = 74 \) because \( 74 - 1 = 73 \).
+
+Now we have \( a \equiv 26 \mod 27 \) and \( a \equiv 74 \mod 73 \). We can use the Chinese Remainder Theorem to find the smallest positive integer \( a \) that satisfies both congruences. We can set up the equation \( a = 27x + 26 = 73y + 74 \) and solve for \( x \) and \( y \).
+
+Starting with \( y = 0 \), we increment \( y \) until we find a value that satisfies the equation. For \( y = 0 \), we have \( a = 73 \cdot 0 + 74 = 74 \), which is not congruent to \( 26 \mod 27 \). We continue incrementing \( y \):
+
+For \( y = 1 \), \( a = 73 \cdot 1 + 74 = 147 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 2 \), \( a = 73 \cdot 2 + 74 = 220 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 3 \), \( a = 73 \cdot 3 + 74 = 293 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 4 \), \( a = 73 \cdot 4 + 74 = 366 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 5 \), \( a = 73 \cdot 5 + 74 = 439 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 6 \), \( a = 73 \cdot 6 + 74 = 512 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 7 \), \( a = 73 \cdot 7 + 74 = 585 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 8 \), \( a = 73 \cdot 8 + 74 = 658 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 9 \), \( a = 73 \cdot 9 + 74 = 731 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 10 \), \( a = 73 \cdot 10 + 74 = 804 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 11 \), \( a = 73 \cdot 11 + 74 = 877 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 12 \), \( a = 73 \cdot 12 + 74 = 950 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 13 \), \( a = 73 \cdot 13 + 74 = 1023 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 14 \), \( a = 73 \cdot 14 + 74 = 1096 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 15 \), \( a = 73 \cdot 15 + 74 = 1169 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 16 \), \( a = 73 \cdot 16 + 74 = 1242 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 17 \), \( a = 73 \cdot 17 + 74 = 1315 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 18 \), \( a = 73 \cdot 18 + 74 = 1388 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 19 \), \( a = 73 \cdot 19 + 74 = 1461 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 20 \), \( a = 73 \cdot 20 + 74 = 1534 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 21 \), \( a = 73 \cdot 21 + 74 = 1607 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 22 \), \( a = 73 \cdot 22 + 74 = 1680 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 23 \), \( a = 73 \cdot 23 + 74 = 1753 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 24 \), \( a = 73 \cdot 24 + 74 = 1826 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 25 \), \( a = 73 \cdot 25 + 74 = 1899 \), which is not congruent to \( 26 \mod 27 \).
+For \( y = 26 \), \( a = 73 \cdot 26 + 74 = 1972 \), which is congruent to \( 26 \mod 27 \) because \( 1972 - 26 = 1946 \) is divisible by \( 27 \).
+
+Therefore, the smallest positive integer \( a \) that satisfies both congruences is \( a = 1972 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer \( a \) such that \( 1971 \) divides \( 50^n + 23^n \cdot a \) for odd \( n \) is \( a = 1972 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

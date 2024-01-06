@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_49</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_49']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For three integer numbers a, b, c, if their sum a+b+c is divisible by 6, is their cubed sum a^3+b^3+c^3 always divisble by 6?
+
+You may find the following information useful:
+
+1. For prime number p and integer a, n, if p | a^n, then p | a.
+2. A number is a multiple of 4 if and only if the number consisting of its last two digit is divisible by 4.
+3. For integer x, x^2 mod 8 can take values of 0, 1 and 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine whether the cubed sum \( a^3 + b^3 + c^3 \) is always divisible by 6 given that the sum \( a + b + c \) is divisible by 6, we need to consider the properties of divisibility and the behavior of cubes modulo 6.
+
+First, let&#x27;s recall that 6 is a composite number, which is the product of the primes 2 and 3. Therefore, for a number to be divisible by 6, it must be divisible by both 2 and 3.
+
+Given that \( a + b + c \) is divisible by 6, we know that:
+1. \( a + b + c \) is divisible by 2, which means \( a + b + c \) is even.
+2. \( a + b + c \) is divisible by 3.
+
+Now, let&#x27;s consider the cubes of \( a \), \( b \), and \( c \). The cube of any integer is congruent to either 0, 1, or -1 modulo 3 because:
+- If an integer is divisible by 3, its cube is also divisible by 3 (0 modulo 3).
+- If an integer is 1 more than a multiple of 3, its cube is also 1 more than a multiple of 3 (1 modulo 3).
+- If an integer is 1 less than a multiple of 3, its cube is also 1 less than a multiple of 3 (-1 or 2 modulo 3).
+
+Since \( a + b + c \) is divisible by 3, we can express \( a \), \( b \), and \( c \) as:
+- \( a = 3m \) or \( a = 3m \pm 1 \)
+- \( b = 3n \) or \( b = 3n \pm 1 \)
+- \( c = 3p \) or \( c = 3p \pm 1 \)
+
+Where \( m \), \( n \), and \( p \) are integers.
+
+The cubes of these expressions will be:
+- \( a^3 = 27m^3 \) or \( a^3 = (3m \pm 1)^3 \)
+- \( b^3 = 27n^3 \) or \( b^3 = (3n \pm 1)^3 \)
+- \( c^3 = 27p^3 \) or \( c^3 = (3p \pm 1)^3 \)
+
+In all cases, the cubes are either divisible by 3 or have a remainder of 1 or -1 when divided by 3. Since \( a + b + c \) is divisible by 3, the sum of the remainders when \( a^3 \), \( b^3 \), and \( c^3 \) are divided by 3 must also be 0. Therefore, \( a^3 + b^3 + c^3 \) is divisible by 3.
+
+Now, let&#x27;s consider the divisibility by 2. Since \( a + b + c \) is even, there are three cases:
+1. All three numbers \( a \), \( b \), and \( c \) are even.
+2. Two numbers are odd, and one is even.
+3. All three numbers are odd (which cannot be the case since their sum would be odd).
+
+In case 1, where all numbers are even, their cubes are also even, so \( a^3 + b^3 + c^3 \) is even.
+
+In case 2, the sum of two odd cubes and one even cube is even because the sum of two odd numbers is even, and adding an even number to an even number results in an even number.
+
+Therefore, in both cases, \( a^3 + b^3 + c^3 \) is even.
+
+Since \( a^3 + b^3 + c^3 \) is divisible by both 2 and 3, it is divisible by 6.
+
+In conclusion, if the sum \( a + b + c \) is divisible by 6, then the cubed sum \( a^3 + b^3 + c^3 \) is always divisible by 6.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, if the sum of three integers \(a + b + c\) is divisible by 6, then their cubed sum \(a^3 + b^3 + c^3\) is always divisible by 6.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

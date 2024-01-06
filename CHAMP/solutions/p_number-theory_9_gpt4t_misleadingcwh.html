@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_9</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No positive integer solutions</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_9']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation x^2+y^2+z^2=2xyz.
+
+You may find the following information useful:
+
+1. Choose k to be the maximum value such that 2^k divides x, y, z at the same time, and write x=2^k*u, y=2^k*v, z=2^k*w.
+2. Find the parity of u, v, w.
+3. Study the equation of u, v, w modulo 4.
+4. If ab | c, then a | c and b | c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s solve the equation step by step:
+
+1. We choose \( k \) to be the maximum value such that \( 2^k \) divides \( x \), \( y \), and \( z \) at the same time. We can then write \( x = 2^k u \), \( y = 2^k v \), and \( z = 2^k w \), where \( u \), \( v \), and \( w \) are integers that are not all even (otherwise, \( k \) would not be the maximum).
+
+2. Substituting these into the original equation, we get:
+\[ (2^k u)^2 + (2^k v)^2 + (2^k w)^2 = 2 \cdot (2^k u) \cdot (2^k v) \cdot (2^k w) \]
+\[ 2^{2k} (u^2 + v^2 + w^2) = 2^{3k+1} uvw \]
+\[ u^2 + v^2 + w^2 = 2^{k+1} uvw \]
+
+3. Now, let&#x27;s find the parity of \( u \), \( v \), and \( w \). If \( u \), \( v \), and \( w \) were all odd, then \( u^2 + v^2 + w^2 \) would be odd (since the square of an odd number is odd), but \( 2^{k+1} uvw \) would be even, which is a contradiction. Therefore, at least one of \( u \), \( v \), and \( w \) must be even.
+
+4. Without loss of generality, let&#x27;s assume \( w \) is even. Then \( u \) and \( v \) must be odd because if either were even, \( k \) would not be the maximum value such that \( 2^k \) divides \( x \), \( y \), and \( z \) at the same time.
+
+5. Now, let&#x27;s study the equation modulo 4. Since \( u \) and \( v \) are odd, \( u^2 \equiv v^2 \equiv 1 \pmod{4} \), and since \( w \) is even, \( w^2 \equiv 0 \pmod{4} \). Thus, the left side of the equation \( u^2 + v^2 + w^2 \) is congruent to \( 1 + 1 + 0 = 2 \pmod{4} \). However, the right side \( 2^{k+1} uvw \) is divisible by 4 for any \( k \geq 1 \), which is a contradiction because it implies that the left side should also be divisible by 4.
+
+6. The only way to avoid this contradiction is if \( k = 0 \), which means that \( x \), \( y \), and \( z \) are not divisible by 2 at all. But we have already established that at least one of \( u \), \( v \), and \( w \) must be even, which is a contradiction if \( k = 0 \).
+
+7. Therefore, the only solution is when \( u = v = w = 0 \), which implies \( x = y = z = 0 \). However, we are looking for positive integer solutions, so there are no positive integer solutions to the equation \( x^2 + y^2 + z^2 = 2xyz \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no positive integer solutions to the equation \(x^2 + y^2 + z^2 = 2xyz\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

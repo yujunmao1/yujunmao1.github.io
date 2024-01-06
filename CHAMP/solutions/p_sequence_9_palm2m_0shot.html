@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_9</td>
+            <td>PaLM 2 Medium</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no such values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_9']
+messages = problem.conversations['PaLM 2 Medium|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let n&gt;1 be an integer. There are n lamps L_0, ..., L_(n−1) arranged in a circle. Each lamp is either ON or OFF. A sequence of steps S_0, ..., S_i, ... is carried out. Step S_j affects the state of L_j only (leaving the states of all other lamps unaltered) as follows: if L_(j−1) is ON, S_j changes the state of L_j from ON to OFF or from OFF to ON; if L_(j−1) is OFF, S_j leaves the state L_j unchanged. The lamps are labeled modulo n, that is, L_(−1)=L_(n−1), L_0=L_n, L_1=L_(n+1). Initially all lamps are ON. For n in {2, 3, ..., 100}, how many of them result in a the sequence of switching not being able to return all lamps to the ON state ever again?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $n$ be the number of lamps. We will show that the sequence of switching cannot return all lamps to the ON state ever again if and only if $n$ is a power of 2.
+
+First, suppose that $n$ is a power of 2. Let $a$ be the smallest positive integer such that $2^a \ge n$. Then, we can write $n = 2^a k$ for some integer $k$. Consider the sequence of steps $S_0, S_1, \ldots, S_{2^a-1}$, where $S_j$ is the following operation:
+
+* If the lamp at position $j$ is ON, turn it OFF.
+* If the lamp at position $j$ is OFF, turn it ON.
+
+It is easy to see that this sequence of steps will turn all of the lamps OFF. Moreover, if we start with all of the lamps ON, then after $2^a$ steps, the lamps will be in the same state as they were at the beginning. Therefore, the sequence of switching cannot return all lamps to the ON state ever again.
+
+Now, suppose that $n$ is not a power of 2. Let $a$ be the smallest positive integer such that $2^a &lt; n &lt; 2^{a+1}$. Then, we can write $n = 2^a k + 1$ for some integer $k$. Consider the sequence of steps $S_0, S_1, \ldots, S_{2^a-1}$, where $S_j$ is the following operation:
+
+* If the lamp at position $j$ is ON, turn it OFF.
+* If the lamp at position $j$ is OFF, turn it ON.
+
+It is easy to see that this sequence of steps will turn all of the lamps OFF. Moreover, if we start with all of the lamps ON, then after $2^a$ steps, the lamps will be in the following state:
+
+* The lamps at positions $0, 2, 4, \ldots, 2^{a-1}$ will be ON.
+* The lamps at positions $1, 3, 5, \ldots, 2^a-1$ will be OFF.
+
+Therefore, the sequence of switching can return all lamps to the ON state.
+
+In conclusion, the sequence of switching cannot return all lamps to the ON state ever again if and only if $n$ is a power of 2. Therefore, the number of such $n$ in the range $[2, 100]$ is $\boxed{32}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of $n$ in the range $[2, 100]$ such that the sequence of switching cannot return all lamps to the ON state ever again is $\boxed{32}$, which are the powers of 2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

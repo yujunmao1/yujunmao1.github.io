@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_14</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_14']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Find all positive integer solutions to the equation 2^x+1=3^y.
+Step-wise solution:
+1. The obvious solutions are x=1, y=1 and x=3, y=2.
+2. For x≥4 and odd y, we have 2^x=3^y-1=(3-1)(3^(y-1)+3^(y-2)+...+3+1).
+3. The second term in the product is a sum of odd number of odd values, and not divisible by 2.
+4. Thus, the product is not divisible by 4, which contradicts with the fact that 2^x is divisible by 4 for x≥4.
+5. So we have no solution here.
+6. For x≥4 and even y, let y=2k and we have 2^x=3^(2k)-1=(3^k)^2-1.
+7. Since 3^k is odd, we let 3^k=2a+1, which means 2^x=(2a+1)^2-1=(2a+2)(2a)=4a(a+1).
+8. Since either a or a+1 must be odd, when a&gt;1, the right hand side contains an odd factor greater than 1, which is not present in 2^x. 
+9. The case of a=1 corresponds k=1, x=3, y=2.
+10. Thus, the only solutions are x=1, y=1 and x=3, y=2.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1=1 and x_(n+1)=1+n/x_n. For how many values of x_1, ..., x_100 do we have the inequality sqrt(i)≤x_i≤sqrt(i)+1?
+
+In addition, you may also find the following information helpful:
+
+1. Study whether x_(n+1) satisfies the inequality if x_n satisfies it.
+2. To find a lower bound of n/(sqrt(n)+1), change sqrt(n) to sqrt(n+1), rewrite n as n+1-1 and get rid of the square root in the denominator.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the recursive sequence defined by \( x_1 = 1 \) and \( x_{n+1} = 1 + \frac{n}{x_n} \) to determine for how many values of \( x_1, x_2, \ldots, x_{100} \) the inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \) holds.
+
+First, let&#x27;s check if the inequality holds for \( x_1 \):
+\[ \sqrt{1} \leq x_1 \leq \sqrt{1} + 1 \]
+\[ 1 \leq 1 \leq 2 \]
+The inequality holds for \( x_1 \).
+
+Now, let&#x27;s assume that the inequality holds for some \( x_n \), i.e., \( \sqrt{n} \leq x_n \leq \sqrt{n} + 1 \), and see if it holds for \( x_{n+1} \).
+
+Given \( x_{n+1} = 1 + \frac{n}{x_n} \), we want to show that \( \sqrt{n+1} \leq x_{n+1} \leq \sqrt{n+1} + 1 \).
+
+First, let&#x27;s find the lower bound of \( x_{n+1} \):
+\[ x_{n+1} = 1 + \frac{n}{x_n} \geq 1 + \frac{n}{\sqrt{n} + 1} \]
+
+To find a lower bound of \( \frac{n}{\sqrt{n} + 1} \), we can change \( \sqrt{n} \) to \( \sqrt{n+1} \), rewrite \( n \) as \( n+1-1 \), and get rid of the square root in the denominator:
+\[ \frac{n}{\sqrt{n} + 1} = \frac{n+1-1}{\sqrt{n+1} + 1} = \frac{(n+1) - 1}{\sqrt{n+1} + 1} \]
+\[ = \frac{(n+1)}{\sqrt{n+1} + 1} - \frac{1}{\sqrt{n+1} + 1} \]
+\[ = \sqrt{n+1} - \frac{1}{\sqrt{n+1} + 1} \]
+\[ \geq \sqrt{n+1} - 1 \]
+
+So, we have:
+\[ x_{n+1} \geq 1 + \sqrt{n+1} - 1 \]
+\[ x_{n+1} \geq \sqrt{n+1} \]
+
+Now, let&#x27;s find the upper bound of \( x_{n+1} \):
+\[ x_{n+1} = 1 + \frac{n}{x_n} \leq 1 + \frac{n}{\sqrt{n}} \]
+\[ x_{n+1} \leq 1 + \sqrt{n} \]
+
+To show that \( x_{n+1} \leq \sqrt{n+1} + 1 \), we need to prove that \( 1 + \sqrt{n} \leq \sqrt{n+1} + 1 \), which simplifies to \( \sqrt{n} \leq \sqrt{n+1} \). This is true since the square root function is increasing.
+
+Therefore, we have shown that if \( \sqrt{n} \leq x_n \leq \sqrt{n} + 1 \), then \( \sqrt{n+1} \leq x_{n+1} \leq \sqrt{n+1} + 1 \).
+
+Since the inequality holds for \( x_1 \), by induction, it holds for all \( x_2, x_3, \ldots, x_{100} \). Thus, the inequality holds for all 100 values of \( x_1, x_2, \ldots, x_{100} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \) holds for all 100 values of \( x_1, x_2, \ldots, x_{100} \) in the given recursive sequence.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

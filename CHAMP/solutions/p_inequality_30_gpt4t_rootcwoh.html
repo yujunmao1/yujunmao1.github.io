@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_30']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?
+
+You may find the following information useful:
+
+1. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the given expression, we can use the information provided about the rearrangement inequality. The rearrangement inequality tells us that the sum of products of two sequences is minimized when the sequences are sorted in the opposite order.
+
+Let&#x27;s consider the sequences \( a_1, a_2, \ldots, a_n \) and \( \frac{1}{s-a_1}, \frac{1}{s-a_2}, \ldots, \frac{1}{s-a_n} \). To minimize the sum
+
+\[ \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n}, \]
+
+we want to pair the largest \( a_i \) with the smallest \( \frac{1}{s-a_i} \), and so on. However, notice that as \( a_i \) increases, \( s-a_i \) decreases, which means \( \frac{1}{s-a_i} \) increases. Therefore, both sequences are already sorted in the same order, and the sum is already minimized.
+
+Now, let&#x27;s simplify the expression:
+
+\[ \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} = \sum_{i=1}^{n} \frac{a_i}{s-a_i}. \]
+
+We can rewrite each term as follows:
+
+\[ \frac{a_i}{s-a_i} = \frac{s - (s - a_i)}{s-a_i} = \frac{s}{s-a_i} - 1. \]
+
+Summing up all the terms, we get:
+
+\[ \sum_{i=1}^{n} \left( \frac{s}{s-a_i} - 1 \right) = \sum_{i=1}^{n} \frac{s}{s-a_i} - \sum_{i=1}^{n} 1. \]
+
+The second sum is simply \( n \), so we have:
+
+\[ \sum_{i=1}^{n} \frac{s}{s-a_i} - n. \]
+
+Now, notice that \( s = a_1 + a_2 + \ldots + a_n \), so \( s - a_i = a_1 + \ldots + a_{i-1} + a_{i+1} + \ldots + a_n \), which is the sum of all \( a_j \)&#x27;s except \( a_i \). Since all \( a_i \)&#x27;s are positive, \( s - a_i \) is also positive, and we can combine the fractions:
+
+\[ \sum_{i=1}^{n} \frac{s}{s-a_i} = \frac{s}{s-a_1} + \frac{s}{s-a_2} + \ldots + \frac{s}{s-a_n}. \]
+
+Since \( s \) is a common factor in the numerator, we can factor it out:
+
+\[ s \left( \frac{1}{s-a_1} + \frac{1}{s-a_2} + \ldots + \frac{1}{s-a_n} \right). \]
+
+Now, we can apply the AM-HM inequality (Arithmetic Mean - Harmonic Mean inequality), which states that for positive numbers \( x_1, x_2, \ldots, x_n \):
+
+\[ \frac{x_1 + x_2 + \ldots + x_n}{n} \geq \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \ldots + \frac{1}{x_n}}. \]
+
+Applying this to our sum, we get:
+
+\[ \frac{n}{\frac{1}{s-a_1} + \frac{1}{s-a_2} + \ldots + \frac{1}{s-a_n}} \leq \frac{s-a_1 + s-a_2 + \ldots + s-a_n}{n}. \]
+
+Since \( s-a_1 + s-a_2 + \ldots + s-a_n = (n-1)s \), we have:
+
+\[ \frac{n}{\frac{1}{s-a_1} + \frac{1}{s-a_2} + \ldots + \frac{1}{s-a_n}} \leq \frac{(n-1)s}{n}. \]
+
+Taking the reciprocal, we get:
+
+\[ \frac{1}{s-a_1} + \frac{1}{s-a_2} + \ldots + \frac{1}{s-a_n} \geq \frac{n}{(n-1)s}. \]
+
+Multiplying by \( s \), we have:
+
+\[ s \left( \frac{1}{s-a_1} + \frac{1}{s-a_2} + \ldots + \frac{1}{s-a_n} \right) \geq \frac{sn}{(n-1)s} = \frac{n}{n-1}. \]
+
+Therefore, the smallest value of the original sum is:
+
+\[ \frac{n}{n-1} - n = \frac{n}{n-1} - \frac{n(n-1)}{n-1} = \frac{n - n^2 + n}{n-1} = \frac{-n^2 + 2n}{n-1} = \frac{-n(n-2)}{n-1}. \]
+
+Since \( n \) is positive, the smallest value of the sum is \( \frac{-n(n-2)}{n-1} \) when \( n \geq 2 \). If \( n = 1 \), the sum is simply \( \frac{a_1}{s-a_1} = \frac{a_1}{a_1-a_1} \), which is undefined. However, since we are considering positive numbers \( a_1, \ldots, a_n \), we can assume \( n \geq 2 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( a_1/(s-a_1) + a_2/(s-a_2) + \ldots + a_n/(s-a_n) \) as an expression of \( n \) for positive numbers \( a_1, \ldots, a_n \) is \( \frac{-n(n-2)}{n-1} \) when \( n \geq 2 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

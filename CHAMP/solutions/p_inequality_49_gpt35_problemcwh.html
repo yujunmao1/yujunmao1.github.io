@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_49</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_49']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: For real number a, b, what is the largest value of |a+b|/(1+|a+b|)-|a|/(1+|a|)-|b|/(1+|b|)?
+Step-wise solution:
+1. Let x=|a|, y=|b|, z=|a+b|, so the expression is z/(1+z)-x/(1+x)-y/(1+y).
+2. Multiply the expression by (1+x)(1+y)(1+z), we get z(1+x)(1+y)-x(1+y)(1+z)-y(1+x)(1+z)=z+xz+yz+xyz-x-xy-xz-xyz-y-xy-yz-xyz=z-x-y-2xy-xyz.
+3. We have |a+b|≤|a|+|b|, so z-x-y≤0.
+4. With all other terms being non-negative, we can see that this expression is non-positive.
+5. Thus, the largest value of it is 0, achieved when, for example, a=b=0.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+What is the smallest value of |x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z|?
+
+In addition, you may also find the following information helpful:
+
+1. Multiple |x+y-z|+|x-y+z|+|-x+y+z| by 2 and construct 3 groups of 2 terms each.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s solve the problem step by step:
+
+1. We are given the expression |x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z|.
+2. Multiply the expression by 2 to get 2|x+y-z|+2|x-y+z|+2|-x+y+z|-2|x|-2|y|-2|z|.
+3. Group the terms into three pairs: (2|x+y-z|, 2|x-y+z|), (2|-x+y+z|, -2|x|), and (-2|y|, -2|z|).
+4. For each pair, we can use the triangle inequality property: |a+b| ≤ |a| + |b|.
+   - Applying this property to the first pair, we have 2|x+y-z| ≤ 2|x| + 2|y-z|.
+   - Applying it to the second pair, we have 2|-x+y+z| ≤ 2|x-y+z| + 2|y|.
+   - Applying it to the third pair, we have -2|y| ≤ -2|y| - 2|z|.
+5. Simplifying the inequalities, we have:
+   - 2|x+y-z| ≤ 2|x| + 2|y-z|
+   - 2|-x+y+z| ≤ 2|x-y+z| + 2|y|
+   - -2|y| ≤ -2|y| - 2|z|
+6. Rearranging the inequalities, we get:
+   - |x+y-z| ≤ |x| + |y-z|
+   - |-x+y+z| ≤ |x-y+z| + |y|
+   - |y| ≤ |y| + |z|
+7. Since the absolute value of any number is always non-negative, we can drop the absolute value signs in the inequalities:
+   - x+y-z ≤ x + |y-z|
+   - -x+y+z ≤ x-y+z + y
+   - y ≤ y + z
+8. Simplifying the inequalities, we have:
+   - y-z ≤ |y-z|
+   - -x ≤ 2x
+   - 0 ≤ z
+9. From the third inequality, we can conclude that z must be non-negative.
+10. The smallest value of |x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z| occurs when all the terms inside the absolute value signs are minimized.
+11. Since z must be non-negative, we take z = 0.
+12. With z = 0, the first inequality becomes y ≤ |y|.
+13. The second inequality becomes -x ≤ 2x, which implies x ≥ 0.
+14. The third inequality is already satisfied since z = 0.
+15. With x ≥ 0 and y ≤ |y|, the absolute value signs can be dropped, and the expression simplifies to:
+    - (x+y) + (x-y) + (y) - x - y - 0 = 0.
+16. Therefore, the smallest value of |x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z| is 0, achieved when x = 0, y = 0, and z = 0.
+
+Final Answer: The smallest value of |x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z| is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of |x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z| is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

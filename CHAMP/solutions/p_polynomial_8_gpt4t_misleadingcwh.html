@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_8</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no real-valued zeros)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_8']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many real-valued zeros does the polynomial 1+x+x^2/2!+x^3/3!+...+x^(2n)/(2n)! have?
+
+You may find the following information useful:
+
+1. Let u=x+y+z, v=xy+yz+xz, w=xyz and s_n=x^n+y^n+z^n. Then we have s_0=1, s_1=u, s_2=u^2-2v, s_3=u^3-3uv+3w and s_4=u^4-4u^2*v+2v^2+4uw.
+2. Study the positivity of the global minimum of f(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial given is a truncated version of the Taylor series expansion of the exponential function \( e^x \). The full series for \( e^x \) is:
+
+\[ e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \frac{x^4}{4!} + \ldots \]
+
+The polynomial in question is:
+
+\[ P(x) = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots + \frac{x^{2n}}{(2n)!} \]
+
+To determine the number of real zeros of \( P(x) \), we can consider the properties of the exponential function and the fact that the polynomial is a sum of non-negative terms for all \( x \geq 0 \). Since each term in the polynomial is non-negative for non-negative \( x \), the polynomial can have no zeros for \( x \geq 0 \). This means that the polynomial is strictly positive for all \( x \geq 0 \).
+
+Now, let&#x27;s consider \( x &lt; 0 \). The polynomial \( P(x) \) is continuous and differentiable everywhere, and as \( x \) approaches negative infinity, the dominant term will be the one with the highest power of \( x \), which is \( \frac{x^{2n}}{(2n)!} \). Since \( 2n \) is an even number, \( x^{2n} \) will be positive for negative \( x \), and thus \( P(x) \) will approach positive infinity as \( x \) approaches negative infinity.
+
+Given that \( P(x) \) is positive for large negative \( x \) and for all \( x \geq 0 \), and considering that \( P(x) \) is a smooth curve (since it is a polynomial and thus continuous and differentiable), the only possibility for \( P(x) \) to have real zeros is if it dips below the x-axis for some \( x &lt; 0 \) and then comes back up.
+
+To determine if this happens, we need to look at the derivative of \( P(x) \) to find the critical points, which will help us understand the behavior of \( P(x) \). The derivative of \( P(x) \) is:
+
+\[ P&#x27;(x) = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \ldots + \frac{x^{2n-1}}{(2n-1)!} \]
+
+This is another polynomial of degree \( 2n-1 \), which is odd, and it is also a truncated series of \( e^x \). Since the degree is odd, \( P&#x27;(x) \) will have at least one real root. The global minimum of \( P(x) \) will occur at a critical point where \( P&#x27;(x) = 0 \). Since \( P&#x27;(x) \) is the sum of non-negative terms for \( x \geq 0 \), it has no zeros for \( x \geq 0 \), and thus the global minimum must occur for some \( x &lt; 0 \).
+
+However, we cannot conclude the exact number of zeros without further analysis. We can say that \( P(x) \) has at least one real zero because the polynomial must decrease to a minimum and then increase, crossing the x-axis at least once. But without more specific information or a more detailed analysis, we cannot determine the exact number of real zeros.
+
+In summary, the polynomial \( P(x) \) has at least one real zero, but without additional information or a more detailed analysis, we cannot determine the exact number of real zeros.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial \( P(x) = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots + \frac{x^{2n}}{(2n)!} \) has exactly one real-valued zero.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

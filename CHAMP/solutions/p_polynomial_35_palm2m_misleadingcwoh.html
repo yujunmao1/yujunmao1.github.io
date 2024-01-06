@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_35</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_35']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x)=(x^1958+x^1957+2)^1959=a_0+a_1*x+···+a_n*x^n. Find a_0−a_1/2−a_2/2+a_3−a_4/2−a_5/2+a_6-a_7/2-a_8/2+....
+
+You may find the following information useful:
+
+1. a^n-1=(a-1)(a^(n-1)+a^(n-2)+...+a+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can use the binomial theorem to expand $(x^1958+x^1957+2)^1959$. The binomial theorem states that for any non-negative integers $n$ and $k$,
+
+$$(x+y)^n = \sum_{k=0}^n \binom{n}{k} x^k y^{n-k}$$
+
+where $\binom{n}{k}$ is the binomial coefficient, which is defined as
+
+$$\binom{n}{k} = \frac{n!}{k!(n-k)!}$$
+
+In this case, we have $n=1959$ and $k=1958$, so the binomial theorem gives us
+
+$$(x^1958+x^1957+2)^1959 = \sum_{k=0}^{1959} \binom{1959}{k} (x^1958)^k (x^1957)^{1959-k} (2)^k$$
+
+We can simplify this expression by using the fact that $\binom{1959}{k} = 0$ for any $k$ such that $k &gt; 1958$ or $k &lt; 0$. This leaves us with
+
+$$(x^1958+x^1957+2)^1959 = \sum_{k=0}^{1958} \binom{1959}{k} (x^1958)^k (x^1957)^{1959-k} (2)^k$$
+
+We can now expand each term in the sum. For example, the term for $k=0$ is
+
+$$\binom{1959}{0} (x^1958)^0 (x^1957)^{1959-0} (2)^0 = 1 (x^0) (x^1957)^{1959} (2)^0 = 2^{1959}$$
+
+The term for $k=1$ is
+
+$$\binom{1959}{1} (x^1958)^1 (x^1957)^{1959-1} (2)^1 = 1959 x^1958 (x^1957)^{1958} (2) = 1959 x^{1958} 2^{1958}$$
+
+The term for $k=2$ is
+
+$$\binom{1959}{2} (x^1958)^2 (x^1957)^{1959-2} (2)^2 = \frac{1959 \cdot 1958}{2} x^1956 (x^1957)^{1957} (2)^2 = \frac{1959 \cdot 1958}{2} x^{1956} 2^{1957}$$
+
+And so on.
+
+Continuing in this way, we can expand all of the terms in the sum. The result is
+
+$$(x^1958+x^1957+2)^1959 = 2^{1959} + 1959 x^{1958} 2^{1958} + \frac{1959 \cdot 1958}{2} x^{1956} 2^{1957} + \frac{1959 \cdot 1958 \cdot 1957}{6} x^{1954} 2^{1956} + \cdots + 2 x^2 + x + 1$$
+
+We can now collect like terms. The terms with $x^{1958}$ in them are $2^{1959} + 1959 x^{1958} 2^{1958}$. The terms with $x^{1956}$ in them are $\frac{1959 \cdot 1958}{2} x^{1956} 2^{1957} + \frac{1959 \cdot 1958 \cdot 1957}{6} x^{1954} 2^{19</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The answer is $2^{1959} + 1959 x^{1958} 2^{1958} - \frac{1959 \cdot 1958}{2} x^{1956} 2^{1957} + \frac{1959 \cdot 1958 \cdot 1957}{6} x^{1954} 2^{1956} - \cdots + 2 x^2 + x + 1$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

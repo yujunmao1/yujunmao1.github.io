@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_18</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 4</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_18']
+messages = problem.conversations['GPT-3.5|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(4+3a_n), and if so, find it.
+
+You may find the following information useful:
+
+1. If an (infinite) sequence converges to a limit, then all (infinite) subsequences converge, and converge to the same limit.
+2. For non-negative x, y, we have (x+y)/2≤sqrt((x^2+y^2)/2), with equality if and only if x=y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the limit exists for the given sequence, we will first show that the sequence is bounded and then use the Monotone Convergence Theorem to prove convergence.
+
+1. Boundedness:
+We will show that the sequence is bounded above by 2.
+
+For n = 0, we have a_0 = 0, which is less than 2.
+
+Assume that a_n ≤ 2 for some n. We will show that a_(n+1) ≤ 2.
+
+Using the given recurrence relation, we have:
+a_(n+1) = sqrt(4 + 3a_n)
+
+Since a_n ≤ 2, we can substitute this inequality into the above equation:
+a_(n+1) ≤ sqrt(4 + 3(2))
+a_(n+1) ≤ sqrt(10)
+
+Since sqrt(10) &lt; 2, we have a_(n+1) ≤ 2.
+
+By induction, we conclude that a_n ≤ 2 for all n.
+
+Therefore, the sequence is bounded above by 2.
+
+2. Monotone Convergence Theorem:
+To apply the Monotone Convergence Theorem, we need to show that the sequence is increasing.
+
+For n = 0, we have a_0 = 0.
+
+Assume that a_n ≤ a_(n+1) for some n. We will show that a_(n+1) ≤ a_(n+2).
+
+Using the given recurrence relation, we have:
+a_(n+1) = sqrt(4 + 3a_n)
+a_(n+2) = sqrt(4 + 3a_(n+1))
+
+Since a_n ≤ a_(n+1), we can substitute this inequality into the above equation:
+a_(n+2) ≤ sqrt(4 + 3a_(n+1))
+a_(n+2) ≤ sqrt(4 + 3(sqrt(4 + 3a_n)))
+
+To simplify further, let&#x27;s substitute a_n = x:
+a_(n+2) ≤ sqrt(4 + 3(sqrt(4 + 3x)))
+
+Now, let&#x27;s consider the function f(x) = sqrt(4 + 3(sqrt(4 + 3x))).
+
+Taking the derivative of f(x) with respect to x, we get:
+f&#x27;(x) = (9/2) / sqrt(4 + 3(sqrt(4 + 3x)))
+
+Since the derivative is positive for all x, the function f(x) is increasing.
+
+Therefore, a_(n+2) ≤ a_(n+1), and the sequence is increasing.
+
+By the Monotone Convergence Theorem, since the sequence is bounded and increasing, it must converge to a limit.
+
+Let L be the limit of the sequence.
+
+Taking the limit as n approaches infinity in the recurrence relation, we have:
+L = sqrt(4 + 3L)
+
+Squaring both sides of the equation, we get:
+L^2 = 4 + 3L
+
+Rearranging the equation, we have:
+L^2 - 3L - 4 = 0
+
+Factoring the quadratic equation, we have:
+(L - 4)(L + 1) = 0
+
+Therefore, the possible values for L are L = 4 or L = -1.
+
+However, since a_n ≥ 0 for all n, we can conclude that the limit L must be non-negative.
+
+Therefore, the limit of the sequence is L = 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by a_0=0, a_(n+1)=sqrt(4+3a_n) exists and is equal to 4.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

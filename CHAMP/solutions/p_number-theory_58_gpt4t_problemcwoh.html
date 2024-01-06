@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_58</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_58']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?
+Step-wise solution:
+1. Let S(m)=12^m+9^m+8^m+6^m.
+2. We have S(m)=(3^m)(4^m)+(3^m)(3^m)+(2^m)(4^m)+(2^m)(3^m)=(2^m+3^m)(3^m+4^m).
+3. Since m=5(2k+1), S(m)=((2^5)^(2k+1)+(3^5)^(2k+1))((3^5)^(2k+1)+(4^5)^(2k+1)).
+4. Since 2k+1 is odd, we have 2^5+3^5 | (2^5)^(2k+1)+(3^5)^(2k+1) and 3^5 + 4^5 | (3^5)^(2k+1)+(4^5)^(2k+1).
+5. So (2^5+3^5)(3^5 + 4^5) | S(m), which means 11*25*181*7 | S(m).
+6. Since 1991=11*181, we have 1991 | S(m).
+7. So S(m) mod 1991=0.
+
+Problem: Can there exist a polynomial f(x) of integer coefficients with f(7)=11 and f(11)=13?
+Step-wise solution:
+1. Let the polynomial be m_n*x^n+m_(n-1)*x^(n-1)+...+m_1*x_1+m_0.
+2. Thus, f(a)-f(b)=m_n*(a^n-b^n)+m_(n-1)*(a^(n-1)-b^(n-1))+...+m_1*(a_1-b_1)+m_0.
+3. Since a-b divides each of a^i-b^i, we have a-b | f(a)-f(b).
+4. However, if we let a, b be 11 and 7, we get 4 | 2, which is a contradiction.
+5. Thus, such a polynomial does not exist.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of 2(1^k+2^k+...+n^k) mod n(n+1) for odd k.
+
+In addition, you may also find the following information helpful:
+
+1. If a | c, b | c and gcd(a, b)=1, then ab | c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all possible values of \(2(1^k + 2^k + \ldots + n^k) \mod n(n+1)\) for odd \(k\), we need to consider the properties of the sum of powers and the modular arithmetic involved.
+
+First, let&#x27;s denote the sum \(S_k = 1^k + 2^k + \ldots + n^k\). We are interested in the value of \(2S_k \mod n(n+1)\).
+
+For odd \(k\), the sum \(S_k\) has some interesting properties. One of them is that for each term \(i^k\) where \(i\) is an integer from 1 to \(n\), there is a corresponding term \((n+1-i)^k\) which is also part of the sum. Since \(k\) is odd, we have that \((n+1-i)^k \equiv -i^k \mod (n+1)\).
+
+Now, let&#x27;s consider the sum modulo \(n\) and modulo \(n+1\) separately:
+
+1. Modulo \(n\):
+Since \(n\) divides \(n\), it also divides \(n^k\) for any positive integer \(k\). Therefore, each term \(i^k\) where \(i\) is less than \(n\) is not divisible by \(n\), but \(n^k\) is. So, \(S_k \mod n\) is the sum of \(n-1\) terms that are not divisible by \(n\), and one term that is \(0\) modulo \(n\). This means \(S_k \equiv 0 \mod n\).
+
+2. Modulo \(n+1\):
+For each term \(i^k\), there is a corresponding term \((n+1-i)^k\) which is congruent to \(-i^k\) modulo \(n+1\). Since we have an even number of terms (because \(n\) is even when \(k\) is odd), the sum of all these pairs is \(0\) modulo \(n+1\). Therefore, \(S_k \equiv 0 \mod (n+1)\).
+
+Since \(S_k\) is divisible by both \(n\) and \(n+1\), and \(n\) and \(n+1\) are coprime (their greatest common divisor is 1), by the given information, we have that \(n(n+1)\) divides \(S_k\). Therefore, \(2S_k \mod n(n+1)\) is also \(0\).
+
+In conclusion, for odd \(k\), the only possible value of \(2(1^k + 2^k + \ldots + n^k) \mod n(n+1)\) is \(0\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For odd \(k\), the value of \(2(1^k + 2^k + \ldots + n^k) \mod n(n+1)\) is always \(0\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

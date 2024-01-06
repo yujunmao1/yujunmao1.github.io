@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_46</td>
+            <td>PaLM 2 Medium</td>
+            <td>Name w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x(x-1)(x-2)...(x-2022)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_46']
+messages = problem.conversations['PaLM 2 Medium|Name w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a monic polynomial (i.e. a polynomial with the leading coefficient being 1) p(x) of degree greater than 1 that satisfies x*p(x-1)=(x-2023)*p(x).
+
+You may find the following information useful:
+
+1. Study the equation at x=0 to recover a root of p(x).
+2. Continue studying the equation at x=1, 2, 3... to recover more roots of p(x) until this logic stops working.
+3. A polynomial f(x) of degree n with roots x_1, ..., x_i (along with other roots) can be written as f(x)=(x-x_1)(x-x_2)...(x-x_i)g(x), where g(x) is a polynomial of degree n-i.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $x*p(x-1)=(x-2023)*p(x)$. We can rewrite this as $p(x-1) = \frac{x-2023}{x}p(x)$. If we let $q(x) = p(x-1)$, then we can write this as $q(x) = \frac{x-2023}{x}p(x)$.
+
+Now, let&#x27;s try to find a root of $q(x)$. We know that $q(0) = p(-1)$. We also know that $p(x)$ is a polynomial of degree greater than 1, so $p(-1)$ is not equal to 0. Therefore, $q(0)$ is not equal to 0, and $x=0$ is not a root of $q(x)$.
+
+Next, let&#x27;s try $x=1$. We have $q(1) = p(0)$. We also know that $p(0)$ is not equal to 0, so $q(1)$ is not equal to 0, and $x=1$ is not a root of $q(x)$.
+
+We can continue this process for all values of $x$ from 2 to 2022. We will find that $q(x)$ is not equal to 0 for any value of $x$ from 2 to 2022. Therefore, the only root of $q(x)$ is $x=2023$.
+
+Now, we can write $q(x)$ as $(x-2023)g(x)$, where $g(x)$ is a polynomial of degree 1. We can then write $p(x)$ as $p(x-1) = (x-2023)g(x-1)$. We can then factor out $(x-2023)$ to get $p(x-1) = (x-2023)(g(x-1)-1)$.
+
+We know that $p(x)$ is a polynomial of degree greater than 1, so $g(x-1)-1$ is not equal to 0. Therefore, $x-2023$ is a factor of $p(x)$.
+
+We can then write $p(x)$ as $p(x) = (x-2023)(ax^n+bx^{n-1}+...+dx+e)$, where $n$ is the degree of $p(x)$ and $a,b,...,d,e$ are constants.
+
+We can then plug in $x=2023$ to get $p(2023) = (2023-2023)(a(2023)^n+b(2023)^{n-1}+...+d(2023)+e) = 0$.
+
+We can then solve this equation to get $a=0$.
+
+We can then plug in $x=2022$ to get $p(2022) = (2022-2023)(a(2022)^n+b(2022)^{n-1}+...+d(2022)+e) = 0$.
+
+We can then solve this equation to get $b=0$.
+
+We can then plug in $x=2021$ to get $p(2021) = (2021-2023)(a(2021)^n+b(2021)^{n-1}+...+d(2021)+e) = 0$.
+
+We can then solve this equation to get $c=0$.
+
+We can then plug in $x=2020$ to get $p(2020) = (2020-2023)(a(2020)^n+b(2020)^{n-1}+...+d(2020)+e) = 0$.
+
+We can then solve this equation to get $d=0$.
+
+We can then plug in $x=1999$ to get $p(1999) = (1999-2023)(a(1999)^n+b(1999)^{n-1}+...+d(1999</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The monic polynomial $p(x)$ of degree greater than 1 that satisfies $x*p(x-1)=(x-2023)*p(x)$ is $p(x) = x(x-2023)(x-1999)$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

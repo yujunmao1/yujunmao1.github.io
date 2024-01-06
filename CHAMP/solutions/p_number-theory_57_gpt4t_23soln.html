@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_57</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_57']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of 4^n+15n-1 mod 9 for interger n≥0.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let f(n)=4^n+15n-1.
+2. We see that f(0)=0, so f(0) mod 9=0.
+3. We have f(n+1)=4*4^n+15n+15-1=3(4^n+5)+f(n).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all possible values of \( f(n) = 4^n + 15n - 1 \) modulo 9, we can use the properties of modular arithmetic to simplify the expression. We will look at the terms \( 4^n \), \( 15n \), and \( -1 \) modulo 9 separately.
+
+First, let&#x27;s consider \( 4^n \) modulo 9. The powers of 4 modulo 9 cycle with a period that we need to determine. Let&#x27;s calculate the first few values of \( 4^n \) modulo 9:
+
+- \( 4^0 \equiv 1 \mod 9 \)
+- \( 4^1 \equiv 4 \mod 9 \)
+- \( 4^2 \equiv 16 \equiv 7 \mod 9 \)
+- \( 4^3 \equiv 4 \cdot 7 \equiv 28 \equiv 1 \mod 9 \)
+- \( 4^4 \equiv 4 \cdot 1 \equiv 4 \mod 9 \)
+
+We can see that the powers of 4 modulo 9 cycle with a period of 3: the sequence is 1, 4, 7, and then it repeats. So, \( 4^n \) modulo 9 will be 1 if \( n \) is a multiple of 3, 4 if \( n \) is 1 more than a multiple of 3, and 7 if \( n \) is 2 more than a multiple of 3.
+
+Next, let&#x27;s consider \( 15n \) modulo 9. Since 15 is congruent to 6 modulo 9 (because 15 - 6 = 9, which is a multiple of 9), we have:
+
+\( 15n \equiv 6n \mod 9 \)
+
+Now, 6 is a multiple of 3, so \( 6n \) will always be a multiple of 9 for any integer \( n \), which means \( 6n \) modulo 9 is always 0.
+
+Finally, the constant term \( -1 \) modulo 9 is simply 8, because \( -1 \equiv 8 \mod 9 \).
+
+Now we can combine these results to find the possible values of \( f(n) \) modulo 9:
+
+\( f(n) = 4^n + 15n - 1 \)
+
+\( f(n) \mod 9 = (4^n \mod 9) + (15n \mod 9) - 1 \mod 9 \)
+
+\( f(n) \mod 9 = (4^n \mod 9) + 0 - 1 \mod 9 \)
+
+\( f(n) \mod 9 = (4^n \mod 9) - 1 \mod 9 \)
+
+Using the cycle we found for \( 4^n \) modulo 9, we can now list the possible values of \( f(n) \) modulo 9:
+
+- If \( n \) is a multiple of 3, \( f(n) \mod 9 = 1 - 1 \mod 9 = 0 \).
+- If \( n \) is 1 more than a multiple of 3, \( f(n) \mod 9 = 4 - 1 \mod 9 = 3 \).
+- If \( n \) is 2 more than a multiple of 3, \( f(n) \mod 9 = 7 - 1 \mod 9 = 6 \).
+
+Therefore, the possible values of \( f(n) \) modulo 9 are 0, 3, and 6.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of \(4^n + 15n - 1 \mod 9\) for integer \(n \geq 0\) are 0, 3, and 6.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_28</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n times</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_28']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How often does the factor 2 occur in the product P(n)=(n+1)(n+2)...(2n), as an expression of n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. For n=1, we have P(n)=2, with the factor 2 occurs 1 time.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine how often the factor 2 occurs in the product \( P(n) = (n+1)(n+2)...(2n) \), we need to count the number of even factors within the product, since each even number has at least one factor of 2.
+
+Let&#x27;s consider the sequence of numbers from \( n+1 \) to \( 2n \). Half of these numbers are even, since for every two consecutive numbers, one is even and the other is odd. Therefore, there are \( n \) numbers in the sequence, and \( \frac{n}{2} \) of them are even, which means they contribute at least one factor of 2 each.
+
+However, some of these even numbers may have more than one factor of 2. For example, numbers that are divisible by 4 will contribute at least two factors of 2, numbers divisible by 8 will contribute at least three factors of 2, and so on.
+
+To count all the factors of 2, we need to sum the contributions from numbers that are divisible by 2, 4, 8, and so on, up to the largest power of 2 that is less than or equal to \( 2n \).
+
+Let&#x27;s denote \( f(k) \) as the number of multiples of \( 2^k \) in the sequence \( n+1 \) to \( 2n \). Then the total number of factors of 2 in \( P(n) \) is the sum of all \( f(k) \) for \( k \geq 1 \) such that \( 2^k \leq 2n \).
+
+The number of multiples of \( 2^k \) in the sequence is given by:
+\[ f(k) = \left\lfloor \frac{2n}{2^k} \right\rfloor - \left\lfloor \frac{n}{2^k} \right\rfloor \]
+
+This formula counts the number of multiples of \( 2^k \) up to \( 2n \) and subtracts the number of multiples of \( 2^k \) up to \( n \), effectively counting the multiples of \( 2^k \) in the range \( n+1 \) to \( 2n \).
+
+The total number of factors of 2 in \( P(n) \) is then:
+\[ T(n) = \sum_{k=1}^{\lfloor \log_2(2n) \rfloor} f(k) \]
+
+Let&#x27;s calculate \( T(n) \) explicitly:
+
+\[ T(n) = \sum_{k=1}^{\lfloor \log_2(2n) \rfloor} \left( \left\lfloor \frac{2n}{2^k} \right\rfloor - \left\lfloor \frac{n}{2^k} \right\rfloor \right) \]
+
+Since \( \lfloor \log_2(2n) \rfloor \) is the largest integer \( k \) for which \( 2^k \leq 2n \), we sum over all such \( k \).
+
+To find the exact number of times the factor 2 occurs in \( P(n) \), we would need to evaluate this sum for a specific value of \( n \). The sum will account for all the powers of 2 that divide the numbers in the range \( n+1 \) to \( 2n \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The factor 2 occurs in the product \( P(n) = (n+1)(n+2)...(2n) \) a total of \( \sum_{k=1}^{\lfloor \log_2(2n) \rfloor} \left( \left\lfloor \frac{2n}{2^k} \right\rfloor - \left\lfloor \frac{n}{2^k} \right\rfloor \right) \) times as an expression of \( n \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_47</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 120</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_47']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial 1-x+x^2-x^3+...+x^8-x^9 may be written in the form a_0+a_1*y+a_2*y^2+...+a_9*y^9, where y=x+1 and each a_i is a constant. Find the value of a_2.
+
+You may find the following information useful:
+
+1. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).
+2. Substitute x=y-1 into the expression.
+3. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will follow the steps provided.
+
+First, let&#x27;s write down the given polynomial:
+
+P(x) = 1 - x + x^2 - x^3 + ... + x^8 - x^9
+
+We can see that this is an alternating series, and we can factor out -1 from the negative terms to rewrite it as:
+
+P(x) = 1 - x(1 - x + x^2 - x^3 + ... + x^7 - x^8)
+
+Now, we can recognize that the expression in the parentheses is a geometric series with the first term a = 1 and the common ratio r = -x. Using the formula for the sum of a finite geometric series, we have:
+
+1 - r^(n+1)
+S_n = a * ------------
+            1 - r
+
+For our series, a = 1, r = -x, and n = 8, so:
+
+1 - (-x)^(9)
+S_8 = 1 * ----------------
+            1 - (-x)
+
+Simplifying, we get:
+
+1 - (-1)^9 * x^9
+S_8 = ----------------
+          1 + x
+
+Since (-1)^9 = -1, we have:
+
+1 + x^9
+S_8 = ---------
+       1 + x
+
+Now, we substitute x = y - 1 into the expression:
+
+1 + (y - 1)^9
+S_8(y) = ---------------
+           y
+
+We need to expand (y - 1)^9 using the binomial theorem:
+
+(y - 1)^9 = y^9 - C(9,1)y^8 + C(9,2)y^7 - ... + C(9,8)y - 1
+
+Now, we substitute this back into S_8(y):
+
+1 + y^9 - C(9,1)y^8 + C(9,2)y^7 - ... + C(9,8)y - 1
+S_8(y) = ------------------------------------------------
+                                 y
+
+The 1 and -1 cancel out, and we are left with:
+
+y^9 - C(9,1)y^8 + C(9,2)y^7 - ... + C(9,8)y
+S_8(y) = -----------------------------------------
+                           y
+
+Now, we divide each term by y to get the coefficients a_i:
+
+S_8(y) = y^8 - C(9,1)y^7 + C(9,2)y^6 - ... + C(9,8)
+
+We are interested in the coefficient a_2, which is the coefficient of y^2 in the expanded form. Looking at the pattern, we can see that a_2 corresponds to the term with y^(2+1) = y^3 in the numerator before we divided by y. This is because after dividing by y, the y^3 term becomes the y^2 term.
+
+So, we need to find the coefficient of y^3 in the expansion of (y - 1)^9. This is given by C(9,3) with a negative sign because of the alternating signs in the expansion:
+
+a_2 = -C(9,3)
+
+Using the formula for combinations:
+
+C(n, k) = n! / (k!(n - k)!)
+
+We have:
+
+C(9, 3) = 9! / (3!(9 - 3)!) = 9! / (3!6!) = (9*8*7) / (3*2*1) = 84
+
+Therefore:
+
+a_2 = -84
+
+The value of a_2 is -84.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of the coefficient \( a_2 \) in the polynomial \( 1-x+x^2-x^3+...+x^8-x^9 \) when expressed in terms of \( y=x+1 \) is \( -84 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

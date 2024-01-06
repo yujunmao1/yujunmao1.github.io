@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_7</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_7']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Consider a row of 11 seats. A child sits on each. Each child may move by at most one seat. How many possible rearrangements are there (including the original one)?
+
+You may find the following information useful:
+
+1. C(n, k)=C(n, n-k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the possible moves each child can make. Each child has three options:
+
+1. Stay in the original seat.
+2. Move one seat to the left (except for the child in the first seat).
+3. Move one seat to the right (except for the child in the last seat).
+
+We can approach this problem by considering the number of children that move and the number of ways they can move.
+
+Let&#x27;s denote the number of children that move by k. The number of ways to choose k children out of 11 to move is given by the binomial coefficient C(11, k).
+
+For each k, we need to consider the possible movements. If k children move, they can either move to the left or to the right, but we must be careful not to double-count the original arrangement or any arrangement where two children would end up in the same seat.
+
+Let&#x27;s consider the cases:
+
+1. k = 0 (no child moves): There is only 1 way, which is the original arrangement.
+
+2. k = 1 (one child moves): There are 11 ways to choose which child moves, and that child has 2 options (left or right), but we must subtract 2 cases for the children at the ends since they only have 1 option. So, we have 11 * 2 - 2 = 20 ways.
+
+3. k = 2 (two children move): There are C(11, 2) ways to choose which two children move. Each of those two children has 2 options (left or right), giving us 2^2 = 4 possibilities for each pair. However, we must subtract the cases where both children move into the same seat. There are 10 such cases (one for each &quot;internal&quot; seat, since the end seats can&#x27;t result in overlaps). So, we have C(11, 2) * 4 - 10 ways.
+
+For k &gt; 2, we need to be even more careful with overlaps, as the number of invalid cases increases. However, we can notice a pattern: for k &gt; 2, the number of invalid cases grows rapidly, and it becomes impossible for the children to move without overlapping (since they can only move by at most one seat). Therefore, there are no valid arrangements for k &gt; 2.
+
+Let&#x27;s calculate the number of ways for k = 2:
+
+C(11, 2) = 11! / (2! * (11 - 2)!) = 11! / (2! * 9!) = (11 * 10) / (2 * 1) = 55
+
+So, for k = 2, we have 55 * 4 - 10 = 220 - 10 = 210 ways.
+
+Adding up all the cases, we get:
+
+1 (k = 0) + 20 (k = 1) + 210 (k = 2) = 231 ways.
+
+Therefore, there are 231 possible rearrangements, including the original one.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 231 possible rearrangements, including the original one, for a row of 11 seats where each child may move by at most one seat.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_49</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_49']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence {x_n} is defined by x_1=2, x_(n+1)=(2+x_n)/(1−2x_n), and it is known that there are no x_n=0. Could x_p=x_q for any p≠q, and if so, find the smallest possible value of p+q.
+
+You may find the following information useful:
+
+1. Let a=arctan(2) and find the relationship between x_n and tan(na).
+2. tan(2a)=2tan(a)/(1-tan(a)^2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will first establish the relationship between \( x_n \) and \( \tan(na) \), where \( a = \arctan(2) \). Then we will use the properties of the tangent function to determine if \( x_p = x_q \) for any \( p \neq q \).
+
+Let&#x27;s start by finding the relationship between \( x_n \) and \( \tan(na) \).
+
+Given \( x_1 = 2 \), we have \( a = \arctan(2) \), so \( \tan(a) = 2 \).
+
+Now, let&#x27;s assume that \( x_n = \tan(na) \) for some \( n \). We want to show that \( x_{n+1} = \tan((n+1)a) \).
+
+Using the recursive definition of \( x_n \), we have:
+\[ x_{n+1} = \frac{2 + x_n}{1 - 2x_n} \]
+
+Substituting \( x_n = \tan(na) \), we get:
+\[ x_{n+1} = \frac{2 + \tan(na)}{1 - 2\tan(na)} \]
+
+Using the tangent addition formula, \( \tan(\alpha + \beta) = \frac{\tan(\alpha) + \tan(\beta)}{1 - \tan(\alpha)\tan(\beta)} \), let&#x27;s set \( \alpha = na \) and \( \beta = a \), so that \( \alpha + \beta = (n+1)a \). We have:
+\[ \tan((n+1)a) = \frac{\tan(na) + \tan(a)}{1 - \tan(na)\tan(a)} \]
+
+Since \( \tan(a) = 2 \), we can rewrite this as:
+\[ \tan((n+1)a) = \frac{\tan(na) + 2}{1 - 2\tan(na)} \]
+
+Comparing this with our expression for \( x_{n+1} \), we see that they are the same. Therefore, by induction, we can conclude that \( x_n = \tan(na) \) for all \( n \).
+
+Now, let&#x27;s use the given information about the tangent of double angle:
+\[ \tan(2a) = \frac{2\tan(a)}{1 - \tan(a)^2} \]
+
+Since \( \tan(a) = 2 \), we have:
+\[ \tan(2a) = \frac{2 \cdot 2}{1 - 2^2} = \frac{4}{1 - 4} = \frac{4}{-3} = -\frac{4}{3} \]
+
+The tangent function has a period of \( \pi \), which means that \( \tan(\theta) = \tan(\theta + k\pi) \) for any integer \( k \). Therefore, if \( x_p = x_q \), then \( \tan(pa) = \tan(qa) \), which implies that \( pa = qa + k\pi \) for some integer \( k \).
+
+Since \( a \) is not a rational multiple of \( \pi \) (because \( \tan(a) = 2 \) is not a value achieved by the tangent function at a rational multiple of \( \pi \)), the only way for \( pa \) and \( qa \) to differ by an integer multiple of \( \pi \) is if \( p \) and \( q \) differ by an integer multiple of the period of \( \tan(na) \).
+
+The smallest non-zero integer \( k \) for which \( \tan(na) = \tan((n+k\pi)/a) \) is \( k = 1 \), because \( a \) is not a rational multiple of \( \pi \). Therefore, the smallest possible value of \( p + q \) occurs when \( p = n \) and \( q = n + 1 \), which gives us \( p + q = 2n + 1 \).
+
+Since \( n \) must be an integer, the smallest possible value of \( p + q \) is \( 2 \cdot 1 + 1 = 3 \).
+
+Therefore, \( x_p = x_q \) for \( p \neq q \) is possible, and the smallest possible value of \( p + q \) is 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, \( x_p = x_q \) for \( p \neq q \) is possible, and the smallest possible value of \( p + q \) is 3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_24</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_24']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation x^3-y^3=xy+61.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have x&gt;y so let x=y+d for d&gt;0.
+2. Thus, (y+d)^3-y^3-(y+d)y=y^3+3y^2*d+3d*y^2+d^3-y^3-y^2-dy=61.
+3. We have (3d-1)y^2+(3d^2-d)y+d^3=61.
+4. Since each term in the sum is positive, we have d^3&lt;61 and d≤3.
+5. For d=1, 2y^2+2y+1=61, y^2+y-30=0, which has y=5 as a solution.
+6. So x=6.
+7. For d=2, 5y^2+10y+8=61 with no positive integer solution.
+8. For d=3, 8y^2+24y+27=61 with no positive integer solution.
+9. Thus, the only solution to the original equation is x=6, y=5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A one-to-one mapping p: {1, 2, ..., n}-&gt;{1, 2, ..., n} is called an involution, if p∘p=identity (i.e., p(p(i))=i for all i∈{1, ..., n}). Find the number of involutions on {1, 2, 3, 4, 5, 6}.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let T(n) be the number of involutions on {1, 2, ..., n}.
+2. Thus, we have T(1)=1 for {1-&gt;1}, and T(2)=2 for {1-&gt;1, 2-&gt;2} and {1-&gt;2, 2-&gt;1}.
+3. For n&gt;2, on each involution of the set {1, ..., n-1}, we can add {n-&gt;n} to construct a new involution.
+4. In addition, we can also pull out an item i from n-1 items to make {n-&gt;i, i-&gt;n}, and add this to any involution of the set consisting of the remaining n-2 items.
+5. Thus, we have T(n)=T(n-1)+(n-1)*T(n-2).
+6. Starting from T(1)=1, T(2)=2, we have T(3)=4, T(4)=10, T(5)=26 and T(6)=76.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We let d be the first digit of the k+1 digit number and r be the last k digits.
+2. Thus, the original number is 10^k*d+r and the new number is 10r+d.
+3. So we have 10r+d=3*(10^k*d+r)/2.
+4. Simplifying, we get (3*10^k-2)d=17r.
+5. Since d is between 1 and 9 and 17 ∤ d, we must have 17 | 3*10^k-2.
+6. This means 10^k mod 17=12.
+7. Starting from k=1, the sequence of modulo values is 10, 15, 14, 4, 6, 9, 5, 16, 7, 2, 3, 13, 11, 8, 12.
+8. Thus, the smallest value is k=15.
+9. We let d=1, and get r=(3*10^15-2)/17.
+10. Thus, the number is 10^k*d+r=(20*10^15-2)/17.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of them have an even number of 1s, as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We define P(k) as the number of strings with k number of 1s, so P(k)=C(n, k)*3^(n-k).
+2. Thus, the number of length-n strings with an even number of 1s is E(n)=P(0)+P(2)+...=C(n, 0)*3^n+C(n, 2)*3^(n-2)....
+3. The number of length-n strings with an odd number of 1s is O(n)=P(1)+P(3)+...=C(n, 1)*3^(n-1)+C(n, 3)*3^(n-3)....
+4. We have E(n)+O(n)=sum_(k=0)^n C(n, k)*3^(n-k)=sum_(k=0)^n C(n, k)*3^(n-k)*1^k=(3+1)^n=4^n.
+5. In addition, E(n)-O(n)=sum_(k=0)^n C(n, k)*3^(n-k)*(-1)^k=(3-1)^n=2^n.
+6. Thus, E(n)=(4^n+2^n)/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+In how many ways can 12 geometric progressions be selected from the numbers 1, 2, ..., 100 such that every number is in exactly one progression?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For three different prime numbers, p&lt;q&lt;r, we have r/q≠q/p, because otherwise q^2=pr implies that p=q=r.
+2. So no three prime numbers can be in one geometric progression.
+3. Since there are 25 prime numbers under 100, we need at least 13 geometric progressions to contain them.
+4. Thus, it is impossible to put 1, 2, ..., 100 into 12 geometric progressions.
+5. So there are 0 ways to do it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest value of the polynomial f(x)=x^3(x^3+1)(x^3+2)(x^3+3).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. We have f(x)=x^6+4x^3+6x^2+4x+1.
+2. We can factor out x^3 from f(x) to get f(x)=x^3(x^3+1+4/x^3+2/x^3+3/x^3).
+3. Since x^3&gt;0, we have x^3+1+4/x^3+2/x^3+3/x^3&gt;0.
+4. Thus, the smallest value of f(x) is when x=0, which is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the polynomial $f(x)=x^3(x^3+1)(x^3+2)(x^3+3)$ is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

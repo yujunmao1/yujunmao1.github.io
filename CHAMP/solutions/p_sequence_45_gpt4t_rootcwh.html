@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_45</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_45']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {a_n} is defined by a_1=1, a_(n+1)=a_n+1/a_n^2. Do we have a_9000&gt;30?
+
+You may find the following information useful:
+
+1. Compare a_n^3 with 3n.
+2. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will first compare \( a_n^3 \) with \( 3n \) as suggested. We will use induction to prove that \( a_n^3 &gt; 3n \) for all \( n \geq 1 \).
+
+**Base Case (n=1):**
+For \( n = 1 \), we have \( a_1 = 1 \), so \( a_1^3 = 1^3 = 1 \). Since \( 3 \cdot 1 = 3 \), it is clear that \( a_1^3 = 1 \) is not greater than \( 3 \cdot 1 = 3 \). However, we can check the next few terms to see if the inequality holds for larger \( n \).
+
+**Inductive Step:**
+Assume that \( a_k^3 &gt; 3k \) for some \( k \geq 1 \). We want to show that \( a_{k+1}^3 &gt; 3(k+1) \).
+
+We have \( a_{k+1} = a_k + \frac{1}{a_k^2} \). Now, let&#x27;s cube both sides to get \( a_{k+1}^3 \):
+
+\[
+a_{k+1}^3 = \left(a_k + \frac{1}{a_k^2}\right)^3
+\]
+
+Using the binomial expansion, we have:
+
+\[
+a_{k+1}^3 = a_k^3 + 3a_k^2 \cdot \frac{1}{a_k^2} + 3a_k \cdot \left(\frac{1}{a_k^2}\right)^2 + \left(\frac{1}{a_k^2}\right)^3
+\]
+
+Simplifying, we get:
+
+\[
+a_{k+1}^3 = a_k^3 + 3 + \frac{3}{a_k^3} + \frac{1}{a_k^6}
+\]
+
+By the inductive hypothesis, \( a_k^3 &gt; 3k \), so:
+
+\[
+a_{k+1}^3 &gt; 3k + 3 + \frac{3}{a_k^3} + \frac{1}{a_k^6}
+\]
+
+Since \( a_k^3 &gt; 0 \), we have \( \frac{3}{a_k^3} &gt; 0 \) and \( \frac{1}{a_k^6} &gt; 0 \). Therefore:
+
+\[
+a_{k+1}^3 &gt; 3k + 3
+\]
+
+Which simplifies to:
+
+\[
+a_{k+1}^3 &gt; 3(k + 1)
+\]
+
+This completes the inductive step, showing that if \( a_k^3 &gt; 3k \) for some \( k \), then \( a_{k+1}^3 &gt; 3(k+1) \).
+
+However, we have a problem with the base case, as \( a_1^3 = 1 \) is not greater than \( 3 \cdot 1 = 3 \). We need to establish the inequality for the first few terms manually until we find a term where the inequality holds.
+
+Let&#x27;s calculate \( a_2 \):
+
+\[
+a_2 = a_1 + \frac{1}{a_1^2} = 1 + \frac{1}{1^2} = 2
+\]
+
+Now, let&#x27;s check if \( a_2^3 &gt; 3 \cdot 2 \):
+
+\[
+a_2^3 = 2^3 = 8 &gt; 6 = 3 \cdot 2
+\]
+
+So the inequality holds for \( n = 2 \). Now we can use induction from \( n = 2 \) onwards.
+
+Since we have established that \( a_n^3 &gt; 3n \) for \( n \geq 2 \), we can now check if \( a_{9000} &gt; 30 \).
+
+Taking the cube root of both sides of the inequality \( a_n^3 &gt; 3n \), we get:
+
+\[
+a_n &gt; \sqrt[3]{3n}
+\]
+
+For \( n = 9000 \), we have:
+
+\[
+a_{9000} &gt; \sqrt[3]{3 \cdot 9000} = \sqrt[3]{27000}
+\]
+
+Now, \( 30^3 = 27000 \), so \( \sqrt[3]{27000} = 30 \). Therefore:
+
+\[
+a_{9000} &gt; 30
+\]
+
+Thus, we have shown that \( a_{9000} &gt; 30 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, \( a_{9000} \) is greater than 30.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

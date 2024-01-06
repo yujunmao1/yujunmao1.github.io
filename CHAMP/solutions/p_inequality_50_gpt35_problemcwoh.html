@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_50</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_50']
+messages = problem.conversations['GPT-3.5|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Let a, b&gt;0. What is the smallest value of (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3)?
+Step-wise solution:
+1. The expression can be simplified to (a^4*b+a*b^4)-(a^3*b^2+a^2*b^3)=ab((a^3+b^3)-(a^2*b+a*b^2)).
+2. Let u=a^3+b^3 and v=a^2*b+a*b^2.
+3. Consider the two sequences (a^2, b^2) and (a, b) which are sorted in the same way.
+4. u is the sum of products of elements between these two sequences, and v is the sum of products of elements between the first sequence and the reverse of the second sequence.
+5. Thus, u≥v.
+6. So the smallest value of (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3) is 0, achieved when a=b.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b, c&gt;0. What is the minimum value of a^3+b^3+c^3-(a^2*b+b^2*c+c^2*a)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the minimum value of the expression a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a), we can follow a similar approach as in the previous problem.
+
+Step-wise solution:
+1. The expression can be simplified to a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a).
+2. Rearrange the terms to get a^3 - a^2*b + b^3 - b^2*c + c^3 - c^2*a.
+3. Group the terms to get a^3 - a^2*b - c^2*a + b^3 - b^2*c + c^3.
+4. Factor out a common factor of a from the first two terms and a common factor of b from the next two terms to get a(a^2 - ab - c^2) + b(b^2 - bc + c^2).
+5. Factor out a common factor of c from the last two terms to get a(a^2 - ab - c^2) + b(b^2 - bc + c^2) + c(c^2 - ab).
+6. Now, let&#x27;s consider the two sequences (a^2, b^2, c^2) and (a, b, c) which are sorted in the same way.
+7. The expression can be written as the sum of products of elements between these two sequences: a(a^2 - ab - c^2) + b(b^2 - bc + c^2) + c(c^2 - ab).
+8. Let u = a^2 - ab - c^2 and v = b^2 - bc + c^2.
+9. We need to find the minimum value of u + v + c(c^2 - ab).
+10. Since c &gt; 0, the minimum value of c(c^2 - ab) is 0, which is achieved when c = 0.
+11. Therefore, the minimum value of u + v + c(c^2 - ab) is achieved when c = 0, and it is equal to u + v.
+12. Now, let&#x27;s consider the two sequences (a^2, b^2) and (a, b) which are sorted in the same way.
+13. u is the sum of products of elements between these two sequences, and v is the sum of products of elements between the first sequence and the reverse of the second sequence.
+14. Thus, u ≥ v.
+15. So the minimum value of u + v is achieved when u = v, which is when a^2 - ab - c^2 = b^2 - bc + c^2.
+16. Rearrange the equation to get a^2 - b^2 + c^2 + ab - bc = 0.
+17. Factor the left side of the equation to get (a - b)(a + b) + c^2 + ab - bc = 0.
+18. Since a, b, and c are positive, (a - b)(a + b) + c^2 + ab - bc &gt; 0.
+19. Therefore, the minimum value of u + v is greater than 0.
+20. Hence, the minimum value of a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a) is greater than 0.
+
+Therefore, the minimum value of a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a) is greater than 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a) is greater than 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

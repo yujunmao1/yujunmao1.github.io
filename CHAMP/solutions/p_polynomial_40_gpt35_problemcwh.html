@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_40</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_40']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Find all non-negative integer solutions to the equation x^3+8x^2-6x+8=y^3.
+Step-wise solution:
+1. y^3-(x+1)^3=x^3+8x^2-6x+8-x^3-3x^2-3x-1=5x^2-9x+7&gt;0.
+2. y^3-(x+3)^3=x^3+8x^2-6x+8-x^3-9x^2-27x-27=-x^2-33x-19&lt;0.
+3. Thus, x+1&lt;y&lt;x+3, so the only integer solution would by y=x+2.
+4. Plugging into the equation, we get x^3+8x^2-6x+8-(x+2)^3=2x(x-9)=0.
+5. Thus, we have x=0, y=2 and x=9, y=11 being the only two solutions.
+
+Problem: For real numbers a, b, c satisfying a+b+c=9, what is the smallest value of a^2+b^2+c^2-(ab+bc+ac)-(a+b+c)?
+Step-wise solution:
+1. We have 2(a^2+b^2+c^2-(ab+bc+ac))=(a^2-2ab-b^2)(b^2-2bc-c^2)(a^2-2ac-c^2)=(a-b)^2+(b-c)^2+(a-c)^2≥0.
+2. So the smallest value of a^2+b^2+c^2-(ab+bc+ac)-(a+b+c) is -9, achieved at a=b=c=3.
+
+Problem: Find the smallest value of the polynomial f(x)=x^3(x^3+1)(x^3+2)(x^3+3).
+Step-wise solution:
+1. Let t=x^3, we have f(x)=t(t+1)(t+2)(t+3)=(t^2+3t)(t^2+3t+2).
+2. Let u=t^2+3t, we have f(x)=u(u+2)=u^2+2u+1-1=(u+1)^2-1≥-1.
+3. Thus, the minimum value is -1.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest value of a^2+ab+b^2-3a-3b for real numbers a, b.
+
+In addition, you may also find the following information helpful:
+
+1. Let the smallest value be m and define a non-negative expression.
+2. Consider the expression as a quadratic polynomial in the variable a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the expression a^2+ab+b^2-3a-3b, we can treat it as a quadratic polynomial in the variable a. Let&#x27;s rewrite the expression:
+
+a^2+ab+b^2-3a-3b = (a^2-3a) + (ab-3b) + b^2
+
+Now, let&#x27;s focus on the quadratic term (a^2-3a). We can complete the square to find its minimum value. 
+
+(a^2-3a) = (a^2-3a+9/4) - 9/4
+          = (a-3/2)^2 - 9/4
+
+Since (a-3/2)^2 is always non-negative, the minimum value of (a^2-3a) is -9/4 when a = 3/2.
+
+Now, let&#x27;s consider the linear term (ab-3b). We can factor out b:
+
+(ab-3b) = b(a-3)
+
+Since b is a constant, the minimum value of (ab-3b) is -3b when a = 3.
+
+Finally, let&#x27;s consider the constant term b^2. Since b^2 is always non-negative, its minimum value is 0.
+
+Putting it all together, the minimum value of the expression a^2+ab+b^2-3a-3b is:
+
+m = (a^2-3a) + (ab-3b) + b^2
+  = (a-3/2)^2 - 9/4 - 3b + b^2
+  = (a-3/2)^2 + b^2 - 3b - 9/4
+
+To find the smallest value, we want to minimize each term. The minimum value of (a-3/2)^2 is 0 when a = 3/2, the minimum value of b^2 is 0, and the minimum value of -3b is -3b when b = 0.
+
+Therefore, the smallest value of a^2+ab+b^2-3a-3b is:
+
+m = (a-3/2)^2 + b^2 - 3b - 9/4
+  = 0 + 0 - 0 - 9/4
+  = -9/4
+
+So, the smallest value of a^2+ab+b^2-3a-3b for real numbers a, b is -9/4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of a^2+ab+b^2-3a-3b for real numbers a, b is -9/4.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

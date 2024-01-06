@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_40</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_40']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: How many different ordered triples (a, b, c) of non-negative integers are there such that a+b+c=99?
+Step-wise solution:
+1. For any c, we know that a+b=99-c.
+2. Thus, there are 99-c+1 different values of (a, b), ranging from (0, 99-c) to (99-c, 0).
+3. We know that c can range from 0 to 99.
+4. Thus, the total number of ordered triples is 100+99+...+1=(100+1)*100/2=5050.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 11 rectangle with 2 x 1 tiles.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem of filling a 2 x 11 rectangle with 2 x 1 tiles, we can use a recursive approach. Let&#x27;s denote the number of ways to fill a 2 x n rectangle with 2 x 1 tiles as f(n).
+
+There are two ways to place a 2 x 1 tile in a 2 x n rectangle: vertically or horizontally.
+
+1. If we place a tile vertically, it will occupy a 2 x 1 space, and we will be left with a 2 x (n-1) rectangle. So, the number of ways to fill the remaining part is f(n-1).
+
+2. If we place a tile horizontally, it will occupy a 2 x 2 space (since we need to place two horizontal tiles to cover the 2 x 2 area), and we will be left with a 2 x (n-2) rectangle. So, the number of ways to fill the remaining part is f(n-2).
+
+Therefore, we can express f(n) as the sum of f(n-1) and f(n-2), which gives us the recurrence relation:
+
+f(n) = f(n-1) + f(n-2)
+
+This is the Fibonacci sequence, where each term is the sum of the two preceding ones. The base cases for this problem are:
+
+f(0) = 1 (an empty rectangle has one way to be &quot;filled&quot; - by doing nothing)
+f(1) = 1 (there is only one way to fill a 2 x 1 rectangle - with a single vertical tile)
+
+Now we can compute f(11) using the recurrence relation:
+
+f(2) = f(1) + f(0) = 1 + 1 = 2
+f(3) = f(2) + f(1) = 2 + 1 = 3
+f(4) = f(3) + f(2) = 3 + 2 = 5
+f(5) = f(4) + f(3) = 5 + 3 = 8
+f(6) = f(5) + f(4) = 8 + 5 = 13
+f(7) = f(6) + f(5) = 13 + 8 = 21
+f(8) = f(7) + f(6) = 21 + 13 = 34
+f(9) = f(8) + f(7) = 34 + 21 = 55
+f(10) = f(9) + f(8) = 55 + 34 = 89
+f(11) = f(10) + f(9) = 89 + 55 = 144
+
+So, there are 144 different ways to fill a 2 x 11 rectangle with 2 x 1 tiles.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 144 different ways to fill a 2 x 11 rectangle with 2 x 1 tiles.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

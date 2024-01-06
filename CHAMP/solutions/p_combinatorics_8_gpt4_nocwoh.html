@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_8</td>
+            <td>GPT-4</td>
+            <td>No C w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 634</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_8']
+messages = problem.conversations['GPT-4|No C w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many strings of length 5 and consisting solely of the digits 1, 2, 3 and 4 have the property that any 1 and 2 are never neighbors (i.e., the string does not contain &quot;12&quot; or &quot;21&quot; as substrings).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the number of such strings of length n that end with a particular digit as a_n, b_n, c_n, and d_n, where a, b, c, and d correspond to the digits 1, 2, 3, and 4 respectively.
+
+For n = 1, we have a_1 = b_1 = c_1 = d_1 = 1, because there is exactly one string of length 1 for each digit.
+
+For n &gt; 1, we have the following recurrence relations:
+
+a_n = b_{n-1} + c_{n-1} + d_{n-1}, because a string of length n ending with 1 can be formed by appending 1 to a string of length n-1 ending with 2, 3, or 4.
+
+b_n = c_{n-1} + d_{n-1}, because a string of length n ending with 2 can be formed by appending 2 to a string of length n-1 ending with 3 or 4.
+
+c_n = a_{n-1} + b_{n-1} + c_{n-1} + d_{n-1}, because a string of length n ending with 3 can be formed by appending 3 to a string of length n-1 ending with any digit.
+
+d_n = a_{n-1} + b_{n-1} + c_{n-1} + d_{n-1}, because a string of length n ending with 4 can be formed by appending 4 to a string of length n-1 ending with any digit.
+
+We want to find a_5 + b_5 + c_5 + d_5, the total number of such strings of length 5.
+
+We can calculate the values for n = 2, 3, 4, and 5 using the recurrence relations:
+
+For n = 2, we have a_2 = b_1 + c_1 + d_1 = 1 + 1 + 1 = 3, b_2 = c_1 + d_1 = 1 + 1 = 2, c_2 = a_1 + b_1 + c_1 + d_1 = 1 + 1 + 1 + 1 = 4, and d_2 = a_1 + b_1 + c_1 + d_1 = 1 + 1 + 1 + 1 = 4.
+
+For n = 3, we have a_3 = b_2 + c_2 + d_2 = 2 + 4 + 4 = 10, b_3 = c_2 + d_2 = 4 + 4 = 8, c_3 = a_2 + b_2 + c_2 + d_2 = 3 + 2 + 4 + 4 = 13, and d_3 = a_2 + b_2 + c_2 + d_2 = 3 + 2 + 4 + 4 = 13.
+
+For n = 4, we have a_4 = b_3 + c_3 + d_3 = 8 + 13 + 13 = 34, b_4 = c_3 + d_3 = 13 + 13 = 26, c_4 = a_3 + b_3 + c_3 + d_3 = 10 + 8 + 13 + 13 = 44, and d_4 = a_3 + b_3 + c_3 + d_3 = 10 + 8 + 13 + 13 = 44.
+
+For n = 5, we have a_5 = b_4 + c_4 + d_4 = 26 + 44 + 44 = 114, b_5 = c_4 + d_4 = 44 + 44 = 88, c_5 = a_4 + b_4 + c_4 + d_4 = 34 + 26 + 44 + 44 = 148, and d_5 = a_4 + b_4 + c_4 + d_4 = 34 + 26 + 44 + 44 = 148.
+
+So, the total number of such strings of length 5 is a_5 + b_5 + c_5 + d_5 = 114 + 88 + 148 + 148 = 498.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The total number of strings of length 5, consisting solely of the digits 1, 2, 3, and 4, where any 1 and 2 are never neighbors, is 498.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

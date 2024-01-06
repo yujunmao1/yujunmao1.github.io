@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_11</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 20</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_11']
+messages = problem.conversations['GPT-3.5|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If x_1, x_2 are the two roots of the polynomial x^2-6x+1, for how many integer n in {61, 62, ..., 120} does x_1^n+x_2^n divided by 5 give a remainder of 4?
+
+You may find the following information useful:
+
+1. Let x_1, x_2 be the root of the polynomial x^2+px+q. Then x_1+x_2=-p and x_1*x_2=q. For the polynomial rx^2+px+q, we have x_1+x_2=-p/r and x_1*x_2=q/r. 
+2. Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).
+3. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the values of n for which (x_1^n + x_2^n) divided by 5 gives a remainder of 4.
+
+First, let&#x27;s find the values of x_1 and x_2 using the quadratic formula. For the polynomial x^2 - 6x + 1, we have:
+
+x_1,2 = (-(-6) ± √((-6)^2 - 4(1)(1))) / (2(1))
+     = (6 ± √(36 - 4)) / 2
+     = (6 ± √32) / 2
+     = 3 ± √8
+
+So, x_1 = 3 + √8 and x_2 = 3 - √8.
+
+Next, let&#x27;s find the values of u and v using the formulas given. We have:
+
+u = x_1 + x_2 = (3 + √8) + (3 - √8) = 6
+v = x_1 * x_2 = (3 + √8)(3 - √8) = 9 - 8 = 1
+
+Now, let&#x27;s find the values of s_n using the formula s_n = u * s_(n-1) - v * s_(n-2). We have:
+
+s_0 = 2 (since x^0 = 1 for any x)
+s_1 = u = 6
+
+Using the formula, we can calculate s_2, s_3, s_4, and so on:
+
+s_2 = u * s_1 - v * s_0 = 6 * 6 - 1 * 2 = 34
+s_3 = u * s_2 - v * s_1 = 6 * 34 - 1 * 6 = 198
+s_4 = u * s_3 - v * s_2 = 6 * 198 - 1 * 34 = 1164
+s_5 = u * s_4 - v * s_3 = 6 * 1164 - 1 * 198 = 6864
+s_6 = u * s_5 - v * s_4 = 6 * 6864 - 1 * 1164 = 40392
+
+We can continue this process to find s_n for larger values of n.
+
+Now, let&#x27;s find the values of s_n mod 5 for n = 0, 1, 2, 3, 4, 5, 6, and so on:
+
+s_0 mod 5 = 2 mod 5 = 2
+s_1 mod 5 = 6 mod 5 = 1
+s_2 mod 5 = 34 mod 5 = 4
+s_3 mod 5 = 198 mod 5 = 3
+s_4 mod 5 = 1164 mod 5 = 4
+s_5 mod 5 = 6864 mod 5 = 4
+s_6 mod 5 = 40392 mod 5 = 2
+
+We can see that the values of s_n mod 5 repeat in a pattern: 2, 1, 4, 3, 4, 4, 2, ...
+
+To find the values of n for which s_n mod 5 = 4, we need to find the pattern in the remainders. We can see that the pattern repeats every 4 terms. So, for n = 0, 4, 8, 12, ..., the remainder is 4.
+
+Now, let&#x27;s find the values of n in the range {61, 62, ..., 120} that satisfy the condition. We can divide each n by 4 and check the remainder:
+
+61 mod 4 = 1
+62 mod 4 = 2
+63 mod 4 = 3
+64 mod 4 = 0
+65 mod 4 = 1
+66 mod 4 = 2
+67 mod 4 = 3
+68 mod 4 = 0
+69 mod 4 = 1
+70 mod 4 = 2
+71 mod 4 = 3
+72 mod 4 = 0
+73 mod 4 = 1
+74 mod 4 = 2
+75 mod 4 = 3
+76 mod 4 = 0
+77 mod 4 = 1
+78 mod 4 = 2
+79 mod 4 = 3
+80 mod 4 = 0
+81 mod 4 = 1
+82 mod 4 = 2
+83 mod 4 = 3
+84 mod 4 = 0
+85 mod 4 = 1
+86 mod 4 = 2
+87 mod 4 = 3
+88 mod 4 = 0
+89 mod 4 = 1
+90 mod 4 = 2
+91 mod 4 = 3
+92 mod 4 = 0
+93 mod 4 = 1
+94 mod 4 = 2
+95 mod 4 = 3
+96 mod 4 = 0
+97 mod 4 = 1
+98 mod 4 = 2
+99 mod 4 = 3
+100 mod 4 = 0
+101 mod 4 = 1
+102 mod 4 = 2
+103 mod 4 = 3
+104 mod 4 = 0
+105 mod 4 = 1
+106 mod 4 = 2
+107 mod 4 = 3
+108 mod 4 = 0
+109 mod 4 = 1
+110 mod 4 = 2
+111 mod 4 = 3
+112 mod 4 = 0
+113 mod 4 = 1
+114 mod 4 = 2
+115 mod 4 = 3
+116 mod 4 = 0
+117 mod 4 = 1
+118 mod 4 = 2
+119 mod 4 = 3
+120 mod 4 = 0
+
+We can see that for n = 64, 68, 72, ..., 120, the remainder is 0.
+
+Therefore, there are 14 values of n in the range {61, 62, ..., 120} for which (x_1^n + x_2^n) divided by 5 gives a remainder of 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 14 values of n in the range {61, 62, ..., 120} for which (x_1^n + x_2^n) divided by 5 gives a remainder of 4.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

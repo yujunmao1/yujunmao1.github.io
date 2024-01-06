@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_49</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_49']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence {x_n} is defined by x_1=2, x_(n+1)=(2+x_n)/(1−2x_n), and it is known that there are no x_n=0. Could x_p=x_q for any p≠q, and if so, find the smallest possible value of p+q.
+
+You may find the following information useful:
+
+1. Let a=arctan(2) and find the relationship between x_n and tan(na).
+2. tan(a±b)=(tan(a)±tan(b))/(1∓tan(ab)).
+3. tan(a)±tan(b)=sin(a±b)/(cos(a)cos(b)).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will first establish the relationship between \( x_n \) and \( \tan(na) \) using the given information. Let&#x27;s start by finding \( a = \arctan(2) \).
+
+Now, we will try to express \( x_n \) in terms of \( \tan(na) \). We are given that \( x_1 = 2 \), which means \( x_1 = \tan(a) \) since \( a = \arctan(2) \).
+
+We are also given the recursive formula for the sequence:
+\[ x_{n+1} = \frac{2 + x_n}{1 - 2x_n} \]
+
+Let&#x27;s assume that \( x_n = \tan(na) \) for some \( n \). We want to show that \( x_{n+1} = \tan((n+1)a) \) to establish the relationship.
+
+Using the tangent addition formula:
+\[ \tan(a + b) = \frac{\tan(a) + \tan(b)}{1 - \tan(a)\tan(b)} \]
+
+Let&#x27;s apply this to \( \tan(na + a) \):
+\[ \tan((n+1)a) = \tan(na + a) = \frac{\tan(na) + \tan(a)}{1 - \tan(na)\tan(a)} \]
+
+Since we assumed \( x_n = \tan(na) \) and we know \( \tan(a) = 2 \), we can write:
+\[ \tan((n+1)a) = \frac{\tan(na) + 2}{1 - 2\tan(na)} \]
+\[ \tan((n+1)a) = \frac{x_n + 2}{1 - 2x_n} \]
+
+This matches the recursive formula for \( x_{n+1} \), so by induction, we can say that \( x_n = \tan(na) \) for all \( n \).
+
+Now, we want to find if \( x_p = x_q \) for any \( p \neq q \). This would mean:
+\[ \tan(pa) = \tan(qa) \]
+
+Since the tangent function is periodic with period \( \pi \), this implies that:
+\[ pa - qa = k\pi \]
+\[ (p - q)a = k\pi \]
+
+Where \( k \) is an integer. Since \( a = \arctan(2) \), it is not a rational multiple of \( \pi \), so \( p - q \) must be an integer multiple of the period of the tangent function for \( x_p = x_q \) to be true.
+
+We are looking for the smallest positive integer values of \( p \) and \( q \) such that \( p \neq q \) and \( (p - q)a = k\pi \). Since \( a \) is not a rational multiple of \( \pi \), \( p - q \) must be zero for the smallest non-zero \( k \), which is impossible because \( p \neq q \). Therefore, there are no such \( p \) and \( q \) that satisfy the condition \( x_p = x_q \) for \( p \neq q \) within the constraints of the problem. Thus, there are no \( p \) and \( q \) such that \( x_p = x_q \) and \( p \neq q \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no values of \( p \) and \( q \) such that \( p \neq q \) and \( x_p = x_q \) in the given sequence, as the tangent function&#x27;s period is not commensurate with \( \pi \) when \( a = \arctan(2) \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_38</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_38']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For x, y, z&gt;0, what is the smallest value of x^2/y^2+y^2/z^2+z^2/x^2-(x/y+y/z+z/x)?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let f(x, y, z)=x^2/y^2+y^2/z^2+z^2/x^2-(x/y+y/z+z/x).
+2. Thus, x^2*y^2*z^2*f(x, y, z)=x^4*z^2+y^4*x^2+z^4*y^2-(x^3*y*z^2+y^3*z*x^2+z^3*x*y^2)=x^3*z^2*(x-y)+y^3*x^2*(y-z)+z^3*y^2*(z-x).
+3. Without loss of generality, we can assume that x≥y≥z due to symmetry.
+4. Thus, x^3*z^2*(x-y)+y^3*x^2*(y-z)+z^3*y^2*(z-x)=x^3*z^2*(x-y)+y^3*x^2*(y-z)+z^3*y^2*(z-y)+z^3*y^2*(y-x)=(x^3*z^2-z^3*y^2)(x-y)+(y^3*x^2-z^3*y^2)(y-z)=z^2(x^3-z*y^2)(x-y)+y^2(x^2*y-z^3)(y-z).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s continue from where the partial solution left off. We have:
+
+\[ f(x, y, z) = \frac{x^4z^2 + y^4x^2 + z^4y^2 - (x^3yz^2 + y^3zx^2 + z^3xy^2)}{x^2y^2z^2} \]
+
+And we have simplified it to:
+
+\[ f(x, y, z) = \frac{z^2(x^3 - zy^2)(x - y) + y^2(x^2y - z^3)(y - z)}{x^2y^2z^2} \]
+
+Since we have assumed \( x \geq y \geq z \), we know that \( x - y \geq 0 \) and \( y - z \geq 0 \). Now, let&#x27;s examine the terms \( x^3 - zy^2 \) and \( x^2y - z^3 \).
+
+By the rearrangement inequality, since \( x \geq y \geq z \), we have \( x^3 \geq xz^2 \), \( y^3 \geq yz^2 \), and \( z^3 \leq zy^2 \). Therefore, \( x^3 - zy^2 \geq xz^2 - zy^2 = z(x^2 - y^2) \geq 0 \) and \( x^2y - z^3 \geq x^2z - z^3 = z(x^2 - z^2) \geq 0 \).
+
+Since all the terms in the numerator of \( f(x, y, z) \) are non-negative, the smallest value of \( f(x, y, z) \) occurs when \( x = y = z \). In this case, \( f(x, y, z) \) simplifies to:
+
+\[ f(x, x, x) = \frac{x^4x^2 + x^4x^2 + x^4x^2 - (x^3xx^2 + x^3xx^2 + x^3xx^2)}{x^2x^2x^2} = \frac{3x^6 - 3x^6}{x^6} = 0 \]
+
+Therefore, the smallest value of \( f(x, y, z) \) is \( 0 \), which occurs when \( x = y = z \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( f(x, y, z) = x^2/y^2 + y^2/z^2 + z^2/x^2 - (x/y + y/z + z/x) \) for \( x, y, z &gt; 0 \) is 0, which occurs when \( x = y = z \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

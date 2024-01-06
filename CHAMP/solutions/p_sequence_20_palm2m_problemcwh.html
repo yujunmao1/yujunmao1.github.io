@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_20</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_20']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Each of the faces of a cube is painted by a different color. How many of the colorings are distinct up to rotations?
+Step-wise solution:
+1. We paint a face and put it on the bottom, and consider painting the second face.
+2. We can paint it on top, the remaining four faces have 4! colorings, but we can rotate the cube four times, which makes four colorings the same, so we 4!/4=6 distinct colorings.
+3. If the second face is on the side, we can put it on the front, and the two faces uniquely fix the rotation.
+4. Thus, any coloring of the remaining four faces is distinct, and we have 4!=24 colorings.
+5. In total, we have 30 colorings.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a_n be the number of all permutations p of {1, ..., n} with |p(i)−i|≤1 for all i. Find a_10.
+
+In addition, you may also find the following information helpful:
+
+1. Find an expression for a_n in terms of a_(n-1) and a_(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n$ be the number of all permutations $p$ of $\\{1, \ldots, n\\}$ with $|p(i) - i| \leq 1$ for all $i$. We will find an expression for $a_n$ in terms of $a_{n-1}$ and $a_{n-2}$.
+
+We can think of a permutation $p$ of $\\{1, \ldots, n\\}$ with $|p(i) - i| \leq 1$ for all $i$ as a path on the $n$-cube, starting at the vertex $(1, 2, \ldots, n)$ and ending at the vertex $(p(1), p(2), \ldots, p(n))$. The path must always move up, down, left, or right, and it must never move diagonally.
+
+For example, the following is a path on the 4-cube that corresponds to the permutation $(1, 2, 3, 4)$:
+
+[Image of a 4-cube with a path on it]
+
+The path starts at the vertex $(1, 2, 3, 4)$ and ends at the vertex $(1, 2, 3, 4)$. It moves up, down, left, and right.
+
+We can now count the number of permutations of $\\{1, \ldots, n\\}$ with $|p(i) - i| \leq 1$ for all $i$ by counting the number of paths on the $n$-cube.
+
+There are two types of paths on the $n$-cube: paths that start at the vertex $(1, 2, \ldots, n)$ and end at the vertex $(n, n-1, \ldots, 1)$, and paths that start at the vertex $(1, 2, \ldots, n)$ and end at the vertex $(n-1, n-2, \ldots, 1)$.
+
+The number of paths of the first type is $a_{n-1}$. This is because there are $a_{n-1}$ ways to choose the first step of the path, $a_{n-2}$ ways to choose the second step, and so on.
+
+The number of paths of the second type is $a_{n-2}$. This is because there are $a_{n-2}$ ways to choose the first step of the path, $a_{n-3}$ ways to choose the second step, and so on.
+
+Therefore, the total number of permutations of $\\{1, \ldots, n\\}$ with $|p(i) - i| \leq 1$ for all $i$ is $a_{n-1} + a_{n-2}$.
+
+In conclusion, $a_n = a_{n-1} + a_{n-2}$.
+
+To find $a_{10}$, we can use the following formula:
+
+$$a_n = a_{n-1} + a_{n-2}$$
+
+Substituting $n = 10$, we get:
+
+$$a_{10} = a_{9} + a_{8}$$
+
+Substituting $n = 9$, we get:
+
+$$a_{9} = a_{8} + a_{7}$$
+
+Substituting $n = 8$, we get:
+
+$$a_{8} = a_{7} + a_{6}$$
+
+Substituting $n = 7$, we get:
+
+$$a_{7} = a_{6} + a_{5}$$
+
+Substituting $n = 6$, we get:
+
+$$a_{6} = a_{5} + a_{4}$$
+
+Substituting $n = 5$, we get:
+
+$$a_{5} = a_{4} + a_{3}$$
+
+Substituting $n = 4$, we get:
+
+$$a_{4} = a_{3} + a_{2}$$
+
+Substituting $n = 3$, we get:
+
+$$a_{3} = a_{2} + a_{1}$$
+
+Substituting $n = 2$, we get:
+
+$$a_{2} = a_{1} + a_{0}$$
+
+Substituting $n = 1$, we get:
+
+$$a_{1} = a_{0} + a_{-1}$$
+
+Substituting $n = 0$, we get:
+
+$$a_{0} = a_{-1} + a_{</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of permutations of $\\{1, \ldots, n\\}$ with $|p(i) - i| \leq 1$ for all $i$ is $a_n = a_{n-1} + a_{n-2}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

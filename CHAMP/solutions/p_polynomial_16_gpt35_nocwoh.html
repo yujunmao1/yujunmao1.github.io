@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_16</td>
+            <td>GPT-3.5</td>
+            <td>No C w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> k-2 (i.e., all of them)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_16']
+messages = problem.conversations['GPT-3.5|No C w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial f(x) has integer coefficients and there exists an integer k such that f(k), f(k+1), f(k+2) are all divisible by 3. For integer m in {k+3, k+4, ..., 2k}, at least how many of them have f(m) divisible by 3, as an expression of k?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by considering the polynomial f(x) and its divisibility by 3.
+
+Since f(k), f(k+1), and f(k+2) are all divisible by 3, we can write them as:
+
+f(k) = 3a
+f(k+1) = 3b
+f(k+2) = 3c
+
+where a, b, and c are integers.
+
+Now, let&#x27;s consider the values of f(m) for m in {k+3, k+4, ..., 2k}.
+
+We can express f(m) as:
+
+f(m) = f(k + (m - k))
+
+Expanding this expression using the polynomial f(x), we get:
+
+f(m) = f(k) + (m - k)f&#x27;(k) + [(m - k)(m - k - 1)/2]f&#x27;&#x27;(k) + ...
+
+where f&#x27;(k), f&#x27;&#x27;(k), ... are the derivatives of f(x) evaluated at k.
+
+Since f(x) has integer coefficients, all the terms in the expansion of f(m) will have integer coefficients as well.
+
+Now, let&#x27;s consider the divisibility of f(m) by 3.
+
+We know that f(k) is divisible by 3, so the first term in the expansion, f(k), is divisible by 3.
+
+The second term, (m - k)f&#x27;(k), is a linear term and may or may not be divisible by 3, depending on the value of f&#x27;(k).
+
+The third term, [(m - k)(m - k - 1)/2]f&#x27;&#x27;(k), is a quadratic term and may or may not be divisible by 3, depending on the value of f&#x27;&#x27;(k).
+
+In general, the divisibility of f(m) by 3 will depend on the values of the derivatives of f(x) evaluated at k.
+
+To find the minimum number of values of m in {k+3, k+4, ..., 2k} for which f(m) is divisible by 3, we need to find the maximum number of terms in the expansion of f(m) that are divisible by 3.
+
+Let&#x27;s consider the quadratic term [(m - k)(m - k - 1)/2]f&#x27;&#x27;(k).
+
+For this term to be divisible by 3, either (m - k) or (m - k - 1) must be divisible by 3.
+
+Since m takes values from k+3 to 2k, there are k-2 values for m.
+
+Out of these k-2 values, at most one-third of them can have (m - k) divisible by 3, and at most one-third of them can have (m - k - 1) divisible by 3.
+
+Therefore, the maximum number of terms in the expansion of f(m) that are divisible by 3 is (k-2)/3 + (k-2)/3 = 2(k-2)/3.
+
+Hence, the minimum number of values of m in {k+3, k+4, ..., 2k} for which f(m) is divisible by 3 is 2(k-2)/3.
+
+Therefore, the expression for the minimum number of values of m is:
+
+2(k-2)/3
+
+This is the final answer.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum number of values of m in {k+3, k+4, ..., 2k} for which f(m) is divisible by 3, as an expression of k, is 2(k-2)/3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

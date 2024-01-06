@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_61</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_61']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 5 rectangle with 1 x 1 tiles and three-cell L-shaped tiles (i.e., a 2 x 2 tile without a corner).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We let a_n be the number of ways to tile a 2 x n rectangle.
+2. For a 2 x (n+1) rectangle, let 2 be the vertical dimension and n+1 be the horizontal direction.
+3. We consider possible ways to extend shorter rectangles to get this one.
+4. First, we could add two 1 x 1 tiles to a new column of an 2 x n rectangle.
+5. Second, we could add one 1 x 1 tile and one L-shaped tile to two new columns of an 2 x (n-1) rectangle, and we have four different ways to do so.
+6. Third, we could add two L-shaped tiles to three new columns of an 2 x (n-2) rectangle, and we have two different ways to do so.
+7. Thus, we have a_(n+1)=a_n+4*a_(n-1)+2*a_(n-2).
+8. We have a_1=1 because we can only fill it with two 1 x 1 tiles.
+9. We have a_2=5 because we can fill it with only 1 x 1 tiles or with one of each tile, with four different ways.
+10. We have a_3=11 because we have one way to fill it with only 1 x 1 tiles, 8 ways with three 1 x 1 tiles and one L-shaped tiles (because there are 8 possible locations for the L-shaped tile in a 2 x 3 rectangle), and 2 ways to fill it with two L-shaped tiles.
+11. Continuing on, the sequence of a_n is a_4=33 and a_5=87.
+12. Thus, there are 87 ways to fill an 2 x 5 rectangle.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+On a chess board, two rooks are placed peacefully if they are not on the same row or column. For an n x n chess board, find the number of ways that n rooks can be placed peacefully (i.e., any two are placed peacefully), as an expression of n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Obviously, since we have n rows and n rooks, we need one rook per row.
+2. We also need rooks to occupy different columns.
+3. Thus, on the first row, we have n columns available, and then n-1 columns available, until 1 column available for the last row.
+4. So we have n! possible placements.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {1, 2, ..., 100} do we have (n+1)^n≥2^n*n!?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We see that the inequality holds for n=1, as 2=2.
+2. For n≥2, assume that n^(n-1)≥2^(n-1)*(n-1)!.
+3. We have (n+1)^n/n^(n-1)=((n+1)/n)^n*n=(1+1/n)^n*n≥2n.
+4. Thus, (n+1)^n=n^(n-1)*(n+1)^n/n^(n-1)≥2^(n-1)*(n-1)!*(2n)=2^n*n!, which means that the inequality is holds for n.
+5. Thus, by induction, the equality holds for every n=1, 2, 3, ....
+6. So all 100 values of n satisfy the condition.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+An integer a is called automorphic if a^2 ends in a. For example, 5 is automorphic because 5^2=25 ends in 5. 25 is also automorphic because 25^2=625 ends in 25. Find all three-digit automorphic numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have 100≤a≤999 and since a^2 ends in a, a^2-a ends in 000.
+2. So 1000 | a(a-1).
+3. Since gcd(a, a-1)=1, we have one of a and a-1 being a multiple of 8, and the other being a multiple of 125 (or one being a multiple of 1000, but this is impossible because a is a three-digit number).
+4. If 125 | a and 8 | a-1, the only solution is a=625.
+5. If 125 | a-1 and  8 | a, the only solution is a=376.
+6. So the answer is 376 and 625.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+In how many ways can 12 geometric progressions be selected from the numbers 1, 2, ..., 100 such that every number is in exactly one progression?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For three different prime numbers, p&lt;q&lt;r, we have r/q≠q/p, because otherwise q^2=pr implies that p=q=r.
+2. So no three prime numbers can be in one geometric progression.
+3. Since there are 25 prime numbers under 100, we need at least 13 geometric progressions to contain them.
+4. Thus, it is impossible to put 1, 2, ..., 100 into 12 geometric progressions.
+5. So there are 0 ways to do it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive integers a, b, c, d, n satisfying ab=cd, can a^n+b^n+c^n+d^n be a prime number?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, it is possible for $a^n+b^n+c^n+d^n$ to be a prime number. For example, if $a=b=c=d=2$, then $a^n+b^n+c^n+d^n=2^n+2^n+2^n+2^n=8^n$, which is a prime number for any positive integer $n$.
+
+However, it is not always possible for $a^n+b^n+c^n+d^n$ to be a prime number. For example, if $a=2$, $b=3$, $c=5$, and $d=7$, then $a^n+b^n+c^n+d^n=2^n+3^n+5^n+7^n$ is always divisible by 6, since it is always divisible by 2 and 3. Therefore, it cannot be a prime number.
+
+In general, it is not possible to say whether or not $a^n+b^n+c^n+d^n$ is a prime number without knowing the values of $a$, $b$, $c$, $d$, and $n$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>It is possible for $a^n+b^n+c^n+d^n$ to be a prime number, but it is not always possible.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

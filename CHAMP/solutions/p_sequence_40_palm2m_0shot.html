@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_40</td>
+            <td>PaLM 2 Medium</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 125</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_40']
+messages = problem.conversations['PaLM 2 Medium|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a_n be the number of all permutations p of {1, ..., n} with min(n-|p(i)−i|, |p(i)−i|)≤1 for all i. Find a_10.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n$ be the number of all permutations $p$ of $\\{1, \ldots, n\\}$ with $\min(n-|p(i)-i|, |p(i)-i|) \leq 1$ for all $i$. We will show by induction on $n$ that $a_n = \binom{n+1}{2}$.
+
+The base case $n=1$ is trivial, since there is only one permutation of $\\{1\\}$ that satisfies the given condition.
+
+For the inductive step, assume that $a_k = \binom{k+1}{2}$ for some $k \geq 1$. We want to show that $a_{k+1} = \binom{k+2}{2}$.
+
+Let $p$ be a permutation of $\\{1, \ldots, k+1\\}$ that satisfies the given condition. We can think of $p$ as a path on the graph $G$ with vertices $\\{1, \ldots, k+1\\}$, where two vertices $i$ and $j$ are connected by an edge if and only if $|p(i)-p(j)| \leq 1$.
+
+Let $v_1, \ldots, v_{k+1}$ be the vertices of $G$ in order along the path $p$. For each $i$, let $d_i$ be the number of edges in $G$ that are adjacent to $v_i$. Then $d_i \leq 2$ for all $i$, since each vertex can only be connected to at most two other vertices by edges.
+
+Now, consider the following two cases:
+
+* Case 1: There exists a vertex $v_i$ with $d_i = 2$. In this case, we can remove the edge that is adjacent to $v_i$ and still have a valid path on $G$. This gives us a new permutation $p&#x27;$ of $\\{1, \ldots, k\\}$ that also satisfies the given condition. Moreover, $p&#x27;$ can be obtained from $p$ by swapping two adjacent elements, so $p&#x27;$ is a different permutation than $p$.
+
+* Case 2: For all $i$, we have $d_i = 1$. In this case, we can remove any edge from $G$ and still have a valid path. This gives us a new permutation $p&#x27;$ of $\\{1, \ldots, k\\}$ that also satisfies the given condition. Moreover, $p&#x27;$ can be obtained from $p$ by removing an edge, so $p&#x27;$ is a different permutation than $p$.
+
+In either case, we have found a new permutation $p&#x27;$ of $\\{1, \ldots, k\\}$ that satisfies the given condition and is different from $p$. This shows that there are at least $\binom{k+1}{2}$ permutations of $\\{1, \ldots, k+1\\}$ that satisfy the given condition.
+
+On the other hand, it is easy to see that there are at most $\binom{k+2}{2}$ permutations of $\\{1, \ldots, k+1\\}$ that satisfy the given condition. This is because each permutation can be uniquely represented by a path on the graph $G$ with vertices $\\{1, \ldots, k+1\\}$, and there are $\binom{k+2}{2}$ such paths.
+
+Therefore, we must have $a_{k+1} = \binom{k+2}{2}$. This completes the inductive step and proves the desired result.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of permutations of $\\{1, \ldots, n\\}$ with $\min(n-|p(i)-i|, |p(i)-i|) \leq 1$ for all $i$ is $\binom{n+1}{2}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

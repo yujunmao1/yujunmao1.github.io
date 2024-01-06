@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_38</td>
+            <td>GPT-4</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The sequence does not exist</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_38']
+messages = problem.conversations['GPT-4|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: If n is a composite number, find all possible values of 1*2*...*(n-2)*(n-1) mod 1+2+...+(n-2)+(n-1).
+Step-wise solution:
+1. We have Q(n)=1*2*...*(n-2)*(n-1)/(1+2+...+(n-1))=1*2*...*(n-2)*(n-1)/(n(n-1)/2)=2*2*3*...*(n-2)/n.
+2. Since n is composite, we let n=pq, where 1&lt;p≤q&lt;n.
+3. We further have q&lt;n-1 since gcd(n,n-1)=1.
+4. Thus, if p≠q, then p,q are two factors less than n-1 and thus separately appear among the terms of 2*3*...*(n-2).
+5. If p=q, when p=q=2, we have n=4 and Q(n)=2*2/4=1.
+6. For p=q≥3, then n-2=q^2-2&gt;2q.
+7. Thus, factors p and 2q appear among the terms of 2*3*...*(n-2).
+8. So in all cases, we have Q(n) as a whole integer.
+9. Thus, 1*2*...*(n-2)*(n-1) mod 1+2+...+(n-2)+(n-1)=0.
+
+Problem: Find the smallest positive integer a, so that 1971 | 50^n+23^n*a for odd n.
+Step-wise solution:
+1. Since 1971=27*73, we need 27 | 50^n+23^n*a and 73 | 50^n+23^n*a.
+2. We have 50^n+23^n*a mod 27=23^n+23^n*a mod 27=23^n*(a+1) mod 27=0.
+3. In addition, for odd n, we have 50^n+23^n*a mod 73=(-23)^n+23^n*a mod 73=23^n*(a-1) mod 73=0.
+4. Since gcd(27, 23)=gcd(73, 23)=1, we must have gcd(27, 23^n)=gcd(73, 23^n)=1, so 27 | a+1 and 73 | a-1.
+5. In other words, a mod 27=-1 and a mod 73=1.
+6. Thus, a=27x-1=73y+1 and 27 | 73y+2.
+7. We have 73 mod 27=19, so the sequence of 73y+2 mod 27, starting for y=1, 2, 3, ... is 21, 13, 5, 24, 16, 8, 0.
+8. We have 27 | 73y+2 for y=7, and a=73y+2=512.
+9. Thus, a=512.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+The terms of the sequence a_1, a_2, a_3, ... are all positive, and a_(n+1)=sqrt(1+a_n) for all n. Does there exist such a sequence with all a_n being rational numbers, and if so, find the smallest possible value of a_1 such that the sequence satisfies the condition.
+
+In addition, you may also find the following information helpful:
+
+1. Assume that each a_n is rational and write a_n=p_n/q_n with gcd(p_n, q_n)=1.
+2. From a_(n+1)^2=1+a_n, study the relationship between q_n and q_(n+1).
+3. Establish a stronger condition on the sequence of numbers.
+4. Study possible valid values for a_1 under this stronger condition by looking at the expression a_(n+1)^2-a_n^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+
+1. Assume that each a_n is rational and write a_n=p_n/q_n with gcd(p_n, q_n)=1.
+2. From a_(n+1)^2=1+a_n, we have (p_(n+1)/q_(n+1))^2=1+p_n/q_n.
+3. This simplifies to p_(n+1)^2/q_(n+1)^2=1+q_n/p_n, or p_(n+1)^2=q_(n+1)^2+q_n*p_n.
+4. Since gcd(p_n, q_n)=1, we must have gcd(p_(n+1), q_(n+1))=1.
+5. This implies that q_(n+1)^2 and q_n*p_n must be relatively prime, which is only possible if q_(n+1)^2 and q_n are relatively prime and p_n and q_(n+1)^2 are relatively prime.
+6. Since p_n and q_n are relatively prime, this implies that q_n and q_(n+1)^2 are relatively prime.
+7. Therefore, we have a stronger condition on the sequence: for all n, q_n and q_(n+1)^2 are relatively prime.
+8. Now, let&#x27;s study possible valid values for a_1 under this stronger condition by looking at the expression a_(n+1)^2-a_n^2.
+9. We have a_(n+1)^2-a_n^2=(p_(n+1)/q_(n+1))^2-(p_n/q_n)^2=(p_(n+1)^2*q_n^2-p_n^2*q_(n+1)^2)/(q_n*q_(n+1))^2.
+10. Since q_n and q_(n+1)^2 are relatively prime, we must have q_n | p_(n+1)^2 and q_(n+1)^2 | p_n^2.
+11. This implies that p_n is a perfect square and q_n is a perfect square for all n.
+12. Therefore, a_n must be a perfect square for all n.
+13. The smallest possible value of a_1 that is a perfect square is 1/1=1.
+
+So, there does exist such a sequence with all a_n being rational numbers, and the smallest possible value of a_1 such that the sequence satisfies the condition is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there exists such a sequence with all a_n being rational numbers, and the smallest possible value of a_1 that satisfies the condition is 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

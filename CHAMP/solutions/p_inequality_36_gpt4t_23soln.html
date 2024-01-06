@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_36</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_36']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For non-negative a, b, c, d, what is the smallest value of sqrt((a+c)(b+d))-sqrt(ab)-sqrt(cd)-1?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have sqrt((a+c)(b+d))^2=(a+c)(b+d)=ab+ad+bc+cd.
+2. We have (sqrt(ab)+sqrt(cd))^2=ab+cd+2*sqrt(abcd).
+3. Thus, sqrt((a+c)(b+d))^2-(sqrt(ab)+sqrt(cd))^2=ad+bc-2sqrt(abcd), which is non-negative because ad+bc≥2sqrt(abcd).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s continue from where the partial solution left off. We have:
+
+\[ \sqrt{(a+c)(b+d)}^2 - (\sqrt{ab} + \sqrt{cd})^2 = ad + bc - 2\sqrt{abcd} \]
+
+This expression is non-negative due to the AM-GM inequality, which states that for non-negative real numbers \( x \) and \( y \), the arithmetic mean is greater than or equal to the geometric mean:
+
+\[ \frac{x + y}{2} \geq \sqrt{xy} \]
+
+Applying this to \( ad \) and \( bc \), we get:
+
+\[ \frac{ad + bc}{2} \geq \sqrt{abcd} \]
+
+Multiplying both sides by 2, we have:
+
+\[ ad + bc \geq 2\sqrt{abcd} \]
+
+This confirms that \( ad + bc - 2\sqrt{abcd} \) is indeed non-negative.
+
+Now, let&#x27;s consider the original expression:
+
+\[ \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \]
+
+We want to find the smallest value of this expression. From the partial solution, we know that:
+
+\[ \sqrt{(a+c)(b+d)} - (\sqrt{ab} + \sqrt{cd}) = \sqrt{ad + bc - 2\sqrt{abcd}} \]
+
+Since \( ad + bc - 2\sqrt{abcd} \) is non-negative, the square root is well-defined. Now, let&#x27;s subtract 1 from both sides:
+
+\[ \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 = \sqrt{ad + bc - 2\sqrt{abcd}} - 1 \]
+
+The smallest value this expression can take is when \( ad + bc - 2\sqrt{abcd} = 0 \), which occurs when \( ad = bc \) and \( a, b, c, d \) are such that \( ad = bc = \sqrt{abcd} \). This implies that \( a = c \) and \( b = d \) (assuming \( a, b, c, d \) are all non-zero; if any are zero, the equality still holds trivially).
+
+In this case, the expression simplifies to:
+
+\[ \sqrt{(a+a)(b+b)} - \sqrt{ab} - \sqrt{ab} - 1 = \sqrt{4ab} - 2\sqrt{ab} - 1 = 2\sqrt{ab} - 2\sqrt{ab} - 1 = -1 \]
+
+Therefore, the smallest value of the original expression is \(-1\), which occurs when \( a = c \) and \( b = d \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \) for non-negative \( a, b, c, d \) is \(-1\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

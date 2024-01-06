@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_77</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_77']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?
+
+You may find the following information useful:
+
+1. Factorize 12^m+9^m+8^m+6^m into an expression involving 2^m, 3^m, 4^m.
+2. An integer ending with 5 can be written as 10k+5=5(2k+1).
+3. All prime numbers greater than 3 has the form of 6n±1.
+4. Let a be a positive integer and p be a prime. Then a^p≡a mod p.
+5. 2^5+3^5=275=11*25.
+6. 3^5+4^5=1267=181*7.
+7. 1991=11*181.
+8. For odd x, x^2 mod 8=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the integer \( m \) ends with digit 5, we can write \( m \) as \( 5(2k+1) \), where \( k \) is an integer. This means \( m \) is of the form \( 10k+5 \), which is always odd.
+
+We are asked to find possible values of \( 12^m + 9^m + 8^m + 6^m \mod 1991 \).
+
+First, let&#x27;s factorize \( 12^m + 9^m + 8^m + 6^m \) into an expression involving \( 2^m \), \( 3^m \), \( 4^m \):
+
+\( 12^m = (2^2 \cdot 3)^m = 2^{2m} \cdot 3^m \)
+\( 9^m = (3^2)^m = 3^{2m} \)
+\( 8^m = (2^3)^m = 2^{3m} \)
+\( 6^m = (2 \cdot 3)^m = 2^m \cdot 3^m \)
+
+Now, let&#x27;s combine these expressions:
+
+\( 12^m + 9^m + 8^m + 6^m = 2^{2m} \cdot 3^m + 3^{2m} + 2^{3m} + 2^m \cdot 3^m \)
+
+Since \( m \) is odd, \( 2m \) and \( 3m \) are also odd. We can use the fact that for odd \( x \), \( x^2 \mod 8 = 1 \) to simplify \( 2^{2m} \) and \( 2^{3m} \) modulo 8:
+
+\( 2^{2m} \mod 8 = (2^m)^2 \mod 8 = 1 \) (since \( m \) is odd)
+\( 2^{3m} \mod 8 = 2^m \cdot (2^m)^2 \mod 8 = 2^m \) (since \( m \) is odd)
+
+Now, let&#x27;s consider the expression modulo 1991, which is the product of two primes, 11 and 181. By the Chinese Remainder Theorem, we can consider the expression modulo 11 and modulo 181 separately.
+
+Using the fact that \( a^p \equiv a \mod p \) for a prime \( p \), we have:
+
+\( 12^m \equiv 12 \mod 11 \)
+\( 9^m \equiv 9 \mod 11 \)
+\( 8^m \equiv 8 \mod 11 \)
+\( 6^m \equiv 6 \mod 11 \)
+
+Adding these up modulo 11:
+
+\( 12^m + 9^m + 8^m + 6^m \equiv 12 + 9 + 8 + 6 \equiv 35 \equiv 2 \mod 11 \)
+
+Similarly, modulo 181:
+
+\( 12^m \equiv 12 \mod 181 \)
+\( 9^m \equiv 9 \mod 181 \)
+\( 8^m \equiv 8 \mod 181 \)
+\( 6^m \equiv 6 \mod 181 \)
+
+Adding these up modulo 181:
+
+\( 12^m + 9^m + 8^m + 6^m \equiv 12 + 9 + 8 + 6 \equiv 35 \mod 181 \)
+
+Since 35 is less than 181, we don&#x27;t need to reduce it further.
+
+Now we have:
+
+\( 12^m + 9^m + 8^m + 6^m \equiv 2 \mod 11 \)
+\( 12^m + 9^m + 8^m + 6^m \equiv 35 \mod 181 \)
+
+To find the solution modulo 1991, we need to find a number that is congruent to 2 modulo 11 and congruent to 35 modulo 181. This can be done using the Chinese Remainder Theorem, but since we are looking for a number less than 1991, we can find it by inspection or by using the extended Euclidean algorithm.
+
+Let&#x27;s try to find such a number by inspection. We know that \( 35 + 181k \) must be congruent to 2 modulo 11 for some integer \( k \). We can check the first few multiples of 181 added to 35:
+
+\( 35 + 181 \cdot 0 = 35 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 1 = 216 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 2 = 397 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 3 = 578 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 4 = 759 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 5 = 940 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 6 = 1121 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 7 = 1302 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 8 = 1483 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 9 = 1664 \) (not congruent to 2 modulo 11)
+\( 35 + 181 \cdot 10 = 1845 \) (congruent to 2 modulo 11)
+
+So, \( 1845 \) is the number we are looking for. It is congruent to 2 modulo 11 and congruent to 35 modulo 181.
+
+Therefore, the possible value of \( 12^m + 9^m + 8^m + 6^m \mod 1991 \) is \( 1845 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible value of \(12^m + 9^m + 8^m + 6^m \mod 1991\) for an integer \(m\) ending with the digit 5 is \(1845\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

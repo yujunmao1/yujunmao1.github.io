@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_11</td>
+            <td>PaLM 2 Medium</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_11']
+messages = problem.conversations['PaLM 2 Medium|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $x_1, x_2, x_3, ...$ is defined recursively by $x_1 = \frac{1}{2}$ and $x_{k+1} = x_k^2 + x_k$. We can write this as a recurrence relation:
+
+$$x_k = x_{k-1}^2 + x_{k-1}$$
+
+We can also write this as a generating function:
+
+$$\sum_{k=1}^{\infty} x_k z^k = \frac{1}{1 - z - z^2}$$
+
+The integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \frac{1}{x_3+1} + ... + \frac{1}{x_{100}+1}$ is the number of terms in the sequence that are greater than or equal to 1.
+
+To find this, we can use the partial fraction decomposition of $\frac{1}{1 - z - z^2}$:
+
+$$\frac{1}{1 - z - z^2} = \frac{1}{2} \left( \frac{1}{1 - z} + \frac{1}{1 + z} \right)$$
+
+This gives us:
+
+$$\sum_{k=1}^{\infty} x_k z^k = \frac{1}{2} \left( \sum_{k=1}^{\infty} \frac{z^k}{1 - z} + \sum_{k=1}^{\infty} \frac{z^k}{1 + z} \right)$$
+
+The first sum is the geometric series $\frac{1}{1 - z}$, which converges to $\frac{1}{1 - z}$ for $|z| &lt; 1$. The second sum is the geometric series $\frac{1}{1 + z}$, which converges to $\frac{1}{1 + z}$ for $|z| &lt; 1$.
+
+Therefore, the sum $\sum_{k=1}^{\infty} x_k z^k$ converges to $\frac{1}{2} \left( \frac{1}{1 - z} + \frac{1}{1 + z} \right)$ for $|z| &lt; 1$.
+
+We can now use this to find the integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \frac{1}{x_3+1} + ... + \frac{1}{x_{100}+1}$.
+
+The first term in the sum is $\frac{1}{x_1+1} = \frac{1}{\frac{1}{2} + 1} = \frac{2}{3}$.
+
+The second term in the sum is $\frac{1}{x_2+1} = \frac{1}{x_1^2 + x_1} = \frac{1}{\left( \frac{1}{2} \right)^2 + \frac{1}{2}} = \frac{2}{5}$.
+
+The third term in the sum is $\frac{1}{x_3+1} = \frac{1}{x_2^2 + x_2} = \frac{1}{\left( \frac{2}{5} \right)^2 + \frac{2}{5}} = \frac{5}{13}$.
+
+Continuing in this way, we find that the terms in the sum alternate between being greater than or equal to 1 and less than 1. The first 10 terms in the sum are $\frac{2}{3}, \frac{2}{5}, \frac{5}{13}, \frac{13}{34}, \frac{34}{89}, \frac{89}{233}, \frac{233}{610}, \frac{610}{1597}, \frac{1597}{4181}, \frac{4181}{10946}$.
+
+The integer part of the sum is therefore the number of terms in the sum that are greater than or equal to 1, which is 10.
+
+Therefore, the integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \frac{1}{x_3+1} + ... + \frac{1}{x_{100}+1}$ is $\boxed{10}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \frac{1}{x_3+1} + ... + \frac{1}{x_{100}+1}$ is 10.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

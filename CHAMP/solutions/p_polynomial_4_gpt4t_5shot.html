@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_4</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (none of the values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_4']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence a_0, a_1, a_2, ... is such that, for all nonnegative m≥n, we have a_(m+n)+a_(m−n)=(a_(2m)+a_(2n))/2. If a_1=1, find a_50.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. With m=n, we have a_(2n)+a_0=(a_(2n)+a_(2n))/2.
+2. So a_0=0.
+3. With n=0, we have a_m+a_m=(a_(2m)+a_0)/2.
+4. So a_(2m)=4a_m.
+5. With m=n+2, we have a_(2n+2)+a_2=(a_(2n+4)+a_(2n))/2.
+6. Plugging in a_(2m)=4a_m, we have 4(a_(n+1)+a_1)=4*(a_(n+2)+a_n)/2.
+7. With a_1=1, we have a_(n+2)=2a_(n+1)-a_n+2.
+8. Thus, starting from a_0=0, a_1=1, we have the sequence a_0, a_1, a_2, ... to be 0, 1, 4, 9, 16, ...
+9. We see that a_n=n^2, which can be shown with a_(n+2)^2=n^2+4n+4=2(n^2+2n+1)-n^2+2=a_(n+1)^2-a_n^2+2.
+10. Thus, a_50=2500.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+What is the smallest value of a/(b+c)+b/(a+c)+c/(a+b) for positive numbers a, b, c?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a/(b+c)+b/(a+c)+c/(a+b)=(a+b+c)/(b+c)+(a+b+c)/(a+c)+(a+b+c)/(a+b)-3=(a+b+c)(1/(a+b)+1/(b+c)+1/(a+c))-3.
+2. We also have 2(a+b+c)(1/(a+b)+1/(b+c)+1/(a+c))=((a+b)+(b+c)+(a+c))(1/(a+b)+1/(b+c)+1/(a+c))≥3^2=9.
+3. Thus, (a+b+c)(1/(a+b)+1/(b+c)+1/(a+c))≥9/2 and a/(b+c)+b/(a+c)+c/(a+b)≥9/2-3=3/2.
+4. So the smallest value is 3/2, achieved when a=b=c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let u&lt;v and define two sequences {u_n} and {v_n}, as u_0=u, u_n=(u_(n-1)+v_(n-1))/2 and v_0=v, v_n=(u_(n-1)+2v_(n-1))/3. Let the two limits be L_u and L_v respectively. Find L_u-L_v.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have v_n-u_n=v_(n-1)/6-u_(n-1)/6=(v_(n-1)-u_(n-1))/6.
+2. So the difference of the sequence decreases to 1/6 after each term.
+3. Thus, they converge to the same limit, and L_u-L_v=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all non-negative integer solutions to the equation x^3+8x^2-6x+8=y^3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. y^3-(x+1)^3=x^3+8x^2-6x+8-x^3-3x^2-3x-1=5x^2-9x+7&gt;0.
+2. y^3-(x+3)^3=x^3+8x^2-6x+8-x^3-9x^2-27x-27=-x^2-33x-19&lt;0.
+3. Thus, x+1&lt;y&lt;x+3, so the only integer solution would by y=x+2.
+4. Plugging into the equation, we get x^3+8x^2-6x+8-(x+2)^3=2x(x-9)=0.
+5. Thus, we have x=0, y=2 and x=9, y=11 being the only two solutions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For the first 100 numbers in the sequence a_1=a_2=1, a_3=2, a_(n+3)=(a_(n+1)*a_(n+2)+5)/a_n, how many of them are integers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_n*a_(n+3)=a_(n+1)*a_(n+2)+5, which means that a_(n-1)*a_(n+2)=a_n*a_(n+1)+5.
+2. Thus, we have a_n*a_(n+3)+a_n*a_(n+1)+5=a_(n-1)*a_(n+2)+a_(n+1)*a_(n+2)+5.
+3. So (a_(n-1)+a_(n+1))*a_(n+2)=(a_(n+1)+a_(n+3))*a_n.
+4. (a_(n-1)+a_(n+1))/a_n=(a_(n+1)+a_(n+3))/a_(n+2)=c.
+5. Note that the two groups skip the group a_n, a_(n+1), a_(n+2) in the middle.
+6. Thus, we could potentially have a different value for (a_n+a_(n+2))/a_(n+1)=(a_(n+2)+a_(n+4))/a_(n+3)=d.
+7. The first few terms of the sequence is 1, 1, 2, 7, 19, 69.
+8. Thus, we see that (a_(n-1)+a_(n+1))/a_n=3, or a_(n+1)=3a_n-a_(n-1), when n is even, and (a_(n-1)+a_(n+1))/a_n=4, or a_(n+1)=4a_n-a_(n-1), when n is odd.
+9. In both cases, a_(n+1) is an integer value.
+10. Thus, all 100 numbers are integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let P(x)=x^(2n)-2x^(2n-1)+3x^(2n-2)-4x^(2n-3)+...-2nx+2n+1. For how many values of n∈{1, 2, ..., 100} does P(x) has at least one real-valued root?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine for how many values of \( n \) the polynomial \( P(x) \) has at least one real-valued root, we can look at the behavior of the polynomial and its derivatives.
+
+The polynomial \( P(x) \) is defined as:
+\[ P(x) = x^{2n} - 2x^{2n-1} + 3x^{2n-2} - 4x^{2n-3} + \ldots - 2nx + 2n + 1 \]
+
+Notice that the polynomial has alternating signs and the coefficients are increasing by 1 in absolute value until the linear term. The constant term is \( 2n + 1 \), which is always positive.
+
+Let&#x27;s consider the first derivative of \( P(x) \):
+\[ P&#x27;(x) = 2nx^{2n-1} - 2(2n-1)x^{2n-2} + 3(2n-2)x^{2n-3} - \ldots - 2n \]
+
+The first derivative \( P&#x27;(x) \) has the same alternating sign pattern, but the coefficients are now multiples of the original coefficients. Since the polynomial \( P(x) \) is of even degree and the leading coefficient is positive, \( P(x) \) will tend to \( +\infty \) as \( x \) tends to \( +\infty \) or \( -\infty \).
+
+Now, let&#x27;s consider the behavior of \( P(x) \) as \( x \) approaches 0 from the positive side. The constant term \( 2n + 1 \) is positive, and since the signs are alternating, the terms will subtract from the constant term as \( x \) gets closer to 0. This means that \( P(x) \) will decrease as \( x \) approaches 0 from the right.
+
+Since \( P(x) \) is continuous and differentiable, and it tends to \( +\infty \) as \( x \) goes to \( +\infty \) or \( -\infty \), and it decreases near \( x = 0 \), there must be at least one real root for \( P(x) \) by the Intermediate Value Theorem. This is because \( P(x) \) must cross the x-axis at some point to go from a value less than 0 near \( x = 0 \) to \( +\infty \) as \( x \) goes to \( +\infty \).
+
+Since this argument holds for any positive integer \( n \), all polynomials \( P(x) \) with \( n \in \{1, 2, \ldots, 100\} \) will have at least one real-valued root.
+
+Therefore, for all 100 values of \( n \), \( P(x) \) has at least one real-valued root.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For all 100 values of \( n \) in the set \( \{1, 2, \ldots, 100\} \), the polynomial \( P(x) \) has at least one real-valued root.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

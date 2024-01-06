@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_19</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2 inequalities</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_19']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, d, at most how many of the three inequalities a+b&lt;c+d, (a+b)(c+d)&lt;ab+cd, (a+b)cd&lt;ab(c+d) can be true at the same time?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We can see that the first two inequalities can be satisified with a=b=1, c=d=10, as 2&lt;20 and 40&lt;102.
+2. Assume that all three inequalities are true.
+3. Multiplying the first two inequalities, we get (a+b)^2&lt;ab+cd.
+4. Since (a+b)^2≥4ab, we have 4ab&lt;ab+cd, or cd&gt;3ab.
+5. Multiplying the last two inequalities, we get (a+b)^2*cd&lt;ab(ab+cd).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s continue from where the partial solution left off:
+
+We have the following three inequalities:
+
+1. \( a + b &lt; c + d \)
+2. \( (a + b)(c + d) &lt; ab + cd \)
+3. \( (a + b)cd &lt; ab(c + d) \)
+
+From the partial solution, we have:
+
+4. \( cd &gt; 3ab \)
+
+Now, let&#x27;s analyze the third inequality:
+
+\( (a + b)cd &lt; ab(c + d) \)
+
+Divide both sides by \( cd \) (since \( c \) and \( d \) are positive, \( cd \) is also positive and we can divide by it without changing the inequality):
+
+\( a + b &lt; \frac{ab(c + d)}{cd} \)
+
+Now, using the result from step 4, \( cd &gt; 3ab \), we can substitute this into the inequality:
+
+\( a + b &lt; \frac{ab(c + d)}{3ab} \)
+
+Simplify by canceling out \( ab \):
+
+\( a + b &lt; \frac{c + d}{3} \)
+
+Now, let&#x27;s compare this result with the first inequality:
+
+1. \( a + b &lt; c + d \)
+5. \( a + b &lt; \frac{c + d}{3} \)
+
+Clearly, if \( a + b &lt; \frac{c + d}{3} \), then \( a + b &lt; c + d \) is also true since \( \frac{c + d}{3} &lt; c + d \) for positive \( c \) and \( d \). Therefore, the first inequality is redundant if the third inequality is true.
+
+Now, let&#x27;s look at the second inequality:
+
+2. \( (a + b)(c + d) &lt; ab + cd \)
+
+We already have from the partial solution that:
+
+\( (a + b)^2 &lt; ab + cd \)
+
+And from step 4:
+
+\( cd &gt; 3ab \)
+
+This suggests that \( ab + cd \) is significantly larger than \( 4ab \), which is the minimum value of \( (a + b)^2 \) when \( a = b \). However, we need to show that the second inequality cannot hold if the third one does.
+
+Let&#x27;s multiply the third inequality by \( a + b \) (which is positive):
+
+\( (a + b)^2cd &lt; ab(a + b)(c + d) \)
+
+Now, we know from the second inequality that:
+
+\( (a + b)(c + d) &lt; ab + cd \)
+
+Substitute this into the inequality we just derived:
+
+\( (a + b)^2cd &lt; ab(ab + cd) \)
+
+This suggests that \( (a + b)^2cd \) is less than \( ab(ab + cd) \), which is a contradiction to the partial solution&#x27;s step 5, which states:
+
+\( (a + b)^2*cd &lt; ab(ab + cd) \)
+
+This contradiction arises because we assumed that all three inequalities could be true simultaneously. Since this leads to a contradiction, it is not possible for all three inequalities to be true at the same time.
+
+Therefore, at most two of the three inequalities can be true at the same time.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most two of the three inequalities can be true at the same time.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

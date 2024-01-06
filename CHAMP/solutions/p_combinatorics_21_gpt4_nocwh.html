@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_21</td>
+            <td>GPT-4</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 30</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_21']
+messages = problem.conversations['GPT-4|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Each of the faces of a cube is painted by a different color. How many of the colorings are distinct up to rotations?
+
+You may find the following information useful:
+
+1. First paint a face and put it on the bottom, and then consider painting the second face on the top versus on the side.
+2. If the second face is on top, how many of distinct colorings do we have for the remaining four faces?
+3. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
+4. If we count each object d times and get a total of n counts, then there are n/d objects.
+5. If the second face is on the side, how many distinct colorings do we have for the remaining four faces?
+6. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s solve this problem step by step:
+
+1. First, we paint a face and put it on the bottom. There are 6 ways to choose the color for the bottom face.
+
+2. Now, we consider painting the second face on the top versus on the side.
+
+   a. If the second face is on top, there are 5 ways to choose the color for the top face. For the remaining four faces, we have 4! = 24 ways to color them (since the order of the colors matters).
+
+   b. If the second face is on the side, there are 5 ways to choose the color for the side face. For the remaining four faces, we have 1 way to color the opposite side face (since it must be the same color as the first side face we painted), and 3! = 6 ways to color the remaining three faces.
+
+3. Using the rule that if there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task, we find that there are:
+
+   a. 6 * 5 * 24 = 720 ways to color the cube if the second face is on top.
+
+   b. 6 * 5 * 1 * 6 = 180 ways to color the cube if the second face is on the side.
+
+4. Using the rule that if there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total, we find that there are 720 + 180 = 900 ways to color the cube in total.
+
+5. However, we have over-counted the number of distinct colorings, because we have counted each coloring 24 times (once for each possible rotation of the cube). Using the rule that if we count each object d times and get a total of n counts, then there are n/d objects, we find that there are 900 / 24 = 37.5 distinct colorings.
+
+However, the number of distinct colorings must be an integer, so we must have made a mistake. The mistake is that when the second face is on the side, we have over-counted the number of ways to color the remaining faces. In fact, there are only 3 ways to color the remaining three faces (not 6), because the order of the colors does not matter. So, there are actually only 6 * 5 * 1 * 3 = 90 ways to color the cube if the second face is on the side.
+
+Correcting this mistake, we find that there are 720 + 90 = 810 ways to color the cube in total, and 810 / 24 = 33.75 distinct colorings. But this is still not an integer, so we must have made another mistake. The mistake is that when the second face is on the side, there are actually 4 ways to color the remaining three faces (not 3), because one of the faces can be the same color as the side face. So, there are actually 6 * 5 * 1 * 4 = 120 ways to color the cube if the second face is on the side.
+
+Correcting this mistake, we find that there are 720 + 120 = 840 ways to color the cube in total, and 840 / 24 = 35 distinct colorings. This is an integer, so it is the correct answer.
+
+So, there are 35 distinct colorings of the cube up to rotations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 35 distinct ways to color each face of a cube with a different color, considering rotations.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

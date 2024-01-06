@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_41</td>
+            <td>PaLM 2 Medium</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (1+sqrt(4a+1))/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_41']
+messages = problem.conversations['PaLM 2 Medium|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a&gt;0, does the limit of the sequence defined by a_0=sqrt(a), a_(n+1)=sqrt(a+a_n) exist, and if so, find it as an expression of a.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have a_1=sqrt(a+a_0)&gt;sqrt(a)=a_0.
+2. If a_n&gt;a_(n-1), then a_(n+1)=sqrt(a+a_n)&gt;sqrt(a+a_(n-1))&gt;a_n.
+3. So the sequence is monotonically increasing.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence defined by $a_0 = \sqrt{a}$ and $a_{n+1} = \sqrt{a + a_n}$ for $a &gt; 0$ is monotonically increasing and bounded above by $2 \sqrt{a}$. Therefore, it has a limit.
+
+To show that the sequence is monotonically increasing, we can use the following inequality:
+
+$$a_n \leq a_{n+1}$$
+
+To prove this inequality, we can square both sides and simplify:
+
+$$a_n^2 \leq a_{n+1}^2$$
+
+$$a_n^2 - a_{n+1}^2 \leq 0$$
+
+$$(a_n - a_{n+1})(a_n + a_{n+1}) \leq 0$$
+
+Since $a_n$ and $a_{n+1}$ are both positive, we know that $a_n - a_{n+1} \leq 0$. Therefore, $a_n \leq a_{n+1}$.
+
+To show that the sequence is bounded above by $2 \sqrt{a}$, we can use the following inequality:
+
+$$a_n \leq 2 \sqrt{a}$$
+
+To prove this inequality, we can use the fact that $a_n$ is increasing and $a_0 = \sqrt{a}$. Therefore, for all $n \geq 0$, we have:
+
+$$a_n \leq a_{n+1} \leq 2 \sqrt{a}$$
+
+Therefore, the sequence $a_n$ is monotonically increasing and bounded above by $2 \sqrt{a}$. By the Monotone Convergence Theorem, the sequence has a limit. Let $L$ be the limit of the sequence. Then, for any $\epsilon &gt; 0$, there exists an $N$ such that for all $n \geq N$, we have:
+
+$$|a_n - L| &lt; \epsilon$$
+
+We can use this to show that $L \leq 2 \sqrt{a}$. To do this, we can choose $\epsilon = 2 \sqrt{a}$. Then, there exists an $N$ such that for all $n \geq N$, we have:
+
+$$|a_n - L| &lt; 2 \sqrt{a}$$
+
+This implies that $L \leq 2 \sqrt{a}$.
+
+We can also use this to show that $L \geq \sqrt{a}$. To do this, we can choose $\epsilon = \sqrt{a}$. Then, there exists an $N$ such that for all $n \geq N$, we have:
+
+$$|a_n - L| &lt; \sqrt{a}$$
+
+This implies that $L \geq \sqrt{a}$.
+
+Therefore, we have shown that $L \leq 2 \sqrt{a}$ and $L \geq \sqrt{a}$. This implies that $L = 2 \sqrt{a}$. Therefore, the limit of the sequence is $2 \sqrt{a}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence $a_0 = \sqrt{a}, a_{n+1} = \sqrt{a + a_n}$ for $a &gt; 0$ is $2 \sqrt{a}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_16</td>
+            <td>GPT-3.5</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_16']
+messages = problem.conversations['GPT-3.5|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A be a string of n binary digits (leading 0s are allowed). How many such strings have the substring &quot;01&quot; appearing exactly m times, as an expression of m and n?
+
+You may find the following information useful:
+
+1. For any string, add the digit 1 to the beginning and digit 0 to the end.
+2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither.
+3. If there are m &quot;0-1&quot; transitions in the original string, how many &quot;1-0&quot; transitions are there in the new string, and what is their ordering?
+4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?
+5. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of combinations and the information provided.
+
+Let&#x27;s start by adding a 1 to the beginning and a 0 to the end of the string A. This ensures that we have a &quot;1-0&quot; transition at the beginning and end of the string.
+
+Now, let&#x27;s consider the gaps between every two digits in the new string. We can classify these gaps into three types: &quot;0-1&quot; transition, &quot;1-0&quot; transition, and neither.
+
+Since we added a 1 to the beginning and a 0 to the end, the number of &quot;1-0&quot; transitions in the new string is m + 2.
+
+Now, let&#x27;s focus on the &quot;0-1&quot; transitions. We know that there are m &quot;0-1&quot; transitions in the original string. In the new string, these &quot;0-1&quot; transitions will become &quot;1-0&quot; transitions. So, the number of &quot;1-0&quot; transitions in the new string is also m.
+
+The ordering of the &quot;1-0&quot; transitions is important. We can arrange the m &quot;1-0&quot; transitions in (m + 2) positions in the new string. This can be done in C(m + 2, m) ways.
+
+Finally, we need to consider the total number of ways we can arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions. Since there are n - 1 gaps between the digits in the original string, we have (n - 1) gaps to place the m &quot;0-1&quot; transitions. This can be done in C(n - 1, m) ways.
+
+Therefore, the total number of strings with the substring &quot;01&quot; appearing exactly m times is:
+
+C(n - 1, m) * C(m + 2, m)
+
+This is the final answer, expressed as an expression of m and n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings with the substring &quot;01&quot; appearing exactly m times in a string of n binary digits is given by C(n - 1, m) * C(m + 2, m).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

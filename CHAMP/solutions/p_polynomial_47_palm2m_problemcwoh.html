@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_47</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 120</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_47']
+messages = problem.conversations['PaLM 2 Medium|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Finding the remainder when p(x^7) is divided by p(x), where p(x)=x^6+x^5+...+x+1?
+Step-wise solution:
+1. We have p(x)=x^6+x^5+...+x+1=(x^7-1)/(x-1).
+2. Thus, p(x) | x^7-1.
+3. Let y=x^7.
+4. In addition, since y-1 | y^n-1^n for any n, we have y-1 | p(y)-p(1) for the polynomial p.
+5. Since p(x) | y-1, we have p(x) | p(y)-p(1).
+6. Thus, the remainder when p(y)=p(x^7) divides p(x) is p(1)=7.
+
+Problem: Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of them have an even number of 1s, as an expression of n?
+Step-wise solution:
+1. We define P(k) as the number of strings with k number of 1s, so P(k)=C(n, k)*3^(n-k).
+2. Thus, the number of length-n strings with an even number of 1s is E(n)=P(0)+P(2)+...=C(n, 0)*3^n+C(n, 2)*3^(n-2)....
+3. The number of length-n strings with an odd number of 1s is O(n)=P(1)+P(3)+...=C(n, 1)*3^(n-1)+C(n, 3)*3^(n-3)....
+4. We have E(n)+O(n)=sum_(k=0)^n C(n, k)*3^(n-k)=sum_(k=0)^n C(n, k)*3^(n-k)*1^k=(3+1)^n=4^n.
+5. In addition, E(n)-O(n)=sum_(k=0)^n C(n, k)*3^(n-k)*(-1)^k=(3-1)^n=2^n.
+6. Thus, E(n)=(4^n+2^n)/2.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial 1-x+x^2-x^3+...+x^8-x^9 may be written in the form a_0+a_1*y+a_2*y^2+...+a_9*y^9, where y=x+1 and each a_i is a constant. Find the value of a_2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial $1-x+x^2-x^3+...+x^8-x^9$ may be written in the form $a_0+a_1y+a_2y^2+...+a_9y^9$, where $y=x+1$ and each $a_i$ is a constant. To find the value of $a_2$, we can use the following steps:
+
+1. Substitute $y=x+1$ into the polynomial. This gives us $1-x+(x+1)^2-(x+1)^3+...+(x+1)^8-(x+1)^9$.
+2. Expand the parentheses. This gives us $1-x+x^2+2x^3-3x^4+4x^5-5x^6+6x^7-7x^8+8x^9$.
+3. Group the terms together. This gives us $(1-x+x^2-x^3+x^4-x^5+x^6-x^7+x^8) + (2x^3-3x^4+4x^5-5x^6+6x^7-7x^8+8x^9)$.
+4. Factor out the common factors. This gives us $x(1-x+x^2-x^3+x^4-x^5+x^6-x^7+x^8) + 2(x^2-x^3+x^4-x^5+x^6-x^7+x^8)$.
+5. Set each factor equal to zero and solve for $x$. This gives us $x=0$ and $x=1$.
+6. Substitute $x=0$ and $x=1$ into the polynomial. This gives us $1-0+0-0+0-0+0+0$ and $1-1+1-1+1-1+1+1$, respectively.
+7. Subtract the two polynomials. This gives us $0$.
+8. This means that $a_2=0$.
+
+Therefore, the value of $a_2$ is $0$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of $a_2$ in the polynomial $1-x+x^2-x^3+...+x^8-x^9$ is $0$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

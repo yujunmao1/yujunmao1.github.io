@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_28</td>
+            <td>GPT-3.5</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> ((-1)^(n+1)+n+1)/(n+2) (i.e., 1 if for odd n, and n/(n+2) for even n)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_28']
+messages = problem.conversations['GPT-3.5|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let P(x) be a polynomial of degree n such that P(k)=k/(k+1) for k=0, 1, ..., n. Find P(n+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find P(n+1), we need to determine the polynomial P(x) of degree n that satisfies the given conditions.
+
+We know that P(k) = k/(k+1) for k = 0, 1, ..., n.
+
+Let&#x27;s start by considering the polynomial P(x) in its general form:
+
+P(x) = a_n * x^n + a_(n-1) * x^(n-1) + ... + a_1 * x + a_0
+
+Since P(x) is a polynomial of degree n, it has n+1 coefficients: a_n, a_(n-1), ..., a_1, a_0.
+
+Now, let&#x27;s substitute the given values of k and P(k) into the polynomial P(x):
+
+P(0) = a_n * 0^n + a_(n-1) * 0^(n-1) + ... + a_1 * 0 + a_0 = 0/(0+1) = 0/1 = 0
+
+P(1) = a_n * 1^n + a_(n-1) * 1^(n-1) + ... + a_1 * 1 + a_0 = 1/(1+1) = 1/2
+
+P(2) = a_n * 2^n + a_(n-1) * 2^(n-1) + ... + a_1 * 2 + a_0 = 2/(2+1) = 2/3
+
+...
+
+P(n) = a_n * n^n + a_(n-1) * n^(n-1) + ... + a_1 * n + a_0 = n/(n+1)
+
+We now have a system of n+1 equations with n+1 unknowns (the coefficients of P(x)). We can solve this system to find the values of the coefficients.
+
+Let&#x27;s write out the equations for k = 0, 1, ..., n:
+
+Equation 1: a_0 = 0
+Equation 2: a_n + a_(n-1) + ... + a_1 + a_0 = 1/2
+Equation 3: 2^n * a_n + 2^(n-1) * a_(n-1) + ... + 2 * a_1 + a_0 = 2/3
+...
+Equation n+1: n^n * a_n + n^(n-1) * a_(n-1) + ... + n * a_1 + a_0 = n/(n+1)
+
+From Equation 1, we know that a_0 = 0. We can substitute this value into the remaining equations to simplify them.
+
+Equation 2: a_n + a_(n-1) + ... + a_1 = 1/2
+Equation 3: 2^n * a_n + 2^(n-1) * a_(n-1) + ... + 2 * a_1 = 2/3
+...
+Equation n+1: n^n * a_n + n^(n-1) * a_(n-1) + ... + n * a_1 = n/(n+1)
+
+Now, we have a system of n equations with n unknowns (a_n, a_(n-1), ..., a_1). We can solve this system to find the values of the remaining coefficients.
+
+To solve this system, we can use various methods such as Gaussian elimination or matrix inversion. However, since the equations are not linear, we need to use numerical methods or approximation techniques to find the values of the coefficients.
+
+Once we have determined the values of the coefficients, we can substitute them into the polynomial P(x) and evaluate P(n+1) to find the final answer.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find P(n+1), we need to solve a system of equations with n+1 unknowns, where P(k) = k/(k+1) for k = 0, 1, ..., n, and substitute the values of the coefficients into the polynomial P(x) to evaluate P(n+1).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_24</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_24']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest value of the polynomial f(x)=x^3(x^3+1)(x^3+2)(x^3+3).
+
+You may find the following information useful:
+
+1. Let t=x^3.
+2. Let u=t^2+3t.
+3. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.
+4. For any real number a, a^2≥0. </code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the polynomial \( f(x) = x^3(x^3+1)(x^3+2)(x^3+3) \), we can use the substitutions provided.
+
+Let \( t = x^3 \). Then the polynomial becomes:
+\[ f(t) = t(t+1)(t+2)(t+3) \]
+
+Now, let \( u = t^2 + 3t \). We can express \( t(t+3) \) as \( t^2 + 3t \), which is \( u \). So we have:
+\[ f(t) = (t+1)(t+2)u \]
+
+Expanding \( (t+1)(t+2) \) gives us:
+\[ (t+1)(t+2) = t^2 + 2t + t + 2 = t^2 + 3t + 2 = u + 2 \]
+
+Now we have:
+\[ f(t) = u(u + 2) \]
+
+Using the binomial theorem (point 3), we can expand \( (u+2)^2 \) as:
+\[ (u+2)^2 = u^2 + 2 \cdot C(2,1)u \cdot 2 + 2^2 = u^2 + 4u + 4 \]
+
+Now, we know that for any real number \( a \), \( a^2 \geq 0 \) (point 4). This means that \( u^2 \) is always non-negative. Therefore, the smallest value of \( u^2 \) is 0, which occurs when \( u = 0 \).
+
+Since \( u = t^2 + 3t \), setting \( u = 0 \) gives us:
+\[ t^2 + 3t = 0 \]
+\[ t(t + 3) = 0 \]
+
+This equation has two solutions: \( t = 0 \) and \( t = -3 \). However, since \( t = x^3 \), and we are looking for the smallest value of the polynomial \( f(x) \), we should consider the negative solution \( t = -3 \) because the cube of a negative number is also negative, and we are looking for the smallest (most negative) value of \( f(x) \).
+
+Substituting \( t = -3 \) into \( u \), we get:
+\[ u = (-3)^2 + 3(-3) = 9 - 9 = 0 \]
+
+Now, we can find the smallest value of \( f(t) \) by substituting \( u = 0 \) into \( f(t) = u(u + 2) \):
+\[ f(t)_{\text{min}} = 0(0 + 2) = 0 \]
+
+Therefore, the smallest value of the polynomial \( f(x) \) is 0, which occurs when \( x^3 = t = -3 \), or \( x = \sqrt[3]{-3} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the polynomial \( f(x) = x^3(x^3+1)(x^3+2)(x^3+3) \) is 0, which occurs when \( x = \sqrt[3]{-3} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

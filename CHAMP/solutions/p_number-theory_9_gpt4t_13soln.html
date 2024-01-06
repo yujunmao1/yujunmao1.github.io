@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_9</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No positive integer solutions</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_9']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation x^2+y^2+z^2=2xyz.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We choose k to be the maximum value such that 2^k divides x, y, z at the same time, and write x=2^k*u, y=2^k*v, z=2^k*w.
+2. Thus, u, v, w cannot be all even (otherwise k can be chosen to be k+1).
+3. Substituting these values into the equation, we have 2^(2k)*(u^2+v^2+w^2)=2^(3k+1)*uvw.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Continuing from the partial solution provided:
+
+We have the equation \(2^{2k}(u^2 + v^2 + w^2) = 2^{3k+1}uvw\). We can divide both sides by \(2^{2k}\) to simplify the equation:
+
+\[u^2 + v^2 + w^2 = 2^{k+1}uvw\]
+
+Since \(u\), \(v\), and \(w\) cannot all be even, at least one of them must be odd. Without loss of generality, let&#x27;s assume \(u\) is odd (if not, we can relabel \(u\), \(v\), and \(w\) such that this is the case).
+
+Now, let&#x27;s look at the equation modulo 2:
+
+\[u^2 + v^2 + w^2 \equiv 0 \pmod{2}\]
+
+Since \(u\) is odd, \(u^2 \equiv 1 \pmod{2}\). If \(v\) and \(w\) were both odd, then the left-hand side would be \(1 + 1 + 1 \equiv 1 \pmod{2}\), which is not congruent to 0 modulo 2. Therefore, \(v\) and \(w\) must both be even.
+
+Let \(v = 2v&#x27;\) and \(w = 2w&#x27;\), where \(v&#x27;\) and \(w&#x27;\) are integers. Substituting these into the equation, we get:
+
+\[u^2 + (2v&#x27;)^2 + (2w&#x27;)^2 = 2^{k+1}(2^ku)(2v&#x27;)(2w&#x27;)\]
+
+Simplifying, we have:
+
+\[u^2 + 4v&#x27;^2 + 4w&#x27;^2 = 2^{k+3}uv&#x27;w&#x27;\]
+
+Now, dividing both sides by 4:
+
+\[\frac{u^2}{4} + v&#x27;^2 + w&#x27;^2 = 2^{k+1}uv&#x27;w&#x27;\]
+
+Since \(u\) is odd, \(u^2/4\) is not an integer, which means the left-hand side is not an integer, but the right-hand side is an integer. This is a contradiction, which implies that there are no positive integer solutions for \(u\), \(v&#x27;\), and \(w&#x27;\) that satisfy the equation.
+
+Therefore, the only solution to the original equation \(x^2 + y^2 + z^2 = 2xyz\) is the trivial solution where \(x = y = z = 0\). However, since we are looking for positive integer solutions, there are no such solutions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no positive integer solutions to the equation \(x^2 + y^2 + z^2 = 2xyz\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

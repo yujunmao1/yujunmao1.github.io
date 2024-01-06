@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_26</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -3 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_26']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For what value(s) of k is x^3+y^3+z^3+kxyz divisible by x+y+z?
+
+You may find the following information useful:
+
+1. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).
+2. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.
+3. a^3±b^3=(a+b)(a^2∓ab+b^2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the value(s) of \( k \) for which \( x^3 + y^3 + z^3 + kxyz \) is divisible by \( x + y + z \), we can use the fact that if a polynomial \( f(x) \) is divisible by another polynomial \( g(x) \), then the remainder when \( f(x) \) is divided by \( g(x) \) is zero.
+
+Let&#x27;s set \( f(x, y, z) = x^3 + y^3 + z^3 + kxyz \) and \( g(x, y, z) = x + y + z \). We want to find the value(s) of \( k \) such that \( f(x, y, z) \) is divisible by \( g(x, y, z) \), which means that the remainder when \( f(x, y, z) \) is divided by \( g(x, y, z) \) is zero.
+
+To find the remainder, we can use polynomial long division or synthetic division, but in this case, we can also use the fact that if \( f(x, y, z) \) is divisible by \( g(x, y, z) \), then \( f(x, y, z) \) must be zero when \( x = -y - z \). This is because \( g(-y - z, y, z) = 0 \).
+
+Let&#x27;s substitute \( x = -y - z \) into \( f(x, y, z) \):
+
+\( f(-y - z, y, z) = (-y - z)^3 + y^3 + z^3 + k(-y - z)yz \)
+
+Using the binomial theorem and the identity \( a^3 + b^3 = (a + b)(a^2 - ab + b^2) \), we can simplify this expression:
+
+\( f(-y - z, y, z) = (-y - z)(y^2 + yz + z^2) + y^3 + z^3 - ky^2z - kyz^2 \)
+
+Now, we can group the terms:
+
+\( f(-y - z, y, z) = -y^3 - y^2z - yz^2 - z^3 + y^3 + z^3 - ky^2z - kyz^2 \)
+
+Simplifying further:
+
+\( f(-y - z, y, z) = -y^2z(1 + k) - yz^2(1 + k) \)
+
+For the expression to be zero for all \( y \) and \( z \), we must have:
+
+\( -y^2z(1 + k) - yz^2(1 + k) = 0 \)
+
+This simplifies to:
+
+\( yz(-y(1 + k) - z(1 + k)) = 0 \)
+
+Since we are looking for the expression to be zero for all \( y \) and \( z \), not just when \( yz = 0 \), we need the factor \( -y(1 + k) - z(1 + k) \) to be zero. This gives us:
+
+\( (1 + k)(-y - z) = 0 \)
+
+For this to be true for all \( y \) and \( z \), we must have \( 1 + k = 0 \), which gives us:
+
+\( k = -1 \)
+
+Therefore, the value of \( k \) for which \( x^3 + y^3 + z^3 + kxyz \) is divisible by \( x + y + z \) is \( k = -1 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of \( k \) for which \( x^3 + y^3 + z^3 + kxyz \) is divisible by \( x + y + z \) is \( k = -1 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

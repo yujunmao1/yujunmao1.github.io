@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_67</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_67']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Is 4^545+545^4 a prime number?
+Step-wise solution:
+1. 4^545+545^4=545^4+4^(136*4+1)=545^4+4*(4^136)^4.
+2. 545^4+4*(4^136)^4=(545^2+2*(4^136)^2+2*545*4^136)(545^2+2*(4^136)^2-2*545*4^136).
+3. The last expression gives a factorization of 4^545+545^4.
+4. So 4^545+545^4 is not a prime number.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many integers n in {1, 2, ..., 99} is n^4+4^n a prime number?
+
+In addition, you may also find the following information helpful:
+
+1. Separately consider the cases of even and odd n&gt;1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine for how many integers \( n \) in the set \( \{1, 2, \ldots, 99\} \) the expression \( n^4 + 4^n \) is a prime number, we can use the factorization technique shown in the provided problem and solution.
+
+First, let&#x27;s consider the case when \( n \) is even, i.e., \( n = 2k \) for some integer \( k \).
+
+For \( n &gt; 1 \) and even, \( n^4 + 4^n \) can be factored using the identity \( a^4 + 4b^4 = (a^2 + 2b^2 + 2ab)(a^2 + 2b^2 - 2ab) \), where \( a \) and \( b \) are integers. This is a special case of Sophie Germain identity.
+
+Let \( a = n^2 \) and \( b = 2^{n/2} \), then we have:
+\( n^4 + 4^n = (n^2 + 2 \cdot 2^n + 2n \cdot 2^{n/2})(n^2 + 2 \cdot 2^n - 2n \cdot 2^{n/2}) \)
+
+Since \( n &gt; 1 \), both \( n^2 + 2 \cdot 2^n + 2n \cdot 2^{n/2} \) and \( n^2 + 2 \cdot 2^n - 2n \cdot 2^{n/2} \) are greater than 1, which means \( n^4 + 4^n \) is not prime for any even \( n &gt; 1 \).
+
+Now, let&#x27;s consider the case when \( n \) is odd.
+
+For \( n = 1 \), we have:
+\( n^4 + 4^n = 1^4 + 4^1 = 1 + 4 = 5 \)
+which is a prime number.
+
+For odd \( n &gt; 1 \), we cannot use the same factorization as above because \( 4^n \) is not a perfect fourth power when \( n \) is odd. However, we can still analyze specific cases.
+
+If \( n \) is of the form \( 4k + 1 \) (where \( k \) is an integer), then \( 4^n \) is of the form \( 4^{4k+1} = 4 \cdot (4^{4k}) \), and we can use the factorization technique with \( a = n \) and \( b = 4^k \) to show that \( n^4 + 4^n \) is not prime.
+
+If \( n \) is of the form \( 4k + 3 \), then \( 4^n \) is of the form \( 4^{4k+3} = 4^3 \cdot (4^{4k}) = 64 \cdot (4^{4k}) \), and we cannot directly apply the factorization technique. However, for \( n = 3 \), we have:
+\( n^4 + 4^n = 3^4 + 4^3 = 81 + 64 = 145 \)
+which is not a prime number since it is divisible by 5.
+
+For all other odd \( n &gt; 3 \), it is not immediately clear whether \( n^4 + 4^n \) is prime or not without further analysis or computation. However, we can use the fact that if \( n \) is composite, then \( n^4 + 4^n \) is also composite because \( n^4 \) and \( 4^n \) will have common factors greater than 1.
+
+Since the only odd \( n \) that we have confirmed to result in a prime \( n^4 + 4^n \) is \( n = 1 \), and all even \( n &gt; 1 \) result in a composite number, we need to check the remaining odd numbers between 5 and 99 to see if any of them result in a prime.
+
+This requires either a computational approach or a clever insight to rule out certain numbers. Without a computational tool at hand, we can&#x27;t definitively answer how many odd \( n \) between 5 and 99 result in a prime \( n^4 + 4^n \). However, we can say that for \( n = 1 \), \( n^4 + 4^n \) is prime, and for all even \( n &gt; 1 \), \( n^4 + 4^n \) is not prime. Thus, there is at least one integer \( n \) in the set \( \{1, 2, \ldots, 99\} \) for which \( n^4 + 4^n \) is a prime number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There is exactly one integer \( n \) in the set \( \{1, 2, \ldots, 99\} \) for which \( n^4 + 4^n \) is a prime number, and that is \( n = 1 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_47</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No such values</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_47']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Starting from a number x_1, form a sequence x_2, x_3, x_4... by appending one digit from 0 to 8 (i.e., 9 is not allowed) to the previous number. Can there be finitely many composite numbers in this sequence?
+Step-wise solution:
+1. Assume that there are only finitely many composite numbers.
+2. This means that we can only use 0, 2, 4, 5, 6, 8 finitely many times since numbers ending in them are composite.
+3. In addition, number 1 and 7 can also only be used finitely many times since they increase the digit sum mod 3 by one, which means that adding them at most three times will result in a multiple of 3.
+4. So we can only append 3 after a certain place.
+5. We want to show that starting from a prime p, appending a certain number of 3s would produce a number that is a multiple of p.
+6. For p, we have p | 10^p-10, and since gcd(10, p)=1, we have p | 10^(p-1)-1, which is 99...99 (with p-1 9s).
+7. Thus, we have p | 33...33 since gcd(p, 3)=1.
+8. So appending this sequence to p would result in a composite number, and repeating this process means that we have infinitely many composite numbers.
+
+Problem: Can n+2 be a factor of 1^1987+2^1987+...+n^1987 for some n?
+Step-wise solution:
+1. Let s=1^1987+2^1987+...+n^1987.
+2. Thus, 2s=1^1987+2^1987+...+n^1987+1^1987+2^1987+...+n^1987=2+(2^1987+n^1987)+(3^1987+(n-1)^1987)+...+((n-1)^1987+3^1987)+(n^1987+2^1987).
+3. We have 2s=2+t where t=(2^1987+n^1987)+(3^1987+(n-1)^1987)+...+((n-1)^1987+3^1987)+(n^1987+2^1987).
+4. We know 2+n | 2^1987+n^1987, 3+n-1 | 3^1987+(n-1)^1987...
+5. Thus, 2+n divides each term in t, so 2+n | t.
+6. This means 2+n ∤ 2s so 2+n ∤ s.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer values of m such that 1000^m-1 is a factor of 1978^m-1.
+
+In addition, you may also find the following information helpful:
+
+1. Study whether 1978^m-1000^m is divisible by 1000^m-1.
+2. Extract a factor of 2^m from 1978^m-1000^m.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can prove that $1000^m-1$ is a factor of $1978^m-1$ for all integer values of $m$ by using Fermat&#x27;s little theorem. Fermat&#x27;s little theorem states that if $p$ is a prime number, then for any integer $a$, $a^p-a$ is divisible by $p$. In this case, $p=1001$ is a prime number, so $1000^p-1000$ is divisible by $1001$. This means that $1000^m-1$ is divisible by $1001$ for all integer values of $m$.
+
+We can also prove that $1978^m-1000^m$ is divisible by $1000^m-1$ for all integer values of $m$. To do this, we can use the following lemma:
+
+Lemma: If $a$ and $b$ are integers, and $a$ divides $b$, then $a^n$ divides $b^n$ for all integer values of $n$.
+
+Proof: We can prove this by induction on $n$. The base case is $n=1$. In this case, we have $a^1=a$, which divides $b^1=b$.
+
+For the inductive step, assume that $a^n$ divides $b^n$. We want to show that $a^{n+1}$ divides $b^{n+1}$. We have
+
+$$a^{n+1}b=a^n(ab)=a^n(a^1b)=a^{n+1}b.$$
+
+Since $a^n$ divides $b^n$, and $a$ divides $b$, we have $a^n(ab)$ divides $b^{n+1}$. Therefore, $a^{n+1}$ divides $b^{n+1}$.
+
+Now, we can use the lemma to prove that $1978^m-1000^m$ is divisible by $1000^m-1$ for all integer values of $m$. We have $1978=1001+77$, so $1978^m=1001^m(1+77^m)$. Since $1001$ is prime, $1001^m-1$ is divisible by $1001$. Therefore, $1978^m-1000^m$ is divisible by $1001$.
+
+Finally, we can use the fact that $1000^m-1$ is divisible by $1001$ and $1978^m-1000^m$ is divisible by $1000^m-1$ to conclude that $1000^m-1$ is a factor of $1978^m-1$ for all integer values of $m$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>$1000^m-1$ is a factor of $1978^m-1$ for all integer values of $m$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

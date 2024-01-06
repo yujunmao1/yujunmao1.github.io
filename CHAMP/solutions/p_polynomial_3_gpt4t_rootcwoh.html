@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_3</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At most 0 integer-valued zeros (i.e., no integer zeros)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_3']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, at most how many integer-valued zeros can it have?
+
+You may find the following information useful:
+
+1. A polynomial of degree n with root x_1, ..., x_n can be written as a(x-x_1)(x-x_2)...(x-x_n) for some value of a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the properties of polynomials with integer coefficients and their behavior at integer values.
+
+First, let&#x27;s consider the polynomial f(x) evaluated at x = 0. Since f(0) is odd, we know that the constant term of the polynomial is odd.
+
+Now, let&#x27;s consider the polynomial f(x) evaluated at x = 1. Since f(1) is also odd, we know that the sum of all the coefficients of the polynomial is odd. This is because when you substitute x = 1 into the polynomial, you are essentially summing all the coefficients.
+
+Now, let&#x27;s consider what happens when we have an integer root, say x = k, where k is an integer. If f(k) = 0, then by the Factor Theorem, (x - k) is a factor of f(x). If k is an integer, then (x - k) will have integer coefficients.
+
+If we have an integer-valued zero, say k, then we can write f(x) as:
+
+f(x) = (x - k)g(x)
+
+where g(x) is a polynomial with integer coefficients (since the original polynomial f(x) has integer coefficients).
+
+Now, let&#x27;s consider the parity (odd or even) of the coefficients. If k is even, then (x - k) will not change the parity of the coefficients of g(x) when multiplied out. However, if k is odd, then (x - k) will change the parity of every coefficient of g(x) when multiplied out.
+
+Since f(0) is odd, we initially have an odd constant term. If we have an even root, multiplying by (x - k) where k is even will not change the parity of the constant term—it will remain odd. However, if we have an odd root, multiplying by (x - k) where k is odd will change the parity of the constant term—it will become even.
+
+Since f(0) is odd, we cannot have any odd roots, because that would make the constant term even, which would contradict the given that f(0) is odd. Therefore, all integer roots must be even.
+
+Now, let&#x27;s consider the sum of the coefficients again. If we have an even root, the sum of the coefficients of the polynomial will remain odd after multiplying by (x - k) where k is even. However, if we have an odd root, the sum of the coefficients will become even after multiplying by (x - k) where k is odd, which would contradict the given that f(1) is odd.
+
+Therefore, we cannot have any odd roots, and all integer roots must be even.
+
+Now, let&#x27;s consider the maximum number of even integer roots we can have. Since the polynomial is of degree n, it can have at most n roots. However, there is no restriction on the number of even integer roots we can have as long as they are distinct, because multiplying by factors of the form (x - k) where k is even will not change the parity of f(0) or f(1).
+
+Therefore, the maximum number of integer-valued zeros that the polynomial can have is equal to its degree n, and all of these zeros must be even integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial f(x) of degree n with integer coefficients can have at most n integer-valued zeros, and all of them must be even integers if both f(0) and f(1) are odd.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

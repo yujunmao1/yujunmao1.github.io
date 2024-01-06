@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_8</td>
+            <td>GPT-3.5</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no real-valued zeros)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_8']
+messages = problem.conversations['GPT-3.5|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have x_(k+1)=x_k^2+x_k=x_k(x_k+1), so 1/x_(k+1)=1/(x_k(x_k+1))=1/x_k-1/(x_k+1).
+2. Thus, 1/(x_k+1)=1/x_k-1/x_(k+1).
+3. So 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)=(1/x_1-1/x_2)+(1/x_2-1/x_3)+...+(1/x_100-1/x_101)=1/x_1-1/x_101.
+4. We have x_1=1/2, x_2=3/4, x_3=21/16&gt;1.
+5. Since x_(n+1)=x_n^2+x_n&gt;x_n, we have x_n&gt;1 for all n≥3.
+6. Thus, 1/x_101&lt;1.
+7. This means that the integer part of 1/x_1-1/x_101 is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, at most how many of the three inequalities a(1-b)&gt;1/4, b(1-c)&gt;1/4, c(1-a)&gt;1/4 can be true at the same time?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We can see that a=0.9, b=0.5, c=0.1 makes a(1-b)=0.45&gt;1/4 and b(1-c)=0.45&gt;1/4.
+2. Assume that all three inequalities are true.
+3. Since we have a, b, c&gt;0, we must have a, b, c&lt;1 for the three inequalities to hold.
+4. Thus, we need to have a(1-a)*b(1-b)*c(1-c)&gt;(1/4)^3.
+5. However, we know that a(1-a)=-a^2+a=-(a-1/2)^2+1/4≤1/4, and the same for b, c.
+6. Thus, we cannot have a(1-a)*b(1-b)*c(1-c)&gt;(1/4)^3, so the three inequalities cannot be true at the same time.
+7. So at most 2 inequalities can be true.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, at most how many integer-valued zeros can it have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Suppose that there is an integer-valued zero at x=a.
+2. Then f(x)=(x-a)g(x) for some polynomial g(x) of degree n-1.
+3. Let g(x)=c_(n-1)*x^(n-1)+c_(n-2)*x^(n-2)+...+c_1*x+c_0.
+4. So f(x)=c_(n-1)*x^n+(c_(n-2)-a*c_(n-1))*x^(n-1)+(c_(n-3)-a*c_(n-2))*x^(n-2)+...+(c_0-a*c_1)*x-a*c_0.
+5. We need every coefficient of f(x) to be an integer, which means that c_(n-1) is an integer, thus c_(n-2) is an integer, thus c_(n-3) is an integer, and so on for all c_i.
+6. So g(x) is a polynomial of integer coefficients.
+7. Thus, we have f(0)=-a*g(x) and f(1)=(1-a)*g(x).
+8. Since -a and 1-a are of opposite parities (i.e., one even and one odd), we cannot have f(0) and f(1) both being odd.
+9. Thus, such an integer root a does not exist.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence a_0, a_1, a_2, ... is such that, for all nonnegative m≥n, we have a_(m+n)+a_(m−n)=(a_(2m)+a_(2n))/2. If a_1=1, find a_50.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. With m=n, we have a_(2n)+a_0=(a_(2n)+a_(2n))/2.
+2. So a_0=0.
+3. With n=0, we have a_m+a_m=(a_(2m)+a_0)/2.
+4. So a_(2m)=4a_m.
+5. With m=n+2, we have a_(2n+2)+a_2=(a_(2n+4)+a_(2n))/2.
+6. Plugging in a_(2m)=4a_m, we have 4(a_(n+1)+a_1)=4*(a_(n+2)+a_n)/2.
+7. With a_1=1, we have a_(n+2)=2a_(n+1)-a_n+2.
+8. Thus, starting from a_0=0, a_1=1, we have the sequence a_0, a_1, a_2, ... to be 0, 1, 4, 9, 16, ...
+9. We see that a_n=n^2, which can be shown with a_(n+2)^2=n^2+4n+4=2(n^2+2n+1)-n^2+2=a_(n+1)^2-a_n^2+2.
+10. Thus, a_50=2500.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let binary string w_1=0, and w_(n+1) is generated by replacing each 0 in w_n by 001, and each 1 in w_n by 0. Thus, we have w_2=001, w_3=0010010, etc. Does this operation result in a periodic binary string in the infinite limit, and if so, what is its period?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We let the sequence of strings be w_1=0, w_2=001. Thus, we have w_3=0010010=w_2 w_2 w_1 as the concatenation of w_1 and w_2.
+2. If w_k=w_(k-1) w_(k-1) w_(k-2), then we can generate w_(k+1) by rewriting every digit of w_k, which is equivalent to rewriting every digit of w_(k-1), w_(k-1), w_(k-2) respectively, resulting in w_k, w_k, w_(k-1) for each of the three rewritings.
+3. Thus, we get w_(k+1)=w_k w_k w_(k-1) for all k.
+4. Denote the numbers of 0s and 1s in w_k as a_k and b_k respectively.
+5. We have a_0=1, b_0=0, a_(k+1)=2a_k+a_(k-1) and b_k=a_(k-1) (since each digit of 1 is generated by rewriting a previous digit of 0 as 001).
+6. Let t_k=a_k/b_k, and we have t_k=a_k/a_(k-1), t_(k+1)=a_(k+1)/a_k=2+a_(k-1)/a_k=2+1/t_k.
+7. In the infinite limit, we have t=1+1/t, or t^2-2t-1=0, which gives t=1±sqrt(2), and neither is a rational number.
+8. So the limit either does not exist, or is an irrational number.
+9. In both cases, the sequence cannot be periodic.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many real-valued zeros does the polynomial 1+x+x^2/2!+x^3/3!+...+x^(2n)/(2n)! have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. The given polynomial can be written as the Taylor series expansion of the exponential function e^x.
+2. The Taylor series expansion of e^x is given by e^x = 1 + x + x^2/2! + x^3/3! + ... + x^n/n! + ...
+3. Comparing the given polynomial with the Taylor series expansion of e^x, we can see that the polynomial is the partial sum of the Taylor series expansion up to the term x^(2n)/(2n)!.
+4. The Taylor series expansion of e^x converges for all real values of x.
+5. Therefore, the given polynomial also converges for all real values of x.
+6. The number of real-valued zeros of a polynomial is equal to the number of sign changes in the coefficients of the polynomial.
+7. In the given polynomial, the coefficients are all positive (since the terms in the Taylor series expansion of e^x are all positive).
+8. Therefore, there are no sign changes in the coefficients of the polynomial.
+9. Hence, the given polynomial has no real-valued zeros.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial has no real-valued zeros.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

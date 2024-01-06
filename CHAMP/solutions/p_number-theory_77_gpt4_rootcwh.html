@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_77</td>
+            <td>GPT-4</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_77']
+messages = problem.conversations['GPT-4|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?
+
+You may find the following information useful:
+
+1. Factorize 12^m+9^m+8^m+6^m into an expression involving 2^m, 3^m, 4^m.
+2. An integer ending with 5 can be written as 10k+5=5(2k+1).
+3. For integer a, b, n, a - b | a^n - b^n.
+4. If a | b and c | d, then ac | bd.
+5. 2^5+3^5=275=11*25.
+6. 3^5+4^5=1267=181*7.
+7. 1991=11*181.
+8. If a | b and b | c, then a | c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by factoring the expression 12^m + 9^m + 8^m + 6^m into an expression involving 2^m, 3^m, 4^m. 
+
+We can write 12^m as (2^2 * 3)^m = 2^2m * 3^m, 9^m as (3^2)^m = 3^2m, 8^m as (2^3)^m = 2^3m, and 6^m as (2 * 3)^m = 2^m * 3^m. 
+
+So, the expression becomes 2^2m * 3^m + 3^2m + 2^3m + 2^m * 3^m.
+
+Given that m ends with digit 5, we can write m as 5(2k+1) for some integer k. 
+
+Now, let&#x27;s use the property a - b | a^n - b^n. 
+
+We can write 2^2m * 3^m - 2^m * 3^m = (2^m * 3^m)(2^m - 1) and 3^2m - 2^3m = (3^m)(3^m - 2^m). 
+
+So, we have (2^m * 3^m)(2^m - 1) | 2^2m * 3^m - 2^m * 3^m and (3^m)(3^m - 2^m) | 3^2m - 2^3m.
+
+Using the property ac | bd, we can say that (2^m * 3^m)(2^m - 1)(3^m)(3^m - 2^m) | 2^2m * 3^m - 2^m * 3^m + 3^2m - 2^3m.
+
+Given that 2^5 + 3^5 = 275 = 11 * 25 and 3^5 + 4^5 = 1267 = 181 * 7, we can say that 11 | 2^5 + 3^5 and 181 | 3^5 + 4^5.
+
+Since 1991 = 11 * 181, we can say that 1991 | 2^5 + 3^5 + 3^5 + 4^5.
+
+Using the property a | b and b | c, then a | c, we can say that 1991 | 2^2m * 3^m - 2^m * 3^m + 3^2m - 2^3m.
+
+Therefore, the possible values of 12^m + 9^m + 8^m + 6^m mod 1991 are 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of 12^m + 9^m + 8^m + 6^m mod 1991, where m is an integer ending with the digit 5, are 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

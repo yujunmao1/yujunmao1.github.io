@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_15</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_15']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. Is the sequence a_n/b_n monotonically increasing, monotonically decreasing, or neither?
+Step-wise solution:
+1. We have a_n&lt;b_n for all n&gt;1.
+2. In addition, we know that both a_(n+1) and b_(n+1) lie in between a_n and b_n, as they are averages.
+3. Thus, we have a_n&lt;a_(n+1)&lt;b_(n+1)&lt;b_n.
+4. So a_n is monotonically increasing and b_n is monotonically decreasing.
+5. Thus, the ratio a_n/b_n is monotonically increasing.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Does there exist a positive sequence {a_n}, such that both sum a_n and sum 1/(n^2*a_n) converge to finite values?
+
+In addition, you may also find the following information helpful:
+
+1. The harmonic series 1+1/2+1/3+... diverges (i.e., the sum is not a finite value).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, we need to determine if there exists a positive sequence \({a_n}\) such that both \(\sum a_n\) and \(\sum \frac{1}{n^2 a_n}\) converge to finite values.
+
+Let&#x27;s first consider the convergence of \(\sum a_n\). For this series to converge, the terms \(a_n\) must approach zero as \(n\) approaches infinity, and they must do so sufficiently quickly. This is because if the terms do not approach zero, the series will diverge by the Test for Divergence.
+
+Now, let&#x27;s consider the convergence of \(\sum \frac{1}{n^2 a_n}\). For this series to converge, the terms \(\frac{1}{n^2 a_n}\) must also approach zero as \(n\) approaches infinity. Since \(n^2\) grows very quickly, even if \(a_n\) decreases slowly, this series has a good chance of converging due to the \(n^2\) term in the denominator.
+
+However, we must be careful because if \(a_n\) decreases too quickly, the terms \(\frac{1}{n^2 a_n}\) may not approach zero fast enough for the series to converge. For example, if \(a_n = \frac{1}{n}\), then \(\frac{1}{n^2 a_n} = \frac{1}{n^3}\), and the series \(\sum \frac{1}{n^3}\) does converge. But in this case, \(\sum a_n = \sum \frac{1}{n}\) would be the harmonic series, which diverges.
+
+To ensure that both series converge, we need to find a sequence \(a_n\) that decreases to zero slowly enough so that \(\sum a_n\) converges, but not so slowly that \(\sum \frac{1}{n^2 a_n}\) diverges.
+
+One way to find such a sequence is to consider the p-series test, which states that the series \(\sum \frac{1}{n^p}\) converges if \(p &gt; 1\) and diverges if \(p \leq 1\). We can use this test to guide our choice of \(a_n\).
+
+Let&#x27;s try \(a_n = \frac{1}{n^p}\) for some \(p &gt; 1\). Then \(\sum a_n = \sum \frac{1}{n^p}\) would converge by the p-series test. Now let&#x27;s check the convergence of \(\sum \frac{1}{n^2 a_n}\):
+
+\[
+\sum \frac{1}{n^2 a_n} = \sum \frac{1}{n^2 \cdot \frac{1}{n^p}} = \sum n^{p-2}
+\]
+
+For this series to converge, we need \(p - 2 &gt; 1\), or \(p &gt; 3\). So if we choose \(p &gt; 3\), both series will converge.
+
+Therefore, there does exist a positive sequence \({a_n}\) such that both \(\sum a_n\) and \(\sum \frac{1}{n^2 a_n}\) converge to finite values. For example, we could take \(a_n = \frac{1}{n^p}\) for any \(p &gt; 3\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there exists a positive sequence \({a_n}\) such that both \(\sum a_n\) and \(\sum \frac{1}{n^2 a_n}\) converge to finite values, for example, when \(a_n = \frac{1}{n^p}\) for any \(p &gt; 3\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

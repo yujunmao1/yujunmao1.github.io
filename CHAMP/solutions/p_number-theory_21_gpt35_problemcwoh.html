@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_21</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No integer solutions</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_21']
+messages = problem.conversations['GPT-3.5|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: For positive integer n for which 2n+1 and 3n+1 are both perfect squares, what are possible values of n mod 40?
+Step-wise solution:
+1. Let x^2=2n+1 and y^2=3n+1.
+2. Since 2n+1 is odd, x is odd and x^2 mod 8=1.
+3. So 2n mod 8=0 and n is even because it is divisible by 4.
+4. Thus, 3n+1 is odd and y is odd.
+5. This means that y^2 mod 8=1 and 8 | 3n.
+6. Since gcd(3,8)=1, we must have 8 | n, so n mod 8=0.
+7. For modulo 5, we know that x^2 mod 5 is one of 0, 1 and 4.
+8. Thus, n mod 5=0 leads to 2n+1 mod 5=3n+1 mod 5=1.
+9. n mod 5=1 leads to 2n+1 mod 5=3 which is impossible.
+10. n mod 5=2 leads to 3n+1 mod 5=2 which is impossible.
+11. n mod 5=3 leads to 2n+1 mod 5=2 which is impossible.
+12. n mod 5=4 leads to 3n+1 mod 5=3 which is impossible.
+13. Thus, we have 5 | n and 8 | n.
+14. Since gcd(5, 8)=1, we have 40 | n and n mod 40=0.
+
+Problem: Find the smallest positive integer a, so that 1971 | 50^n+23^n*a for odd n.
+Step-wise solution:
+1. Since 1971=27*73, we need 27 | 50^n+23^n*a and 73 | 50^n+23^n*a.
+2. We have 50^n+23^n*a mod 27=23^n+23^n*a mod 27=23^n*(a+1) mod 27=0.
+3. In addition, for odd n, we have 50^n+23^n*a mod 73=(-23)^n+23^n*a mod 73=23^n*(a-1) mod 73=0.
+4. Since gcd(27, 23)=gcd(73, 23)=1, we must have gcd(27, 23^n)=gcd(73, 23^n)=1, so 27 | a+1 and 73 | a-1.
+5. In other words, a mod 27=-1 and a mod 73=1.
+6. Thus, a=27x-1=73y+1 and 27 | 73y+2.
+7. We have 73 mod 27=19, so the sequence of 73y+2 mod 27, starting for y=1, 2, 3, ... is 21, 13, 5, 24, 16, 8, 0.
+8. We have 27 | 73y+2 for y=7, and a=73y+2=512.
+9. Thus, a=512.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation 19x^3-84y^2=1984.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation 19x^3 - 84y^2 = 1984, we can start by factoring out the common factor of 19:
+
+19(x^3 - 4y^2) = 1984.
+
+Now, we can divide both sides of the equation by 19:
+
+x^3 - 4y^2 = 104.
+
+Next, we can rewrite the equation as:
+
+x^3 = 4y^2 + 104.
+
+Now, let&#x27;s consider the equation modulo 4. Since any perfect square is congruent to either 0 or 1 modulo 4, we have two cases to consider:
+
+Case 1: y^2 ≡ 0 (mod 4)
+In this case, y must be even, so let y = 2k, where k is an integer. Substituting this into the equation, we get:
+
+x^3 = 4(2k)^2 + 104,
+x^3 = 16k^2 + 104,
+x^3 = 8(2k^2 + 13).
+
+Since 8 is a perfect cube, we can let x = 2m, where m is an integer. Substituting this into the equation, we get:
+
+(2m)^3 = 8(2k^2 + 13),
+8m^3 = 8(2k^2 + 13),
+m^3 = 2k^2 + 13.
+
+This equation implies that m^3 is odd, which means m is odd. Let m = 2n + 1, where n is an integer. Substituting this into the equation, we get:
+
+(2n + 1)^3 = 2k^2 + 13,
+8n^3 + 12n^2 + 6n + 1 = 2k^2 + 13,
+4n^3 + 6n^2 + 3n + 6 = k^2.
+
+This equation implies that k^2 is even, which means k is even. Let k = 2p, where p is an integer. Substituting this into the equation, we get:
+
+4n^3 + 6n^2 + 3n + 6 = (2p)^2,
+4n^3 + 6n^2 + 3n + 6 = 4p^2,
+n^3 + (3/2)n^2 + (3/4)n + (3/2) = p^2.
+
+This equation implies that p^2 is odd, which means p is odd. Let p = 2q + 1, where q is an integer. Substituting this into the equation, we get:
+
+n^3 + (3/2)n^2 + (3/4)n + (3/2) = (2q + 1)^2,
+n^3 + (3/2)n^2 + (3/4)n + (3/2) = 4q^2 + 4q + 1,
+n^3 + (3/2)n^2 + (3/4)n + 1/2 = 2q^2 + 2q.
+
+This equation implies that q^2 is odd, which means q is odd. Let q = 2r + 1, where r is an integer. Substituting this into the equation, we get:
+
+n^3 + (3/2)n^2 + (3/4)n + 1/2 = 2(2r + 1)^2 + 2(2r + 1),
+n^3 + (3/2)n^2 + (3/4)n + 1/2 = 8r^2 + 8r + 4,
+n^3 + (3/2)n^2 + (3/4)n - 8r^2 - 8r - 7/2 = 0.
+
+This equation is a cubic equation in n. To find its integer solutions, we can use various methods such as factoring, synthetic division, or numerical methods. However, in this case, we can observe that n = -1 is a solution. Dividing the cubic equation by (n + 1), we get:
+
+n^2 + (1/2)n - 8r^2 - 8r - 7/2 = 0.
+
+Now, we can use the quadratic formula to solve for n:
+
+n = (-1/4) ± √[(1/4)^2 + 8r^2 + 8r + 7/2].
+
+Since n must be an integer, the discriminant [(1/4)^2 + 8r^2 + 8r + 7/2] must be a perfect square. Let&#x27;s denote it as m^2, where m is an integer. We can rewrite the equation as:
+
+[(1/4)^2 + 8r^2 + 8r + 7/2] = m^2,
+1/16 + 8r^2 + 8r + 7/2 = m^2,
+8r^2 + 8r + 121/16 = m^2,
+128r^2 + 128r + 1936 = 16m^2,
+(8r + 16)^2 + 1936 - 256 = 16m^2,
+(8r + 16)^2 + 1680 = 16m^2,
+(8r + 16)^2 = 16m^2 - 1680,
+(8r + 16)^2 = 16(m^2 - 105).
+
+Now, let&#x27;s consider the equation modulo 16. Since any perfect square is congruent to either 0, 1, 4, or 9 modulo 16, we have four cases to consider:
+
+Case 1: m^2 ≡ 0 (mod 16)
+In this case, m must be even, so let m = 2s, where s is an integer. Substituting this into the equation, we get:
+
+(8r + 16)^2 = 16((2s)^2 - 105),
+(8r + 16)^2 = 64s^2 - 1680,
+(2r + 4)^2 = 8s^2 - 210.
+
+This equation implies that s^2 is odd, which means s is odd. Let s = 2t + 1, where t is an integer. Substituting this into the equation, we get:
+
+(2r + 4)^2 = 8(2t + 1)^2 - 210,
+(2r + 4)^2 = 8(4t^2 + 4t + 1) - 210,
+(2r + 4)^2 = 32t^2 + 32t - 202,
+(2r + 4)^2 = 32(t^2 + t - 6).
+
+This equation implies that t^2 + t - 6 is a perfect square. Let&#x27;s denote it as k^2, where k is an integer. We can rewrite the equation as:
+
+t^2 + t - 6 = k^2,
+4t^2 + 4t - 24 = 4k^2,
+(2t + 1)^2 - 25 = 4k^2,
+(2t + 1)^2 - (2k)^2 = 25,
+(2t + 2k + 1)(2t - 2k + 1) = 25.
+
+Since 25 is a prime number, we have two cases to consider:
+
+Case 1a: 2t + 2k + 1 = 25 and 2t - 2k + 1 = 1
+In this case, we have t = 12 and k = 0. Substituting these values back into the equation, we get:
+
+(2r + 4)^2 = 32(12^2 + 12 - 6),
+(2r + 4)^2 = 32(144 + 12 - 6),
+(2r + 4)^2 = 32(150),
+(2r + 4)^2 = 4800,
+2r + 4 = ±√4800,
+2r + 4 = ±20√3,
+r = -2 ± 10√3.
+
+Case 1b: 2t + 2k + 1 = 1 and 2t - 2k + 1 = 25
+In this case, we have t = -12 and k = 0. Substituting these values back into the equation, we get:
+
+(2r + 4)^2 = 32((-12)^2 - 12 - 6),
+(2r + 4)^2 = 32(144 - 12 - 6),
+(2r + 4)^2 = 32(126),
+(2r + 4)^2 = 4032,
+2r + 4 = ±√4032,
+2r + 4 = ±8√14,
+r = -2 ± 4√14.
+
+Therefore, in Case 1, we have four possible values for r: -2 + 10√3, -2 - 10√3, -2 + 4√14, and -2 - 4√14.
+
+Case 2: m^2 ≡ 1 (mod 16)
+In this case, m must be odd, so let m = 2s + 1, where s is an integer. Substituting this into the equation, we get:
+
+(8r + 16)^2 = 16((2s + 1)^2 - 105),
+(8r + 16)^2 = 64s^2 + 64s - 1680,
+(2r + 4)^2 = 8s^2 + 8s - 210.
+
+This equation implies that s^2 is even, which means s is even. Let s = 2t, where t is an integer. Substituting this into the equation, we get:
+
+(2r + 4)^2 = 8(2t)^2 + 8(2t) - 210,
+(2r + 4)^2 = 32t^2 + 32t - 210,
+(2r + 4)^2 = 2(16t^2 + 16t - 105).
+
+This equation implies that 16t^2 + 16t - 105 is a perfect square. Let&#x27;s denote it as k^2, where k is an integer. We can rewrite the equation as:
+
+16t^2 + 16t - 105 = k^2,
+t^2 + t - 6 = (k/4)^2,
+(2t + 1)^2 - 25 = (k/4)^2,
+(2t + 1)^2 - (k/2)^2 = 25,
+(2t + k/2 + 1)(2t - k/2 + 1) = 25.
+
+Since 25 is a prime number, we have two cases to consider:
+
+Case 2a: 2t + k/2 + 1 = 25 and 2t - k/2 + 1 = 1
+In this case, we have t = 12 and k = 0. Substituting these values back into the equation, we get:
+
+(2r + 4)^2 = 2(16(12^2 + 12 - 6)),
+(2r + 4)^2 = 2(16(144 + 12 - 6)),
+(2r + 4)^2 = 2(16(150)),
+(2r + 4)^2 = 4800,
+2r + 4 = ±√4800,
+2r + 4 = ±20√3,
+r = -2 ± 10√3.
+
+Case 2b: 2t + k/2 + 1 = 1 and 2t - k/2 + 1 = 25
+In this case, we have t = -12 and k = 0. Substituting these values back into the equation, we get:
+
+(2r + 4)^2 = 2(16((-12)^2 - 12 - 6)),
+(2r + 4)^2 = 2(16(144 - 12 - 6)),
+(2r + 4)^2 = 2(16(126)),
+(2r + 4)^2 = 4032,
+2r + 4 = ±√4032,
+2r + 4 = ±8√14,
+r = -2 ± 4√14.
+
+Therefore, in Case 2, we have four possible values for r: -2 + 10√3, -2 - 10√3, -2 + 4√14, and -2 - 4√14.
+
+In conclusion, the integer solutions to the equation 19x^3 - 84y^2 = 1984 are given by the values of x and y corresponding to the four possible values of r: (-2 + 10√3, x, y), (-2 - 10√3, x, y), (-2 + 4√14, x, y), and (-2 - 4√14, x, y).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer solutions to the equation 19x^3 - 84y^2 = 1984 are given by the values of x and y corresponding to the four possible values of r: (-2 + 10√3, x, y), (-2 - 10√3, x, y), (-2 + 4√14, x, y), and (-2 - 4√14, x, y).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

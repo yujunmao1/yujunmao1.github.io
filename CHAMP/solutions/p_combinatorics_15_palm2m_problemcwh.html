@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_15</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_15']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: How many different ordered triples (a, b, c) of non-negative integers are there such that a+b+c=99?
+Step-wise solution:
+1. For any c, we know that a+b=99-c.
+2. Thus, there are 99-c+1 different values of (a, b), ranging from (0, 99-c) to (99-c, 0).
+3. We know that c can range from 0 to 99.
+4. Thus, the total number of ordered triples is 100+99+...+1=(100+1)*100/2=5050.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column.
+
+In addition, you may also find the following information helpful:
+
+1. How must the middle column be tiled?
+2. Let a_n be the number of ways to tile a 2 x n rectangle without consideration of the symmetry.
+3. Find the expression for a_(n+1) in terms of a_n and a_(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The middle column must be tiled with a single tile, so there is only one way to tile it.
+
+Let $a_n$ be the number of ways to tile a 2 x $n$ rectangle without consideration of the symmetry. We can see that $a_0 = 1$, since there is only one way to tile a 2 x 0 rectangle.
+
+For $n \ge 1$, we can tile a 2 x $n$ rectangle by tiling the first column with $1$ or $2$ tiles, then tiling the second column with the remaining $n-1$ tiles. If we tile the first column with $1$ tile, then there are $a_{n-1}$ ways to tile the second column, since the first column is now a 1 x $(n-1)$ rectangle. If we tile the first column with $2$ tiles, then there are $a_{n-2}$ ways to tile the second column, since the first column is now a 2 x $(n-2)$ rectangle.
+
+Therefore, we have the following recurrence relation:
+
+$$a_n = a_{n-1} + a_{n-2}$$
+
+with initial conditions $a_0 = 1$ and $a_1 = 2$.
+
+We can solve this recurrence relation using the method of generating functions. The generating function for the sequence $a_n$ is defined as:
+
+$$A(x) = \sum_{n=0}^{\infty} a_n x^n$$
+
+We can use the recurrence relation to find the closed form for $A(x)$:
+
+$$A(x) = 1 + 2x + \frac{1}{1-x-x^2}$$
+
+The coefficient of $x^n$ in $A(x)$ is the number of ways to tile a 2 x $n$ rectangle, so the number of ways to tile a 2 x 21 rectangle is the coefficient of $x^{21}$ in $A(x)$. This coefficient is equal to $\frac{1}{21!}$, which is approximately equal to $0.000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column is $\frac{1}{21!}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

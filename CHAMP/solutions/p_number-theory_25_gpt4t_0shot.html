@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_25</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 3 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_25']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive integer n, if 2^n and 5^n start with the same digit, what are possible values of this digit?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the range of values that \(2^n\) and \(5^n\) can take such that they start with the same digit. Since \(2^n\) and \(5^n\) are powers of 2 and 5 respectively, when multiplied together, they give \(10^n\), which is a 1 followed by n zeros.
+
+The key observation is that for \(2^n\) and \(5^n\) to start with the same digit, the leading digit must be the same before they reach the next power of 10, which would add another zero to the end of \(10^n\). This means that the leading digit must be the same in the interval between \(10^n\) and \(10^{n+1}\).
+
+Let&#x27;s consider the possible leading digits for \(2^n\) and \(5^n\). Since \(2^n \times 5^n = 10^n\), we can write \(2^n = \frac{10^n}{5^n}\). As \(n\) increases, \(2^n\) will cycle through different leading digits as it grows from just over \(10^k\) to just under \(10^{k+1}\) for some integer \(k\).
+
+The possible leading digits for \(2^n\) and \(5^n\) will be the same if \(2^n\) is in the range \([1, 2)\) when multiplied by \(10^k\), because \(5^n\) will be in the range \([0.2, 0.4)\) when multiplied by \(10^k\), and both will have the same leading digit of 1.
+
+Similarly, if \(2^n\) is in the range \([2, 4)\) when multiplied by \(10^k\), then \(5^n\) will be in the range \([0.4, 0.8)\) when multiplied by \(10^k\), and both will have the same leading digit of 2.
+
+Continuing this pattern, we can see that the possible leading digits for \(2^n\) and \(5^n\) to be the same are 1, 2, 4, and 8. These are the digits for which the intervals for \(2^n\) and \(5^n\) overlap before reaching the next power of 10.
+
+To summarize, the possible leading digits for \(2^n\) and \(5^n\) to start with the same digit are 1, 2, 4, and 8.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible leading digits for \(2^n\) and \(5^n\) to start with the same digit are 1, 2, 4, and 8.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

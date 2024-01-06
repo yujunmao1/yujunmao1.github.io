@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_5</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x=8, y=2), (x=2, y=8)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_5']
+messages = problem.conversations['GPT-3.5|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation x^3+x^2*y+x*y^2+y^3=8(x^2+xy+y^2+1).
+
+You may find the following information useful:
+
+1. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.
+2. (x±y)^2=x^2±2xy+y^2.
+3. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation x^3 + x^2*y + x*y^2 + y^3 = 8(x^2 + xy + y^2 + 1), we can start by simplifying both sides of the equation.
+
+On the left side, we can factor the expression x^3 + x^2*y + x*y^2 + y^3 using the sum of cubes formula:
+
+x^3 + x^2*y + x*y^2 + y^3 = (x + y)(x^2 - xy + y^2)
+
+On the right side, we can distribute the 8 to each term:
+
+8(x^2 + xy + y^2 + 1) = 8x^2 + 8xy + 8y^2 + 8
+
+Now, our equation becomes:
+
+(x + y)(x^2 - xy + y^2) = 8x^2 + 8xy + 8y^2 + 8
+
+Next, we can divide both sides of the equation by (x + y) to isolate the quadratic term:
+
+x^2 - xy + y^2 = 8x^2/(x + y) + 8xy/(x + y) + 8y^2/(x + y) + 8/(x + y)
+
+Now, let&#x27;s simplify the right side of the equation. We can use the fact that (x ± y)^2 = x^2 ± 2xy + y^2:
+
+8x^2/(x + y) + 8xy/(x + y) + 8y^2/(x + y) + 8/(x + y) = 8(x^2 + 2xy + y^2)/(x + y) + 8/(x + y)
+= 8(x + y)^2/(x + y) + 8/(x + y)
+= 8(x + y) + 8/(x + y)
+
+Substituting this back into our equation, we have:
+
+x^2 - xy + y^2 = 8(x + y) + 8/(x + y)
+
+Now, let&#x27;s simplify further. We can multiply both sides of the equation by (x + y) to get rid of the denominator:
+
+(x + y)(x^2 - xy + y^2) = (x + y)(8(x + y) + 8/(x + y))
+
+Expanding both sides, we have:
+
+x^3 + x^2*y + x*y^2 - xy^2 - x^2*y - xy^2 + y^3 = 8(x^2 + xy + y^2) + 8(x + y) + 8/(x + y)
+
+Simplifying, we get:
+
+x^3 + y^3 - 2xy^2 = 8x^2 + 8xy + 8y^2 + 8x + 8y + 8/(x + y)
+
+Now, let&#x27;s rearrange the terms to get all the variables on one side and the constants on the other side:
+
+x^3 + y^3 - 8x^2 - 8y^2 - 2xy^2 - 8xy - 8x - 8y = 8/(x + y)
+
+Now, we can multiply both sides of the equation by (x + y) to get rid of the denominator:
+
+(x + y)(x^3 + y^3 - 8x^2 - 8y^2 - 2xy^2 - 8xy - 8x - 8y) = 8
+
+Expanding both sides, we have:
+
+x^4 + x^3*y + x^3*y + y^4 - 8x^3 - 8xy^2 - 8x^2*y - 8y^3 - 8x^2 - 8y^2 - 2xy^3 - 2xy^3 - 8xy^2 - 8xy^2 - 8x^2*y - 8xy^2 - 8x^2 - 8y^2 - 8x - 8y = 8
+
+Simplifying, we get:
+
+x^4 + 2x^3*y + y^4 - 16x^3 - 24xy^2 - 16x^2*y - 16y^3 - 16x^2 - 32y^2 - 4xy^3 - 16xy^2 - 16x^2*y - 16xy^2 - 8x^2 - 16y^2 - 8x - 8y = 8
+
+Now, let&#x27;s combine like terms:
+
+x^4 + 2x^3*y + y^4 - 16x^3 - 32x^2*y - 24xy^2 - 16y^3 - 24x^2 - 48y^2 - 4xy^3 - 32xy^2 - 8x - 8y = 8
+
+Finally, we have a polynomial equation in terms of x and y. To find the integer solutions, we need to solve this equation. However, it is a high-degree polynomial equation and finding its solutions may not be straightforward. We may need to use numerical methods or advanced techniques to find the solutions.
+
+Therefore, the final answer is that the equation x^3 + x^2*y + x*y^2 + y^3 = 8(x^2 + xy + y^2 + 1) has integer solutions, but finding them requires further analysis.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The equation x^3 + x^2*y + x*y^2 + y^3 = 8(x^2 + xy + y^2 + 1) has integer solutions, but finding them requires further analysis.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

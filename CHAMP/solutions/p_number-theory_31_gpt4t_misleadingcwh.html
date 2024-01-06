@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_31</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=2, y=1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_31']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation 2^x-1=3^y.
+
+You may find the following information useful:
+
+1. Study the equation for x≥3 by considering the divisibility by 8.
+2. Separately consider even and odd values of y.
+3. If ab=c^k and gcd(a, b)=1, then a=u^k and b=v^k for gcd(u, v)=1 and uv=c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s analyze the given equation:
+
+\[ 2^x - 1 = 3^y \]
+
+We are looking for positive integer solutions for \( x \) and \( y \).
+
+First, let&#x27;s consider the case when \( x \geq 3 \). In this case, \( 2^x \) is divisible by 8, and since we are subtracting 1, \( 2^x - 1 \) is 7 modulo 8. However, \( 3^y \) is always 1 modulo 8 when \( y \) is even (since \( 3^2 = 9 \) is 1 modulo 8 and the powers of 9 will also be 1 modulo 8), and it is 3 modulo 8 when \( y \) is odd (since \( 3^1 = 3 \) is 3 modulo 8 and the powers of 3 will cycle through 3, 1, 3, 1, etc. modulo 8). Therefore, for \( x \geq 3 \), \( y \) must be odd for the equation to hold.
+
+Now, let&#x27;s consider the case when \( y \) is odd. We can rewrite the equation as:
+
+\[ 2^x = 3^y + 1 \]
+
+Since \( y \) is odd, \( 3^y + 1 \) is even, and we can factor it as a difference of squares:
+
+\[ 2^x = (3^{y/2} + 1)(3^{y/2} - 1) \]
+
+Since \( 2^x \) is a power of 2, both factors on the right must also be powers of 2. However, these two factors are consecutive even numbers, so their greatest common divisor is 2. Therefore, one of the factors must be \( 2 \) and the other must be \( 2^{x-1} \).
+
+Without loss of generality, let&#x27;s assume \( 3^{y/2} + 1 = 2^{x-1} \) and \( 3^{y/2} - 1 = 2 \). Solving the second equation gives us \( y/2 = 1 \), so \( y = 2 \). Plugging this back into the first equation gives us \( 3 + 1 = 2^{x-1} \), so \( 4 = 2^{x-1} \), which implies \( x = 3 \).
+
+So we have one solution: \( (x, y) = (3, 2) \).
+
+Now let&#x27;s consider the case when \( x &lt; 3 \). The possible values for \( x \) are 1 and 2.
+
+For \( x = 1 \), the equation becomes \( 2^1 - 1 = 3^y \), which simplifies to \( 1 = 3^y \). There are no positive integer solutions for \( y \) here.
+
+For \( x = 2 \), the equation becomes \( 2^2 - 1 = 3^y \), which simplifies to \( 3 = 3^y \). This gives us \( y = 1 \).
+
+So we have another solution: \( (x, y) = (2, 1) \).
+
+In conclusion, the positive integer solutions to the equation \( 2^x - 1 = 3^y \) are \( (x, y) = (3, 2) \) and \( (x, y) = (2, 1) \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The positive integer solutions to the equation \(2^x - 1 = 3^y\) are \( (x, y) = (3, 2) \) and \( (x, y) = (2, 1) \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

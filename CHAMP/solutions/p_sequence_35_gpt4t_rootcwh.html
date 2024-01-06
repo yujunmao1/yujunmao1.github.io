@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_35</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1000 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_35']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {x_n} is defined by x_1=2, x_(n+1)=(x_n^4+9)/(10x_n). For how many values of x_1, x_2, ..., x_1000 do we have x_n&gt;4/5?
+
+You may find the following information useful:
+
+1. Write (x_n^4+9)/(10x_n) as a sum of four fractions so that their multiplication does not contain x_n.
+2. For n non-negative numbers x_1, ..., x_n, we have (x_1+x_2+...+x_n)/n≥(x_1*x_2*...*x_n)^(1/n), with equality if and only if x_1=...=x_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the recursive sequence given by the formula:
+
+\[ x_{n+1} = \frac{x_n^4 + 9}{10x_n} \]
+
+First, let&#x27;s follow the hint and write \( x_{n+1} \) as a sum of four fractions:
+
+\[ x_{n+1} = \frac{x_n^4}{10x_n} + \frac{9}{10x_n} \]
+\[ x_{n+1} = \frac{x_n^3}{10} + \frac{9}{10x_n} \]
+
+Now, let&#x27;s consider the inequality \( x_n &gt; \frac{4}{5} \). We want to find out for how many values of \( x_1, x_2, \ldots, x_{1000} \) this inequality holds.
+
+Notice that if \( x_n &gt; \frac{4}{5} \), then \( x_n^3 &gt; \left(\frac{4}{5}\right)^3 \) and \( \frac{9}{x_n} &lt; \frac{9}{\frac{4}{5}} \). So we have:
+
+\[ x_{n+1} &gt; \frac{\left(\frac{4}{5}\right)^3}{10} + \frac{9}{10 \cdot \frac{4}{5}} \]
+\[ x_{n+1} &gt; \frac{\frac{64}{125}}{10} + \frac{9}{8} \]
+\[ x_{n+1} &gt; \frac{64}{1250} + \frac{90}{80} \]
+\[ x_{n+1} &gt; \frac{64}{1250} + \frac{9 \cdot 10}{8 \cdot 10} \]
+\[ x_{n+1} &gt; \frac{64}{1250} + \frac{9}{8} \]
+\[ x_{n+1} &gt; \frac{64}{1250} + \frac{1125}{1000} \]
+\[ x_{n+1} &gt; \frac{0.0512}{1} + \frac{1.125}{1} \]
+\[ x_{n+1} &gt; 1.1762 \]
+
+Since \( x_{n+1} &gt; 1.1762 \) which is greater than \( \frac{4}{5} \), we can see that once \( x_n &gt; \frac{4}{5} \), \( x_{n+1} \) will also be greater than \( \frac{4}{5} \).
+
+Given that \( x_1 = 2 \), which is greater than \( \frac{4}{5} \), we can conclude that all subsequent terms \( x_2, x_3, \ldots, x_{1000} \) will also be greater than \( \frac{4}{5} \). Therefore, for all 1000 values of \( x_1, x_2, \ldots, x_{1000} \), we have \( x_n &gt; \frac{4}{5} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For all 1000 values of \( x_1, x_2, \ldots, x_{1000} \) in the given sequence, we have \( x_n &gt; \frac{4}{5} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

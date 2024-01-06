@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_20</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_20']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive integers a, b, c, d, e satisfying a^5+b^5+c^5+d^5+e^5 mod 25=0, what are possible values of abcde mod 5?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. If 5 ∤ abcde, then none of a, b, c, d, e is divisible by 5.
+2. For 5 ∤ u, we have u=5k±1 or u=5k±2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the fifth powers of integers modulo 25 and then use this information to determine the possible values of \( abcde \mod 5 \).
+
+First, let&#x27;s consider the fifth powers of integers modulo 25. For any integer \( u \), if \( u \) is not divisible by 5, then \( u \) can be written in the form \( 5k \pm 1 \) or \( 5k \pm 2 \), where \( k \) is an integer. Let&#x27;s see what happens when we raise these forms to the fifth power:
+
+1. \( (5k + 1)^5 \mod 25 \)
+2. \( (5k - 1)^5 \mod 25 \)
+3. \( (5k + 2)^5 \mod 25 \)
+4. \( (5k - 2)^5 \mod 25 \)
+
+We can use the binomial theorem to expand these expressions, but we only need to consider the last two terms of the expansion because all other terms will have a factor of \( 5^2 = 25 \) and thus will be 0 modulo 25.
+
+1. \( (5k + 1)^5 = \ldots + 10k(5k)^4 + 1 \equiv 1 \mod 25 \)
+2. \( (5k - 1)^5 = \ldots - 10k(5k)^4 + 1 \equiv 1 \mod 25 \)
+3. \( (5k + 2)^5 = \ldots + 10k(5k)^4 + 32 \equiv 7 \mod 25 \)
+4. \( (5k - 2)^5 = \ldots - 10k(5k)^4 + 32 \equiv 7 \mod 25 \)
+
+So, we see that for \( u \) not divisible by 5, \( u^5 \) is congruent to either 1 or 7 modulo 25.
+
+Now, let&#x27;s consider the given condition \( a^5 + b^5 + c^5 + d^5 + e^5 \equiv 0 \mod 25 \). Since each term is congruent to either 1 or 7 modulo 25, we need to find a combination of 1&#x27;s and 7&#x27;s that sum to a multiple of 25.
+
+The only way to get a sum that is a multiple of 25 using 1&#x27;s and 7&#x27;s is to have five 1&#x27;s, or three 1&#x27;s and two 7&#x27;s (since \( 3 \times 1 + 2 \times 7 = 3 + 14 = 17 \), which is not a multiple of 25). Therefore, all of \( a, b, c, d, e \) must be of the form \( 5k \pm 1 \) to satisfy the condition.
+
+Since \( abcde \) is a product of numbers of the form \( 5k \pm 1 \), the product \( abcde \) modulo 5 will be either \( 1 \) or \( -1 \), which are both congruent to 1 modulo 5.
+
+Therefore, the possible value of \( abcde \mod 5 \) is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible value of \( abcde \mod 5 \) for positive integers \( a, b, c, d, e \) satisfying \( a^5 + b^5 + c^5 + d^5 + e^5 \mod 25 = 0 \) is 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

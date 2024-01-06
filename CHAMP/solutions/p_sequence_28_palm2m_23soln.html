@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_28</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_28']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let u&lt;v and define two sequences {u_n} and {v_n}, as u_0=u, u_n=(u_(n-1)+v_(n-1))/2 and v_0=v, v_n=(u_(n-1)+2v_(n-1))/3. Let the two limits be L_u and L_v respectively. Find L_u-L_v.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have v_n-u_n=v_(n-1)/6-u_(n-1)/6=(v_(n-1)-u_(n-1))/6.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We have $v_n-u_n=(v_{n-1}-u_{n-1})/6$. Since $u&lt;v$, we have $v_{n-1}-u_{n-1}&gt;0$. Therefore, $v_n-u_n&gt;0$ for all $n$. This means that the sequence $\\{v_n\\}$ is increasing.
+
+We also have $u_n=(u_{n-1}+v_{n-1})/2$. Since $u&lt;v$, we have $u_{n-1}+v_{n-1}&gt;u$. Therefore, $u_n&gt;u$ for all $n$. This means that the sequence $\\{u_n\\}$ is increasing.
+
+Let $L_u$ and $L_v$ be the limits of the sequences $\\{u_n\\}$ and $\\{v_n\\}$, respectively. We want to find $L_u-L_v$.
+
+Since the sequences $\\{u_n\\}$ and $\\{v_n\\}$ are increasing, we have $L_u\ge u$ and $L_v\ge v$. Therefore, $L_u-L_v\ge u-v$.
+
+To show that $L_u-L_v=u-v$, we will use the following lemma:
+
+&gt; **Lemma.** Let $a_n$ and $b_n$ be sequences of real numbers such that $a_n\ge a$ and $b_n\ge b$ for all $n$. If $a_n\to L$ and $b_n\to L$, then $a_n-b_n\to 0$.
+
+To prove the lemma, we can use the following argument:
+
+For any $\epsilon&gt;0$, there exists an $N$ such that $|a_n-L|&lt;\epsilon$ and $|b_n-L|&lt;\epsilon$ for all $n&gt;N$. Therefore, for all $n&gt;N$, we have
+
+$$|a_n-b_n|=|a_n-L+L-b_n|&lt;\epsilon+L-b_n.$$
+
+Since $L$ is a limit of $a_n$, we can make $L-b_n$ as small as we want by choosing $N$ large enough. Therefore, we can make $|a_n-b_n|$ as small as we want, which shows that $a_n-b_n\to 0$.
+
+Now, we can apply the lemma to the sequences $\\{u_n\\}$ and $\\{v_n\\}$. We have $u_n\ge u$ and $v_n\ge v$ for all $n$. Also, $u_n\to L_u$ and $v_n\to L_v$. Therefore, $u_n-v_n\to 0$. This means that $L_u-L_v=u-v$.
+
+Therefore, the answer is $\boxed{u-v}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Since $u&lt;v$, we have $L_u-L_v=u-v$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

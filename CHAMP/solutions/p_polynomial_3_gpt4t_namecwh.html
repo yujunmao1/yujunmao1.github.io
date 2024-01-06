@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_3</td>
+            <td>GPT-4 Turbo</td>
+            <td>Name w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At most 0 integer-valued zeros (i.e., no integer zeros)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_3']
+messages = problem.conversations['GPT-4 Turbo|Name w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, at most how many integer-valued zeros can it have?
+
+You may find the following information useful:
+
+1. Let a be an integer zero of f(x).
+2. A polynomial f(x) of degree n with roots x_1, ..., x_i (along with other roots) can be written as f(x)=(x-x_1)(x-x_2)...(x-x_i)g(x), where g(x) is a polynomial of degree n-i.
+3. Study the parity of f(0) and f(1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s analyze the given information and use it to solve the problem.
+
+1. We know that f(0) and f(1) are both odd. This means that when we plug in x = 0 and x = 1 into the polynomial f(x), the result is an odd number in both cases.
+
+2. If a polynomial f(x) has an integer zero a, then (x - a) is a factor of f(x).
+
+3. The product of two odd numbers is odd, and the product of an even number with any other integer is even.
+
+Now, let&#x27;s consider the polynomial f(x) evaluated at x = 0 and x = 1:
+
+- f(0) being odd means that the constant term of the polynomial is odd because f(0) is simply the constant term of the polynomial.
+- f(1) being odd means that the sum of all the coefficients of the polynomial is odd because f(1) is the sum of all the coefficients when x = 1.
+
+Now, let&#x27;s consider the integer zeros of f(x). Suppose f(x) has k integer zeros. Then we can write f(x) as:
+
+f(x) = (x - x_1)(x - x_2)...(x - x_k)g(x)
+
+where x_1, x_2, ..., x_k are the integer zeros and g(x) is a polynomial of degree n - k.
+
+If we evaluate f(0), we get:
+
+f(0) = (-x_1)(-x_2)...(-x_k)g(0)
+
+Since f(0) is odd, the product (-x_1)(-x_2)...(-x_k)g(0) must also be odd. This means that each factor (-x_i) must be odd (since an even number would make the product even), and g(0) must be odd as well.
+
+Now, let&#x27;s evaluate f(1):
+
+f(1) = (1 - x_1)(1 - x_2)...(1 - x_k)g(1)
+
+For f(1) to be odd, the product (1 - x_1)(1 - x_2)...(1 - x_k)g(1) must be odd. Each factor (1 - x_i) must be even because x_i is an integer and for 1 - x_i to be odd, x_i would have to be even, which contradicts our earlier conclusion that each x_i must be odd for f(0) to be odd.
+
+Therefore, we have a contradiction. We cannot have a situation where all the x_i are odd integers because it would make f(1) even, not odd.
+
+The only way to resolve this contradiction is to have no integer zeros at all. Thus, the polynomial f(x) with integer coefficients, where both f(0) and f(1) are odd, cannot have any integer-valued zeros.
+
+The final answer is that at most, the polynomial can have 0 integer-valued zeros.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>A polynomial f(x) of degree n with integer coefficients, where both f(0) and f(1) are odd, can have at most 0 integer-valued zeros.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

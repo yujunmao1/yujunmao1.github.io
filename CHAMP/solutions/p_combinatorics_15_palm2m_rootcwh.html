@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_15</td>
+            <td>PaLM 2 Medium</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_15']
+messages = problem.conversations['PaLM 2 Medium|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column.
+
+You may find the following information useful:
+
+1. How must the middle column be tiled?
+2. Let a_n be the number of ways to tile a 2 x n rectangle without consideration of the symmetry.
+3. Find the expression for a_(n+1) in terms of a_n and a_(n-1).
+4. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The middle column must be tiled with a single tile, so there is only one way to tile it.
+
+Let $a_n$ be the number of ways to tile a 2 x $n$ rectangle without consideration of the symmetry. We can tile a 2 x $n$ rectangle by tiling the first column, then the second column, and so on. There are $2$ ways to tile the first column, $2$ ways to tile the second column, and so on, so there are $2^n$ ways to tile a 2 x $n$ rectangle without consideration of the symmetry.
+
+To find the number of ways to tile a 2 x $n$ rectangle such that the tiling is same when the rectangle is flipped around the middle column, we need to divide the number of ways to tile a 2 x $n$ rectangle without consideration of the symmetry by $2$, since there are two ways to tile the middle column. Therefore, the number of ways to tile a 2 x $n$ rectangle such that the tiling is same when the rectangle is flipped around the middle column is $a_n/2$.
+
+We can find the expression for $a_{n+1}$ in terms of $a_n$ and $a_{n-1}$ by considering the following. To tile a 2 x $(n+1)$ rectangle, we can either tile the first column and then the second column, or we can tile the second column and then the first column. If we tile the first column and then the second column, we have $a_n$ ways to tile the first column and $2$ ways to tile the second column, so there are $2a_n$ ways to tile the rectangle in this way. If we tile the second column and then the first column, we have $2$ ways to tile the first column and $a_n$ ways to tile the second column, so there are $2a_n$ ways to tile the rectangle in this way. Therefore, there are $4a_n$ ways to tile a 2 x $(n+1)$ rectangle.
+
+We can also find the expression for $a_{n+1}$ in terms of $a_n$ and $a_{n-1}$ by considering the following. To tile a 2 x $(n+1)$ rectangle, we can either tile the first column with a single tile, then tile the second column with $n$ tiles, or we can tile the first column with $n$ tiles, then tile the second column with a single tile. If we tile the first column with a single tile, then we have $a_{n-1}$ ways to tile the second column, so there are $a_{n-1}$ ways to tile the rectangle in this way. If we tile the first column with $n$ tiles, then we have $a_n$ ways to tile the second column, so there are $a_n$ ways to tile the rectangle in this way. Therefore, there are $a_{n-1}+a_n$ ways to tile a 2 x $(n+1)$ rectangle.
+
+Therefore, the number of ways to tile a 2 x $n$ rectangle such that the tiling is same when the rectangle is flipped around the middle column is $a_n/2$, where $a_n$ is the number of ways to tile a 2 x $n$ rectangle without consideration of the symmetry.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column is $\frac{2^{21}-1}{2}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

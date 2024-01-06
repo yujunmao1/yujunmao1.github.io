@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_3</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At most 0 integer-valued zeros (i.e., no integer zeros)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_3']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {a_n} is defined by a_1=1, a_(n+1)=a_n+1/a_n^2. Do we have a_9000&gt;30?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_2^3=(1+1)^3=8&gt;3*2.
+2. Assume that a_n^3&gt;3n, then we have a_(n+1)^3=a_n^3+3+3/a_n^3+1/a_n^6&gt;a_n^3+3&gt;3(n+1).
+3. Thus, we have a_n^3&gt;3n for all n, or a_n&gt;(3n)^(1/3).
+4. So a_9000&gt;(3*9000)^(1/3)=27000^(1/3)=30.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(4+3a_n), and if so, find it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_1=2&gt;a_0.
+2. If a_n&gt;a_(n-1), then sqrt(4+3a_n)&gt;sqrt(4+3a_(n-1)), which means that a_(n+1)&gt;a_n.
+3. In addition, if a_n&lt;4, then sqrt(4+3a_n)&lt;sqrt(16)=4, so a_(n+1)&lt;4.
+4. So the sequence is monotonic and bounded, and thus has a limit.
+5. The limit happens when a=sqrt(4+3a), which gives a=4 as the only solution.
+6. Thus, the limit of the sequence is 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. What is the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have b_(n+1)-a_(n+1)=(a_n+b_n)/2-sqrt(a_n*b_n)=(sqrt(a_n)-sqrt(b_n))^2/2=(a_n-b_n)^2/(2(sqrt(a_n)+sqrt(b_n))^2)=(a_n-b_n)^2/(2(a_n+b_n+2a_(n+1)))=(a_n-b_n)^2/(2(2b_(n+1)+2a_(n+1)))=(a_n-b_n)^2/(4(a_(n+1)+b_(n+1)))=(a_n-b_n)^2/(8b_(n+2)).
+2. Thus, (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2=1/8.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. Is the sequence a_n/b_n monotonically increasing, monotonically decreasing, or neither?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_n&lt;b_n for all n&gt;1.
+2. In addition, we know that both a_(n+1) and b_(n+1) lie in between a_n and b_n, as they are averages.
+3. Thus, we have a_n&lt;a_(n+1)&lt;b_(n+1)&lt;b_n.
+4. So a_n is monotonically increasing and b_n is monotonically decreasing.
+5. Thus, the ratio a_n/b_n is monotonically increasing.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the remainder of x^1959−1 divided by (x^2+1)(x^2+x+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have f(x)=x^1959-1=(x^2+1)(x^2+x+1)q(x)+ax^3+bx^2+cx+d.
+2. At x=i, f(i)=-i-1=-ai-b+ci+d.
+3. At x=-i, f(-i)=i-1=ai-b-ci+d.
+4. At x=w, f(w)=0=a+bw^2+cw+d.
+5. At x=w^2, f(w^2)=0=a+bw+cw^2+d.
+6. We have f(i)+f(-i)=-2b+2d=-2, which means b-d=1.
+7. We have f(i)-f(-i)=-2ai+2ci=-2i, which means a-c=1.
+8. We have f(w)+f(w^2)=2a-b-c+2d=0.
+9. We have f(w)-f(w^2)=(b-c)(w^2-w)=0, which means b=c.
+10. These equations give us a=1, b=c=0, d=-1.
+11. So the remainder is ax^3+bx^2+cx+d=x^3-1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, at most how many integer-valued zeros can it have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s analyze the given information about the polynomial f(x) of degree n with integer coefficients.
+
+1. Since f(0) is odd, the constant term of the polynomial must be odd because f(0) is equal to the constant term when you substitute x = 0 into the polynomial.
+
+2. Since f(1) is odd, the sum of all the coefficients of the polynomial must be odd. This is because when you substitute x = 1 into the polynomial, you are essentially summing all the coefficients.
+
+Now, let&#x27;s consider the polynomial f(x) evaluated at any integer x. If x is even, then any term of the form ax^k (where a is an integer coefficient and k is a non-negative integer) will be even because an even number raised to any power is even, and an even number multiplied by an integer is even.
+
+If x is odd, then any term of the form ax^k will be odd if a is odd and k is even, and it will be even if a is even. This is because an odd number raised to any power is odd, but if the coefficient a is even, the product will be even.
+
+Now, let&#x27;s consider the polynomial f(x) evaluated at two consecutive integers, say m and m+1. Since the coefficients of f(x) are integers, f(m+1) - f(m) is also an integer. Moreover, f(m+1) - f(m) is the sum of terms involving the coefficients and powers of m. Since m and m+1 have opposite parity (one is even, the other is odd), the difference f(m+1) - f(m) will be even because it is the sum of an even number of odd terms (from the odd coefficients) and some even terms.
+
+This means that f(x) cannot have two consecutive integer zeros because the difference between the polynomial evaluated at consecutive integers is even, and you cannot have an odd jump between two odd values without hitting an even value (zero) in between.
+
+Therefore, the integer zeros of f(x) must be spaced out by at least one integer. Since the degree of the polynomial is n, it can have at most n real zeros (by the Fundamental Theorem of Algebra). However, because we need to space out the integer zeros, the maximum number of integer-valued zeros we can have is at most ⌊n/2⌋, where ⌊⌋ denotes the floor function, which rounds down to the nearest integer.
+
+In conclusion, a polynomial f(x) of degree n with integer coefficients, where both f(0) and f(1) are odd, can have at most ⌊n/2⌋ integer-valued zeros.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>A polynomial f(x) of degree n with integer coefficients, where both f(0) and f(1) are odd, can have at most ⌊n/2⌋ integer-valued zeros.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_72</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1 and 3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_72']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If positive integers x and y are such that x^2+2y^2 is a prime number, what are all possible values of x^2+2y^2 mod 8?
+
+You may find the following information useful:
+
+1. For integer a, b, n, a - b | a^n - b^n.
+2. An even perfect square is divisible by 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the possible values of \( x^2 \) and \( 2y^2 \) modulo 8 and how they combine to give us \( x^2 + 2y^2 \) modulo 8.
+
+First, let&#x27;s consider \( x^2 \) modulo 8. Since \( x \) is a positive integer, \( x \) can be either even or odd.
+
+- If \( x \) is even, then \( x = 2k \) for some integer \( k \), and \( x^2 = (2k)^2 = 4k^2 \). Since \( k^2 \) is a perfect square, it is either 0, 1, 4, or 9 modulo 4 (these are the squares of 0, 1, 2, and 3 modulo 4). However, since \( 4k^2 \) is a multiple of 4, \( x^2 \) must be 0 modulo 8 if \( x \) is even.
+
+- If \( x \) is odd, then \( x = 2k + 1 \) for some integer \( k \), and \( x^2 = (2k + 1)^2 = 4k^2 + 4k + 1 \). The term \( 4k^2 + 4k \) is even and divisible by 4, so it is 0 modulo 8. Therefore, \( x^2 \) is 1 modulo 8 if \( x \) is odd.
+
+Now let&#x27;s consider \( 2y^2 \) modulo 8. Since \( y \) is a positive integer, \( y \) can also be either even or odd.
+
+- If \( y \) is even, then \( y = 2k \) for some integer \( k \), and \( 2y^2 = 2(2k)^2 = 8k^2 \). This is 0 modulo 8.
+
+- If \( y \) is odd, then \( y = 2k + 1 \) for some integer \( k \), and \( 2y^2 = 2(2k + 1)^2 = 2(4k^2 + 4k + 1) = 8k^2 + 8k + 2 \). The term \( 8k^2 + 8k \) is divisible by 8, so \( 2y^2 \) is 2 modulo 8 if \( y \) is odd.
+
+Now, we need to consider that \( x^2 + 2y^2 \) is a prime number. Since 2 is the only even prime number, and \( x^2 + 2y^2 \) is even only if both \( x \) and \( y \) are even, we can rule out the case where both are even because \( x^2 + 2y^2 \) would be greater than 2 and thus not prime.
+
+Therefore, at least one of \( x \) or \( y \) must be odd. Let&#x27;s consider the possible combinations:
+
+1. \( x \) is odd and \( y \) is even: \( x^2 + 2y^2 \equiv 1 + 0 \equiv 1 \mod 8 \)
+2. \( x \) is even and \( y \) is odd: \( x^2 + 2y^2 \equiv 0 + 2 \equiv 2 \mod 8 \)
+3. \( x \) and \( y \) are both odd: \( x^2 + 2y^2 \equiv 1 + 2 \equiv 3 \mod 8 \)
+
+Since \( x^2 + 2y^2 \) is prime and greater than 2, it must be odd, which rules out the second case where \( x \) is even and \( y \) is odd. Therefore, the only possible values of \( x^2 + 2y^2 \) modulo 8 are 1 and 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of \( x^2 + 2y^2 \) modulo 8, where \( x \) and \( y \) are positive integers and \( x^2 + 2y^2 \) is prime, are 1 and 3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

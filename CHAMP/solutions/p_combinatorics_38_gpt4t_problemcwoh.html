@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_38</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 240</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_38']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: 8 dogs fight over 3 cookies. It is possible that a dog gets more than one cookie or no cookies. However, no two dogs would share the same cookie and there are no cookies left unclaimed. If the cookies are the same but the dogs are different (e.g., dog A, B, C each getting one cookie is one result but dog B, C, D each getting one cookie is a different result), how many possible results are there?
+Step-wise solution:
+1. Consider possible configurations of a row of 10 dots, with 7 being black and 3 being white.
+2. We can derive 8 numbers, being the numbers of white dots to the left of the first black dot, in between each black dots, and to the right of the last black dot.
+3. Obviously each number is non-negative and all numbers sum up to 3.
+4. Thus, we can consider this as one possible result of the fight.
+5. Furthermore, each fight result can also be encoded as a dot configuration.
+6. So there are C(10, 7)=C(10, 3)=120 possible results.
+
+Problem: In how many ways can you take an odd number of objects from n (distinct) objects?
+Step-wise solution:
+1. Let U be the set of objects.
+2. For a specific object m in the collection, we can partition the set of all subsets into two sets, A={S⊆U: m∈S} and B={S⊆U: m∉S}.
+3. We can construct a one-to-one mapping between A and B by pairing up sets that only differ in m, so |A|=|B|.
+4. Thus, one of the sets has an odd number of objects and the other has an even number of objects.
+5. Since there are 2^n subsets, there are 2^(n-1) subsets with an odd number of objects.
+
+Problem: A one-to-one mapping p: {1, 2, ..., n}-&gt;{1, 2, ..., n} is called an involution, if p∘p=identity (i.e., p(p(i))=i for all i∈{1, ..., n}). Find the number of involutions on {1, 2, 3, 4, 5, 6}.
+Step-wise solution:
+1. Let T(n) be the number of involutions on {1, 2, ..., n}.
+2. Thus, we have T(1)=1 for {1-&gt;1}, and T(2)=2 for {1-&gt;1, 2-&gt;2} and {1-&gt;2, 2-&gt;1}.
+3. For n&gt;2, on each involution of the set {1, ..., n-1}, we can add {n-&gt;n} to construct a new involution.
+4. In addition, we can also pull out an item i from n-1 items to make {n-&gt;i, i-&gt;n}, and add this to any involution of the set consisting of the remaining n-2 items.
+5. Thus, we have T(n)=T(n-1)+(n-1)*T(n-2).
+6. Starting from T(1)=1, T(2)=2, we have T(3)=4, T(4)=10, T(5)=26 and T(6)=76.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+There are three different toys. We give one toy to each child, selected among four boys and six girls. We want to make sure that at least two boys are selected. In how many ways can this be done?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the different ways we can distribute the three different toys among the four boys and six girls, with the constraint that at least two boys are selected.
+
+Let&#x27;s break down the problem into cases based on how many boys are selected:
+
+Case 1: Exactly two boys are selected.
+Case 2: All three boys are selected.
+
+For Case 1:
+- We first choose 2 boys from the 4 available to receive toys. This can be done in C(4, 2) ways.
+- We then have to choose 1 girl from the 6 available to receive the remaining toy. This can be done in C(6, 1) ways.
+- Since the toys are different, for each selection of children, there are 3! ways to distribute the toys.
+
+So, the total number of ways for Case 1 is C(4, 2) * C(6, 1) * 3!.
+
+For Case 2:
+- We choose 3 boys from the 4 available to receive toys. This can be done in C(4, 3) ways.
+- Since the toys are different, for each selection of boys, there are 3! ways to distribute the toys.
+
+So, the total number of ways for Case 2 is C(4, 3) * 3!.
+
+Now we calculate the number of ways for each case:
+
+Case 1:
+C(4, 2) * C(6, 1) * 3! = (4! / (2! * (4-2)!)) * (6! / (1! * (6-1)!)) * 3!
+= (4 * 3 / 2) * 6 * 6
+= 6 * 6 * 6
+= 216 ways.
+
+Case 2:
+C(4, 3) * 3! = (4! / (3! * (4-3)!)) * 3!
+= 4 * 6
+= 24 ways.
+
+Adding the number of ways for both cases gives us the total number of ways to distribute the toys with at least two boys selected:
+
+Total number of ways = Case 1 + Case 2
+= 216 + 24
+= 240 ways.
+
+Therefore, there are 240 different ways to distribute the three different toys among the children, ensuring that at least two boys are selected.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 240 different ways to distribute three different toys among four boys and six girls, ensuring that at least two boys are selected.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

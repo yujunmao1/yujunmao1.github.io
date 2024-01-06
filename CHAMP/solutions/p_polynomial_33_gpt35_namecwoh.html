@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_33</td>
+            <td>GPT-3.5</td>
+            <td>Name w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_33']
+messages = problem.conversations['GPT-3.5|Name w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial p(x)=ax^4+bx^3+cx^2+dx+e with integer coefficients is divisible by 7 for every integer x. What are possible values of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7)?
+
+You may find the following information useful:
+
+1. Study p(x) mod 7 at x=-2, -1, 0, 1, 2.
+2. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.
+3. If a | bc and gcd(a, b)=1, then a | c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the possible values of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7), we need to analyze the polynomial p(x) mod 7 for different values of x.
+
+1. Evaluate p(x) mod 7 at x = -2, -1, 0, 1, 2:
+
+For x = -2:
+p(-2) = a(-2)^4 + b(-2)^3 + c(-2)^2 + d(-2) + e
+       = 16a - 8b + 4c - 2d + e
+
+Since p(-2) is divisible by 7, we have:
+16a - 8b + 4c - 2d + e ≡ 0 (mod 7)
+2a - b + 4c - 2d + e ≡ 0 (mod 7)   (dividing by 8)
+
+For x = -1:
+p(-1) = a(-1)^4 + b(-1)^3 + c(-1)^2 + d(-1) + e
+       = a - b + c - d + e
+
+Since p(-1) is divisible by 7, we have:
+a - b + c - d + e ≡ 0 (mod 7)
+
+For x = 0:
+p(0) = a(0)^4 + b(0)^3 + c(0)^2 + d(0) + e
+      = e
+
+Since p(0) is divisible by 7, we have:
+e ≡ 0 (mod 7)
+
+For x = 1:
+p(1) = a(1)^4 + b(1)^3 + c(1)^2 + d(1) + e
+       = a + b + c + d + e
+
+Since p(1) is divisible by 7, we have:
+a + b + c + d + e ≡ 0 (mod 7)
+
+For x = 2:
+p(2) = a(2)^4 + b(2)^3 + c(2)^2 + d(2) + e
+       = 16a + 8b + 4c + 2d + e
+
+Since p(2) is divisible by 7, we have:
+16a + 8b + 4c + 2d + e ≡ 0 (mod 7)
+2a + b + 4c + 2d + e ≡ 0 (mod 7)   (dividing by 8)
+
+2. Using the information given, we can deduce some relationships between the coefficients:
+
+From the equations obtained above, we have the following congruences:
+
+2a - b + 4c - 2d + e ≡ 0 (mod 7)   (1)
+a - b + c - d + e ≡ 0 (mod 7)   (2)
+e ≡ 0 (mod 7)   (3)
+a + b + c + d + e ≡ 0 (mod 7)   (4)
+2a + b + 4c + 2d + e ≡ 0 (mod 7)   (5)
+
+Adding equations (1) and (5), we get:
+4a + 8c ≡ 0 (mod 7)
+4a ≡ 0 (mod 7)
+a ≡ 0 (mod 7)
+
+Substituting a = 7k into equation (2), we have:
+7k - b + c - d + e ≡ 0 (mod 7)
+-b + c - d + e ≡ 0 (mod 7)
+b - c + d - e ≡ 0 (mod 7)   (6)
+
+Adding equations (4) and (6), we get:
+2b + 2d ≡ 0 (mod 7)
+2b ≡ 0 (mod 7)
+b ≡ 0 (mod 7)
+
+Substituting b = 7m into equation (6), we have:
+7m - c + d - e ≡ 0 (mod 7)
+-c + d - e ≡ 0 (mod 7)
+c - d + e ≡ 0 (mod 7)   (7)
+
+Adding equations (3) and (7), we get:
+2c + 2e ≡ 0 (mod 7)
+2c ≡ 0 (mod 7)
+c ≡ 0 (mod 7)
+
+Substituting c = 7n into equation (7), we have:
+7n - d + e ≡ 0 (mod 7)
+-d + e ≡ 0 (mod 7)
+d - e ≡ 0 (mod 7)   (8)
+
+Adding equations (3) and (8), we get:
+2d + 2e ≡ 0 (mod 7)
+2d ≡ 0 (mod 7)
+d ≡ 0 (mod 7)
+
+Substituting d = 7p into equation (8), we have:
+7p + e ≡ 0 (mod 7)
+e ≡ 0 (mod 7)
+
+3. Now that we have determined the congruences for each coefficient, we can find the possible values of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7):
+
+(a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7)
+= (0 mod 7) + (0 mod 7) + (0 mod 7) + (0 mod 7) + (0 mod 7)
+= 0
+
+Therefore, the possible value of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7) is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible value of (a mod 7) + (b mod 7) + (c mod 7) + (d mod 7) + (e mod 7) is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

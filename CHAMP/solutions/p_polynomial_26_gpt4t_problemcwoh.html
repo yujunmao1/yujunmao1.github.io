@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_26</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -3 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_26']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: If f(x)=x^5-x+a is divisible by x-b for some integer b, what are possible values of a mod 5?
+Step-wise solution:
+1. We can write f(x)=x^5-x+a=(x-b)q(x).
+2. Thus, f(b)=b^5-b+a=0, or b^5-b=-a.
+3. Since 5 is a prime number, we have 5 | b^5-b, which means that a mod 5=0.
+
+Problem: A sequence {a_n} is defined by a_1=1, a_(n+1)=a_n+1/a_n^2. Does a finite limit of a_n exist, and if so, find it.
+Step-wise solution:
+1. We have a_2^3=(1+1)^3=8&gt;3*2.
+2. Assume that a_n^3&gt;3n, then we have a_(n+1)^3=a_n^3+3+3/a_n^3+1/a_n^6&gt;a_n^3+3&gt;3(n+1).
+3. Thus, we have a_n^3&gt;3n for all n, or a_n&gt;(3n)^(1/3).
+4. So a_n increases unboundedly, and thus does not have a finite limit.
+
+Problem: Does the limit exist for the sequence defined as a_n=((2^3-1)/(2^3+1))*((3^3-1)/(3^3+1))*((4^3-1)/(4^3+1))*...*((n^3-1)/(n^3+1)), and if so, find it.
+Step-wise solution:
+1. We have n^3-1=(n-1)(n^2+n+1) and n^3+1=(n+1)(n^2-n+1).
+2. Thus, a_n=PQ where P=(2-1)/(2+1)*(3-1)/(3+1)*(4-1)/(4+1)*...*(n-3)/(n-1)*(n-2)/n*(n-1)/(n+1) and Q=(2^2+2+1)/(2^2-2+1)*(3^2+3+1)/(3^2-3+1)*(4^2+4+1)/(4^2-4+1)*...*(n^2+n+1)/(n^2-n+1).
+3. We have P=2/(n(n+1)).
+4. We also have (k-1)^2+(k-1)+1=k^2-2k+1+k-1+1=k^2-k+1.
+5. Thus, Q=(n^2+n+1)/(2^2-2+1), and a_n=PQ=2(n^2+n+1)/(3n(n+1)).
+6. So lim_(n→∞) a_n=2/3.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For what value(s) of k is x^3+y^3+z^3+kxyz divisible by x+y+z?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine for what value(s) of k the expression \( x^3 + y^3 + z^3 + kxyz \) is divisible by \( x + y + z \), we can use the factorization of the sum of cubes. The sum of cubes can be factored as follows:
+
+\[ a^3 + b^3 + c^3 - 3abc = (a + b + c)(a^2 + b^2 + c^2 - ab - ac - bc) \]
+
+If we want \( x^3 + y^3 + z^3 + kxyz \) to be divisible by \( x + y + z \), we can compare it to the factorization above. We can rewrite the expression as:
+
+\[ x^3 + y^3 + z^3 - 3xyz + (3+k)xyz \]
+
+Now, we want to find the value of k such that:
+
+\[ x^3 + y^3 + z^3 - 3xyz + (3+k)xyz = (x + y + z)(x^2 + y^2 + z^2 - xy - xz - yz) + (3+k)xyz \]
+
+For the expression to be divisible by \( x + y + z \), the term \( (3+k)xyz \) must be a multiple of \( x + y + z \). This is true when \( k = -3 \), because then the term \( (3+k)xyz \) becomes zero, and the remaining expression is exactly the factorization of the sum of cubes.
+
+Therefore, the value of k for which \( x^3 + y^3 + z^3 + kxyz \) is divisible by \( x + y + z \) is \( k = -3 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of k for which \( x^3 + y^3 + z^3 + kxyz \) is divisible by \( x + y + z \) is \( k = -3 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

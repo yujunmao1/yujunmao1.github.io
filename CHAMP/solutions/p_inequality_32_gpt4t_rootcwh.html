@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_32</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x(n)&gt;y(n-1) for all n≥2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_32']
+messages = problem.conversations['GPT-4 Turbo|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x(n)=3^3^3^...^3 with n 3&#x27;s, and y(n)=4^4^4^...^4 with n 4&#x27;s. Among integer values of n≥2, what is the relationship between x(n) and y(n-1): x(n)&gt;y(n-1) for all n≥2, x(n)&lt;y(n-1) for all n≥2, or x(n)&gt;y(n-1) for some n and x(n)&lt;y(n-1) for some other n?
+
+You may find the following information useful:
+
+1. Study the relationship between x(n+1) and 2y(n) given the relationship between x(n) and 2y(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To compare \( x(n) \) and \( y(n-1) \), let&#x27;s first understand the structure of these expressions. \( x(n) \) is a power tower of \( n \) threes, and \( y(n-1) \) is a power tower of \( n-1 \) fours.
+
+The expressions are:
+\[ x(n) = 3^{3^{3^{\cdot^{\cdot^{\cdot^{3}}}}}} \quad \text{(with \( n \) threes)} \]
+\[ y(n-1) = 4^{4^{4^{\cdot^{\cdot^{\cdot^{4}}}}}} \quad \text{(with \( n-1 \) fours)} \]
+
+We are asked to compare \( x(n) \) and \( y(n-1) \) for integer values of \( n \geq 2 \).
+
+Let&#x27;s start by comparing \( x(2) \) and \( y(1) \):
+\[ x(2) = 3^3 = 27 \]
+\[ y(1) = 4 \]
+
+Clearly, \( x(2) &gt; y(1) \).
+
+Now, let&#x27;s consider the relationship between \( x(n+1) \) and \( 2y(n) \). We know that:
+\[ x(n+1) = 3^{x(n)} \]
+\[ 2y(n) = 2 \cdot 4^{y(n-1)} \]
+
+Since \( x(n) &gt; y(n-1) \) for \( n = 2 \), let&#x27;s assume that \( x(n) &gt; y(n-1) \) holds for some \( n \) and see if it holds for \( n+1 \).
+
+If \( x(n) &gt; y(n-1) \), then:
+\[ 3^{x(n)} &gt; 3^{y(n-1)} \]
+Since \( 3^{y(n-1)} &gt; 2 \cdot 4^{y(n-1)} \) for \( y(n-1) \geq 1 \) (because \( 3^2 = 9 &gt; 8 = 2 \cdot 4 \) and the exponential function is increasing), we have:
+\[ 3^{x(n)} &gt; 3^{y(n-1)} &gt; 2 \cdot 4^{y(n-1)} \]
+Thus:
+\[ x(n+1) &gt; 2y(n) \]
+
+Now, since \( 2y(n) = 2 \cdot 4^{y(n-1)} \) is clearly greater than \( 4^{y(n-1)} = y(n) \), we have:
+\[ x(n+1) &gt; 2y(n) &gt; y(n) \]
+
+This shows that if \( x(n) &gt; y(n-1) \) for some \( n \), then \( x(n+1) &gt; y(n) \) also holds.
+
+Since we have established that \( x(2) &gt; y(1) \), by induction, we can conclude that \( x(n) &gt; y(n-1) \) for all integer values of \( n \geq 2 \).
+
+Therefore, the relationship between \( x(n) \) and \( y(n-1) \) is \( x(n) &gt; y(n-1) \) for all \( n \geq 2 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The relationship between \( x(n) \) and \( y(n-1) \) is that \( x(n) &gt; y(n-1) \) for all integer values of \( n \geq 2 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

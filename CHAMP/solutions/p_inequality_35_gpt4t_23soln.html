@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_35</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 900 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_35']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {101, ..., 1000} is 1/(n+1)+1/(n+2)+...+1/(2n)&lt;3/4?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have 2(1/n+1/(n+1)+1/(n+2)+...+1/(2n))=(1/n+1/(2n))+(1/(n+1)+1/(2n-1))+(1/(n+2)+1/(2n-2))+...+(1/(2n-1)+1/(n+1))+(1/(2n)+1/n).
+2. We have 1/(n+i)+1/(2n-i)=3n/((n+i)(2n-i))=3n/((n+i)(2n-i))=3n/(2n^2+ni-i^2)≤3n/(2n^2) since i≤n.
+3. Thus, 2(1/n+1/(n+1)+1/(n+2)+...+1/(2n))≤3n/(2n^2)*(n+1)=3/2+3/(2n).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s continue from the partial solution provided. We have the inequality:
+
+\[ 2\left(\frac{1}{n} + \frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n}\right) \leq \frac{3}{2} + \frac{3}{2n} \]
+
+We want to find for how many values of \( n \) in the set \( \{101, \ldots, 1000\} \) the following inequality holds:
+
+\[ \frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n} &lt; \frac{3}{4} \]
+
+Multiplying both sides of the inequality by 2, we get:
+
+\[ 2\left(\frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n}\right) &lt; \frac{3}{2} \]
+
+Now, we can use the inequality from the partial solution:
+
+\[ 2\left(\frac{1}{n} + \frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n}\right) \leq \frac{3}{2} + \frac{3}{2n} \]
+
+Since we want the sum without the \( \frac{1}{n} \) term to be less than \( \frac{3}{4} \), we can subtract \( \frac{1}{n} \) from both sides of the inequality:
+
+\[ 2\left(\frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n}\right) \leq \frac{3}{2} + \frac{3}{2n} - \frac{2}{n} \]
+
+Simplifying the right side, we get:
+
+\[ 2\left(\frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n}\right) \leq \frac{3}{2} - \frac{1}{n} \]
+
+Now, we want the left side to be strictly less than \( \frac{3}{2} \), so we need:
+
+\[ \frac{3}{2} - \frac{1}{n} &lt; \frac{3}{2} \]
+
+This inequality is true for all \( n &gt; 0 \). However, we need to ensure that the original sum without the \( \frac{1}{n} \) term is strictly less than \( \frac{3}{4} \), not \( \frac{3}{2} \). Therefore, we need:
+
+\[ \frac{3}{2} - \frac{1}{n} &lt; \frac{3}{2} \Rightarrow \frac{3}{2n} &lt; \frac{3}{4} \Rightarrow \frac{1}{n} &lt; \frac{1}{4} \Rightarrow n &gt; 4 \]
+
+Since all \( n \) in the set \( \{101, \ldots, 1000\} \) are greater than 4, the inequality \( \frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n} &lt; \frac{3}{4} \) holds for all \( n \) in the set. Therefore, the number of values of \( n \) for which the inequality holds is the number of elements in the set \( \{101, \ldots, 1000\} \), which is \( 1000 - 101 + 1 = 900 \).
+
+So, there are 900 values of \( n \) for which the given inequality holds.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 900 values of \( n \) in the set \( \{101, \ldots, 1000\} \) for which \( \frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n} &lt; \frac{3}{4} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

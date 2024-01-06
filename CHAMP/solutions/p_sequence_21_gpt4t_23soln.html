@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_21</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2500</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_21']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence a_0, a_1, a_2, ... is such that, for all nonnegative m≥n, we have a_(m+n)+a_(m−n)=(a_(2m)+a_(2n))/2. If a_1=1, find a_50.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. With m=n, we have a_(2n)+a_0=(a_(2n)+a_(2n))/2.
+2. So a_0=0.
+3. With n=0, we have a_m+a_m=(a_(2m)+a_0)/2.
+4. So a_(2m)=4a_m.
+5. With m=n+2, we have a_(2n+2)+a_2=(a_(2n+4)+a_(2n))/2.
+6. Plugging in a_(2m)=4a_m, we have 4(a_(n+1)+a_1)=4*(a_(n+2)+a_n)/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s go through the steps provided in the partial solution and then continue to solve for a_50.
+
+1. With m=n, we have a_(2n) + a_0 = (a_(2n) + a_(2n))/2.
+2. Simplifying the right side, we get a_(2n) + a_0 = a_(2n)/2 + a_(2n)/2 = a_(2n).
+3. Subtracting a_(2n) from both sides, we get a_0 = 0.
+
+Now we know that a_0 = 0.
+
+3. With n=0, we have a_m + a_m = (a_(2m) + a_0)/2.
+4. Simplifying the left side, we get 2a_m = (a_(2m) + 0)/2.
+5. Multiplying both sides by 2, we get 4a_m = a_(2m).
+
+Now we know that a_(2m) = 4a_m.
+
+5. With m=n+2, we have a_(2n+2) + a_2 = (a_(2n+4) + a_(2n))/2.
+6. Plugging in a_(2m) = 4a_m, we have 4(a_(n+1) + a_1) = 4*(a_(n+2) + a_n)/2.
+
+Let&#x27;s correct the last step since it seems to be a bit off:
+
+5. With m=n+2, we have a_(2n+2) + a_2 = (a_(2n+4) + a_(2n))/2.
+6. Plugging in a_(2m) = 4a_m, we have a_(2n+2) + a_2 = (4a_(n+2) + 4a_n)/2.
+7. Simplifying the right side, we get a_(2n+2) + a_2 = 2a_(n+2) + 2a_n.
+8. Subtracting 2a_n from both sides, we get a_(2n+2) - 2a_n + a_2 = 2a_(n+2).
+
+Now, let&#x27;s use the fact that a_1 = 1 to find a_2 using the relation with m=1 and n=0:
+
+a_(1+0) + a_(1-0) = (a_(2*1) + a_(2*0))/2
+2a_1 = a_2/2
+2*1 = a_2/2
+a_2 = 4
+
+Now we have a_2 = 4. Let&#x27;s find a_3 using the relation with m=2 and n=1:
+
+a_(2+1) + a_(2-1) = (a_(2*2) + a_(2*1))/2
+a_3 + a_1 = (a_4 + a_2)/2
+a_3 + 1 = (4a_2 + 4a_1)/2
+a_3 + 1 = (4*4 + 4*1)/2
+a_3 + 1 = (16 + 4)/2
+a_3 + 1 = 20/2
+a_3 + 1 = 10
+a_3 = 9
+
+Now we have a_3 = 9. To find a_50, we need to find a pattern or a direct way to calculate it. Since we have a relation for even indices (a_(2m) = 4a_m), we can try to express a_50 in terms of a_25:
+
+a_50 = 4a_25
+
+Now we need to find a_25. We can use the relation with m=13 and n=12 (since 13+12=25 and 13-12=1):
+
+a_(13+12) + a_(13-12) = (a_(2*13) + a_(2*12))/2
+a_25 + a_1 = (a_26 + a_24)/2
+a_25 + 1 = (4a_13 + 4a_12)/2
+a_25 + 1 = 2a_13 + 2a_12
+
+We need to find a_13 and a_12. We can continue this process, but it becomes clear that we need a more direct approach. The given relation is recursive and does not easily yield a closed-form expression for a_n. Without additional information or a pattern, we cannot directly compute a_50 from the given information. We would need to compute each term one by one, which is not feasible within this format.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The given recursive relation does not easily yield a closed-form expression for a_n, and without additional information or a pattern, we cannot directly compute a_50 from the given information.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_25</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 3 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_25']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive integer n, if 2^n and 5^n start with the same digit, what are possible values of this digit?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let 2^n be an (r+1)-digit number and 5^n be an (s+1)-digit number, both starting with digit d.
+2. Thus, we have d*10^r&lt;2^n&lt;(d+1)*10^r and d*10^s&lt;5^n&lt;(d+1)*10^s.
+3. Multiplying the two inequalities we get d^2*10^(r+s)&lt;10^n&lt;(d+1)^2*10^(r+s).
+4. So d^2&lt;10^(n-r-s)&lt;(d+1)^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the possible values of the digit d such that both 2^n and 5^n start with the same digit d. We can use the partial solution provided to guide us.
+
+Given that 2^n and 5^n start with the same digit d, we can say that:
+
+d * 10^r &lt; 2^n &lt; (d + 1) * 10^r
+d * 10^s &lt; 5^n &lt; (d + 1) * 10^s
+
+Multiplying these inequalities, we get:
+
+d^2 * 10^(r+s) &lt; 2^n * 5^n &lt; (d + 1)^2 * 10^(r+s)
+
+Since 2^n * 5^n = 10^n, we can simplify the inequality to:
+
+d^2 * 10^(r+s) &lt; 10^n &lt; (d + 1)^2 * 10^(r+s)
+
+Now, we can divide all parts of the inequality by 10^(r+s):
+
+d^2 &lt; 10^(n - r - s) &lt; (d + 1)^2
+
+Since 10^(n - r - s) is a power of 10, it must be equal to 10^k for some non-negative integer k. This means that 10^k is a number that starts with the digit d and has exactly one non-zero digit followed by k zeros.
+
+Now, we need to find the values of d for which there exists an integer k such that:
+
+d^2 &lt; 10^k &lt; (d + 1)^2
+
+Let&#x27;s consider the squares of the digits 1 through 9:
+
+1^2 = 1
+2^2 = 4
+3^2 = 9
+4^2 = 16
+5^2 = 25
+6^2 = 36
+7^2 = 49
+8^2 = 64
+9^2 = 81
+
+We are looking for a power of 10 that falls between d^2 and (d + 1)^2. Since 10^k is a power of 10, it can only be 1, 10, 100, 1000, etc. We can see that the only squares that are immediately followed by a power of 10 are:
+
+1^2 = 1 &lt; 10^1 = 10 &lt; 2^2 = 4
+3^2 = 9 &lt; 10^1 = 10 &lt; 4^2 = 16
+
+No other squares of digits have a power of 10 between them. Therefore, the only possible values of d for which 2^n and 5^n start with the same digit are 1 and 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of the digit d such that 2^n and 5^n start with the same digit are 1 and 3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

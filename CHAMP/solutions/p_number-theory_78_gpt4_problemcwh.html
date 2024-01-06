@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_78</td>
+            <td>GPT-4</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_78']
+messages = problem.conversations['GPT-4|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Find all possible values of p^2 mod 24 for prime number p.
+Step-wise solution:
+1. For p≤3, we have 2^2 mod 24=4 and 3^2 mod 24=9.
+2. For p&gt;3, we have p=6n±1.
+3. So (6n±1)^2=36n^2±12n+1=12n(3n±1)+1.
+4. Either n or 3n±1 is even, so 12n(3n±1) mod 24=0.
+5. Thus, (6n±1)^2 mod 24=1.
+6. So we have all possible values of p^2 mod 24 being 1, 4, and 9.
+
+Problem: Factorize x^9+x^4-x-1 into terms of integer coefficients.
+Step-wise solution:
+1. We have x^9+x^4-x-1=(x^9-x)+(x^4-1)=x(x^8-1)+(x^4-1)=x(x^4+1)(x^4-1)+(x^4-1)=(x^4-1)(x^5+x+1)=(x+1)(x-1)(x^2+1)(x^5+x+1).
+2. To factorize x^5+x+1, we have x^5+x+1=(x^5-x^2)+(x^2+x+1)=x^2*(x^3-1)+(x^2+x+1)=x^2*(x-1)(x^2+x+1)+(x^2+x+1)=(x^3-x^2+1)(x^2+x+1).
+3. Thus, x^9+x^4-x-1=(x+1)(x-1)(x^2+1)(x^3-x^2+1)(x^2+x+1).
+
+Problem: Find all possible values of n^5-5*n^3+4n mod 120 for integer n.
+Step-wise solution:
+1. We have n^5-5n^3+4n=n(n^4-5n^2+4)=n(n^2-1)(n^2-4)=(n-2)(n-1)n(n+1)(n+2).
+2. Since the expression is a product of five consecutive integers, four of the five terms must be a multiple of 2, 3, 4, and 5 respectively.
+3. Since 120=5!, we have n^5-5*n^3+4n mod 120=0.
+
+Problem: Find all integer solutions to the equation 19x^3-84y^2=1984.
+Step-wise solution:
+1. We can rearrange the equation as 19(x^3-100)=84(y^2+1).
+2. We have 7 | 84 so need 19(x^3-100) mod 7=0.
+3. Since gcd(7, 19)=1, we need 7 | x^3-100, which means x^3 mod 7=2.
+4. However, for integer x (modulo 7 being 1, 2, ..., 6), x^3 mod 7∈{1, 6}.
+5. Thus, the equation has no integer solution.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of p^2-q^2 mod 24 for prime numbers p and q greater than 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. For prime numbers p and q greater than 3, we have p=6n±1 and q=6m±1.
+2. So, p^2-q^2=(6n±1)^2-(6m±1)^2=36n^2±12n+1-(36m^2±12m+1).
+3. This simplifies to 36n^2-36m^2±12n-12m=36(n^2-m^2)±12(n-m).
+4. Since either n or m is even, 36(n^2-m^2) mod 24=0 and 12(n-m) mod 24=0.
+5. Thus, p^2-q^2 mod 24=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible value of p^2-q^2 mod 24 for prime numbers p and q greater than 3 is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

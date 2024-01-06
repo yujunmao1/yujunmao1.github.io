@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_34</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n-k+3)*2^(n-k-2)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_34']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all sequences of positive integer numbers have sum n, for integer k&lt;n-1, how many times does the number k appear, as an expression of n and k?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Consider a row of n points, with n-1 gaps.
+2. For each of the n-1 gaps, we can choose to insert a divider or not, and we count the number of points in each group, which forms a sequence (a_1, ..., a_(m+1)) for m dividers that sum up to n.
+3. Thus, the number of times that k appears among all the sequences is the number of times that a group of k points appear among all the divider configurations.
+4. To get this number, we can find a k-point group and isolate it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of times the number k appears in all sequences of positive integers that sum to n. We can use the stars and bars method to approach this problem.
+
+Let&#x27;s follow the partial solution provided:
+
+1. We have a row of n points, with n-1 gaps between them.
+
+2. We can insert a divider in any of the n-1 gaps to create a sequence of positive integers that sum to n.
+
+3. We want to count the number of times a group of k points appears among all possible divider configurations.
+
+4. To count the number of times a group of k points appears, we can isolate a group of k points and then count the number of ways to arrange the remaining points with dividers.
+
+Let&#x27;s isolate a group of k points. We have n-k points left to distribute among the remaining groups. We need to place dividers to create these groups. Since we have isolated a group of k points, we have n-k-1 gaps where we can place dividers.
+
+Now, we need to consider that the group of k points can be at the beginning, at the end, or somewhere in the middle of the sequence. If the group of k points is at the beginning or the end, we have n-k points and n-k-1 gaps to place dividers, which gives us:
+
+C(n-k-1, m) = C(n-k-1, n-k-1-m)
+
+where m is the number of dividers we choose to place, and C(n, k) is the binomial coefficient representing the number of combinations of n things taken k at a time.
+
+If the group of k points is in the middle, we have to place at least one divider on each side of the group to separate it from the other groups. This leaves us with n-k-2 gaps to place the remaining m-2 dividers. So, we have:
+
+C(n-k-2, m-2) = C(n-k-2, n-k-m)
+
+Now, we need to sum these possibilities. However, we must also consider that the group of k points can appear multiple times in a sequence. To count each appearance only once, we need to divide by the number of times the group of k points appears in the sequence.
+
+The total number of sequences of positive integers that sum to n is given by the number of ways to place m dividers in n-1 gaps, which is:
+
+C(n-1, m) = C(n-1, n-1-m)
+
+Now, let&#x27;s put it all together. The number of times k appears in all sequences is the sum of the number of times it appears at the beginning or end, plus the number of times it appears in the middle, divided by the number of times it appears in the sequence:
+
+Number of times k appears = 2 * C(n-k-1, m) + C(n-k-2, m-2)
+
+However, we need to consider all possible values of m, which range from 1 to n-k-1 (since we need at least one number other than k to make up the sum n). So we need to sum over all possible values of m:
+
+Number of times k appears = 2 * Σ[C(n-k-1, m)] + Σ[C(n-k-2, m-2)] for m = 1 to n-k-1
+
+This is a general expression for the number of times k appears in all sequences of positive integers that sum to n. However, it is not yet simplified, and we need to be careful with the ranges of summation and the fact that we cannot have negative binomial coefficients.
+
+Let&#x27;s correct the approach:
+
+We have n-k points left to distribute, and we need to place dividers to create sequences. If we isolate a group of k points, we have n-k points left to distribute, and we can place dividers in n-k-1 possible positions.
+
+The number of ways to place dividers in n-k-1 positions to create sequences of positive integers is given by the binomial coefficient C(n-k-1, m), where m is the number of dividers. Since we can have from 0 to n-k-1 dividers, we sum over all possible values of m:
+
+Number of times k appears = Σ[C(n-k-1, m)] for m = 0 to n-k-1
+
+This is equivalent to the number of ways to distribute n-k indistinguishable items into m+1 distinguishable bins, which is the same as the number of ways to place m dividers in n-k-1 positions.
+
+Using the identity that the sum of binomial coefficients over m is equal to 2 raised to the power of the number of positions, we get:
+
+Number of times k appears = 2^(n-k-1)
+
+This is the final answer. The number k appears 2^(n-k-1) times among all sequences of positive integers that sum to n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number k appears \(2^{n-k-1}\) times among all sequences of positive integers that sum to n.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

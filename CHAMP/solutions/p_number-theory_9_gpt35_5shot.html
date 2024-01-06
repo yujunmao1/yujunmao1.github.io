@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_9</td>
+            <td>GPT-3.5</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No positive integer solutions</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_9']
+messages = problem.conversations['GPT-3.5|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let A=a_1/(s-a_1)+a_1/(s-a_n)+...+a_n/(s-a_n).
+2. For two sequences (a_1, ..., a_n) and (1/(s-a_1), ..., 1/(s-a_n)), we can see that they are sorted in the same way since a_i≥a_j means 1/(s-a_i)≥1/(s-a_j).
+3. Thus, A achieves the maximum value among all ways to define sum of products of paired elements from the two sequences.
+4. Let B_k=a_1/(s-a_(1+k))+a_2/(s-a_(2+k))+...+a_n/(s-a_(n+k)) for k=1, ..., n-1.
+5. Thus, for k≠0, B_k is the sum of products of paired elements that are not necessarily sorted in the same way.
+6. Thus, A≥B_k and (n-1)A≥B_1+B_2+...+B_(n-1).
+7. In B_1+B_2+...+B_(n-1), we have each pair of a_i/(s-a_j) appearing exactly once for i≠j, and we have sum_(i≠j) a_i/(s-a_j)=1.
+8. Thus, B_1+B_2+...+B_(n-1)=n, so A≥n/(n-1).
+9. We have A=n/(n-1) when a_i=s/n for all i.
+10. So the smallest value is n/(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let P(x) be a polynomial of degree n such that P(k)=k/(k+1) for k=0, 1, ..., n. Find P(n+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let Q(x)=(x+1)P(x)-x and we have Q(x)=0 for x=0, 1, ..., n.
+2. Thus, Q(x)=a*x*(x-1)*(x-2)*...*(x-n) for some a.
+3. To find the value of a, we have Q(-1)=a*(-1)*(-2)*...*(-(n+1))=(-1)^(n+1)*(n+1)!*a=1.
+4. Thus, Q(x)=(-1)^(n+1)*x*(x-1)*...*(x-n)/(n+1)!.
+5. So we have Q(n+1)=(-1)^(n+1) and P(n+1)=((-1)^(n+1)+n+1)/(n+2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For x_1, x_2, ..., x_n≥0, with x_1+x_2+...+x_n=1, what is the minimum value of x_1^2+x_2^2+...+x_n^2, as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let a_1=a_2=...a_n=1 and b_i=x_i.
+2. Thus, we have a_1*b_1+a_2*b_2+...+a_n*b_n≤sqrt(a_1^2+a_2^2+...+a_n^2)*sqrt(b_1^2+b_2^2+...+b_n^2).
+3. Plugging in the values, we get 1≤sqrt(n)*sqrt(x_1^2+x_2^2+...+x_n^2).
+4. Thus, sqrt(x_1^2+x_2^2+...+x_n^2)≥1/sqrt(n), and x_1^2+x_2^2+...+x_n^2≥1/n.
+5. So the smallest value is 1/n, which can be achieved at x_1=x_2=...=x_n=1/n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many real-valued zeros does the polynomial 1+x+x^2/2!+x^3/3!+...+x^(2n)/(2n)! have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let the polynomial be f(x), so we have f&#x27;(x)=1+x+x^2/2!+...+x^(2n-1)/(2n-1)!.
+2. So we have f&#x27;(x)=f(x)-x^(2n)/(2n)!.
+3. Since f(x) is an even-degree polynomial with a positive leading coefficient, it has a global minimum with f&#x27;(x)=0.
+4. Thus, at this location, we have f(x)=x^(2n)/(2n)!, which must be positive for any x≠0 and x=0 is not a valid solution.
+5. Because the minimum of this function is positive, the function has no real-valued zeros.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of strings consisting of 5 digits of 1, 2 and 3 where no two 1s are neighbors.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let f(n) be the number of length-n strings that end with 1 and g(n) be the number of length-n strings that end with either 2 or 3.
+2. To construct a length-(n+1) string that ends with 1, we have to append 1 to a length-n string that ends with 2 or 3, so f(n+1)=g(n).
+3. To construct a length-(n+1) string that ends with 2 or 3, we can append 2 or 3 to a length-n string that ends with anything, so g(n+1)=2g(n)+2f(n).
+4. Thus, starting from f(1)=1, g(1)=2, we have f(2)=g(1)=2, f(3)=g(2)=6, f(4)=g(3)=16, f(5)=g(4)=44, f(6)=g(5)=120.
+5. So the number of such strings is f(5)+g(5)=164.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation x^2+y^2+z^2=2xyz.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. Assume without loss of generality that x≤y≤z.
+2. Rewrite the equation as x^2+y^2+z^2-2xyz=0.
+3. Rearrange the equation as x^2-2xyz+y^2+z^2=0.
+4. Consider this equation as a quadratic equation in x, with y and z as constants.
+5. The discriminant of this quadratic equation is Δ=4(y^2+z^2-1).
+6. For the equation to have real solutions, the discriminant must be non-negative, so Δ≥0.
+7. Simplifying the inequality, we have y^2+z^2≥1.
+8. Since y and z are positive integers, the minimum value of y^2+z^2 is 1+1=2.
+9. Thus, we have y^2+z^2≥2.
+10. From the inequality, we can conclude that y^2+z^2-1≥1, which means Δ≥4.
+11. Therefore, we have 4(y^2+z^2-1)≥4, which simplifies to y^2+z^2-1≥1.
+12. From this inequality, we can conclude that y^2+z^2≥2.
+13. Combining this inequality with the previous inequality, we have y^2+z^2=2.
+14. The only positive integer solutions to this equation are (y,z)=(1,1).
+15. Substituting these values back into the original equation, we have x^2+1+1=2x.
+16. Simplifying, we have x^2-2x+2=0.
+17. This quadratic equation has no real solutions.
+18. Therefore, the equation x^2+y^2+z^2=2xyz has no positive integer solutions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The equation x^2+y^2+z^2=2xyz has no positive integer solutions.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

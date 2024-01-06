@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_10</td>
+            <td>GPT-4 Turbo</td>
+            <td>Name w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_10']
+messages = problem.conversations['GPT-4 Turbo|Name w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Please explain the following concept: rule of product.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The rule of product, also known as the multiplication principle, is a fundamental concept in combinatorics and probability theory. It is used to determine the total number of possible outcomes when there are multiple stages or events, and each stage or event is independent of the others.
+
+The rule states that if one event can occur in \( m \) ways and a second event can occur in \( n \) ways, then the total number of ways both events can occur together is \( m \times n \). This can be extended to any number of events: if there are \( k \) events, with the first event having \( m_1 \) outcomes, the second event having \( m_2 \) outcomes, ..., and the \( k \)-th event having \( m_k \) outcomes, then the total number of outcomes for all \( k \) events is the product \( m_1 \times m_2 \times \cdots \times m_k \).
+
+Here&#x27;s an example to illustrate the rule of product:
+
+Suppose you are choosing an outfit consisting of a shirt and a pair of pants. If you have 5 different shirts and 3 different pairs of pants, the rule of product tells us that there are \( 5 \times 3 = 15 \) possible outfits you can create.
+
+The rule of product applies only when the choices are independent, meaning the choice of one item does not affect the choices of the others. If the choices are not independent, then the rule of product cannot be directly applied, and other combinatorial methods must be used to find the total number of outcomes.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many sequences of positive integer numbers have sum n, as an expression of n?
+
+Besides the concept above, you may also find the following information useful:
+
+1. Consider a row of n points, with n-1 gaps.
+2. Insert dividers into the gaps, and consider the correspondance between a sequence with a divider insertion configuration.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use a combinatorial method known as &quot;stars and bars&quot; or &quot;balls and urns.&quot; The idea is to represent the sequence of positive integers that sum to \( n \) as a configuration of stars (representing the units) and bars (representing the dividers between different numbers in the sequence).
+
+For example, if \( n = 5 \), a sequence like \( (1, 1, 3) \) can be represented as:
+```
+* | * | * * *
+```
+Here, we have 5 stars and 2 bars (since the sequence has 3 numbers, there are 2 dividers).
+
+To generalize, if we have a sum of \( n \), we have \( n \) stars. If we want to split this sum into \( k \) positive integers, we need \( k - 1 \) bars to create \( k \) separate groups. However, since the problem does not specify the number of integers in the sequence, \( k \) can range from 1 to \( n \), meaning we can have from 0 to \( n - 1 \) bars.
+
+The correspondence between the sequence and the divider insertion configuration is as follows: each gap between the stars can either have a bar or not. Since there are \( n - 1 \) gaps, and we are free to choose any number of bars to insert (from 0 to \( n - 1 \)), we are essentially choosing a subset of the gaps to insert bars.
+
+The number of ways to insert \( k - 1 \) bars into \( n - 1 \) gaps is given by the binomial coefficient \( \binom{n-1}{k-1} \). However, since \( k \) can range from 1 to \( n \), we need to sum over all possible values of \( k \):
+
+\[
+\sum_{k=1}^{n} \binom{n-1}{k-1}
+\]
+
+Notice that this sum is actually the sum of all the entries in the \( (n-1) \)-th row of Pascal&#x27;s triangle, which is known to be \( 2^{n-1} \). Therefore, the total number of sequences of positive integers that sum to \( n \) is \( 2^{n-1} \).
+
+So, the final answer, expressed as a function of \( n \), is:
+
+\[
+2^{n-1}
+\]</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences of positive integer numbers that sum to \( n \) is \( 2^{n-1} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

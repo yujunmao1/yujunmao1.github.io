@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_17</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_17']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x) be a polynomial of degree n and f(x)=x has no real number solutions. What is the maximum number of real number solutions does f(f(x))=x have?
+
+You may find the following information useful:
+
+1. A polynomial f(x) of degree 2n is reciprocal if the coefficients of x^i and x^(2n-i) are the same for all i=0, 1, ..., n-1, and such a polynomial can be written in the form of f(x)=x^n*g(z) with z=x+1/x and g(z) is a polynomial in z of degree n.
+2. Study the inequality relationship of x, f(x), f(f(x)).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given that \( f(x) \) is a polynomial of degree \( n \) and \( f(x) = x \) has no real solutions, we want to find the maximum number of real solutions for \( f(f(x)) = x \).
+
+First, let&#x27;s consider the relationship between \( x \), \( f(x) \), and \( f(f(x)) \). Since \( f(x) \neq x \) for any real \( x \), we have two possibilities for each real \( x \):
+
+1. \( f(x) &gt; x \)
+2. \( f(x) &lt; x \)
+
+Now, let&#x27;s consider \( f(f(x)) \). If \( f(x) &gt; x \), then for \( f(f(x)) \) to equal \( x \), \( f(x) \) must be mapped to a value less than itself by \( f \). Similarly, if \( f(x) &lt; x \), then \( f(x) \) must be mapped to a value greater than itself by \( f \) for \( f(f(x)) \) to equal \( x \).
+
+Since \( f \) is a continuous function (being a polynomial), by the Intermediate Value Theorem, for each interval where \( f(x) \) is either strictly above or strictly below the line \( y = x \), there must be at least one point where \( f(f(x)) = x \) due to the continuous mapping of values from above to below the line \( y = x \) or vice versa.
+
+Now, let&#x27;s consider the degree of \( f(f(x)) \). If \( f(x) \) is a polynomial of degree \( n \), then \( f(f(x)) \) is a polynomial of degree \( n^n \). This is because when you substitute a polynomial of degree \( n \) into itself, the resulting degree is \( n \) raised to the power of the degree of the polynomial.
+
+Since \( f(f(x)) \) is a polynomial of degree \( n^n \), it can have at most \( n^n \) real roots by the Fundamental Theorem of Algebra. However, this is the theoretical maximum, and the actual number of real roots could be less due to the nature of the polynomial and the fact that complex roots come in conjugate pairs.
+
+To find the maximum number of real solutions, we need to consider the behavior of \( f(x) \) and how it maps to \( f(f(x)) \). Since \( f(x) \) has no fixed points (points where \( f(x) = x \)), it must cross the line \( y = x \) an even number of times to ensure that it starts and ends on opposite sides of the line \( y = x \) as \( x \) goes from \( -\infty \) to \( +\infty \).
+
+Each time \( f(x) \) crosses the line \( y = x \), there is a potential for a change in the sign of \( f(x) - x \), which could lead to a real solution for \( f(f(x)) = x \). Since \( f(x) \) is of degree \( n \), it can cross the line \( y = x \) at most \( n \) times. Therefore, there can be at most \( n \) intervals where \( f(x) \) is either strictly above or strictly below the line \( y = x \).
+
+For each of these intervals, there is at least one real solution for \( f(f(x)) = x \), giving us a maximum of \( n \) real solutions for \( f(f(x)) = x \).
+
+In conclusion, the maximum number of real solutions that \( f(f(x)) = x \) can have is \( n \), given that \( f(x) \) is a polynomial of degree \( n \) with no real fixed points.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum number of real solutions that \( f(f(x)) = x \) can have is \( n \), where \( n \) is the degree of the polynomial \( f(x) \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

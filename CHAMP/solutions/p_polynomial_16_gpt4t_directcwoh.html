@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_16</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> k-2 (i.e., all of them)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_16']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial f(x) has integer coefficients and there exists an integer k such that f(k), f(k+1), f(k+2) are all divisible by 3. For integer m in {k+3, k+4, ..., 2k}, at least how many of them have f(m) divisible by 3, as an expression of k?
+
+You may find the following information useful:
+
+1. For integer a, b, n, a - b | a^n - b^n.
+2. If a | b and b | c, then a | c.
+3. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote f(x) as a polynomial with integer coefficients. We are given that f(k), f(k+1), and f(k+2) are all divisible by 3. This means that:
+
+f(k) ≡ 0 (mod 3)
+f(k+1) ≡ 0 (mod 3)
+f(k+2) ≡ 0 (mod 3)
+
+Now, let&#x27;s consider the polynomial f(x) - f(k). Since f(k) is divisible by 3, f(x) - f(k) will have the same divisibility by 3 as f(x) for any integer x. This means that:
+
+f(k) - f(k) ≡ 0 (mod 3)
+f(k+1) - f(k) ≡ 0 (mod 3)
+f(k+2) - f(k) ≡ 0 (mod 3)
+
+Using the fact that a - b | a^n - b^n, we can say that:
+
+k - (k+1) | f(k) - f(k+1)
+k - (k+2) | f(k) - f(k+2)
+
+This implies that:
+
+-1 | f(k) - f(k+1)
+-2 | f(k) - f(k+2)
+
+Since -1 and -2 divide the differences, we can say that:
+
+f(k+1) ≡ f(k) (mod 3)
+f(k+2) ≡ f(k) (mod 3)
+
+Now, let&#x27;s consider the values of f(m) for m in {k+3, k+4, ..., 2k}. We can write m as k + i for some integer i where 3 ≤ i ≤ k.
+
+Using the property that if d | a and d | b, then d | ax+by, we can say that since 3 divides both f(k) and f(k+1), it will also divide any linear combination of these values. Therefore, for any integer i, we can express f(k+i) as a linear combination of f(k), f(k+1), and f(k+2), which are all divisible by 3.
+
+Now, let&#x27;s consider the sequence of values f(k), f(k+1), f(k+2), ..., f(2k). We know that every third value is divisible by 3 because of the periodicity of the polynomial modulo 3. Since we have k+1 values in total (from k to 2k inclusive), and we know that the first three are divisible by 3, we can count the number of multiples of 3 within this range.
+
+The number of multiples of 3 in a sequence starting with a multiple of 3 and having a length of k+1 is at least ⌊(k+1)/3⌋, where ⌊x⌋ denotes the floor function, which gives the greatest integer less than or equal to x.
+
+Therefore, at least ⌊(k+1)/3⌋ of the values f(m) for m in {k+3, k+4, ..., 2k} are divisible by 3. This is the expression of k that represents the minimum number of values f(m) divisible by 3 in the given range.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At least ⌊(k+1)/3⌋ of the values f(m) for m in {k+3, k+4, ..., 2k} are divisible by 3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

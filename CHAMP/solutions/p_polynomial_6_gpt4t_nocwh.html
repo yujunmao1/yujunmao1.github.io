@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_6</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x=1, y=2) and (x=2, y=1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_6']
+messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equations x^5+y^5=33, x+y=3.
+
+You may find the following information useful:
+
+1. Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the equations:
+
+1. \( x^5 + y^5 = 33 \)
+2. \( x + y = 3 \)
+
+We are also given a recursive formula for \( s_n \), which is the sum of the \( n \)-th powers of \( x \) and \( y \):
+
+\( s_n = u \cdot s_{n-1} - v \cdot s_{n-2} \)
+
+where \( u = x + y \) and \( v = xy \).
+
+From equation 2, we know that \( u = 3 \). We can use this to find \( s_1 \), \( s_2 \), and so on, until we reach \( s_5 \), which we know must equal 33.
+
+First, let&#x27;s find \( s_1 \) and \( s_2 \):
+
+\( s_1 = x + y = u = 3 \)
+
+To find \( s_2 \), we need to know \( v \), which is \( xy \). We can find \( v \) by using the fact that \( (x + y)^2 = x^2 + 2xy + y^2 \). Since \( x + y = 3 \), we have:
+
+\( 3^2 = x^2 + 2xy + y^2 \)
+\( 9 = s_2 + 2v \)
+
+We don&#x27;t know \( s_2 \) yet, but we can express it in terms of \( u \) and \( v \) using the recursive formula:
+
+\( s_2 = u \cdot s_1 - v \cdot s_0 \)
+
+Since \( s_0 = x^0 + y^0 = 1 + 1 = 2 \), we have:
+
+\( s_2 = 3 \cdot 3 - v \cdot 2 \)
+\( s_2 = 9 - 2v \)
+
+Now we can substitute \( s_2 \) into the equation \( 9 = s_2 + 2v \):
+
+\( 9 = (9 - 2v) + 2v \)
+\( 9 = 9 \)
+
+This doesn&#x27;t give us any information about \( v \), so we need to find another way to determine \( v \). We can use the fact that \( x \) and \( y \) are the roots of the quadratic equation \( t^2 - ut + v = 0 \). Since \( u = 3 \), the equation becomes:
+
+\( t^2 - 3t + v = 0 \)
+
+The sum of the roots is \( u = 3 \), and the product of the roots is \( v = xy \). We can find \( v \) by using the fact that \( x \) and \( y \) are integers and their sum is 3. The only integer pairs that sum to 3 are (2,1), (1,2), (3,0), (0,3), (-1,4), and (4,-1). We can test these pairs to find the one that satisfies \( x^5 + y^5 = 33 \).
+
+Let&#x27;s test the pairs:
+
+For (2,1):
+\( x^5 + y^5 = 2^5 + 1^5 = 32 + 1 = 33 \)
+\( xy = 2 \cdot 1 = 2 \)
+
+For (1,2):
+\( x^5 + y^5 = 1^5 + 2^5 = 1 + 32 = 33 \)
+\( xy = 1 \cdot 2 = 2 \)
+
+For (3,0):
+\( x^5 + y^5 = 3^5 + 0^5 = 243 + 0 = 243 \)
+\( xy = 3 \cdot 0 = 0 \)
+
+For (0,3):
+\( x^5 + y^5 = 0^5 + 3^5 = 0 + 243 = 243 \)
+\( xy = 0 \cdot 3 = 0 \)
+
+For (-1,4):
+\( x^5 + y^5 = (-1)^5 + 4^5 = -1 + 1024 = 1023 \)
+\( xy = (-1) \cdot 4 = -4 \)
+
+For (4,-1):
+\( x^5 + y^5 = 4^5 + (-1)^5 = 1024 - 1 = 1023 \)
+\( xy = 4 \cdot (-1) = -4 \)
+
+The only pairs that satisfy both \( x^5 + y^5 = 33 \) and \( x + y = 3 \) are (2,1) and (1,2). Therefore, the integer solutions to the given equations are \( x = 2, y = 1 \) and \( x = 1, y = 2 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer solutions to the equations \(x^5 + y^5 = 33\) and \(x + y = 3\) are \( (x, y) = (2, 1) \) and \( (x, y) = (1, 2) \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

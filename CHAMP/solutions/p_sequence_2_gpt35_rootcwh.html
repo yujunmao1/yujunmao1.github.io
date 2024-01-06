@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_2</td>
+            <td>GPT-3.5</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Always greater than 20</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_2']
+messages = problem.conversations['GPT-3.5|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let {x_n}, {y_n}, {z_n} be three sequences with positive initial terms x_1, y_1, z_1, defined as x_(n+1)=y_n+1/z_n, y_(n+1)=z_n+1/x_n, z_(n+1)=x_n+1/y_n. Let w_n be the maximum value of x_n, y_n, z_n. For different values of x_1, y_1, z_1, do we have w_200 always greater than 20, always smaller than 20, or sometimes greater and sometimes smaller than 20?
+
+You may find the following information useful:
+
+1. Let a_n=x_n+y_n+z_n.
+2. Derive a lower bound on a_2.
+3. For n non-negative numbers x_1, ..., x_n, we have (x_1+x_2+...+x_n)/n≥(x_1*x_2*...*x_n)^(1/n), with equality if and only if x_1=...=x_n.
+4. Compare a_n with 18n for all n.
+5. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.
+6. For real numbers a_1, ..., a_n and b_1, ..., b_n, (a_1*b_1+...+a_n*b_n)^2≤(a_1^2+...+a_n^2)(b_1^2+...+b_n^2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will first derive a lower bound on a_2 using the given information.
+
+From the given recursive definitions, we have:
+x_2 = y_1 + 1/z_1
+y_2 = z_1 + 1/x_1
+z_2 = x_1 + 1/y_1
+
+Adding these three equations together, we get:
+a_2 = x_2 + y_2 + z_2
+     = (y_1 + 1/z_1) + (z_1 + 1/x_1) + (x_1 + 1/y_1)
+     = x_1 + y_1 + z_1 + 1/x_1 + 1/y_1 + 1/z_1
+
+Using the given inequality (3), we can apply it to the terms 1/x_1, 1/y_1, and 1/z_1:
+(1/x_1 + 1/y_1 + 1/z_1)/3 ≥ (1/x_1 * 1/y_1 * 1/z_1)^(1/3)
+
+Simplifying the left side, we have:
+(1/x_1 + 1/y_1 + 1/z_1)/3 = (x_1 + y_1 + z_1)/(3x_1y_1z_1)
+
+Substituting this back into the inequality, we get:
+(x_1 + y_1 + z_1)/(3x_1y_1z_1) ≥ (1/x_1 * 1/y_1 * 1/z_1)^(1/3)
+
+Taking the cube of both sides, we have:
+(x_1 + y_1 + z_1)^3/(27x_1^3y_1^3z_1^3) ≥ 1/(x_1y_1z_1)
+
+Multiplying both sides by 27x_1^3y_1^3z_1^3, we get:
+(x_1 + y_1 + z_1)^3 ≥ 27x_1^2y_1^2z_1^2
+
+Expanding the left side, we have:
+x_1^3 + y_1^3 + z_1^3 + 3(x_1^2y_1 + x_1^2z_1 + y_1^2x_1 + y_1^2z_1 + z_1^2x_1 + z_1^2y_1) ≥ 27x_1^2y_1^2z_1^2
+
+Using the given information (6), we can apply it to the terms x_1^2y_1, x_1^2z_1, y_1^2x_1, y_1^2z_1, z_1^2x_1, and z_1^2y_1:
+3(x_1^2y_1 + x_1^2z_1 + y_1^2x_1 + y_1^2z_1 + z_1^2x_1 + z_1^2y_1)^2 ≤ 18(x_1^4 + y_1^4 + z_1^4)
+
+Substituting this inequality back into the previous inequality, we get:
+x_1^3 + y_1^3 + z_1^3 + 3(x_1^2y_1 + x_1^2z_1 + y_1^2x_1 + y_1^2z_1 + z_1^2x_1 + z_1^2y_1) ≥ 27x_1^2y_1^2z_1^2
+x_1^3 + y_1^3 + z_1^3 + 3(x_1^2y_1 + x_1^2z_1 + y_1^2x_1 + y_1^2z_1 + z_1^2x_1 + z_1^2y_1) ≥ 3(x_1^2y_1 + x_1^2z_1 + y_1^2x_1 + y_1^2z_1 + z_1^2x_1 + z_1^2y_1)^2/6
+
+Now, let&#x27;s consider the value of a_2:
+a_2 = x_1 + y_1 + z_1 + 1/x_1 + 1/y_1 + 1/z_1
+
+Using the given inequality (4), we can compare a_2 with 18*2:
+a_2 ≥ 18*2
+x_1 + y_1 + z_1 + 1/x_1 + 1/y_1 + 1/z_1 ≥ 36
+
+Combining the two inequalities, we have:
+x_1 + y_1 + z_1 + 1/x_1 + 1/y_1 + 1/z_1 ≥ 3(x_1^2y_1 + x_1^2z_1 + y_1^2x_1 + y_1^2z_1 + z_1^2x_1 + z_1^2y_1)^2/6
+
+Now, let&#x27;s consider the value of a_3:
+a_3 = x_2 + y_2 + z_2
+     = (y_1 + 1/z_1) + (z_1 + 1/x_1) + (x_1 + 1/y_1)
+     = x_1 + y_1 + z_1 + 1/x_1 + 1/y_1 + 1/z_1
+
+Comparing a_3 with 18*3, we have:
+a_3 ≥ 18*3
+x_1 + y_1 + z_1 + 1/x_1 + 1/y_1 + 1/z_1 ≥ 54
+
+Combining this inequality with the previous inequality, we have:
+x_1 + y_1 + z_1 + 1/x_1 + 1/y_1 + 1/z_1 ≥ 3(x_1^2y_1 + x_1^2z_1 + y_1^2x_1 + y_1^2z_1 + z_1^2x_1 + z_1^2y_1)^2/6 ≥ 54
+
+From this inequality, we can see that the value of a_3 is bounded below by 54.
+
+Now, let&#x27;s consider the value of a_4:
+a_4 = x_3 + y_3 + z_3
+     = (y_2 + 1/z_2) + (z_2 + 1/x_2) + (x_2 + 1/y_2)
+     = x_2 + y_2 + z_2 + 1/x_2 + 1/y_2 + 1/z_2
+
+Using the given inequality (4), we can compare a_4 with 18*4:
+a_4 ≥ 18*4
+x_2 + y_2 + z_2 + 1/x_2 + 1/y_2 + 1/z_2 ≥ 72
+
+Combining this inequality with the previous inequality, we have:
+x_2 + y_2 + z_2 + 1/x_2 + 1/y_2 + 1/z_2 ≥ 3(x_1^2y_1 + x_1^2z_1 + y_1^2x_1 + y_1^2z_1 + z_1^2x_1 + z_1^2y_1)^2/6 ≥ 72
+
+From this inequality, we can see that the value of a_4 is bounded below by 72.
+
+Continuing this pattern, we can see that the value of a_n is bounded below by 18n for all n.
+
+Now, let&#x27;s consider the value of w_200, which is the maximum value of x_n, y_n, z_n.
+
+From the given recursive definitions, we can see that x_n+1 = y_n+1/z_n, y_n+1 = z_n+1/x_n, and z_n+1 = x_n+1/y_n.
+
+Using the given inequality (4), we can compare x_n+1, y_n+1, and z_n+1 with 18:
+x_n+1 ≥ 18
+y_n+1 ≥ 18
+z_n+1 ≥ 18
+
+Therefore, we have w_n+1 ≥ 18 for all n.
+
+Since w_200 is the maximum value of x_n, y_n, z_n, we have w_200 ≥ 18.
+
+Therefore, w_200 is always greater than or equal to 18, which means it is always greater than 20.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum value of the sequences x_n, y_n, z_n is always greater than 20 for any positive initial terms x_1, y_1, z_1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

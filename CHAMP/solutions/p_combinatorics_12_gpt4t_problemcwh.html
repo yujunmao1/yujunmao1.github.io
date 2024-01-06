@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_12</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_12']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: n people sit around a circular table. How many of the n! arrangements are distinct (i.e., do not have the same neighboring relations), as an expression of n?
+Step-wise solution:
+1. For each arrangement, a total of n rotations and 2 reflections all preserve the neighoring relationship.
+2. Thus, the distinct number of arrangement is n!/(2n).
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Along a one-way street there are n parking lots. One-by-one n cars numbered 1 to n enter the street. Each driver i heads to his favorite parking lot a_i, and, if it is free, he occupies it. Otherwise, he continues to the next free lot and occupies it. But if all succeeding lots are occupied, he leaves for good. How many sequences {a_1, ..., a_n} are such that every driver can park, as an expression of n?
+
+In addition, you may also find the following information helpful:
+
+1. Convert the street parking lot into a circle by adding an (n+1)-th lot that connects to both the n-th lot and the 1st lot.
+2. Establish the condition on the circular lot equivalent to every car being able to park on the street parking lot.
+3. Consider all driver preference sequences of length n but taking values in 1 to n+1. How many of the satisfy the condition?
+4. For each sequence {a}, consider its n cyclically shifted version (including itself), and study how many lead to a valid parking configuration.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the number of sequences {a_1, ..., a_n} such that every driver can park. We will follow the steps outlined in the problem statement.
+
+Step 1: Convert the street parking lot into a circle by adding an (n+1)-th lot that connects to both the n-th lot and the 1st lot.
+
+By doing this, we are essentially creating a circular arrangement where the condition for every driver to be able to park is that there are no consecutive occupied lots in the circle. This is because if there were consecutive occupied lots, it would mean that a driver on the street would have found no place to park.
+
+Step 2: Establish the condition on the circular lot equivalent to every car being able to park on the street parking lot.
+
+The condition is that in the circular arrangement, there must be at least one empty lot between any two occupied lots. This ensures that on the street, every driver will find a parking lot.
+
+Step 3: Consider all driver preference sequences of length n but taking values in 1 to n+1. How many of them satisfy the condition?
+
+We need to count the number of ways to arrange n cars in n+1 lots such that no two cars are adjacent. This is a classic combinatorial problem known as the &quot;no adjacent&quot; problem or &quot;stars and bars&quot; problem with a twist. However, because we are dealing with a circular arrangement, we need to account for rotational symmetries.
+
+Step 4: For each sequence {a}, consider its n cyclically shifted versions (including itself), and study how many lead to a valid parking configuration.
+
+Since we are dealing with a circular arrangement, each sequence can be rotated n times (including the original sequence). However, not all rotations will lead to a valid parking configuration. We need to find the number of sequences that, when rotated, still satisfy the condition that no two cars are adjacent.
+
+To count the number of valid sequences, we can use a combinatorial argument. We have n+1 lots and n cars, so we can place a &quot;barrier&quot; in one of the lots to prevent it from being used. This leaves us with n lots for n cars, and we need to ensure that no two cars are adjacent.
+
+We can think of the n cars as &quot;stars&quot; and the spaces between them as &quot;bars.&quot; We need to place n-1 bars between the n stars to ensure that no two stars are adjacent. Since we have n lots and n-1 bars, we can think of this as a problem of placing n-1 indistinguishable items into n distinguishable boxes, where each box can hold at most one item.
+
+The number of ways to do this is given by the binomial coefficient C(n, n-1), which is equal to n. However, since we have an extra lot that acts as a barrier, we need to multiply this by n+1 to account for the different positions the barrier can occupy.
+
+Therefore, the number of valid sequences is n * (n+1). However, we have overcounted by a factor of n due to the rotational symmetry. Each valid sequence can be rotated n times, but these rotations are not distinct in the circular arrangement.
+
+Thus, the final answer is the number of valid sequences divided by the number of rotations, which is:
+
+\[ \frac{n * (n+1)}{n} = n+1 \]
+
+So, there are n+1 sequences {a_1, ..., a_n} such that every driver can park.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are n+1 distinct sequences {a_1, ..., a_n} such that every driver can park in the n parking lots.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

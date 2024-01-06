@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_22</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_22']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b, c be the lengths of the three sides of a (possibly degenerate) triangle. What is the largest value of (a^2+b^2+c^2)/(ab+bc+ac)?
+
+You may find the following information useful:
+
+1. a, b, c are three sides of a (possibly degenerate) triangle if and only if |b-c|≤a≤b+c, |a-c|≤b≤a+c, |a-b|≤c≤a+b. The triangle is not degenerate if and only if all inequalities are strict.
+2. (x±y)^2=x^2±2xy+y^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the largest value of the expression \(\frac{a^2 + b^2 + c^2}{ab + bc + ac}\), we can use the given information and the fact that \(a\), \(b\), and \(c\) are the sides of a (possibly degenerate) triangle.
+
+First, let&#x27;s rewrite the expression by factoring out \(a^2 + b^2 + c^2\) from the numerator:
+
+\[\frac{a^2 + b^2 + c^2}{ab + bc + ac} = \frac{a^2 + b^2 + c^2}{\frac{1}{2}((a+b+c)^2 - (a^2 + b^2 + c^2))}\]
+
+Now, let&#x27;s use the identity \((x \pm y)^2 = x^2 \pm 2xy + y^2\) to expand \((a+b+c)^2\):
+
+\[(a+b+c)^2 = a^2 + b^2 + c^2 + 2ab + 2bc + 2ac\]
+
+Substituting this into our expression, we get:
+
+\[\frac{a^2 + b^2 + c^2}{\frac{1}{2}(a^2 + b^2 + c^2 + 2ab + 2bc + 2ac - (a^2 + b^2 + c^2))}\]
+
+Simplifying the denominator:
+
+\[\frac{a^2 + b^2 + c^2}{ab + bc + ac}\]
+
+Now, we want to maximize this expression. Notice that by the triangle inequality, we have \(a &lt; b + c\), \(b &lt; a + c\), and \(c &lt; a + b\). This implies that \(ab + bc + ac\) is always positive for a non-degenerate triangle.
+
+To find the maximum, we can use the Cauchy-Schwarz inequality, which states that for any real numbers \(x_1, x_2, ..., x_n\) and \(y_1, y_2, ..., y_n\):
+
+\[(x_1^2 + x_2^2 + ... + x_n^2)(y_1^2 + y_2^2 + ... + y_n^2) \geq (x_1y_1 + x_2y_2 + ... + x_ny_n)^2\]
+
+Let&#x27;s apply this to our case with \(x_1 = a\), \(x_2 = b\), \(x_3 = c\), and \(y_1 = b\), \(y_2 = c\), \(y_3 = a\):
+
+\[(a^2 + b^2 + c^2)(b^2 + c^2 + a^2) \geq (ab + bc + ac)^2\]
+
+Taking the square root of both sides:
+
+\[\sqrt{(a^2 + b^2 + c^2)(b^2 + c^2 + a^2)} \geq ab + bc + ac\]
+
+Dividing both sides by \(ab + bc + ac\):
+
+\[\frac{\sqrt{(a^2 + b^2 + c^2)(b^2 + c^2 + a^2)}}{ab + bc + ac} \geq 1\]
+
+Squaring both sides:
+
+\[\frac{(a^2 + b^2 + c^2)(b^2 + c^2 + a^2)}{(ab + bc + ac)^2} \geq 1\]
+
+Since \(b^2 + c^2 + a^2 = a^2 + b^2 + c^2\), we have:
+
+\[\frac{a^2 + b^2 + c^2}{ab + bc + ac} \geq 1\]
+
+Equality holds when \(a = b = c\), which corresponds to an equilateral triangle. Therefore, the largest value of the expression \(\frac{a^2 + b^2 + c^2}{ab + bc + ac}\) is \(1\), and this occurs when the triangle is equilateral.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression \(\frac{a^2 + b^2 + c^2}{ab + bc + ac}\) for the sides \(a\), \(b\), and \(c\) of a (possibly degenerate) triangle is \(1\), which occurs when the triangle is equilateral.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

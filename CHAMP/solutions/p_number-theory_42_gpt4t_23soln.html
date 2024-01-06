@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_42</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 50</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_42']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Fifty numbers a_1, a_2,..., a_50 are written along a circle. Each of the numbers is +1 or -1. You want to find the product of these numbers. You may find the product of three consecutive numbers in one question. How many questions do you need at least?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. There are 50 products in total: a_1*a_2*a_3, a_2*a_3*a_4, ..., a_50*a_1*a_2.
+2. After 49 questions, one product is unknown, and suppose that it is a_1*a_2*a_3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to determine the minimum number of questions required to find the product of all 50 numbers, given that we can only find the product of three consecutive numbers at a time.
+
+Let&#x27;s denote the product of all 50 numbers as P, which is what we want to find. We can express P as:
+
+P = a_1 * a_2 * a_3 * ... * a_50
+
+Now, let&#x27;s consider the information we can gather from the questions we ask. If we ask 49 questions, we can find the product of three consecutive numbers for all but one set of three consecutive numbers. For example, if we ask about the products a_1*a_2*a_3, a_2*a_3*a_4, ..., a_48*a_49*a_50, we will not know the product a_49*a_50*a_1.
+
+However, we can use the information from the 49 products we do know to find the product of all 50 numbers. Let&#x27;s denote the products we find from the questions as P_i, where i ranges from 1 to 49:
+
+P_1 = a_1 * a_2 * a_3
+P_2 = a_2 * a_3 * a_4
+...
+P_49 = a_49 * a_50 * a_1
+
+Notice that if we multiply all these products together, we get:
+
+P_1 * P_2 * ... * P_49 = (a_1 * a_2 * a_3) * (a_2 * a_3 * a_4) * ... * (a_49 * a_50 * a_1)
+
+Each a_i appears exactly three times in the product, except for a_1, a_2, and a_50, which appear only twice. Therefore, we can write:
+
+P_1 * P_2 * ... * P_49 = (a_1^2 * a_2^2 * a_3^2 * ... * a_49^2 * a_50^2) * (a_1 * a_2 * a_50)
+
+Since a_i^2 = 1 for all i (because a_i is either +1 or -1), we can simplify this to:
+
+P_1 * P_2 * ... * P_49 = a_1 * a_2 * a_50
+
+Now, we can solve for the product P by dividing both sides by a_1 * a_2:
+
+P = (P_1 * P_2 * ... * P_49) / (a_1 * a_2)
+
+We already know the product on the left side from our 49 questions. To find a_1 * a_2, we can ask one more question: the product a_50 * a_1 * a_2. Let&#x27;s call this product P_50:
+
+P_50 = a_50 * a_1 * a_2
+
+Now we have:
+
+P = (P_1 * P_2 * ... * P_49) / P_50
+
+Since we have all the information we need to calculate P, we can conclude that we need a minimum of 50 questions to find the product of all 50 numbers. The 49 initial questions give us the products P_1 through P_49, and the 50th question gives us P_50, which allows us to calculate P.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>A minimum of 50 questions are needed to find the product of all 50 numbers.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

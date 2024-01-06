@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_11</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_11']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?
+
+You may find the following information useful:
+
+1. Express 1/(x_k+1) in terms of 1/x_k and 1/x_(k+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s first find a relationship between 1/(x_k+1), 1/x_k, and 1/x_(k+1).
+
+Given the sequence x_(k+1) = x_k^2 + x_k, we want to express 1/(x_k+1) in terms of 1/x_k and 1/x_(k+1).
+
+Starting with the given recurrence relation:
+x_(k+1) = x_k^2 + x_k
+
+We can add 1 to both sides to get:
+x_(k+1) + 1 = x_k^2 + x_k + 1
+
+Now, let&#x27;s express x_k in terms of x_(k+1):
+x_k = x_(k+1) - x_k^2
+
+We can rewrite this as:
+x_k = x_(k+1) - (x_k)^2
+
+Now, let&#x27;s find 1/(x_k+1) in terms of x_k and x_(k+1):
+1/(x_k+1) = 1/(x_(k+1) - x_k^2 + 1)
+
+We can split the fraction into two parts using partial fraction decomposition:
+1/(x_(k+1) - x_k^2 + 1) = A/(x_k+1) + B/(x_(k+1)+1)
+
+To find A and B, we need to solve the equation:
+1 = A(x_(k+1)+1) + B(x_k+1)
+
+Now, let&#x27;s find A and B by plugging in suitable values for x_k and x_(k+1). If we set x_(k+1) = -1, we get:
+1 = B(x_k+1)
+
+Since x_k cannot be -1 (because x_1 = 1/2 and the sequence is increasing), we can divide both sides by (x_k+1) to get B = 1/(x_k+1).
+
+Similarly, if we set x_k = -1, we get:
+1 = A(x_(k+1)+1)
+
+And since x_(k+1) cannot be -1, we can divide both sides by (x_(k+1)+1) to get A = 1/(x_(k+1)+1).
+
+So we have:
+1/(x_k+1) = 1/(x_k+1) - 1/(x_(k+1)+1)
+
+Now, let&#x27;s compute the sum of the series:
+S = 1/(x_1+1) + 1/(x_2+1) + 1/(x_3+1) + ... + 1/(x_100+1)
+
+Using the relationship we found, we can rewrite the sum as:
+S = (1/(x_1+1) - 1/(x_2+1)) + (1/(x_2+1) - 1/(x_3+1)) + ... + (1/(x_100+1) - 1/(x_101+1))
+
+Notice that this is a telescoping series, where most terms cancel out, leaving us with:
+S = 1/(x_1+1) - 1/(x_101+1)
+
+We know that x_1 = 1/2, so:
+1/(x_1+1) = 1/(1/2+1) = 1/(3/2) = 2/3
+
+We don&#x27;t have an explicit formula for x_101, but we know that the sequence is increasing and x_k &gt; 0 for all k. Therefore, x_101 + 1 &gt; 1, and 1/(x_101+1) is a positive fraction less than 1. Since we are only interested in the integer part of the sum, we can ignore this term because it will not contribute to the integer part.
+
+Thus, the integer part of the sum S is the integer part of 2/3, which is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer part of the sum 1/(x_1+1) + 1/(x_2+1) + 1/(x_3+1) + ... + 1/(x_100+1) for the given sequence is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

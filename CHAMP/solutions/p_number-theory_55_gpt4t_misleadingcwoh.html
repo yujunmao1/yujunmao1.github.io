@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_55</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At least 1 number</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_55']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let (x, y, z) be an integer solution to the equation x^2+y^2=z^2. At least how many of the three numbers must be divisible by 4?
+
+You may find the following information useful:
+
+1. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).
+2. If a | b and b | c, then a | c.
+3. For integer a, b with a&gt;b, gcd(a, b)=gcd(b, a-b). </code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The equation given is x^2 + y^2 = z^2, which is a Pythagorean equation. We are looking for integer solutions (x, y, z) and want to know how many of these numbers must be divisible by 4.
+
+First, let&#x27;s consider the parity of x, y, and z. If x and y were both odd, then their squares would be odd as well (since the square of an odd number is odd). Adding two odd numbers would give an even number, so z^2 would be even, meaning z would also be even. However, the sum of two odd squares would be congruent to 2 mod 4, which cannot be a perfect square since all squares are congruent to 0 or 1 mod 4. Therefore, it&#x27;s impossible for both x and y to be odd.
+
+If one of x or y is even and the other is odd, then their squares would be even and odd, respectively, and the sum would be odd, which cannot equal z^2 since z^2 must be even if z is an integer. Therefore, both x and y cannot be of opposite parity.
+
+The only remaining possibility is that both x and y are even. If x and y are both even, then z must also be even because the sum of two even squares is even, and the square root of an even number is even.
+
+Now, let&#x27;s consider divisibility by 4. If x and y are both even, we can write x = 2a and y = 2b, where a and b are integers. Substituting these into the equation, we get:
+
+(2a)^2 + (2b)^2 = z^2
+4a^2 + 4b^2 = z^2
+4(a^2 + b^2) = z^2
+
+Since 4 divides the left side of the equation, 4 must also divide z^2, which means z must be even. However, this does not guarantee that z is divisible by 4. For z to be divisible by 4, z^2 must be divisible by 16.
+
+Let&#x27;s assume z is not divisible by 4, which means z is of the form 2k where k is an odd integer. Then z^2 = (2k)^2 = 4k^2. Since k is odd, k^2 is odd, and 4k^2 is not divisible by 16, which contradicts the fact that 4(a^2 + b^2) must be divisible by 16 for the equation to hold.
+
+Therefore, z must be divisible by 4. Since x and y are both even, at least one of them must also be divisible by 4 to ensure that their squares sum up to a number whose square is divisible by 16.
+
+In conclusion, at least two of the numbers x, y, and z must be divisible by 4 for the equation x^2 + y^2 = z^2 to have an integer solution.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At least two of the numbers x, y, and z must be divisible by 4 for the equation x^2 + y^2 = z^2 to have an integer solution.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

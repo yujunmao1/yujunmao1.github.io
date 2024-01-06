@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_30']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?
+
+You may find the following information useful:
+
+1. For positive x, x+1/x≥2, with equality if and only if x=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the given expression, we can use the inequality provided:
+
+For positive x, x + 1/x ≥ 2, with equality if and only if x = 1.
+
+Let&#x27;s apply this inequality to each term of the given expression:
+
+a_i/(s - a_i) + (s - a_i)/a_i ≥ 2, with equality if and only if a_i/(s - a_i) = 1.
+
+This means that a_i = s - a_i, or 2a_i = s, which implies a_i = s/2. However, since we have n terms, it&#x27;s not possible for each a_i to be s/2 unless n = 2. So, we will not be able to achieve this equality for each term when n &gt; 2.
+
+Now, let&#x27;s sum up the inequalities for each term from i = 1 to n:
+
+∑ (a_i/(s - a_i) + (s - a_i)/a_i) ≥ ∑ 2
+
+Since we have n terms, the right side of the inequality becomes 2n:
+
+∑ (a_i/(s - a_i) + (s - a_i)/a_i) ≥ 2n
+
+Now, let&#x27;s look at the left side of the inequality. We can see that the sum of all the terms a_i/(s - a_i) is exactly what we are trying to minimize:
+
+∑ a_i/(s - a_i)
+
+And the sum of all the terms (s - a_i)/a_i can be rewritten as:
+
+∑ s/a_i - ∑ 1
+
+Since s is the sum of all a_i, we can rewrite s/a_i as (a_1 + a_2 + ... + a_n)/a_i, which simplifies to:
+
+∑ (1 + a_1/a_i + a_2/a_i + ... + a_(i-1)/a_i + a_(i+1)/a_i + ... + a_n/a_i)
+
+Now, we can see that each term a_j/a_i (for j ≠ i) will appear exactly once in the sum when we consider all terms from i = 1 to n. Therefore, the sum of all these terms is n - 1 for each i, and since we have n terms, we get:
+
+∑ (1 + (n - 1)) = ∑ n = n^2
+
+So, the sum of all the terms (s - a_i)/a_i is n^2 - n, because we have n terms of -1.
+
+Putting it all together, we have:
+
+∑ a_i/(s - a_i) + (n^2 - n) ≥ 2n
+
+Now, we can isolate the sum we are interested in:
+
+∑ a_i/(s - a_i) ≥ 2n - (n^2 - n)
+
+∑ a_i/(s - a_i) ≥ 2n - n^2 + n
+
+∑ a_i/(s - a_i) ≥ n^2 - n
+
+Since we are looking for the smallest value of the sum, we can say that the smallest value of the expression a_1/(s - a_1) + a_2/(s - a_2) + ... + a_n/(s - a_n) is n^2 - n, which occurs when each a_i is equal to s/n (i.e., when all a_i are equal).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( a_1/(s - a_1) + a_2/(s - a_2) + ... + a_n/(s - a_n) \) as an expression of \( n \) is \( n - 1 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

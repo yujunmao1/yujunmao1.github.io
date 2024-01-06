@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_45</td>
+            <td>GPT-4</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_45']
+messages = problem.conversations['GPT-4|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial ax^3+bx^2+cx+d has integer coefficients a, b, c, d with ad odd and bc even. Can some values of a, b, c, d result in all three roots of the polynomial being integers?
+
+You may find the following information useful:
+
+1. Let f(x)=ax^3+bx^2+cx+d with its three roots being x_1, x_2, x_3.
+2. Let y_i=a*x_i for i=1, 2, 3 and find a polynomial which has y_i as the roots by studying the polynomial a^2*f(x).
+3. Study the parity of y_i from the constant term a^2*d.
+4. A polynomial of degree n with root x_1, ..., x_n can be written as a(x-x_1)(x-x_2)...(x-x_n) for some value of a.
+5. Study the parity of b and ac from that of y_i.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s follow the steps you&#x27;ve outlined.
+
+1. We have the polynomial f(x) = ax^3 + bx^2 + cx + d with roots x_1, x_2, x_3.
+
+2. Let&#x27;s define y_i = ax_i for i = 1, 2, 3. Then, we can form a new polynomial g(x) = a^2f(x/a) = x^3 + abx^2 + a^2cx + a^3d. This polynomial has roots y_1, y_2, y_3.
+
+3. The constant term of g(x) is a^3d. Since a and d are both odd, a^3d is also odd. Therefore, the product of the roots y_1*y_2*y_3 = a^3d is odd. This means that all three roots y_i cannot be even; at least one of them must be odd.
+
+4. We can write g(x) = (x - y_1)(x - y_2)(x - y_3). Expanding this and comparing coefficients with g(x) = x^3 + abx^2 + a^2cx + a^3d, we find that -y_1 - y_2 - y_3 = ab and y_1y_2 + y_1y_3 + y_2y_3 = a^2c.
+
+5. Since ab is the sum of three integers, it can be even only if all three integers are even or if exactly two of them are odd. But we know from step 3 that at least one y_i is odd, so ab must be odd. However, we were given that b is even, so a must be odd, which is consistent with our earlier information.
+
+Similarly, a^2c is the sum of three products of integers. Each product is even if both its factors are even or if one of its factors is even. Since at least one y_i is odd, at least one of these products is odd, so a^2c is odd. Since a^2 is odd, c must also be odd.
+
+However, we were given that bc is even. Since b is even and c is odd, this is a contradiction. Therefore, it is not possible for all three roots of the polynomial to be integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>No, it is not possible for all three roots of the polynomial ax^3 + bx^2 + cx + d to be integers if a, b, c, d are integers with ad odd and bc even.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

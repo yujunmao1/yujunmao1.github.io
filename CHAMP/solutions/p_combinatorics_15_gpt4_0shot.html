@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_15</td>
+            <td>GPT-4</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_15']
+messages = problem.conversations['GPT-4|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem is a classic example of a problem that can be solved using dynamic programming. 
+
+Let&#x27;s denote the number of ways to fill a 2 x n rectangle with 2 x 1 tiles such that the tiling is the same when the rectangle is flipped around the middle column as F(n). 
+
+We can see that F(1) = 1 (we can only place one tile vertically), F(2) = 2 (we can place two tiles vertically or horizontally), and F(3) = 1 (we can only place three tiles vertically).
+
+For n &gt; 3, we can see that the first tile can be placed either vertically or horizontally. If it&#x27;s placed vertically, then the last tile must also be placed vertically, and the number of ways to fill the rest of the rectangle is F(n-2). If it&#x27;s placed horizontally, then the last tile must also be placed horizontally, and the number of ways to fill the rest of the rectangle is F(n-4).
+
+Therefore, we have the following recurrence relation:
+
+F(n) = F(n-2) + F(n-4)
+
+We can use this recurrence relation to compute F(21). 
+
+F(1) = 1
+F(2) = 2
+F(3) = 1
+F(4) = F(2) + F(0) = 2 + 1 = 3
+F(5) = F(3) + F(1) = 1 + 1 = 2
+F(6) = F(4) + F(2) = 3 + 2 = 5
+F(7) = F(5) + F(3) = 2 + 1 = 3
+F(8) = F(6) + F(4) = 5 + 3 = 8
+F(9) = F(7) + F(5) = 3 + 2 = 5
+F(10) = F(8) + F(6) = 8 + 5 = 13
+F(11) = F(9) + F(7) = 5 + 3 = 8
+F(12) = F(10) + F(8) = 13 + 8 = 21
+F(13) = F(11) + F(9) = 8 + 5 = 13
+F(14) = F(12) + F(10) = 21 + 13 = 34
+F(15) = F(13) + F(11) = 13 + 8 = 21
+F(16) = F(14) + F(12) = 34 + 21 = 55
+F(17) = F(15) + F(13) = 21 + 13 = 34
+F(18) = F(16) + F(14) = 55 + 34 = 89
+F(19) = F(17) + F(15) = 34 + 21 = 55
+F(20) = F(18) + F(16) = 89 + 55 = 144
+F(21) = F(19) + F(17) = 55 + 34 = 89
+
+So, there are 89 ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is the same when the rectangle is flipped around the middle column.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 89 ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is the same when the rectangle is flipped around the middle column.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_75</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_75']
+messages = problem.conversations['GPT-3.5|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Are there integer solutions to the equation (x^2-1)(y^2-1)+1981=z^2?
+
+You may find the following information useful:
+
+1. For integer x, x^2 mod 8 can take values of 0, 1 and 4.
+2. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation (x^2-1)(y^2-1)+1981=z^2, we can start by expanding the left side:
+
+(x^2-1)(y^2-1) = x^2y^2 - x^2 - y^2 + 1
+
+Now we can substitute this expression back into the original equation:
+
+x^2y^2 - x^2 - y^2 + 1 + 1981 = z^2
+
+Rearranging the terms, we have:
+
+x^2y^2 - x^2 - y^2 + 1982 = z^2
+
+Now let&#x27;s consider the equation modulo 8. Using the information given, we know that x^2 mod 8 can only be 0, 1, or 4. Similarly, y^2 mod 8 can only be 0, 1, or 4.
+
+Case 1: x^2 mod 8 = 0
+In this case, x^2y^2 mod 8 = 0, and the equation becomes:
+0 - 0 - y^2 + 1982 = z^2
+1982 - y^2 = z^2
+Since 1982 mod 8 = 6, and y^2 mod 8 can only be 0, 1, or 4, there are no integer solutions in this case.
+
+Case 2: x^2 mod 8 = 1
+In this case, x^2y^2 mod 8 = y^2 mod 8, and the equation becomes:
+y^2 - 1 - y^2 + 1982 = z^2
+1981 = z^2
+Since 1981 is a prime number, there are no integer solutions in this case.
+
+Case 3: x^2 mod 8 = 4
+In this case, x^2y^2 mod 8 = 4y^2 mod 8, and the equation becomes:
+4y^2 - 4 - y^2 + 1982 = z^2
+3y^2 + 1978 = z^2
+Now let&#x27;s consider this equation modulo 3. We know that y^2 mod 3 can only be 0 or 1.
+
+Subcase 3.1: y^2 mod 3 = 0
+In this case, 3y^2 mod 3 = 0, and the equation becomes:
+1978 = z^2
+Since 1978 mod 3 = 2, there are no integer solutions in this subcase.
+
+Subcase 3.2: y^2 mod 3 = 1
+In this case, 3y^2 mod 3 = 3, and the equation becomes:
+3 + 1978 = z^2
+1981 = z^2
+Since 1981 is a prime number, there are no integer solutions in this subcase.
+
+Therefore, after considering all cases and subcases, we conclude that there are no integer solutions to the equation (x^2-1)(y^2-1)+1981=z^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no integer solutions to the equation (x^2-1)(y^2-1)+1981=z^2.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

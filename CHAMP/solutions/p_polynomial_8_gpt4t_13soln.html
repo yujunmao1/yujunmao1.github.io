@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_8</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no real-valued zeros)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_8']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many real-valued zeros does the polynomial 1+x+x^2/2!+x^3/3!+...+x^(2n)/(2n)! have?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let the polynomial be f(x), so we have f&#x27;(x)=1+x+x^2/2!+...+x^(2n-1)/(2n-1)!.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine the number of real zeros of the polynomial, we can use the fact that the polynomial is closely related to the Taylor series expansion of the exponential function \( e^x \). The given polynomial is:
+
+\[ f(x) = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots + \frac{x^{2n}}{(2n)!} \]
+
+This is the sum of the first \(2n+1\) terms of the Taylor series for \( e^x \) centered at 0. The full Taylor series for \( e^x \) is:
+
+\[ e^x = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots \]
+
+Since the Taylor series for \( e^x \) converges to \( e^x \) for all real \( x \), and \( e^x \) has no real zeros (since \( e^x &gt; 0 \) for all real \( x \)), we can infer that as \( n \) goes to infinity, our polynomial \( f(x) \) will approach \( e^x \) and thus will not have any real zeros.
+
+However, we are looking at a finite polynomial of degree \( 2n \), not the entire series. To determine the number of real zeros of \( f(x) \), we can use Descartes&#x27; Rule of Signs or analyze the behavior of the polynomial and its derivatives.
+
+From the partial solution, we have:
+
+\[ f&#x27;(x) = 1 + x + \frac{x^2}{2!} + \ldots + \frac{x^{2n-1}}{(2n-1)!} \]
+
+Notice that \( f&#x27;(x) \) is the sum of the first \( 2n \) terms of the Taylor series for \( e^x \), and it is also a polynomial of degree \( 2n-1 \). Since each term in \( f&#x27;(x) \) is positive for \( x &gt; 0 \), \( f&#x27;(x) \) is strictly increasing for \( x &gt; 0 \). Similarly, for \( x &lt; 0 \), each term is alternating in sign, but the magnitude of the terms is decreasing rapidly, so \( f&#x27;(x) \) is still increasing (though not strictly) because the positive \( x \) term will dominate the negative terms as \( x \) becomes more negative.
+
+Since \( f&#x27;(x) \) is always increasing, \( f(x) \) is always concave up. This means that \( f(x) \) has at most one real zero because it starts at \( f(0) = 1 \) and increases at an increasing rate. If \( f(x) \) were to have a zero, it would have to cross the x-axis exactly once.
+
+To determine if \( f(x) \) actually has a zero, we can look at the behavior as \( x \) approaches negative infinity. As \( x \) becomes very negative, the higher-degree terms in \( f(x) \) become negligible because the factorial in the denominator grows much faster than the power in the numerator. Thus, the behavior of \( f(x) \) for large negative \( x \) is dominated by the first few terms, particularly \( 1 + x \). Since \( 1 + x \) will become negative for \( x &lt; -1 \), \( f(x) \) will also become negative for sufficiently large negative \( x \). This implies that \( f(x) \) must cross the x-axis exactly once.
+
+Therefore, the polynomial \( f(x) \) has exactly one real-valued zero.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial \( f(x) = 1 + x + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots + \frac{x^{2n}}{(2n)!} \) has exactly one real-valued zero.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

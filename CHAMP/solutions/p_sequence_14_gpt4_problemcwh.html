@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_14</td>
+            <td>GPT-4</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_14']
+messages = problem.conversations['GPT-4|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Of 3n+1 objects, n are indistinguishable, and the remaining ones are distinct. In how many ways can we choose n objects, as an expression of n?
+Step-wise solution:
+1. We have 2n+1 distinguishable objects and n indistinguishable objects.
+2. Thus, to choose a collection contains k distinguishable objects, there are C(2n+1, k) ways.
+3. So the total number of ways is C(2n+1, 0)+C(2n+1, 1)+...+C(2n+1, n).
+4. Denote C(2n+1, k) as c_k.
+5. We have c_0+c_1+...+c_(2n)+c_(2n+1)=2^(2n+1).
+6. Furthermore, we have c_0=c_(2n+1), c_1=c_(2n), ..., c_n=c_(n+1).
+7. Thus, we have c_0+c_1+...+c_n=2^(2n+1)/2=4^n.
+
+Problem: Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(4+3a_n), and if so, find it.
+Step-wise solution:
+1. We have a_1=2&gt;a_0.
+2. If a_n&gt;a_(n-1), then sqrt(4+3a_n)&gt;sqrt(4+3a_(n-1)), which means that a_(n+1)&gt;a_n.
+3. In addition, if a_n&lt;4, then sqrt(4+3a_n)&lt;sqrt(16)=4, so a_(n+1)&lt;4.
+4. So the sequence is monotonic and bounded, and thus has a limit.
+5. The limit happens when a=sqrt(4+3a), which gives a=4 as the only solution.
+6. Thus, the limit of the sequence is 4.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let the sequence be defined as a_n=1/C(n, 0)+1/C(n, 1)+...+1/C(n, n). Does the limit of the sequence exist, and if so, what is it?
+
+In addition, you may also find the following information helpful:
+
+1. C(n, k)=n/k*C(n-1, k-1).
+2. Study the relationship between a_n and a_(n-1).
+3. For even n, express a_n in terms of a_(n-1) by isolating the first term and grouping each pair of the terms from the two ends.
+4. For odd n, express a_n in terms of a_(n-1) by isolating the first term, grouping each pair of the terms from the two ends and adding the remaining middle term.
+5. Write out the first few terms of a_n up to a_5 and study the relationship between a_n and 2+2/n.
+6. Study the monotonicity of the sequence after a_4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+
+1. We have a_n=1/C(n, 0)+1/C(n, 1)+...+1/C(n, n).
+2. Using the formula C(n, k)=n/k*C(n-1, k-1), we can rewrite a_n as a_n=1/C(n-1, 0)+1/(n/1*C(n-1, 0))+...+1/(n/n*C(n-1, n-1)).
+3. Simplifying, we get a_n=1/C(n-1, 0)+1/C(n-1, 0)+...+1/C(n-1, n-1).
+4. This is equal to a_n=1+a_(n-1).
+5. So, the sequence is defined by a_n=1+a_(n-1) with a_0=1.
+6. Writing out the first few terms, we get a_0=1, a_1=2, a_2=3, a_3=4, a_4=5, a_5=6.
+7. We can see that a_n=n+1 for n&gt;=0.
+8. So, the sequence is increasing and unbounded.
+9. Therefore, the limit of the sequence does not exist.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by a_n=1/C(n, 0)+1/C(n, 1)+...+1/C(n, n) does not exist as the sequence is increasing and unbounded.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

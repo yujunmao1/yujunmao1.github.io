@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_30']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let A=a_1/(s-a_1)+a_1/(s-a_n)+...+a_n/(s-a_n).
+2. For two sequences (a_1, ..., a_n) and (1/(s-a_1), ..., 1/(s-a_n)), we can see that they are sorted in the same way since a_i≥a_j means 1/(s-a_i)≥1/(s-a_j).
+3. Thus, A achieves the maximum value among all ways to define sum of products of paired elements from the two sequences.
+4. Let B_k=a_1/(s-a_(1+k))+a_2/(s-a_(2+k))+...+a_n/(s-a_(n+k)) for k=1, ..., n-1.
+5. Thus, for k≠0, B_k is the sum of products of paired elements that are not necessarily sorted in the same way.
+6. Thus, A≥B_k and (n-1)A≥B_1+B_2+...+B_(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The partial solution provided is on the right track, but it seems to be aiming towards proving that a certain arrangement of terms gives the maximum value of the expression, rather than the minimum. However, the question asks for the smallest value of the expression, so we need to adjust our approach accordingly.
+
+Let&#x27;s denote the expression we want to minimize as:
+
+\[ A = \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} \]
+
+We can apply the Cauchy-Schwarz inequality to the sequences \( (a_1, a_2, \ldots, a_n) \) and \( \left(\frac{1}{s-a_1}, \frac{1}{s-a_2}, \ldots, \frac{1}{s-a_n}\right) \). The Cauchy-Schwarz inequality states that for any sequences of real numbers \( (x_1, x_2, \ldots, x_n) \) and \( (y_1, y_2, \ldots, y_n) \), the following inequality holds:
+
+\[ \left( \sum_{i=1}^{n} x_i y_i \right)^2 \leq \left( \sum_{i=1}^{n} x_i^2 \right) \left( \sum_{i=1}^{n} y_i^2 \right) \]
+
+Let&#x27;s apply this to our sequences:
+
+\[ A^2 = \left( \sum_{i=1}^{n} a_i \cdot \frac{1}{s-a_i} \right)^2 \leq \left( \sum_{i=1}^{n} a_i^2 \right) \left( \sum_{i=1}^{n} \frac{1}{(s-a_i)^2} \right) \]
+
+Now, we know that \( s = a_1 + a_2 + \ldots + a_n \), so we can rewrite the inequality as:
+
+\[ A^2 \leq \left( \sum_{i=1}^{n} a_i^2 \right) \left( \sum_{i=1}^{n} \frac{1}{(s-a_i)^2} \right) \]
+
+However, this doesn&#x27;t directly help us minimize \( A \) since the right-hand side of the inequality depends on the specific values of \( a_i \). To find the minimum value of \( A \), we need to use a different approach.
+
+Let&#x27;s use the AM-HM inequality, which states that for positive real numbers \( x_1, x_2, \ldots, x_n \), the arithmetic mean is always greater than or equal to the harmonic mean:
+
+\[ \frac{x_1 + x_2 + \ldots + x_n}{n} \geq \frac{n}{\frac{1}{x_1} + \frac{1}{x_2} + \ldots + \frac{1}{x_n}} \]
+
+Applying this to the terms \( s-a_i \), we get:
+
+\[ \frac{(s-a_1) + (s-a_2) + \ldots + (s-a_n)}{n} \geq \frac{n}{\frac{1}{s-a_1} + \frac{1}{s-a_2} + \ldots + \frac{1}{s-a_n}} \]
+
+Simplifying the left-hand side, we have:
+
+\[ \frac{ns - (a_1 + a_2 + \ldots + a_n)}{n} = \frac{ns - s}{n} = \frac{(n-1)s}{n} \]
+
+So the inequality becomes:
+
+\[ \frac{(n-1)s}{n} \geq \frac{n}{\frac{1}{s-a_1} + \frac{1}{s-a_2} + \ldots + \frac{1}{s-a_n}} \]
+
+Taking the reciprocal of both sides, we get:
+
+\[ \frac{n}{(n-1)s} \leq \frac{1}{s-a_1} + \frac{1}{s-a_2} + \ldots + \frac{1}{s-a_n} \]
+
+Multiplying both sides by \( s \), we have:
+
+\[ \frac{n}{n-1} \leq \frac{s}{s-a_1} + \frac{s}{s-a_2} + \ldots + \frac{s}{s-a_n} \]
+
+Now, we can subtract 1 from each term on the right-hand side:
+
+\[ \frac{n}{n-1} \leq \left(1 + \frac{a_1}{s-a_1}\right) + \left(1 + \frac{a_2}{s-a_2}\right) + \ldots + \left(1 + \frac{a_n}{s-a_n}\right) \]
+
+\[ \frac{n}{n-1} \leq n + \left(\frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n}\right) \]
+
+\[ \frac{n}{n-1} - n \leq \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} \]
+
+\[ \frac{n}{n-1} - \frac{n(n-1)}{n-1} \leq A \]
+
+\[ \frac{n - n(n-1)}{n-1} \leq A \]
+
+\[ \frac{n - n^2 + n}{n-1} \leq A \]
+
+\[ \frac{-n^2 + 2n}{n-1} \leq A \]
+
+\[ \frac{-n(n - 2)}{n-1} \leq A \]
+
+Since \( n \) is positive, the smallest value of \( A \) is achieved when \( n = 2 \), which gives us:
+
+\[ A \geq \frac{-2(2 - 2)}{2-1} = 0 \]
+
+However, this is not a useful bound since \( A \) is always positive. We need to find a tighter bound that gives us the smallest value of \( A \) as an expression of \( n \).
+
+To do this, let&#x27;s consider the case when all \( a_i \) are equal, i.e., \( a_i = \frac{s}{n} \) for all \( i \). In this case, we have:
+
+\[ A = \frac{\frac{s}{n}}{s-\frac{s}{n}} + \frac{\frac{s}{n}}{s-\frac{s}{n}} + \ldots + \frac{\frac{s}{n}}{s-\frac{s}{n}} \]
+
+\[ A = n \cdot \frac{\frac{s}{n}}{s-\frac{s}{n}} \]
+
+\[ A = n \cdot \frac{1}{n-1} \]
+
+\[ A = \frac{n}{n-1} \]
+
+This is the smallest value of \( A \) because if any \( a_i \) were different, the sum would be larger due to the convexity of the function \( f(x) = \frac{x}{s-x} \). Therefore, the smallest value of \( A \) as an expression of \( n \) is:
+
+\[ A_{\text{min}} = \frac{n}{n-1} \]</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( A = \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} \) as an expression of \( n \) is \( A_{\text{min}} = \frac{n}{n-1} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

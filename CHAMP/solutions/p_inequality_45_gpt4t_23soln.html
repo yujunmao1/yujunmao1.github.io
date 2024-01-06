@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_45</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_45']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a, b, c&gt;0, are there possible values of them to make (a^3*b+b^3*c+c^3*a)/(a+b+c) less than abc?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have (a/sqrt(c)*sqrt(c)+b/sqrt(a)*sqrt(a)+c/sqrt(b)*sqrt(b))^2≤((a/sqrt(c))^2+(b/sqrt(a))^2+(c/sqrt(b))^2)((sqrt(a))^2+(sqrt(b))^2+(sqrt(c))^2), which simplifies to (a+b+c)^2≤(a^2/c+b^2/a+c^2/b)(a+b+c).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To investigate whether there are possible values of \( a, b, c &gt; 0 \) that make \( \frac{a^3b + b^3c + c^3a}{a + b + c} &lt; abc \), we can start by using the partial solution provided.
+
+The partial solution uses the Cauchy-Schwarz inequality:
+
+\[ \left( \frac{a}{\sqrt{c}} \cdot \sqrt{c} + \frac{b}{\sqrt{a}} \cdot \sqrt{a} + \frac{c}{\sqrt{b}} \cdot \sqrt{b} \right)^2 \leq \left( \left( \frac{a}{\sqrt{c}} \right)^2 + \left( \frac{b}{\sqrt{a}} \right)^2 + \left( \frac{c}{\sqrt{b}} \right)^2 \right) \left( \sqrt{a}^2 + \sqrt{b}^2 + \sqrt{c}^2 \right) \]
+
+Simplifying the left side:
+
+\[ (a + b + c)^2 \]
+
+And the right side:
+
+\[ \left( \frac{a^2}{c} + \frac{b^2}{a} + \frac{c^2}{b} \right) (a + b + c) \]
+
+So we have:
+
+\[ (a + b + c)^2 \leq \left( \frac{a^2}{c} + \frac{b^2}{a} + \frac{c^2}{b} \right) (a + b + c) \]
+
+Now, let&#x27;s divide both sides by \( (a + b + c) \) (which is positive, since \( a, b, c &gt; 0 \)):
+
+\[ a + b + c \leq \frac{a^2}{c} + \frac{b^2}{a} + \frac{c^2}{b} \]
+
+Now, let&#x27;s consider the expression we want to investigate:
+
+\[ \frac{a^3b + b^3c + c^3a}{a + b + c} &lt; abc \]
+
+Multiplying both sides by \( a + b + c \) gives:
+
+\[ a^3b + b^3c + c^3a &lt; abc(a + b + c) \]
+
+Expanding the right side:
+
+\[ a^3b + b^3c + c^3a &lt; a^2bc + ab^2c + abc^2 \]
+
+Now, let&#x27;s subtract \( a^3b + b^3c + c^3a \) from both sides:
+
+\[ 0 &lt; a^2bc + ab^2c + abc^2 - a^3b - b^3c - c^3a \]
+
+Simplifying:
+
+\[ 0 &lt; abc(a + b + c) - a^3b - b^3c - c^3a \]
+
+\[ 0 &lt; a^2bc + ab^2c + abc^2 - a^3b - b^3c - c^3a \]
+
+\[ 0 &lt; a^2bc - a^3b + ab^2c - b^3c + abc^2 - c^3a \]
+
+\[ 0 &lt; ab(ac - a^2) + bc(ba - b^2) + ca(cb - c^2) \]
+
+\[ 0 &lt; ab(c - a)(a - c) + bc(a - b)(b - a) + ca(b - c)(c - b) \]
+
+Notice that each term is negative since \( (c - a)(a - c) \), \( (a - b)(b - a) \), and \( (b - c)(c - b) \) are all negative (they are the product of two numbers with opposite signs). This means that the sum of these three negative terms cannot be positive, which contradicts the inequality we derived.
+
+Therefore, there are no positive values of \( a, b, c \) that make \( \frac{a^3b + b^3c + c^3a}{a + b + c} &lt; abc \). The initial assumption that such values exist is incorrect.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no positive values of \( a, b, c \) that satisfy \( \frac{a^3b + b^3c + c^3a}{a + b + c} &lt; abc \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

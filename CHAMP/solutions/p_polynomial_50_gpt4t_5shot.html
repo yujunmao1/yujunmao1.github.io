@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_50</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -5</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_50']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Factorize x^3+y^3+z^3-3xyz.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let u=x+y+z, v=xy+yz+xz, w=xyz, s_n=x^n+y^n+z^n.
+2. Then the target polynomial becomes s_3-3w=u^3-3uv+3w-3w=u^3-3uv=u(u^2-3v).
+3. We have u^2=x^2+y^2+z^2-2xy-2yz-2xz.
+4. So x^3+y^3+z^3-3xyz=(x+y+z)(x^2+y^2+z^2-xy-yz-xz).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive real a, b and integer m, what is the smallest value of (1+a/b)^m+(1+b/a)^m as an expression of m?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have 1+a/b≥2sqrt(a/b) and 1+b/a≥2sqrt(b/a) so (1+a/b)^m≥(2sqrt(a/b))^m and (1+b/a)^m≥(2sqrt(b/a))^m.
+2. In addition, denoting sqrt(a/b)^m=x, we have (2sqrt(a/b))^m+(2sqrt(b/a))^m=2^m(x+1/x)≥2^m*2=2^(m+1).
+3. Thus, (1+a/b)^m+(1+b/a)^m≥2^(m+1).
+4. So the smallest value is 2^(m+1), which can be achieved at a=b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1, x_2&lt;100 be two positive integers. For k≥3, let x_k be the smallest of the absolute values of the pairwise differences of the preceding terms. What are possible values of x_12?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We compute x_3=|x_1-x_2|, and reorder x_1, x_2, x_3 in decreasing order, such that x_1≥x_2≥x_3.
+2. Thus, x_3=x_1-x_2.
+3. We have x_4=min(x_1-x_2, x_2-x_3)≤x_1-x_2=x_3.
+4. So the four number sequence x_1, x_2, x_3, x_4 is also decreasing.
+5. For any x_k, assuming that x_1, x_2, ..., x_k is a decreasing sequence, we have x_k=min(x_1-x_2, x_2-x_3, ..., x_(k-2)-x_(k-1)) and x_(k+1)=min(x_1-x_2, x_2-x_3, ..., x_(k-2)-x_(k-1), x_(k-1), x_k), since the difference between any non-adjacent terms (i.e., x_i-x_j for j&gt;i+1) cannot be minimal.
+6. Since the minimization of x_(k+1) involves one more term than that of x_k, we have x_(k+1)≤x_k.
+7. So x_1, x_2, ..., x_(k+1) also form a decreasing sequence.
+8. If x_12≥1, then x_11≥x_12≥1.
+9. We have x_12≤x_10-x_11, so x_10≥x_11+x_12=2.
+10. We also have x_11≤x_9-x_10, so x_9≥x_10+x_11≥3.
+11. Continuing this on, we have the minimum of the sequence of x_8, x_7, x_6, ..., x_1 to be 5, 8, 13, 21, 34, 55, 89, 144.
+12. Thus, we have x_1≥144, which contradicts with the condition that x_1, x_2&lt;100.
+13. So the only possible value for x_12 is 0, which can be achieved by x_1=x_2=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Consider all 2^n−1 nonempty subsets of the set {1, 2,..., n}. For every such subset, we find the product of the reciprocals of each of its elements. Find the sum of all these products, as an expression of n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We define P=(1+1/1)(1+1/2)(1+1/3)+...+(1+1/n) and it is a sum of 2^n terms.
+2. Each term is a product of n numbers, chosen from either 1 or 1/i in the (1+1/i) factor.
+3. Thus, P represents the sum of all subset recriprocal products, including the empty subset (where we choose 1 from each of the n factors in P).
+4. So the answer we want is P-1.
+5. We have P=(2/1)*(3/2)*(4/3)*...*(n+1)/n=n+1 due to telescoping, so P-1=n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many integer solutions does the equation x^2+y^2+z^2=x^3+y^3+z^3 have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We let z=-x and the equation becomes 2x^2+y^2=y^3.
+2. Thus, x^2=y^2*(y-1)/2.
+3. If (y-1)/2=t^2 for some integer t, we have y=2t^2+1, x=yt, z=-x being a solution.
+4. Thus, each value of t corresponds to a solution, and there are infinitely many of them.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the value of a such that the polynomial x^5−ax^2−ax+1 has a root with multiplicity more than 1 at x=-1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the value of \( a \) such that the polynomial \( f(x) = x^5 - ax^2 - ax + 1 \) has a root with multiplicity more than 1 at \( x = -1 \), we need to ensure that both \( f(-1) = 0 \) and \( f&#x27;(-1) = 0 \), where \( f&#x27;(x) \) is the first derivative of \( f(x) \).
+
+First, let&#x27;s find \( f(-1) \):
+\[ f(-1) = (-1)^5 - a(-1)^2 - a(-1) + 1 = -1 - a + a + 1 = 0 \]
+This equation is satisfied for any \( a \), so we don&#x27;t get any information about \( a \) from this step.
+
+Next, let&#x27;s find the first derivative \( f&#x27;(x) \):
+\[ f&#x27;(x) = 5x^4 - 2ax - a \]
+
+Now, let&#x27;s find \( f&#x27;(-1) \):
+\[ f&#x27;(-1) = 5(-1)^4 - 2a(-1) - a = 5 + 2a - a = 5 + a \]
+
+For \( f&#x27;(-1) \) to be zero, we need:
+\[ 5 + a = 0 \]
+\[ a = -5 \]
+
+Therefore, the value of \( a \) such that the polynomial \( x^5 - ax^2 - ax + 1 \) has a root with multiplicity more than 1 at \( x = -1 \) is \( a = -5 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of \( a \) such that the polynomial \( x^5 - ax^2 - ax + 1 \) has a root with multiplicity more than 1 at \( x = -1 \) is \( a = -5 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

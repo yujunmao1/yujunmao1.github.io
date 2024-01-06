@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_3</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_3']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1=2, and define x_(n+1)=2x_n/(x_n^2-1). Could this sequence be extended indefinitely (i.e., not encountering division-by-zero issue)?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. When there is a division by 0 error when trying to compute x_(n+1), we have x_n=±1.
+2. This translates to 2x_(n-1)/(x_(n-1)^2-1)=±1, or x_(n-1)^2±2x_(n-1)-1=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the sequence can be extended indefinitely without encountering a division-by-zero issue, we need to analyze the recursive formula and the conditions under which division by zero would occur.
+
+Given the recursive formula:
+\[ x_{n+1} = \frac{2x_n}{x_n^2 - 1} \]
+
+We know that division by zero would occur if the denominator becomes zero, that is, if \( x_n^2 - 1 = 0 \). This would happen if \( x_n = \pm 1 \).
+
+Now, let&#x27;s look at the partial solution provided:
+
+If \( x_n = \pm 1 \), then we have:
+\[ \frac{2x_{n-1}}{x_{n-1}^2 - 1} = \pm 1 \]
+
+This leads to the quadratic equation:
+\[ x_{n-1}^2 \pm 2x_{n-1} - 1 = 0 \]
+
+Let&#x27;s solve this quadratic equation for both cases (using the plus and minus):
+
+Case 1 (plus sign):
+\[ x_{n-1}^2 + 2x_{n-1} - 1 = 0 \]
+
+Using the quadratic formula:
+\[ x_{n-1} = \frac{-2 \pm \sqrt{2^2 - 4(1)(-1)}}{2(1)} \]
+\[ x_{n-1} = \frac{-2 \pm \sqrt{4 + 4}}{2} \]
+\[ x_{n-1} = \frac{-2 \pm \sqrt{8}}{2} \]
+\[ x_{n-1} = \frac{-2 \pm 2\sqrt{2}}{2} \]
+\[ x_{n-1} = -1 \pm \sqrt{2} \]
+
+Case 2 (minus sign):
+\[ x_{n-1}^2 - 2x_{n-1} - 1 = 0 \]
+
+Using the quadratic formula:
+\[ x_{n-1} = \frac{2 \pm \sqrt{(-2)^2 - 4(1)(-1)}}{2(1)} \]
+\[ x_{n-1} = \frac{2 \pm \sqrt{4 + 4}}{2} \]
+\[ x_{n-1} = \frac{2 \pm \sqrt{8}}{2} \]
+\[ x_{n-1} = \frac{2 \pm 2\sqrt{2}}{2} \]
+\[ x_{n-1} = 1 \pm \sqrt{2} \]
+
+Now, we have four possible values for \( x_{n-1} \): \( -1 + \sqrt{2} \), \( -1 - \sqrt{2} \), \( 1 + \sqrt{2} \), and \( 1 - \sqrt{2} \). None of these values are equal to \( \pm 1 \), which means that if \( x_{n-1} \) were any of these values, \( x_n \) would not be \( \pm 1 \), and we would not encounter a division-by-zero issue when computing \( x_{n+1} \).
+
+Since \( x_1 = 2 \), which is not one of the values that would lead to \( x_n = \pm 1 \), we can conclude that the sequence can be extended indefinitely without encountering a division-by-zero issue, as long as it starts with \( x_1 = 2 \). The sequence will never reach a value of \( \pm 1 \) because the values that could potentially lead to \( x_n = \pm 1 \) are not in the sequence generated from \( x_1 = 2 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence defined by \( x_{n+1} = \frac{2x_n}{x_n^2 - 1} \) with \( x_1 = 2 \) can be extended indefinitely without encountering a division-by-zero issue.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

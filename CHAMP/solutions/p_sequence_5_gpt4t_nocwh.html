@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_5</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> There are no prime numbers in the sequence</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_5']
+messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Are there prime numbers in the sequence {a_n} with a_1=10001, a_2=100010001, a_3=1000100010001, ... (there are three 0s in between each pair of 1s). If so, what is the smallest one?
+
+You may find the following information useful:
+
+1. 10001=73*137.
+2. For even n, let n+1=m and factorize the expression for a_n.
+3. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).
+4. x^2-y^2=(x+y)(x-y).
+5. For integer a, b, n, a - b | a^n - b^n.
+6. For integer a, b and odd n, a + b | a^n + b^n.
+7. For odd n, let n+1=2k and factorize the expression for a_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s analyze the sequence {a_n} given by a_1=10001, a_2=100010001, a_3=1000100010001, and so on. We can see that each term in the sequence is constructed by placing three zeros between each pair of ones.
+
+First, let&#x27;s consider the given information:
+
+1. 10001 = 73 * 137.
+2. For even n, let n+1 = m and factorize the expression for a_n.
+3. The sum of a geometric series a + ar + ar^2 + ... + ar^n = a(1 - r^(n+1)) / (1 - r), and for an infinite series a + ar + ar^2 + ... = a / (1 - r).
+4. The difference of squares x^2 - y^2 = (x + y)(x - y).
+5. For integers a, b, n, a - b | a^n - b^n.
+6. For integers a, b, and odd n, a + b | a^n + b^n.
+7. For odd n, let n+1 = 2k and factorize the expression for a_n.
+
+Now, let&#x27;s look at the terms of the sequence:
+
+a_1 = 10001 = 73 * 137, which is not prime.
+
+For a_2, we have an even n (n=2), so we can use the information from point 2. Let n+1 = m, so m = 3. We can write a_2 as a sum of a geometric series with a = 1 and r = 1000 (since there are three zeros between each pair of ones):
+
+a_2 = 1 + 1000 + 1000^2 = 1(1 - 1000^3) / (1 - 1000) using the formula for the sum of a finite geometric series.
+
+We can simplify this to:
+
+a_2 = (1 - 1000^3) / (-999)
+a_2 = (1000^3 - 1) / 999
+a_2 = (10^9 - 1) / 999
+
+Now, we can use the difference of squares from point 4:
+
+10^9 - 1 = (10^4.5)^2 - 1^2 = (10^4.5 + 1)(10^4.5 - 1)
+
+Since 10^4.5 is not an integer, we can&#x27;t directly apply the difference of squares, but we can see that 10^9 - 1 is divisible by 10 - 1, which is 9. So, a_2 is divisible by 9 and thus not prime.
+
+For a_3, we have an odd n (n=3), so we can use the information from point 7. Let n+1 = 2k, so k = 2. We can write a_3 as a sum of a geometric series with a = 1 and r = 1000:
+
+a_3 = 1 + 1000 + 1000^2 + 1000^3
+
+Using the formula for the sum of a finite geometric series, we get:
+
+a_3 = 1(1 - 1000^4) / (1 - 1000)
+a_3 = (1 - 1000^4) / (-999)
+a_3 = (1000^4 - 1) / 999
+
+Now, we can use the difference of squares:
+
+1000^4 - 1 = (10^6)^2 - 1^2 = (10^6 + 1)(10^6 - 1)
+
+We can see that 10^6 - 1 is divisible by 10 - 1, which is 9, and 10^6 + 1 is divisible by 10 + 1, which is 11. So, a_3 is divisible by both 9 and 11, and thus not prime.
+
+Continuing this pattern, we can see that for each term a_n in the sequence, if n is even, a_n will be divisible by 9, and if n is odd, a_n will be divisible by both 9 and 11. Therefore, no term in the sequence is prime, as each term has factors other than 1 and itself.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>No term in the sequence {a_n} is prime, as each term is divisible by numbers other than 1 and itself.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

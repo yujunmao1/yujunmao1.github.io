@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_5</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_5']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the minimum value of sin(x)^3/cos(x)+cos(x)^3/sin(x) for 0&lt;x&lt;π/2.
+
+You may find the following information useful:
+
+1. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the minimum value of the given expression for \(0 &lt; x &lt; \frac{\pi}{2}\), let&#x27;s first simplify the expression:
+
+\[
+\frac{\sin^3(x)}{\cos(x)} + \frac{\cos^3(x)}{\sin(x)}
+\]
+
+We can rewrite this as:
+
+\[
+\sin^2(x) \cdot \frac{\sin(x)}{\cos(x)} + \cos^2(x) \cdot \frac{\cos(x)}{\sin(x)}
+\]
+
+Now, using the trigonometric identity \(\sin^2(x) + \cos^2(x) = 1\), we can rewrite the expression as:
+
+\[
+\sin^2(x) \cdot \tan(x) + \cos^2(x) \cdot \cot(x)
+\]
+
+Let&#x27;s denote \(a = \sin^2(x)\) and \(b = \cos^2(x)\), and note that \(a + b = 1\). Also, let&#x27;s denote \(c = \tan(x)\) and \(d = \cot(x)\). We know that \(c\) and \(d\) are positive in the interval \(0 &lt; x &lt; \frac{\pi}{2}\) and that \(cd = 1\).
+
+We want to minimize the expression \(a \cdot c + b \cdot d\). According to the given information, the minimum value is achieved when \(a\) and \(d\) are sorted in the opposite way to \(b\) and \(c\). Since \(a + b = 1\), we can assume without loss of generality that \(a \leq b\), which means that \(c \geq d\) because \(c\) and \(d\) are reciprocals.
+
+Now, we can apply the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality) to \(a \cdot c\) and \(b \cdot d\):
+
+\[
+\frac{a \cdot c + b \cdot d}{2} \geq \sqrt{a \cdot c \cdot b \cdot d}
+\]
+
+Since \(a + b = 1\) and \(c \cdot d = 1\), we have:
+
+\[
+\frac{a \cdot c + b \cdot d}{2} \geq \sqrt{a \cdot b}
+\]
+
+Multiplying both sides by 2:
+
+\[
+a \cdot c + b \cdot d \geq 2\sqrt{a \cdot b}
+\]
+
+Since \(a \cdot b = \sin^2(x) \cdot \cos^2(x)\), we can use the fact that \(\sin(2x) = 2\sin(x)\cos(x)\) to rewrite \(\sqrt{a \cdot b}\) as \(\frac{\sin(2x)}{2}\).
+
+Thus, the minimum value of the expression is:
+
+\[
+2\frac{\sin(2x)}{2} = \sin(2x)
+\]
+
+Now, we need to find the minimum value of \(\sin(2x)\) for \(0 &lt; x &lt; \frac{\pi}{2}\). Since \(\sin(2x)\) is increasing in this interval, the minimum value is achieved at \(x \rightarrow 0\), which is:
+
+\[
+\sin(2 \cdot 0) = \sin(0) = 0
+\]
+
+Therefore, the minimum value of the given expression for \(0 &lt; x &lt; \frac{\pi}{2}\) is \(0\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression \(\frac{\sin^3(x)}{\cos(x)} + \frac{\cos^3(x)}{\sin(x)}\) for \(0 &lt; x &lt; \frac{\pi}{2}\) is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

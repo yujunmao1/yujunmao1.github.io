@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_46</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (no such selection is possible)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_46']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+In how many ways can 12 geometric progressions be selected from the numbers 1, 2, ..., 100 such that every number is in exactly one progression?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find a way to partition the numbers 1 through 100 into 12 geometric progressions, with each number belonging to exactly one progression.
+
+A geometric progression (GP) is a sequence of numbers where each term after the first is found by multiplying the previous one by a constant called the common ratio. For a GP to be made from the numbers 1 to 100, the common ratio must be a rational number because all terms in the sequence must also be integers.
+
+Let&#x27;s consider the constraints:
+
+1. Each GP must have at least two terms (otherwise, it wouldn&#x27;t be a progression).
+2. The largest number in any GP cannot exceed 100.
+3. Each number from 1 to 100 must be included in exactly one GP.
+
+Given these constraints, let&#x27;s start by considering the largest number, 100. The number 100 can only be the first term of a GP if the common ratio is 1 (which would make the sequence 100, 100, 100, ...), but this violates the condition that each number must be in exactly one progression. Therefore, 100 must be a term other than the first in its GP.
+
+The divisors of 100 are 1, 2, 4, 5, 10, 20, 25, 50, and 100. Since 100 must be a term other than the first, we can consider it as the second term or later. This means the common ratio of the GP that includes 100 must be one of its divisors (excluding 100 itself).
+
+Let&#x27;s consider the largest divisor, 50. If 100 is the second term in a GP with a common ratio of 50, the first term would be 2. This GP would be 2, 100, which is valid. However, we need to find a systematic way to create all 12 GPs.
+
+To do this, let&#x27;s look at the prime factorization of the numbers from 1 to 100. Each number can be uniquely expressed as a product of prime factors. For example, the prime factorization of 100 is 2^2 * 5^2. We can use the exponents in the prime factorizations to help us form GPs.
+
+Let&#x27;s start by forming GPs with a common ratio of 2. We can take the powers of 2 up to 64 (2^6), which gives us one GP: 1, 2, 4, 8, 16, 32, 64. We can&#x27;t include 128 because it&#x27;s larger than 100.
+
+Next, we can form a GP with a common ratio of 3, taking powers of 3 up to 81 (3^4): 1, 3, 9, 27, 81.
+
+Continuing with prime numbers, we form a GP with a common ratio of 5, taking powers of 5 up to 25 (5^2): 1, 5, 25.
+
+We can also form a GP with a common ratio of 7, but since 7^2 = 49 and 7^3 = 343 (which is greater than 100), this GP will only have two terms: 1, 7.
+
+For the prime number 11, we can only have the GP: 1, 11, since 11^2 = 121 is greater than 100.
+
+Similarly, for the primes 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97, we can only have GPs with two terms: 1 and the prime number itself.
+
+Now, let&#x27;s count the GPs we have formed:
+
+1. 1, 2, 4, 8, 16, 32, 64 (7 terms)
+2. 1, 3, 9, 27, 81 (5 terms)
+3. 1, 5, 25 (3 terms)
+4. 1, 7 (2 terms)
+5-22. 1, prime number (18 GPs with 2 terms each)
+
+We have already formed 22 GPs, which is more than the 12 we need, and we haven&#x27;t even considered composite numbers that aren&#x27;t powers of primes. This indicates that the problem, as stated, may not have a solution because we cannot partition the numbers 1 through 100 into exactly 12 GPs with each number belonging to exactly one GP.
+
+It&#x27;s possible that there is a misunderstanding in the problem statement or additional constraints that were not provided. As it stands, with the information given, we cannot partition the numbers 1 through 100 into exactly 12 geometric progressions with each number belonging to exactly one progression.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem, as stated, cannot be solved because it is not possible to partition the numbers 1 through 100 into exactly 12 geometric progressions with each number belonging to exactly one progression.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

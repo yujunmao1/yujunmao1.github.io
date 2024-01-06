@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_77</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_77']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?
+
+You may find the following information useful:
+
+1. All prime numbers greater than 3 has the form of 6n±1.
+2. Let a be a positive integer and p be a prime. Then a^p≡a mod p.
+3. For odd x, x^2 mod 8=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $m$ be an integer that ends with digit 5. Then $m$ can be written as $m=10k+5$ for some integer $k$.
+
+We have
+\begin{align*}
+12^m+9^m+8^m+6^m &amp;= (2^2)^m + (3^2)^m + 2^m\cdot3^m + 2^2\cdot3^m \\\
+&amp;= 2^{2m} + 3^{2m} + 2^{m+1}3^m + 2^{2m+1}3^m \\\
+&amp;= (2^m+3^m)^2 + 2^{m+1}3^m(2-3) \\\
+&amp;\equiv (2^m+3^m)^2 \pmod{1991}.
+\end{align*}
+
+Since $m$ ends with digit 5, $m$ is odd. Therefore, $2^m$ is odd and $3^m$ is even. This implies that $2^m+3^m$ is odd.
+
+Now, let $a$ be an odd integer. Then $a^2$ is congruent to $1$ modulo $8$. Therefore, $(2^m+3^m)^2$ is congruent to $1$ modulo $8$.
+
+Since $1991$ is of the form $6n+1$, it is a prime number greater than $3$. Therefore, by Fermat&#x27;s little theorem, we have $2^{1991}\equiv 1 \pmod{1991}$.
+
+Hence, we have
+\begin{align*}
+12^m+9^m+8^m+6^m &amp;\equiv (2^m+3^m)^2 \pmod{1991} \\\
+&amp;\equiv 1^2 \pmod{1991} \\\
+&amp;\equiv 1 \pmod{1991}.
+\end{align*}
+
+Therefore, the possible values of $12^m+9^m+8^m+6^m$ modulo $1991$ are $1$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $12^m+9^m+8^m+6^m$ modulo $1991$ are $1$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

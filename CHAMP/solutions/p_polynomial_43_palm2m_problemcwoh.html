@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_43</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_43']
+messages = problem.conversations['PaLM 2 Medium|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: What are possible values of n mod k if x^n-y^n is divisible by x^k-y^k for integer n, k?
+Step-wise solution:
+1. Let n=kq+r for integer q, r and r&lt;k.
+2. Thus, x^n-y^n=x^(kq+r)-y^(kq+r)=x^(kq)*x^r-y^(kq)*y^r=x^(kq)*x^r-y^(kq)x^r+y^(kq)*x^r-y^(kq)*y^r=x^r*(x^kq-y^kq)+y^(kq)*(x^r-y^r).
+3. We have x^k-y^k | (x^k)^q-(y^k)^q, which means that x^k-y^k | x^r*(x^(kq)-y^(kq)).
+4. So we require x^k-y^k | x^r-y^r, which is only true when r=0.
+5. Thus, the only possible value of n mod k is 0.
+
+Problem: Find a perfect square number that can be written as aabb (i.e., first two digits are the same, and last two digits are the same).
+Step-wise solution:
+1. Let x^2 be the number, which means x^2=1100a+11b=11(100a+b).
+2. Thus, we have 11 | 100a+b.
+3. Since 100a+b=99a+(a+b) and 11 | 99a, we have 11 | a+b and a+b=11.
+4. So we have n^2=11(99a+(a+b))=11^2*(9a+1), which means that 9a+1 must also be a perfect square.
+5. Trying values of a from 1 to 9, we find a=7 is the only solution.
+6. Thus, b=4 and the number is 7744.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+If polynomial f(x, y) is symmetric (i.e., f(x, y)=f(y, x)) and x-y | f(x, y), can we always find h(x, y) with f(x, y)=(x-y)^2*h(x, y) such that h(x, y) is a polynomial function?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, we can always find $h(x, y)$ with $f(x, y) = (x - y)^2 h(x, y)$ such that $h(x, y)$ is a polynomial function.
+
+Let $f(x, y) = a_0 + a_1 x + a_2 y + \cdots + a_n x^n + a_{n+1} y^n + \cdots$ be a polynomial of degree $n$ in $x$ and $y$. We can write $f(x, y)$ as
+
+$$f(x, y) = (x - y)^2 g(x, y)$$
+
+for some polynomial $g(x, y)$ of degree at most $n-2$. To see this, we can write
+
+$$f(x, y) = (x - y)^2 \left( \frac{f(x, y)}{(x - y)^2} \right)$$
+
+and then use the fact that $\frac{f(x, y)}{(x - y)^2}$ is a polynomial of degree at most $n-2$.
+
+Now, let $h(x, y) = g(x, y) + c$ for some constant $c$. Then $h(x, y)$ is a polynomial of degree at most $n-2$, and
+
+$$f(x, y) = (x - y)^2 g(x, y) = (x - y)^2 h(x, y) + c (x - y)^2$$
+
+so $f(x, y) - (x - y)^2 h(x, y) = c (x - y)^2$. Since $x - y$ divides $f(x, y)$, it also divides $f(x, y) - (x - y)^2 h(x, y)$, so $c = 0$. Therefore, $h(x, y) = g(x, y)$, and we have
+
+$$f(x, y) = (x - y)^2 h(x, y)$$
+
+as desired.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, we can always find $h(x, y)$ with $f(x, y) = (x - y)^2 h(x, y)$ such that $h(x, y)$ is a polynomial function.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

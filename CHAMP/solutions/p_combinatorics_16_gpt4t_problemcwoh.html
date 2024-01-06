@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_16</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_16']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of them have an even number of 1s, as an expression of n?
+Step-wise solution:
+1. We define P(k) as the number of strings with k number of 1s, so P(k)=C(n, k)*3^(n-k).
+2. Thus, the number of length-n strings with an even number of 1s is E(n)=P(0)+P(2)+...=C(n, 0)*3^n+C(n, 2)*3^(n-2)....
+3. The number of length-n strings with an odd number of 1s is O(n)=P(1)+P(3)+...=C(n, 1)*3^(n-1)+C(n, 3)*3^(n-3)....
+4. We have E(n)+O(n)=sum_(k=0)^n C(n, k)*3^(n-k)=sum_(k=0)^n C(n, k)*3^(n-k)*1^k=(3+1)^n=4^n.
+5. In addition, E(n)-O(n)=sum_(k=0)^n C(n, k)*3^(n-k)*(-1)^k=(3-1)^n=2^n.
+6. Thus, E(n)=(4^n+2^n)/2.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A be a string of n binary digits (leading 0s are allowed). How many such strings have the substring &quot;01&quot; appearing exactly m times, as an expression of m and n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the structure of a binary string that contains the substring &quot;01&quot; exactly m times. Let&#x27;s break down the solution step by step:
+
+1. A substring &quot;01&quot; can only occur when a &#x27;0&#x27; is followed by a &#x27;1&#x27;. Since we want exactly m occurrences of &quot;01&quot;, we need m &#x27;0&#x27;s followed by &#x27;1&#x27;s at specific positions in the string.
+
+2. Each occurrence of &quot;01&quot; takes up 2 positions in the string. Therefore, m occurrences of &quot;01&quot; will take up 2m positions.
+
+3. The remaining n - 2m positions in the string can be filled with any combination of &#x27;0&#x27;s and &#x27;1&#x27;s.
+
+4. We need to place m &quot;01&quot; substrings in the string of length n. We can think of each &quot;01&quot; as a single unit. This leaves us with n - m positions to fill, since each &quot;01&quot; takes up 2 positions.
+
+5. We can place the first &quot;01&quot; in any of the n - 1 possible positions (since it takes up 2 spaces), the second &quot;01&quot; in any of the remaining n - 3 positions, and so on, until we place the m-th &quot;01&quot; in any of the remaining n - (2m - 1) positions.
+
+6. However, we must account for the fact that the order in which we place the &quot;01&quot; substrings does not matter. Therefore, we divide by the number of permutations of the m &quot;01&quot; substrings, which is m!.
+
+7. The remaining n - 2m positions can be filled with any binary digit, so there are 2^(n - 2m) ways to fill these positions.
+
+Putting it all together, the number of ways to arrange the &quot;01&quot; substrings is the product of the number of ways to choose the positions for the &quot;01&quot; substrings and the number of ways to fill the remaining positions. However, we must be careful not to overcount, as we have to ensure that we do not create additional &quot;01&quot; substrings when placing the remaining &#x27;0&#x27;s and &#x27;1&#x27;s.
+
+The formula for the number of ways to place the &quot;01&quot; substrings is:
+
+Number of ways to place &quot;01&quot; substrings = (n - 1) * (n - 3) * ... * (n - (2m - 1)) / m!
+
+However, this formula does not account for the restriction that we cannot create additional &quot;01&quot; substrings. To ensure we do not create additional &quot;01&quot; substrings, we must place &#x27;0&#x27;s and &#x27;1&#x27;s in the remaining positions in such a way that no &#x27;0&#x27; is directly followed by a &#x27;1&#x27; unless it is part of the m &quot;01&quot; substrings we have already placed.
+
+This restriction complicates the problem significantly, as we must consider various cases depending on where the &quot;01&quot; substrings are placed and how the remaining &#x27;0&#x27;s and &#x27;1&#x27;s are arranged. The problem, as stated, does not have a straightforward closed-form solution due to this complexity.
+
+To find an exact expression for the number of strings with exactly m &quot;01&quot; substrings, we would need to use a more advanced combinatorial argument or recursive approach, potentially involving generating functions or inclusion-exclusion principles, which would allow us to count the valid arrangements without overcounting those that violate the &quot;no additional &#x27;01&#x27; substrings&quot; restriction.
+
+Given the complexity of the problem, a full solution would require a more detailed analysis that is beyond the scope of this response. If you are looking for a more in-depth exploration of this problem, it may be necessary to consult advanced combinatorial literature or perform a case-by-case analysis using combinatorial algorithms.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem of counting binary strings of length n with exactly m occurrences of the substring &quot;01&quot; does not have a straightforward closed-form solution due to the complexity of ensuring no additional &quot;01&quot; substrings are created, and would require advanced combinatorial techniques or algorithms to solve.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

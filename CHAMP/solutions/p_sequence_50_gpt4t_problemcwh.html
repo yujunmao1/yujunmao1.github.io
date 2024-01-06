@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_50</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_50']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a sequence be the defined as a_1=a_2=1, and a_n=(a_(n-1)^2+2)/a_(n-2). How many values in a_1, a_2, ..., a_100 are integers?
+
+You may find the following information useful:
+
+1. Write the expression for a_n*a_(n-2) and a_(n+1)*a_(n-1).
+2. Find the relationship between (a_(n-1)+a_(n+1))/a_n and (a_(n-2)+a_n)/a_(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by writing the expressions for \( a_n \cdot a_{n-2} \) and \( a_{n+1} \cdot a_{n-1} \) using the given recursive formula:
+
+Given \( a_n = \frac{a_{n-1}^2 + 2}{a_{n-2}} \), we can multiply both sides by \( a_{n-2} \) to get:
+
+\[ a_n \cdot a_{n-2} = a_{n-1}^2 + 2 \]
+
+Now, let&#x27;s find \( a_{n+1} \cdot a_{n-1} \):
+
+\[ a_{n+1} = \frac{a_n^2 + 2}{a_{n-1}} \]
+
+Multiplying both sides by \( a_{n-1} \), we get:
+
+\[ a_{n+1} \cdot a_{n-1} = a_n^2 + 2 \]
+
+Now, let&#x27;s find the relationship between \( \frac{a_{n-1} + a_{n+1}}{a_n} \) and \( \frac{a_{n-2} + a_n}{a_{n-1}} \):
+
+Using the expressions we found for \( a_n \cdot a_{n-2} \) and \( a_{n+1} \cdot a_{n-1} \), we can write:
+
+\[ \frac{a_{n-1} + a_{n+1}}{a_n} = \frac{a_{n-1} + \frac{a_n^2 + 2}{a_{n-1}}}{a_n} = \frac{a_{n-1}^2 + a_n^2 + 2}{a_n \cdot a_{n-1}} \]
+
+\[ \frac{a_{n-2} + a_n}{a_{n-1}} = \frac{a_{n-2} + \frac{a_{n-1}^2 + 2}{a_{n-2}}}{a_{n-1}} = \frac{a_{n-2}^2 + a_{n-1}^2 + 2}{a_{n-1} \cdot a_{n-2}} \]
+
+Notice that both numerators are the same, \( a_{n-1}^2 + a_n^2 + 2 \), and the denominators are the products of consecutive terms of the sequence. This suggests that the two expressions are equal:
+
+\[ \frac{a_{n-1} + a_{n+1}}{a_n} = \frac{a_{n-2} + a_n}{a_{n-1}} \]
+
+Now, let&#x27;s try to find a pattern in the sequence to determine which terms are integers. We start with \( a_1 = 1 \) and \( a_2 = 1 \), and we can calculate the next few terms:
+
+\[ a_3 = \frac{a_2^2 + 2}{a_1} = \frac{1^2 + 2}{1} = 3 \]
+\[ a_4 = \frac{a_3^2 + 2}{a_2} = \frac{3^2 + 2}{1} = 11 \]
+\[ a_5 = \frac{a_4^2 + 2}{a_3} = \frac{11^2 + 2}{3} = \frac{123}{3} = 41 \]
+
+We can see that \( a_3, a_4, \) and \( a_5 \) are all integers. However, without a clear pattern, it&#x27;s difficult to determine which of the terms up to \( a_{100} \) are integers. We need to find a more systematic approach.
+
+Let&#x27;s consider the relationship we derived earlier:
+
+\[ \frac{a_{n-1} + a_{n+1}}{a_n} = \frac{a_{n-2} + a_n}{a_{n-1}} \]
+
+This can be rewritten as:
+
+\[ a_{n-1} \cdot a_n + a_n \cdot a_{n+1} = a_{n-2} \cdot a_{n-1} + a_{n-1} \cdot a_n \]
+
+Simplifying, we get:
+
+\[ a_n \cdot a_{n+1} = a_{n-2} \cdot a_{n-1} \]
+
+This implies that the product of two consecutive terms is constant. Since \( a_1 = a_2 = 1 \), the product of any two consecutive terms is 1. This means that if \( a_n \) is an integer, then \( a_{n+1} \) must also be an integer because their product is 1.
+
+Now, we know that \( a_1, a_2, \) and \( a_3 \) are integers. By the property we just discovered, all subsequent terms \( a_4, a_5, \ldots, a_{100} \) must also be integers because each term is the reciprocal of the previous term (since their product is 1), and the previous term is an integer.
+
+Therefore, all values in \( a_1, a_2, \ldots, a_{100} \) are integers. There are 100 terms in this sequence, so the answer is 100.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>All 100 terms in the sequence \(a_1, a_2, \ldots, a_{100}\) are integers.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

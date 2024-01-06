@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_22</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 999 (i.e., all except for one value)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_22']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {x_n} is defined by x_1=2, x_(n+1)=(x_n^4+9)/(10x_n). For how many values of x_1, x_2, ..., x_1000 do we have x_n≤5/4?
+
+You may find the following information useful:
+
+1. Let (a_1, ..., a_n) and (b_1, ..., b_n) be two similarly sorted sequences (e.g., both increasing or both decreasing). Then ((a_1+...+a_n)/n)*((b_1+...+b_n)/n)≤(a_1*b_1+...+a_n*b_n)/n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the behavior of the sequence {x_n} given by the recursive formula x_1=2 and x_(n+1)=(x_n^4+9)/(10x_n). We want to find out for how many values of x_1, x_2, ..., x_1000 the inequality x_n ≤ 5/4 holds.
+
+First, let&#x27;s examine the recursive formula to see if we can find any patterns or behaviors that will help us determine when x_n ≤ 5/4.
+
+Given x_(n+1) = (x_n^4 + 9) / (10x_n), we can see that if x_n is large, the term x_n^4 will dominate the numerator, and since the denominator is 10x_n, the sequence will tend to decrease. Conversely, if x_n is small, the constant 9 in the numerator will have a larger effect, and since the denominator is 10x_n, the sequence will tend to increase. This suggests that the sequence might have a fixed point or a value that it converges to.
+
+Let&#x27;s find the fixed point by setting x_(n+1) = x_n = x and solving for x:
+
+x = (x^4 + 9) / (10x)
+10x^2 = x^4 + 9
+x^4 - 10x^2 + 9 = 0
+
+This is a quadratic in terms of x^2. Let y = x^2, then we have:
+
+y^2 - 10y + 9 = 0
+
+Factoring this quadratic equation gives us:
+
+(y - 1)(y - 9) = 0
+
+So y = 1 or y = 9. Since y = x^2, we have x = ±1 or x = ±3. However, since we are looking for positive values of x (as the sequence starts with x_1 = 2), we only consider x = 1 and x = 3.
+
+Now, we need to determine the behavior of the sequence around these fixed points. If x_n is slightly greater than 1, then x_(n+1) will be slightly less than 1, and vice versa, which means x = 1 is a repelling fixed point. For x = 3, if x_n is slightly greater than 3, then x_(n+1) will be slightly greater than 3, and vice versa, which means x = 3 is an attracting fixed point.
+
+Since the sequence starts at x_1 = 2, which is between these two fixed points, and 1 is repelling while 3 is attracting, the sequence will tend to move towards 3. Therefore, we expect that after some number of terms, all subsequent terms will be close to 3 and certainly greater than 5/4.
+
+To find out how many terms are less than or equal to 5/4, we need to compute the terms of the sequence until they are all greater than 5/4. However, this could be computationally intensive for 1000 terms, and we need a more analytical approach.
+
+Let&#x27;s consider the inequality x_n ≤ 5/4. If at any point x_n &gt; 5/4, then because 3 is an attracting fixed point, all subsequent terms will also be greater than 5/4. So we only need to check the terms until we first get a term greater than 5/4.
+
+Let&#x27;s compute the first few terms manually to see if we can find when the sequence first exceeds 5/4:
+
+x_1 = 2
+x_2 = (2^4 + 9) / (10*2) = (16 + 9) / 20 = 25 / 20 = 5/4
+x_3 = ((5/4)^4 + 9) / (10*(5/4)) = (625/256 + 9) / (50/4) = (625/256 + 2304/256) / (50/4) = 2929/256 * 4/50 = 2929/3200
+
+Now, we need to check if 2929/3200 is greater than 5/4. To compare these two fractions without calculating their decimal values, we can cross-multiply:
+
+2929 * 4 ? 3200 * 5
+11716 ? 16000
+
+Since 11716 &lt; 16000, we have 2929/3200 &lt; 5/4. Therefore, x_3 is still less than or equal to 5/4.
+
+We can continue this process, but it&#x27;s clear that the sequence is increasing and approaching the attracting fixed point of 3. Thus, we can conclude that there will be a finite number of terms less than or equal to 5/4 before all subsequent terms exceed this value.
+
+Without an explicit formula for the terms of the sequence, it&#x27;s difficult to determine the exact number of terms that are less than or equal to 5/4 without computing them. However, based on the behavior of the sequence, we can say that there will be only a few such terms, and we would need to compute them one by one until we find the first term that exceeds 5/4.
+
+Since the problem requires an exact number and the computation for 1000 terms is not feasible here, we would need to implement a program or use a computational tool to find the exact number of terms that are less than or equal to 5/4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence defined by x_1=2 and x_(n+1)=(x_n^4+9)/(10x_n) will have a finite number of terms less than or equal to 5/4, but without explicit computation, we cannot determine the exact number of such terms within the first 1000 terms.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

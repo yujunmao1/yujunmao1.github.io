@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_11</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 20</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_11']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If x_1, x_2 are the two roots of the polynomial x^2-6x+1, for how many integer n in {61, 62, ..., 120} does x_1^n+x_2^n divided by 5 give a remainder of 4?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have x_1+x_2=6, x_1*x_2=1.
+2. Define u=x_1+x_2, v=x_1*x_2 and s_n=x_1^n+x_2^n.
+3. Thus, we have s_0=2, s_1=6 and s_n=u^s_(n-1)-v*s_(n-2)=6s_(n-1)-s_(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the recurrence relation s_n = 6s_(n-1) - s_(n-2), we can compute the first few terms to identify a pattern modulo 5:
+
+s_0 = 2
+s_1 = 6 ≡ 1 (mod 5)
+s_2 = 6s_1 - s_0 = 6*6 - 2 = 36 - 2 = 34 ≡ 4 (mod 5)
+s_3 = 6s_2 - s_1 = 6*34 - 6 = 204 - 6 = 198 ≡ 3 (mod 5)
+s_4 = 6s_3 - s_2 = 6*198 - 34 = 1188 - 34 = 1154 ≡ 4 (mod 5)
+s_5 = 6s_4 - s_3 = 6*1154 - 198 = 6924 - 198 = 6726 ≡ 1 (mod 5)
+s_6 = 6s_5 - s_4 = 6*6726 - 1154 = 40356 - 1154 = 39202 ≡ 2 (mod 5)
+
+We can see that the sequence modulo 5 is starting to repeat with the period of 4: 2, 1, 4, 3, 4, 1, 2, ...
+
+Now, we want to find for how many integers n in the set {61, 62, ..., 120} does s_n ≡ 4 (mod 5).
+
+Since the sequence repeats every 4 terms, we can find the remainder when n is divided by 4 to determine the value of s_n modulo 5.
+
+For s_n to be equivalent to 4 modulo 5, n must be of the form 4k + 2 or 4k + 0, where k is an integer.
+
+Let&#x27;s find the remainders when 61, 62, ..., 120 are divided by 4:
+
+- 61 mod 4 = 1
+- 62 mod 4 = 2
+- 63 mod 4 = 3
+- 64 mod 4 = 0
+- ...
+- 120 mod 4 = 0
+
+We are interested in the cases where the remainder is 2 or 0.
+
+Starting from 61, the first n that gives a remainder of 2 when divided by 4 is 62. Then, every 4th number after that will also give a remainder of 2. Similarly, starting from 64, every 4th number will give a remainder of 0.
+
+So, for n = 62, 66, 70, ..., 118 (for remainder 2) and n = 64, 68, 72, ..., 120 (for remainder 0), s_n will be equivalent to 4 modulo 5.
+
+To count these, we can use an arithmetic sequence formula. For the sequence starting at 62 and increasing by 4 each time, the nth term is given by:
+
+a_n = a_1 + (n - 1)d
+
+where a_1 = 62 and d = 4. We want to find the largest n such that a_n ≤ 120. Rearranging the formula:
+
+n = (a_n - a_1)/d + 1
+
+For a_n = 118 (the largest term less than or equal to 120):
+
+n = (118 - 62)/4 + 1 = 56/4 + 1 = 14 + 1 = 15
+
+So, there are 15 terms in the sequence 62, 66, ..., 118.
+
+For the sequence starting at 64 and increasing by 4 each time, the nth term is given by:
+
+a_n = a_1 + (n - 1)d
+
+where a_1 = 64 and d = 4. We want to find the largest n such that a_n ≤ 120. For a_n = 120:
+
+n = (120 - 64)/4 + 1 = 56/4 + 1 = 14 + 1 = 15
+
+So, there are also 15 terms in the sequence 64, 68, ..., 120.
+
+Adding these together, there are 15 + 15 = 30 integers n in the set {61, 62, ..., 120} for which s_n ≡ 4 (mod 5).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 30 integers n in the set {61, 62, ..., 120} for which \( x_1^n + x_2^n \) divided by 5 gives a remainder of 4.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

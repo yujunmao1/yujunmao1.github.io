@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_4</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_4']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1, x_2&lt;100 be two positive integers. For k≥3, let x_k be the smallest of the absolute values of the pairwise differences of the preceding terms. What are possible values of x_12?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to understand the sequence&#x27;s behavior as it progresses. We start with two positive integers \( x_1 \) and \( x_2 \) such that \( x_1, x_2 &lt; 100 \). For \( k \geq 3 \), \( x_k \) is defined as the smallest of the absolute values of the pairwise differences of the preceding terms.
+
+Let&#x27;s denote the difference between \( x_1 \) and \( x_2 \) as \( d \). Without loss of generality, we can assume \( x_1 &gt; x_2 \), so \( d = x_1 - x_2 \). Now, \( x_3 \) will be the smallest absolute difference, which is \( d \) itself.
+
+Now, we have three numbers: \( x_1, x_2, \) and \( x_3 (= d) \). The next term, \( x_4 \), will be the smallest absolute difference between any two of these three numbers. Since \( x_3 \) is already the smallest difference between \( x_1 \) and \( x_2 \), the next smallest difference could be between \( x_2 \) and \( x_3 \) or between \( x_1 \) and \( x_3 \). Both of these differences will be \( d \) or a multiple of \( d \).
+
+As we continue this process, we will keep getting differences that are multiples of \( d \). Eventually, we will get a difference of 0 if \( d \) divides one of the numbers, or we will reach the greatest common divisor (GCD) of \( x_1 \) and \( x_2 \) if \( d \) does not divide one of the numbers perfectly.
+
+Once we reach the GCD, the sequence will start repeating because the smallest absolute difference between any two terms that include the GCD will always be the GCD itself. Therefore, the sequence will become constant at the GCD.
+
+Since the sequence becomes constant at the GCD of \( x_1 \) and \( x_2 \), and we are looking for \( x_{12} \), we can say that \( x_{12} \) will be the GCD of \( x_1 \) and \( x_2 \).
+
+The possible values of \( x_{12} \) are any positive integer that can be the GCD of two numbers less than 100. This means \( x_{12} \) can be any positive integer less than 100 because any positive integer less than 100 can be the GCD of some pair of numbers less than 100. For example, the number 1 is the GCD of (1, 2), the number 2 is the GCD of (2, 4), and so on, up to the number 99, which is the GCD of (99, 99).
+
+Therefore, the possible values of \( x_{12} \) are all positive integers from 1 to 99.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of \( x_{12} \) are all positive integers from 1 to 99.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

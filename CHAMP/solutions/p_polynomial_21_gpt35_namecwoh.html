@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_21</td>
+            <td>GPT-3.5</td>
+            <td>Name w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> a=3, b=-7, c=4</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_21']
+messages = problem.conversations['GPT-3.5|Name w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a, b, c such that (x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3).
+
+You may find the following information useful:
+
+1. Find the expression for x+5 in terms of a, b, c and x.
+2. Find the values of a, b, c by studying the expression at x=1, 2, 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the values of a, b, and c, we can start by multiplying both sides of the equation by the denominator (x-1)(x-2)(x-3):
+
+(x+5) = a(x-2)(x-3) + b(x-1)(x-3) + c(x-1)(x-2)
+
+Expanding the right side of the equation:
+
+x+5 = a(x^2 - 5x + 6) + b(x^2 - 4x + 3) + c(x^2 - 3x + 2)
+
+Simplifying:
+
+x+5 = (a+b+c)x^2 + (-5a-4b-3c)x + (6a+3b+2c)
+
+Now, we can equate the coefficients of x^2, x, and the constant term on both sides of the equation:
+
+Coefficient of x^2: a+b+c = 0
+Coefficient of x: -5a-4b-3c = 1
+Constant term: 6a+3b+2c = 5
+
+We now have a system of three equations with three unknowns (a, b, c). We can solve this system to find the values of a, b, and c.
+
+From the first equation, we have a+b+c = 0, which implies that a = -b-c.
+
+Substituting this into the second equation, we get -5(-b-c) - 4b - 3c = 1:
+
+5b + 5c - 4b - 3c = 1
+b + 2c = 1
+
+From the third equation, we have 6(-b-c) + 3b + 2c = 5:
+
+-6b - 6c + 3b + 2c = 5
+-3b - 4c = 5
+
+Now, we have a system of two equations with two unknowns (b, c):
+
+b + 2c = 1
+-3b - 4c = 5
+
+Multiplying the first equation by 3 and the second equation by -1, we can eliminate b:
+
+3b + 6c = 3
+3b + 4c = -5
+
+Subtracting the second equation from the first, we get:
+
+2c = 8
+c = 4
+
+Substituting this value of c into the first equation, we can solve for b:
+
+b + 2(4) = 1
+b + 8 = 1
+b = -7
+
+Finally, substituting the values of b and c into the equation a = -b-c, we can find a:
+
+a = -(-7) - 4
+a = 7 - 4
+a = 3
+
+Therefore, the values of a, b, and c are a = 3, b = -7, and c = 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The values of a, b, and c are a = 3, b = -7, and c = 4.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

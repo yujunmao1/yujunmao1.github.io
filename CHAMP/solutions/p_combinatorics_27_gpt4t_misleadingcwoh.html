@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_27</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2*C(10, 5), or equivalently 504</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_27']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many strings of length 5 using the digits {0, 1, ..., 9} (with leading zeros allowed) have strictly increasing or decreasing digits?
+
+You may find the following information useful:
+
+1. If we count each object d times and get a total of n counts, then there are n/d objects.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of strings of length 5 with strictly increasing digits and the number of strings with strictly decreasing digits separately, and then add them together.
+
+**Strictly Increasing Strings:**
+
+For a string of length 5 to have strictly increasing digits, we must choose 5 different digits from the set {0, 1, ..., 9} and then arrange them in increasing order. The order is determined once we choose the 5 digits since they must be in increasing order.
+
+The number of ways to choose 5 different digits out of 10 is given by the binomial coefficient &quot;10 choose 5&quot;, which is:
+
+C(10, 5) = 10! / (5! * (10 - 5)!) = 10! / (5! * 5!) = (10 * 9 * 8 * 7 * 6) / (5 * 4 * 3 * 2 * 1) = 252
+
+So, there are 252 strictly increasing strings of length 5.
+
+**Strictly Decreasing Strings:**
+
+For strictly decreasing strings, the process is similar. We again choose 5 different digits from the set {0, 1, ..., 9}, but this time we arrange them in decreasing order. The number of ways to choose the digits is the same as for increasing strings, since the order is again determined once the digits are chosen.
+
+So, there are also 252 strictly decreasing strings of length 5.
+
+**Combining the Counts:**
+
+Now, we add the number of strictly increasing strings to the number of strictly decreasing strings to get the total number of strings that are either strictly increasing or strictly decreasing:
+
+Total = 252 (increasing) + 252 (decreasing) = 504
+
+However, we must be careful not to double-count the strings that are both strictly increasing and strictly decreasing. These would be strings where all digits are the same, but since we are looking for strictly increasing or decreasing strings, such strings do not exist in our case (as they would not be strictly increasing or decreasing).
+
+Therefore, the final answer is 504 strings of length 5 with strictly increasing or decreasing digits.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 504 strings of length 5 using the digits {0, 1, ..., 9} that have strictly increasing or decreasing digits.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

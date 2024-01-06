@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_3</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At most 0 integer-valued zeros (i.e., no integer zeros)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_3']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Let f(x) be a polynomial of degree n with integer coefficients. If there are three different integers a, b, c, such that f(a)=f(b)=f(c)=-1, then at most how many integer-valued roots can this polynomial have?
+Step-wise solution:
+1. Let g(x)=f(x)+1, so a, b, c are the three roots of g(x).
+2. Thus, g(x)=(x-a)(x-b)(x-c)h(x) for some polynomial h(x).
+3. If there exists integer k such that f(k)=0, then g(k)=f(k)+1=1.
+4. This means that (k-a)(k-b)(k-c)h(k)=1.
+5. The first three terms are all distinct integers, but 1 can be the product of at most one distinct integers (1 itself).
+6. Thus, we have a contradiction, and no such k exists.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, at most how many integer-valued zeros can it have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the properties of polynomials with integer coefficients and the parity of the function values at specific points.
+
+Let&#x27;s analyze the given information:
+
+1. f(x) is a polynomial of degree n with integer coefficients.
+2. f(0) is odd.
+3. f(1) is odd.
+
+Now, let&#x27;s consider the polynomial evaluated at an integer-valued zero, say k, where k is an integer. If f(k) = 0, then k is a root of the polynomial f(x).
+
+Since f(0) is odd, we can write f(0) = 2m + 1 for some integer m. Similarly, since f(1) is odd, we can write f(1) = 2n + 1 for some integer n.
+
+Now, let&#x27;s consider the polynomial f(x) - f(0). This new polynomial has the same roots as f(x) except for x = 0, which is no longer a root since f(0) - f(0) = 0. However, the new polynomial has the property that it evaluates to an even number at x = 0 because f(0) - f(0) = 0, which is even.
+
+Let&#x27;s denote this new polynomial as g(x) = f(x) - f(0). Now, g(0) = 0 (even) and g(1) = f(1) - f(0) = (2n + 1) - (2m + 1) = 2(n - m), which is also even.
+
+Now, let&#x27;s consider the polynomial g(x) evaluated at an integer-valued zero k. If g(k) = 0, then f(k) = f(0) = 2m + 1, which is odd. But since g(k) = f(k) - f(0), we have g(k) = (2m + 1) - (2m + 1) = 0.
+
+Now, let&#x27;s consider the polynomial g(x) - g(1). This polynomial, which we&#x27;ll call h(x), has the same roots as g(x) except for x = 1, which is no longer a root since g(1) - g(1) = 0. However, h(x) has the property that it evaluates to an even number at x = 1 because g(1) - g(1) = 0, which is even.
+
+So, h(x) = g(x) - g(1) = f(x) - f(0) - (f(1) - f(0)) = f(x) - f(1).
+
+Now, h(0) = f(0) - f(1) = (2m + 1) - (2n + 1) = 2(m - n), which is even, and h(1) = f(1) - f(1) = 0, which is also even.
+
+If h(x) has an integer-valued zero, say k (where k is not 0 or 1 since those are not zeros of h(x)), then h(k) = f(k) - f(1) = 0 - (2n + 1) = - (2n + 1), which is odd.
+
+However, we have established that h(x) evaluates to an even number at integer values (since both h(0) and h(1) are even), so we have a contradiction. Therefore, h(x) cannot have any integer-valued zeros other than 0 and 1, which are not zeros of h(x).
+
+Since h(x) = f(x) - f(1) and f(x) is the original polynomial, we conclude that f(x) cannot have any integer-valued zeros other than possibly 0 and 1. However, since f(0) and f(1) are both odd, they cannot be zeros of f(x).
+
+Therefore, the polynomial f(x) with integer coefficients, where both f(0) and f(1) are odd, cannot have any integer-valued zeros. The answer to the problem is that at most, f(x) can have 0 integer-valued zeros.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>A polynomial f(x) of degree n with integer coefficients, where both f(0) and f(1) are odd, cannot have any integer-valued zeros.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

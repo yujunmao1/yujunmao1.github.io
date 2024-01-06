@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_21</td>
+            <td>GPT-3.5</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No integer solutions</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_21']
+messages = problem.conversations['GPT-3.5|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have x_(k+1)=x_k^2+x_k=x_k(x_k+1), so 1/x_(k+1)=1/(x_k(x_k+1))=1/x_k-1/(x_k+1).
+2. Thus, 1/(x_k+1)=1/x_k-1/x_(k+1).
+3. So 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)=(1/x_1-1/x_2)+(1/x_2-1/x_3)+...+(1/x_100-1/x_101)=1/x_1-1/x_101.
+4. We have x_1=1/2, x_2=3/4, x_3=21/16&gt;1.
+5. Since x_(n+1)=x_n^2+x_n&gt;x_n, we have x_n&gt;1 for all n≥3.
+6. Thus, 1/x_101&lt;1.
+7. This means that the integer part of 1/x_1-1/x_101 is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Do there exist positive integers x, y such that x+y, x+2y and 2x+y are both squares?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let x+y=a^2, x+2y=b^2, 2x+y=c^2.
+2. Thus, 3a^2=b^2+c^2.
+3. Since u^2 mod 3∈{0, 1}, we must have b^2 mod 3=c^2 mod 3=0.
+4. This means 3 | b and 3 | c.
+5. Thus, for b=3v and c=3w, b^2 mod 9=c^2 mod 9=0.
+6. So a^2 mod 3=0, and 3 | a.
+7. Therefore, we can substitute a=3u, b=3v, c=3w into the equation and get 3u^2=v^2+w^2.
+8. So if (a,b,c) satisfies the equation, (a/3, b/3, c/3) also satisfies the equation.
+9. Thus, the only possible value for integer (a, b, c) is (0, 0, 0), but this contradicts with the fact that x, y are positive.
+10. So there cannot exist such x, y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence starts with 1, 9, 7, 7, 4, 7, 5, 3, 9, 4, 1... From the fifth number, every number is the sum of the preceding four numbers mod 10. Could the sequence contain 3, 2, 6, 9 as a subsequence somewhere?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. In its parity representation (0 for even and 1 for odd), the sequence is 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, ...
+2. The sequence generation rule dictates that there is an even number for every four odd numbers.
+3. Thus, the sequence 3, 2, 6, 9, which can be written in parity as 1, 0, 0, 1 can never occur.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For non-negative a, b, c, d, what is the smallest value of sqrt((a+c)(b+d))-sqrt(ab)-sqrt(cd)-1?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have sqrt((a+c)(b+d))^2=(a+c)(b+d)=ab+ad+bc+cd.
+2. We have (sqrt(ab)+sqrt(cd))^2=ab+cd+2*sqrt(abcd).
+3. Thus, sqrt((a+c)(b+d))^2-(sqrt(ab)+sqrt(cd))^2=ad+bc-2sqrt(abcd), which is non-negative because ad+bc≥2sqrt(abcd).
+4. Thus, sqrt((a+c)(b+d))^2≥(sqrt(ab)+sqrt(cd))^2.
+5. Since a, b, c, d are all non-negative, we have sqrt((a+c)(b+d))≥sqrt(ab)+sqrt(cd).
+6. So the smallest value of sqrt((a+c)(b+d))-sqrt(ab)-sqrt(cd)-1 is -1, achieved when a=b=c=d.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {a_n} is defined by a_1=1, a_(n+1)=a_n+1/a_n^2. Do we have a_9000&gt;30?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_2^3=(1+1)^3=8&gt;3*2.
+2. Assume that a_n^3&gt;3n, then we have a_(n+1)^3=a_n^3+3+3/a_n^3+1/a_n^6&gt;a_n^3+3&gt;3(n+1).
+3. Thus, we have a_n^3&gt;3n for all n, or a_n&gt;(3n)^(1/3).
+4. So a_9000&gt;(3*9000)^(1/3)=27000^(1/3)=30.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation 19x^3-84y^2=1984.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. Rearrange the equation to get 19x^3 = 84y^2 + 1984.
+2. Notice that the right-hand side is divisible by 4, so x must also be divisible by 2.
+3. Let x = 2k, where k is an integer.
+4. Substitute x = 2k into the equation: 19(2k)^3 = 84y^2 + 1984.
+5. Simplify: 152k^3 = 84y^2 + 1984.
+6. Divide both sides by 8: 19k^3 = 10y^2 + 248.
+7. Observe that the right-hand side is divisible by 8, so k must also be divisible by 2.
+8. Let k = 2m, where m is an integer.
+9. Substitute k = 2m into the equation: 19(2m)^3 = 10y^2 + 248.
+10. Simplify: 304m^3 = 10y^2 + 248.
+11. Divide both sides by 8: 38m^3 = 5y^2 + 31.
+12. Observe that the right-hand side is odd, so y must also be odd.
+13. Let y = 2n + 1, where n is an integer.
+14. Substitute y = 2n + 1 into the equation: 38m^3 = 5(2n + 1)^2 + 31.
+15. Expand and simplify: 38m^3 = 20n^2 + 20n + 36.
+16. Divide both sides by 2: 19m^3 = 10n^2 + 10n + 18.
+17. Observe that the right-hand side is even, so m must also be even.
+18. Let m = 2p, where p is an integer.
+19. Substitute m = 2p into the equation: 19(2p)^3 = 10n^2 + 10n + 18.
+20. Simplify: 304p^3 = 10n^2 + 10n + 18.
+21. Divide both sides by 2: 152p^3 = 5n^2 + 5n + 9.
+22. Observe that the right-hand side is odd, so p must also be odd.
+23. Let p = 2q + 1, where q is an integer.
+24. Substitute p = 2q + 1 into the equation: 152(2q + 1)^3 = 5n^2 + 5n + 9.
+25. Expand and simplify: 608q^3 + 912q^2 + 456q + 152 = 5n^2 + 5n + 9.
+26. Rearrange: 5n^2 + 5n = 608q^3 + 912q^2 + 456q + 143.
+27. Observe that the left-hand side is divisible by 5, so n must also be divisible by 5.
+28. Let n = 5r, where r is an integer.
+29. Substitute n = 5r into the equation: 5(5r)^2 + 5(5r) = 608q^3 + 912q^2 + 456q + 143.
+30. Simplify: 125r^2 + 25r = 608q^3 + 912q^2 + 456q + 143.
+31. Rearrange: 125r^2 + 25r - 608q^3 - 912q^2 - 456q = 143.
+32. Observe that the left-hand side is divisible by 25, so r must also be divisible by 25.
+33. Let r = 25s, where s is an integer.
+34. Substitute r = 25s into the equation: 125(25s)^2 + 25(25s) - 608q^3 - 912q^2 - 456q = 143.
+35. Simplify: 78125s^2 + 625s - 608q^3 - 912q^2 - 456q = 143.
+36. Rearrange: 78125s^2 + 625s - 608q^3 - 912q^2 - 456q - 143 = 0.
+37. Observe that the left-hand side is divisible by 13, so q must also be divisible by 13.
+38. Let q = 13t, where t is an integer.
+39. Substitute q = 13t into the equation: 78125s^2 + 625s - 608(13t)^3 - 912(13t)^2 - 456(13t) - 143 = 0.
+40. Simplify: 78125s^2 + 625s - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+41. Rearrange: 78125s^2 + 625s - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+42. Observe that the left-hand side is divisible by 13, so s must also be divisible by 13.
+43. Let s = 13u, where u is an integer.
+44. Substitute s = 13u into the equation: 78125(13u)^2 + 625(13u) - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+45. Simplify: 2197(13^2)u^2 + 625(13)u - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+46. Rearrange: 2197(13^2)u^2 + 625(13)u - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+47. Observe that the left-hand side is divisible by 13, so u must also be divisible by 13.
+48. Let u = 13v, where v is an integer.
+49. Substitute u = 13v into the equation: 2197(13^2)(13v)^2 + 625(13)(13v) - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+50. Simplify: 2197(13^3)v^2 + 625(13^2)v - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+51. Rearrange: 2197(13^3)v^2 + 625(13^2)v - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+52. Observe that the left-hand side is divisible by 13, so v must also be divisible by 13.
+53. Let v = 13w, where w is an integer.
+54. Substitute v = 13w into the equation: 2197(13^3)(13w)^2 + 625(13^2)(13w) - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+55. Simplify: 2197(13^4)w^2 + 625(13^3)w - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+56. Rearrange: 2197(13^4)w^2 + 625(13^3)w - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+57. Observe that the left-hand side is divisible by 13, so w must also be divisible by 13.
+58. Let w = 13x, where x is an integer.
+59. Substitute w = 13x into the equation: 2197(13^4)(13x)^2 + 625(13^3)(13x) - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+60. Simplify: 2197(13^5)x^2 + 625(13^4)x - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+61. Rearrange: 2197(13^5)x^2 + 625(13^4)x - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+62. Observe that the left-hand side is divisible by 13, so x must also be divisible by 13.
+63. Let x = 13y, where y is an integer.
+64. Substitute x = 13y into the equation: 2197(13^5)(13y)^2 + 625(13^4)(13y) - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+65. Simplify: 2197(13^6)y^2 + 625(13^5)y - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+66. Rearrange: 2197(13^6)y^2 + 625(13^5)y - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+67. Observe that the left-hand side is divisible by 13, so y must also be divisible by 13.
+68. Let y = 13z, where z is an integer.
+69. Substitute y = 13z into the equation: 2197(13^6)(13z)^2 + 625(13^5)(13z) - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+70. Simplify: 2197(13^8)z^2 + 625(13^6)z - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+71. Rearrange: 2197(13^8)z^2 + 625(13^6)z - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+72. Observe that the left-hand side is divisible by 13, so z must also be divisible by 13.
+73. Let z = 13m, where m is an integer.
+74. Substitute z = 13m into the equation: 2197(13^8)(13m)^2 + 625(13^6)(13m) - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+75. Simplify: 2197(13^10)m^2 + 625(13^8)m - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+76. Rearrange: 2197(13^10)m^2 + 625(13^8)m - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+77. Observe that the left-hand side is divisible by 13, so m must also be divisible by 13.
+78. Let m = 13n, where n is an integer.
+79. Substitute m = 13n into the equation: 2197(13^10)(13n)^2 + 625(13^8)(13n) - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+80. Simplify: 2197(13^12)n^2 + 625(13^10)n - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+81. Rearrange: 2197(13^12)n^2 + 625(13^10)n - 608(13^3)t^3 - 912(13^2)t^2 - 456(13)t - 143 = 0.
+82. Observe that the left-hand side is divisible by 13, so n must also be divisible by 13.
+83. Let n = 13p, where p is an integer.
+84. Substitute n = 13p into the equation: 2197(13^12)(13p)^2 + 625(13^10)(13p) - 608(13^3)t^3 - 912(13^2)t^</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>LENGTH EXCEED</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

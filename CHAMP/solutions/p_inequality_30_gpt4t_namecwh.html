@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_30</td>
+            <td>GPT-4 Turbo</td>
+            <td>Name w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> n/(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_30']
+messages = problem.conversations['GPT-4 Turbo|Name w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Please explain the following concept: rearrangement inequality.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The rearrangement inequality is a fundamental result in combinatorial mathematics that provides a way to compare the sums of products of elements from two sequences when the sequences are permuted in different ways. It states that, for any two sequences of real numbers that are both either non-increasing or non-decreasing, the sum of the products of corresponding terms is maximized when the sequences are ordered in the same way and minimized when the sequences are ordered in the opposite way.
+
+More formally, let&#x27;s consider two sequences of real numbers:
+
+\( a_1 \geq a_2 \geq \ldots \geq a_n \)
+\( b_1 \geq b_2 \geq \ldots \geq b_n \)
+
+These sequences are non-increasing. The rearrangement inequality states that for any permutation \( \sigma \) of the indices \( \{1, 2, \ldots, n\} \), the following inequality holds:
+
+\( a_1b_1 + a_2b_2 + \ldots + a_nb_n \geq a_1b_{\sigma(1)} + a_2b_{\sigma(2)} + \ldots + a_nb_{\sigma(n)} \)
+
+And the sum is minimized when the largest element of one sequence is paired with the smallest element of the other sequence, and so on, which corresponds to the permutation that reverses the order of one of the sequences:
+
+\( a_1b_n + a_2b_{n-1} + \ldots + a_nb_1 \leq a_1b_{\sigma(1)} + a_2b_{\sigma(2)} + \ldots + a_nb_{\sigma(n)} \)
+
+The rearrangement inequality also holds if both sequences are non-decreasing. The key point is that the sequences must be ordered in the same direction (either both non-increasing or both non-decreasing) for the inequality to apply.
+
+This inequality has applications in various areas of mathematics, including optimization, algebra, and analysis. It is often used in mathematical competitions and problem-solving to establish bounds or to prove that a certain arrangement of terms is optimal.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?
+
+Besides the concept above, you may also find the following information useful:
+
+1. Let A=a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n), and write each term as a_i*(1/(s-a_i)).
+2. Let B_k=a_1/(s-a_(1+k))+a_2/(s-a_(2+k))+...+a_n/(s-a_(n+k)) for k=1, ..., n-1 (where we wrap around the index of a_i&#x27;s at n).
+3. Compare A with B_k and compare (n-1)A with B_2+B_3+...+B_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the concept of the rearrangement inequality to compare the expressions \( A \) and \( B_k \) for \( k = 1, \ldots, n-1 \), and then compare \( (n-1)A \) with \( B_2 + B_3 + \ldots + B_n \).
+
+First, let&#x27;s define \( A \) as given:
+
+\[ A = \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} \]
+
+Now, let&#x27;s consider \( B_k \) for a particular \( k \) (where the indices are taken modulo \( n \)):
+
+\[ B_k = \frac{a_1}{s-a_{1+k}} + \frac{a_2}{s-a_{2+k}} + \ldots + \frac{a_n}{s-a_{n+k}} \]
+
+By the rearrangement inequality, since the \( a_i \)&#x27;s are positive and the sequence \( \left\{ \frac{1}{s-a_i} \right\} \) is decreasing (because the smaller \( a_i \) is, the larger \( \frac{1}{s-a_i} \) is), the sum \( A \) is minimized when the terms are matched in the opposite order. This means that \( A \) is less than or equal to any \( B_k \):
+
+\[ A \leq B_k \]
+
+Now, let&#x27;s sum up all the \( B_k \)&#x27;s for \( k = 2, \ldots, n \):
+
+\[ B_2 + B_3 + \ldots + B_n \]
+
+Notice that each \( B_k \) is just a permutation of the terms in \( A \), and each term \( \frac{a_i}{s-a_j} \) appears exactly once in this sum for \( i \neq j \). Therefore, the sum of all \( B_k \)&#x27;s is equal to the sum of all terms \( \frac{a_i}{s-a_j} \) for \( i \neq j \), which is \( (n-1)A \) because each \( a_i \) appears in the numerator \( (n-1) \) times.
+
+Thus, we have:
+
+\[ (n-1)A = B_2 + B_3 + \ldots + B_n \]
+
+Since \( A \leq B_k \) for each \( k \), we have:
+
+\[ (n-1)A \leq nA - A \]
+
+\[ (n-1)A \leq (n-1)A \]
+
+This inequality is trivially true, and it shows that \( A \) is indeed minimized when the terms are matched in the opposite order. However, since all \( a_i \)&#x27;s are positive and \( s = a_1 + a_2 + \ldots + a_n \), the smallest value of \( A \) occurs when all \( a_i \)&#x27;s are equal because that is the only arrangement that satisfies the equality in the rearrangement inequality for all \( B_k \)&#x27;s.
+
+If all \( a_i \)&#x27;s are equal, then \( a_i = \frac{s}{n} \) for all \( i \). Substituting this into \( A \), we get:
+
+\[ A = \frac{\frac{s}{n}}{s-\frac{s}{n}} + \frac{\frac{s}{n}}{s-\frac{s}{n}} + \ldots + \frac{\frac{s}{n}}{s-\frac{s}{n}} \]
+
+\[ A = n \cdot \frac{\frac{s}{n}}{s-\frac{s}{n}} \]
+
+\[ A = n \cdot \frac{1}{n-1} \]
+
+\[ A = \frac{n}{n-1} \]
+
+Therefore, the smallest value of \( A \) as an expression of \( n \) is \( \frac{n}{n-1} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( A = \frac{a_1}{s-a_1} + \frac{a_2}{s-a_2} + \ldots + \frac{a_n}{s-a_n} \) for positive numbers \( a_1, \ldots, a_n \) with \( s = a_1 + \ldots + a_n \) is \( \frac{n}{n-1} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

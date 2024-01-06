@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_66</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_66']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If n is a composite number, find all possible values of 1*2*...*(n-2)*(n-1) mod 1+2+...+(n-2)+(n-1).
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have Q(n)=1*2*...*(n-2)*(n-1)/(1+2+...+(n-1))=1*2*...*(n-2)*(n-1)/(n(n-1)/2)=2*2*3*...*(n-2)/n.
+2. Since n is composite, we let n=pq, where 1&lt;p≤q&lt;n.
+3. We further have q&lt;n-1 since gcd(n,n-1)=1.
+4. Thus, if p≠q, then p,q are two factors less than n-1 and thus separately appear among the terms of 2*3*...*(n-2).
+5. If p=q, when p=q=2, we have n=4 and Q(n)=2*2/4=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s continue from where the partial solution left off. We are trying to find all possible values of the product of all numbers from 1 to (n-1) modulo the sum of all numbers from 1 to (n-1), given that n is a composite number.
+
+The partial solution correctly simplifies the expression to:
+
+\[ Q(n) = \frac{2 \cdot 3 \cdot \ldots \cdot (n-2)}{n} \]
+
+Now, let&#x27;s consider the two cases for the composite number n:
+
+**Case 1: p ≠ q**
+
+In this case, since n is composite and n = pq, both p and q are factors of n and are included in the product in the numerator. Since p and q are less than n, they will cancel out with the n in the denominator, leaving us with an integer result for Q(n). This means that the product modulo the sum will be 0, because the sum is a multiple of n.
+
+**Case 2: p = q**
+
+In this case, n = p^2, and the only prime factor of n is p. If p &gt; 2, then p will appear in the product in the numerator, but p^2 will not be canceled out completely by the n in the denominator, because there is only one p in the denominator. Therefore, the result will not be an integer, and we cannot have a product modulo the sum equal to 0.
+
+However, if p = q = 2, then n = 4, and we have a special case. The product is 2 * 3 = 6, and the sum is 1 + 2 + 3 = 6. The product modulo the sum is 6 mod 6 = 0.
+
+So, the only case where we do not get a product modulo the sum equal to 0 is when n is a perfect square of a prime greater than 2. In all other cases, the product modulo the sum is 0.
+
+To summarize, the possible values of the product modulo the sum are:
+
+- 0, for all composite numbers n except when n is a perfect square of a prime greater than 2.
+- For n = p^2 where p is a prime greater than 2, the value will not be 0, and we need to compute it individually for each such n.
+
+For n = 4, as shown in the partial solution, Q(n) = 1.
+
+Therefore, the final answer is that the product modulo the sum is 0 for all composite numbers n except when n is a perfect square of a prime greater than 2, and for n = 4, the value is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The product 1*2*...*(n-2)*(n-1) modulo the sum 1+2+...+(n-2)+(n-1) is 0 for all composite numbers n except when n is a perfect square of a prime greater than 2, and for n = 4, the value is 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

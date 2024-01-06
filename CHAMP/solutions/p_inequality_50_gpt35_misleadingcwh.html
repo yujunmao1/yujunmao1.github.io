@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_50</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_50']
+messages = problem.conversations['GPT-3.5|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a, b, c&gt;0. What is the minimum value of a^3+b^3+c^3-(a^2*b+b^2*c+c^2*a)?
+
+You may find the following information useful:
+
+1. Consider the two sequences (a^2, b^2, c^2) and (a, b, c).
+2. a, b, c are three sides of a (possibly degenerate) triangle if and only if |b-c|≤a≤b+c, |a-c|≤b≤a+c, |a-b|≤c≤a+b. The triangle is not degenerate if and only if all inequalities are strict.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the minimum value of the expression a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a), we can use the concept of rearrangement inequality.
+
+First, let&#x27;s rewrite the expression as a sum of products:
+
+a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a) = a^3 - a^2*b + b^3 - b^2*c + c^3 - c^2*a
+
+Now, let&#x27;s consider the two sequences (a^2, b^2, c^2) and (a, b, c). According to the rearrangement inequality, the sum of the products of corresponding terms from two sequences is minimized when the sequences are sorted in the same order.
+
+Since a, b, c are positive, we can sort the sequences in descending order:
+
+(a^2, b^2, c^2) = (max(a^2, b^2, c^2), mid(a^2, b^2, c^2), min(a^2, b^2, c^2))
+(a, b, c) = (max(a, b, c), mid(a, b, c), min(a, b, c))
+
+Now, let&#x27;s rewrite the expression using the sorted sequences:
+
+a^3 - a^2*b + b^3 - b^2*c + c^3 - c^2*a = max(a^2, b^2, c^2)*max(a, b, c) + mid(a^2, b^2, c^2)*mid(a, b, c) + min(a^2, b^2, c^2)*min(a, b, c)
+
+Since the sequences are sorted in the same order, we can apply the rearrangement inequality to obtain:
+
+max(a^2, b^2, c^2)*max(a, b, c) + mid(a^2, b^2, c^2)*mid(a, b, c) + min(a^2, b^2, c^2)*min(a, b, c) ≥ a^2*b + b^2*c + c^2*a
+
+Therefore, the minimum value of the expression a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a) is achieved when the sequences (a^2, b^2, c^2) and (a, b, c) are sorted in the same order.
+
+In other words, the minimum value occurs when a ≥ b ≥ c.
+
+Now, let&#x27;s substitute a = b + x and c = b - y, where x and y are positive numbers.
+
+Using the triangle inequality, we have:
+
+|b - (b - y)| ≤ a ≤ b + (b - y)
+y ≤ a ≤ 2b - y
+
+Since a ≥ b ≥ c, we have y ≤ b.
+
+Now, let&#x27;s substitute these values into the expression:
+
+a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a) = (b + x)^3 + b^3 + (b - y)^3 - ((b + x)^2*b + b^2*(b - y) + (b - y)^2*(b + x))
+
+Expanding and simplifying the expression, we get:
+
+3b^2x + 3bx^2 - 3by^2 - 3b^2y + 3xy^2 + 3y^3
+
+Now, let&#x27;s find the minimum value of this expression.
+
+Taking the derivative with respect to x, we get:
+
+d/dx (3b^2x + 3bx^2 - 3by^2 - 3b^2y + 3xy^2 + 3y^3) = 6bx + 6bx - 3by^2 + 3y^2
+
+Setting the derivative equal to zero, we have:
+
+6bx + 6bx - 3by^2 + 3y^2 = 0
+12bx - 3by^2 + 3y^2 = 0
+4bx - by^2 + y^2 = 0
+4bx = (b - 1)y^2
+
+Since x and y are positive, we can divide both sides by y^2:
+
+4bx/y^2 = b - 1
+
+Since y ≤ b, we have y^2 ≤ b^2, so we can substitute y^2 with b^2:
+
+4bx/b^2 = b - 1
+4x/b = b - 1
+4x = b(b - 1)
+
+Now, let&#x27;s substitute this value of x back into the expression:
+
+3b^2x + 3bx^2 - 3by^2 - 3b^2y + 3xy^2 + 3y^3 = 3b^3 - 3b^2y - 3by^2 + 3by^2 + 3y^3 + 3y^3
+= 3b^3 + 6y^3
+
+Since y ≤ b, we have 3b^3 + 6y^3 ≥ 3b^3 + 6b^3 = 9b^3.
+
+Therefore, the minimum value of the expression a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a) is 9b^3.
+
+In conclusion, the minimum value of the expression is 9b^3, where b is the smallest of the three positive numbers a, b, c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a) is 9b^3, where b is the smallest of the three positive numbers a, b, c.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

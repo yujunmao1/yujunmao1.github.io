@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_16</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_16']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A be a string of n binary digits (leading 0s are allowed). How many such strings have the substring &quot;01&quot; appearing exactly m times, as an expression of m and n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. For the string, we add 1 to the front and 0 to the back, and consider the n+1 gaps between the n+2 digits.
+2. For the two digits around the gap, if they are &quot;01&quot;, we call the gap a &quot;0-1&quot; transition, and analogously a &quot;1-0&quot; transition, or neither.
+3. We note that prepending with 1 and appending with 0 does not create new 01 substrings, or in other words &quot;0-1&quot; transitions.
+4. Thus, there are m &quot;0-1&quot; transitions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $A$ be a string of $n$ binary digits (leading 0s are allowed). We want to count the number of such strings that have the substring &quot;01&quot; appearing exactly $m$ times.
+
+We can solve this problem by considering the following recurrence relation:
+
+$$f(n, m) = \begin{cases} 1 &amp; \text{if } n = 0 \text{ or } m = 0 \\\ f(n - 1, m - 1) + f(n - 1, m) &amp; \text{if } n &gt; 0 \text{ and } m &gt; 0 \end{cases}$$
+
+The base cases are easy to verify. For the inductive step, suppose we have a string of length $n - 1$ with $m - 1$ occurrences of &quot;01&quot;. We can either add a 0 to the end of the string, in which case we will have a string of length $n$ with $m$ occurrences of &quot;01&quot;, or we can add a 1 to the end of the string, in which case we will have a string of length $n$ with $m - 1$ occurrences of &quot;01&quot;.
+
+Therefore, the number of strings of length $n$ with $m$ occurrences of &quot;01&quot; is given by $f(n, m) = 1 + f(n - 1, m - 1) + f(n - 1, m)$.
+
+We can write this recurrence relation in terms of generating functions as follows:
+
+$$F(x, y) = \sum_{n \ge 0} \sum_{m \ge 0} f(n, m) x^n y^m = \frac{1}{1 - x - y + xy}$$
+
+The coefficient of $x^n y^m$ in $F(x, y)$ is the number of strings of length $n$ with $m$ occurrences of &quot;01&quot;, so we have
+
+$$f(n, m) = \binom{n + m}{m}$$
+
+as desired.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of length $n$ with $m$ occurrences of &quot;01&quot; is $\binom{n + m}{m}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

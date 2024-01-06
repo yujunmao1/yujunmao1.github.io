@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_1</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> [-1, 1]</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_1']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x be a root of the polynomial ax^2+bx+c, with a&gt;0, a+b+c≥0, a-b+c≥0, a-c≥0. What is the range of x, expressed as an interval?
+
+You may find the following information useful:
+
+1. Let x_1, x_2 be the root of the polynomial x^2+px+q. Then x_1+x_2=-p and x_1*x_2=q. For the polynomial rx^2+px+q, we have x_1+x_2=-p/r and x_1*x_2=q/r. </code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the polynomial \( ax^2 + bx + c \), we know that the sum of the roots \( x_1 + x_2 \) is \( -\frac{b}{a} \) and the product of the roots \( x_1 \cdot x_2 \) is \( \frac{c}{a} \).
+
+We are given the following conditions:
+1. \( a &gt; 0 \)
+2. \( a + b + c \geq 0 \)
+3. \( a - b + c \geq 0 \)
+4. \( a - c \geq 0 \)
+
+Let&#x27;s analyze these conditions:
+
+From condition 2, we have:
+\( a + b + c \geq 0 \)
+\( \Rightarrow b \geq -a - c \)
+
+From condition 3, we have:
+\( a - b + c \geq 0 \)
+\( \Rightarrow b \leq a + c \)
+
+From condition 4, we have:
+\( a - c \geq 0 \)
+\( \Rightarrow c \leq a \)
+
+Now, let&#x27;s consider the discriminant \( D \) of the quadratic equation \( ax^2 + bx + c = 0 \):
+\( D = b^2 - 4ac \)
+
+For real roots, we need \( D \geq 0 \):
+\( b^2 - 4ac \geq 0 \)
+
+Since \( a &gt; 0 \), the parabola opens upwards, and the vertex of the parabola is at \( x = -\frac{b}{2a} \). The value of the polynomial at the vertex is:
+\( f\left(-\frac{b}{2a}\right) = a\left(-\frac{b}{2a}\right)^2 + b\left(-\frac{b}{2a}\right) + c \)
+\( = \frac{b^2}{4a} - \frac{b^2}{2a} + c \)
+\( = -\frac{b^2}{4a} + c \)
+
+Since \( a &gt; 0 \), the minimum value of the polynomial is at the vertex. For the polynomial to have real roots, the minimum value must be less than or equal to zero:
+\( -\frac{b^2}{4a} + c \leq 0 \)
+\( \Rightarrow \frac{b^2}{4a} \geq c \)
+
+Combining this with \( c \leq a \), we have:
+\( \frac{b^2}{4a} \geq c \leq a \)
+
+Now, let&#x27;s find the range of \( x \). The roots of the polynomial are real, and since \( a &gt; 0 \), the parabola opens upwards, meaning the roots are at the points where the parabola intersects the x-axis.
+
+The vertex \( x = -\frac{b}{2a} \) is the midpoint between the roots \( x_1 \) and \( x_2 \). Since \( b \) can range from \( -a - c \) to \( a + c \), the vertex can range from \( -\frac{-a - c}{2a} \) to \( -\frac{a + c}{2a} \), which simplifies to \( \frac{a + c}{2a} \) to \( -\frac{a + c}{2a} \) after negating.
+
+However, we need to consider the sign of \( b \) to determine the actual range of \( x \). If \( b \) is positive, the vertex is to the left of the y-axis, and the larger root \( x_2 \) will be positive. If \( b \) is negative, the vertex is to the right of the y-axis, and the smaller root \( x_1 \) will be negative.
+
+Since \( a + b + c \geq 0 \) and \( a - b + c \geq 0 \), we can conclude that both \( -b \) and \( b \) are less than or equal to \( a + c \). This means that the vertex \( -\frac{b}{2a} \) is within the interval \( \left[-\frac{a + c}{2a}, \frac{a + c}{2a}\right] \).
+
+Given that the parabola opens upwards and the vertex is the minimum point, the range of \( x \) (the roots) will be from \( -\infty \) to \( \infty \) because the parabola will extend indefinitely in both directions along the x-axis.
+
+Therefore, the range of \( x \) is \( (-\infty, \infty) \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The range of x, where x is a root of the polynomial \( ax^2 + bx + c \) with the given conditions, is \( (-\infty, \infty) \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

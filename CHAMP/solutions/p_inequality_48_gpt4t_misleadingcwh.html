@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_48</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_48']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {1, 2, ..., 100} do we have (n+1)^n≥2^n*n!?
+
+You may find the following information useful:
+
+1. Study the validity of the inequality for n if the inequality for n-1 holds.
+2. a, b, c are the sides of a (possibly degenerate) triangle if and only if a+b≥s, b+c≥s, a+c≥s for semi-perimeter s=(a+b+c)/2. The triangle is not degenerate if and only if all inequalities are strict.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will first look at the inequality for a given value of \( n \) and see if we can establish a pattern or a recursive relationship that will help us determine for how many values of \( n \) in the set {1, 2, ..., 100} the inequality \( (n+1)^n \geq 2^n \cdot n! \) holds.
+
+Let&#x27;s start by examining the inequality for small values of \( n \):
+
+For \( n = 1 \):
+\[ (1+1)^1 \geq 2^1 \cdot 1! \]
+\[ 2 \geq 2 \]
+The inequality holds for \( n = 1 \).
+
+For \( n = 2 \):
+\[ (2+1)^2 \geq 2^2 \cdot 2! \]
+\[ 3^2 \geq 4 \cdot 2 \]
+\[ 9 \geq 8 \]
+The inequality holds for \( n = 2 \).
+
+Now, let&#x27;s assume the inequality holds for \( n = k \), i.e., \( (k+1)^k \geq 2^k \cdot k! \), and see if it implies that the inequality holds for \( n = k+1 \).
+
+For \( n = k+1 \):
+\[ (k+2)^{k+1} \geq 2^{k+1} \cdot (k+1)! \]
+\[ (k+2)^{k+1} \geq 2 \cdot 2^k \cdot k! \cdot (k+1) \]
+
+We know from our assumption that \( (k+1)^k \geq 2^k \cdot k! \), so we need to compare \( (k+2)^{k+1} \) with \( 2 \cdot (k+1)^k \cdot (k+1) \).
+
+Let&#x27;s divide both sides of the inequality we want to prove by \( (k+1)^k \) to simplify the comparison:
+\[ \left(\frac{k+2}{k+1}\right)^{k+1} \geq 2 \cdot (k+1) \]
+
+Now, we can use the fact that \( \left(1 + \frac{1}{k+1}\right)^{k+1} \) is an increasing function of \( k \) and approaches \( e \) as \( k \) goes to infinity. Since \( e &gt; 2 \), there exists a value of \( k \) beyond which \( \left(1 + \frac{1}{k+1}\right)^{k+1} &gt; 2 \). For such values of \( k \), the inequality will hold if \( k+1 \) is greater than or equal to 1, which is always true for \( k \geq 0 \).
+
+To find the smallest \( k \) for which \( \left(1 + \frac{1}{k+1}\right)^{k+1} &gt; 2 \), we can test values of \( k \):
+
+For \( k = 2 \):
+\[ \left(1 + \frac{1}{3}\right)^3 = \left(\frac{4}{3}\right)^3 = \frac{64}{27} \]
+\[ \frac{64}{27} &lt; 2 \]
+
+For \( k = 3 \):
+\[ \left(1 + \frac{1}{4}\right)^4 = \left(\frac{5}{4}\right)^4 \]
+\[ \left(\frac{5}{4}\right)^4 &gt; 2 \]
+
+So, for \( k \geq 3 \), the inequality \( (k+2)^{k+1} \geq 2^{k+1} \cdot (k+1)! \) holds.
+
+Therefore, the inequality holds for all \( n \) in the set {1, 2, ..., 100} starting from \( n = 3 \) up to \( n = 100 \). We have already checked that it holds for \( n = 1 \) and \( n = 2 \), so the inequality holds for all \( n \) in the set.
+
+The number of values of \( n \) for which the inequality holds is therefore 100 (since it holds for every \( n \) from 1 to 100).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality \( (n+1)^n \geq 2^n \cdot n! \) holds for all values of \( n \) in the set {1, 2, ..., 100}, so there are 100 values of \( n \) for which the inequality is true.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

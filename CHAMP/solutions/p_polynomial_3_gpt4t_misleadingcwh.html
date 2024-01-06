@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_3</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At most 0 integer-valued zeros (i.e., no integer zeros)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_3']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, at most how many integer-valued zeros can it have?
+
+You may find the following information useful:
+
+1. Let a be an integer zero of f(x).
+2. Let x_1, x_2 be the root of the polynomial x^2+px+q. Then x_1+x_2=-p and x_1*x_2=q. For the polynomial rx^2+px+q, we have x_1+x_2=-p/r and x_1*x_2=q/r. 
+3. Study the parity of f(0) and f(1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s analyze the given information and use it to determine the maximum number of integer zeros that the polynomial \( f(x) \) can have.
+
+First, we know that \( f(x) \) is a polynomial of degree \( n \) with integer coefficients. Since \( f(0) \) and \( f(1) \) are both odd, we can deduce the following:
+
+1. \( f(0) \) being odd implies that the constant term of the polynomial is odd because \( f(0) \) is simply the constant term of \( f(x) \).
+
+2. \( f(1) \) being odd implies that the sum of all the coefficients of the polynomial is odd. This is because when you substitute \( x = 1 \) into the polynomial, you are essentially summing all the coefficients.
+
+Now, let&#x27;s consider an integer zero \( a \) of \( f(x) \). By the Factor Theorem, \( (x - a) \) is a factor of \( f(x) \). If \( a \) is an integer, then \( -a \) (the coefficient of \( x \) in the factor \( (x - a) \)) is also an integer.
+
+If \( f(x) \) has an even number of integer zeros, then we can pair the factors corresponding to these zeros into quadratic factors with integer coefficients. Each quadratic factor \( (x - a)(x - b) = x^2 - (a+b)x + ab \) will have an even constant term \( ab \) (since the product of two integers with the same parity is even) and an integer coefficient for \( x \). However, since the constant term of \( f(x) \) is odd, we cannot have an even number of such quadratic factors, as their product would yield an even constant term.
+
+If \( f(x) \) has an odd number of integer zeros, we can still pair most of them into quadratic factors, but there will be one linear factor \( (x - a) \) left unpaired. This unpaired factor will contribute an odd constant term \( -a \) to the product (since the constant term of \( f(x) \) is odd). Therefore, the polynomial can have an odd number of integer zeros.
+
+However, we must also consider the sum of the coefficients. If \( f(x) \) has more than one integer zero, the sum of the coefficients of the resulting polynomial after factoring will be affected. Since the sum of the coefficients of \( f(x) \) is odd, and each quadratic factor contributes an even sum to the overall sum of coefficients (because \( -a - b \) is even when \( a \) and \( b \) are both integers with the same parity), the presence of the linear factor \( (x - a) \) ensures that the sum of the coefficients remains odd.
+
+Therefore, the polynomial \( f(x) \) can have at most one integer zero to maintain both the odd constant term and the odd sum of coefficients. This integer zero will be the unpaired linear factor in the factorization of \( f(x) \).
+
+In conclusion, a polynomial \( f(x) \) of degree \( n \) with integer coefficients, where both \( f(0) \) and \( f(1) \) are odd, can have at most one integer-valued zero.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>A polynomial \( f(x) \) of degree \( n \) with integer coefficients, where both \( f(0) \) and \( f(1) \) are odd, can have at most one integer-valued zero.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

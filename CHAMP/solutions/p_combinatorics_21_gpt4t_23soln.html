@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_21</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 30</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_21']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Each of the faces of a cube is painted by a different color. How many of the colorings are distinct up to rotations?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We paint a face and put it on the bottom, and consider painting the second face.
+2. We can paint it on top, the remaining four faces have 4! colorings, but we can rotate the cube four times, which makes four colorings the same, so we 4!/4=6 distinct colorings.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the symmetries of the cube and how they affect the distinctness of the colorings. We can use Burnside&#x27;s Lemma, which is a tool in group theory that counts the number of orbits (distinct configurations) under a group action (in this case, the rotations of the cube).
+
+Let&#x27;s denote the six colors by A, B, C, D, E, and F. We need to count the number of distinct ways to color the cube using these colors, considering that rotations of the cube can make some colorings equivalent.
+
+We will consider the rotations of the cube and count the number of colorings that remain unchanged (fixed) by each rotation. The total number of rotations of a cube is 24, which includes:
+
+1. Identity rotation (1 rotation): The cube is not rotated at all.
+2. Rotations about an axis through the centers of opposite faces (3 axes, each with 3 non-identity rotations): 3 axes × 3 rotations = 9 rotations.
+3. Rotations about an axis through the centers of opposite edges (6 axes, each with 1 non-identity rotation): 6 axes × 1 rotation = 6 rotations.
+4. Rotations about an axis through opposite vertices (4 axes, each with 2 non-identity rotations): 4 axes × 2 rotations = 8 rotations.
+
+Now, let&#x27;s count the number of fixed colorings for each type of rotation:
+
+1. Identity rotation: Every coloring is fixed, so there are 6! fixed colorings because each of the six faces can be any of the six colors.
+
+2. Rotations about an axis through the centers of opposite faces: Each rotation of this type fixes the colors of the top and bottom faces and permutes the four side faces among themselves. Since the top and bottom can each be any of the six colors, and the four side faces must be different, there are 6 choices for the top, 5 choices for the bottom, and (4-1)! = 3! choices for the side faces (since rotating the cube does not change the coloring). So, there are 6 × 5 × 3! fixed colorings for each rotation, and 9 rotations of this type, giving 9 × 6 × 5 × 3! fixed colorings in total.
+
+3. Rotations about an axis through the centers of opposite edges: Each rotation of this type fixes the colors of the two opposite edges and permutes the remaining four faces in pairs. There are 6 choices for one edge, 5 choices for the opposite edge, and (4/2)! = 2! choices for the remaining pairs of faces. So, there are 6 × 5 × 2! fixed colorings for each rotation, and 6 rotations of this type, giving 6 × 6 × 5 × 2! fixed colorings in total.
+
+4. Rotations about an axis through opposite vertices: Each rotation of this type fixes no faces and permutes all six faces in a cycle. There is only one way to color the cube that remains fixed under this rotation: all faces must be the same color. However, since each face must be a different color, there are 0 fixed colorings for each rotation of this type.
+
+Using Burnside&#x27;s Lemma, the number of distinct colorings is the average number of fixed colorings over all rotations:
+
+Number of distinct colorings = (1/24) × (6! + 9 × 6 × 5 × 3! + 6 × 6 × 5 × 2! + 0)
+
+Now, let&#x27;s calculate this:
+
+Number of distinct colorings = (1/24) × (720 + 9 × 6 × 5 × 6 + 6 × 6 × 5 × 2)
+Number of distinct colorings = (1/24) × (720 + 1620 + 360)
+Number of distinct colorings = (1/24) × (2700)
+Number of distinct colorings = 112.5
+
+Since the number of distinct colorings must be an integer, we must have made a mistake in our calculations. Let&#x27;s re-evaluate the fixed colorings for the rotations about an axis through the centers of opposite edges:
+
+For these rotations, there are 6 choices for one edge and 5 choices for the opposite edge. The remaining four faces are divided into two pairs that are swapped by the rotation. However, since the pairs are indistinguishable, we should not count them as 2! = 2 choices, but rather as 1 choice (because swapping the pairs does not result in a new coloring). So, there are 6 × 5 fixed colorings for each rotation, and 6 rotations of this type, giving 6 × 6 × 5 fixed colorings in total.
+
+Let&#x27;s correct the calculation:
+
+Number of distinct colorings = (1/24) × (6! + 9 × 6 × 5 × 3! + 6 × 6 × 5 + 0)
+Number of distinct colorings = (1/24) × (720 + 9 × 6 × 5 × 6 + 6 × 6 × 5)
+Number of distinct colorings = (1/24) × (720 + 1620 + 180)
+Number of distinct colorings = (1/24) × (2520)
+Number of distinct colorings = 105
+
+So, there are 105 distinct colorings of the cube up to rotations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 105 distinct colorings of a cube up to rotations when each face is painted a different color.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

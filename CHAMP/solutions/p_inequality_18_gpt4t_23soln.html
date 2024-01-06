@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_18</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> sqrt(3)/3, or equivalently 1/sqrt(3)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_18']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, what is the largest value of sqrt(ab+bc+ac)/(a+b+c)?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let f(a, b, c)=sqrt(ab+bc+ac)/(a+b+c), so f(a, b, c)^2=(ab+bc+ac)/(a^2+b^2+c^2+2(ab+bc+ac)).
+2. Consider the sequences (a, b, c) and (a, b, c), which are sorted in the same way.
+3. Thus, a^2+b^2+c^2≥ab+bc+ca.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the largest value of \( f(a, b, c) = \frac{\sqrt{ab+bc+ac}}{a+b+c} \), we can start by squaring the function as given in the partial solution:
+
+\[ f(a, b, c)^2 = \frac{ab+bc+ac}{a^2+b^2+c^2+2(ab+bc+ac)} \]
+
+Now, let&#x27;s simplify the denominator by combining like terms:
+
+\[ f(a, b, c)^2 = \frac{ab+bc+ac}{(a+b+c)^2} \]
+
+We can now see that the function \( f(a, b, c)^2 \) is a ratio of the sum of the products of the variables to the square of the sum of the variables.
+
+Next, we use the fact that \( a^2 + b^2 + c^2 \geq ab + bc + ac \) (which is true by the rearrangement inequality or by considering that \( (a-b)^2 + (b-c)^2 + (c-a)^2 \geq 0 \)) to observe that:
+
+\[ (a+b+c)^2 = a^2 + b^2 + c^2 + 2(ab + bc + ac) \geq 2(ab + bc + ac) \]
+
+This implies that:
+
+\[ f(a, b, c)^2 = \frac{ab+bc+ac}{(a+b+c)^2} \leq \frac{ab+bc+ac}{2(ab+bc+ac)} = \frac{1}{2} \]
+
+Taking the square root of both sides, we get:
+
+\[ f(a, b, c) \leq \frac{1}{\sqrt{2}} \]
+
+Equality occurs when \( a^2 + b^2 + c^2 = ab + bc + ac \), which happens when \( a = b = c \). Therefore, the largest value of \( f(a, b, c) \) is \( \frac{1}{\sqrt{2}} \) when \( a = b = c \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of \( \frac{\sqrt{ab+bc+ac}}{a+b+c} \) for positive \( a, b, c \) is \( \frac{1}{\sqrt{2}} \), achieved when \( a = b = c \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

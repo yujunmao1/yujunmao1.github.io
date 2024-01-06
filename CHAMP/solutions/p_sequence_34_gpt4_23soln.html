@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_34</td>
+            <td>GPT-4</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^997</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_34']
+messages = problem.conversations['GPT-4|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The positive real numbers x_0, x_1, ..., x_1995 satisfy x_0=x_1995 and x_i+2/x_i=2x_(i+1)+1/x_(i+1) for i=0, ..., 1994. Find the maximum value that x_0 can have.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have 2x_(i+1)^2-(x_i+2/x_i)x_(i+1)+1=0.
+2. Thus, x_(i+1)=x_i/2 or 1/x_i.
+3. We can write x_0=2^(k_0)*x_0^e_0, where k_0=0, e_0=1.
+4. If we can write x_i=2^k_i*x_0^e_i, then x_(i+1)=x_i/2=2^(k_i-1)*x_0^e_i, or x_(i+1)=1/x_i=2^(-k)*x_0^(-e_i).
+5. Thus, we have k_(i+1)=k_i-1, e_(i+1)=e_i or k_(i+1)=-k_i, e_(i+1)=-e_i.
+6. Since k_0=0, we see that |k_i|≤i.
+7. We also have e_i=(-1)^(k_i+i) since exactly when k keeps its parity by being the same as k_(i-1), e_i is inverted.
+8. If k_1995 is odd, then e_1995=(-1)^(k_1995+1995)=1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Continuing from the partial solution:
+
+9. If k_1995 is even, then e_1995=(-1)^(k_1995+1995)=-1.
+
+10. Since x_0 = x_1995, we have 2^(k_0)*x_0^(e_0) = 2^(k_1995)*x_0^(e_1995).
+
+11. Substituting the values of k_0, e_0, k_1995, and e_1995, we get x_0 = 2^(k_1995)*x_0^(e_1995).
+
+12. If e_1995 = 1, then x_0 = 2^(k_1995), and since |k_1995| ≤ 1995, the maximum value of x_0 is 2^1995.
+
+13. If e_1995 = -1, then x_0 = 2^(k_1995)/x_0, which simplifies to x_0^2 = 2^(k_1995). Since |k_1995| ≤ 1995, the maximum value of x_0^2 is 2^1995, and the maximum value of x_0 is sqrt(2^1995), which is less than 2^1995.
+
+14. Therefore, the maximum value that x_0 can have is 2^1995.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum value that x_0 can have is 2^1995.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

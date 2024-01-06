@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_18</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 4</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_18']
+messages = problem.conversations['PaLM 2 Medium|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: A sequence is defined by a_1=sqrt(2), a_(n+1)=sqrt(2)^a_n. Does the limit for the sequence exist, and if so, find it.
+Step-wise solution:
+1. We have 0&lt;a_1&lt;a_2 and if 0&lt;a_(n-1)&lt;a_n, we have a_n=sqrt(2)^a_(n-1)&lt;sqrt(2)^a_n=a_(n+1).
+2. Thus, the sequence is monotonically increasing.
+3. We show that it is bounded by 2.
+4. We have a_1&lt;2.
+5. When a_n&lt;2, a_(n+1)=sqrt(2)^a_n&lt;sqrt(2)^2=2.
+6. Thus, we have a_n&lt;2 for all n.
+7. So the limit exists, and its value L satisfy L=sqrt(2)^L.
+8. The value L with L≤2 is L=2, so the limit is 2.
+
+Problem: Let A=(1/2)*(3/4)*(5/6)*...*(99/100). Is A greater than 0.1?
+Step-wise solution:
+1. We let B=(2/3)*(4/5)*...*(100/101), and hence A&lt;B.
+2. We have A^2&lt;AB=(1/2)*(2/3)*(3/4)*(4/5)*...*(99/100)*(100/101)=1/101.
+3. Since A^2&lt;1/101&lt;1/100, we have A&lt;0.1.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(4+3a_n), and if so, find it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence is defined by $a_0=0$ and $a_{n+1}=\sqrt{4+3a_n}$. We will show that the sequence is monotonically increasing and bounded, and hence has a limit.
+
+To show that the sequence is monotonically increasing, we will show that $a_{n+1}\ge a_n$ for all $n$. We have
+\begin{align*}
+a_{n+1} &amp;= \sqrt{4+3a_n} \\
+&amp;\ge \sqrt{4} \\
+&amp;= 2.
+\end{align*}Therefore, $a_{n+1}\ge a_n$ for all $n$, and the sequence is monotonically increasing.
+
+To show that the sequence is bounded, we will show that there exists a constant $M$ such that $|a_n|\le M$ for all $n$. We have
+\begin{align*}
+|a_n| &amp;= \left|\sqrt{4+3a_n}\right| \\
+&amp;\le \sqrt{4+3M} \\
+&amp;= \sqrt{3M+4}.
+\end{align*}Therefore, $|a_n|\le \sqrt{3M+4}$ for all $n$, and the sequence is bounded.
+
+Since the sequence is monotonically increasing and bounded, it has a limit. Let $L$ be the limit of the sequence. Then, for any $\epsilon&gt;0$, there exists an $N$ such that $|a_n-L|&lt;\epsilon$ for all $n&gt;N$. We have
+\begin{align*}
+|a_n-L| &amp;= |a_n-a_{n+1}+a_{n+1}-L| \\
+&amp;\le |a_n-a_{n+1}|+|a_{n+1}-L| \\
+&amp;\le \sqrt{3M+4}+\sqrt{4+3L}.
+\end{align*}Letting $\epsilon=1$, we get
+\begin{align*}
+1 &amp;\le \sqrt{3M+4}+\sqrt{4+3L} \\
+&amp;\le 2 \sqrt{3M+4} \\
+&amp;= 2 \sqrt{3(M+1)+4} \\
+&amp;= 2 \sqrt{3(1+\frac{M}{3})+4} \\
+&amp;= 2 \sqrt{3+\frac{2M}{3}}.
+\end{align*}Squaring both sides, we get
+\begin{align*}
+1 &amp;\le 4(3+\frac{2M}{3}) \\
+&amp;= 12+8M \\
+&amp;= 8(1+\frac{M}{2}).
+\end{align*}Therefore, $\frac{M}{2}\le \frac{1}{8}$. This implies that $M\le 2$.
+
+Therefore, the limit of the sequence is $L=2$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by $a_0=0$ and $a_{n+1}=\sqrt{4+3a_n}$ is $2$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

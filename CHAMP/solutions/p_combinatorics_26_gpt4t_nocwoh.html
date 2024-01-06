@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_26</td>
+            <td>GPT-4 Turbo</td>
+            <td>No C w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 239</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_26']
+messages = problem.conversations['GPT-4 Turbo|No C w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many strings of length 6 and consisting solely of the digits 1, 2 and 3 have the property that any two adjacent digits differ by at most 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use a systematic approach to count the number of valid strings. Let&#x27;s denote the strings by their length and the last digit used. For example, a string of length 3 ending with the digit 2 will be denoted as (3, 2).
+
+We can start by considering strings of length 1 for each of the digits 1, 2, and 3. Clearly, there is one such string for each digit:
+
+- (1, 1)
+- (1, 2)
+- (1, 3)
+
+Now, let&#x27;s consider strings of length 2. We can build them by adding a digit to the strings of length 1:
+
+- From (1, 1), we can add 1 or 2 to get (2, 1) and (2, 2).
+- From (1, 2), we can add 1, 2, or 3 to get (2, 1), (2, 2), and (2, 3).
+- From (1, 3), we can add 2 or 3 to get (2, 2) and (2, 3).
+
+Counting these, we have:
+
+- Two strings of length 2 ending in 1: (2, 1)
+- Three strings of length 2 ending in 2: (2, 2)
+- Two strings of length 2 ending in 3: (2, 3)
+
+Next, let&#x27;s consider strings of length 3:
+
+- From (2, 1), we can only add 1 or 2 to get (3, 1) and (3, 2).
+- From (2, 2), we can add 1, 2, or 3 to get (3, 1), (3, 2), and (3, 3).
+- From (2, 3), we can only add 2 or 3 to get (3, 2) and (3, 3).
+
+Counting these, we have:
+
+- Two strings of length 3 ending in 1: (3, 1)
+- Three strings of length 3 ending in 2: (3, 2)
+- Two strings of length 3 ending in 3: (3, 3)
+
+We can continue this process for strings of length 4, 5, and finally 6. However, to make this process more efficient, we can notice a pattern and create a recursive relationship. Let&#x27;s denote the number of strings of length n ending with digit i as S(n, i).
+
+The recursive relationships are as follows:
+
+- S(n, 1) = S(n-1, 1) + S(n-1, 2) because we can only add a 1 or 2 to a string ending in 1.
+- S(n, 2) = S(n-1, 1) + S(n-1, 2) + S(n-1, 3) because we can add 1, 2, or 3 to a string ending in 2.
+- S(n, 3) = S(n-1, 2) + S(n-1, 3) because we can only add a 2 or 3 to a string ending in 3.
+
+Using the base cases we already have for n=2:
+
+- S(2, 1) = 2
+- S(2, 2) = 3
+- S(2, 3) = 2
+
+We can now calculate the values for n=3:
+
+- S(3, 1) = S(2, 1) + S(2, 2) = 2 + 3 = 5
+- S(3, 2) = S(2, 1) + S(2, 2) + S(2, 3) = 2 + 3 + 2 = 7
+- S(3, 3) = S(2, 2) + S(2, 3) = 3 + 2 = 5
+
+And for n=4:
+
+- S(4, 1) = S(3, 1) + S(3, 2) = 5 + 7 = 12
+- S(4, 2) = S(3, 1) + S(3, 2) + S(3, 3) = 5 + 7 + 5 = 17
+- S(4, 3) = S(3, 2) + S(3, 3) = 7 + 5 = 12
+
+Continuing this process for n=5:
+
+- S(5, 1) = S(4, 1) + S(4, 2) = 12 + 17 = 29
+- S(5, 2) = S(4, 1) + S(4, 2) + S(4, 3) = 12 + 17 + 12 = 41
+- S(5, 3) = S(4, 2) + S(4, 3) = 17 + 12 = 29
+
+And finally for n=6:
+
+- S(6, 1) = S(5, 1) + S(5, 2) = 29 + 41 = 70
+- S(6, 2) = S(5, 1) + S(5, 2) + S(5, 3) = 29 + 41 + 29 = 99
+- S(6, 3) = S(5, 2) + S(5, 3) = 41 + 29 = 70
+
+To find the total number of strings of length 6, we sum the values for S(6, 1), S(6, 2), and S(6, 3):
+
+Total number of strings = S(6, 1) + S(6, 2) + S(6, 3) = 70 + 99 + 70 = 239
+
+Therefore, there are 239 strings of length 6 consisting solely of the digits 1, 2, and 3 where any two adjacent digits differ by at most 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 239 strings of length 6 consisting solely of the digits 1, 2, and 3 where any two adjacent digits differ by at most 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

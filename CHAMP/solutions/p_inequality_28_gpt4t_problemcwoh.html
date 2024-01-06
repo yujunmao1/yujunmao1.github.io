@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_28</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_28']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let A=(1/2)*(3/4)*(5/6)*...*(99/100). Is A greater than 1/15?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to look at the pattern of the terms in the product A. The terms are fractions where the numerator of each fraction is an odd number starting from 1 and increasing by 2 each time, and the denominator is an even number starting from 2 and increasing by 2 each time.
+
+Let&#x27;s write out the first few terms to see the pattern more clearly:
+
+A = (1/2) * (3/4) * (5/6) * ... * (99/100)
+
+Notice that for each fraction after the first, the numerator of one fraction is one less than the denominator of the next fraction. This means that each pair of adjacent fractions will partially cancel out. Let&#x27;s illustrate this with the first few terms:
+
+A = (1/2) * (3/4) * (5/6) * (7/8) * ... * (99/100)
+
+Now, let&#x27;s cancel out the common factors:
+
+A = 1 * (1/2) * (3/2) * (1/2) * (5/2) * (1/2) * (7/2) * ... * (1/2) * (99/2)
+
+We can see that every term after the first has a factor of 1/2 that will cancel out with the 2 in the numerator of the next term. This cancellation will continue until the last term. The last term, (99/100), does not have a following term to cancel out with, so it will remain as is.
+
+After all the cancellations, we are left with:
+
+A = 1 * (1/2)^(49) * (3 * 5 * 7 * ... * 99)
+
+The exponent 49 comes from the fact that there are 50 terms in the product, and we are excluding the first term (1/2) from the cancellation process.
+
+Now, let&#x27;s simplify the remaining product of odd numbers:
+
+A = (1/2)^(49) * (3 * 5 * 7 * ... * 99)
+
+We can see that the product of the odd numbers (3 * 5 * 7 * ... * 99) is a very large number, and (1/2)^(49) is a very small number. To determine if A is greater than 1/15, we don&#x27;t need the exact value of A; we just need to compare it to 1/15.
+
+Let&#x27;s compare the powers of 2 in A and 1/15:
+
+A = (1/2)^(49) * (3 * 5 * 7 * ... * 99)
+1/15 = 1/(3 * 5)
+
+We can see that 1/15 has a factor of 3 and 5 in the denominator, which are also present in the product of odd numbers in A. However, A has many more factors in the numerator that will make it larger than just 3 * 5. Moreover, A has a factor of (1/2)^(49), which is a very small number, but it is not small enough to make the entire product A less than 1/15.
+
+Therefore, without calculating the exact value, we can conclude that A is greater than 1/15 because the large product of odd numbers in A&#x27;s numerator will outweigh the small factor of (1/2)^(49) when compared to the relatively simple fraction of 1/15.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, A is greater than 1/15.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

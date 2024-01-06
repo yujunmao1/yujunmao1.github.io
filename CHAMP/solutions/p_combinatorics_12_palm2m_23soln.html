@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_12</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_12']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Along a one-way street there are n parking lots. One-by-one n cars numbered 1 to n enter the street. Each driver i heads to his favorite parking lot a_i, and, if it is free, he occupies it. Otherwise, he continues to the next free lot and occupies it. But if all succeeding lots are occupied, he leaves for good. How many sequences {a_1, ..., a_n} are such that every driver can park, as an expression of n?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Make the parking lot arrangement a circle, by connecting the n-th lot to a new (n+1)-th lot, which connects back to the 1st lot.
+2. Thus, every car will have somewhere to park because there are n cars in the (n+1)-lot circle.
+3. In addition, satisfying the original parking configuration is equivalent to the (n+1)-th lot being empty after all cars have parked (because an occupied (n+1)-th lot means that the car on that lot would have left for good originally).
+4. Let each driver choose his favorite lot number from 1 to n+1, so there are (n+1)^n sequences.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The following is a solution to the problem:
+
+Let $a_1, a_2, \dots, a_n$ be the sequence of parking lot numbers chosen by the drivers. We can think of this as a permutation of the numbers from 1 to $n+1$. The condition that every driver can park is equivalent to the condition that the permutation is a derangement. A derangement is a permutation of the numbers from 1 to $n$ such that no number appears in its original position.
+
+It is known that the number of derangements of $n$ objects is given by the following formula:
+
+$$D_n = n!\sum_{k=0}^{n} \frac{(-1)^k}{k!}$$
+
+Therefore, the number of sequences of parking lot numbers such that every driver can park is given by the following formula:
+
+$$\boxed{(n+1)^n \sum_{k=0}^{n} \frac{(-1)^k}{k!}}$$
+
+Here is a proof of the formula for the number of derangements. Let $S_n$ be the set of all permutations of the numbers from 1 to $n$. For each permutation $\pi \in S_n$, let $f(\pi)$ be the number of fixed points of $\pi$, i.e., the number of numbers that appear in their original position in $\pi$. Then, we have the following identity:
+
+$$\sum_{\pi \in S_n} f(\pi) = n!$$
+
+This is because each number from 1 to $n$ appears in exactly one permutation of $S_n$, and the number of fixed points of that permutation is the number of times that number appears in its original position.
+
+Now, let $D_n$ be the number of derangements of $n$ objects. Then, we have the following identity:
+
+$$\sum_{\pi \in S_n} (-1)^{f(\pi)} = D_n$$
+
+This is because a permutation is a derangement if and only if it has no fixed points.
+
+We can rewrite the above identity as follows:
+
+$$\sum_{\pi \in S_n} (-1)^{f(\pi)} = \sum_{\pi \in S_n} \sum_{k=0}^{n} \frac{(-1)^k}{k!} \binom{n}{k}$$
+
+where $\binom{n}{k}$ is the binomial coefficient.
+
+The inner sum is equal to $1$ if $k=0$ and $0$ otherwise. Therefore, we have the following identity:
+
+$$D_n = \sum_{k=0}^{n} \frac{(-1)^k}{k!} \binom{n}{k}$$
+
+This is the formula for the number of derangements.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences of parking lot numbers such that every driver can park is given by $(n+1)^n \sum_{k=0}^{n} \frac{(-1)^k}{k!}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

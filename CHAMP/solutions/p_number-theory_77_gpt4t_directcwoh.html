@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_77</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_77']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?
+
+You may find the following information useful:
+
+1. For integer a, b and odd n, a + b | a^n + b^n.
+2. If a | b and c | d, then ac | bd.
+3. If a | b and b | c, then a | c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the possible values of \(12^m + 9^m + 8^m + 6^m \mod 1991\). Since \(m\) ends with the digit 5, \(m\) is odd.
+
+First, let&#x27;s factorize 1991 to see if it can help us simplify the expression:
+
+\(1991 = 11 \times 181\)
+
+Both 11 and 181 are prime numbers. Now, let&#x27;s use the given information:
+
+1. For integer \(a\), \(b\), and odd \(n\), \(a + b | a^n + b^n\).
+
+Since \(m\) is odd, we can apply this property to pairs of terms in our expression. Let&#x27;s consider the pairs \(12^m + 9^m\) and \(8^m + 6^m\):
+
+- \(12 + 9 | 12^m + 9^m\) because \(m\) is odd.
+- \(8 + 6 | 8^m + 6^m\) because \(m\) is odd.
+
+So, \(21 | 12^m + 9^m\) and \(14 | 8^m + 6^m\). Since 21 and 14 are not coprime (they share a common factor of 7), we cannot directly apply the second piece of information. However, we can say that \(7 | 12^m + 9^m\) and \(7 | 8^m + 6^m\), which means \(7 | (12^m + 9^m + 8^m + 6^m)\).
+
+Now, let&#x27;s consider the modulo 1991 aspect:
+
+2. If \(a | b\) and \(c | d\), then \(ac | bd\).
+
+We know that \(7 | (12^m + 9^m + 8^m + 6^m)\), but we need to find another factor that, when multiplied by 7, gives us a factor of 1991. Since 1991 is not a multiple of 7, we cannot directly apply this property.
+
+3. If \(a | b\) and \(b | c\), then \(a | c\).
+
+We know that \(7 | (12^m + 9^m + 8^m + 6^m)\), but we need to find if there&#x27;s another factor of 1991 that divides the expression.
+
+Let&#x27;s check if 11 or 181 divides any of the terms \(12^m\), \(9^m\), \(8^m\), or \(6^m\):
+
+- \(12^m \mod 11 = 1^m \mod 11 = 1\) because \(12 \equiv 1 \mod 11\).
+- \(9^m \mod 11 = (-2)^m \mod 11 = -2\) because \(9 \equiv -2 \mod 11\) and \(m\) is odd.
+- \(8^m \mod 11 = (-3)^m \mod 11 = -3\) because \(8 \equiv -3 \mod 11\) and \(m\) is odd.
+- \(6^m \mod 11 = (-5)^m \mod 11 = -5\) because \(6 \equiv -5 \mod 11\) and \(m\) is odd.
+
+Adding these up:
+
+\(12^m + 9^m + 8^m + 6^m \mod 11 = 1 - 2 - 3 - 5 \mod 11 = -9 \mod 11 = 2 \mod 11\)
+
+So, \(11 \nmid (12^m + 9^m + 8^m + 6^m)\).
+
+Now let&#x27;s check modulo 181:
+
+- \(12^m \mod 181\) is not easily simplified.
+- \(9^m \mod 181\) is not easily simplified.
+- \(8^m \mod 181\) is not easily simplified.
+- \(6^m \mod 181\) is not easily simplified.
+
+Without a clear simplification for modulo 181, we cannot directly apply the divisibility rules.
+
+However, we know that \(7 | (12^m + 9^m + 8^m + 6^m)\), and since 1991 is not a multiple of 7, the expression \(12^m + 9^m + 8^m + 6^m\) cannot be a multiple of 1991. Therefore, the expression modulo 1991 cannot be 0.
+
+Since we cannot find a direct factorization that simplifies the expression modulo 1991, we need to consider the expression modulo 7, 11, and 181 separately and then use the Chinese Remainder Theorem to find the possible values modulo 1991.
+
+We already found that \(12^m + 9^m + 8^m + 6^m \equiv 2 \mod 11\).
+
+Now let&#x27;s consider modulo 7:
+
+- \(12^m \mod 7 = 5^m \mod 7\), and since \(m\) ends with 5, \(5^m \equiv 5 \mod 7\).
+- \(9^m \mod 7 = 2^m \mod 7\), and since \(m\) ends with 5, \(2^5 = 32 \equiv 4 \mod 7\).
+- \(8^m \mod 7 = 1^m \mod 7 = 1\).
+- \(6^m \mod 7 = (-1)^m \mod 7 = -1 \mod 7 = 6 \mod 7\).
+
+Adding these up:
+
+\(12^m + 9^m + 8^m + 6^m \mod 7 = 5 + 4 + 1 + 6 \mod 7 = 16 \mod 7 = 2 \mod 7\)
+
+So, \(12^m + 9^m + 8^m + 6^m \equiv 2 \mod 7\).
+
+We have:
+
+- \(12^m + 9^m + 8^m + 6^m \equiv 2 \mod 7\)
+- \(12^m + 9^m + 8^m + 6^m \equiv 2 \mod 11\)
+
+We still need to find the value modulo 181, which is not straightforward. However, we can use the fact that \(m\) is odd and ends with 5 to consider Fermat&#x27;s Little Theorem, which states that if \(p\) is prime and \(a\) is not divisible by \(p\), then \(a^{p-1} \equiv 1 \mod p\).
+
+Since \(m\) ends with 5, let&#x27;s consider \(m = 5\), which is the smallest odd number ending with 5:
+
+- \(12^5 \mod 181\) is not easily simplified.
+- \(9^5 \mod 181\) is not easily simplified.
+- \(8^5 \mod 181\) is not easily simplified.
+- \(6^5 \mod 181\) is not easily simplified.
+
+Without further information or constraints on \(m\), we cannot simplify the expression modulo 181. Therefore, we cannot determine the exact value of \(12^m + 9^m + 8^m + 6^m \mod 1991\) without additional information or computational power to handle the large exponents involved.
+
+In conclusion, we have found that \(12^m + 9^m + 8^m + 6^m\) is congruent to 2 modulo 7 and 11, but without the value modulo 181, we cannot use the Chinese Remainder Theorem to find the exact value modulo 1991. Further computational work or additional information about \(m\) would be required to solve this completely.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Without additional information or computational power to handle the large exponents involved, we cannot determine the exact value of \(12^m + 9^m + 8^m + 6^m \mod 1991\), but we know it is congruent to 2 modulo 7 and 11.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

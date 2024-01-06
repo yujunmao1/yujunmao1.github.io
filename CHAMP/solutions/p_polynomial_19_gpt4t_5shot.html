@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_19</td>
+            <td>GPT-4 Turbo</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x+y+z)(x^2+y^2+z^2-xy-yz-xz)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_19']
+messages = problem.conversations['GPT-4 Turbo|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+When (x+y+z)^1999 is expanded and like terms are collected (e.g., collecting 2*x^2*y*z^3 and 3*x^2*y*z^3 into a single term of 5*x^2*y*z^3), how many terms will there be?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For the term x^a*y^b*z^c to appear in the expansion, we must have a+b+c=1999 and a, b, c≥0.
+2. Thus, for any c, we know that a+b=1999-c, and there are 1999-c+1 different values of (a, b), ranging from (0, 1999-c) to (1999-c, 0).
+3. c can range from 0 to 1999.
+4. Thus, the total number of terms in the expansion is 2000+1999+...+1=(2000+1)*2000/2=2001000.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, at most how many integer-valued zeros can it have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Suppose that there is an integer-valued zero at x=a.
+2. Then f(x)=(x-a)g(x) for some polynomial g(x) of degree n-1.
+3. Let g(x)=c_(n-1)*x^(n-1)+c_(n-2)*x^(n-2)+...+c_1*x+c_0.
+4. So f(x)=c_(n-1)*x^n+(c_(n-2)-a*c_(n-1))*x^(n-1)+(c_(n-3)-a*c_(n-2))*x^(n-2)+...+(c_0-a*c_1)*x-a*c_0.
+5. We need every coefficient of f(x) to be an integer, which means that c_(n-1) is an integer, thus c_(n-2) is an integer, thus c_(n-3) is an integer, and so on for all c_i.
+6. So g(x) is a polynomial of integer coefficients.
+7. Thus, we have f(0)=-a*g(x) and f(1)=(1-a)*g(x).
+8. Since -a and 1-a are of opposite parities (i.e., one even and one odd), we cannot have f(0) and f(1) both being odd.
+9. Thus, such an integer root a does not exist.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a string consist of digit 1, 2, 3. How many such strings of length 6 have adjacent digit differing by less than or equal to 1?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let x_n, y_n, z_n be the number of length-n strings that end with digit 1, 2, 3 respectively.
+2. Thus, we have x_1=y_1=z_1=1.
+3. For a string ending with 1, we can append 1 and 2; for a string ending with 2, we can append 1, 2 and 3; for a string ending with 3, we can append 2 and 3.
+4. Thus, we have x_(n+1)=x_n+y_n, y_(n+1)=x_n+y_n+z_n, and z_(n+1)=y_n+z_n.
+5. Starting from (1, 1, 1), we have the sequence of (x_n, y_n, z_n) to be (1, 1, 1), (2, 3, 2), (5, 7, 5), (12, 17, 12), (29, 41, 29), (70, 99, 70).
+6. Thus, in total, there are x_6+y_6+z_6=70+99+70=239 such strings.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1=1 and x_(n+1)=1+n/x_n. For how many values of x_1, ..., x_100 do we have the inequality sqrt(i)≤x_i≤sqrt(i)+1?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We see that x_1 satisfies the condition.
+2. Assume that x_n satisfies the condition, then we know that x_(n+1)=1+n/x_n≤1+n/sqrt(n)=1+sqrt(n)≤sqrt(n+1)+1.
+3. In addition, x_(n+1)=1+n/x_n≥1+n/(sqrt(n)+1)≥1+(n+1-1)/(sqrt(n+1)+1)=1+sqrt(n+1)-1=sqrt(n+1).
+4. Thus, we have sqrt(n+1)≤x_(n+1)≤sqrt(n+1)+1, which means that x_(n+1) also satisifies the inequality for all n.
+5. So all 100 values of x_i satisfy the condition.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, what is the smallest value of (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2))?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Since a, b, c&gt;0, we have the two sequences (a, b, c) and (a^2, b^2, c^2) being similarly sorted.
+2. Thus, we have ((a+b+c)/3)*((a^2+b^2+c^2)/3)≤(a^3+b^3+c^3)/3, which gives (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2))≥1/3.
+3. So the smallest value of (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2)) is 1/3, achieved when a=b=c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Factorize x^3+y^3+z^3-3xyz.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The expression \( x^3 + y^3 + z^3 - 3xyz \) can be factorized using the identity for the sum of cubes, which states that \( a^3 + b^3 + c^3 - 3abc \) can be factorized if \( a + b + c = 0 \). However, in this case, we do not have the condition that \( x + y + z = 0 \), so we cannot directly apply this identity.
+
+Instead, we can use the following factorization for the given expression:
+
+\[ x^3 + y^3 + z^3 - 3xyz = (x + y + z)(x^2 + y^2 + z^2 - xy - xz - yz) \]
+
+This factorization can be derived by considering the following:
+
+1. The expression \( x^3 + y^3 + z^3 - 3xyz \) is symmetric in \( x, y, z \).
+2. If \( x + y + z = 0 \), then \( x^3 + y^3 + z^3 - 3xyz = 0 \) as well.
+3. The expression can be written as a product of two factors, one of which is \( x + y + z \).
+
+To derive the factorization, we can start by writing:
+
+\[ x^3 + y^3 + z^3 - 3xyz = (x + y + z)(A) \]
+
+We want to find \( A \) such that the equation holds. Expanding the right-hand side, we get:
+
+\[ (x + y + z)(A) = xA + yA + zA \]
+
+Now, we want the terms \( x^3, y^3, z^3 \) to appear, so \( A \) must contain \( x^2, y^2, z^2 \) respectively. Also, to cancel out the cross terms that will appear when expanding, \( A \) must contain \( -xy, -xz, -yz \). Thus, we can write:
+
+\[ A = x^2 + y^2 + z^2 - xy - xz - yz \]
+
+Now, let&#x27;s verify the factorization:
+
+\[ (x + y + z)(x^2 + y^2 + z^2 - xy - xz - yz) \]
+\[ = x^3 + xy^2 + xz^2 - x^2y - x^2z - xyz \]
+\[ + yx^2 + y^3 + yz^2 - y^2x - y^2z - xyz \]
+\[ + zx^2 + zy^2 + z^3 - zx^2 - zy^2 - xyz \]
+\[ = x^3 + y^3 + z^3 - 3xyz \]
+
+Thus, the factorization of \( x^3 + y^3 + z^3 - 3xyz \) is:
+
+\[ x^3 + y^3 + z^3 - 3xyz = (x + y + z)(x^2 + y^2 + z^2 - xy - xz - yz) \]</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The factorization of \( x^3 + y^3 + z^3 - 3xyz \) is \( (x + y + z)(x^2 + y^2 + z^2 - xy - xz - yz) \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

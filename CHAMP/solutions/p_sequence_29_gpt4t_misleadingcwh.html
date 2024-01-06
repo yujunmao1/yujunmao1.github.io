@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_29</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 2/3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_29']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Does the limit exist for the sequence defined as a_n=((2^3-1)/(2^3+1))*((3^3-1)/(3^3+1))*((4^3-1)/(4^3+1))*...*((n^3-1)/(n^3+1)), and if so, find it.
+
+You may find the following information useful:
+
+1. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).
+2. x^2-y^2=(x+y)(x-y).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine whether the limit of the sequence \( a_n \) exists as \( n \) approaches infinity, we need to analyze the pattern of the terms in the sequence.
+
+The sequence is given by:
+
+\[ a_n = \left(\frac{2^3-1}{2^3+1}\right) \left(\frac{3^3-1}{3^3+1}\right) \left(\frac{4^3-1}{4^3+1}\right) \ldots \left(\frac{n^3-1}{n^3+1}\right) \]
+
+We can simplify each term in the sequence by factoring the numerator using the difference of cubes formula:
+
+\[ x^3 - y^3 = (x - y)(x^2 + xy + y^2) \]
+
+In our case, \( x = k \) and \( y = 1 \), so we have:
+
+\[ k^3 - 1^3 = (k - 1)((k)^2 + (k)(1) + (1)^2) = (k - 1)(k^2 + k + 1) \]
+
+Now, let&#x27;s apply this to the terms in the sequence:
+
+\[ \frac{k^3-1}{k^3+1} = \frac{(k - 1)(k^2 + k + 1)}{k^3 + 1} \]
+
+Notice that \( k^3 + 1 \) can be factored as \( (k + 1)(k^2 - k + 1) \), so we have:
+
+\[ \frac{k^3-1}{k^3+1} = \frac{(k - 1)(k^2 + k + 1)}{(k + 1)(k^2 - k + 1)} \]
+
+Now, we can cancel out the common terms \( k^2 + k + 1 \) from the numerator and denominator:
+
+\[ \frac{k^3-1}{k^3+1} = \frac{k - 1}{k + 1} \]
+
+Thus, the sequence can be rewritten as:
+
+\[ a_n = \left(\frac{2 - 1}{2 + 1}\right) \left(\frac{3 - 1}{3 + 1}\right) \left(\frac{4 - 1}{4 + 1}\right) \ldots \left(\frac{n - 1}{n + 1}\right) \]
+
+\[ a_n = \left(\frac{1}{3}\right) \left(\frac{2}{4}\right) \left(\frac{3}{5}\right) \ldots \left(\frac{n - 1}{n + 1}\right) \]
+
+We can see that each term in the sequence has a factor in the numerator that cancels with a factor in the denominator of the next term. This telescoping effect simplifies the sequence to:
+
+\[ a_n = \frac{1}{n + 1} \]
+
+Now, we can easily find the limit as \( n \) approaches infinity:
+
+\[ \lim_{n \to \infty} a_n = \lim_{n \to \infty} \frac{1}{n + 1} = 0 \]
+
+Therefore, the limit of the sequence \( a_n \) exists and is equal to 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence \( a_n = \left(\frac{2^3-1}{2^3+1}\right)\left(\frac{3^3-1}{3^3+1}\right)\left(\frac{4^3-1}{4^3+1}\right)\ldots\left(\frac{n^3-1}{n^3+1}\right) \) as \( n \) approaches infinity is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

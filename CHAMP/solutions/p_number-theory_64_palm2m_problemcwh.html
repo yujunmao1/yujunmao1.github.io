@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_64</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No positive integer solutions</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_64']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: The sequence a_0, a_1, a_2, ... is such that, for all nonnegative m≥n, we have a_(m+n)+a_(m−n)=(a_(2m)+a_(2n))/2. If a_1=1, find a_50.
+Step-wise solution:
+1. With m=n, we have a_(2n)+a_0=(a_(2n)+a_(2n))/2.
+2. So a_0=0.
+3. With n=0, we have a_m+a_m=(a_(2m)+a_0)/2.
+4. So a_(2m)=4a_m.
+5. With m=n+2, we have a_(2n+2)+a_2=(a_(2n+4)+a_(2n))/2.
+6. Plugging in a_(2m)=4a_m, we have 4(a_(n+1)+a_1)=4*(a_(n+2)+a_n)/2.
+7. With a_1=1, we have a_(n+2)=2a_(n+1)-a_n+2.
+8. Thus, starting from a_0=0, a_1=1, we have the sequence a_0, a_1, a_2, ... to be 0, 1, 4, 9, 16, ...
+9. We see that a_n=n^2, which can be shown with a_(n+2)^2=n^2+4n+4=2(n^2+2n+1)-n^2+2=a_(n+1)^2-a_n^2+2.
+10. Thus, a_50=2500.
+
+Problem: Find all real-valued solutions to the equation x^8+4x^6−10x^4+4x^2+1=0.
+Step-wise solution:
+1. Let f(x)=x^8+4x^6−10x^4+4x^2+1.
+2. We have f(x)=x^4*g(z) where z=x+1/x and g(z)=x^4+4x^2-10+4/x^2+1/x^4 should be a polynomial of degree 4 in z.
+3. We have z^4=(x+1/x)^4=x^4+4x^2+6+4/x^2+1/x^4, so g(z)=z^4-16.
+4. Thus, we have f(x)=x^4*(z^4-16), and since x≠0, we must have z^4=16.
+5. This gives us z^2=±4, and z=±2, ±2i.
+6. With z=x+1/x, we do not have real-valued x for z=±2i.
+7. When z=2, we have x=1.
+8. When z=-2, we have x=-1.
+9. So the real-valued solutions to the equation are x=±1.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all positive integer solutions to the equation m^2+(m+1)^2=n^4+(n+1)^4.
+
+In addition, you may also find the following information helpful:
+
+1. Expand the expressions in the equation and simplify.
+2. Add 1 to both sides.
+3. Split 3n^2 into 2n^2+n^2 and complete the square.
+4. Compare m^2+m+1 with m^2 and (m+1)^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Sure, I can help you with that.
+
+The equation $m^2+(m+1)^2=n^4+(n+1)^4$ can be rewritten as $m^2+(m+1)^2-n^4-(n+1)^4=0$. Expanding the left-hand side, we get $m^2+2m+1+m^2+2m+1-n^4-4n^3+4n^2-4n+1=0$. Combining like terms, we get $4m^2+4m-4n^4+4n^3-4n=0$. Dividing both sides by 4, we get $m^2+m-n^2-n+1=0$.
+
+Adding 1 to both sides, we get $m^2+m-n^2-n=1$. Completing the square on $m$, we get $(m-\frac{1}{2})^2=\frac{3}{4}-n^2-n$. Taking the square root of both sides, we get $m-\frac{1}{2}=\pm\frac{\sqrt{3}}{2}(n+\frac{1}{2})$. Adding $\frac{1}{2}$ to both sides, we get $m=\frac{1}{2}\pm\frac{\sqrt{3}}{2}(n+\frac{1}{2})$.
+
+Since $m$ is an integer, we must have $\frac{1}{2}\pm\frac{\sqrt{3}}{2}(n+\frac{1}{2})$ an integer. This means that $n+\frac{1}{2}$ must be an integer multiple of $\frac{\sqrt{3}}{2}$. In other words, $n$ must be an integer multiple of $\frac{\sqrt{3}}{2}-\frac{1}{2}$.
+
+The possible values of $n$ are $0$, $\frac{\sqrt{3}}{2}-\frac{1}{2}$, $\frac{\sqrt{3}}{2}$, $\frac{3\sqrt{3}}{2}-\frac{1}{2}$, $\frac{3\sqrt{3}}{2}$, $\frac{5\sqrt{3}}{2}-\frac{1}{2}$, $\frac{5\sqrt{3}}{2}$, $\frac{7\sqrt{3}}{2}-\frac{1}{2}$, $\frac{7\sqrt{3}}{2}$, $\frac{9\sqrt{3}}{2}-\frac{1}{2}$, $\frac{9\sqrt{3}}{2}$, $\frac{11\sqrt{3}}{2}-\frac{1}{2}$, $\frac{11\sqrt{3}}{2}$, $\frac{13\sqrt{3}}{2}-\frac{1}{2}$, $\frac{13\sqrt{3}}{2}$, $\frac{15\sqrt{3}}{2}-\frac{1}{2}$, $\frac{15\sqrt{3}}{2}$, $\frac{17\sqrt{3}}{2}-\frac{1}{2}$, $\frac{17\sqrt{3}}{2}$, $\frac{19\sqrt{3}}{2}-\frac{1}{2}$, $\frac{19\sqrt{3}}{2}$, $\frac{21\sqrt{3}}{2}-\frac{1}{2}$, $\frac{21\sqrt{3}}{2}$, $\frac{23\sqrt{3}}{2}-\frac{1}{2}$, $\frac{23\sqrt{3}}{2}$, $\frac{25\sqrt{3}}{2}-\frac{1}{2}$, $\frac{25\sqrt{3}}{2}$, $\frac{27\sqrt{3}}{2}-\frac{1}{2}$, $\frac{27\sqrt{3}}{2}$, $\frac{29\sqrt{3}}{2}-\frac{1}{2}$, $\frac{29\sqrt{3}}{2}$, $\frac{31\sqrt{3}}{2}-\frac{1}{2}$, $\frac{31\sqrt{3}}{2}$, $\frac{33\sqrt{3}}{2}-\frac{1</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only positive integer solutions to the equation $m^2+(m+1)^2=n^4+(n+1)^4$ are $(m,n)=(0,0),(1,0),(2,1),(3,2),(4,3),(5,4),(6,5),(7,6),(8,7),(9,8),(10,9),(11,10),(12,11),(13,12),(14,13),(15,14),(16,15),(17,16),(18,17),(19,18),(20,19),(21,20),(22,21),(23,22),(24,23),(25,24),(26,25),(27,26),(28,27),(29,28),(30,29),(31,30),(32,31),(33,32),(34,33),(35,34),(36,35),(37,36),(38,37),(39,38),(40,39),(41,40),(42,41),(43,42),(44,43),(45,44),(46,45),(47,46),(48,47),(49,48),(50,49)$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

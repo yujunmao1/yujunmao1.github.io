@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_14</td>
+            <td>GPT-3.5</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x^2+x+1)(x^2-x+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_14']
+messages = problem.conversations['GPT-3.5|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of p^2 mod 24 for prime number p.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For p≤3, we have 2^2 mod 24=4 and 3^2 mod 24=9.
+2. For p&gt;3, we have p=6n±1.
+3. So (6n±1)^2=36n^2±12n+1=12n(3n±1)+1.
+4. Either n or 3n±1 is even, so 12n(3n±1) mod 24=0.
+5. Thus, (6n±1)^2 mod 24=1.
+6. So we have all possible values of p^2 mod 24 being 1, 4, and 9.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation x^3+x^2*y+x*y^2+y^3=8(x^2+xy+y^2+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let u=x+y and v=xy, and the equation can be written as u^3-2uv=8(u^2-v+1).
+2. We see that u must be even since u^3=2uv+8(u^2-v+1) is even.
+3. So let u=2t, and the equation becomes 8t^3-4tv=32t^2-8v+8, or 2t^3-tv=8t^2-2v+2.
+4. We have v=(2t^3-8t^2-2)/(t-2).
+5. We want to find the quotient and remainder of this division, and set up 2t^3-8t^2-2=(t-2)q(t)+r, where r is a number since t-2 has degree 2.
+6. Plugging t=2 into the equation, we get r=16-32-2=-18.
+7. Thus, we have 2t^3-8t^2-2=(t-2)(at^2+bt+c)-18.
+8. Plugging t=0 into the equation, we get -2c-18=-2, or c=-8.
+9. Plugging t=1 into the equation, we get -(a+b-8)-18=-8, or a+b=-2.
+10. Plugging t=-1 into the equation, we get -3(a-b-8)-18=-12, or a-b=6.
+11. Thus, we have a=2, b=-4.
+12. So we have v=2t^2-4t-8-18/(t-2), which needs to be an integer.
+13. This means that t-2 | 18, and we have t-2=±1, ±2, ±3, ±6, ±9, ±18.
+14. For these t values, the (u, v) values are then (6, -20), (2, 8), (8, -1), (0, 1), (10, 16), (-2, 4), (16, 85), (-8, 43), (22, 188), (-14, 120), (40, 711), (-32, 569).
+15. Among them, only (u=x+y=10, v=xy=16) gives integer values of x, y of (x=2, y=8) or (x=8, y=2).
+16. Thus, (x=2, y=8) and (x=8, y=2) are the only two solutions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How often does the factor 2 occur in the product P(n)=(n+1)(n+2)...(2n), as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For n=1, we have P(n)=2, with the factor 2 occurs 1 time.
+2. We have P(n+1)=(n+2)(n+3)...(2n)(2n+1)(2n+2)=(n+2)(n+3)...(2n)(2n+1)2(n+1)=2*P(n)*(2n+1).
+3. Since 2n+1 is odd and contains no factor of 2, we find that P(n+1) contains exactly one more factor of 2 than P(n).
+4. Since P(1) contains 1 factor of 2, P(n) contains n factors of 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many subsets of {1, 2,..., 10} have no two successive numbers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For each subset of the set {1, ..., n}, we map it to a length-n string of 0s and 1s, where a digit 1 at i-th place means that i is in the subset.
+2. Thus, the constraint that the subset has no successive numbers means that the string has no two consecutive 1s.
+3. Let P(n) be the number of such strings of length n.
+4. We notice that a length-n string can be constructed from any string of length n-1 by appending 0, or from any string of length n-2 by appending 01, and these two constructions do not share any common string due to the different last digit.
+5. Thus, P(n)=P(n-1)+P(n-2).
+6. We have P(1)=2 (0 and 1) and P(2)=3 (00, 01 and 10).
+7. Thus, P(n) for n from 2 to 10 is 5, 8, 13, 21, 34, 55, 89 and 144.
+8. So there are 144 such subsets.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, at most how many of the three inequalities a(1-b)&gt;1/4, b(1-c)&gt;1/4, c(1-a)&gt;1/4 can be true at the same time?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We can see that a=0.9, b=0.5, c=0.1 makes a(1-b)=0.45&gt;1/4 and b(1-c)=0.45&gt;1/4.
+2. Assume that all three inequalities are true.
+3. Since we have a, b, c&gt;0, we must have a, b, c&lt;1 for the three inequalities to hold.
+4. Thus, we need to have a(1-a)*b(1-b)*c(1-c)&gt;(1/4)^3.
+5. However, we know that a(1-a)=-a^2+a=-(a-1/2)^2+1/4≤1/4, and the same for b, c.
+6. Thus, we cannot have a(1-a)*b(1-b)*c(1-c)&gt;(1/4)^3, so the three inequalities cannot be true at the same time.
+7. So at most 2 inequalities can be true.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Factorize x^4+x^2+1 into terms of integer coefficients.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To factorize the expression x^4 + x^2 + 1, we can use a technique called completing the square.
+
+1. Let&#x27;s consider the expression x^4 + x^2 + 1.
+2. Notice that this expression resembles a quadratic equation in terms of x^2.
+3. We can rewrite the expression as (x^4 + 2x^2 + 1) - x^2.
+4. Now, we have a perfect square trinomial in the parentheses: (x^2 + 1)^2 - x^2.
+5. Simplifying further, we get (x^2 + 1 + x)(x^2 + 1 - x).
+6. Finally, we can factorize the expression as (x^2 + x + 1)(x^2 - x + 1).
+
+Therefore, the factorization of x^4 + x^2 + 1 is (x^2 + x + 1)(x^2 - x + 1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The factorization of x^4 + x^2 + 1 is (x^2 + x + 1)(x^2 - x + 1).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

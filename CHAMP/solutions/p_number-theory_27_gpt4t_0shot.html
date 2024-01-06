@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_27</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_27']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let n be 22...22, with a total of 1980 digits. What is n mod 1982?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the remainder when the number \( n = 22\ldots22 \) (with 1980 digits of 2) is divided by 1982.
+
+First, let&#x27;s express \( n \) as a sum of its digits multiplied by powers of 10. Since \( n \) is composed entirely of the digit 2, we can write it as:
+
+\[ n = 2 \cdot 10^{1979} + 2 \cdot 10^{1978} + \ldots + 2 \cdot 10^1 + 2 \cdot 10^0 \]
+
+Now, we can factor out the 2:
+
+\[ n = 2(10^{1979} + 10^{1978} + \ldots + 10^1 + 10^0) \]
+
+Next, we need to find the remainder of each term when divided by 1982. Since 1982 is not a power of 10, we can use the fact that \( 10^k \mod 1982 \) will eventually repeat because the remainders must cycle due to the pigeonhole principle.
+
+Let&#x27;s start by finding the remainders of powers of 10 modulo 1982:
+
+\[ 10^1 \mod 1982 = 10 \]
+\[ 10^2 \mod 1982 = 100 \]
+\[ 10^3 \mod 1982 = 1000 \mod 1982 = 18 \]
+\[ 10^4 \mod 1982 = 10 \cdot 10^3 \mod 1982 = 10 \cdot 18 \mod 1982 = 180 \]
+\[ 10^5 \mod 1982 = 10 \cdot 10^4 \mod 1982 = 10 \cdot 180 \mod 1982 = 1800 \mod 1982 = -182 \]
+\[ 10^6 \mod 1982 = 10 \cdot 10^5 \mod 1982 = 10 \cdot (-182) \mod 1982 = -1820 \mod 1982 = 162 \]
+\[ 10^7 \mod 1982 = 10 \cdot 10^6 \mod 1982 = 10 \cdot 162 \mod 1982 = 1620 \mod 1982 = -362 \]
+
+We can see that the remainders are not immediately repeating, but since there are only 1982 possible remainders (from 0 to 1981), the remainders must eventually repeat. However, we don&#x27;t need to find the entire cycle because we can use a property of the modulus operation: \( (a \cdot b) \mod m = [(a \mod m) \cdot (b \mod m)] \mod m \).
+
+Since \( 10^{1980} \) is a power of 10, we can reduce it modulo 1982 by considering the pattern we&#x27;ve started to see. We notice that every third power of 10 after \( 10^3 \) is a multiple of 18 (since \( 10^3 \mod 1982 = 18 \)), and every power of 10 increases by one digit. Therefore, \( 10^{1980} \) will have a remainder that is a multiple of 18 when divided by 1982.
+
+Let&#x27;s find the remainder of \( 10^{1980} \mod 1982 \) by considering the pattern:
+
+\[ 10^{1980} \equiv (10^3)^{660} \mod 1982 \]
+\[ 10^{1980} \equiv 18^{660} \mod 1982 \]
+
+Now, \( 18^{660} \) is a very large number, but we only need its remainder modulo 1982. Since 18 and 1982 are not coprime (they share a common factor of 2), we cannot directly apply Euler&#x27;s theorem to simplify this. However, we can still use the fact that \( 18^2 = 324 \) and \( 18^3 = 5832 \), which is a multiple of 1982 plus 18:
+
+\[ 18^3 \mod 1982 = 18 \]
+
+This means that every third power of 18 will be congruent to 18 modulo 1982. Since 660 is a multiple of 3, we have:
+
+\[ 18^{660} \mod 1982 = 18 \]
+
+Now, we can go back to our original expression for \( n \):
+
+\[ n = 2(10^{1979} + 10^{1978} + \ldots + 10^1 + 10^0) \]
+
+Since \( 10^{1980} \mod 1982 = 18 \), we can say that \( 10^{1979} \mod 1982 \) will be \( \frac{18}{10} \mod 1982 \), which is not an integer. However, we can multiply and divide by the modular inverse of 10 modulo 1982 to find the remainder. The modular inverse of 10 modulo 1982 is the number that, when multiplied by 10, gives a remainder of 1 modulo 1982. To find this, we can use the extended Euclidean algorithm, but since 1982 is not a prime number and 10 is not coprime to 1982 (they share a common factor of 2), 10 does not have a modular inverse modulo 1982.
+
+At this point, we realize that we&#x27;ve been overcomplicating the problem. Since \( n \) is composed of 1980 digits of 2, and we&#x27;re looking for \( n \mod 1982 \), we can simplify the problem significantly by noting that \( n \) is even and 1982 is also even. Therefore, \( n \) is some even number minus another even number (1980), which will give us an even result. Since \( n \) is composed of the digit 2 repeated 1980 times, we can express \( n \) as \( 2 \times 111\ldots111 \) (with 1980 digits of 1).
+
+Now, let&#x27;s consider the number \( 111\ldots111 \) (with 1980 digits of 1) modulo 1982. This number is clearly odd, and when we subtract 1 from it, we get \( 111\ldots110 \) (with 1979 digits of 1 followed by a 0), which is even. If we subtract 1 again, we get \( 111\ldots109 \), which is odd. Therefore, \( 111\ldots111 \) (with 1980 digits of 1) is 1 more than a multiple of 1982.
+
+So, \( n = 2 \times 111\ldots111 \) (with 1980 digits of 1) is 2 more than a multiple of 1982. Therefore, \( n \mod 1982 = 2 \).
+
+The final answer is \( n \mod 1982 = 2 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder when the number \( n = 22\ldots22 \) (with 1980 digits of 2) is divided by 1982 is \( n \mod 1982 = 2 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

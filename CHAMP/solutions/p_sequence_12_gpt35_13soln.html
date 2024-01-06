@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_12</td>
+            <td>GPT-3.5</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit does not exist</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_12']
+messages = problem.conversations['GPT-3.5|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {a_n} is defined by a_1=1, a_(n+1)=a_n+1/a_n^2. Does a finite limit of a_n exist, and if so, find it.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have a_2^3=(1+1)^3=8&gt;3*2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if a finite limit of the sequence {a_n} exists, we need to analyze the behavior of the terms as n approaches infinity.
+
+Let&#x27;s start by finding the next few terms of the sequence:
+
+a_1 = 1
+a_2 = a_1 + 1/a_1^2 = 1 + 1/1^2 = 2
+a_3 = a_2 + 1/a_2^2 = 2 + 1/2^2 = 2 + 1/4 = 2.25
+a_4 = a_3 + 1/a_3^2 = 2.25 + 1/2.25^2 = 2.25 + 1/5.0625 = 2.25 + 0.1975 = 2.4475
+a_5 = a_4 + 1/a_4^2 = 2.4475 + 1/2.4475^2 = 2.4475 + 1/5.9976 = 2.4475 + 0.1667 = 2.6142
+
+From these calculations, we can observe that the terms of the sequence are increasing. However, it is not clear if they will continue to increase indefinitely or eventually converge to a finite limit.
+
+To investigate further, let&#x27;s calculate a few more terms:
+
+a_6 = a_5 + 1/a_5^2 = 2.6142 + 1/2.6142^2 = 2.6142 + 1/6.8266 = 2.6142 + 0.1466 = 2.7608
+a_7 = a_6 + 1/a_6^2 = 2.7608 + 1/2.7608^2 = 2.7608 + 1/7.6287 = 2.7608 + 0.131 = 2.8918
+a_8 = a_7 + 1/a_7^2 = 2.8918 + 1/2.8918^2 = 2.8918 + 1/8.3837 = 2.8918 + 0.119 = 3.0108
+
+At this point, we can see that the terms are still increasing, but the rate of increase is decreasing. This suggests that the sequence may be approaching a finite limit.
+
+To confirm this, let&#x27;s calculate a few more terms:
+
+a_9 = a_8 + 1/a_8^2 = 3.0108 + 1/3.0108^2 = 3.0108 + 1/9.0657 = 3.0108 + 0.1103 = 3.1211
+a_10 = a_9 + 1/a_9^2 = 3.1211 + 1/3.1211^2 = 3.1211 + 1/9.7487 = 3.1211 + 0.1026 = 3.2237
+
+As we continue to calculate more terms, we can observe that the rate of increase becomes smaller and smaller. This suggests that the sequence is converging to a finite limit.
+
+To find the exact value of the limit, we can use the concept of a recursive formula. Let L represent the limit of the sequence. Then, we have:
+
+L = L + 1/L^2
+
+Simplifying this equation, we get:
+
+0 = 1/L^2
+
+Since the denominator cannot be zero, we conclude that L must be infinity.
+
+Therefore, the sequence {a_n} does not have a finite limit.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence {a_n} does not have a finite limit.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

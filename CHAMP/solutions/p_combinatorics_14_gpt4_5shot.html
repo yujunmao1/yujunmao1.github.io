@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_14</td>
+            <td>GPT-4</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 5/14, or approximately 35.7%</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_14']
+messages = problem.conversations['GPT-4|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence of positive integers a_0, a_1, ..., a_100 is defined as a_1&gt;a_0, a_n=3a_(n-1)-2a_(n-2). Is it possible to have a_100&lt;2^99 for certain such sequences, and if so, find the sequence with the largest sum a_0+a_1+...+a_100.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_1-a_0≥1.
+2. We also have a_(n+1)-a_n=3a_n-2a_(n-1)-a_n=2(a_n-a_(n-1)) and all the differences are positive.
+3. Thus, a_2-a_1=2(a_1-a_0)≥2, a_3-a_2=2(a_2-a_1)≥2^2, a_4-a_3=2(a_3-a_2)≥2^3, ..., a_100-a_99=2(a_99-a_98)≥2^99.
+4. So a_100≥a_99+2^99&gt;2^99.
+5. Thus, there does not exist such a sequence.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x be 1000...0001, with a total of 1961 zeros in the middle. Is x a prime number?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have x=10^1962+1.
+2. 1962 is divisible by 3 since its digit sum, is 18, is divisible by 3.
+3. Thus, we can write 10^1962+1=(10^k)^3+1, which is divisible by 10^k+1.
+4. So x is not a prime number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the remainder of x^100-2x^51+1 divided by x^2-1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We know that the remainder is a polynomial of degree less than 2, so we set up x^100-2x^51+1=(x^2-1)q(x)+ax+b.
+2. Plugging x=1 into the equation, we get 0=a+b.
+3. Plugging x=-1 into the equation, we get 4=-a+b.
+4. Thus, a=-2 and b=2.
+5. So the remainder is -2x+2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a monic polynomial (i.e. a polynomial with the leading coefficient being 1) p(x) of degree greater than 1 that satisfies x*p(x-1)=(x-2023)*p(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Plugging x=0 into the equation, we get -2023p(0)=0, so p(0)=0 and 0 is a root of p(x).
+2. Plugging x=1 into the equation, we get -2022p(1)=p(0)=0, so p(1)=0 and 1 is a root.
+3. Plugging x=2 into the equation, we get -2021p(2)=2p(1)=0, so p(2)=0 and 2 is a root.
+4. This process can continue to x=2022, where we get -p(2022)=2022p(2021)=0 and 2022 is a root.
+5. We cannot continue because at x=2023, we have 0*p(2023)=0, but p(2023) is not necessarily 0.
+6. So we have identified the roots 0, 1, ..., 2022, which means that p(x)=x(x-1)(x-2)...(x-2022)f(x) for some f(x).
+7. Plugging this into the original equation, we have x(x-1)(x-2)...(x-2023)f(x-1)=(x-2023)x(x-1)...(x-2022)f(x) for all x.
+8. So we need to have f(x)=f(x-1) for all x.
+9. The only possible value of f(x) to make p(x) a monic polynomial of degree more than 1 is thus f(x)=1.
+10. So we have p(x)=x(x-1)(x-2)...(x-2022).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Define a sequence with a_1=a_2=1, a_3=−1, a_n=a_(n−1)*a_(n−3). Find a_1964.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We see that the first few terms are 1, 1, -1, -1, -1, 1, -1, 1, 1, -1.
+2. The last three terms are the same as the first three terms, and since a_n depends only on the last three terms, the pattern of the first 7 numbers repeats indefinitely.
+3. Thus, a_1964=a_(1964 mod 7)=a_4=-1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A gardener plants 3 apple trees, 3 peach trees and 2 cherry trees in a row, with a random order. What is the probability that no two apple trees are next two each other?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. There are a total of 8!/(3!3!2!) = 560 ways to arrange the trees.
+2. We can think of the apple trees as &quot;dividers&quot; separating the other trees into groups.
+3. There are 6 spaces between the 7 other trees, and we need to choose 3 of them to place the apple trees.
+4. This can be done in 6 choose 3 = 20 ways.
+5. Each arrangement of the other trees can be done in 7!/(3!2!) = 420 ways.
+6. So the total number of valid arrangements is 20*420 = 8400.
+7. Thus, the probability is 8400/560 = 15.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The probability that no two apple trees are next to each other when a gardener plants 3 apple trees, 3 peach trees, and 2 cherry trees in a row in a random order is 15.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

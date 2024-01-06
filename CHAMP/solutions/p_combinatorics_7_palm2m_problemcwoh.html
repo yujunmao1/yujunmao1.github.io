@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_7</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_7']
+messages = problem.conversations['PaLM 2 Medium|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Each of the faces of a cube is painted by a different color. How many of the colorings are distinct up to rotations?
+Step-wise solution:
+1. We paint a face and put it on the bottom, and consider painting the second face.
+2. We can paint it on top, the remaining four faces have 4! colorings, but we can rotate the cube four times, which makes four colorings the same, so we 4!/4=6 distinct colorings.
+3. If the second face is on the side, we can put it on the front, and the two faces uniquely fix the rotation.
+4. Thus, any coloring of the remaining four faces is distinct, and we have 4!=24 colorings.
+5. In total, we have 30 colorings.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Consider a row of 11 seats. A child sits on each. Each child may move by at most one seat. How many possible rearrangements are there (including the original one)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem can be solved by considering the number of ways to choose a starting position for each child, and then the number of ways to rearrange the children from that position.
+
+There are 11 ways to choose a starting position for the first child. For each of these positions, there are 10 ways to choose a starting position for the second child, 9 ways to choose a starting position for the third child, and so on. This gives a total of $11 \times 10 \times 9 \times \cdots \times 2 \times 1 = 11!$ possible rearrangements.
+
+However, this includes the original arrangement, where all of the children stay in their original seats. To account for this, we need to divide $11!$ by 2. This is because there are two ways to rearrange the children in the original position: we can either start with the first child in the first seat and then move them around, or we can start with the first child in the last seat and then move them around.
+
+Therefore, the total number of possible rearrangements is $\frac{11!}{2} = \boxed{39916800}$.
+
+Here is a more detailed solution:
+
+We can think of each rearrangement as a sequence of 11 moves, where each move is a child moving to the seat next to them. For example, the rearrangement where the children start in the seats 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 and then move to the seats 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 1 can be represented by the sequence of moves (1, 2), (2, 3), (3, 4), (4, 5), (5, 6), (6, 7), (7, 8), (8, 9), (9, 10), (10, 11).
+
+There are 11! possible sequences of 11 moves, but this includes the empty sequence, which corresponds to the original arrangement. To account for this, we need to divide 11! by 2. This is because there are two ways to rearrange the children in the original position: we can either start with the first child in the first seat and then move them around, or we can start with the first child in the last seat and then move them around.
+
+Therefore, the total number of possible rearrangements is $\frac{11!}{2} = \boxed{39916800}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of possible rearrangements of 11 children in a row, where each child may move by at most one seat, is $\boxed{39916800}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

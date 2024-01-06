@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_19</td>
+            <td>GPT-3.5</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2 inequalities</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_19']
+messages = problem.conversations['GPT-3.5|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, d, at most how many of the three inequalities a+b&lt;c+d, (a+b)(c+d)&lt;ab+cd, (a+b)cd&lt;ab(c+d) can be true at the same time?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We can see that the first two inequalities can be satisified with a=b=1, c=d=10, as 2&lt;20 and 40&lt;102.
+2. Assume that all three inequalities are true.
+3. Multiplying the first two inequalities, we get (a+b)^2&lt;ab+cd.
+4. Since (a+b)^2≥4ab, we have 4ab&lt;ab+cd, or cd&gt;3ab.
+5. Multiplying the last two inequalities, we get (a+b)^2*cd&lt;ab(ab+cd).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To continue the solution, let&#x27;s simplify the expression (a+b)^2*cd&lt;ab(ab+cd):
+
+Expanding (a+b)^2, we have (a+b)^2 = a^2 + 2ab + b^2.
+
+Substituting this into the inequality, we get (a^2 + 2ab + b^2)*cd &lt; ab(ab+cd).
+
+Expanding further, we have a^2cd + 2abcd + b^2cd &lt; ab^2 + abcd.
+
+Rearranging the terms, we get a^2cd - ab^2 + 2abcd - abcd + b^2cd &lt; 0.
+
+Factoring out common terms, we have (a^2 - ab + b^2)cd + (2ab - abcd) &lt; 0.
+
+Now, let&#x27;s analyze the two terms separately:
+
+1. (a^2 - ab + b^2)cd:
+   Since a, b, c, and d are positive, we know that cd is positive.
+   For the term (a^2 - ab + b^2) to be negative, we need a^2 - ab + b^2 &lt; 0.
+   This can be rewritten as (a - b)^2 &lt; 0, which is not possible since squares of real numbers are always non-negative.
+   Therefore, (a^2 - ab + b^2)cd is always non-negative.
+
+2. (2ab - abcd):
+   We can factor out ab from this term: ab(2 - cd).
+   Since a, b, c, and d are positive, we have 2 - cd &lt; 2.
+   Therefore, (2ab - abcd) is always non-negative.
+
+From the analysis above, we can conclude that the expression (a^2 - ab + b^2)cd + (2ab - abcd) is always non-negative.
+
+This means that the inequality (a+b)^2*cd &lt; ab(ab+cd) cannot be true if all three inequalities are true.
+
+Therefore, at most two of the three inequalities can be true at the same time.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most two of the three inequalities can be true at the same time.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_46</td>
+            <td>GPT-3.5</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (no such selection is possible)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_46']
+messages = problem.conversations['GPT-3.5|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+In how many ways can 12 geometric progressions be selected from the numbers 1, 2, ..., 100 such that every number is in exactly one progression?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. For three different prime numbers, p&lt;q&lt;r, we have r/q≠q/p, because otherwise q^2=pr implies that p=q=r.
+2. So no three prime numbers can be in one geometric progression.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the different cases for the common ratio of the geometric progressions.
+
+Case 1: Common ratio is a prime number
+In this case, we cannot have three prime numbers in one geometric progression, as stated in the partial solution. Therefore, we can have at most two prime numbers in one progression.
+
+There are 25 prime numbers between 1 and 100. We can choose 2 prime numbers in C(25, 2) = 300 ways. For each pair of prime numbers, we can choose any other number from the remaining 100 - 2 = 98 numbers. So, the total number of progressions with a common ratio as a prime number is 300 * 98 = 29,400.
+
+Case 2: Common ratio is a composite number
+In this case, the common ratio must be a power of a prime number. Let&#x27;s consider the different powers of prime numbers.
+
+2^1: There are 6 numbers between 1 and 100 that are powers of 2 (2, 4, 8, 16, 32, 64). We can choose any 2 of these numbers in C(6, 2) = 15 ways. For each pair, we can choose any other number from the remaining 100 - 2 = 98 numbers. So, the total number of progressions with a common ratio of 2^1 is 15 * 98 = 1,470.
+
+2^2: There are 3 numbers between 1 and 100 that are powers of 4 (4, 16, 64). We can choose any 2 of these numbers in C(3, 2) = 3 ways. For each pair, we can choose any other number from the remaining 100 - 2 = 98 numbers. So, the total number of progressions with a common ratio of 2^2 is 3 * 98 = 294.
+
+2^3: There is only 1 number between 1 and 100 that is a power of 8 (8). We can choose any 2 of these numbers in C(1, 2) = 0 ways. Therefore, there are no progressions with a common ratio of 2^3.
+
+3^1: There are 4 numbers between 1 and 100 that are powers of 3 (3, 9, 27, 81). We can choose any 2 of these numbers in C(4, 2) = 6 ways. For each pair, we can choose any other number from the remaining 100 - 2 = 98 numbers. So, the total number of progressions with a common ratio of 3^1 is 6 * 98 = 588.
+
+5^1: There are 2 numbers between 1 and 100 that are powers of 5 (5, 25). We can choose any 2 of these numbers in C(2, 2) = 1 way. For each pair, we can choose any other number from the remaining 100 - 2 = 98 numbers. So, the total number of progressions with a common ratio of 5^1 is 1 * 98 = 98.
+
+Combining all the cases, the total number of progressions is 29,400 + 1,470 + 294 + 588 + 98 = 31,850.
+
+Therefore, there are 31,850 ways to select 12 geometric progressions from the numbers 1, 2, ..., 100 such that every number is in exactly one progression.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 31,850 ways to select 12 geometric progressions from the numbers 1, 2, ..., 100 such that every number is in exactly one progression.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

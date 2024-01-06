@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_40</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2 inequalities</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_40']
+messages = problem.conversations['GPT-4 Turbo|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, at most how many of the three inequalities a(1-b)&gt;1/4, b(1-c)&gt;1/4, c(1-a)&gt;1/4 can be true at the same time?
+
+You may find the following information useful:
+
+1. For any real number a, a^2≥0. </code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s assume that all three inequalities are true and see if we can derive a contradiction. The inequalities are:
+
+1. \( a(1-b) &gt; \frac{1}{4} \)
+2. \( b(1-c) &gt; \frac{1}{4} \)
+3. \( c(1-a) &gt; \frac{1}{4} \)
+
+Let&#x27;s multiply all three inequalities together:
+
+\[ a(1-b) \cdot b(1-c) \cdot c(1-a) &gt; \left(\frac{1}{4}\right)^3 \]
+
+\[ abc(1-b)(1-c)(1-a) &gt; \frac{1}{64} \]
+
+Now, let&#x27;s look at the product of the three terms \( (1-a)(1-b)(1-c) \). We can expand this product using the distributive property:
+
+\[ (1-a)(1-b)(1-c) = 1 - a - b + ab - c + ac + bc - abc \]
+
+We can group the negative terms together:
+
+\[ (1-a)(1-b)(1-c) = 1 - (a + b + c) + (ab + ac + bc) - abc \]
+
+Now, let&#x27;s use the fact that for any real number \( x \), \( x^2 \geq 0 \). This implies that \( x \geq -x^2/2 \) because \( x + x^2/2 \geq 0 \). Applying this to \( a, b, \) and \( c \), we get:
+
+\[ a \geq -\frac{a^2}{2} \]
+\[ b \geq -\frac{b^2}{2} \]
+\[ c \geq -\frac{c^2}{2} \]
+
+Adding these inequalities together, we get:
+
+\[ a + b + c \geq -\frac{a^2 + b^2 + c^2}{2} \]
+
+Now, let&#x27;s substitute this into the expanded form of \( (1-a)(1-b)(1-c) \):
+
+\[ (1-a)(1-b)(1-c) \geq 1 - \frac{a^2 + b^2 + c^2}{2} + (ab + ac + bc) - abc \]
+
+Since \( a^2, b^2, \) and \( c^2 \) are all non-negative, we can say that \( a^2 + b^2 + c^2 \) is non-negative. Therefore, the term \( -\frac{a^2 + b^2 + c^2}{2} \) is non-positive. This means that the expression \( 1 - \frac{a^2 + b^2 + c^2}{2} \) is at most 1.
+
+Now, let&#x27;s consider the terms \( ab, ac, \) and \( bc \). Each of these terms is the product of two positive numbers, so each term is positive. However, we are subtracting \( abc \) at the end, which is also the product of three positive numbers. This means that the sum \( (ab + ac + bc) - abc \) could be negative if \( abc \) is large enough.
+
+To maximize \( (1-a)(1-b)(1-c) \), we want to minimize \( abc \). However, we know that \( abc(1-b)(1-c)(1-a) &gt; \frac{1}{64} \), so \( abc \) cannot be too small.
+
+At this point, we have not found a direct contradiction, but we can see that the product \( abc(1-b)(1-c)(1-a) \) is constrained by the fact that \( (1-a)(1-b)(1-c) \) cannot be too large due to the negative contribution of \( -\frac{a^2 + b^2 + c^2}{2} \).
+
+Let&#x27;s now consider the AM-GM inequality, which states that for non-negative real numbers, the arithmetic mean is greater than or equal to the geometric mean. Applying this to \( a, b, \) and \( c \), we get:
+
+\[ \frac{a + b + c}{3} \geq \sqrt[3]{abc} \]
+
+Cubing both sides, we have:
+
+\[ \left(\frac{a + b + c}{3}\right)^3 \geq abc \]
+
+Since \( a, b, \) and \( c \) are positive, we know that \( a + b + c &gt; 0 \). Therefore, the left side of the inequality is positive, and so is the right side, which means \( abc &gt; 0 \).
+
+Now, let&#x27;s consider the sum \( a + b + c \). If all three original inequalities are true, then we have:
+
+\[ a &gt; \frac{1}{4(1-b)} \]
+\[ b &gt; \frac{1}{4(1-c)} \]
+\[ c &gt; \frac{1}{4(1-a)} \]
+
+Adding these inequalities together, we get:
+
+\[ a + b + c &gt; \frac{1}{4(1-b)} + \frac{1}{4(1-c)} + \frac{1}{4(1-a)} \]
+
+Now, let&#x27;s consider the denominators \( (1-b), (1-c), \) and \( (1-a) \). If \( b, c, \) and \( a \) are all less than 1, then each denominator is positive. However, if any of \( b, c, \) or \( a \) is greater than or equal to 1, then the corresponding term on the right side of the inequality would be non-positive, which would contradict the assumption that all three original inequalities are true.
+
+Therefore, we must have \( a, b, \) and \( c \) all less than 1. This means that \( (1-b), (1-c), \) and \( (1-a) \) are all positive and less than 1. This implies that each term on the right side of the inequality is greater than 1/4, so we have:
+
+\[ a + b + c &gt; \frac{3}{4} \]
+
+Now, let&#x27;s go back to the AM-GM inequality:
+
+\[ \left(\frac{a + b + c}{3}\right)^3 \geq abc \]
+
+Since \( a + b + c &gt; \frac{3}{4} \), we have:
+
+\[ \left(\frac{3}{4}\right)^3 &gt; abc \]
+
+\[ \frac{27}{64} &gt; abc \]
+
+This means that the product \( abc \) is less than \( \frac{27}{64} \), which is less than \( \frac{1}{64} \). This contradicts our earlier statement that \( abc(1-b)(1-c)(1-a) &gt; \frac{1}{64} \) if all three original inequalities are true.
+
+Therefore, it is not possible for all three inequalities to be true at the same time. At most, two of the inequalities can be true simultaneously.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most, two of the inequalities \(a(1-b)&gt;\frac{1}{4}\), \(b(1-c)&gt;\frac{1}{4}\), and \(c(1-a)&gt;\frac{1}{4}\) can be true at the same time for positive \(a\), \(b\), and \(c\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

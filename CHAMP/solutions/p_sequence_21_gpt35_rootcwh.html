@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_21</td>
+            <td>GPT-3.5</td>
+            <td>Root w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2500</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_21']
+messages = problem.conversations['GPT-3.5|Root w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence a_0, a_1, a_2, ... is such that, for all nonnegative m≥n, we have a_(m+n)+a_(m−n)=(a_(2m)+a_(2n))/2. If a_1=1, find a_50.
+
+You may find the following information useful:
+
+1. Find the value of a_0 with m=n.
+2. Find the value of a_(2m) in terms of a_m with n=0.
+3. Find the value of a_(n+2) in terms of a_(n+1) and a_n with m=n+2.
+4. Write the first few terms of a_n and identify a pattern.
+5. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s follow the given information step by step:
+
+1. Find the value of a_0 with m=n:
+Using the given equation, we have a_(m+n) + a_(m-n) = (a_(2m) + a_(2n))/2.
+Substituting m=n, we get a_(2n) + a_0 = (a_(4n) + a_0)/2.
+Simplifying, we find a_(2n) = a_(4n)/2.
+
+2. Find the value of a_(2m) in terms of a_m with n=0:
+Using the given equation, we have a_(m+0) + a_(m-0) = (a_(2m) + a_0)/2.
+Simplifying, we find a_(2m) = 2a_m - a_0.
+
+3. Find the value of a_(n+2) in terms of a_(n+1) and a_n with m=n+2:
+Using the given equation, we have a_((n+2)+n) + a_((n+2)-n) = (a_(2(n+2)) + a_(2n))/2.
+Simplifying, we find a_(3n+2) + a_2 = (a_(4n+4) + a_(2n))/2.
+Substituting a_2 = 2a_1 - a_0 and a_(2n) = a_(4n)/2, we get a_(3n+2) = (a_(4n+4) + a_(4n))/4 + a_1 - a_0.
+
+4. Write the first few terms of a_n and identify a pattern:
+Using the information from steps 1-3, we can start writing the terms of the sequence:
+a_0 = a_0 (from step 1)
+a_1 = 1 (given)
+a_2 = 2a_1 - a_0 = 2(1) - a_0 = 2 - a_0
+a_3 = (a_4 + a_0)/4 + a_1 - a_0 (from step 3)
+a_4 = 2a_2 - a_0 = 2(2 - a_0) - a_0 = 4 - 3a_0
+a_5 = (a_6 + a_0)/4 + a_1 - a_0 (from step 3)
+
+Continuing this pattern, we can write the first few terms of the sequence:
+a_0, a_1, a_2, a_3, a_4, a_5, ...
+
+5. (x+y)^n = x^n + C(n,1)x^(n-1)y + C(n,2)x^(n-2)y^2 + ... + C(n,2)x^2y^(n-2) + C(n,1)xy^(n-1) + y^n:
+Using the binomial theorem, we can express (a_3 + a_0) and (a_4 + a_0) in terms of a_3 and a_4:
+(a_3 + a_0) = a_3 + C(2,1)a_3a_0 + C(2,2)a_0^2
+(a_4 + a_0) = a_4 + C(3,1)a_4a_0 + C(3,2)a_4a_0^2 + C(3,3)a_0^3
+
+Substituting these expressions into the equation for a_5 from step 4, we get:
+a_5 = [(a_4 + a_0) + a_0]/4 + a_1 - a_0
+     = [a_4 + C(3,1)a_4a_0 + C(3,2)a_4a_0^2 + C(3,3)a_0^3 + a_0]/4 + a_1 - a_0
+     = [a_4(1 + C(3,1)a_0 + C(3,2)a_0^2) + a_0(1 + C(3,3)a_0^2)]/4 + a_1 - a_0
+
+Continuing this pattern, we can write the equation for a_50 in terms of a_0:
+a_50 = [a_48(1 + C(49,1)a_0 + C(49,2)a_0^2 + ... + C(49,49)a_0^49) + a_46(1 + C(49,2)a_0^2 + ... + C(49,49)a_0^49) + ... + a_0(1 + C(49,49)a_0^49)]/4 + a_1 - a_0
+
+At this point, we can see that the equation for a_50 involves a_0 raised to various powers and multiplied by binomial coefficients. To find the exact value of a_50, we would need to know the value of a_0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Using the given information and the binomial theorem, the exact value of a_50 cannot be determined without knowing the value of a_0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

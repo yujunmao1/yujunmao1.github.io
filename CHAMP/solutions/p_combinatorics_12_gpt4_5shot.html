@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_12</td>
+            <td>GPT-4</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_12']
+messages = problem.conversations['GPT-4|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a monic polynomial (i.e. a polynomial with the leading coefficient being 1) p(x) of degree greater than 1 that satisfies x*p(x-1)=(x-2023)*p(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Plugging x=0 into the equation, we get -2023p(0)=0, so p(0)=0 and 0 is a root of p(x).
+2. Plugging x=1 into the equation, we get -2022p(1)=p(0)=0, so p(1)=0 and 1 is a root.
+3. Plugging x=2 into the equation, we get -2021p(2)=2p(1)=0, so p(2)=0 and 2 is a root.
+4. This process can continue to x=2022, where we get -p(2022)=2022p(2021)=0 and 2022 is a root.
+5. We cannot continue because at x=2023, we have 0*p(2023)=0, but p(2023) is not necessarily 0.
+6. So we have identified the roots 0, 1, ..., 2022, which means that p(x)=x(x-1)(x-2)...(x-2022)f(x) for some f(x).
+7. Plugging this into the original equation, we have x(x-1)(x-2)...(x-2023)f(x-1)=(x-2023)x(x-1)...(x-2022)f(x) for all x.
+8. So we need to have f(x)=f(x-1) for all x.
+9. The only possible value of f(x) to make p(x) a monic polynomial of degree more than 1 is thus f(x)=1.
+10. So we have p(x)=x(x-1)(x-2)...(x-2022).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible values of x^2 mod 30 for prime number x&gt;30.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We let x=30m+n, and since x is prime, we need gcd(30,n)=1.
+2. Thus, n can be 1, 7, 11, 13, 17, 19, 23, 29.
+3. We have x^2 mod 30=900m^2+60mn+n^2 mod 30=n^2 mod 30.
+4. Substituing each value of n, we see that possible values for n^2 mod 30 are 1 and 19.
+5. These two values are achieved for example by x=31 and x=37.
+6. So all possible values are 1 and 19.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let the sequence a_1, a_2, ... be defined as a_(4n+1)=1, a_(4n+3)=0, a_(2n)=a_n. Is this sequence periodic, and if so, find its period.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. At n=0, we have a_(4n+1)=a_1=1=a_(2^k).
+2. Suppose that this sequence is periodic, with period T=2^r*q for odd q.
+3. If q=4u+1, for any k≥r+2, we have 1=a_(2^k)=a_(2^k+3T)=a_(2^k+3(4u+1))=a_(2^k+2^r(4v+3))=a_(2^(k-r)+(4v+3))=a_(4w+3)=0, for v=3u and w=2^(k-r-2)+v.
+4. This gives us a contradiction.
+5. If q=4u+3, for any k≥r+2, we have 1=a_(2^k)=a_(2^k+T)=a_(2^k+2^r(4u+3))=a_(2^(k-r)+(4u+3))=a_(4w+3)=0, for w=2^(k-r-2)+u.
+6. This again gives us a contradiction.
+7. Thus, the sequence cannot be periodic.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+In how many ways can 12 geometric progressions be selected from the numbers 1, 2, ..., 100 such that every number is in exactly one progression?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For three different prime numbers, p&lt;q&lt;r, we have r/q≠q/p, because otherwise q^2=pr implies that p=q=r.
+2. So no three prime numbers can be in one geometric progression.
+3. Since there are 25 prime numbers under 100, we need at least 13 geometric progressions to contain them.
+4. Thus, it is impossible to put 1, 2, ..., 100 into 12 geometric progressions.
+5. So there are 0 ways to do it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Solve the equation x^4+a^4-3a*x^3+3a^3*x=0 for a≠0 as an expression of a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Dividing the equation by a^2*x^2, we get x^2/a^2+a^2/x^2-3x/a+3a/x=0.
+2. We note that x^2/a^2+a^2/x^2=(x/a-a/x)^2+2.
+3. Thus, the equation becomes (x/a-a/x)^2-3(x/a-a/x)+2=0.
+4. Let u=x/a-a/x, we get u^2-3u+2=(u-1)(u-2)=0.
+5. So u=1 or u=2.
+6. For u=1, we have x/a-a/x=1, or x=a(1±sqrt(5))/2.
+7. For u=2, we have x/a-a/x=2, or x=a(1±sqrt(2)).
+8. Thus, all solutions are a(1±sqrt(2)), a(1±sqrt(5))/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Along a one-way street there are n parking lots. One-by-one n cars numbered 1 to n enter the street. Each driver i heads to his favorite parking lot a_i, and, if it is free, he occupies it. Otherwise, he continues to the next free lot and occupies it. But if all succeeding lots are occupied, he leaves for good. How many sequences {a_1, ..., a_n} are such that every driver can park, as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. We note that if a_i&gt;a_j for i&lt;j, then driver i will not be able to park.
+2. Thus, the sequence {a_1, ..., a_n} must be a permutation of 1, 2, ..., n in non-decreasing order.
+3. For each i, there are i choices for a_i.
+4. Thus, there are 1*2*...*n=n! sequences such that every driver can park.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences {a_1, ..., a_n} such that every driver can park is n!, where n is the number of parking lots and cars.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

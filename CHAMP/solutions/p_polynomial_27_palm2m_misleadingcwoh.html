@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_27</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> At most 0 values (i.e., no such values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_27']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x) be a polynomial with integer coefficients, with f(x)=5 at four distinct integers x=a, b, c, d. If f(x) has degree n, then at most how many integer values k are there with f(k)=8?
+
+You may find the following information useful:
+
+1. Let u=x+y+z, v=xy+yz+xz, w=xyz and s_n=x^n+y^n+z^n. Then we have s_0=1, s_1=u, s_2=u^2-2v, s_3=u^3-3uv+3w and s_4=u^4-4u^2*v+2v^2+4uw.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x)$ be a polynomial with integer coefficients, with $f(x)=5$ at four distinct integers $x=a, b, c, d$. If $f(x)$ has degree $n$, then at most how many integer values $k$ are there with $f(k)=8$?
+
+We can write $f(x)$ as a polynomial in terms of the elementary symmetric polynomials $u=x+y+z, v=xy+yz+xz, w=xyz$:
+
+$$f(x) = a_0 + a_1 u + a_2 v + a_3 w + \cdots + a_n u^n + \cdots$$
+
+where $a_0, a_1, \dots, a_n$ are integers.
+
+We know that $f(a)=f(b)=f(c)=f(d)=5$. This means that
+
+$$a_0 + a_1 u_a + a_2 v_a + a_3 w_a + \cdots + a_n u_a^n = 5$$
+
+$$a_0 + a_1 u_b + a_2 v_b + a_3 w_b + \cdots + a_n u_b^n = 5$$
+
+$$a_0 + a_1 u_c + a_2 v_c + a_3 w_c + \cdots + a_n u_c^n = 5$$
+
+$$a_0 + a_1 u_d + a_2 v_d + a_3 w_d + \cdots + a_n u_d^n = 5$$
+
+where $u_a, v_a, w_a, u_b, v_b, w_b, u_c, v_c, w_c, u_d, v_d, w_d$ are the values of $u, v, w$ at $x=a, b, c, d$, respectively.
+
+We can solve this system of equations for $a_0, a_1, \dots, a_n$. Once we have done this, we can write $f(x)$ as a polynomial in terms of $u, v, w$.
+
+We can then use the fact that $f(k)=8$ to find the values of $k$ that satisfy this equation.
+
+For example, if $n=2$, then we can write $f(x)$ as
+
+$$f(x) = a_0 + a_1 u + a_2 v + a_3 w + a_4 u^2 + a_5 uv + a_6 vw + a_7 w^2$$
+
+Substituting $f(k)=8$, we get
+
+$$a_0 + a_1 u_k + a_2 v_k + a_3 w_k + a_4 u_k^2 + a_5 u_k v_k + a_6 u_k w_k + a_7 w_k^2 = 8$$
+
+This is a quadratic equation in $u_k$. We can solve this equation to find the values of $u_k$ that satisfy this equation.
+
+Once we have found the values of $u_k$, we can find the values of $v_k$ and $w_k$ from the equations $u_k+v_k+w_k=a$, $u_k v_k + v_k w_k + w_k u_k = b$, and $u_k v_k w_k = c$.
+
+Finally, we can find the values of $k$ from the equation $u_k+v_k+w_k=a$.
+
+In this way, we can find the maximum number of integer values $k$ that satisfy $f(k)=8$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum number of integer values $k$ that satisfy $f(k)=8$ is $\boxed{3}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

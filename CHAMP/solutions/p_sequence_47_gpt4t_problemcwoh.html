@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_47</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_47']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1=2, y_1=4, z_1=6/7, and define x_(n+1)=2x_n/(x_n^2-1), y_(n+1)=2y_n/(y_n^2-1), z_(n+1)=2z_n/(z_n^2-1). Is it possible for x_n+y_n+z_n=0 for some n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if it&#x27;s possible for \( x_n + y_n + z_n = 0 \) for some \( n \), let&#x27;s first look at the recursive definitions for \( x_{n+1} \), \( y_{n+1} \), and \( z_{n+1} \):
+
+\[ x_{n+1} = \frac{2x_n}{x_n^2 - 1} \]
+\[ y_{n+1} = \frac{2y_n}{y_n^2 - 1} \]
+\[ z_{n+1} = \frac{2z_n}{z_n^2 - 1} \]
+
+We can notice that the recursive formula is the same for \( x_n \), \( y_n \), and \( z_n \), just starting with different initial values. The recursive formula is a transformation that maps a number \( t \) to \( \frac{2t}{t^2 - 1} \). This transformation has fixed points, which are the solutions to the equation \( t = \frac{2t}{t^2 - 1} \), or equivalently \( t^2 - 1 = 2 \), which simplifies to \( t^2 = 3 \). The solutions to this equation are \( t = \sqrt{3} \) and \( t = -\sqrt{3} \).
+
+Now, let&#x27;s consider the behavior of the transformation for different values of \( t \):
+
+1. If \( t = \sqrt{3} \) or \( t = -\sqrt{3} \), then \( t \) remains unchanged by the transformation.
+2. If \( t \) is between \( -\sqrt{3} \) and \( \sqrt{3} \), then \( t^2 - 1 &lt; 2 \), so \( \frac{2t}{t^2 - 1} \) will be outside of the interval \( (-\sqrt{3}, \sqrt{3}) \).
+3. If \( t \) is outside of the interval \( (-\sqrt{3}, \sqrt{3}) \), then \( t^2 - 1 &gt; 2 \), so \( \frac{2t}{t^2 - 1} \) will be between \( -\sqrt{3} \) and \( \sqrt{3} \).
+
+Given the initial values \( x_1 = 2 \), \( y_1 = 4 \), and \( z_1 = \frac{6}{7} \), we can see that \( x_1 \) and \( y_1 \) are outside of the interval \( (-\sqrt{3}, \sqrt{3}) \), while \( z_1 \) is inside the interval. This means that \( x_2 \) and \( y_2 \) will be mapped inside the interval \( (-\sqrt{3}, \sqrt{3}) \), and \( z_2 \) will be mapped outside of it.
+
+Since the transformation alternates between mapping numbers inside and outside of the interval \( (-\sqrt{3}, \sqrt{3}) \), and since \( x_1 \) and \( y_1 \) are both positive and greater than \( \sqrt{3} \), while \( z_1 \) is positive and less than \( \sqrt{3} \), it follows that \( x_n \) and \( y_n \) will always be positive, and \( z_n \) will always be negative for all \( n \).
+
+Therefore, it is not possible for \( x_n + y_n + z_n = 0 \) for any \( n \), because \( x_n \) and \( y_n \) will never become negative, and \( z_n \) will never become positive. The sum \( x_n + y_n + z_n \) will always be positive for all \( n \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>It is not possible for \( x_n + y_n + z_n = 0 \) for any \( n \) because \( x_n \) and \( y_n \) will always be positive, and \( z_n \) will always be negative for all \( n \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

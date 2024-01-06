@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_14</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_14']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let x_1=1 and x_(n+1)=1+n/x_n. For how many values of x_1, ..., x_100 do we have the inequality sqrt(i)≤x_i≤sqrt(i)+1?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We see that x_1 satisfies the condition.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the recursive sequence defined by \( x_1 = 1 \) and \( x_{n+1} = 1 + \frac{n}{x_n} \) to determine for how many terms \( x_i \) the inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \) holds.
+
+We are given that \( x_1 = 1 \), which satisfies \( \sqrt{1} \leq x_1 \leq \sqrt{1} + 1 \) since \( 1 \leq 1 \leq 2 \).
+
+Let&#x27;s try to find a pattern by calculating the first few terms of the sequence:
+
+\( x_2 = 1 + \frac{1}{x_1} = 1 + \frac{1}{1} = 2 \)
+
+\( x_3 = 1 + \frac{2}{x_2} = 1 + \frac{2}{2} = 2 \)
+
+\( x_4 = 1 + \frac{3}{x_3} = 1 + \frac{3}{2} = 2.5 \)
+
+\( x_5 = 1 + \frac{4}{x_4} = 1 + \frac{4}{2.5} = 2.6 \)
+
+We can see that the sequence is increasing, and we want to check if \( x_i \) stays within the bounds of \( \sqrt{i} \) and \( \sqrt{i} + 1 \).
+
+Let&#x27;s assume that for some \( k \), \( \sqrt{k} \leq x_k \leq \sqrt{k} + 1 \) holds. We want to prove that \( \sqrt{k+1} \leq x_{k+1} \leq \sqrt{k+1} + 1 \) also holds.
+
+Using the recursive formula, we have:
+
+\( x_{k+1} = 1 + \frac{k}{x_k} \)
+
+Since \( x_k \geq \sqrt{k} \), we have:
+
+\( x_{k+1} \leq 1 + \frac{k}{\sqrt{k}} = 1 + \sqrt{k} \)
+
+Now, we need to show that \( x_{k+1} \geq \sqrt{k+1} \). Since \( x_k \leq \sqrt{k} + 1 \), we have:
+
+\( x_{k+1} \geq 1 + \frac{k}{\sqrt{k} + 1} \)
+
+To show that this is greater than or equal to \( \sqrt{k+1} \), we need to prove:
+
+\( 1 + \frac{k}{\sqrt{k} + 1} \geq \sqrt{k+1} \)
+
+Multiplying both sides by \( \sqrt{k} + 1 \) to clear the denominator, we get:
+
+\( (\sqrt{k} + 1) + k \geq (\sqrt{k+1})(\sqrt{k} + 1) \)
+
+Expanding the right side, we have:
+
+\( \sqrt{k} + 1 + k \geq \sqrt{k^2 + k} + \sqrt{k+1} \)
+
+Since \( \sqrt{k^2 + k} \leq \sqrt{k^2 + 2k + 1} = \sqrt{(k+1)^2} = k+1 \), we have:
+
+\( \sqrt{k} + 1 + k \geq k+1 + \sqrt{k+1} \)
+
+Which simplifies to:
+
+\( \sqrt{k} \geq \sqrt{k+1} \)
+
+This is not true for all \( k \), so our assumption does not hold for all \( k \). Therefore, we need to find the specific values of \( i \) for which the inequality holds.
+
+Since the inequality does not hold for all \( i \), we need to check each \( x_i \) individually up to \( x_{100} \) to determine for how many values the inequality is true. This would require a more detailed analysis or a computer program to iterate through the values and check the inequality for each term.
+
+Without further information or a specific pattern, we cannot determine the exact number of values for which the inequality holds just by hand. However, we can say that the inequality holds for at least the first few terms we&#x27;ve calculated, and we would need to continue this process to find the total number of terms that satisfy the inequality up to \( x_{100} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The exact number of terms \( x_i \) for \( i = 1, \ldots, 100 \) that satisfy the inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \) cannot be determined without further detailed analysis or computational assistance.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

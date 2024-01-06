@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_28</td>
+            <td>PaLM 2 Medium</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_28']
+messages = problem.conversations['PaLM 2 Medium|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let u&lt;v and define two sequences {u_n} and {v_n}, as u_0=u, u_n=(u_(n-1)+v_(n-1))/2 and v_0=v, v_n=(u_(n-1)+2v_(n-1))/3. Let the two limits be L_u and L_v respectively. Find L_u-L_v.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We have that $u_0=u$ and $v_0=v$. We also have that $u_n=(u_{n-1}+v_{n-1})/2$ and $v_n=(u_{n-1}+2v_{n-1})/3$. We want to find $L_u-L_v$, where $L_u$ and $L_v$ are the limits of the sequences $\\{u_n\\}$ and $\\{v_n\\}$, respectively.
+
+To find $L_u$, we can write
+
+$$L_u = \lim_{n\to\infty} u_n = \lim_{n\to\infty} \left(\frac{u_{n-1}+v_{n-1}}{2}\right) = \frac{1}{2} \lim_{n\to\infty} \left(u_{n-1} + \frac{v_{n-1}}{2}\right) = \frac{1}{2} \left(u + \lim_{n\to\infty} \frac{v_{n-1}}{2}\right) = \frac{1}{2} \left(u + \frac{v}{2}\right).$$
+
+Similarly, we can write
+
+$$L_v = \lim_{n\to\infty} v_n = \lim_{n\to\infty} \left(\frac{u_{n-1}+2v_{n-1}}{3}\right) = \frac{1}{3} \lim_{n\to\infty} \left(u_{n-1} + \frac{2v_{n-1}}{3}\right) = \frac{1}{3} \left(u + \frac{2v}{3}\right).$$
+
+Therefore, we have
+
+$$L_u-L_v = \frac{1}{2} \left(u + \frac{v}{2}\right) - \frac{1}{3} \left(u + \frac{2v}{3}\right) = \frac{1}{6} \left(2u - 3v\right).$$
+
+Since $u&lt;v$, we have $2u-3v&lt;0$. Therefore, $L_u-L_v&lt;0$. In other words, the limit of the sequence $\\{u_n\\}$ is less than the limit of the sequence $\\{v_n\\}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>If $u&lt;v$, then $L_u-L_v&lt;0$, where $L_u$ and $L_v$ are the limits of the sequences $\\{u_n\\}$ and $\\{v_n\\}$, respectively.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_5</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (x=8, y=2), (x=2, y=8)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_5']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: For what value(s) of k is x^3+y^3+z^3+kxyz divisible by x+y+z?
+Step-wise solution:
+1. We want x^3+y^3+z^3+kxyz=(x+y+z)f(x, y, z) for some polynomial f(x, y, z).
+2. Let z=-(x+y), we get x^3+y^3-(x+y)^3-kxy(x+y)=0.
+3. This means that 3x^2*y+3x*y^2-k(x^2*y+x*y^2)=0, which has solution of k=-3.
+4. To verify that k=-3 is valid for all x, y, z, we can factorize x^3+y^3+z^3-3xyz as x^3+y^3+z^3-3xyz=x^3+y^3+3x^2*y+3x*y^2+z^3-3xyz-3x^2*y-3x*y^2=(x+y)^3+z^3-3xy(x+y+z)=(x+y+z)((x+y)^2-(x+y)z+z^2-3xy).
+5. Thus, k=-3 is the only solution that makes x^3+y^3+z^3+kxyz divisible by x+y+z.
+
+Problem: Does the limit exist for the sequence defined as a_n=((2^3-1)/(2^3+1))*((3^3-1)/(3^3+1))*((4^3-1)/(4^3+1))*...*((n^3-1)/(n^3+1)), and if so, find it.
+Step-wise solution:
+1. We have n^3-1=(n-1)(n^2+n+1) and n^3+1=(n+1)(n^2-n+1).
+2. Thus, a_n=PQ where P=(2-1)/(2+1)*(3-1)/(3+1)*(4-1)/(4+1)*...*(n-3)/(n-1)*(n-2)/n*(n-1)/(n+1) and Q=(2^2+2+1)/(2^2-2+1)*(3^2+3+1)/(3^2-3+1)*(4^2+4+1)/(4^2-4+1)*...*(n^2+n+1)/(n^2-n+1).
+3. We have P=2/(n(n+1)).
+4. We also have (k-1)^2+(k-1)+1=k^2-2k+1+k-1+1=k^2-k+1.
+5. Thus, Q=(n^2+n+1)/(2^2-2+1), and a_n=PQ=2(n^2+n+1)/(3n(n+1)).
+6. So lim_(n→∞) a_n=2/3.
+
+Problem: Find the remainder of x^1959−1 divided by (x^2+1)(x^2+x+1).
+Step-wise solution:
+1. We have f(x)=x^1959-1=(x^2+1)(x^2+x+1)q(x)+ax^3+bx^2+cx+d.
+2. At x=i, f(i)=-i-1=-ai-b+ci+d.
+3. At x=-i, f(-i)=i-1=ai-b-ci+d.
+4. At x=w, f(w)=0=a+bw^2+cw+d.
+5. At x=w^2, f(w^2)=0=a+bw+cw^2+d.
+6. We have f(i)+f(-i)=-2b+2d=-2, which means b-d=1.
+7. We have f(i)-f(-i)=-2ai+2ci=-2i, which means a-c=1.
+8. We have f(w)+f(w^2)=2a-b-c+2d=0.
+9. We have f(w)-f(w^2)=(b-c)(w^2-w)=0, which means b=c.
+10. These equations give us a=1, b=c=0, d=-1.
+11. So the remainder is ax^3+bx^2+cx+d=x^3-1.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation x^3+x^2*y+x*y^2+y^3=8(x^2+xy+y^2+1).
+
+In addition, you may also find the following information helpful:
+
+1. Let u=x+y, v=xy and write the equation in terms of u, v.
+2. Study the parity of u and write u=2t or u=2t+1 accordingly.
+3. Solve v as a division of two polynomials and study the integer solutions of (t, v).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s follow the given steps to solve the problem:
+
+Step 1: Let u = x + y and v = xy. Rewrite the equation in terms of u and v:
+u^3 - 3uv = 8(u^2 + v + 1)
+
+Step 2: Study the parity of u. If u is even, then u = 2t for some integer t. If u is odd, then u = 2t + 1 for some integer t.
+
+Case 1: u = 2t
+Substitute u = 2t into the equation:
+(2t)^3 - 3(2t)v = 8((2t)^2 + v + 1)
+8t^3 - 6tv = 32t^2 + 8v + 8
+8t^3 - 6tv - 32t^2 - 8v - 8 = 0
+4t^3 - 3tv - 16t^2 - 4v - 4 = 0
+
+Case 2: u = 2t + 1
+Substitute u = 2t + 1 into the equation:
+(2t + 1)^3 - 3(2t + 1)v = 8((2t + 1)^2 + v + 1)
+8t^3 + 12t^2 + 6t + 1 - 6tv - 3v = 32t^2 + 32t + 8v + 8 + 8
+8t^3 + 12t^2 + 6t + 1 - 6tv - 3v - 32t^2 - 32t - 8v - 8 - 8 = 0
+8t^3 - 20t^2 - 38t - 10v - 15 = 0
+
+Step 3: Solve v as a division of two polynomials and study the integer solutions of (t, v).
+
+For Case 1:
+Using polynomial division, we can divide 4t^3 - 3tv - 16t^2 - 4v - 4 by 2t - 1 to find the quotient and remainder.
+
+For Case 2:
+Using polynomial division, we can divide 8t^3 - 20t^2 - 38t - 10v - 15 by 2t + 1 to find the quotient and remainder.
+
+By studying the integer solutions of (t, v) obtained from the polynomial divisions, we can find the corresponding integer solutions for (x, y).
+
+Finally, list all the integer solutions (x, y) that satisfy the equation x^3 + x^2y + xy^2 + y^3 = 8(x^2 + xy + y^2 + 1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The equation x^3 + x^2y + xy^2 + y^3 = 8(x^2 + xy + y^2 + 1) has integer solutions (x, y) that can be found by studying the parity of u = x + y and solving for v = xy using polynomial division.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

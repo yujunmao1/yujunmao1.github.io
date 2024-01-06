@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_21</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 30</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_21']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Each of the faces of a cube is painted by a different color. How many of the colorings are distinct up to rotations?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use Burnside&#x27;s Lemma from group theory, which counts the number of orbits in a set under a group action. In this case, the group is the rotation group of the cube, and the set is the set of colorings.
+
+The rotation group of the cube has 24 elements: 6 for rotations about an axis through the centers of opposite faces (90°, 180°, and 270° for each of two axes), 8 for rotations about an axis through the centers of opposite edges (180° for each of four axes), and 8 for rotations about an axis through opposite vertices (120° and 240° for each of four axes), and the identity rotation (0°).
+
+We need to count the number of colorings that are fixed by each of these rotations. Since there are 6 faces and each face is painted a different color, there are 6! (6 factorial) ways to color the cube if we don&#x27;t consider rotations.
+
+Now, let&#x27;s consider each type of rotation:
+
+1. Identity rotation (1 rotation): Every coloring is fixed by the identity rotation, so there are 6! colorings here.
+
+2. Face rotations (6 rotations of 90°, 180°, or 270° about an axis through the centers of opposite faces): Each face rotation affects 4 faces, so the colors on those faces must be the same for the coloring to be fixed. Since there are 6 such rotations and each requires 4 faces to have the same color, there are no colorings fixed by these rotations because we are using 6 different colors.
+
+3. Edge rotations (8 rotations of 180° about an axis through the centers of opposite edges): Each edge rotation affects 4 faces in two pairs of opposite faces. Since the faces in each pair must have the same color, there are 6 choices for the first pair and 5 choices for the second pair (since we can&#x27;t reuse the color from the first pair). This gives us 6 * 5 = 30 colorings for each rotation, and since there are 8 such rotations, we have 8 * 30 = 240 colorings in total.
+
+4. Vertex rotations (8 rotations of 120° or 240° about an axis through opposite vertices): Each vertex rotation affects 4 faces, and the 4 faces must cycle through 3 colors. There are 6 choices for the first color, 5 for the second, and 4 for the third, giving us 6 * 5 * 4 = 120 colorings for each rotation. Since there are 8 such rotations, we have 8 * 120 = 960 colorings in total.
+
+Now, we apply Burnside&#x27;s Lemma, which states that the number of distinct colorings up to rotation is the average number of colorings fixed by each rotation:
+
+Number of distinct colorings = (1/24) * (6! + 0 + 240 + 960)
+= (1/24) * (720 + 0 + 240 + 960)
+= (1/24) * 1920
+= 80
+
+So there are 80 distinct colorings of the cube up to rotations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 10 distinct colorings of a cube with each face painted a different color, up to rotations.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

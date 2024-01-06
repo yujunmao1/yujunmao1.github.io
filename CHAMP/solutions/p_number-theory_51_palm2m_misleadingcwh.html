@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_51</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (20*10^15-2)/17, or equivalently 1176470588235294</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_51']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one.
+
+You may find the following information useful:
+
+1. Let the original number has k+1 digits, with the first digit d, and the last k digits representing the number r.
+2. Set up the equation of digit manipulation involving k, d, r.
+3. Find the smallest value for k by considering the equation modulo 17.
+4. A perfect square number can only end in digit 0, 1, 4, 5, 6 and 9.
+5. If ab | c, then a | c and b | c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let the original number be $10^kd+r$, where $d$ is the first digit and $r$ is the remaining $k$ digits. If we move the first digit to the end, the new number is $10^kr+d$. We are given that the new number is 1.5 times as large as the old one, so $10^kr+d = 1.5(10^kd+r)$. Simplifying this equation, we get $9000r - 4500d = 0$. Dividing both sides by 900, we get $10r - 5d = 0$. This equation can be solved for $d$ as follows:
+
+$$d = \frac{5r}{10} = \frac{r}{2}.$$
+
+We are also given that the original number is a perfect square. A perfect square number can only end in digit 0, 1, 4, 5, 6, or 9. Since $d = \frac{r}{2}$, the only possible values for $r$ are 0, 1, 4, 5, 6, and 9.
+
+If $r = 0$, then $d = 0$ and the original number is 0. This is not a perfect square, so we can rule out this possibility.
+
+If $r = 1$, then $d = \frac{1}{2}$ and the original number is 1. This is a perfect square, so it is a possible solution.
+
+If $r = 4$, then $d = 2$ and the original number is 4. This is a perfect square, so it is a possible solution.
+
+If $r = 5$, then $d = \frac{5}{2}$ and the original number is 5. This is not a perfect square, so we can rule out this possibility.
+
+If $r = 6$, then $d = 3$ and the original number is 6. This is a perfect square, so it is a possible solution.
+
+If $r = 9$, then $d = \frac{9}{2}$ and the original number is 9. This is not a perfect square, so we can rule out this possibility.
+
+Therefore, the smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 1.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

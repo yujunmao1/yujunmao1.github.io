@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_16</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_16']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Can n+2 be a factor of 1^1987+2^1987+...+n^1987 for some n?
+
+You may find the following information useful:
+
+1. For integer x, x^2 mod 8 can take values of 0, 1 and 4.
+2. A number is a multiple of 9 if and only if its digit sum is divisible by 9.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if \( n+2 \) can be a factor of \( 1^{1987} + 2^{1987} + \ldots + n^{1987} \), let&#x27;s first consider the properties given:
+
+1. For integer \( x \), \( x^2 \) mod 8 can take values of 0, 1, and 4.
+2. A number is a multiple of 9 if and only if its digit sum is divisible by 9.
+
+Let&#x27;s use these properties to analyze the sum \( S = 1^{1987} + 2^{1987} + \ldots + n^{1987} \).
+
+First, notice that 1987 is an odd number. Therefore, \( x^{1987} \) will have the same parity as \( x \) itself (i.e., if \( x \) is even, \( x^{1987} \) is even, and if \( x \) is odd, \( x^{1987} \) is odd).
+
+Now, let&#x27;s consider the sum \( S \) modulo 2. If \( n \) is even, then there are an equal number of even and odd terms in the sum, and since even powers are even and odd powers are odd, the sum \( S \) will be even. If \( n \) is odd, then there is one more odd term than even terms, making the sum \( S \) odd.
+
+Next, let&#x27;s consider the sum \( S \) modulo 8 using the first property. Since \( x^2 \) mod 8 can only be 0, 1, or 4, and 1987 is odd, we can say that \( x^{1987} \) mod 8 will be the same as \( x \) mod 8. This is because raising \( x \) to an odd power will not change its residue modulo 8 if we only consider the possible residues of \( x^2 \).
+
+Now, let&#x27;s look at the sum \( S \) modulo 8 for \( n = 1, 2, \ldots, 8 \):
+
+- \( 1^{1987} \) mod 8 = 1
+- \( 2^{1987} \) mod 8 = 2
+- \( 3^{1987} \) mod 8 = 3
+- \( 4^{1987} \) mod 8 = 4
+- \( 5^{1987} \) mod 8 = 5
+- \( 6^{1987} \) mod 8 = 6
+- \( 7^{1987} \) mod 8 = 7
+- \( 8^{1987} \) mod 8 = 0
+
+Adding these up, we get \( S \) mod 8 = \( 1 + 2 + 3 + 4 + 5 + 6 + 7 + 0 = 28 \) mod 8 = 4.
+
+This pattern will repeat for every set of 8 consecutive integers. Therefore, if \( n \) is a multiple of 8, \( S \) mod 8 will be 4. If \( n \) is not a multiple of 8, the sum modulo 8 will be the sum of the first \( n \) mod 8 residues.
+
+Now, let&#x27;s consider if \( n+2 \) can be a factor of \( S \). If \( n+2 \) is even, then \( S \) must also be even for \( n+2 \) to be a factor. This is always true, as we&#x27;ve shown that \( S \) is even for even \( n \) and odd for odd \( n \).
+
+However, if \( n+2 \) is odd, then it must be a multiple of an odd prime. Let&#x27;s consider the case where \( n+2 \) is a multiple of 3. Since every third term in the sum \( S \) is a multiple of 3, and \( 3^{1987} \) is also a multiple of 3, the sum \( S \) will be a multiple of 3 if and only if \( n \) is one less than a multiple of 3 (because we would have an even number of terms that are multiples of 3).
+
+Now, let&#x27;s combine these observations. For \( n+2 \) to be a factor of \( S \), \( n+2 \) must be even when \( n \) is even, and \( n+2 \) must be a multiple of 3 when \( n \) is one less than a multiple of 3. However, if \( n+2 \) is a multiple of 3, then \( n \) is one more than a multiple of 3, which contradicts the requirement that \( n \) must be one less than a multiple of 3 for \( S \) to be a multiple of 3.
+
+Therefore, \( n+2 \) cannot be a factor of \( S = 1^{1987} + 2^{1987} + \ldots + n^{1987} \) for any integer \( n \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>No, \( n+2 \) cannot be a factor of \( 1^{1987} + 2^{1987} + \ldots + n^{1987} \) for any integer \( n \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

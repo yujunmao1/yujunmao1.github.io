@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_13</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 4^n</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_13']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Of 3n+1 objects, n are indistinguishable, and the remaining ones are distinct. In how many ways can we choose n objects, as an expression of n?
+
+You may find the following information useful:
+
+1. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
+2. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
+3. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.
+4. C(n, r)=n!/(r!*(n-r)!)=n*(n-1)*(n-2)*...*(n-r+1)/r!.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider two cases for choosing n objects from the 3n+1 objects:
+
+1. We choose some or all of the indistinguishable objects.
+2. We choose none of the indistinguishable objects and only choose from the distinct ones.
+
+Let&#x27;s break it down:
+
+Case 1: Choosing some or all indistinguishable objects
+Since there are n indistinguishable objects, we can choose anywhere from 0 to n of them. If we choose k indistinguishable objects, we need to choose n-k more objects from the 2n+1 distinct ones. The number of ways to do this is C(2n+1, n-k).
+
+Case 2: Choosing none of the indistinguishable objects
+If we choose none of the indistinguishable objects, we must choose all n objects from the 2n+1 distinct ones. The number of ways to do this is C(2n+1, n).
+
+Now, we need to sum over all possible k values for the first case and add the second case:
+
+Total number of ways = Sum from k=0 to n of C(2n+1, n-k) + C(2n+1, n)
+
+Let&#x27;s simplify this expression:
+
+Total number of ways = C(2n+1, n) + C(2n+1, n-0) + C(2n+1, n-1) + ... + C(2n+1, n-(n-1)) + C(2n+1, n-n)
+
+Notice that C(2n+1, n-k) is equal to C(2n+1, (2n+1)-(n-k)) by the symmetry property of combinations, which is C(2n+1, n+1+k). So we can rewrite the sum as:
+
+Total number of ways = C(2n+1, n) + C(2n+1, n+1) + C(2n+1, n+2) + ... + C(2n+1, 2n)
+
+Now, we can use the binomial theorem to relate this to the expansion of (x+y)^(2n+1). If we let x=1 and y=1, then the expansion is:
+
+(1+1)^(2n+1) = 2^(2n+1) = C(2n+1, 0) + C(2n+1, 1) + ... + C(2n+1, 2n+1)
+
+We are interested in the sum from C(2n+1, n) to C(2n+1, 2n), which is exactly half of the expansion, excluding the middle term C(2n+1, n+1) if n is even (since there would be an odd number of terms in the expansion). If n is odd, the middle term is included in the sum.
+
+For even n:
+Total number of ways = (2^(2n+1) - C(2n+1, n+1)) / 2
+
+For odd n:
+Total number of ways = (2^(2n+1) + C(2n+1, n+1)) / 2
+
+However, since we are looking for a general expression, we can&#x27;t split it into two cases based on the parity of n. Instead, we can simply state that the total number of ways is half the sum of the binomial coefficients from C(2n+1, n) to C(2n+1, 2n), inclusive:
+
+Total number of ways = (2^(2n) + C(2n+1, n)) / 2
+
+This is because the sum of all the binomial coefficients from C(2n+1, 0) to C(2n+1, 2n+1) is 2^(2n+1), and the sum from C(2n+1, 0) to C(2n+1, n-1) is equal to the sum from C(2n+1, n+2) to C(2n+1, 2n+1) due to symmetry. Therefore, the sum from C(2n+1, n) to C(2n+1, 2n) is half of 2^(2n+1), minus the middle term C(2n+1, n+1) if n is even, which is not necessary to consider when we are summing symmetrically around the middle term.
+
+So, the final expression for the total number of ways to choose n objects from 3n+1 objects, where n are indistinguishable and the rest are distinct, is:
+
+Total number of ways = (2^(2n) + C(2n+1, n)) / 2</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The total number of ways to choose n objects from 3n+1 objects, where n are indistinguishable and the rest are distinct, is given by the expression \(\frac{2^{2n} + C(2n+1, n)}{2}\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

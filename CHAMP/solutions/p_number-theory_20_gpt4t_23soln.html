@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_20</td>
+            <td>GPT-4 Turbo</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_20']
+messages = problem.conversations['GPT-4 Turbo|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive integers a, b, c, d, e satisfying a^5+b^5+c^5+d^5+e^5 mod 25=0, what are possible values of abcde mod 5?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. If 5 ∤ abcde, then none of a, b, c, d, e is divisible by 5.
+2. For 5 ∤ u, we have u=5k±1 or u=5k±2.
+3. For u=5k±1, u^5=(5k±1)^5=(5k)^5±5*(5k)^4+10*(5k)^3±10*(5k)^2+5*(5k)±1, and u^5 mod 25=±1.
+4. For u=5k±2, u^5=(5k±2)^5=(5k)^5±5*(5k)^4*2+10*(5k)^3*4±10*(5k)^2*8+5*(5k)*16±32, and u^5 mod 25=±7.
+5. Thus, in a^5+b^5+c^5+d^5+e^5 mod 25, each u^5 contributes ±1 or ±7.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the partial solution, we know that each term \( a^5, b^5, c^5, d^5, e^5 \) when taken modulo 25 can only contribute a value of \( \pm1 \) or \( \pm7 \). We are given that the sum of these terms modulo 25 is 0, i.e.,
+
+\[ a^5 + b^5 + c^5 + d^5 + e^5 \equiv 0 \pmod{25}. \]
+
+Let&#x27;s consider the possible combinations of \( \pm1 \) and \( \pm7 \) that can sum up to 0 modulo 25. We can ignore the signs for a moment and just consider the absolute values 1 and 7. The only way to sum five numbers each being 1 or 7 to get a multiple of 25 is to have either:
+
+- Five 1&#x27;s, which sum to 5 (not a multiple of 25), or
+- Three 1&#x27;s and two 7&#x27;s, which sum to \( 3 \times 1 + 2 \times 7 = 3 + 14 = 17 \) (also not a multiple of 25), or
+- One 1 and four 7&#x27;s, which sum to \( 1 \times 1 + 4 \times 7 = 1 + 28 = 29 \equiv 4 \pmod{25} \) (also not a multiple of 25).
+
+Since none of these combinations give us a sum that is a multiple of 25, we must consider the signs. The only way to get a sum of 0 modulo 25 with five terms each being \( \pm1 \) or \( \pm7 \) is to have an equal number of positive and negative terms that sum to a multiple of 25. This can only happen if we have:
+
+- Two \( +7 \)&#x27;s and three \( -7 \)&#x27;s (or vice versa), which sum to \( 14 - 21 = -7 \equiv 18 \pmod{25} \) (not a multiple of 25), or
+- Two \( +1 \)&#x27;s and three \( -1 \)&#x27;s (or vice versa), which sum to \( 2 - 3 = -1 \equiv 24 \pmod{25} \) (not a multiple of 25).
+
+The only combination that works is two \( +7 \)&#x27;s, two \( -1 \)&#x27;s, and one \( +1 \), or two \( -7 \)&#x27;s, two \( +1 \)&#x27;s, and one \( -1 \). In both cases, the sum is \( 14 - 2 + 1 = 13 \) or \( -14 + 2 - 1 = -13 \equiv 12 \pmod{25} \), which is not 0 modulo 25.
+
+Therefore, we must have made an incorrect assumption. The only assumption we made is that 5 does not divide \( abcde \). Since none of the combinations of \( \pm1 \) and \( \pm7 \) give us a sum of 0 modulo 25, it must be the case that 5 does divide \( abcde \). This means that at least one of \( a, b, c, d, e \) is divisible by 5.
+
+If one of the numbers is divisible by 5, then its fifth power will be divisible by \( 5^5 \), which is certainly divisible by 25. The other terms, as we have seen, will contribute a sum that is not a multiple of 25 unless they are also divisible by 5. Therefore, the only way to get a sum of 0 modulo 25 is if all the terms are divisible by 5.
+
+Thus, \( abcde \) must be divisible by \( 5^5 \), and \( abcde \mod 5 = 0 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible value of \( abcde \mod 5 \) is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

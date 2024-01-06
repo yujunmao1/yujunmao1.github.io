@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_28</td>
+            <td>GPT-3.5</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_28']
+messages = problem.conversations['GPT-3.5|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all prime number values of n&gt;2 such that 1+2+...+(n-2)+(n-1) is a factor of 1*2*...*(n-2)*(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have 1+2+...+(n-1)=n(n-1)/2, which is divisible by n.
+2. However, n ∤ 1*2*...*(n-1) because n is a prime n ∤ d for d &lt; n.
+3. Thus, 1+2+...+(n-1) ∤ 1*2*...*(n-1) for any prime n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For x, y, z&gt;0, what is the smallest value of x^2/y^2+y^2/z^2+z^2/x^2-(x/y+y/z+z/x)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let f(x, y, z)=x^2/y^2+y^2/z^2+z^2/x^2-(x/y+y/z+z/x).
+2. Thus, x^2*y^2*z^2*f(x, y, z)=x^4*z^2+y^4*x^2+z^4*y^2-(x^3*y*z^2+y^3*z*x^2+z^3*x*y^2)=x^3*z^2*(x-y)+y^3*x^2*(y-z)+z^3*y^2*(z-x).
+3. Without loss of generality, we can assume that x≥y≥z due to symmetry.
+4. Thus, x^3*z^2*(x-y)+y^3*x^2*(y-z)+z^3*y^2*(z-x)=x^3*z^2*(x-y)+y^3*x^2*(y-z)+z^3*y^2*(z-y)+z^3*y^2*(y-x)=(x^3*z^2-z^3*y^2)(x-y)+(y^3*x^2-z^3*y^2)(y-z)=z^2(x^3-z*y^2)(x-y)+y^2(x^2*y-z^3)(y-z).
+5. Due to the relationship of x≥y≥z, we can see that each factor in each term is non-negative.
+6. Thus, x^2*y^2*z^2*f(x, y, z)≥0, and we have f(x, y, z)≥0.
+7. So the minimum value is 0, achieved when x=y=z.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Is (5^125-1)/(5^25-1) a prime number?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let x=5^25.
+2. Thus, 5^125-1=x^5-1=(x-1)(x^4+x^3+x^2+x+1).
+3. So (5^125-1)/(5^25-1)=x^4+x^3+x^2+x+1=(x^2+3x+1)^2-5x(x+1)^2.
+4. We have 5x=5^26=y^2 for y=5^13.
+5. So (5^125-1)/(5^25-1)=(x^2+3x+1+y(x+1))(x^2+3x+1-y(x+1)), which gives a factorization for (5^125-1)/(5^25-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many strings of length 5 using the digits {0, 1, ..., 9} (with leading zeros allowed) have strictly increasing or decreasing digits?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For any 5 numbers, if they are distinct, there are exactly two such string (one increasing and one decreasing), and if they contain duplicate values, there is no such string.
+2. Thus, the number of strings is exactly twice the number of ways to choose 5 distinct numbers from 10 numbers, which is 2*C(10, 5).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive integer n, if 2^n and 5^n start with the same digit, what are possible values of this digit?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let 2^n be an (r+1)-digit number and 5^n be an (s+1)-digit number, both starting with digit d.
+2. Thus, we have d*10^r&lt;2^n&lt;(d+1)*10^r and d*10^s&lt;5^n&lt;(d+1)*10^s.
+3. Multiplying the two inequalities we get d^2*10^(r+s)&lt;10^n&lt;(d+1)^2*10^(r+s).
+4. So d^2&lt;10^(n-r-s)&lt;(d+1)^2.
+5. Since d is an integer between 1 and 9, the only possible value that satisfies the inequality is d=3 with 9&lt;10&lt;16.
+6. We can see that d=3 is indeed possible because 2^5=32 and 5^5=3125.
+7. So the answer is 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let u&lt;v and define two sequences {u_n} and {v_n}, as u_0=u, u_n=(u_(n-1)+v_(n-1))/2 and v_0=v, v_n=(u_(n-1)+2v_(n-1))/3. Let the two limits be L_u and L_v respectively. Find L_u-L_v.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. We can rewrite the recursive formulas as u_n=(u_(n-1)+v_(n-1))/2 and v_n=(u_(n-1)+2v_(n-1))/3.
+2. Taking the limit as n approaches infinity, we have L_u=(L_u+L_v)/2 and L_v=(L_u+2L_v)/3.
+3. Solving the equations, we get 2L_u=L_u+L_v and 3L_v=L_u+2L_v.
+4. Rearranging the equations, we have L_u=L_v and L_u=2L_v.
+5. Substituting L_u=L_v into L_u=2L_v, we get L_u=L_v=0.
+6. Therefore, L_u-L_v=0-0=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The difference between the limits L_u and L_v is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

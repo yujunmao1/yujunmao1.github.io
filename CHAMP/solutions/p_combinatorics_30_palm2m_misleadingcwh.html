@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_30</td>
+            <td>PaLM 2 Medium</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2001000</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_30']
+messages = problem.conversations['PaLM 2 Medium|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+When (x+y+z)^1999 is expanded and like terms are collected (e.g., collecting 2*x^2*y*z^3 and 3*x^2*y*z^3 into a single term of 5*x^2*y*z^3), how many terms will there be?
+
+You may find the following information useful:
+
+1. Study the condition on a, b, c for the term x^a*y^b*z^c to appear in the expansion.
+2. For any given value of c, how many possible values can (a, b) take?
+3. a^3±b^3=(a+b)(a^2∓ab+b^2).
+4. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of terms in the expansion of $(x+y+z)^{1999}$ is $1999+1998+1997+\cdots+1+0 = \frac{1999(2000)}{2} = 1999000$.
+
+To see this, note that each term in the expansion is of the form $x^ay^bz^c$, where $a$, $b$, and $c$ are non-negative integers and $a+b+c=1999$. There are $\binom{1999}{a}$ ways to choose $a$ out of $1999$ places for $x$ to appear, $\binom{1999-a}{b}$ ways to choose $b$ out of $1999-a$ places for $y$ to appear, and $\binom{1999-a-b}{c}$ ways to choose $c$ out of $1999-a-b$ places for $z$ to appear. Therefore, the total number of terms is
+
+$$\binom{1999}{a}\binom{1999-a}{b}\binom{1999-a-b}{c}.$$
+
+We can evaluate this sum using the following identity:
+
+$$\binom{n}{k} = \frac{n!}{k!(n-k)!}.$$
+
+Substituting in $n=1999$ and $k=a$, we get
+
+$$\binom{1999}{a} = \frac{1999!}{a!(1999-a)!}.$$
+
+Substituting in $n=1999-a$ and $k=b$, we get
+
+$$\binom{1999-a}{b} = \frac{(1999-a)!}{b!(1999-a-b)!}.$$
+
+Substituting in $n=1999-a-b$ and $k=c$, we get
+
+$$\binom{1999-a-b}{c} = \frac{(1999-a-b)!}{c!(1999-a-b-c)!}.$$
+
+Therefore, the total number of terms is
+
+$$\frac{1999!}{a!(1999-a)!}\frac{(1999-a)!}{b!(1999-a-b)!}\frac{(1999-a-b)!}{c!(1999-a-b-c)!}.$$
+
+We can simplify this expression by using the following identity:
+
+$$\frac{n!}{k!(n-k)!} = \frac{n!}{(n-k)!} = \binom{n}{n-k}.$$
+
+Substituting in $n=1999$ and $k=a$, we get
+
+$$\binom{1999}{a} = \frac{1999!}{(1999-a)!} = \binom{1999}{1999-a}.$$
+
+Substituting in $n=1999-a$ and $k=b$, we get
+
+$$\binom{1999-a}{b} = \frac{(1999-a)!}{b!(1999-a-b)!} = \binom{1999-a}{1999-a-b}.$$
+
+Substituting in $n=1999-a-b$ and $k=c$, we get
+
+$$\binom{1999-a-b}{c} = \frac{(1999-a-b)!}{c!(1999-a-b-c)!} = \binom{1999-a-b}{1999-a-b-c}.$$
+
+Therefore, the total number of terms is
+
+$$\frac{1999!}{a!(1999-a)!}\frac{(1999-a)!}{b!(1999-a-b)!}\frac</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of terms in the expansion of $(x+y+z)^{1999}$ is $\binom{1999}{0}\binom{1999}{1}\binom{1999}{2}+\binom{1999}{1}\binom{1999}{2}\binom{1999}{3}+\cdots+\binom{1999}{1998}\binom{1999}{1}\binom{1999}{0}=1999000$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

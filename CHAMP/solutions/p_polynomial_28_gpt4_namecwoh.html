@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_28</td>
+            <td>GPT-4</td>
+            <td>Name w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> ((-1)^(n+1)+n+1)/(n+2) (i.e., 1 if for odd n, and n/(n+2) for even n)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_28']
+messages = problem.conversations['GPT-4|Name w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let P(x) be a polynomial of degree n such that P(k)=k/(k+1) for k=0, 1, ..., n. Find P(n+1).
+
+You may find the following information useful:
+
+1. Let Q(x)=(x+1)P(x)-x and study its roots.
+2. A polynomial of degree n with root x_1, ..., x_n can be written as a(x-x_1)(x-x_2)...(x-x_n) for some value of a.
+3. Find the expression for Q(x) by studying the value of Q(x) at x=-1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s follow the steps you provided.
+
+1. Define Q(x) = (x+1)P(x) - x. We know that P(k) = k/(k+1) for k = 0, 1, ..., n. So, we can write Q(k) = (k+1)P(k) - k = k - k = 0 for k = 0, 1, ..., n. This means that Q(x) has roots at x = 0, 1, ..., n.
+
+2. From the given information, we know that a polynomial of degree n with roots x_1, ..., x_n can be written as a(x-x_1)...(x-x_n) for some value of a. Therefore, we can write Q(x) = a(x)(x-1)...(x-n) for some value of a.
+
+3. To find the value of a, we can study the value of Q(x) at x = -1. Substituting x = -1 into Q(x), we get Q(-1) = a(-1)(-1-1)...(-1-n). This simplifies to Q(-1) = a(-1)(-2)...(-n-1) = a(-1)^(n+1)(n+1)! = a(n+1)! if n+1 is even and -a(n+1)! if n+1 is odd.
+
+But we also know that Q(-1) = (-1+1)P(-1) - (-1) = 0 - (-1) = 1. So, we have a(n+1)! = 1 if n+1 is even and -a(n+1)! = 1 if n+1 is odd. Solving for a, we get a = 1/((n+1)!) if n+1 is even and a = -1/((n+1)!) if n+1 is odd.
+
+Now, we want to find P(n+1). We know that Q(x) = (x+1)P(x) - x. So, we can write P(x) = (Q(x) + x) / (x+1). Substituting x = n+1, we get P(n+1) = (Q(n+1) + n+1) / (n+1+1).
+
+We know that Q(x) = a(x)(x-1)...(x-n). So, Q(n+1) = a(n+1)(n+1-1)...(n+1-n) = a(n+1)n!. Substituting this into the equation for P(n+1), we get P(n+1) = (a(n+1)n! + n+1) / (n+2).
+
+Substituting the value of a we found earlier, we get P(n+1) = ((1/((n+1)!) if n+1 is even or -1/((n+1)!) if n+1 is odd)(n+1)n! + n+1) / (n+2).
+
+Simplifying, we get P(n+1) = (1/(n+2) if n+1 is even or -1/(n+2) if n+1 is odd) + n+1 / (n+2) = 1 if n+1 is even or 0 if n+1 is odd.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of the polynomial P(n+1) is 1 if n+1 is even, and 0 if n+1 is odd.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

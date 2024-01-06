@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_23</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (4^n+2^n)/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_23']
+messages = problem.conversations['GPT-3.5|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of them have an even number of 1s, as an expression of n?
+
+You may find the following information useful:
+
+1. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
+2. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
+3. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the number of ways to arrange the digits 1, 2, 3, and 4 in a string of length n such that the string has an even number of 1s.
+
+Let&#x27;s break down the problem into cases based on the number of 1s in the string.
+
+Case 1: 0 1s
+If there are no 1s in the string, then we have three options for each digit (2, 3, or 4). Therefore, there are 3^n strings with no 1s.
+
+Case 2: 2k 1s (where k is a positive integer)
+If there are 2k 1s in the string, then there are C(n, 2k) ways to choose the positions for the 1s. For the remaining n - 2k positions, we have three options for each digit (2, 3, or 4). Therefore, the number of strings with 2k 1s is C(n, 2k) * 3^(n-2k).
+
+Case 3: 2k+1 1s (where k is a non-negative integer)
+If there are 2k+1 1s in the string, then there are C(n, 2k+1) ways to choose the positions for the 1s. For the remaining n - (2k+1) positions, we have three options for each digit (2, 3, or 4). Therefore, the number of strings with 2k+1 1s is C(n, 2k+1) * 3^(n-(2k+1)).
+
+To find the total number of strings with an even number of 1s, we need to sum up the number of strings for each case.
+
+Total number of strings = 3^n + C(n, 2) * 3^(n-2) + C(n, 4) * 3^(n-4) + ... + C(n, n-1) * 3 + C(n, n)
+
+Using the binomial theorem identity (x+y)^n = x^n + C(n, 1)x^(n-1)y + C(n, 2)x^(n-2)y^2 + ... + C(n, n-2)x^2y^(n-2) + C(n, n-1)xy^(n-1) + y^n, we can rewrite the expression as:
+
+Total number of strings = (1 + 3)^(n/2) + (1 - 3)^(n/2)
+
+Simplifying further, we get:
+
+Total number of strings = 2^n/2 + (-2)^n/2
+
+Therefore, the expression for the total number of strings with an even number of 1s is 2^(n/2) + (-2)^(n/2).
+
+Note: The expression assumes that n is even. If n is odd, then the number of strings with an even number of 1s is 2^((n-1)/2) + (-2)^((n-1)/2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of length n consisting of digits 1, 2, 3, and 4 with an even number of 1s is given by the expression 2^(n/2) + (-2)^(n/2).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

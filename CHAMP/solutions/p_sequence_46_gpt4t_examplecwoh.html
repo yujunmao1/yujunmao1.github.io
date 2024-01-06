@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_46</td>
+            <td>GPT-4 Turbo</td>
+            <td>Example w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (no such selection is possible)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_46']
+messages = problem.conversations['GPT-4 Turbo|Example w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+In how many ways can 12 geometric progressions be selected from the numbers 1, 2, ..., 100 such that every number is in exactly one progression?
+
+You may find the following information useful:
+
+1. Study if three prime numbers can belong in the same geometric progression.
+2. There are 25 prime numbers within [1, 100].</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the properties of geometric progressions (GPs) and the constraints given by the prime numbers.
+
+First, let&#x27;s address the information about prime numbers. A geometric progression is a sequence of numbers where each term after the first is found by multiplying the previous one by a constant called the common ratio. If three prime numbers were in the same GP, then the common ratio would have to be a rational number, since the ratio of any two primes is a rational number. However, if the common ratio is a rational number (expressed as a/b where a and b are integers with no common factors), then after multiplying a prime by a/b, the result cannot be a prime unless b = 1, because the result would be a fraction or a multiple of a, which is not prime.
+
+Therefore, three prime numbers cannot belong to the same geometric progression unless the common ratio is 1, which would make all terms in the GP equal, contradicting the fact that all primes are distinct. Hence, no GP can contain more than two prime numbers.
+
+Given that there are 25 prime numbers within [1, 100], and no GP can contain more than two of them, we can form at most 12 pairs of primes (since 25/2 = 12.5, and we can&#x27;t have half a pair). This leaves one prime number unpaired.
+
+Now, let&#x27;s consider the non-prime numbers. We need to form GPs such that every number from 1 to 100 is included exactly once. Since we have 12 GPs to form and one prime number left, we can place this prime number in a GP by itself. This GP will consist of only one term.
+
+For the remaining numbers, we need to distribute them into the 11 remaining GPs. Since the problem does not specify the length of each GP, we have some flexibility. However, we must ensure that the common ratio of each GP is such that it does not produce terms outside the range of 1 to 100 and that each term is an integer.
+
+Let&#x27;s consider the simplest case where each GP has a common ratio of 1. In this case, each GP would consist of a sequence of the same number repeated, which is not very interesting and does not make use of the numbers&#x27; potential to form true GPs with different terms.
+
+A more interesting approach is to consider GPs with different common ratios. For example, we could start with the smallest numbers and try to form GPs with them. Let&#x27;s take the number 2, which is prime. We could pair it with another number to form a GP. If we pair it with 4, the common ratio is 2, and the next term would be 8, which is also within the range. We can continue this GP until we reach a term that would exceed 100.
+
+However, this approach quickly becomes complex, and finding a solution that satisfies all constraints is not straightforward. The problem is essentially asking for a partition of the set {1, 2, ..., 100} into 12 subsets, each forming a GP, with the additional constraint that each subset contains at most two primes.
+
+This is a combinatorial problem that likely requires a more systematic approach or computational assistance to solve. It&#x27;s not a simple problem that can be solved with a straightforward calculation or formula, and it may not have a unique solution.
+
+Given the complexity of the problem and the constraints, it&#x27;s not possible to provide a complete solution without further clarification on the rules for forming the GPs or without employing a more sophisticated combinatorial algorithm.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem of selecting 12 geometric progressions from the numbers 1 to 100 such that each number is in exactly one progression and considering the constraints on prime numbers is complex, likely requiring computational assistance, and cannot be solved with a straightforward calculation provided here.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

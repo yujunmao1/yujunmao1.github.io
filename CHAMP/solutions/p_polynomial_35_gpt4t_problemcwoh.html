@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_35</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_35']
+messages = problem.conversations['GPT-4 Turbo|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: Find the remainder of x^1959−1 divided by (x^2+1)(x^2+x+1).
+Step-wise solution:
+1. We have f(x)=x^1959-1=(x^2+1)(x^2+x+1)q(x)+ax^3+bx^2+cx+d.
+2. At x=i, f(i)=-i-1=-ai-b+ci+d.
+3. At x=-i, f(-i)=i-1=ai-b-ci+d.
+4. At x=w, f(w)=0=a+bw^2+cw+d.
+5. At x=w^2, f(w^2)=0=a+bw+cw^2+d.
+6. We have f(i)+f(-i)=-2b+2d=-2, which means b-d=1.
+7. We have f(i)-f(-i)=-2ai+2ci=-2i, which means a-c=1.
+8. We have f(w)+f(w^2)=2a-b-c+2d=0.
+9. We have f(w)-f(w^2)=(b-c)(w^2-w)=0, which means b=c.
+10. These equations give us a=1, b=c=0, d=-1.
+11. So the remainder is ax^3+bx^2+cx+d=x^3-1.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Let f(x)=(x^1958+x^1957+2)^1959=a_0+a_1*x+···+a_n*x^n. Find a_0−a_1/2−a_2/2+a_3−a_4/2−a_5/2+a_6-a_7/2-a_8/2+....</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the coefficients \( a_0, a_1, a_2, \ldots \) of the polynomial \( f(x) \) and then compute the sum \( a_0 - \frac{a_1}{2} - \frac{a_2}{2} + a_3 - \frac{a_4}{2} - \frac{a_5}{2} + a_6 - \frac{a_7}{2} - \frac{a_8}{2} + \ldots \).
+
+However, directly expanding \( f(x) \) is not feasible due to the high powers involved. Instead, we can look for a pattern or property that simplifies the computation.
+
+Notice that the sum we need to compute has a repeating pattern of coefficients: \( a_0 \), then \( -\frac{a_1}{2} \), \( -\frac{a_2}{2} \), \( a_3 \), and so on. This pattern suggests that we might benefit from considering the function \( f(x) \) evaluated at specific points, particularly \( x = 1 \) and \( x = -1 \), because the alternating signs and halving of coefficients resemble the effect of these substitutions on the terms of \( f(x) \).
+
+Let&#x27;s evaluate \( f(x) \) at \( x = 1 \) and \( x = -1 \):
+
+1. \( f(1) = (1^{1958} + 1^{1957} + 2)^{1959} = (1 + 1 + 2)^{1959} = 4^{1959} \)
+
+This gives us the sum of all coefficients because when \( x = 1 \), each term \( a_i x^i \) becomes simply \( a_i \).
+
+2. \( f(-1) = ((-1)^{1958} + (-1)^{1957} + 2)^{1959} = (1 - 1 + 2)^{1959} = 2^{1959} \)
+
+This gives us the alternating sum of coefficients because when \( x = -1 \), each term \( a_i x^i \) becomes \( a_i \) if \( i \) is even and \( -a_i \) if \( i \) is odd.
+
+Now, let&#x27;s consider the sum we need to compute:
+
+\( S = a_0 - \frac{a_1}{2} - \frac{a_2}{2} + a_3 - \frac{a_4}{2} - \frac{a_5}{2} + a_6 - \frac{a_7}{2} - \frac{a_8}{2} + \ldots \)
+
+We can rewrite this sum as:
+
+\( S = (a_0 + a_3 + a_6 + \ldots) - \frac{1}{2}(a_1 + a_2 + a_4 + a_5 + a_7 + a_8 + \ldots) \)
+
+Notice that the first part of the sum \( (a_0 + a_3 + a_6 + \ldots) \) is the sum of coefficients of terms where the exponent is a multiple of 3, which we can obtain by evaluating \( f(\omega) \) where \( \omega \) is a primitive third root of unity, \( \omega^3 = 1 \) and \( \omega \neq 1 \). The second part of the sum \( (a_1 + a_2 + a_4 + a_5 + \ldots) \) is the sum of coefficients of terms where the exponent is not a multiple of 3, which we can find by subtracting \( f(\omega) \) from \( f(1) \).
+
+Let&#x27;s evaluate \( f(\omega) \):
+
+\( f(\omega) = (\omega^{1958} + \omega^{1957} + 2)^{1959} \)
+
+Since \( \omega^3 = 1 \), we can reduce the exponents modulo 3:
+
+\( \omega^{1958} = \omega^{(3 \cdot 653 + 1)} = \omega^1 = \omega \)
+\( \omega^{1957} = \omega^{(3 \cdot 653)} = \omega^0 = 1 \)
+
+So we have:
+
+\( f(\omega) = (\omega + 1 + 2)^{1959} = (3 + \omega)^{1959} \)
+
+Now, \( (3 + \omega)^{1959} \) will have terms where \( \omega \) is raised to a power that is a multiple of 3, which will contribute to the sum of coefficients we are interested in. However, since \( \omega^3 = 1 \), only the constant term (when \( \omega \) is raised to the power of 0) will contribute to the sum of coefficients of terms where the exponent is a multiple of 3.
+
+Therefore, the sum of coefficients of terms where the exponent is a multiple of 3 is simply the constant term of \( (3 + \omega)^{1959} \), which is \( 3^{1959} \) because the constant term comes from choosing the term 3 every time in the binomial expansion of \( (3 + \omega)^{1959} \).
+
+Now we can compute the sum \( S \):
+
+\( S = 3^{1959} - \frac{1}{2}(4^{1959} - 2^{1959}) \)
+
+Simplifying, we get:
+
+\( S = 3^{1959} - \frac{1}{2}(2^{2 \cdot 1959} - 2^{1959}) \)
+\( S = 3^{1959} - \frac{1}{2}(2^{3918} - 2^{1959}) \)
+\( S = 3^{1959} - \frac{1}{2}(2^{1959} \cdot 2^{1959} - 2^{1959}) \)
+\( S = 3^{1959} - \frac{1}{2}(2^{1959} \cdot (2^{1959} - 1)) \)
+
+This is the final expression for the sum \( S \). It is not possible to simplify it further without knowing the exact values of the powers of 2 and 3, but this expression gives us the relationship between the coefficients of \( f(x) \) as required by the problem.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sum \( S = a_0 - \frac{a_1}{2} - \frac{a_2}{2} + a_3 - \frac{a_4}{2} - \frac{a_5}{2} + a_6 - \frac{a_7}{2} - \frac{a_8}{2} + \ldots \) for the polynomial \( f(x) = (x^{1958} + x^{1957} + 2)^{1959} \) is given by \( S = 3^{1959} - \frac{1}{2}(2^{1959} \cdot (2^{1959} - 1)) \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

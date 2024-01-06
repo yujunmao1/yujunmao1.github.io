@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_4</td>
+            <td>GPT-3.5</td>
+            <td>Direct w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (none of the values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_4']
+messages = problem.conversations['GPT-3.5|Direct w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let P(x)=x^(2n)-2x^(2n-1)+3x^(2n-2)-4x^(2n-3)+...-2nx+2n+1. For how many values of n∈{1, 2, ..., 100} does P(x) has at least one real-valued root?
+
+You may find the following information useful:
+
+1. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine the number of values of n for which P(x) has at least one real-valued root, we need to find the conditions under which P(x) has a real root.
+
+A polynomial has a real root if and only if it changes sign at that root. In other words, if P(x) has a real root r, then P(r) = 0 and P(x) changes sign at x = r.
+
+Let&#x27;s consider the terms of P(x) separately:
+
+P(x) = x^(2n) - 2x^(2n-1) + 3x^(2n-2) - 4x^(2n-3) + ... - 2nx + 2n + 1
+
+We can rewrite P(x) as:
+
+P(x) = x^(2n) + (-2)x^(2n-1) + 3x^(2n-2) + (-4)x^(2n-3) + ... + (-2n)x + (2n + 1)
+
+Now, let&#x27;s consider the signs of the coefficients of the terms in P(x):
+
+The coefficient of x^(2n) is positive (1).
+The coefficient of x^(2n-1) is negative (-2).
+The coefficient of x^(2n-2) is positive (3).
+The coefficient of x^(2n-3) is negative (-4).
+And so on...
+
+From the given information, we know that the sum of a geometric series with a common ratio between -1 and 1 converges. In other words, the sum of the coefficients of the terms in P(x) converges.
+
+Therefore, as n approaches infinity, the sum of the coefficients of the terms in P(x) approaches a finite value. This means that for large enough values of n, the sum of the coefficients will be positive.
+
+Now, let&#x27;s consider the value of P(0):
+
+P(0) = (0)^(2n) + (-2)(0)^(2n-1) + 3(0)^(2n-2) + (-4)(0)^(2n-3) + ... + (-2n)(0) + (2n + 1)
+     = 2n + 1
+
+Since 2n + 1 is positive for all positive values of n, P(0) is positive for all positive values of n.
+
+Therefore, P(x) does not change sign at x = 0, and hence, P(x) does not have a real root at x = 0.
+
+From the above analysis, we can conclude that P(x) has at least one real-valued root if and only if P(x) changes sign at some value of x other than x = 0.
+
+To determine the number of values of n for which P(x) has at least one real-valued root, we need to find the number of sign changes in the coefficients of the terms in P(x).
+
+Let&#x27;s consider the signs of the coefficients of the terms in P(x) for different values of n:
+
+For n = 1:
+The coefficient of x^(2n) is positive (1).
+The coefficient of x^(2n-1) is negative (-2).
+
+For n = 2:
+The coefficient of x^(2n) is positive (1).
+The coefficient of x^(2n-1) is negative (-2).
+The coefficient of x^(2n-2) is positive (3).
+The coefficient of x^(2n-3) is negative (-4).
+
+For n = 3:
+The coefficient of x^(2n) is positive (1).
+The coefficient of x^(2n-1) is negative (-2).
+The coefficient of x^(2n-2) is positive (3).
+The coefficient of x^(2n-3) is negative (-4).
+The coefficient of x^(2n-4) is positive (5).
+
+From the pattern observed, we can see that the number of sign changes in the coefficients of the terms in P(x) is equal to n.
+
+Therefore, P(x) has at least one real-valued root for n = 1, 2, 3, ..., 100.
+
+Hence, the number of values of n for which P(x) has at least one real-valued root is 100.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial P(x) has at least one real-valued root for all values of n from 1 to 100.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

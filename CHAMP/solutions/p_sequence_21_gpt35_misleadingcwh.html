@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_21</td>
+            <td>GPT-3.5</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2500</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_21']
+messages = problem.conversations['GPT-3.5|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The sequence a_0, a_1, a_2, ... is such that, for all nonnegative m≥n, we have a_(m+n)+a_(m−n)=(a_(2m)+a_(2n))/2. If a_1=1, find a_50.
+
+You may find the following information useful:
+
+1. Find the value of a_0 with m=n.
+2. Find the value of a_(2m) in terms of a_m with n=0.
+3. Find the value of a_(n+2) in terms of a_(n+1) and a_n with m=n+2.
+4. Write the first few terms of a_n and identify a pattern.
+5. a^3±b^3=(a+b)(a^2∓ab+b^2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s follow the given information step by step:
+
+1. Find the value of a_0 with m=n:
+Using the given equation, we have a_(m+n) + a_(m-n) = (a_(2m) + a_(2n))/2.
+Substituting m=n, we get a_(2n) + a_0 = (a_(4n) + a_0)/2.
+Simplifying, we find a_(2n) = a_(4n)/2.
+
+2. Find the value of a_(2m) in terms of a_m with n=0:
+Using the given equation, we have a_(m+0) + a_(m-0) = (a_(2m) + a_0)/2.
+Simplifying, we find a_(2m) = 2a_m - a_0.
+
+3. Find the value of a_(n+2) in terms of a_(n+1) and a_n with m=n+2:
+Using the given equation, we have a_((n+2)+n) + a_((n+2)-n) = (a_(2(n+2)) + a_(2n))/2.
+Simplifying, we find a_(3n+2) + a_2 = (a_(4n+4) + a_(2n))/2.
+Substituting a_2 = 2a_1 - a_0 and a_(2n) = a_(4n)/2, we get a_(3n+2) + 2a_1 - a_0 = (a_(4n+4) + a_(4n))/4.
+Simplifying further, we find a_(3n+2) = (a_(4n+4) + a_(4n))/4 - 2a_1 + a_0.
+
+4. Write the first few terms of a_n and identify a pattern:
+Using the information from steps 1-3, we can start calculating the values of a_n:
+
+a_0 = a_(2*0)/2 = a_0/2
+a_1 = 1 (given)
+a_2 = 2a_1 - a_0 = 2(1) - a_0 = 2 - a_0/2
+a_3 = (a_4 + a_0)/4 - 2a_1 + a_0 = (a_4 + a_0)/4 - 2(1) + a_0 = (a_4 - 7a_0)/4
+
+Continuing this pattern, we can find the values of a_4, a_5, a_6, and so on.
+
+a_4 = (a_8 + a_0)/4 - 2a_1 + a_0 = (a_8 + a_0)/4 - 2(1) + a_0 = (a_8 - 7a_0)/4
+a_5 = (a_9 + a_1)/4 - 2a_2 + a_0 = (a_9 + 1)/4 - 2(2 - a_0/2) + a_0 = (a_9 - 7a_0 + 4)/4
+a_6 = (a_10 + a_2)/4 - 2a_3 + a_1 = (a_10 + 2 - a_0/2)/4 - 2((a_4 - 7a_0)/4) + 1 = (a_10 - 7a_0 + 8 - 2a_4 + 14a_0)/4
+
+By observing the pattern, we can see that a_n = (a_(n+4) - 7a_0 + 2^(n+2))/4.
+
+5. a^3±b^3=(a+b)(a^2∓ab+b^2):
+Using this identity, we can rewrite the equation a_(3n+2) = (a_(4n+4) + a_(4n))/4 - 2a_1 + a_0 as:
+a_(3n+2) = (a_(4n+4) + a_(4n))/4 - 2a_1 + a_0
+          = (a_(4n+4) + a_(4n))/4 - (2a_1 - a_0)
+          = (a_(4n+4) + a_(4n))/4 - a_2
+
+Now, let&#x27;s find a_50 using the pattern we observed:
+
+a_50 = (a_54 - 7a_0 + 2^54)/4
+
+To find a_54, we need to calculate a_50, a_51, a_52, and a_53 using the pattern and substitute them into the equation.
+
+a_50 = (a_54 - 7a_0 + 2^54)/4
+a_51 = (a_55 - 7a_0 + 2^55)/4
+a_52 = (a_56 - 7a_0 + 2^56)/4
+a_53 = (a_57 - 7a_0 + 2^57)/4
+
+Substituting these values into the equation, we can find a_54:
+
+a_54 = 4a_50 - (a_55 - 7a_0 + 2^55)/4
+      = 4a_50 - a_55/4 + 7a_0/4 - 2^55/4
+
+Now, substituting a_54 back into the equation for a_50:
+
+a_50 = (4a_50 - a_55/4 + 7a_0/4 - 2^55/4 - 7a_0 + 2^54)/4
+      = (4a_50 - a_55/4 - 6a_0 + 2^54)/4
+
+Simplifying further, we get:
+
+3a_50/4 = (a_55/4 + 6a_0 - 2^54)/4
+a_50 = (a_55 + 24a_0 - 2^54)/16
+
+Therefore, a_50 = (a_55 + 24 - 2^54)/16.
+
+Note: To find the exact value of a_50, we would need additional information or a specific pattern for the values of a_n. Without that, we can only express a_50 in terms of a_55 and a_0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Using the given information and pattern, the value of a_50 is (a_55 + 24 - 2^54)/16.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

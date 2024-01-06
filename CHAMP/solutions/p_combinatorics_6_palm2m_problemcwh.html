@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_6</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_6']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: A one-to-one mapping p: {1, 2, ..., n}-&gt;{1, 2, ..., n} is called an involution, if p∘p=identity (i.e., p(p(i))=i for all i∈{1, ..., n}). Find the number of involutions on {1, 2, 3, 4, 5, 6}.
+Step-wise solution:
+1. Let T(n) be the number of involutions on {1, 2, ..., n}.
+2. Thus, we have T(1)=1 for {1-&gt;1}, and T(2)=2 for {1-&gt;1, 2-&gt;2} and {1-&gt;2, 2-&gt;1}.
+3. For n&gt;2, on each involution of the set {1, ..., n-1}, we can add {n-&gt;n} to construct a new involution.
+4. In addition, we can also pull out an item i from n-1 items to make {n-&gt;i, i-&gt;n}, and add this to any involution of the set consisting of the remaining n-2 items.
+5. Thus, we have T(n)=T(n-1)+(n-1)*T(n-2).
+6. Starting from T(1)=1, T(2)=2, we have T(3)=4, T(4)=10, T(5)=26 and T(6)=76.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+In how many ways can you take an odd number of objects from n (distinct) objects?
+
+In addition, you may also find the following information helpful:
+
+1. Let m be an arbitrary object, and for all subsets of the set of n objects, consider the membership of m (i.e., whether m is in the subset).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to take an odd number of objects from $n$ distinct objects is given by the following formula:
+
+$$\binom{n+1}{n-1}$$
+
+To see why, let&#x27;s consider the following example. Suppose we want to take 3 objects from a set of 5 objects. We can do this in the following ways:
+
+* We can choose 3 objects from the first 4 objects, and then add the fifth object. This can be done in $\binom{4}{3} = 4$ ways.
+* We can choose 2 objects from the first 4 objects, and then add the pair of objects to the fifth object. This can be done in $\binom{4}{2} = 6$ ways.
+* We can choose 1 object from the first 4 objects, and then add the object to itself and the fifth object. This can be done in $\binom{4}{1} = 4$ ways.
+
+In total, there are $4 + 6 + 4 = 14$ ways to take 3 objects from a set of 5 objects.
+
+Now, let&#x27;s generalize this to the case where we want to take an odd number of objects from a set of $n$ objects. We can do this by first choosing an arbitrary object, and then considering all of the subsets of the remaining $n-1$ objects that include the object we chose. There are $\binom{n-1}{n-1} = 1$ way to do this.
+
+We can then choose an arbitrary object from the remaining $n-2$ objects, and then consider all of the subsets of the remaining $n-3$ objects that include the object we chose. There are $\binom{n-2}{n-2} = 1$ way to do this.
+
+We can continue in this way, choosing an arbitrary object from each of the remaining sets of objects, until we reach the empty set. In total, there are $\binom{n+1}{n-1}$ ways to do this.
+
+Therefore, the number of ways to take an odd number of objects from $n$ distinct objects is given by the following formula:
+
+$$\binom{n+1}{n-1}$$</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to take an odd number of objects from $n$ distinct objects is $\binom{n+1}{n-1}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

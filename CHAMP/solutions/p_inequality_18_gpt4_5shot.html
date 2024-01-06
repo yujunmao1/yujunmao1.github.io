@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_18</td>
+            <td>GPT-4</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> sqrt(3)/3, or equivalently 1/sqrt(3)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_18']
+messages = problem.conversations['GPT-4|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let (x, y, z) be an integer-valued solution to the equation x^2+y^2=z^2. At least how many of the three numbers must be divisible by 5?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Assume none of x, y, z are divisible by 5.
+2. Then x, y, z mod 5=1, 2, 3, 4, and x^2, y^2, z^2 mod 5=±1.
+3. Thus, we have (±1)+(±1)≡±1 mod 5 if the equation holds, which is a contradiction.
+4. Thus, one of the numbers must be divisible by 5, which can be achieved by 3^2+4^2=5^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The polynomial 1-x+x^2-x^3+...+x^8-x^9 may be written in the form a_0+a_1*y+a_2*y^2+...+a_9*y^9, where y=x+1 and each a_i is a constant. Find the value of a_2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have f(x)=1-x+x^2-x^3+...+x^8-x^9=(1-x^10)/(1+x).
+2. Substituting x=y-1, we have f(x)=(1-(y-1)^10)/y.
+3. We have the coefficient C(10, 3)*y^3*(-1)^7=-120 for the term y^3 in (y-1)^10.
+4. Thus, the coefficient a_2 for y^2 in (1-(y-1)^10)/y is -(-120)=120.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Does a polyhedron exists with an odd number of faces, each face having an odd number of edges?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We sum up all the edges of all the faces, and get an odd number (sum of an odd number of odd numbers).
+2. However, each edge is counted twice, so we should get an even number.
+3. Thus, no such polyhedron exists.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For a&gt;0, does the limit of the sequence defined by a_0=sqrt(a), a_(n+1)=sqrt(a+a_n) exist, and if so, find it as an expression of a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have a_1=sqrt(a+a_0)&gt;sqrt(a)=a_0.
+2. If a_n&gt;a_(n-1), then a_(n+1)=sqrt(a+a_n)&gt;sqrt(a+a_(n-1))&gt;a_n.
+3. So the sequence is monotonically increasing.
+4. In addition, we have a_(n+1)^2=a+a_n, which means that a_(n+1)^2-a_n-a=0.
+5. Since a_n&lt;a_(n+1) and both are positive, we have a_n^2-a_n-a&lt;0.
+6. The root of a_n^2-a_n-a is (1±sqrt(4a+1))/2, so we have a_n^2-a_n-a=(a_n-(1+sqrt(4a+1))/2)(a_n-(1-sqrt(4a+1))/2)&lt;0, or (a_n-(sqrt(4a+1)+1)/2)(a_n+(sqrt(4a+1)-1)/2)&lt;0.
+7. Since (sqrt(4a+1)-1)/2&gt;0 for every a&gt;0, we must have a_n-(sqrt(4a+1)+1)/2&lt;0, which means that a_n is bounded by (sqrt(4a+1)+1)/2.
+8. Thus, the sequence has a limit, which can be found by solving for x=sqrt(a+x).
+9. As mentioned above, the equation has solutions (1±sqrt(4a+1))/2, and we take the positive one.
+10. So the limit is (1+sqrt(4a+1))/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How often does the factor 2 occur in the product P(n)=(n+1)(n+2)...(2n), as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For n=1, we have P(n)=2, with the factor 2 occurs 1 time.
+2. We have P(n+1)=(n+2)(n+3)...(2n)(2n+1)(2n+2)=(n+2)(n+3)...(2n)(2n+1)2(n+1)=2*P(n)*(2n+1).
+3. Since 2n+1 is odd and contains no factor of 2, we find that P(n+1) contains exactly one more factor of 2 than P(n).
+4. Since P(1) contains 1 factor of 2, P(n) contains n factors of 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, what is the largest value of sqrt(ab+bc+ac)/(a+b+c)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. By AM-GM inequality, we have sqrt(ab+bc+ac) ≤ sqrt(3abc).
+2. Also by AM-GM inequality, we have a+b+c ≥ 3sqrt[3]{abc}.
+3. Thus, sqrt(ab+bc+ac)/(a+b+c) ≤ sqrt(3abc)/(3sqrt[3]{abc}) = sqrt(3)/3.
+4. The equality holds when a=b=c, so the largest value is sqrt(3)/3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of sqrt(ab+bc+ac)/(a+b+c) for positive a, b, c is sqrt(3)/3.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

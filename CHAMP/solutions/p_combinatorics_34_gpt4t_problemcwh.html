@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_34</td>
+            <td>GPT-4 Turbo</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n-k+3)*2^(n-k-2)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_34']
+messages = problem.conversations['GPT-4 Turbo|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of them have an even number of 1s, as an expression of n?
+Step-wise solution:
+1. We define P(k) as the number of strings with k number of 1s, so P(k)=C(n, k)*3^(n-k).
+2. Thus, the number of length-n strings with an even number of 1s is E(n)=P(0)+P(2)+...=C(n, 0)*3^n+C(n, 2)*3^(n-2)....
+3. The number of length-n strings with an odd number of 1s is O(n)=P(1)+P(3)+...=C(n, 1)*3^(n-1)+C(n, 3)*3^(n-3)....
+4. We have E(n)+O(n)=sum_(k=0)^n C(n, k)*3^(n-k)=sum_(k=0)^n C(n, k)*3^(n-k)*1^k=(3+1)^n=4^n.
+5. In addition, E(n)-O(n)=sum_(k=0)^n C(n, k)*3^(n-k)*(-1)^k=(3-1)^n=2^n.
+6. Thus, E(n)=(4^n+2^n)/2.
+
+Problem: Let a string consist of digit 1, 2, 3. How many such strings of length 6 have adjacent digit differing by less than or equal to 1?
+Step-wise solution:
+1. Let x_n, y_n, z_n be the number of length-n strings that end with digit 1, 2, 3 respectively.
+2. Thus, we have x_1=y_1=z_1=1.
+3. For a string ending with 1, we can append 1 and 2; for a string ending with 2, we can append 1, 2 and 3; for a string ending with 3, we can append 2 and 3.
+4. Thus, we have x_(n+1)=x_n+y_n, y_(n+1)=x_n+y_n+z_n, and z_(n+1)=y_n+z_n.
+5. Starting from (1, 1, 1), we have the sequence of (x_n, y_n, z_n) to be (1, 1, 1), (2, 3, 2), (5, 7, 5), (12, 17, 12), (29, 41, 29), (70, 99, 70).
+6. Thus, in total, there are x_6+y_6+z_6=70+99+70=239 such strings.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all sequences of positive integer numbers have sum n, for integer k&lt;n-1, how many times does the number k appear, as an expression of n and k?
+
+In addition, you may also find the following information helpful:
+
+1. Consider a row of n points, with n-1 gaps.
+2. Insert dividers into the gaps to form groups of points and study the formation of the group of k points.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use a combinatorial argument known as &quot;stars and bars&quot; or &quot;balls and bins.&quot; The idea is to represent the sequences of positive integers that sum to n as arrangements of stars and bars, where the stars represent the units that add up to n, and the bars represent dividers between different numbers in the sequence.
+
+For example, if n = 5, a sequence like (1, 3, 1) can be represented as &quot;* | * * * | *&quot;.
+
+Now, let&#x27;s consider how many times the number k appears in all sequences of positive integers that sum to n. We can think of this as fixing k stars together to represent the number k, and then arranging the remaining stars and bars.
+
+Since we have n stars in total and we fix k of them together, we have n - k stars left to arrange. We also have n - 1 gaps between these stars where we can place bars to create different numbers. However, since we are fixing k stars together, we effectively have one less gap where we can place a bar, so we have n - 2 gaps remaining.
+
+The number of ways to place bars in these gaps is equivalent to the number of ways to partition the remaining n - k stars into positive integers, which is the same as the number of sequences of positive integers that sum to n - k.
+
+To find this number, we use the &quot;stars and bars&quot; theorem, which states that the number of ways to distribute n indistinguishable items into k distinguishable bins is given by the binomial coefficient C(n + k - 1, k - 1).
+
+In our case, we want to distribute n - k stars into bins separated by n - 2 bars. The number of bins is one more than the number of bars, so we have n - 2 + 1 = n - 1 bins.
+
+Therefore, the number of ways to arrange the remaining n - k stars with n - 2 bars is given by the binomial coefficient C((n - k) + (n - 1) - 1, (n - 1) - 1), which simplifies to C(n - k + n - 2, n - 2).
+
+This is the number of sequences of positive integers that sum to n where the number k appears exactly once. However, k can appear more than once in a sequence, so we need to account for all possible occurrences of k.
+
+To do this, we can consider the number of times k can appear in a sequence. Since k &lt; n - 1, the maximum number of times k can appear is floor((n - 1) / k). Let&#x27;s denote this maximum number as m.
+
+For each possible occurrence i from 1 to m, we can calculate the number of sequences where k appears i times using the same &quot;stars and bars&quot; argument, but now we fix i groups of k stars and distribute the remaining stars.
+
+The total number of times k appears in all sequences is the sum of the number of sequences where k appears i times for all i from 1 to m.
+
+Therefore, the total number of times k appears in all sequences of positive integers that sum to n is:
+
+Sum_{i=1}^m C(n - i*k + n - 2, n - 2).
+
+This expression gives us the total count of the number k in all sequences, considering all possible occurrences of k.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The total number of times the number k appears in all sequences of positive integers that sum to n is given by the sum of binomial coefficients Sum_{i=1}^m C(n - i*k + n - 2, n - 2), where m is the floor of (n - 1) / k.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

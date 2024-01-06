@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_23</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (4^n+2^n)/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_23']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of them have an even number of 1s, as an expression of n?
+
+You may find the following information useful:
+
+1. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
+2. sum_(k=1)^n C(n, k)=2^n.
+3. a^n-1=(a-1)(a^(n-1)+a^(n-2)+...+a+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of strings of length \( n \) consisting of digits 1, 2, 3, and 4 that have an even number of 1s. We can approach this problem using combinatorics.
+
+Let&#x27;s denote the total number of strings of length \( n \) with digits 1, 2, 3, and 4 as \( T \). Since each position in the string can be filled with any of the 4 digits independently, we have \( T = 4^n \).
+
+Now, let&#x27;s consider the number of strings with an even number of 1s. We can split this into two cases: strings with zero 1s and strings with an even number greater than zero.
+
+Case 1: Strings with zero 1s.
+For each position in the string, we have 3 choices (2, 3, or 4), since we cannot use 1. Therefore, the number of such strings is \( 3^n \).
+
+Case 2: Strings with an even number greater than zero 1s.
+We can use the binomial theorem to count the number of ways to place an even number of 1s in the string. The binomial theorem states that the sum of the binomial coefficients for even \( k \) is equal to half the sum of all binomial coefficients, which is \( 2^{n-1} \) (from the given information that \( \sum_{k=1}^{n} C(n, k) = 2^n \)).
+
+For each placement of 1s, the remaining positions can be filled with any of the 3 other digits. If there are \( k \) 1s, there are \( n-k \) positions left, each of which can be filled in \( 3 \) ways. So for each \( k \), we have \( 3^{n-k} \) ways to fill the remaining positions.
+
+The total number of strings with an even number of 1s is the sum of the number of strings with exactly \( 2k \) 1s for \( k \) from 0 to \( n/2 \) (assuming \( n \) is even; if \( n \) is odd, we go up to \( (n-1)/2 \)).
+
+So, the number of strings with an even number of 1s is:
+\[ E = 3^n + \sum_{k=1}^{n/2} C(n, 2k) \cdot 3^{n-2k} \]
+\[ E = 3^n + \frac{1}{2} \sum_{k=0}^{n} C(n, k) \cdot 3^{n-k} - \frac{1}{2} \sum_{k=0}^{n} C(n, k) \cdot (-1)^k \cdot 3^{n-k} \]
+\[ E = 3^n + \frac{1}{2} (3+1)^n - \frac{1}{2} (3-1)^n \]
+\[ E = 3^n + \frac{1}{2} \cdot 4^n - \frac{1}{2} \cdot 2^n \]
+\[ E = 3^n + 2^{n-1} - 2^{n-2} \]
+\[ E = 3^n + 2^{n-2} \]
+
+This is the expression for the number of strings of length \( n \) with an even number of 1s.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of length \( n \) consisting of digits 1, 2, 3, and 4 that have an even number of 1s is given by the expression \( 3^n + 2^{n-2} \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

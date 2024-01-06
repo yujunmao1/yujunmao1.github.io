@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_29</td>
+            <td>GPT-4 Turbo</td>
+            <td>No C w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 3 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_29']
+messages = problem.conversations['GPT-4 Turbo|No C w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all possible positive integer values of x such that x, 2x+1 and 4x+1 are all prime numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find all positive integer values of \( x \) such that \( x \), \( 2x+1 \), and \( 4x+1 \) are all prime numbers.
+
+Let&#x27;s analyze the conditions:
+
+1. \( x \) must be prime.
+2. \( 2x+1 \) must be prime.
+3. \( 4x+1 \) must be prime.
+
+Since \( x \) is prime and \( 2x+1 \) is also prime, \( x \) cannot be even (because if \( x \) were even, then \( 2x+1 \) would be odd, but the only even prime number is 2, and if \( x = 2 \), then \( 2x+1 = 5 \) which is prime, but \( 4x+1 = 9 \) which is not prime). Therefore, \( x \) must be an odd prime number.
+
+Now, let&#x27;s consider the form of \( 2x+1 \) and \( 4x+1 \). Since \( x \) is odd, \( 2x \) is even, and \( 2x+1 \) is odd. Similarly, \( 4x \) is even, and \( 4x+1 \) is odd. So both \( 2x+1 \) and \( 4x+1 \) are odd, which is consistent with them being prime (since 2 is the only even prime number).
+
+Let&#x27;s start testing odd prime numbers for \( x \):
+
+- If \( x = 3 \), then \( 2x+1 = 7 \) (prime) and \( 4x+1 = 13 \) (prime). So \( x = 3 \) is a solution.
+- If \( x = 5 \), then \( 2x+1 = 11 \) (prime) but \( 4x+1 = 21 \) which is not prime (it&#x27;s divisible by 3 and 7). So \( x = 5 \) is not a solution.
+- If \( x = 7 \), then \( 2x+1 = 15 \) which is not prime (it&#x27;s divisible by 3 and 5). So \( x = 7 \) is not a solution.
+
+We can see a pattern here. For \( x &gt; 3 \), \( 4x+1 \) will always be divisible by 3. This is because if \( x \) is an odd prime greater than 3, it must be of the form \( 6k \pm 1 \) for some integer \( k \) (since all primes greater than 3 are of this form to avoid being divisible by 2 or 3).
+
+- If \( x = 6k+1 \), then \( 4x+1 = 4(6k+1)+1 = 24k+5 \), which is not divisible by 3.
+- If \( x = 6k-1 \), then \( 4x+1 = 4(6k-1)+1 = 24k-3 \), which is \( 24k+1-4 \), and since \( 24k+1 \) is divisible by 3, \( 24k-3 \) is also divisible by 3.
+
+Therefore, the only prime \( x \) that will not make \( 4x+1 \) divisible by 3 is when \( x = 6k+1 \). However, we also need \( 2x+1 \) to be prime. For \( x = 6k+1 \), \( 2x+1 = 2(6k+1)+1 = 12k+3 \), which is always divisible by 3 (except when \( k = 0 \), which gives us \( x = 1 \), but 1 is not prime).
+
+Thus, the only positive integer value of \( x \) such that \( x \), \( 2x+1 \), and \( 4x+1 \) are all prime numbers is \( x = 3 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only positive integer value of \( x \) such that \( x \), \( 2x+1 \), and \( 4x+1 \) are all prime numbers is \( x = 3 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_26</td>
+            <td>PaLM 2 Medium</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 239</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_26']
+messages = problem.conversations['PaLM 2 Medium|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many strings of length 6 and consisting solely of the digits 1, 2 and 3 have the property that any two adjacent digits differ by at most 1.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let a_n, b_n and c_n be the numbers of length-n strings that end with 1, 2 and 3 respectively.
+2. To get a_(n+1), we can append digit 1 to a length-n string that ends with 1 or 2, so a_(n+1)=a_n+b_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n$, $b_n$, and $c_n$ be the number of length-$n$ strings that end in 1, 2, and 3, respectively. We can then write down the following recurrence relations:
+
+$$a_{n+1} = a_n + b_n$$
+$$b_{n+1} = a_n + c_n$$
+$$c_{n+1} = b_n + c_n$$
+
+with initial conditions $a_0 = 1$, $b_0 = 1$, and $c_0 = 1$.
+
+To solve this recurrence relation, we can use the generating function method. The generating function for $a_n$ is defined as
+
+$$A(x) = \sum_{n=0}^{\infty} a_n x^n$$
+
+Similarly, the generating functions for $b_n$ and $c_n$ are defined as
+
+$$B(x) = \sum_{n=0}^{\infty} b_n x^n$$
+
+and
+
+$$C(x) = \sum_{n=0}^{\infty} c_n x^n$$
+
+Then, the recurrence relations can be written as
+
+$$A(x) = A(x) + B(x)$$
+$$B(x) = A(x) + C(x)$$
+$$C(x) = B(x) + C(x)$$
+
+Subtracting the second equation from the first equation, we get
+
+$$A(x) - B(x) = 0$$
+
+Subtracting the third equation from the second equation, we get
+
+$$B(x) - C(x) = 0$$
+
+Adding these two equations, we get
+
+$$A(x) - C(x) = 0$$
+
+This implies that $A(x) = C(x)$.
+
+Now, let $D(x) = A(x) - C(x)$. Then, $D(x)$ satisfies the recurrence relation
+
+$$D(x) = D(x)^2$$
+
+with initial condition $D(0) = 1$.
+
+The solution to this recurrence relation is
+
+$$D(x) = \frac{1}{1 - x}$$
+
+Therefore, $A(x) = C(x) = \frac{1}{1 - x}$.
+
+Now, we can find the number of length-$6$ strings that end in 1, 2, and 3 by evaluating $A(x)$, $B(x)$, and $C(x)$ at $x = 1$. We get
+
+$$A(1) = \frac{1}{2}$$
+$$B(1) = \frac{1}{2}$$
+$$C(1) = \frac{1}{2}$$
+
+Therefore, the number of length-$6$ strings that end in 1, 2, and 3 is $\frac{3}{2}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of length-$6$ strings that end in 1, 2, and 3 is $\frac{3}{2}$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

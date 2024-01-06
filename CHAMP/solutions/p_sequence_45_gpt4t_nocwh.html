@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_45</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_45']
+messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {a_n} is defined by a_1=1, a_(n+1)=a_n+1/a_n^2. Do we have a_9000&gt;30?
+
+You may find the following information useful:
+
+1. Compare a_n^3 with 3n.
+2. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To investigate the behavior of the sequence {a_n}, we can compare \( a_n^3 \) with \( 3n \). Let&#x27;s start by examining the recursive definition of the sequence:
+
+\[ a_{n+1} = a_n + \frac{1}{a_n^2} \]
+
+We want to compare \( a_{n+1}^3 \) with \( 3(n+1) \). To do this, let&#x27;s first cube the expression for \( a_{n+1} \) using the binomial expansion formula:
+
+\[ (x \pm y)^3 = x^3 \pm 3x^2y + 3xy^2 \pm y^3 \]
+
+Applying this to \( a_{n+1} \), we get:
+
+\[ a_{n+1}^3 = \left(a_n + \frac{1}{a_n^2}\right)^3 \]
+\[ a_{n+1}^3 = a_n^3 + 3a_n^2 \cdot \frac{1}{a_n^2} + 3a_n \cdot \left(\frac{1}{a_n^2}\right)^2 + \left(\frac{1}{a_n^2}\right)^3 \]
+\[ a_{n+1}^3 = a_n^3 + 3 + \frac{3}{a_n^3} + \frac{1}{a_n^6} \]
+
+Now, let&#x27;s assume that \( a_n^3 &gt; 3n \) for some \( n \). We want to show that this inequality holds for \( n+1 \) as well. If our assumption is true, then:
+
+\[ a_{n+1}^3 &gt; 3n + 3 + \frac{3}{a_n^3} + \frac{1}{a_n^6} \]
+
+Since \( a_n^3 &gt; 3n \), we know that \( a_n^3 \) is positive, and thus \( \frac{3}{a_n^3} \) and \( \frac{1}{a_n^6} \) are also positive. This means that:
+
+\[ a_{n+1}^3 &gt; 3n + 3 \]
+\[ a_{n+1}^3 &gt; 3(n+1) \]
+
+This shows that if \( a_n^3 &gt; 3n \) for some \( n \), then \( a_{n+1}^3 &gt; 3(n+1) \). Now we need to check the base case to start the induction.
+
+For \( n = 1 \), we have \( a_1 = 1 \), so:
+
+\[ a_1^3 = 1^3 = 1 \]
+
+Comparing this with \( 3 \cdot 1 \):
+
+\[ 1 &lt; 3 \]
+
+So the base case does not satisfy the inequality \( a_n^3 &gt; 3n \). However, we can check the next term to see if the sequence eventually overtakes the linear function \( 3n \).
+
+For \( n = 2 \), we have:
+
+\[ a_2 = a_1 + \frac{1}{a_1^2} = 1 + \frac{1}{1^2} = 2 \]
+
+Now let&#x27;s check \( a_2^3 \) against \( 3 \cdot 2 \):
+
+\[ a_2^3 = 2^3 = 8 \]
+\[ 8 &gt; 6 \]
+
+So for \( n = 2 \), the inequality \( a_n^3 &gt; 3n \) holds. We can now use induction to conclude that \( a_n^3 &gt; 3n \) for all \( n \geq 2 \).
+
+Now, let&#x27;s check if \( a_{9000} &gt; 30 \). We know that \( a_n^3 &gt; 3n \) for \( n \geq 2 \), so:
+
+\[ a_{9000}^3 &gt; 3 \cdot 9000 \]
+\[ a_{9000}^3 &gt; 27000 \]
+
+Taking the cube root of both sides:
+
+\[ a_{9000} &gt; \sqrt[3]{27000} \]
+\[ a_{9000} &gt; 30 \]
+
+Since the cube root of 27000 is indeed greater than 30, we can conclude that \( a_{9000} &gt; 30 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, \( a_{9000} &gt; 30 \) because the sequence \( \{a_n\} \) grows such that \( a_n^3 &gt; 3n \) for all \( n \geq 2 \), and \( a_{9000}^3 &gt; 27000 \) implies \( a_{9000} &gt; \sqrt[3]{27000} &gt; 30 \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

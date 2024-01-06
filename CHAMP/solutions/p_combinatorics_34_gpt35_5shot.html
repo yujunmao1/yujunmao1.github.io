@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_34</td>
+            <td>GPT-3.5</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n-k+3)*2^(n-k-2)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_34']
+messages = problem.conversations['GPT-3.5|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive numbers a_1, ..., a_n, let s=a_1+a_2+...+a_n. What is the smallest value of a_1/(s-a_1)+a_2/(s-a_2)+...+a_n/(s-a_n) as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let A=a_1/(s-a_1)+a_1/(s-a_n)+...+a_n/(s-a_n).
+2. For two sequences (a_1, ..., a_n) and (1/(s-a_1), ..., 1/(s-a_n)), we can see that they are sorted in the same way since a_i≥a_j means 1/(s-a_i)≥1/(s-a_j).
+3. Thus, A achieves the maximum value among all ways to define sum of products of paired elements from the two sequences.
+4. Let B_k=a_1/(s-a_(1+k))+a_2/(s-a_(2+k))+...+a_n/(s-a_(n+k)) for k=1, ..., n-1.
+5. Thus, for k≠0, B_k is the sum of products of paired elements that are not necessarily sorted in the same way.
+6. Thus, A≥B_k and (n-1)A≥B_1+B_2+...+B_(n-1).
+7. In B_1+B_2+...+B_(n-1), we have each pair of a_i/(s-a_j) appearing exactly once for i≠j, and we have sum_(i≠j) a_i/(s-a_j)=1.
+8. Thus, B_1+B_2+...+B_(n-1)=n, so A≥n/(n-1).
+9. We have A=n/(n-1) when a_i=s/n for all i.
+10. So the smallest value is n/(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Can there exist a polynomial f(x) of integer coefficients with f(7)=11 and f(11)=13?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let the polynomial be m_n*x^n+m_(n-1)*x^(n-1)+...+m_1*x_1+m_0.
+2. Thus, f(a)-f(b)=m_n*(a^n-b^n)+m_(n-1)*(a^(n-1)-b^(n-1))+...+m_1*(a_1-b_1)+m_0.
+3. Since a-b divides each of a^i-b^i, we have a-b | f(a)-f(b).
+4. However, if we let a, b be 11 and 7, we get 4 | 2, which is a contradiction.
+5. Thus, such a polynomial does not exist.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Consider a row of 11 seats. A child sits on each. Each child may move by at most one seat. How many possible rearrangements are there (including the original one)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Let a(n) be the number of possible rearrangements (including the original one) for n seats, and consider the movement of the first child in the row.
+2. If the first child does not move, we have a(n-1) rearrangements, since children 2 to n move subject to the one-seat constraint.
+3. If the first child moves, it can only take the 2nd seat, and the 2nd child must move to the first seat.
+4. Thus, the number of such rearrangements is equal to the number of rearrangements from the 3rd to n-th children, or a(n-2).
+5. So we have a(n)=a(n-1)+a(n-2), and starting from a(1)=1 and a(2)=2, we have the sequence of 3, 5, 8, 13, 21, 34, 55, 89, and 144.
+6. So there are 144 possible rearrangements.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A diagnoal in a convex polygon is any line connecting two non-adjacent vertices. For a convex polygon of n vertices, we draw all possible diagonals and suppose that no three diagonals pass through the same point. How many such intersection points do we have in the interior of the polygon, as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Every intersection point is created by two diagnoals constructed from a set of four vertex points, and every set of four vertex points creates exactly two diagonals that have exactly one intersection point.
+2. Thus, the number of intersection points is the number of four-vertex-set from the n vertices, which is C(n, 4).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many integers n in {1, 2, ..., 99} is n^4+4^n a prime number?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have n^4+4^n=5 being a prime number when n=1.
+2. For n&gt;1, if n is even, obviously n^4+4^n is even and greater than two.
+3. Thus, we only need to consider the case of odd n.
+4. We let n=2k+1.
+5. n^4+4^n=n^4+4^(2k+1)=n^4+4*4^(2k)=n^4+4*2^(4k)=n^4+4*(2^k)^4.
+6. n^4+4*(2^k)^4=(n^2+2*(2^k)^2+2n(2^k))(n^2+2*(2^k)^2-2n(2^k)).
+7. The last expression gives a factorization of n^4+4^n.
+8. So n^4+4^n cannot be a prime number for any n&gt;1.
+9. Thus, there is 1 prime number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all sequences of positive integer numbers have sum n, for integer k&lt;n-1, how many times does the number k appear, as an expression of n and k?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. Let&#x27;s consider the problem for a specific value of n and k.
+2. We can represent a sequence of positive integers with sum n as a partition of n.
+3. For example, if n=5, the partitions of 5 are: {5}, {4, 1}, {3, 2}, {3, 1, 1}, {2, 2, 1}, {2, 1, 1, 1}, {1, 1, 1, 1, 1}.
+4. The number of times k appears in the sequence is equal to the number of partitions of n that have k as one of their elements.
+5. We can use the concept of generating functions to count the number of partitions.
+6. The generating function for the number of partitions of n is given by the product (1+x+x^2+...)(1+x^2+x^4+...)(1+x^3+x^6+...)...
+7. The exponent of x^k in the generating function gives the number of partitions of n that have k as one of their elements.
+8. However, finding the exact expression for the exponent of x^k in the generating function is quite complex.
+9. Therefore, it is difficult to give a general expression for the number of times k appears in the sequence for any n and k.
+10. The number of times k appears will depend on the specific values of n and k.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of times the number k appears in a sequence of positive integers with sum n, for integer k&lt;n-1, depends on the specific values of n and k.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

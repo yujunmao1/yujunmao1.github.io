@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_19</td>
+            <td>GPT-4 Turbo</td>
+            <td>Name w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2 inequalities</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Inequality_19']
+messages = problem.conversations['GPT-4 Turbo|Name w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For positive a, b, c, d, at most how many of the three inequalities a+b&lt;c+d, (a+b)(c+d)&lt;ab+cd, (a+b)cd&lt;ab(c+d) can be true at the same time?
+
+You may find the following information useful:
+
+1. Find an assignment of a, b, c that makes two inequalities true.
+2. Study whether all inequalities can be true by multiplying the first two together, and then the last two together.
+3. For real numbers a, b, (a+b)^2≥4ab.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s analyze each inequality one by one:
+
+1. \( a + b &lt; c + d \)
+2. \( (a + b)(c + d) &lt; ab + cd \)
+3. \( (a + b)cd &lt; ab(c + d) \)
+
+We will first try to find an assignment of \( a, b, c, \) and \( d \) that makes two inequalities true.
+
+For the first inequality, \( a + b &lt; c + d \), we can choose any \( a \) and \( b \) such that their sum is less than the sum of \( c \) and \( d \). For example, let&#x27;s take \( a = 1, b = 1, c = 2, \) and \( d = 2 \). This satisfies the first inequality since \( 1 + 1 &lt; 2 + 2 \).
+
+Now let&#x27;s check the second inequality with these values: \( (a + b)(c + d) &lt; ab + cd \). Substituting the values, we get \( (1 + 1)(2 + 2) &lt; 1 \cdot 1 + 2 \cdot 2 \), which simplifies to \( 4 \cdot 4 &lt; 1 + 4 \), or \( 16 &lt; 5 \), which is not true. So, these values do not satisfy the second inequality.
+
+Let&#x27;s try to find a different set of values that might satisfy the first two inequalities. We can use the fact that for real numbers \( a \) and \( b \), \( (a + b)^2 \geq 4ab \). This implies that \( (a + b)(c + d) \geq 2\sqrt{ab} \cdot 2\sqrt{cd} = 4\sqrt{abcd} \). For the second inequality to hold, we need \( (a + b)(c + d) &lt; ab + cd \), which suggests that \( ab \) and \( cd \) should be relatively close to each other, and \( a + b \) and \( c + d \) should not be too large.
+
+Let&#x27;s try \( a = 1, b = 2, c = 1.5, \) and \( d = 2.5 \). Then \( a + b = 3 \) and \( c + d = 4 \), so the first inequality is satisfied. For the second inequality, we have \( (a + b)(c + d) = 3 \cdot 4 = 12 \) and \( ab + cd = 1 \cdot 2 + 1.5 \cdot 2.5 = 2 + 3.75 = 5.75 \), so the second inequality is also satisfied.
+
+Now let&#x27;s check the third inequality with these values: \( (a + b)cd = 3 \cdot 1.5 \cdot 2.5 = 11.25 \) and \( ab(c + d) = 1 \cdot 2 \cdot 4 = 8 \). The third inequality is not satisfied since \( 11.25 \) is not less than \( 8 \).
+
+Next, let&#x27;s consider the possibility of all three inequalities being true simultaneously. We can multiply the first two inequalities together:
+
+\( (a + b &lt; c + d) \) and \( (a + b)(c + d) &lt; ab + cd \) implies \( (a + b)^2(c + d)^2 &lt; (ab + cd)(c + d) \).
+
+Similarly, multiplying the last two inequalities together:
+
+\( (a + b)(c + d) &lt; ab + cd \) and \( (a + b)cd &lt; ab(c + d) \) implies \( (a + b)^2cd(c + d) &lt; ab(c + d)^2 \).
+
+Now, using the fact that \( (a + b)^2 \geq 4ab \), we can see that if \( (a + b)^2(c + d)^2 &lt; (ab + cd)(c + d) \), then \( 4ab(c + d)^2 \leq (a + b)^2(c + d)^2 &lt; (ab + cd)(c + d) \), which implies \( 4ab(c + d) &lt; ab + cd \). This can be simplified to \( 4(c + d) &lt; 1 + \frac{cd}{ab} \), which is not possible for positive \( a, b, c, \) and \( d \) since \( c + d \) would have to be very small or \( ab \) very large, which contradicts our initial inequality \( a + b &lt; c + d \).
+
+Therefore, at most two of the three inequalities can be true at the same time.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most two of the three inequalities can be true at the same time for positive \(a, b, c, d\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

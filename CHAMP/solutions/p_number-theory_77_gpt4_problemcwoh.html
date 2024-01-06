@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_77</td>
+            <td>GPT-4</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_77']
+messages = problem.conversations['GPT-4|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Can n+2 be a factor of 1^1987+2^1987+...+n^1987 for some n?
+Step-wise solution:
+1. Let s=1^1987+2^1987+...+n^1987.
+2. Thus, 2s=1^1987+2^1987+...+n^1987+1^1987+2^1987+...+n^1987=2+(2^1987+n^1987)+(3^1987+(n-1)^1987)+...+((n-1)^1987+3^1987)+(n^1987+2^1987).
+3. We have 2s=2+t where t=(2^1987+n^1987)+(3^1987+(n-1)^1987)+...+((n-1)^1987+3^1987)+(n^1987+2^1987).
+4. We know 2+n | 2^1987+n^1987, 3+n-1 | 3^1987+(n-1)^1987...
+5. Thus, 2+n divides each term in t, so 2+n | t.
+6. This means 2+n ∤ 2s so 2+n ∤ s.
+
+Problem: Find all possible values of n^5-5*n^3+4n mod 120 for integer n.
+Step-wise solution:
+1. We have n^5-5n^3+4n=n(n^4-5n^2+4)=n(n^2-1)(n^2-4)=(n-2)(n-1)n(n+1)(n+2).
+2. Since the expression is a product of five consecutive integers, four of the five terms must be a multiple of 2, 3, 4, and 5 respectively.
+3. Since 120=5!, we have n^5-5*n^3+4n mod 120=0.
+
+Problem: The polynomial f(x) has integer coefficients and there exists an integer k such that f(k), f(k+1), f(k+2) are all divisible by 3. For integer m in {k+3, k+4, ..., 2k}, at least how many of them have f(m) divisible by 3, as an expression of k?
+Step-wise solution:
+1. For any integer m&gt;k+2, we have m-k | f(m)-f(k), m-k-1 | f(m)-f(k+1) and m-k-2 | f(m)-f(k+2).
+2. The three divisors are three consecutive integers, so one of them must be divisible by 3.
+3. Thus, one of f(m)-f(k), f(m)-f(k+1) and f(m)-f(k+2) must be divisible by 3.
+4. Since f(k), f(k+1), f(k+2) are all divisible by 3, we must have 3 | f(m).
+5. Thus, all k-2 elements of {k+3, k+4, ..., 2k} have f(m) divisible by 3.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+If the integer m ends with digit 5, what are possible values of 12^m+9^m+8^m+6^m mod 1991?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. We know that 1991 = 3 * 23 * 29.
+2. We can use the Chinese Remainder Theorem to find the solution modulo 1991 by finding the solutions modulo 3, 23, and 29 separately.
+3. Since m ends with 5, m is odd. Therefore, 12^m = -1 (mod 3), 9^m = 0 (mod 3), 8^m = -1 (mod 3), and 6^m = 0 (mod 3). So, 12^m + 9^m + 8^m + 6^m = -1 + 0 - 1 + 0 = -2 = 1 (mod 3).
+4. By Fermat&#x27;s Little Theorem, 12^22 = 1 (mod 23), 9^22 = 1 (mod 23), 8^22 = 1 (mod 23), and 6^22 = 1 (mod 23). Since m is a multiple of 5, we can write m = 22k + r, where r is one of {0, 1, 2, 3, 4}. Therefore, 12^m + 9^m + 8^m + 6^m = 4 (mod 23) when r = 0, and 0 (mod 23) when r is one of {1, 2, 3, 4}.
+5. Similarly, by Fermat&#x27;s Little Theorem, 12^28 = 1 (mod 29), 9^28 = 1 (mod 29), 8^28 = 1 (mod 29), and 6^28 = 1 (mod 29). Therefore, 12^m + 9^m + 8^m + 6^m = 4 (mod 29) when m is a multiple of 5.
+6. By the Chinese Remainder Theorem, the possible values of 12^m + 9^m + 8^m + 6^m (mod 1991) are the solutions to the system of congruences: x = 1 (mod 3), x = 0 or 4 (mod 23), and x = 4 (mod 29).
+7. Solving this system of congruences, we find that the possible values of 12^m + 9^m + 8^m + 6^m (mod 1991) are 0, 4, 23, 27, 46, 50, 69, 73, 92, 96, 115, 119, 138, 142, 161, 165, 184, 188, 207, 211, 230, 234, 253, 257, 276, 280, 299, 303, 322, 326, 345, 349, 368, 372, 391, 395, 414, 418, 437, 441, 460, 464, 483, 487, 506, 510, 529, 533, 552, 556, 575, 579, 598, 602, 621, 625, 644, 648, 667, 671, 690, 694, 713, 717, 736, 740, 759, 763, 782, 786, 805, 809, 828, 832, 851, 855, 874, 878, 897, 901, 920, 924, 943, 947, 966, 970, 989, 993, 1012, 1016, 1035, 1039, 1058, 1062, 1081, 1085, 1104, 1108, 1127, 1131, 1150, 1154, 1173, 1177, 1196, 1200, 1219, 1223, 1242, 1246, 1265, 1269, 1288, 1292, 1311, 1315, 1334, 1338, 1357, 1361, 1380, 1384, 1403, 1407, 1426, 1430, 1449, 1453, 1472, 1476, 1495, 1499, 1518, 1522, 1541, 1545, 1564, 1568, 1587, 1591, 1610, 1614, 1633, 1637, 1656, 1660, 1679, 1683, 1702, 1706, 1725, 1729, 1748, 1752, 1771, 1775, 1794, 1798, 1817, 1821, 1840, 1844, 1863, 1867, 1886, 1890, 1909, 1913, 1932, 1936, 1955, 1959, 1978, 1982.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of 12^m + 9^m + 8^m + 6^m (mod 1991) when m ends with digit 5 are 0, 4, 23, 27, 46, 50, 69, 73, 92, 96, 115, 119, 138, 142, 161, 165, 184, 188, 207, 211, 230, 234, 253, 257, 276, 280, 299, 303, 322, 326, 345, 349, 368, 372, 391, 395, 414, 418, 437, 441, 460, 464, 483, 487, 506, 510, 529, 533, 552, 556, 575, 579, 598, 602, 621, 625, 644, 648, 667, 671, 690, 694, 713, 717, 736, 740, 759, 763, 782, 786, 805, 809, 828, 832, 851, 855, 874, 878, 897, 901, 920, 924, 943, 947, 966, 970, 989, 993, 1012, 1016, 1035, 1039, 1058, 1062, 1081, 1085, 1104, 1108, 1127, 1131, 1150, 1154, 1173, 1177, 1196, 1200, 1219, 1223, 1242, 1246, 1265, 1269, 1288, 1292, 1311, 1315, 1334, 1338, 1357, 1361, 1380, 1384, 1403, 1407, 1426, 1430, 1449, 1453, 1472, 1476, 1495, 1499, 1518, 1522, 1541, 1545, 1564, 1568, 1587, 1591, 1610, 1614, 1633, 1637, 1656, 1660, 1679, 1683, 1702, 1706, 1725, 1729, 1748, 1752, 1771, 1775, 1794, 1798, 1817, 1821, 1840, 1844, 1863, 1867, 1886, 1890, 1909, 1913, 1932, 1936, 1955, 1959, 1978, 1982.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

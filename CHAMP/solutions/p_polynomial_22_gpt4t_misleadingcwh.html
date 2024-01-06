@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_22</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=±1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_22']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all real-valued solutions to the equation x^8+4x^6−10x^4+4x^2+1=0.
+
+You may find the following information useful:
+
+1. f(x)=0 is the only polynomial function with infinite number of zeros.
+2. Find g(z) by comparing it to the expression of z^4.
+3. (x±y)^2=x^2±2xy+y^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation \( x^8 + 4x^6 - 10x^4 + 4x^2 + 1 = 0 \), we can look for a pattern that might help us factor the polynomial. The given hints suggest that we should compare the expression to \( z^4 \) and use the square of a binomial formula.
+
+Let&#x27;s first make a substitution to simplify the expression. We can let \( z = x^2 \), which gives us \( z^2 = x^4 \). The equation then becomes:
+
+\( z^4 + 4z^3 - 10z^2 + 4z + 1 = 0 \)
+
+Now, we can try to factor this expression by looking for a pattern. Notice that the first term and the last term are perfect squares, and the middle term is negative, which suggests that we might be able to factor by grouping or by using the square of a binomial formula.
+
+Let&#x27;s try to express the polynomial as the square of a binomial:
+
+\( (z^2 + 2z + 1)^2 = z^4 + 4z^3 + 6z^2 + 4z + 1 \)
+
+However, this is not quite our polynomial; the \( 6z^2 \) term does not match our \( -10z^2 \) term. We need to adjust the middle term. We can do this by subtracting \( 16z^2 \) from the square of the binomial:
+
+\( (z^2 + 2z + 1)^2 - 16z^2 = z^4 + 4z^3 + 6z^2 + 4z + 1 - 16z^2 \)
+\( = z^4 + 4z^3 - 10z^2 + 4z + 1 \)
+
+Now we have the correct polynomial. We can rewrite the expression as:
+
+\( (z^2 + 2z + 1)^2 - (4z)^2 = 0 \)
+
+This is a difference of squares, which can be factored as:
+
+\( (z^2 + 2z + 1 + 4z)(z^2 + 2z + 1 - 4z) = 0 \)
+\( (z^2 + 6z + 1)(z^2 - 2z + 1) = 0 \)
+
+Now we have two quadratic equations to solve:
+
+1. \( z^2 + 6z + 1 = 0 \)
+2. \( z^2 - 2z + 1 = 0 \)
+
+The second equation is a perfect square:
+
+\( (z - 1)^2 = 0 \)
+\( z - 1 = 0 \)
+\( z = 1 \)
+
+For the first equation, we can use the quadratic formula:
+
+\( z = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \)
+\( z = \frac{-6 \pm \sqrt{36 - 4(1)(1)}}{2(1)} \)
+\( z = \frac{-6 \pm \sqrt{32}}{2} \)
+\( z = \frac{-6 \pm 4\sqrt{2}}{2} \)
+\( z = -3 \pm 2\sqrt{2} \)
+
+Now we have three solutions for \( z \):
+
+1. \( z = 1 \)
+2. \( z = -3 + 2\sqrt{2} \)
+3. \( z = -3 - 2\sqrt{2} \)
+
+Recall that \( z = x^2 \), so we need to find the square roots of these values to find the solutions for \( x \). However, since \( z = x^2 \), \( z \) must be non-negative (because a square of a real number cannot be negative). Therefore, we can discard the solutions where \( z \) is negative, which are \( z = -3 + 2\sqrt{2} \) and \( z = -3 - 2\sqrt{2} \).
+
+We are left with \( z = 1 \), which gives us:
+
+\( x^2 = 1 \)
+\( x = \pm \sqrt{1} \)
+\( x = \pm 1 \)
+
+So the real-valued solutions to the original equation are \( x = 1 \) and \( x = -1 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The real-valued solutions to the equation \(x^8 + 4x^6 - 10x^4 + 4x^2 + 1 = 0\) are \(x = 1\) and \(x = -1\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

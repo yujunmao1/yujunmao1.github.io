@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_27</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_27']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let n be 22...22, with a total of 1980 digits. What is n mod 1982?
+
+You may find the following information useful:
+
+1. a^n-1=(a-1)(a^(n-1)+a^(n-2)+...+a+1).
+2. All prime numbers greater than 3 has the form of 6n±1.
+3. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the number n as 22...22 with 1980 digits. We can express n as a sum of 2&#x27;s multiplied by powers of 10:
+
+n = 2 + 20 + 200 + 2000 + ... + 2 * 10^(1979)
+
+We can factor out the 2 to get:
+
+n = 2(1 + 10 + 10^2 + 10^3 + ... + 10^(1979))
+
+This is a geometric series with the first term a = 1 and the common ratio r = 10. The sum of the first k terms of a geometric series is given by:
+
+S_k = a * (1 - r^k) / (1 - r)
+
+In our case, k = 1980, so the sum is:
+
+S_1980 = 1 * (1 - 10^1980) / (1 - 10)
+
+Now, we can simplify this expression:
+
+S_1980 = (1 - 10^1980) / (-9)
+S_1980 = (10^1980 - 1) / 9
+
+Now, we can use the fact that a^n - 1 = (a - 1)(a^(n-1) + a^(n-2) + ... + a + 1) to rewrite the numerator:
+
+10^1980 - 1 = (10 - 1)(10^(1979) + 10^(1978) + ... + 10 + 1)
+
+So, n can be rewritten as:
+
+n = 2 * (10^1980 - 1) / 9
+n = 2 * (9 * (10^(1979) + 10^(1978) + ... + 10 + 1)) / 9
+n = 2 * (10^(1979) + 10^(1978) + ... + 10 + 1)
+
+Now, we want to find n mod 1982. We can use the properties of modular arithmetic to simplify this expression:
+
+n mod 1982 = (2 * (10^(1979) + 10^(1978) + ... + 10 + 1)) mod 1982
+
+We can distribute the mod 1982 inside the sum:
+
+n mod 1982 = (2 * (10^(1979) mod 1982 + 10^(1978) mod 1982 + ... + 10 mod 1982 + 1 mod 1982)) mod 1982
+
+Since 10 and 1982 are not coprime, we cannot directly apply Euler&#x27;s theorem to simplify the powers of 10. However, we can still simplify the expression by considering the powers of 10 modulo 1982.
+
+First, let&#x27;s consider 10 mod 1982:
+
+10 mod 1982 = 10
+
+Now, let&#x27;s consider 10^2 mod 1982:
+
+10^2 mod 1982 = (10 mod 1982)^2 mod 1982 = 100 mod 1982 = 100
+
+Continuing this process, we notice that the powers of 10 will cycle through a pattern because 1982 is not a prime number and does not have a primitive root. However, we can simplify our work by noticing that 1982 = 2 * 991, and 991 is a prime number of the form 6n - 1.
+
+Since 10 is not a multiple of 991, we can use Fermat&#x27;s Little Theorem, which states that if p is a prime number, then for any integer a such that a is not divisible by p, it holds that a^(p-1) ≡ 1 (mod p). Therefore, we have:
+
+10^(990) ≡ 1 (mod 991)
+
+Now, we can use this to simplify the powers of 10 modulo 1982. Since 1982 is twice 991, we can consider the powers of 10 modulo 991 and then consider their impact modulo 1982.
+
+Let&#x27;s find the remainder when 1979 is divided by 990:
+
+1979 mod 990 = 999
+
+This means that 10^(1979) ≡ 10^(999) (mod 991). Since 999 is 9 times 111, and we know that 10^(990) ≡ 1 (mod 991), we can further simplify:
+
+10^(999) ≡ (10^(990))^1 * 10^9 ≡ 1^1 * 10^9 ≡ 10^9 (mod 991)
+
+Now, we need to consider this modulo 1982. Since 1982 is twice 991, we have:
+
+10^(999) mod 1982 = 10^9 mod 1982
+
+We can calculate 10^9 mod 1982 directly, as it&#x27;s a small enough power:
+
+10^9 = 1000000000
+
+1000000000 mod 1982 = 36 (since 1000000000 = 1982 * 504502 + 36)
+
+Now, we can use this result to simplify our original sum. Each term in the sum (10^(1979) + 10^(1978) + ... + 10 + 1) will have a similar form when taken modulo 1982. Specifically, each term will be congruent to 10 raised to a power that is a multiple of 9, modulo 1982.
+
+Since we have 1980 terms in the sum, and each term is congruent to 10 raised to a power that is a multiple of 9, modulo 1982, we can say that each term is congruent to 36 modulo 1982.
+
+Therefore, the sum of all terms modulo 1982 is:
+
+n mod 1982 = (2 * 1980 * 36) mod 1982
+
+Now, we can calculate this:
+
+2 * 1980 * 36 = 142560
+
+142560 mod 1982 = 142560 - (1982 * 71 + 1588) = 142560 - 140822 = 1738
+
+So, n mod 1982 = 1738.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number n, which consists of 1980 repeated digits of 2, when taken modulo 1982, is congruent to 1738.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

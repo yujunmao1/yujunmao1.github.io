@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_21</td>
+            <td>PaLM 2 Medium</td>
+            <td>5-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> a=3, b=-7, c=4</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_21']
+messages = problem.conversations['PaLM 2 Medium|5-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #DBDB8D;'>Imputed Model Response</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Among all sequences of positive integer numbers have sum n, for integer k&lt;n-1, how many times does the number k appear, as an expression of n and k?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. Consider a row of n points, with n-1 gaps.
+2. For each of the n-1 gaps, we can choose to insert a divider or not, and we count the number of points in each group, which forms a sequence (a_1, ..., a_(m+1)) for m dividers that sum up to n.
+3. Thus, the number of times that k appears among all the sequences is the number of times that a group of k points appear among all the divider configurations.
+4. To get this number, we can find a k-point group and isolate it.
+5. We need one divider if the group is at the two ends of the row, in which case we have n-k-1 remaining gaps to fill.
+6. We need two dividers if the group is at the middle, where we have n-k-1 possible group locations, and for each location, we have n-k-2 remaining gaps to fill.
+7. Thus, we have 2*2^(n-k-1)+(n-k-1)*2^(n-k-2)=(n-k+3)*2^(n-k-2) groups of k, which is also the number of times that k appear in sequences that sum up to n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+An integer a is called automorphic if a^2 ends in a. For example, 5 is automorphic because 5^2=25 ends in 5. 25 is also automorphic because 25^2=625 ends in 25. Find all two-digit automorphic numbers besides 25.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have 10≤a≤99 and since a^2 ends in a, a^2-a ends in 00.
+2. So 100 | a(a-1).
+3. Since gcd(a, a-1)=1, we have one of a and a-1 being a multiple of 4, and the other being a multiple of 25, subject to 10≤a≤99 (or one being a multiple of 100, but this is impossible because a is a two-digit number).
+4. If 25 | a and 4 | a-1, the only solution is a=25, as introduced in the question.
+5. If 25 | a-1 and  4 | a, the only solution is a=76, with 76^2=5776.
+6. So the answer is 76.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let u&lt;v and define two sequences {u_n} and {v_n}, as u_0=u, u_n=(u_(n-1)+v_(n-1))/2 and v_0=v, v_n=(u_(n-1)+2v_(n-1))/3. Let the two limits be L_u and L_v respectively. Find L_u-L_v.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have v_n-u_n=v_(n-1)/6-u_(n-1)/6=(v_(n-1)-u_(n-1))/6.
+2. So the difference of the sequence decreases to 1/6 after each term.
+3. Thus, they converge to the same limit, and L_u-L_v=0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. What is the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. We have b_(n+1)-a_(n+1)=(a_n+b_n)/2-sqrt(a_n*b_n)=(sqrt(a_n)-sqrt(b_n))^2/2=(a_n-b_n)^2/(2(sqrt(a_n)+sqrt(b_n))^2)=(a_n-b_n)^2/(2(a_n+b_n+2a_(n+1)))=(a_n-b_n)^2/(2(2b_(n+1)+2a_(n+1)))=(a_n-b_n)^2/(4(a_(n+1)+b_(n+1)))=(a_n-b_n)^2/(8b_(n+2)).
+2. Thus, (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2=1/8.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the value of a such that the polynomial x^5−ax^2−ax+1 has a root with multiplicity more than 1 at x=-1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #DBDB8D !important;'>Step-wise solution:
+1. For -1 to be a root of multiplicity of more than 1, it needs to be a root of f(x)=x^5−ax^2−ax+1 and f&#x27;(x)=5x^4−2ax−a.
+2. Thus, f(-1)=-1-a+a+1=0 and f&#x27;(-1)=5+2a-a=0.
+3. So we get a=-5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a, b, c such that (x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Step-wise solution:
+1. Multiply both sides by $(x-1)(x-2)(x-3)$.
+2. We get $x+5=a(x-2)(x-3)+b(x-1)(x-3)+c(x-1)(x-2)$.
+3. Substitute $x=1$. We get $6=a(-1)(-2)+b(-1)(-3)+c(-1)(-2)$.
+4. Substitute $x=2$. We get $7=a(1)(-1)+b(2)(-3)+c(1)(-2)$.
+5. Substitute $x=3$. We get $8=a(3)(-1)+b(3)(-2)+c(3)(-3)$.
+6. Solve the system of equations $6=a(-1)(-2)+b(-1)(-3)+c(-1)(-2)$, $7=a(1)(-1)+b(2)(-3)+c(1)(-2)$, and $8=a(3)(-1)+b(3)(-2)+c(3)(-3)$.
+7. We get $a=-1$, $b=-2$, and $c=-3$.
+8. Therefore, $(x+5)/((x-1)(x-2)(x-3))=-1/(x-1)-2/(x-2)-3/(x-3)$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The answer is $a=-1$, $b=-2$, and $c=-3$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_38</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=±1, ±2, ±1/2</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_38']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all real-valued solutions to the equation 4x^11+4x^10−21x^9-21x^8+17x^7+17x^6+17x^5+17x^4−21x^3-21x^2+4x+4=0.
+
+You may find the following information useful:
+
+1. For positive a, the polynomial ax^2+bx+c≥0 for all x if and only if b^2-4ac≤0. One inequality is strict if and only if the other is also strict.
+2. A polynomial f(x) of an even degree with a positive leading coefficient has a global minimum, at which location f&#x27;(x)=0.
+3. x^2-y^2=(x+y)(x-y).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the polynomial equation \(4x^{11} + 4x^{10} - 21x^9 - 21x^8 + 17x^7 + 17x^6 + 17x^5 + 17x^4 - 21x^3 - 21x^2 + 4x + 4 = 0\), we can look for patterns that might simplify the equation.
+
+First, let&#x27;s group terms with similar coefficients:
+\((4x^{11} + 4x^{10}) + (-21x^9 - 21x^8) + (17x^7 + 17x^6 + 17x^5 + 17x^4) + (-21x^3 - 21x^2) + (4x + 4)\)
+
+Now, let&#x27;s factor out common factors from each group:
+\(4x^{10}(x + 1) - 21x^8(x + 1) + 17x^4(x^3 + x^2 + x + 1) - 21x^2(x + 1) + 4(x + 1)\)
+
+We can see that \(x + 1\) is a common factor:
+\((x + 1)(4x^{10} - 21x^8 + 17x^4(x^2 + x + 1) - 21x^2 + 4)\)
+
+Now, let&#x27;s focus on the remaining polynomial:
+\(4x^{10} - 21x^8 + 17x^4(x^2 + x + 1) - 21x^2 + 4\)
+
+We can rewrite \(x^2 + x + 1\) as \((x + \frac{1}{2})^2 + \frac{3}{4}\) to complete the square:
+\(4x^{10} - 21x^8 + 17x^4((x + \frac{1}{2})^2 + \frac{3}{4}) - 21x^2 + 4\)
+
+Now, let&#x27;s distribute \(17x^4\) into the square and constant term:
+\(4x^{10} - 21x^8 + 17x^4(x + \frac{1}{2})^2 + \frac{51}{4}x^4 - 21x^2 + 4\)
+
+We can now look for a pattern or a way to factor further, but it&#x27;s not immediately clear how to proceed. Instead, let&#x27;s consider the properties of the polynomial. Since the polynomial is of degree 11 (an odd degree) with a positive leading coefficient, it will go to positive infinity as \(x\) goes to positive or negative infinity. This means that the polynomial must have at least one real root.
+
+We can also use the fact that \(x^2 - y^2 = (x + y)(x - y)\) to look for differences of squares in the polynomial, but there are no obvious candidates for this factorization.
+
+Given the complexity of the polynomial, finding the roots algebraically might be very difficult or impossible without further insight. Instead, we can use numerical methods or graphing to approximate the roots or use a computer algebra system to find the exact roots.
+
+However, we can easily verify that \(x = -1\) is a root because of the common factor \(x + 1\) we factored out earlier. To find the remaining roots, we would need to analyze the polynomial \(4x^{10} - 21x^8 + 17x^4(x^2 + x + 1) - 21x^2 + 4\) further, which may require numerical methods or a computer algebra system.
+
+So, the only real root we can find without additional tools is \(x = -1\). The other roots may be found using numerical methods or specialized algebraic techniques.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only real root that can be found algebraically for the given polynomial equation is \(x = -1\); the other roots may require numerical methods or a computer algebra system to determine.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

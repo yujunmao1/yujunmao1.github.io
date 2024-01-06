@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_22</td>
+            <td>GPT-4</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 999 (i.e., all except for one value)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_22']
+messages = problem.conversations['GPT-4|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A sequence {x_n} is defined by x_1=2, x_(n+1)=(x_n^4+9)/(10x_n). For how many values of x_1, x_2, ..., x_1000 do we have x_n≤5/4?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence is defined recursively, meaning each term depends on the previous term. We are given the first term, x_1 = 2, and the formula for the nth term, x_(n+1) = (x_n^4 + 9) / (10x_n).
+
+We want to find out how many terms in the sequence are less than or equal to 5/4. 
+
+Let&#x27;s start by calculating the first few terms of the sequence:
+
+x_1 = 2
+x_2 = (2^4 + 9) / (10*2) = 2.25
+x_3 = (2.25^4 + 9) / (10*2.25) = 1.9382716049382718
+x_4 = (1.9382716049382718^4 + 9) / (10*1.9382716049382718) = 1.6870039670087232
+x_5 = (1.6870039670087232^4 + 9) / (10*1.6870039670087232) = 1.5037593984962407
+x_6 = (1.5037593984962407^4 + 9) / (10*1.5037593984962407) = 1.3752691705799155
+x_7 = (1.3752691705799155^4 + 9) / (10*1.3752691705799155) = 1.287505204163733
+x_8 = (1.287505204163733^4 + 9) / (10*1.287505204163733) = 1.231466405021834
+x_9 = (1.231466405021834^4 + 9) / (10*1.231466405021834) = 1.1960330466841183
+x_10 = (1.1960330466841183^4 + 9) / (10*1.1960330466841183) = 1.1740196078431373
+
+We can see that the sequence is decreasing and it seems to be converging to a value less than 5/4. 
+
+To confirm this, we can use the Monotone Convergence Theorem, which states that every bounded and monotone sequence converges. Since our sequence is decreasing and bounded below by 0, it must converge to a limit. 
+
+We can also see that the sequence is decreasing faster than linearly, so it will reach a value less than 5/4 in a finite number of steps. 
+
+Therefore, for a large enough n, all terms x_n will be less than or equal to 5/4. 
+
+So, for the sequence x_1, x_2, ..., x_1000, the number of terms that are less than or equal to 5/4 will be 1000 - n, where n is the smallest integer such that x_n ≤ 5/4. 
+
+From our calculations above, we can see that x_10 is already less than 5/4. So, n = 10.
+
+Therefore, the number of terms that are less than or equal to 5/4 is 1000 - 10 = 990.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of terms in the sequence {x_n} that are less than or equal to 5/4 for x_1, x_2, ..., x_1000 is 990.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

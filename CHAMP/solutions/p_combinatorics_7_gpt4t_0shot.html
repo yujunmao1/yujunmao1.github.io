@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_7</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_7']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Consider a row of 11 seats. A child sits on each. Each child may move by at most one seat. How many possible rearrangements are there (including the original one)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can consider each child and the possible moves they can make. Each child has three options:
+
+1. Stay in the original seat.
+2. Move one seat to the left (except for the child in the first seat).
+3. Move one seat to the right (except for the child in the last seat).
+
+Let&#x27;s denote the children by numbers from 1 to 11, where 1 is the child in the first seat and 11 is the child in the last seat.
+
+For child 1, there are only 2 options: stay or move to the right.
+For child 11, there are also only 2 options: stay or move to the left.
+
+For children 2 through 10, each has 3 options: stay, move to the left, or move to the right.
+
+However, we must consider that no two children can occupy the same seat after moving. This means that if one child moves to the right, the child to their right cannot move to the left, and vice versa.
+
+Let&#x27;s consider the possible scenarios:
+
+1. No child moves: There is only 1 way this can happen.
+
+2. One child moves: This can happen in 10 ways (since the children on the ends have only one direction to move, and the other 9 children have two directions to move, but we count each pair of moves as one since they are mutually exclusive).
+
+3. Two children move: This can happen in several ways, but we must ensure that the two moving children are not adjacent, as they would end up in the same seat. We can choose any of the 9 middle children to move, and then we have 7 choices for the second child to move (since the two adjacent children to the first mover are not allowed). This gives us 9 * 7 = 63 ways. However, we must divide by 2 to account for the fact that the order in which the two children move does not matter, so we have 63 / 2 = 31.5, which is not possible since we cannot have half a way. We need to correct this by considering that when we pick the first and last of the 9 middle children, there are only 6 choices for the second child to move, not 7. So we need to subtract 2 from 63 to account for these two cases, giving us 61 ways. Then we divide by 2 to get 61 / 2 = 30.5, which is still not possible. The mistake here is that we should not divide by 2 at all because the two children moving are distinguishable. So we have 63 ways for two children to move.
+
+4. Three or more children move: If three or more children move, there will be at least two children who end up in adjacent seats, which is not allowed by the problem&#x27;s constraints.
+
+Therefore, the total number of possible rearrangements is the sum of the scenarios:
+
+1 (no child moves) + 10 (one child moves) + 63 (two children move) = 1 + 10 + 63 = 74.
+
+So there are 74 possible rearrangements, including the original one.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 74 possible rearrangements, including the original one, where each child in a row of 11 seats may move by at most one seat.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

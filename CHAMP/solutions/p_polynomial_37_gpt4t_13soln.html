@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_37</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=16 and x=81</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_37']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation x^(1/4)+(97-x)^(1/4)=5.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let y=x^(1/4) and z=(97-x)^(1/4), and the equation becomes y^4+z^4=x+97-x=97.
+2. Let s_n=y^n+z^n, u=y+z, v=yz.
+3. We have s_0=2, s_1=u.
+4. Thus, s_2=u^2-2v, s_3=u^3-3uv and s_4=u^4-4u^2*v+2v^2=97.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s continue from where the partial solution left off:
+
+We have the following equations:
+
+1. \( s_0 = 2 \)
+2. \( s_1 = u \)
+3. \( s_2 = u^2 - 2v \)
+4. \( s_3 = u^3 - 3uv \)
+5. \( s_4 = u^4 - 4u^2v + 2v^2 = 97 \)
+
+We also have the original equation:
+
+\( y + z = 5 \) (since \( y = x^{1/4} \) and \( z = (97-x)^{1/4} \))
+
+This means that \( u = y + z = 5 \).
+
+Now, we need to find \( v = yz \). Since \( y^4 + z^4 = 97 \), we can use the fact that \( (y + z)^4 = y^4 + 4y^3z + 6y^2z^2 + 4yz^3 + z^4 \) to express \( y^4 + z^4 \) in terms of \( u \) and \( v \).
+
+We have:
+
+\( (y + z)^4 = y^4 + 4y^3z + 6y^2z^2 + 4yz^3 + z^4 \)
+\( 5^4 = y^4 + z^4 + 4(y^3z + yz^3) + 6y^2z^2 \)
+\( 625 = 97 + 4(y^3z + yz^3) + 6v^2 \) (since \( y^4 + z^4 = 97 \) and \( v = yz \))
+
+Now, we can solve for \( v \):
+
+\( 528 = 4(y^3z + yz^3) + 6v^2 \)
+\( 132 = y^3z + yz^3 + \frac{3}{2}v^2 \)
+\( 132 = v(y^2 + z^2) + \frac{3}{2}v^2 \)
+
+We know that \( y^2 + z^2 = (y + z)^2 - 2yz = u^2 - 2v = 5^2 - 2v = 25 - 2v \), so we can substitute this into the equation:
+
+\( 132 = v(25 - 2v) + \frac{3}{2}v^2 \)
+\( 132 = 25v - 2v^2 + \frac{3}{2}v^2 \)
+\( 132 = 25v - \frac{1}{2}v^2 \)
+
+Now, we can solve this quadratic equation for \( v \):
+
+\( \frac{1}{2}v^2 - 25v + 132 = 0 \)
+\( v^2 - 50v + 264 = 0 \)
+
+Using the quadratic formula \( v = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a} \), we get:
+
+\( a = 1, b = -50, c = 264 \)
+
+\( v = \frac{50 \pm \sqrt{(-50)^2 - 4(1)(264)}}{2(1)} \)
+\( v = \frac{50 \pm \sqrt{2500 - 1056}}{2} \)
+\( v = \frac{50 \pm \sqrt{1444}}{2} \)
+\( v = \frac{50 \pm 38}{2} \)
+
+We have two possible solutions for \( v \):
+
+\( v = \frac{50 + 38}{2} = \frac{88}{2} = 44 \)
+\( v = \frac{50 - 38}{2} = \frac{12}{2} = 6 \)
+
+Now, we need to check which of these values for \( v \) are possible given that \( y \) and \( z \) are fourth roots of integers. Since \( v = yz \), and \( y = x^{1/4} \), \( z = (97-x)^{1/4} \), we need \( v \) to be the fourth root of a product of two integers that add up to 97.
+
+Let&#x27;s check \( v = 44 \):
+
+If \( v = 44 \), then \( yz = 44 \). However, there are no two perfect fourth powers that multiply to 44 and add up to 97, so this is not a valid solution.
+
+Let&#x27;s check \( v = 6 \):
+
+If \( v = 6 \), then \( yz = 6 \). We need to find two numbers whose fourth powers add up to 97 and whose product is 6. The only fourth powers less than 97 are \( 1^4 = 1 \), \( 2^4 = 16 \), \( 3^4 = 81 \), and \( 4^4 = 256 \) (which is too large). The pair \( 1 \) and \( 81 \) adds up to \( 82 \), which is not \( 97 \). However, the pair \( 16 \) and \( 81 \) does add up to \( 97 \), and the square roots of these numbers, \( 2 \) and \( 3 \), multiply to \( 6 \), which is our value for \( v \).
+
+Therefore, the only solution is when \( y = 2 \) and \( z = 3 \), or vice versa. Since \( y = x^{1/4} \), \( x = y^4 = 2^4 = 16 \), and since \( z = (97-x)^{1/4} \), \( 97-x = z^4 = 3^4 = 81 \), which means \( x = 97 - 81 = 16 \).
+
+So the only integer solution to the equation \( x^{1/4} + (97-x)^{1/4} = 5 \) is \( x = 16 \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only integer solution to the equation \(x^{1/4} + (97-x)^{1/4} = 5\) is \(x = 16\).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

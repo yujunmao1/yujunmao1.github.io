@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_46</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x(x-1)(x-2)...(x-2022)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_46']
+messages = problem.conversations['GPT-3.5|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problem and its solution as they may contain helpful information.
+
+Problem: For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, at most how many integer-valued zeros can it have?
+Step-wise solution:
+1. Suppose that there is an integer-valued zero at x=a.
+2. Then f(x)=(x-a)g(x) for some polynomial g(x) of degree n-1.
+3. Let g(x)=c_(n-1)*x^(n-1)+c_(n-2)*x^(n-2)+...+c_1*x+c_0.
+4. So f(x)=c_(n-1)*x^n+(c_(n-2)-a*c_(n-1))*x^(n-1)+(c_(n-3)-a*c_(n-2))*x^(n-2)+...+(c_0-a*c_1)*x-a*c_0.
+5. We need every coefficient of f(x) to be an integer, which means that c_(n-1) is an integer, thus c_(n-2) is an integer, thus c_(n-3) is an integer, and so on for all c_i.
+6. So g(x) is a polynomial of integer coefficients.
+7. Thus, we have f(0)=-a*g(x) and f(1)=(1-a)*g(x).
+8. Since -a and 1-a are of opposite parities (i.e., one even and one odd), we cannot have f(0) and f(1) both being odd.
+9. Thus, such an integer root a does not exist.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Find a monic polynomial (i.e. a polynomial with the leading coefficient being 1) p(x) of degree greater than 1 that satisfies x*p(x-1)=(x-2023)*p(x).
+
+In addition, you may also find the following information helpful:
+
+1. Study the equation at x=0 to recover a root of p(x).
+2. Continue studying the equation at x=1, 2, 3... to recover more roots of p(x) until this logic stops working.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by studying the equation at x=0:
+
+0 * p(0-1) = (0-2023) * p(0)
+0 * p(-1) = -2023 * p(0)
+0 = -2023 * p(0)
+
+From this equation, we can conclude that p(0) must be equal to 0. Therefore, we have found one root of p(x), which is x=0.
+
+Now let&#x27;s study the equation at x=1:
+
+1 * p(1-1) = (1-2023) * p(1)
+1 * p(0) = -2022 * p(1)
+p(0) = -2022 * p(1)
+
+Since we know that p(0) is equal to 0, we can substitute this value into the equation:
+
+0 = -2022 * p(1)
+
+From this equation, we can conclude that p(1) must be equal to 0. Therefore, we have found another root of p(x), which is x=1.
+
+Continuing this process, we can study the equation at x=2:
+
+2 * p(2-1) = (2-2023) * p(2)
+2 * p(1) = -2021 * p(2)
+
+Since we know that p(1) is equal to 0, we can substitute this value into the equation:
+
+2 * 0 = -2021 * p(2)
+0 = -2021 * p(2)
+
+From this equation, we can conclude that p(2) must be equal to 0. Therefore, we have found another root of p(x), which is x=2.
+
+We can continue this process for x=3, x=4, and so on until we find a pattern or until this logic stops working.
+
+However, we can already see a pattern emerging. Each time we substitute the previous root into the equation, we find that the next root must be one greater than the previous root. This suggests that the roots of p(x) are consecutive integers.
+
+Therefore, we can write the polynomial p(x) as:
+
+p(x) = (x-0)(x-1)(x-2)(x-3)...(x-n)
+
+where n is the degree of the polynomial.
+
+Since we are looking for a monic polynomial, we can rewrite it as:
+
+p(x) = (x-0)(x-1)(x-2)(x-3)...(x-n) / (1)
+
+Now, let&#x27;s substitute this expression for p(x) into the original equation:
+
+x * p(x-1) = (x-2023) * p(x)
+
+x * [(x-1)-0][(x-1)-1][(x-1)-2]...[(x-1)-n] = (x-2023) * [(x-0)(x-1)(x-2)(x-3)...(x-n)]
+
+Expanding both sides of the equation, we get:
+
+x * (x-1)(x-2)(x-3)...(x-n-1) = (x-2023) * (x-0)(x-1)(x-2)(x-3)...(x-n)
+
+Canceling out common factors, we have:
+
+x * (x-1)(x-2)(x-3)...(x-n-1) = (x-2023) * (x-0)(x-1)(x-2)(x-3)...(x-n)
+
+Dividing both sides by (x-0)(x-1)(x-2)(x-3)...(x-n-1), we get:
+
+x = (x-2023)
+
+Simplifying this equation, we have:
+
+x = x - 2023
+
+This equation is not possible since it leads to a contradiction. Therefore, there is no solution for x.
+
+From this, we can conclude that the logic stops working after finding the first few roots of p(x), and there are no more roots.
+
+Therefore, the monic polynomial p(x) of degree greater than 1 that satisfies x*p(x-1) = (x-2023)*p(x) is:
+
+p(x) = (x-0)(x-1) = x(x-1)
+
+The final answer is p(x) = x(x-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The monic polynomial p(x) of degree greater than 1 that satisfies x*p(x-1) = (x-2023)*p(x) is p(x) = x(x-1).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

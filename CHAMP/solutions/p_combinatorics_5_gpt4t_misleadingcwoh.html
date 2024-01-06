@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_5</td>
+            <td>GPT-4 Turbo</td>
+            <td>Misleading w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_5']
+messages = problem.conversations['GPT-4 Turbo|Misleading w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many subsets of {1, 2,..., 10} have no two successive numbers?
+
+You may find the following information useful:
+
+1. C(n, k)=C(n, n-k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of subsets of the set {1, 2, ..., 10} that do not contain any two successive numbers. We can approach this problem using combinatorics.
+
+Let&#x27;s consider a subset that satisfies the condition. We can represent the numbers in the subset by placing a &quot;1&quot; and the numbers not in the subset by placing a &quot;0&quot;. For example, the subset {1, 3, 5, 8} can be represented as 1010100010, where the positions of the &quot;1&quot;s correspond to the elements of the subset.
+
+Since no two successive numbers can be in the subset, there must be at least one &quot;0&quot; between any two &quot;1&quot;s. This means that if we have a &quot;1&quot; in the sequence, the next position must be a &quot;0&quot;. We can think of this as pairing each &quot;1&quot; with a &quot;0&quot; to its right, except possibly for the last &quot;1&quot;.
+
+Now, let&#x27;s consider the 10 positions as slots where we can place &quot;1&quot;s and &quot;0&quot;s. We have 10 slots, and we need to place &quot;1&quot;s such that there is at least one &quot;0&quot; between them. We can think of this as a problem of placing &quot;blocks&quot; of &quot;10&quot; (representing a &quot;1&quot; followed by a &quot;0&quot;) into these slots. The last &quot;1&quot; does not necessarily need to be followed by a &quot;0&quot; since it&#x27;s at the end of the sequence.
+
+Let&#x27;s denote the number of &quot;1&quot;s in the subset as k. This means we have k &quot;blocks&quot; of &quot;10&quot; and 10 - 2k remaining slots (since each &quot;block&quot; of &quot;10&quot; takes up 2 slots). We need to distribute these remaining slots as &quot;0&quot;s between the &quot;blocks&quot; or at the ends.
+
+The problem now becomes one of distributing 10 - 2k &quot;0&quot;s among k + 1 &quot;gaps&quot; (the gaps before the first &quot;1&quot;, between the &quot;blocks&quot;, and after the last &quot;1&quot;). This is equivalent to the problem of placing k + 1 &quot;dividers&quot; among the 10 - 2k + (k + 1) = 11 - k slots, which can be done in C(11 - k, k + 1) ways.
+
+Since k can range from 0 to 5 (we can&#x27;t have more than 5 &quot;1&quot;s because we would run out of slots due to the &quot;0&quot;s that must follow each &quot;1&quot;), we need to sum over all possible values of k:
+
+Total number of subsets = C(11, 1) + C(10, 2) + C(9, 3) + C(8, 4) + C(7, 5) + C(6, 6)
+
+Using the identity C(n, k) = C(n, n - k), we can simplify this to:
+
+Total number of subsets = C(11, 0) + C(10, 2) + C(9, 3) + C(8, 4) + C(7, 5) + C(6, 6)
+
+Now we can calculate each term:
+
+C(11, 0) = 1 (the empty set)
+C(10, 2) = 10! / (2! * (10 - 2)!) = 45
+C(9, 3) = 9! / (3! * (9 - 3)!) = 84
+C(8, 4) = 8! / (4! * (8 - 4)!) = 70
+C(7, 5) = 7! / (5! * (7 - 5)!) = 21
+C(6, 6) = 1 (the set with all &quot;0&quot;s)
+
+Adding these up gives us the total number of subsets:
+
+Total number of subsets = 1 + 45 + 84 + 70 + 21 + 1 = 222
+
+Therefore, there are 222 subsets of the set {1, 2, ..., 10} that contain no two successive numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 222 subsets of the set {1, 2, ..., 10} that contain no two successive numbers.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

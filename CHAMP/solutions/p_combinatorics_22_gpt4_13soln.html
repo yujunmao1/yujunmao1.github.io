@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_22</td>
+            <td>GPT-4</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)/(r+1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_22']
+messages = problem.conversations['GPT-4|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let 1≤r≤n and consider all subsets of r elements of the set {1, 2, ..., n}. What is the arithmetic mean of the smallest element of these subsets, as an expression of n and r?
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Consider the subsets of {0, 1, ..., n} with r+1 elements.
+2. We define a mapping f from the latter subset and the former subset to be the operation that removes the smallest element in the subset, such as f({0, 2, 3, 5})={2, 3, 5}.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem is asking for the average of the smallest elements of all subsets of size r from the set {1, 2, ..., n}. 
+
+We can use the mapping f to transform the problem into a simpler one. Instead of considering subsets of size r from the set {1, 2, ..., n}, we consider subsets of size r+1 from the set {0, 1, ..., n}. 
+
+The smallest element of a subset of size r+1 from {0, 1, ..., n} is always 0, so the smallest element of the corresponding subset of size r from {1, 2, ..., n} is the second smallest element of the subset of size r+1. 
+
+The average of the second smallest elements of all subsets of size r+1 from {0, 1, ..., n} is the same as the average of the smallest elements of all subsets of size r from {1, 2, ..., n}. 
+
+To find this average, we note that each number from 1 to n appears as the second smallest element in exactly C(n-1, r) subsets of size r+1, where C(n, r) is the binomial coefficient &quot;n choose r&quot;. 
+
+Therefore, the sum of the second smallest elements of all subsets of size r+1 is 
+
+1*C(n-1, r) + 2*C(n-2, r) + ... + n*C(0, r) = ∑_{i=1}^{n} i*C(n-i, r). 
+
+The total number of subsets of size r+1 from {0, 1, ..., n} is C(n+1, r+1). 
+
+Therefore, the average of the second smallest elements is 
+
+(∑_{i=1}^{n} i*C(n-i, r))/C(n+1, r+1) = (n+1)/(r+2). 
+
+So, the arithmetic mean of the smallest element of these subsets, as an expression of n and r, is (n+1)/(r+2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The arithmetic mean of the smallest element of all subsets of r elements from the set {1, 2, ..., n} is (n+1)/(r+2).
+</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

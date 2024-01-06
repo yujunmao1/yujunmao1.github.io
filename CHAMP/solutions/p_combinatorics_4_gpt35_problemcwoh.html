@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_4</td>
+            <td>GPT-3.5</td>
+            <td>Problem w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 76</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_4']
+messages = problem.conversations['GPT-3.5|Problem w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: From the set {1, 2, 3, ..., n+1}, select quadruple (x, y, z, u), with duplicate allowed, such that u&gt;max(x, y, z). In how many ways can this be done?
+Step-wise solution:
+1. For u=i, there are i-1 values of x, y and z satisfying u&gt;max(x, y, z), so we have (i-1)^3 triples of valid (x, y, z, u).
+2. Thus, the total number of choices is sum_(i=1)^(n+1) (i-1)^3=sum_(i=1)^n i^3.
+
+Problem: When (x+y+z)^1999 is expanded and like terms are collected (e.g., collecting 2*x^2*y*z^3 and 3*x^2*y*z^3 into a single term of 5*x^2*y*z^3), how many terms will there be?
+Step-wise solution:
+1. For the term x^a*y^b*z^c to appear in the expansion, we must have a+b+c=1999 and a, b, c≥0.
+2. Thus, for any c, we know that a+b=1999-c, and there are 1999-c+1 different values of (a, b), ranging from (0, 1999-c) to (1999-c, 0).
+3. c can range from 0 to 1999.
+4. Thus, the total number of terms in the expansion is 2000+1999+...+1=(2000+1)*2000/2=2001000.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+A one-to-one mapping p: {1, 2, ..., n}-&gt;{1, 2, ..., n} is called an involution, if p∘p=identity (i.e., p(p(i))=i for all i∈{1, ..., n}). Find the number of involutions on {1, 2, 3, 4, 5, 6}.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the number of involutions on {1, 2, 3, 4, 5, 6}, we can use the concept of fixed points.
+
+A fixed point of a mapping p is an element i such that p(i) = i. In an involution, every element must be either a fixed point or paired with another element such that p(p(i)) = i.
+
+Let&#x27;s consider the possible cases:
+
+Case 1: All elements are fixed points.
+In this case, each element can be mapped to itself, giving us 6! = 720 possible mappings.
+
+Case 2: One element is paired with another element.
+We have 6 choices for the element that is paired with another. Once we choose this pair, we have 4 remaining elements that can be fixed points. The remaining 2 elements must be paired with each other. So, we have 6 * 4 * 2 = 48 possible mappings.
+
+Case 3: Two elements are paired with each other, and the remaining 4 elements are fixed points.
+We have 6 choices for the first pair, and once we choose this pair, we have 4 remaining elements that can be fixed points. So, we have 6 * 4 = 24 possible mappings.
+
+Case 4: Three elements are paired with each other, and the remaining 3 elements are fixed points.
+We have 6 choices for the first pair, and once we choose this pair, we have 4 remaining elements that can be fixed points. For the third pair, we have 2 remaining elements to choose from. So, we have 6 * 4 * 2 = 48 possible mappings.
+
+Case 5: Four elements are paired with each other, and the remaining 2 elements are fixed points.
+We have 6 choices for the first pair, and once we choose this pair, we have 4 remaining elements that can be fixed points. For the second pair, we have 2 remaining elements to choose from. So, we have 6 * 4 * 2 = 48 possible mappings.
+
+Case 6: Five elements are paired with each other, and the remaining 1 element is a fixed point.
+We have 6 choices for the element that is a fixed point. Once we choose this element, we have 5 remaining elements that can be paired with each other. So, we have 6 * 5 = 30 possible mappings.
+
+Case 7: All elements are paired with each other.
+In this case, we have only one possible mapping.
+
+Adding up the possibilities from all cases, we have:
+720 + 48 + 24 + 48 + 48 + 30 + 1 = 919
+
+Therefore, the number of involutions on {1, 2, 3, 4, 5, 6} is 919.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of involutions on {1, 2, 3, 4, 5, 6} is 919.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

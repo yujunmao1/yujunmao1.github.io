@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_11</td>
+            <td>GPT-4 Turbo</td>
+            <td>0-Shot</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_11']
+messages = problem.conversations['GPT-4 Turbo|0-Shot'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find a pattern in the terms of the sequence. Let&#x27;s start by calculating the first few terms of the sequence:
+
+Given x_1 = 1/2, we can find x_2 using the recursive formula x_(k+1) = x_k^2 + x_k:
+
+x_2 = x_1^2 + x_1 = (1/2)^2 + 1/2 = 1/4 + 1/2 = 3/4
+
+Now, let&#x27;s find x_3:
+
+x_3 = x_2^2 + x_2 = (3/4)^2 + 3/4 = 9/16 + 12/16 = 21/16
+
+Before we continue, let&#x27;s look at the terms we are summing: 1/(x_k + 1). We want to see if there&#x27;s a simplification that can be made when we add 1 to x_k:
+
+x_k + 1 = (x_k^2 + x_k) + 1 = x_k(x_k + 1) + 1
+
+Notice that x_(k+1) = x_k^2 + x_k, so we can rewrite the above as:
+
+x_k + 1 = x_(k+1) + 1
+
+Now, let&#x27;s look at the summands:
+
+1/(x_k + 1) = 1/(x_(k+1) + 1)
+
+We can see that the denominator of each summand is just the next term in the sequence plus 1. This suggests that there might be a telescoping property in the sum. Let&#x27;s write out the first few terms of the sum using this observation:
+
+1/(x_1 + 1) = 1/(1/2 + 1) = 1/(3/2) = 2/3
+1/(x_2 + 1) = 1/(3/4 + 1) = 1/(7/4) = 4/7
+1/(x_3 + 1) = 1/(21/16 + 1) = 1/(37/16) = 16/37
+
+Now, let&#x27;s write these fractions in a way that reveals the telescoping nature:
+
+1/(x_1 + 1) = 2/3 = (2 - 4/3)
+1/(x_2 + 1) = 4/7 = (4/3 - 16/21)
+1/(x_3 + 1) = 16/37 = (16/21 - ...)
+
+We can see that each term in the sum has a part that cancels with part of the next term. Specifically, the numerator of the second fraction in each term is the denominator of the first fraction in the next term.
+
+This pattern will continue, and the sum will telescope down to just the first part of the first term and the second part of the last term:
+
+Sum = (2 - last_term_second_part)
+
+To find the last term&#x27;s second part, we need to find x_100 and then calculate 1/(x_100 + 1). However, we don&#x27;t need to find the exact value of x_100; we only need the integer part of the sum.
+
+Since the sequence is increasing and x_1 = 1/2, all subsequent terms will be greater than 1/2, and thus, all terms 1/(x_k + 1) will be less than 1. This means that the integer part of the sum will be 0 for all terms except possibly the first one.
+
+The integer part of the first term is 0 (since 2/3 &lt; 1), and since all other terms are less than 1 and positive, the integer part of the entire sum will be 0.
+
+Therefore, the integer part of the sum 1/(x_1 + 1) + 1/(x_2 + 1) + 1/(x_3 + 1) + ... + 1/(x_100 + 1) is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer part of the sum 1/(x_1 + 1) + 1/(x_2 + 1) + ... + 1/(x_100 + 1) for the given sequence is 0.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_48</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The function is periodic, with a period of 8</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_48']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+A function f(x) satisfies f(x+1)+f(x-1)=sqrt(2)*f(x). Determine whether the function is periodic, and if so, find its period.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let f(x-1)=a and f(x)=b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the function is periodic, we need to analyze the given functional equation and see if there is a constant \( T \) such that \( f(x + T) = f(x) \) for all \( x \).
+
+Given the functional equation:
+\[ f(x+1) + f(x-1) = \sqrt{2} \cdot f(x) \]
+
+Let&#x27;s use the substitution suggested in the partial solution:
+\[ f(x-1) = a \]
+\[ f(x) = b \]
+
+Then we can write:
+\[ f(x+1) = \sqrt{2} \cdot b - a \]
+
+Now, let&#x27;s find an expression for \( f(x+2) \) using the functional equation:
+\[ f(x+2) + f(x) = \sqrt{2} \cdot f(x+1) \]
+\[ f(x+2) + b = \sqrt{2} \cdot (\sqrt{2} \cdot b - a) \]
+\[ f(x+2) = 2b - \sqrt{2} \cdot a - b \]
+\[ f(x+2) = b - \sqrt{2} \cdot a \]
+
+We can continue this process to find expressions for \( f(x+3) \), \( f(x+4) \), and so on, but it&#x27;s not immediately clear if this will lead to a periodic function. Instead, let&#x27;s try to find a relationship between \( f(x+2) \) and \( f(x) \) directly:
+
+\[ f(x+2) + f(x) = \sqrt{2} \cdot f(x+1) \]
+\[ f(x+2) + b = \sqrt{2} \cdot (\sqrt{2} \cdot b - a) \]
+\[ f(x+2) = 2b - \sqrt{2} \cdot a - b \]
+\[ f(x+2) = b - \sqrt{2} \cdot a \]
+
+Now, let&#x27;s find \( f(x+3) \):
+\[ f(x+3) + f(x+1) = \sqrt{2} \cdot f(x+2) \]
+\[ f(x+3) + (\sqrt{2} \cdot b - a) = \sqrt{2} \cdot (b - \sqrt{2} \cdot a) \]
+\[ f(x+3) = \sqrt{2} \cdot b - 2a - \sqrt{2} \cdot b + a \]
+\[ f(x+3) = -a \]
+
+And \( f(x+4) \):
+\[ f(x+4) + f(x+2) = \sqrt{2} \cdot f(x+3) \]
+\[ f(x+4) + (b - \sqrt{2} \cdot a) = \sqrt{2} \cdot (-a) \]
+\[ f(x+4) = -\sqrt{2} \cdot a - b + \sqrt{2} \cdot a \]
+\[ f(x+4) = -b \]
+
+We can see a pattern emerging here, where the function values at \( x+3 \) and \( x+4 \) are negative versions of \( f(x-1) \) and \( f(x) \), respectively. Continuing this pattern, we would expect that \( f(x+5) = -f(x+1) \) and \( f(x+6) = -f(x+2) \), and so on.
+
+However, this pattern does not immediately suggest that the function is periodic, as the values are negated after a certain shift. To be periodic with period \( T \), we would need \( f(x+T) = f(x) \) for all \( x \), not \( f(x+T) = -f(x) \).
+
+Therefore, based on the information we have, we cannot conclude that the function is periodic. We would need additional information about the function, such as specific values or other properties, to determine if it is periodic and, if so, to find its period.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Based on the given functional equation and analysis, we cannot conclude that the function is periodic; additional information about the function is required to determine periodicity.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

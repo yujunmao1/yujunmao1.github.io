@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_2</td>
+            <td>PaLM 2 Medium</td>
+            <td>Problem w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> No</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Number-Theory_2']
+messages = problem.conversations['PaLM 2 Medium|Problem w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>First, study the following problems and their solutions as they may contain helpful information.
+
+Problem: Find all integer solutions to the equation 15x^2-7y^2=9.
+Step-wise solution:
+1. Since 7y^2=15x^2-9 is a multiple of 3, y must be a multiple of 3.
+2. Define y=3u, and we have 15x^2-63u^2=9.
+3. Thus, 5x^2=21u^2+3, which means that x is a also multiple of 3.
+4. Define x=3v and we have 45v^2=21u^2+3, and get 15v^2-1=7u^2.
+5. Since 7u^2 mod 3=15v^2-1 mod 3=2, u^2 mod 3=2.
+6. However, for any integer u, u^2 mod 3 can only be 0 or 1.
+7. Thus, the original equation has no integer solution.
+
+Problem: Find all integer solutions to the equation x^2-3y^2=17.
+Step-wise solution:
+1. For any integer x, we have x^2 mod 3∈{0, 1}.
+2. We further have 3y^2 mod 3=0 and 17 mod 3=2.
+3. Thus, the left hand side is 0 or 1 mod 3 while the right hand side is 2 mod 3.
+4. So the equation has no integer solution.
+
+With what you have learned, solve the following problem. Make sure to show your work before giving the final answer.
+
+Do there exist positive integers x, y such that x+y, x+2y and 2x+y are both squares?
+
+In addition, you may also find the following information helpful:
+
+1. Let x+y=a^2, x+2y=b^2, 2x+y=c^2 and find the relationship among a^2, b^2, c^2.
+2. Find possible values for a, b, c mod 3.
+3. For each possible solution (a, b, c), generate a new solution (u, v, w) with u&lt;a, v&lt;b, w&lt;c and study its implication.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x+y=a^2$, $x+2y=b^2$, and $2x+y=c^2$. Then,
+\begin{align*}
+a^2-b^2 &amp;= (x+y)-(x+2y) \\
+&amp;= -y \\
+&amp;= -(2x+y) \\
+&amp;= -2c^2.
+\end{align*}This implies that $a^2+2c^2=0$.
+
+Let $a^2=-2c^2$. Then, $a^2$ is a multiple of 4, so $a$ is even. Let $a=2u$. Then,
+\begin{align*}
+4u^2 &amp;= -2c^2 \\
+&amp;= -2(2v^2) \\
+&amp;= -4v^2.
+\end{align*}This implies that $u^2=v^2$.
+
+Let $u^2=v^2$. Then, $u$ is even. Let $u=2w$. Then,
+\begin{align*}
+4w^2 &amp;= v^2 \\
+&amp;= (x+y) \\
+&amp;= (x+2y)+y \\
+&amp;= b^2+y.
+\end{align*}This implies that $4w^2-b^2=y$.
+
+Let $4w^2-b^2=y$. Then, $y$ is even. Let $y=2z$. Then,
+\begin{align*}
+4w^2 &amp;= b^2+2z \\
+&amp;= (2x+y)+2z \\
+&amp;= c^2+2z.
+\end{align*}This implies that $4w^2-c^2=2z$.
+
+Let $4w^2-c^2=2z$. Then, $z$ is even. Let $z=2t$. Then,
+\begin{align*}
+4w^2 &amp;= c^2+4t \\
+&amp;= (2x+y)+4t \\
+&amp;= (2x+2y)+2t \\
+&amp;= (2(x+y)+t)^2.
+\end{align*}This implies that $4w^2$ is a perfect square.
+
+However, this is a contradiction, since $w$ is even and $4w^2$ is odd. Therefore, there do not exist positive integers $x$ and $y$ such that $x+y$, $x+2y$, and $2x+y$ are all squares.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There do not exist positive integers $x$ and $y$ such that $x+y$, $x+2y$, and $2x+y$ are all squares.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

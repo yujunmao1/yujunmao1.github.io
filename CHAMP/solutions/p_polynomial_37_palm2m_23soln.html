@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_37</td>
+            <td>PaLM 2 Medium</td>
+            <td>2/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> x=16 and x=81</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Polynomial_37']
+messages = problem.conversations['PaLM 2 Medium|2/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find all integer solutions to the equation x^(1/4)+(97-x)^(1/4)=5.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. Let y=x^(1/4) and z=(97-x)^(1/4), and the equation becomes y^4+z^4=x+97-x=97.
+2. Let s_n=y^n+z^n, u=y+z, v=yz.
+3. We have s_0=2, s_1=u.
+4. Thus, s_2=u^2-2v, s_3=u^3-3uv and s_4=u^4-4u^2*v+2v^2=97.
+5. With u=5, we have v^2-50v+264=(v-6)(v-44)=0.
+6. So v=6 or v=44.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $y=x^{1/4}$ and $z=(97-x)^{1/4}$, and the equation becomes $y^4+z^4=x+97-x=97$.
+
+Let $s_n=y^n+z^n$, $u=y+z$, and $v=yz$. We have $s_0=2$, $s_1=u$. Thus, $s_2=u^2-2v$, $s_3=u^3-3uv$ and $s_4=u^4-4u^2v+2v^2=97$.
+
+With $u=5$, we have $v^2-50v+264=(v-6)(v-44)=0$. So $v=6$ or $v=44$.
+
+If $v=6$, then $y=6^{1/4}=\sqrt[4]{6}$. Since $y$ is an integer, $y=2$ or $y=-2$. But $y$ is also the square root of a number, so $y$ must be positive. Therefore, $y=2$.
+
+If $v=44$, then $y=44^{1/4}=\sqrt[4]{44}$. Since $y$ is an integer, $y=2$, $y=-2$, $y=4$, or $y=-4$. But $y$ is also the square root of a number, so $y$ must be positive. Therefore, $y=4$.
+
+Therefore, the only integer solutions to the equation $x^{1/4}+(97-x)^{1/4}=5$ are $x=2^4+97-2^4=49$ and $x=4^4+97-4^4=97$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only integer solutions to the equation $x^{1/4}+(97-x)^{1/4}=5$ are $x=49$ and $x=97$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

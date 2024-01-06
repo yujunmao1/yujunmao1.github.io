@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_34</td>
+            <td>GPT-4 Turbo</td>
+            <td>1/3 Soln</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 2^997</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Sequence_34']
+messages = problem.conversations['GPT-4 Turbo|1/3 Soln'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+The positive real numbers x_0, x_1, ..., x_1995 satisfy x_0=x_1995 and x_i+2/x_i=2x_(i+1)+1/x_(i+1) for i=0, ..., 1994. Find the maximum value that x_0 can have.
+
+Below is a partial solution to the problem that may be helpful:
+
+1. We have 2x_(i+1)^2-(x_i+2/x_i)x_(i+1)+1=0.
+2. Thus, x_(i+1)=x_i/2 or 1/x_i.
+3. We can write x_0=2^(k_0)*x_0^e_0, where k_0=0, e_0=1.
+4. If we can write x_i=2^k_i*x_0^e_i, then x_(i+1)=x_i/2=2^(k_i-1)*x_0^e_i, or x_(i+1)=1/x_i=2^(-k)*x_0^(-e_i).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the recurrence relation:
+
+\[ x_{i+2}/x_i = 2x_{i+1} + 1/x_{i+1} \]
+
+and the quadratic equation derived from it:
+
+\[ 2x_{i+1}^2 - (x_{i+2}/x_i)x_{i+1} + 1 = 0 \]
+
+we can see that \( x_{i+1} \) must satisfy this quadratic equation for each \( i \). The roots of this quadratic equation are \( x_{i+1} = x_i/2 \) or \( x_{i+1} = 1/x_i \), as given in the partial solution.
+
+Now, let&#x27;s consider the sequence \( x_0, x_1, \ldots, x_{1995} \) and the possible values for \( x_{i+1} \) based on \( x_i \). Since \( x_0 = x_{1995} \), the sequence must eventually return to its initial value after 1995 steps.
+
+Let&#x27;s analyze the two possible cases for \( x_{i+1} \):
+
+1. \( x_{i+1} = x_i/2 \): This choice reduces the value of \( x_{i+1} \) by half compared to \( x_i \).
+
+2. \( x_{i+1} = 1/x_i \): This choice inverts the value of \( x_{i+1} \) compared to \( x_i \).
+
+Since we are looking for the maximum value of \( x_0 \), we should avoid reducing its value by half. Therefore, we should prefer the inversion whenever possible. However, we cannot always choose the inversion because after an odd number of inversions, we would need an inversion to return to the initial value, which is not possible since \( x_0 = x_{1995} \).
+
+To maximize \( x_0 \), we need to minimize the number of halvings. Since we have 1995 steps and we must end where we started, we can have at most one halving because two halvings would reduce \( x_0 \) by a factor of 4, and there would be no way to increase it back to the original value with the operations given.
+
+Therefore, the sequence must consist of 1994 inversions and one halving. The inversion steps do not change the magnitude of \( x_0 \) since \( x_0 \) is positive, and the one halving step reduces it by half.
+
+Thus, to maximize \( x_0 \), we should choose the halving step to occur at the very last step, which means \( x_{1994} = 2x_0 \). This implies that \( x_0 \) can be arbitrarily large, and the maximum value of \( x_0 \) is not bounded above. However, if we are looking for the maximum value of \( x_0 \) under the constraint that \( x_0 = x_{1995} \), then we must have \( x_0 = 2x_0 \), which is impossible for positive real numbers.
+
+Therefore, under the given constraints, there is no maximum value for \( x_0 \); it can be arbitrarily large.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum value that \( x_0 \) can have is unbounded; it can be arbitrarily large.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

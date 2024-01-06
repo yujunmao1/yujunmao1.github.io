@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_7</td>
+            <td>GPT-4 Turbo</td>
+            <td>Root w/o H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load()
+problem = dataset['P_Combinatorics_7']
+messages = problem.conversations['GPT-4 Turbo|Root w/o H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Consider a row of 11 seats. A child sits on each. Each child may move by at most one seat. How many possible rearrangements are there (including the original one)?
+
+You may find the following information useful:
+
+1. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the possible moves each child can make. Each child has three options:
+
+1. Stay in the same seat.
+2. Move one seat to the left (except for the child in the first seat).
+3. Move one seat to the right (except for the child in the last seat).
+
+Let&#x27;s denote the number of ways to rearrange the children with n seats as f(n). We will build up to f(11) by considering smaller cases.
+
+For n = 1 (one seat), there is only one child and they can only stay in their seat. So, f(1) = 1.
+
+For n = 2 (two seats), each child can either stay or swap seats. There are two options for each child, but we must subtract the case where both children try to move into each other&#x27;s seats, as that&#x27;s not allowed. So, f(2) = 2 * 2 - 1 = 3.
+
+Now, let&#x27;s consider n = 3 (three seats). We have three children A, B, and C. They can either stay in their seats or move one seat to the left or right, with the exception of A and C who can&#x27;t move left or right, respectively, beyond the ends. The possible rearrangements are:
+
+1. ABC (all stay)
+2. BAC (B and A swap)
+3. ACB (B and C swap)
+4. BCA (A moves right, B moves left, C stays)
+5. CAB (A stays, B moves right, C moves left)
+6. CBA (A moves right, B stays, C moves left)
+
+So, f(3) = 6.
+
+For n = 4 (four seats), we can consider the possible moves for the fourth child D, in addition to the previous three children:
+
+1. ABCD (all stay)
+2. BACD (B and A swap, D stays)
+3. ACBD (B and C swap, D stays)
+4. BACB (A moves right, B moves left, C stays, D stays)
+5. CABD (A stays, B moves right, C moves left, D stays)
+6. CBAD (A moves right, B stays, C moves left, D stays)
+7. ABCB (A, B, C as before, D moves left)
+8. BADC (B and A swap, D moves left)
+9. ACDB (B and C swap, D moves left)
+10. BCAD (A moves right, B moves left, C stays, D moves left)
+11. CADB (A stays, B moves right, C moves left, D moves left)
+12. CBDA (A moves right, B stays, C moves left, D moves left)
+
+Notice that for each arrangement of the first three children, D has two options: stay or move left. So, f(4) = f(3) * 2 = 6 * 2 = 12.
+
+Now, let&#x27;s generalize this to n seats. For the nth child, there are two options: stay in the current seat or move one seat to the left. Therefore, for each arrangement of the first (n-1) children, there are two options for the nth child. This means that f(n) = f(n-1) * 2.
+
+Using this recursive relationship, we can find f(11):
+
+f(4) = f(3) * 2 = 6 * 2 = 12
+f(5) = f(4) * 2 = 12 * 2 = 24
+f(6) = f(5) * 2 = 24 * 2 = 48
+f(7) = f(6) * 2 = 48 * 2 = 96
+f(8) = f(7) * 2 = 96 * 2 = 192
+f(9) = f(8) * 2 = 192 * 2 = 384
+f(10) = f(9) * 2 = 384 * 2 = 768
+f(11) = f(10) * 2 = 768 * 2 = 1536
+
+So, there are 1536 possible rearrangements of the children, including the original one.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 1536 possible rearrangements of the children in 11 seats, including the original arrangement.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>
