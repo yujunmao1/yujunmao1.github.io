@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_48</td>
             <td>PaLM 2 Medium</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_48']
-messages = problem.conversations['PaLM 2 Medium|Name w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,27 +81,44 @@ For how many values of n in {1, 2, ..., 100} do we have (n+1)^n≥2^n*n!?
 
 You may find the following information useful:
 
-1. Study the validity of the inequality for n if the inequality for n-1 holds.
-2. For non-negative x_1, ..., x_n, (1+x_1)(1+x_2)...(1+x_n)≥1+x_1+x_2+...+x_n.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can prove by induction that the inequality $(n+1)^n \ge 2^n n!$ holds for all $n \ge 1$.
+1. For non-negative x_1, ..., x_n, (1+x_1)(1+x_2)...(1+x_n)≥1+x_1+x_2+...+x_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can use the following inequality to prove that $(n+1)^n \ge 2^n n!$ for all $n \ge 1$:
 
-The base case is $n=1$. In this case, the inequality is trivially true since $(1+1)^1 = 2 \ge 2^1 \cdot 1!$.
+$$(1+x_1)(1+x_2)...(1+x_n) \ge 1+x_1+x_2+...+x_n$$
 
-Now assume that the inequality holds for some $n \ge 1$. That is, we assume that $(n+1)^n \ge 2^n n!$. We want to show that the inequality holds for $n+1$.
+where $x_1 = x_2 = ... = x_n = \frac{1}{n+1}$.
 
-We have
-\begin{align*}
-(n+2)^{n+1} &amp;= (n+1)^{n+1} + (n+1)^{n} \\\
-&amp;\ge 2^n n! + (n+1)^{n} \\\
-&amp;\ge 2^n n! + 2^n \frac{(n+1)!}{n!} \\\
-&amp;= 2^{n+1} \frac{(n+1)!}{n!} + 2^n n! \\\
-&amp;= 2^{n+1} (n+1)!.
-\end{align*}
+Multiplying both sides by $(n+1)!$, we get:
+
+$$(n+1)!(1+\frac{1}{n+1})(1+\frac{2}{n+1})...(1+\frac{n}{n+1}) \ge (n+1)!$$
+
+Dividing both sides by $(n+1)!$, we get:
+
+$$1+\frac{1}{n+1}+\frac{2}{n+1}+...+\frac{n}{n+1} \ge 1$$
+
+Simplifying, we get:
+
+$$\frac{n(n+1)}{2} \ge 1$$
+
+Since $n \ge 1$, we know that $n(n+1) \ge 2$. Therefore, we have:
+
+$$\frac{n(n+1)}{2} \ge 1 \implies n \ge 1$$
+
 Therefore, the inequality $(n+1)^n \ge 2^n n!$ holds for all $n \ge 1$.
 
-In particular, the inequality holds for $n \in \\{1, 2, ..., 100\\}$. Therefore, there are $\boxed{100}$ values of $n$ in $\\{1, 2, ..., 100\\}$ such that $(n+1)^n \ge 2^n n!$.</code></pre>
+Now, we can use this inequality to solve the given problem. We want to find the number of values of $n$ in the set $\{1, 2, ..., 100\}$ such that $(n+1)^n \ge 2^n n!$.
+
+We can start by considering the values of $n$ from 1 to 10. For $n = 1$, we have $(1+1)^1 = 2 \ge 2^1 \cdot 1!$. For $n = 2$, we have $(2+1)^2 = 9 \ge 2^2 \cdot 2!$. For $n = 3$, we have $(3+1)^3 = 28 \ge 2^3 \cdot 3!$. For $n = 4$, we have $(4+1)^4 = 64 \ge 2^4 \cdot 4!$. For $n = 5$, we have $(5+1)^5 = 125 \ge 2^5 \cdot 5!$. For $n = 6$, we have $(6+1)^6 = 729 \ge 2^6 \cdot 6!$. For $n = 7$, we have $(7+1)^7 = 343 \ge 2^7 \cdot 7!$. For $n = 8$, we have $(8+1)^8 = 6561 \ge 2^8 \cdot 8!$. For $n = 9$, we have $(9+1)^9 = 59049 \ge 2^9 \cdot 9!$. For $n = 10$, we have $(10+1)^{10} = 102401 \ge 2^{10} \cdot 10!$.
+
+Therefore, we have found 10 values of $n$ in the set $\{1, 2, ..., 100\}$ such that $(n+1)^n \ge 2^n n!$.
+
+However, we need to be careful. We have only considered the values of $n$ from 1 to 10. It is possible that there are other values of $n$ in the set $\{1, 2, ..., 100\}$ such that $(n+1)^n \ge 2^n n!$.
+
+To find all of the values of $n$ in the set $\{1, 2, ..., 100\}$ such that $(n+1)^n \ge 2^n n!$, we can use a computer to solve the inequality $(n+1)^n - 2^n n! \ge 0$.
+
+The solution to this inequality is $n \ge 1$. Therefore, there are 100 values of $n$ in the set $\{1, 2, ..., 100\}$ such that $(n+1)^n</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 100 values of $n$ in $\\{1, 2, ..., 100\\}$ such that $(n+1)^n \ge 2^n n!$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 100 values of $n$ in the set $\{1, 2, ..., 100\}$ such that $(n+1)^n \ge 2^n n!$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

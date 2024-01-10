@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_16</td>
             <td>PaLM 2 Medium</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_16']
-messages = problem.conversations['PaLM 2 Medium|Name w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,78 +81,14 @@ Let A be a string of n binary digits (leading 0s are allowed). How many such str
 
 You may find the following information useful:
 
-1. For any string, add the digit 1 to the beginning and digit 0 to the end.
-2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither.
-3. If there are m &quot;0-1&quot; transitions in the original string, how many &quot;1-0&quot; transitions are there in the new string, and what is their ordering?
-4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?
-5. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $A$ be a string of $n$ binary digits (leading 0s are allowed). We want to count the number of such strings that have the substring &quot;01&quot; appearing exactly $m$ times.
+1. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose a set of (unordered) k items from n items is C(n, k) = n! / (k!(n-k)!).
 
-To do this, we will first consider the case where $m=0$. In this case, the only string that satisfies the condition is the empty string.
+To count the number of strings of n binary digits with the substring &quot;01&quot; appearing exactly m times, we can first count the number of ways to choose the positions of the m &quot;01&quot; substrings. This can be done in C(n, m) ways. For each choice of positions, there are 2^m ways to fill in the remaining digits. Therefore, the total number of strings is $C(n, m)2^m$.
 
-Now, let&#x27;s consider the case where $m=1$. In this case, the string must have the form $01x$, where $x$ is any string of $n-1$ binary digits. There are $2^{n-1}$ such strings, so there are $2^{n-1}$ strings that satisfy the condition.
-
-Now, let&#x27;s consider the case where $m=2$. In this case, the string must have the form $010x$ or $101x$, where $x$ is any string of $n-2$ binary digits. There are $2^{n-2}$ such strings, so there are $2^{n-2}+2^{n-2}=2^{n-1}$ strings that satisfy the condition.
-
-In general, if $m=k$, then the string must have the form $0101\dots01x$, where $x$ is any string of $n-k$ binary digits. There are $2^{n-k}$ such strings, so there are $2^{n-k}$ strings that satisfy the condition.
-
-Therefore, the total number of strings that satisfy the condition is
-
-$$\sum_{k=0}^m 2^{n-k} = 2^n - 1.$$
-
-Here is a diagram that illustrates the solution:
-
-[asy]
-unitsize(1 cm);
-
-draw((0,0)--(10,0));
-draw((0,1)--(10,1));
-draw((0,2)--(10,2));
-draw((0,3)--(10,3));
-draw((0,4)--(10,4));
-draw((0,5)--(10,5));
-draw((0,6)--(10,6));
-draw((0,7)--(10,7));
-draw((0,8)--(10,8));
-draw((0,9)--(10,9));
-draw((0,10)--(10,10));
-
-label(&quot;$0$&quot;, (0,0), S);
-label(&quot;$1$&quot;, (0,1), S);
-label(&quot;$0$&quot;, (0,2), S);
-label(&quot;$1$&quot;, (0,3), S);
-label(&quot;$0$&quot;, (0,4), S);
-label(&quot;$1$&quot;, (0,5), S);
-label(&quot;$0$&quot;, (0,6), S);
-label(&quot;$1$&quot;, (0,7), S);
-label(&quot;$0$&quot;, (0,8), S);
-label(&quot;$1$&quot;, (0,9), S);
-label(&quot;$0$&quot;, (0,10), S);
-
-label(&quot;$n$&quot;, (10,0), E);
-label(&quot;$n$&quot;, (10,1), E);
-label(&quot;$n$&quot;, (10,2), E);
-label(&quot;$n$&quot;, (10,3), E);
-label(&quot;$n$&quot;, (10,4), E);
-label(&quot;$n$&quot;, (10,5), E);
-label(&quot;$n$&quot;, (10,6), E);
-label(&quot;$n$&quot;, (10,7), E);
-label(&quot;$n$&quot;, (10,8), E);
-label(&quot;$n$&quot;, (10,9), E);
-label(&quot;$n$&quot;, (10,10), E);
-
-for (int i=0; i&lt;10; i++) {
-  for (int j=0; j&lt;10; j++) {
-    if (i == 0 &amp;&amp; j == 0) {
-      continue;
-    }
-    if (i == 0 &amp;&amp; j == 1) {
-      draw((i,j)--(i+1,j));
-    } else if (i == 1 &amp;&amp; j == 0) {
-      draw((i,j)--(i,j+1));
-    } else if (i == 0</code></pre>
+Alternatively, we can count the number of strings of n binary digits with the substring &quot;01&quot; appearing at least once. This can be done in $2^n$ ways. We then subtract the number of strings with the substring &quot;01&quot; appearing more than once, which can be done in $C(n-1, m-1)2^{n-1}$ ways. Therefore, the total number of strings is $2^n - C(n-1, m-1)2^{n-1} = C(n, m)2^m$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of $n$ binary digits that have the substring &quot;01&quot; appearing exactly $m$ times is $2^n-1$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of n binary digits with the substring &quot;01&quot; appearing exactly m times is $C(n, m)2^m$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

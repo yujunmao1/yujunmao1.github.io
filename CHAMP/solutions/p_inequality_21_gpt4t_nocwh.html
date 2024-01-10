@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_21</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 1/(n+1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_21']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,29 +81,48 @@ For positive real number a, b and positive integer n, what is the largest value 
 
 You may find the following information useful:
 
-1. Consider n+1 numbers, with one number being a and n numbers all being b.
-2. For n non-negative numbers x_1, ..., x_n, we have (x_1+x_2+...+x_n)/n≥(x_1*x_2*...*x_n)^(1/n), with equality if and only if x_1=...=x_n.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the Arithmetic Mean-Geometric Mean Inequality (AM-GM Inequality), which states that for any non-negative numbers \( x_1, x_2, \ldots, x_n \), the following inequality holds:
+1. Consider n+1 numbers, with one number being a and n numbers all being b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), which states that for any set of non-negative real numbers, the arithmetic mean is greater than or equal to the geometric mean. The equality holds if and only if all the numbers are equal.
 
-\[ \frac{x_1 + x_2 + \ldots + x_n}{n} \geq (x_1 \cdot x_2 \cdot \ldots \cdot x_n)^{1/n} \]
+Let&#x27;s consider n+1 numbers, with one number being a and n numbers all being b. The arithmetic mean (AM) of these numbers is:
 
-with equality if and only if \( x_1 = x_2 = \ldots = x_n \).
+AM = (a + nb) / (n + 1)
 
-Let&#x27;s consider \( n+1 \) numbers, with one number being \( a \) and \( n \) numbers all being \( b \). We can apply the AM-GM Inequality to these numbers:
+The geometric mean (GM) of these numbers is:
 
-\[ \frac{a + nb}{n+1} \geq (a \cdot b^n)^{1/(n+1)} \]
+GM = (a * b^n)^(1/(n + 1))
 
-Now, we want to maximize the expression \( \frac{(a \cdot b^n)^{1/(n+1)}}{a + bn} \). Using the inequality above, we have:
+According to the AM-GM inequality:
 
-\[ \frac{(a \cdot b^n)^{1/(n+1)}}{a + bn} \leq \frac{\frac{a + nb}{n+1}}{a + bn} \]
+AM &gt;= GM
 
-Simplifying the right-hand side, we get:
+Substituting the expressions for AM and GM, we get:
 
-\[ \frac{\frac{a + nb}{n+1}}{a + bn} = \frac{1}{n+1} \]
+(a + nb) / (n + 1) &gt;= (a * b^n)^(1/(n + 1))
 
-Therefore, the largest value of \( \frac{(a \cdot b^n)^{1/(n+1)}}{a + bn} \) as an expression of \( n \) is \( \frac{1}{n+1} \), and this maximum is achieved when \( a = b \), which is the condition for equality in the AM-GM Inequality.</code></pre>
+Now, we want to find the largest value of the expression (a * b^n)^(1/(n + 1)) / (a + bn). Let&#x27;s call this expression E:
+
+E = (a * b^n)^(1/(n + 1)) / (a + bn)
+
+We can rewrite E using the inequality we have:
+
+E = (a * b^n)^(1/(n + 1)) / ((n + 1) * AM)
+
+Since AM &gt;= GM, we can replace AM with GM in the denominator:
+
+E &lt;= (a * b^n)^(1/(n + 1)) / ((n + 1) * GM)
+
+But GM is equal to (a * b^n)^(1/(n + 1)), so:
+
+E &lt;= (a * b^n)^(1/(n + 1)) / ((n + 1) * (a * b^n)^(1/(n + 1)))
+
+E &lt;= 1 / (n + 1)
+
+Therefore, the largest value of E, as an expression of n, is 1 / (n + 1), which occurs when a = b (the case where all n+1 numbers are equal, which is the condition for equality in the AM-GM inequality).
+
+So the largest value of the given expression, as an expression of n, is 1 / (n + 1).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression \((a \cdot b^n)^{1/(n+1)} / (a + bn)\) as an expression of \(n\) is \(1/(n+1)\), achieved when \(a = b\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression \((a \cdot b^n)^{\frac{1}{n+1}} / (a + bn)\) as an expression of \(n\) is \(1 / (n + 1)\).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

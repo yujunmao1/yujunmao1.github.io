@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_73</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_73']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,31 +81,76 @@ What are possible values of 20^n+16^n-3^n-1 mod 323 for even n?
 
 You may find the following information useful:
 
-1. 323=17*19.
-2. For integer a, b, n, a - b | a^n - b^n.
-3. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.
-4. If a | c, b | c and gcd(a, b)=1, then ab | c.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, we need to find the possible values of the expression \(20^n + 16^n - 3^n - 1 \mod 323\) for even \(n\). Since \(323 = 17 \cdot 19\), we can use the Chinese Remainder Theorem to solve the problem modulo 17 and modulo 19 separately, and then combine the results.
+1. 323=17*19.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the expression modulo 323, which is the product of two distinct primes, 17 and 19. Since we are working with modular arithmetic, we can apply the Chinese Remainder Theorem (CRT) to solve the problem separately modulo 17 and modulo 19, and then combine the results to find the solution modulo 323.
 
-First, let&#x27;s consider the expression modulo 17 and modulo 19.
+Let&#x27;s first consider the expression modulo 17 and modulo 19 separately.
 
-Modulo 17:
-Since \(20 \equiv 3 \mod 17\) and \(16 \equiv -1 \mod 17\), we can rewrite the expression as:
-\((3^n + (-1)^n - 3^n - 1) \mod 17\)
+For modulo 17:
+We want to find the value of the expression 20^n + 16^n - 3^n - 1 (mod 17). Since n is even, we can simplify the expression using Fermat&#x27;s Little Theorem, which states that for any integer a not divisible by a prime p, a^(p-1) ≡ 1 (mod p). Here, p = 17.
 
-For even \(n\), \((-1)^n = 1\), so the expression simplifies to:
-\((3^n + 1 - 3^n - 1) \mod 17 = 0 \mod 17\)
+20 ≡ 3 (mod 17) because 20 - 17 = 3
+16 ≡ -1 (mod 17) because 16 - 17 = -1
+3 ≡ 3 (mod 17)
+1 ≡ 1 (mod 17)
 
-Modulo 19:
-Since \(20 \equiv 1 \mod 19\) and \(16 \equiv -3 \mod 19\), we can rewrite the expression as:
-\((1^n + (-3)^n - 3^n - 1) \mod 19\)
+Now, since n is even, we can say that 16^n ≡ (-1)^n ≡ 1 (mod 17), because (-1)^n = 1 when n is even.
 
-For even \(n\), \((-3)^n = 3^n\), so the expression simplifies to:
-\((1 + 3^n - 3^n - 1) \mod 19 = 0 \mod 19\)
+So the expression simplifies to:
+3^n + 1 - 3^n - 1 (mod 17)
+= 0 (mod 17)
 
-Now we have that the expression is congruent to 0 modulo both 17 and 19. Since 17 and 19 are coprime (their greatest common divisor is 1), we can use the fourth property to conclude that \(17 \cdot 19 | 20^n + 16^n - 3^n - 1\) for even \(n\).
+For modulo 19:
+We want to find the value of the expression 20^n + 16^n - 3^n - 1 (mod 19). Again, since n is even, we can simplify the expression using Fermat&#x27;s Little Theorem, where p = 19.
 
-Therefore, the possible values of \(20^n + 16^n - 3^n - 1 \mod 323\) for even \(n\) are 0, because \(323 | 20^n + 16^n - 3^n - 1\) for even \(n\).</code></pre>
+20 ≡ 1 (mod 19) because 20 - 19 = 1
+16 ≡ -3 (mod 19) because 16 - 19 = -3
+3 ≡ 3 (mod 19)
+1 ≡ 1 (mod 19)
+
+Since n is even, 16^n ≡ (-3)^n ≡ (3^2)^n/2 ≡ 9^n/2 ≡ 1 (mod 19), because 9^(19-1)/2 ≡ 1 (mod 19) by Fermat&#x27;s Little Theorem.
+
+So the expression simplifies to:
+1 + 1 - 3^n - 1 (mod 19)
+= 1 - 3^n (mod 19)
+
+Now, we need to find the value of 3^n (mod 19). Since n is even, we can write n = 2k for some integer k. Then we have:
+
+3^n = 3^(2k) = (3^2)^k = 9^k
+
+We know that 9^2 ≡ 81 ≡ 5 (mod 19), so:
+
+9^k ≡ 5^(k/2) (mod 19) if k is even
+9^k ≡ 9*5^((k-1)/2) (mod 19) if k is odd
+
+Since n is even, k is also even, so we only need to consider the case where k is even. Thus, we have:
+
+9^k ≡ 5^(k/2) (mod 19)
+
+Now, we need to find the value of 5^(k/2) (mod 19). Since 5^2 ≡ 25 ≡ 6 (mod 19), we have:
+
+5^(k/2) ≡ 6^(k/4) (mod 19) if k/2 is even
+5^(k/2) ≡ 5*6^((k/2-1)/2) (mod 19) if k/2 is odd
+
+Since k is even, k/2 is also even, so we only need to consider the case where k/2 is even. Thus, we have:
+
+5^(k/2) ≡ 6^(k/4) (mod 19)
+
+Now, we need to find the value of 6^(k/4) (mod 19). Since 6^2 ≡ 36 ≡ -1 (mod 19), we have:
+
+6^(k/4) ≡ (-1)^(k/4) (mod 19)
+
+Since k/4 is an integer, (-1)^(k/4) is either 1 or -1. However, since k is even, k/4 is also even, so we have:
+
+(-1)^(k/4) ≡ 1 (mod 19)
+
+Therefore, 5^(k/2) ≡ 1 (mod 19), and thus 9^k ≡ 1 (mod 19). This means that 3^n ≡ 1 (mod 19).
+
+So the expression simplifies to:
+1 - 1 (mod 19)
+= 0 (mod 19)
+
+Now that we have the expression modulo 17 and modulo 19, we can see that in both cases, the expression is congruent to 0. Therefore, the possible values of the expression 20^n + 16^n - 3^n - 1 modulo 323 for even n are 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of \(20^n + 16^n - 3^n - 1 \mod 323\) for even \(n\) are 0.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

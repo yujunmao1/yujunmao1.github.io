@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_15</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> No</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_15']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,56 +81,22 @@ Does there exist a positive sequence {a_n}, such that both sum a_n and sum 1/(n^
 
 You may find the following information useful:
 
-1. Pair up the terms from the two sums.
-2. For non-negative x, y, we have (x+y)≥2*sqrt(xy) and (x+y)/2≥sqrt(xy), with equality if and only if x=y.
-3. The harmonic series 1+1/2+1/3+... diverges (i.e., the sum is not a finite value).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n = \frac{1}{n^2}$. Then,
+1. Pair up the terms from the two sums.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there exists a positive sequence $\\{a_n\\}$, such that both $\sum a_n$ and $\sum \frac{1}{n^2a_n}$ converge to finite values.
 
-\begin{align*}
-\sum_{n=1}^{\infty} a_n &amp;= \sum_{n=1}^{\infty} \frac{1}{n^2} \\
-&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n} - \frac{1}{n^2} + \frac{1}{n^3} - \frac{1}{n^4} + \cdots \right) \\
-&amp;= 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots \\
-&amp;= \frac{1}{2}.
-\end{align*}
+Let $a_n = \frac{1}{n^2}$. Then $\sum a_n = \zeta(2) = \frac{\pi^2}{6}$, which converges. Also, $\frac{1}{n^2a_n} = \frac{1}{n^4}$, which converges. Therefore, $\sum \frac{1}{n^2a_n}$ also converges.
 
-Also,
+Another example is $a_n = \frac{1}{n^2\log n}$. Then $\sum a_n = \zeta(2)\log n$, which converges. Also, $\frac{1}{n^2a_n} = \frac{\log n}{n^4}$, which converges. Therefore, $\sum \frac{1}{n^2a_n}$ also converges.
 
-\begin{align*}
-\sum_{n=1}^{\infty} \frac{1}{n^2 a_n} &amp;= \sum_{n=1}^{\infty} \frac{1}{n^4} \\
-&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n^2} - \frac{2}{n^3} + \frac{3}{n^4} - \frac{4}{n^5} + \cdots \right) \\
-&amp;= 1 - \frac{2}{3} + \frac{3}{5} - \frac{4}{7} + \cdots \\
-&amp;= \frac{1}{2}.
-\end{align*}
+In general, any positive sequence $\\{a_n\\}$ such that $\lim_{n\to\infty} a_n = 0$ will work. This is because, for any such sequence, we have
 
-Therefore, both $\sum a_n$ and $\sum \frac{1}{n^2 a_n}$ converge to finite values.
+$$\sum a_n = \lim_{N\to\infty} \sum_{n=1}^N a_n = \lim_{N\to\infty} \sum_{n=1}^N \frac{1}{n^2} = \zeta(2)$$
 
-* * *
+and
 
-Here is a more detailed solution.
-
-We can pair up the terms from the two sums as follows:
-
-\begin{align*}
-\sum_{n=1}^{\infty} a_n &amp;= \sum_{n=1}^{\infty} \frac{1}{n^2} \\
-&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n} - \frac{1}{n^2} + \frac{1}{n^3} - \frac{1}{n^4} + \cdots \right) \\
-&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n} \right) + \sum_{n=1}^{\infty} \left( -\frac{1}{n^2} \right) + \sum_{n=1}^{\infty} \left( \frac{1}{n^3} \right) - \sum_{n=1}^{\infty} \left( \frac{1}{n^4} \right) + \cdots \\
-&amp;= 1 - \frac{1}{2} + \frac{1}{3} - \frac{1}{4} + \cdots \\
-&amp;= \frac{1}{2}.
-\end{align*}
-
-Also, we can pair up the terms from the two sums as follows:
-
-\begin{align*}
-\sum_{n=1}^{\infty} \frac{1}{n^2 a_n} &amp;= \sum_{n=1}^{\infty} \frac{1}{n^4} \\
-&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n^2} - \frac{2}{n^3} + \frac{3}{n^4} - \frac{4}{n^5} + \cdots \right) \\
-&amp;= \sum_{n=1}^{\infty} \left( \frac{1}{n^2} \right) + \sum_{n=1}^{\infty} \left( -\frac{2}{n^3} \right) + \sum_{n=1}^{\infty} \left( \frac{3}{n^4} \right) - \sum_{n=1}^{\infty} \left( \frac{4}{n^5} \right) + \cdots \\
-&amp;= 1 - \frac{2}{3} + \frac{3}{5} - \frac{4}{7} + \cdots \\
-&amp;= \frac{1}{2}.
-\end{align*}
-
-Therefore, both $\sum a_n$ and $\sum \frac{1}{n^2 a_n}$ converge to finite values.</code></pre>
+$$\sum \frac{1}{n^2a_n} = \lim_{N\to\infty} \sum_{n=1}^N \frac{1}{n^4} = \lim_{N\to\infty} \frac{1}{N^2} = 0.$$</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there exists a positive sequence $\\{a_n\\}$ such that both $\sum a_n$ and $\sum \frac{1}{n^2 a_n}$ converge to finite values.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there exists a positive sequence $\\{a_n\\}$, such that both $\sum a_n$ and $\sum \frac{1}{n^2a_n}$ converge to finite values.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

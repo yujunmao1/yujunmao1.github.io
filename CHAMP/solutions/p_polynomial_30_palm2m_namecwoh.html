@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_30</td>
             <td>PaLM 2 Medium</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_30']
-messages = problem.conversations['PaLM 2 Medium|Name w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,19 +81,47 @@ What are possible values of n mod k if x^n-y^n is divisible by x^k-y^k for integ
 
 You may find the following information useful:
 
-1. Let n=kq+r.
-2. Add and subtract y^(kq)*x^r to x^n-y^n.
-3. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
-4. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $n=kq+r$, where $0\leq r&lt;k$. Then,
-\begin{align*}
-x^n-y^n &amp;= x^{kq+r}-y^{kq+r} \\
-&amp;= (x^k)^q(x^r) - (y^k)^q(y^r) \\
-&amp;= (x^k-y^k)(x^{kq-1}x^r + x^{kq-2}y^r + \cdots + y^{kq-1}x^r + y^r) \\
-&amp;= (x^k-y^k)(x^{kq-1}(x^r+y^r) + x^{kq-2}(x^r-y^r) + \cdots + (-1)^{kq-1}x^r + (-1)^k y^r)).
-\end{align*}Since $x^k-y^k$ divides $x^n-y^n$, and $x^k-y^k$ is a polynomial of degree $k$, then $x^r+y^r$, $x^r-y^r$, $\cdots$, $(-1)^{kq-1}x^r + (-1)^k y^r$ must all be divisible by $x^k-y^k$. This means that $r$ must be a multiple of $k$, or $r=kq$ for some integer $q$. Therefore, the possible values of $n$ modulo $k$ are $n=kq$ for any integer $q$.</code></pre>
+1. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
+2. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x^n-y^n$ be divisible by $x^k-y^k$. Then, by the Factor Theorem, $x-y$ is a factor of $x^n-y^n$. This means that $x-y$ divides $x^n-y^n$, or $x^n-y^n=(x-y)q(x)$ for some polynomial $q(x)$.
+
+We can then write $x^n-y^n=(x-y)(x^{n-1}+y+x^{n-2}y+\cdots+y^{n-1})$.
+
+If we divide both sides by $x-y$, we get $x^{n-1}+y+x^{n-2}y+\cdots+y^{n-1}=0$.
+
+This means that $x^{n-1}+y+x^{n-2}y+\cdots+y^{n-1}$ is divisible by $x-y$.
+
+By the Factor Theorem, $x-y$ is a factor of $x^{n-1}+y+x^{n-2}y+\cdots+y^{n-1}$.
+
+This means that $x-y$ divides $x^{n-1}+y+x^{n-2}y+\cdots+y^{n-1}$, or $x^{n-1}+y+x^{n-2}y+\cdots+y^{n-1}=(x-y)q(x)$ for some polynomial $q(x)$.
+
+We can then write $x^{n-1}+y+x^{n-2}y+\cdots+y^{n-1}=(x-y)(x^{n-2}+xy+x^{n-3}y^2+\cdots+y^{n-2})$.
+
+If we divide both sides by $x-y$, we get $x^{n-2}+xy+x^{n-3}y^2+\cdots+y^{n-2}=0$.
+
+This means that $x^{n-2}+xy+x^{n-3}y^2+\cdots+y^{n-2}$ is divisible by $x-y$.
+
+By the Factor Theorem, $x-y$ is a factor of $x^{n-2}+xy+x^{n-3}y^2+\cdots+y^{n-2}$.
+
+This means that $x-y$ divides $x^{n-2}+xy+x^{n-3}y^2+\cdots+y^{n-2}$, or $x^{n-2}+xy+x^{n-3}y^2+\cdots+y^{n-2}=(x-y)q(x)$ for some polynomial $q(x)$.
+
+We can then write $x^{n-2}+xy+x^{n-3}y^2+\cdots+y^{n-2}=(x-y)(x^{n-3}+x^2y+\cdots+y^{n-3})$.
+
+If we divide both sides by $x-y$, we get $x^{n-3}+x^2y+\cdots+y^{n-3}=0$.
+
+This means that $x^{n-3}+x^2y+\cdots+y^{n-3}$ is divisible by $x-y$.
+
+By the Factor Theorem, $x-y$ is a factor of $x^{n-3}+x^2y+\cdots+y^{n-3}$.
+
+This means that $x-y$ divides $x^{n-3}+x^2y+\cdots+y^{n-3}$, or $x^{n-3}+x^2y+\cdots+y^{n-3}=(x-y)q(x)$ for some polynomial $q(x)$.
+
+We can then write $x^{n-3}+x^2y+\cdots+y^{n-3}=(x-y)(x^{n-4}+x^3y+\cdots+y^{n-4})$.
+
+If we divide both sides by $x-y$, we get $x^{n-4}+x^3y+\cdots+y^{n-4}=0$.
+
+This means that $x^{n-4}+x^3y</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $n$ modulo $k$ are $n=kq$ for any integer $q$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $n$ modulo $k$ such that $x^n-y^n$ is divisible by $x^k-y^k$ are $n=0$, $n=k$, and $n=2k$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

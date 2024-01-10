@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_13</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 4^n</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_13']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,38 +81,27 @@ Of 3n+1 objects, n are indistinguishable, and the remaining ones are distinct. I
 
 You may find the following information useful:
 
-1. Find the number of ways to choose a collection containing k distinguishable objects.
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
-4. sum_(k=1)^n C(n, k)=2^n.
-5. C(n, k)=C(n, n-k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of combinations. 
+1. Find the number of ways to choose a collection containing k distinguishable objects.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the number of ways to choose n objects out of 3n+1 objects, where n are indistinguishable and the remaining ones are distinct.
 
-Let&#x27;s consider the number of ways to choose n objects from 3n+1 objects. We have n indistinguishable objects and 3n+1 - n = 2n+1 distinguishable objects.
+Let&#x27;s break down the problem into two cases:
 
-We can choose 0 distinguishable objects and n indistinguishable objects, or 1 distinguishable object and n-1 indistinguishable objects, or 2 distinguishable objects and n-2 indistinguishable objects, and so on, up to n distinguishable objects and 0 indistinguishable objects.
+Case 1: Choosing all n indistinguishable objects
+In this case, we have only one option since all n objects are indistinguishable.
 
-Using the information given, we know that the number of ways to choose a collection containing k distinguishable objects is C(2n+1, k).
+Case 2: Choosing n-1 indistinguishable objects and 1 distinct object
+In this case, we have n options for choosing the distinct object and C(n-1, 1) = n-1 ways to choose n-1 indistinguishable objects.
 
-Therefore, the total number of ways to choose n objects can be expressed as the sum of the number of ways to choose k distinguishable objects for each value of k from 0 to n:
+Therefore, the total number of ways to choose n objects is the sum of the two cases:
 
-Total number of ways = C(2n+1, 0) + C(2n+1, 1) + C(2n+1, 2) + ... + C(2n+1, n)
+Total = Case 1 + Case 2
+      = 1 + n(n-1)
+      = 1 + n^2 - n
+      = n^2 - n + 1
 
-Using the property C(n, k) = C(n, n-k), we can rewrite the expression as:
-
-Total number of ways = C(2n+1, 0) + C(2n+1, 1) + C(2n+1, 2) + ... + C(2n+1, n) + C(2n+1, n+1) + ... + C(2n+1, 2n+1)
-
-Since C(n, k) = C(n, n-k), we can simplify the expression as:
-
-Total number of ways = 2 * (C(2n+1, 0) + C(2n+1, 1) + C(2n+1, 2) + ... + C(2n+1, n))
-
-Using the property sum_(k=0)^n C(n, k) = 2^n, we can further simplify the expression as:
-
-Total number of ways = 2 * 2^(2n+1) = 2^(2n+2)
-
-Therefore, the final answer is 2^(2n+2).</code></pre>
+So, the expression for the number of ways to choose n objects is n^2 - n + 1.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose n objects from 3n+1 objects, where n are indistinguishable and the remaining ones are distinct, is 2^(2n+2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose n objects out of 3n+1 objects, where n are indistinguishable and the remaining ones are distinct, is given by the expression n^2 - n + 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

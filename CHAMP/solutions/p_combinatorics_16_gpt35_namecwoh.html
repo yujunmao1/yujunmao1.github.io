@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_16</td>
             <td>GPT-3.5</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_16']
-messages = problem.conversations['GPT-3.5|Name w/o H'].messages
+messages = problem.conversations['GPT-3.5|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,32 +81,33 @@ Let A be a string of n binary digits (leading 0s are allowed). How many such str
 
 You may find the following information useful:
 
-1. For any string, add the digit 1 to the beginning and digit 0 to the end.
-2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither.
-3. If there are m &quot;0-1&quot; transitions in the original string, how many &quot;1-0&quot; transitions are there in the new string, and what is their ordering?
-4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?
-5. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of combinations and the information provided.
+1. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can break it down into smaller subproblems.
 
-Let&#x27;s start by adding a 1 to the beginning and a 0 to the end of the string A. This ensures that we have a &quot;1-0&quot; transition at the beginning and end of the string.
+Let&#x27;s consider the first occurrence of the substring &quot;01&quot; in the string A. It can be in one of two positions: either as the first two digits or as the second and third digits. 
 
-Now, let&#x27;s consider the gaps between every two digits in the new string. We can classify these gaps into three types: &quot;0-1&quot; transition, &quot;1-0&quot; transition, and neither.
+Case 1: The substring &quot;01&quot; is at the beginning of the string A.
+In this case, the remaining n-2 digits can be any binary digits, so there are 2^(n-2) possibilities.
 
-Since we added a 1 to the beginning and a 0 to the end, the number of &quot;1-0&quot; transitions in the new string is m + 2.
+Case 2: The substring &quot;01&quot; is not at the beginning of the string A.
+In this case, the first digit can be either 0 or 1. If it is 0, then the substring &quot;01&quot; must appear m-1 times in the remaining n-1 digits. If it is 1, then the substring &quot;01&quot; must appear m times in the remaining n-1 digits. Therefore, the total number of possibilities in this case is the sum of the number of possibilities when the first digit is 0 and when the first digit is 1.
 
-Now, let&#x27;s focus on the &quot;0-1&quot; transitions. We know that there are m &quot;0-1&quot; transitions in the original string. In the new string, these &quot;0-1&quot; transitions will become &quot;1-0&quot; transitions. So, the number of &quot;1-0&quot; transitions in the new string is also m.
+Let&#x27;s denote the number of strings of length n with exactly m occurrences of the substring &quot;01&quot; as f(n, m). Then we can express f(n, m) as follows:
 
-The ordering of the &quot;1-0&quot; transitions is important. We can arrange the m &quot;1-0&quot; transitions in (m + 2) positions in the new string. This can be done in C(m + 2, m) ways.
+f(n, m) = 2^(n-2) + C(n-1, m-1) * f(n-1, m-1) + C(n-1, m) * f(n-1, m)
 
-Finally, we need to consider the total number of ways we can arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions. Since there are n - 1 gaps between the digits in the original string, we have (n - 1) gaps to place the m &quot;0-1&quot; transitions. This can be done in C(n - 1, m) ways.
+Now, let&#x27;s solve this recursively.
 
-Therefore, the total number of strings with the substring &quot;01&quot; appearing exactly m times is:
+Base cases:
+f(n, 0) = 2^n (since there are no occurrences of the substring &quot;01&quot;, all binary digits are allowed)
+f(n, 1) = 2^(n-2) (since there is only one occurrence of the substring &quot;01&quot;, it can be at the beginning or not at the beginning)
 
-C(n - 1, m) * C(m + 2, m)
+Recursive cases:
+f(n, m) = 2^(n-2) + C(n-1, m-1) * f(n-1, m-1) + C(n-1, m) * f(n-1, m)
 
-This is the final answer, expressed as an expression of m and n.</code></pre>
+Using these formulas, we can calculate f(n, m) for any given values of n and m.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings with the substring &quot;01&quot; appearing exactly m times in a string of n binary digits is given by C(n - 1, m) * C(m + 2, m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of length n with exactly m occurrences of the substring &quot;01&quot; is given by the recursive formula f(n, m) = 2^(n-2) + C(n-1, m-1) * f(n-1, m-1) + C(n-1, m) * f(n-1, m).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_20</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_20']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,28 +82,41 @@ For positive integers a, b, c, d, e satisfying a^5+b^5+c^5+d^5+e^5 mod 25=0, wha
 You may find the following information useful:
 
 1. Assume that 5 ∤ abcde.
-2. Consider possible values of u^5 mod 25 for 5 ∤ u.
-3. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.
-4. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can solve this problem by considering the possible values of $u^5 \pmod{25}$ for $5 \nmid u$. By Fermat&#x27;s little theorem, we know that $a^5 \equiv a \pmod{25}$ for all integers $a$. Therefore, the possible values of $u^5 \pmod{25}$ are $0, 1, 5, 25$.
+2. Consider possible values of u^5 mod 25 for 5 ∤ u.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $a^5+b^5+c^5+d^5+e^5 \equiv 0 \pmod{25}$. We can factor this as $(a+b+c+d+e)(a^4-a^3b+a^2b^2-a^2bc+a^2bd-ab^2c+ab^2d-abcd+abcde) \equiv 0 \pmod{25}$. Since $5$ does not divide $a+b+c+d+e$, we must have $a^4-a^3b+a^2b^2-a^2bc+a^2bd-ab^2c+ab^2d-abcd+abcde \equiv 0 \pmod{25}$.
 
-Now, we can consider the equation $a^5+b^5+c^5+d^5+e^5 \equiv 0 \pmod{25}$. We can factor this equation as follows:
+We can now consider the possible values of $a^4$, $a^3b$, $a^2b^2$, $a^2bc$, $a^2bd$, $ab^2c$, $ab^2d$, and $abcde$ modulo $25$.
 
-$$(a+b+c+d+e)(a^4-a^3b+a^2b^2-ab^3+b^4+c^4-c^3d+c^2d^2-cd^3+d^4+e^4-e^3f+e^2f^2-ef^3+f^4) \equiv 0 \pmod{25}$$
+* $a^4$ can take on the values $0$, $1$, $4$, $9$, $16$, $25$, $21$, $16$, $9$, $4$, $1$, $0$.
+* $a^3b$ can take on the values $0$, $5$, $10$, $15$, $20$, $25$, $20$, $15$, $10$, $5$, $0$.
+* $a^2b^2$ can take on the values $0$, $4$, $16$, $25$, $20$, $16$, $4$, $0$.
+* $a^2bc$ can take on the values $0$, $5$, $10$, $15$, $20$, $25$, $20$, $15$, $10$, $5$, $0$.
+* $a^2bd$ can take on the values $0$, $5$, $10$, $15$, $20$, $25$, $20$, $15$, $10$, $5$, $0$.
+* $ab^2c$ can take on the values $0$, $4$, $16$, $25$, $20$, $16$, $4$, $0$.
+* $ab^2d$ can take on the values $0$, $4$, $16$, $25$, $20$, $16$, $4$, $0$.
+* $abcde$ can take on the values $0$, $25$, $20$, $16$, $10$, $5$, $4$, $0$.
 
-Since $5 \nmid abcde$, we can assume that $5 \nmid a+b+c+d+e$. Therefore, we can divide both sides of the equation by $a+b+c+d+e$ to get:
+We can now substitute these values into the equation $a^4-a^3b+a^2b^2-a^2bc+a^2bd-ab^2c+ab^2d-abcde \equiv 0 \pmod{25}$ and solve for $a$, $b$, $c$, $d$, and $e$. This gives us the following possible values for abcde modulo $5$:
 
-$$a^4-a^3b+a^2b^2-ab^3+b^4+c^4-c^3d+c^2d^2-cd^3+d^4+e^4-e^3f+e^2f^2-ef^3+f^4 \equiv 0 \pmod{25}$$
+* $0$
+* $1$
+* $2$
+* $3$
+* $4$
+* $10$
+* $11$
+* $12$
+* $13$
+* $14$
+* $20$
+* $21$
+* $22$
+* $23$
+* $24$
 
-Now, we can consider the possible values of $a^4 \pmod{25}$. By Fermat&#x27;s little theorem, we know that $a^4 \equiv a \pmod{25}$ for all integers $a$. Therefore, the possible values of $a^4 \pmod{25}$ are $0, 1, 5, 25$.
-
-We can then consider the possible values of $a^3b \pmod{25}$. We know that $a^4 \equiv a \pmod{25}$ and $b^4 \equiv b \pmod{25}$. Therefore, the possible values of $a^3b \pmod{25}$ are $0, 1, 5, 25$.
-
-We can continue in this way to consider the possible values of $a^2b^2, ab^3, b^4, c^4, c^3d, c^2d^2, cd^3, d^4, e^4, e^3f, e^2f^2, ef^3, f^4$. We will find that the only possible values for these terms are $0, 1, 5, 25$.
-
-Therefore, the only possible values for the equation $a^5+b^5+c^5+d^5+e^5 \equiv 0 \pmod{25}$ are $0, 1, 5, 25$. This means that the only possible values of $abcde \pmod{5}$ are $0, 1, 5, 25$.</code></pre>
+Therefore, the possible values of abcde modulo $5$ are $0$, $1$, $2$, $3$, $4$, $10$, $11$, $12$, $13$, $14$, $20$, $21$, $22$, $23$, and $24$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $abcde \pmod{5}$ are $0, 1, 5, 25$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of abcde modulo 5 are 0, 1, 2, 3, 4, 10, 11, 12, 13, 14, 20, 21, 22, 23, and 24.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

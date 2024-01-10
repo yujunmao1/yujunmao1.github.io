@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_16</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_16']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -84,23 +84,24 @@ You may find the following information useful:
 1. For any string, add the digit 1 to the beginning and digit 0 to the end.
 2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither.
 3. If there are m &quot;0-1&quot; transitions in the original string, how many &quot;1-0&quot; transitions are there in the new string, and what is their ordering?
-4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?
-5. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem can be solved using combinatorics. 
 
-1. If we add a 1 to the beginning and a 0 to the end of the string, we will have a string of n+2 binary digits. 
+1. For any string, add the digit 1 to the beginning and digit 0 to the end. This does not change the number of &quot;01&quot; substrings, but it makes the problem easier to analyze. Now, every string starts with a &quot;1&quot; and ends with a &quot;0&quot;.
 
-2. In this new string, every &quot;0-1&quot; transition in the original string will still be a &quot;0-1&quot; transition, and every &quot;1-0&quot; transition will still be a &quot;1-0&quot; transition. 
+2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither. A &quot;0-1&quot; transition corresponds to the start of a &quot;01&quot; substring, and a &quot;1-0&quot; transition corresponds to the end of a &quot;01&quot; substring.
 
-3. If there are m &quot;0-1&quot; transitions in the original string, there will be m+1 &quot;1-0&quot; transitions in the new string (one for each &quot;0-1&quot; transition, plus one for the transition from the added 1 to the added 0 at the end). 
+3. If there are m &quot;0-1&quot; transitions in the original string, there are also m &quot;1-0&quot; transitions in the new string. The ordering of these transitions is always &quot;0-1&quot; followed by &quot;1-0&quot;, because every &quot;01&quot; substring must start before it ends.
 
-4. The &quot;0-1&quot; transitions and &quot;1-0&quot; transitions must alternate in the new string, starting with a &quot;1-0&quot; transition and ending with a &quot;1-0&quot; transition. Therefore, the ordering of the transitions is fixed.
+4. Now, we need to arrange these m &quot;0-1&quot; transitions and m &quot;1-0&quot; transitions among the n-1 gaps between the n digits. However, we also need to account for the fact that the first gap is always a &quot;1-0&quot; transition and the last gap is always a &quot;0-1&quot; transition. Therefore, we need to arrange m-1 &quot;0-1&quot; transitions and m-1 &quot;1-0&quot; transitions among the n-3 remaining gaps.
 
-5. We can think of the problem as choosing m+1 positions for the &quot;1-0&quot; transitions out of n+2 total positions, and then filling in the remaining positions with &quot;0-1&quot; transitions. This can be done in C(n+2, m+1) ways.
+5. The number of ways to do this is given by the multinomial coefficient (n-3 choose m-1, m-1, n-2m+1). This is because we are choosing m-1 gaps to be &quot;0-1&quot; transitions, m-1 gaps to be &quot;1-0&quot; transitions, and the remaining n-2m+1 gaps to be neither.
 
-Therefore, the number of strings of n binary digits with exactly m &quot;01&quot; substrings is C(n+2, m+1).</code></pre>
+6. Therefore, the number of strings of n binary digits with exactly m &quot;01&quot; substrings is (n-3 choose m-1, m-1, n-2m+1).
+
+Note: This formula is valid for n &gt;= 2m+2. If n &lt; 2m+2, then it is impossible to have m &quot;01&quot; substrings, so the answer is 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of n binary digits with exactly m &quot;01&quot; substrings is given by the binomial coefficient C(n+2, m+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of n binary digits with exactly m &quot;01&quot; substrings is given by the multinomial coefficient (n-3 choose m-1, m-1, n-2m+1), valid for n &gt;= 2m+2, and 0 otherwise.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

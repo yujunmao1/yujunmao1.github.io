@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_42</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> At most 0 integer-valued roots (i.e., no integer roots)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_42']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,37 +82,36 @@ Let f(x) be a polynomial of degree n with integer coefficients. If there are thr
 You may find the following information useful:
 
 1. Study the root of the polynomial g(x)=f(x)+1.
-2. A polynomial f(x) of degree n with roots x_1, ..., x_i (along with other roots) can be written as f(x)=(x-x_1)(x-x_2)...(x-x_i)g(x), where g(x) is a polynomial of degree n-i.
-3. Study the factorization of g(k) for an integer-valued root k of f(x).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given that f(a) = f(b) = f(c) = -1 for three distinct integers a, b, and c, we can consider the polynomial g(x) = f(x) + 1. This polynomial g(x) will have a, b, and c as roots because:
+2. Study the factorization of g(k) for an integer-valued root k of f(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s first consider the polynomial g(x) = f(x) + 1. Since f(a) = f(b) = f(c) = -1 for three different integers a, b, and c, it follows that g(a) = g(b) = g(c) = 0. This means that (x - a), (x - b), and (x - c) are factors of g(x).
 
-g(a) = f(a) + 1 = -1 + 1 = 0
-g(b) = f(b) + 1 = -1 + 1 = 0
-g(c) = f(c) + 1 = -1 + 1 = 0
+Now, let&#x27;s consider any integer-valued root k of f(x). Since k is a root of f(x), we have f(k) = 0, and therefore g(k) = f(k) + 1 = 1. This means that g(x) - 1 = f(x) has k as a root.
 
-Thus, g(x) has at least the roots a, b, and c. Since g(x) is a polynomial with integer coefficients (as f(x) has integer coefficients and we are just adding 1), any integer-valued root k of f(x) must also be a root of g(x), because f(k) = 0 implies g(k) = f(k) + 1 = 1.
+Since g(x) has (x - a), (x - b), and (x - c) as factors, we can write g(x) as:
 
-Now, let&#x27;s consider the factorization of g(x) with respect to its known roots a, b, and c:
+g(x) = (x - a)(x - b)(x - c)h(x),
 
-g(x) = (x - a)(x - b)(x - c)h(x)
+where h(x) is a polynomial with integer coefficients (since f(x) has integer coefficients and thus g(x) does as well).
 
-where h(x) is a polynomial with integer coefficients of degree n - 3 (since we factored out three roots from a degree n polynomial).
+Now, let&#x27;s consider what happens when we plug in an integer-valued root k into g(x):
 
-If k is an integer root of f(x), then k must also be a root of g(x), so we have:
+g(k) = (k - a)(k - b)(k - c)h(k) = 1.
 
-0 = g(k) = (k - a)(k - b)(k - c)h(k)
+Since k is an integer and a, b, and c are also integers, (k - a), (k - b), and (k - c) are all integers. Moreover, since g(k) = 1, it follows that the product of these integers and h(k) must be 1 or -1 (since 1 is a prime number and the only divisors of 1 are 1 and -1).
 
-Since k is an integer and a, b, and c are distinct integers, the factors (k - a), (k - b), and (k - c) are non-zero integers. Therefore, h(k) must be zero for g(k) to be zero.
+This means that for each integer-valued root k of f(x), the numbers (k - a), (k - b), and (k - c) must be either 1 or -1, and h(k) must also be 1 or -1.
 
-Now, let&#x27;s consider the maximum number of integer roots that f(x) can have. Since g(x) has the same integer roots as f(x) (except for a, b, and c), the maximum number of integer roots of f(x) is the same as the maximum number of integer roots of g(x).
+Now, let&#x27;s consider the possible values for k. Since (k - a), (k - b), and (k - c) must be either 1 or -1, there are at most 2 choices for k relative to each of a, b, and c. Specifically, k could be one more or one less than each of a, b, and c. This gives us at most 2 choices for k near a, 2 choices near b, and 2 choices near c, for a total of 6 possible integer-valued roots.
 
-The polynomial h(x) has a degree of n - 3, and by the Fundamental Theorem of Algebra, a polynomial of degree m can have at most m roots. Therefore, h(x) can have at most n - 3 roots.
+However, we must also consider that some of these choices could overlap. For example, if a, b, and c are consecutive integers, then the &quot;one more than&quot; and &quot;one less than&quot; choices for each could overlap, reducing the total number of distinct integer-valued roots.
 
-Since we already have three integer roots a, b, and c for g(x), the total number of integer roots that g(x) can have is the sum of the roots of h(x) and the three known roots, which is at most (n - 3) + 3 = n.
+In the worst-case scenario, where there is no overlap, we would have 6 distinct integer-valued roots. However, since we already have a, b, and c as roots of g(x), and thus not roots of f(x), we must exclude these from our count of integer-valued roots of f(x).
 
-Therefore, the polynomial f(x) can have at most n integer-valued roots.</code></pre>
+Therefore, at most, f(x) can have 6 - 3 = 3 integer-valued roots, in addition to the roots a, b, and c, which are not integer-valued roots of f(x) since f(a) = f(b) = f(c) = -1.
+
+In conclusion, the polynomial f(x) can have at most 3 integer-valued roots.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial f(x) can have at most n integer-valued roots.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial f(x) can have at most 3 integer-valued roots.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

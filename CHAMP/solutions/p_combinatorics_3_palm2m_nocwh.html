@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_3</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2^floor(n/2)*floor(n/2)!</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_3']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -84,31 +84,20 @@ You may find the following information useful:
 1. If n is odd, what position must be occupied by a rook?
 2. For even n=2k, consider a board of size 2k x 2k. If a rook is placed on the first row, which other position is also determined?
 3. Let P(2k) be the number of placements on a 2k x 2k board. Express P(2k) in terms of P(2k-2).
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. Find P(2) as the base case.</code></pre>
+4. Find P(2) as the base case.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $P(n)$ be the number of ways to place $n$ rooks on an $n\times n$ chess board so that no two rooks are in the same row or column. We will prove by induction on $n$ that $P(n) = \binom{n}{2}$.
 
 The base case is $n=2$. There is only one way to place two rooks on a $2\times 2$ chess board so that no two rooks are in the same row or column, namely, to place one rook in each corner.
 
 Now assume that the claim holds for some $n\geq 2$, and let $n=2k$ be even. We will show that $P(2k+2) = \binom{2k+2}{2}$.
 
-Consider a $2k+2\times 2k+2$ chess board. We can place the first $k$ rooks on the first $k$ rows in any order, since they cannot be in the same row or column. Once the first $k$ rooks are placed, there are $2k$ empty squares remaining on the board. We can place the $(k+1)$-th rook in any of these squares, since it cannot be in the same row or column as any of the first $k$ rooks. Once the $(k+1)$-th rook is placed, there are $2k-1$ empty squares remaining on the board. We can place the $(k+2)$-th rook in any of these squares, since it cannot be in the same row or column as any of the first $k+1$ rooks. We can continue in this way, placing each rook in a square that is not in the same row or column as any of the previously placed rooks. In this way, we can place all $k+2$ rooks on the board so that no two rooks are in the same row or column.
+Consider a $2k+2\times 2k+2$ chess board. We can place the first $k$ rooks on the first $k$ rows in any order, since they cannot be in the same row or column. Once the first $k$ rooks are placed, the remaining $2$ rooks must be placed on the last two rows, and they must be in different columns, since there are already $k$ rooks in the first $k$ columns. Therefore, there are $\binom{k}{2}$ ways to place the first $k$ rooks, and $2$ ways to place the remaining $2$ rooks, so there are a total of $\binom{k}{2}2 = \binom{k+1}{2}$ ways to place $k+2$ rooks on a $2k+2\times 2k+2$ chess board so that no two rooks are in the same row or column.
 
-Now consider the following two placements of $k+2$ rooks on a $2k+2\times 2k+2$ chess board:
+Now assume that $n=2k+1$ is odd. We can place the first $k$ rooks on the first $k$ rows in any order, since they cannot be in the same row or column. Once the first $k$ rooks are placed, the remaining $1$ rook must be placed on the last row, and it cannot be in the same column as any of the first $k$ rooks, since there are already $k$ rooks in the first $k$ columns. Therefore, there are $\binom{k}{2}$ ways to place the first $k$ rooks, and $1$ way to place the remaining $1$ rook, so there are a total of $\binom{k}{2}1 = \binom{k+1}{2}$ ways to place $k+1$ rooks on a $2k+1\times 2k+1$ chess board so that no two rooks are in the same row or column.
 
-1. Place the first $k$ rooks on the first $k$ rows in any order.
-2. Place the $(k+1)$-th rook in the bottom right corner.
-3. Place the $(k+2)$-th rook in the square directly above the $(k+1)$-th rook.
-4. Continue in this way, placing each rook in the square directly above the previously placed rook.
+This completes the proof by induction. Therefore, $P(n) = \binom{n}{2}$ for all $n\geq 2$.
 
-2. Place the first $k$ rooks on the first $k$ rows in any order.
-3. Place the $(k+1)$-th rook in the top left corner.
-4. Place the $(k+2)$-th rook in the square directly below the $(k+1)$-th rook.
-5. Continue in this way, placing each rook in the square directly below the previously placed rook.
-
-It is easy to see that these two placements are equivalent under a 180-degree rotation. Therefore, there are $\binom{2k+2}{2}$ ways to place $k+2$ rooks on a $2k+2\times 2k+2$ chess board so that no two rooks are in the same row or column.
-
-By the principle of mathematical induction, the claim holds for all $n\geq 2$.</code></pre>
+In particular, for $n=8$, there are $\binom{8}{2} = 28$ ways to place $8$ rooks on an $8\times 8$ chess board so that no two rooks are in the same row or column.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to place $n$ rooks on an $n\times n$ chess board so that no two rooks are in the same row or column is $\binom{n}{2}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

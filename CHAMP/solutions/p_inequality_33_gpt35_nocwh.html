@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_33</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 98 values</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_33']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,39 +81,60 @@ If a, b, c are sides of a non-degenerate 90-degree triangle with c being the hyp
 
 You may find the following information useful:
 
-1. a, b, c are sides of a 90-degree triangle and c being the hypotenuse if and only if a^2+b^2=c^2.
-2. For n&gt;2, write a^n=a^2*a^(n-2), b^n=b^2*b^(n-2), c^n=c^2*c^(n-2).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the given condition for each value of n in the set {1, 2, 3, ..., 100}.
+1. For n&gt;2, write a^n=a^2*a^(n-2), b^n=b^2*b^(n-2), c^n=c^2*c^(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the given inequality for different values of n and determine how many values satisfy the condition.
 
-Let&#x27;s start by substituting the values of a^n, b^n, and c^n using the given information:
+Let&#x27;s start by substituting the given expressions for a^n, b^n, and c^n into the inequality:
 
-a^n = a^2 * a^(n-2)
-b^n = b^2 * b^(n-2)
-c^n = c^2 * c^(n-2)
-
-Now, we can rewrite the inequality c^n &gt; a^n + b^n as:
+c^n &gt; a^n + b^n
 
 c^2 * c^(n-2) &gt; a^2 * a^(n-2) + b^2 * b^(n-2)
 
-Since a^2 + b^2 = c^2 (from the Pythagorean theorem), we can substitute this into the inequality:
+Since we know that a, b, and c are the sides of a non-degenerate 90-degree triangle, we can use the Pythagorean theorem to relate them:
 
-c^2 * c^(n-2) &gt; c^2 * a^(n-2) + c^2 * b^(n-2)
+a^2 + b^2 = c^2
 
-Dividing both sides of the inequality by c^2, we get:
+Substituting this into the inequality, we get:
 
-c^(n-2) &gt; a^(n-2) + b^(n-2)
+c^2 * c^(n-2) &gt; (c^2 - b^2) * a^(n-2) + b^2 * b^(n-2)
 
-Now, we can see that the inequality holds true for any value of n as long as c^(n-2) &gt; a^(n-2) + b^(n-2).
+Simplifying further:
 
-Since a, b, and c are sides of a non-degenerate 90-degree triangle, we know that a, b, and c are positive numbers. Therefore, raising any positive number to a positive power will always result in a positive number.
+c^2 * c^(n-2) &gt; c^2 * a^(n-2) - b^2 * a^(n-2) + b^2 * b^(n-2)
 
-This means that for any value of n, the inequality c^(n-2) &gt; a^(n-2) + b^(n-2) will always hold true.
+Dividing both sides by c^2:
 
-Therefore, for all values of n in the set {1, 2, 3, ..., 100}, we have c^n &gt; a^n + b^n.
+c^(n-2) &gt; a^(n-2) - (b^2 * a^(n-2))/c^2 + b^2 * (b^(n-2))/c^2
 
-So, the answer is 100.</code></pre>
+Since a, b, and c are sides of a non-degenerate 90-degree triangle, we know that a, b, and c are positive. Therefore, we can conclude that a^(n-2), (b^2 * a^(n-2))/c^2, and b^2 * (b^(n-2))/c^2 are all positive.
+
+Hence, we can simplify the inequality further:
+
+c^(n-2) &gt; a^(n-2)
+
+Now, we need to consider the possible values of n for which this inequality holds true.
+
+For n = 1, the inequality becomes:
+
+c^(-1) &gt; a^(-1)
+
+This is not possible since a, b, and c are positive.
+
+For n = 2, the inequality becomes:
+
+c^(0) &gt; a^(0)
+
+This is true since any positive number raised to the power of 0 is equal to 1.
+
+For n &gt; 2, the inequality becomes:
+
+c^(n-2) &gt; a^(n-2)
+
+Since a, b, and c are sides of a non-degenerate 90-degree triangle, we know that c &gt; a. Therefore, c^(n-2) &gt; a^(n-2) for all n &gt; 2.
+
+In summary, the inequality c^n &gt; a^n + b^n holds true for n = 2 and for all n &gt; 2. Therefore, there are 99 values of n in {1, 2, 3, ..., 100} that satisfy the condition.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For all values of n in the set {1, 2, 3, ..., 100}, the inequality c^n &gt; a^n + b^n holds true in a non-degenerate 90-degree triangle.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality c^n &gt; a^n + b^n holds true for n = 2 and for all n &gt; 2, resulting in a total of 99 values of n in {1, 2, 3, ..., 100} that satisfy the condition.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

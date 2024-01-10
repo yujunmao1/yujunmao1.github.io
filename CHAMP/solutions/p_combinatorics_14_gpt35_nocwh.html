@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_14</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 5/14, or approximately 35.7%</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_14']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,39 +82,28 @@ A gardener plants 3 apple trees, 3 peach trees and 2 cherry trees in a row, with
 You may find the following information useful:
 
 1. Study if we can consider the 3 apple trees as indistinguishable, and 5 other trees as indistinguishable.
-2. Consider a row of 5 dots, and place 3 dividers in between and/or at the two ends.
-3. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
-4. C(n, r)=n!/(r!*(n-r)!)=n*(n-1)*(n-2)*...*(n-r+1)/r!.</code></pre>
+2. Consider a row of 5 dots, and place 3 dividers in between and/or at the two ends.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of combinations and permutations.
 
 First, let&#x27;s consider the total number of ways the trees can be arranged in a row. Since there are 8 trees in total (3 apple trees, 3 peach trees, and 2 cherry trees), the total number of arrangements is 8!.
 
-Next, let&#x27;s consider the number of arrangements where two apple trees are next to each other. We can treat the two apple trees as a single entity. So, we have 7 entities to arrange (1 group of 2 apple trees, 3 peach trees, and 2 cherry trees). The number of arrangements with the two apple trees together is 7!.
+Next, let&#x27;s consider the number of arrangements where no two apple trees are next to each other. We can treat the 3 apple trees as indistinguishable, and the 5 other trees as indistinguishable. We can think of this as arranging 3 apple trees and 5 &quot;dummy&quot; trees (representing the peach and cherry trees) in a row.
 
-However, within the group of 2 apple trees, they can be arranged in 2! ways. So, we need to multiply the number of arrangements by 2!.
+To visualize this, let&#x27;s use the dots and dividers method. We have 5 dots representing the 5 dummy trees, and we need to place 3 dividers in between and/or at the two ends to separate the apple trees. The dividers act as placeholders to ensure that no two apple trees are next to each other.
 
-Therefore, the number of arrangements where two apple trees are next to each other is 7! * 2!.
+The number of ways to arrange the dots and dividers is given by the combination formula: (n + r - 1) C (r), where n is the number of dots and r is the number of dividers.
 
-Now, let&#x27;s calculate the number of arrangements where no two apple trees are next to each other. This is the total number of arrangements minus the number of arrangements where two apple trees are next to each other.
+In this case, we have 5 dots and 3 dividers, so the number of arrangements is (5 + 3 - 1) C (3) = 7 C 3 = 35.
 
-Number of arrangements where no two apple trees are next to each other = Total number of arrangements - Number of arrangements where two apple trees are next to each other
-= 8! - (7! * 2!)
+Therefore, the number of arrangements where no two apple trees are next to each other is 35.
 
-Finally, we can calculate the probability by dividing the number of arrangements where no two apple trees are next to each other by the total number of arrangements.
+Finally, we can calculate the probability by dividing the number of favorable outcomes (35) by the total number of outcomes (8!). So the probability is:
 
-Probability = (Number of arrangements where no two apple trees are next to each other) / (Total number of arrangements)
-= (8! - (7! * 2!)) / 8!
+P = 35 / 8! = 35 / (8 x 7 x 6 x 5 x 4 x 3 x 2 x 1) = 35 / 40,320 ≈ 0.000867
 
-Now, let&#x27;s simplify this expression:
-
-Probability = (8 * 7 * 6 * 5 * 4 * 3 * 2 * 1 - (7 * 6 * 5 * 4 * 3 * 2 * 1 * 2 * 1)) / (8 * 7 * 6 * 5 * 4 * 3 * 2 * 1)
-= (8 * 7 * 6 * 5 * 4 * 3 * 2 * 1 - 7 * 6 * 5 * 4 * 3 * 2 * 1) / (8 * 7 * 6 * 5 * 4 * 3 * 2 * 1)
-= (8 - 1) / 8
-= 7/8
-
-Therefore, the probability that no two apple trees are next to each other is 7/8.</code></pre>
+Therefore, the probability that no two apple trees are next to each other is approximately 0.000867.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The probability that no two apple trees are next to each other is 7/8.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The probability that no two apple trees are next to each other when planting 3 apple trees, 3 peach trees, and 2 cherry trees in a random order is approximately 0.000867.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

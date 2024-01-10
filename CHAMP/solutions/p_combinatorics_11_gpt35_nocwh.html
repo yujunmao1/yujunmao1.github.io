@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_11</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> n(n-3)/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_11']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,25 +77,38 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-A diagnoal in a convex polygon is any line connecting two non-adjacent vertices. How many diagonals are there in a convex polygon of n vertices, as an expression of n?
-
-You may find the following information useful:
-
-1. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
-2. C(n, r)=n!/(r!*(n-r)!)=n*(n-1)*(n-2)*...*(n-r+1)/r!.</code></pre>
+A diagnoal in a convex polygon is any line connecting two non-adjacent vertices. How many diagonals are there in a convex polygon of n vertices, as an expression of n?</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the number of diagonals in a convex polygon with n vertices, we need to consider that each vertex can be connected to every other non-adjacent vertex.
 
-Let&#x27;s start by choosing two vertices to connect. We have n vertices to choose from for the first vertex, and (n-3) vertices to choose from for the second vertex (since we cannot choose the adjacent vertices or the vertex itself).
+Let&#x27;s start by selecting one vertex. This vertex can be connected to n-3 other non-adjacent vertices (since it cannot be connected to itself, the two adjacent vertices, or the vertex opposite to it).
 
-Using the combination formula, the number of ways to choose two vertices is C(n, 2) = n! / (2! * (n-2)!) = n * (n-1) / 2.
+Now, let&#x27;s move on to the next vertex. We have already counted the diagonals that can be formed from the previous vertex, so we need to subtract those from the total count. This vertex can be connected to n-4 other non-adjacent vertices (since it cannot be connected to itself, the two adjacent vertices, the previous vertex, or the vertex opposite to it).
 
-However, this counts each diagonal twice (once for each direction). Since we only want to count each diagonal once, we need to divide the result by 2.
+We continue this process for each vertex, subtracting the previously counted diagonals. The last vertex can be connected to n-3 other non-adjacent vertices (since it cannot be connected to itself, the two adjacent vertices, or the vertex opposite to it).
 
-Therefore, the number of diagonals in a convex polygon with n vertices is (n * (n-1)) / 2.
+To find the total number of diagonals, we sum up the counts for each vertex:
 
-Final Answer: (n * (n-1)) / 2.</code></pre>
+(n-3) + (n-4) + (n-5) + ... + 3 + 2 + 1
+
+This is an arithmetic series with a common difference of -1 and a first term of (n-3). We can use the formula for the sum of an arithmetic series to simplify this expression:
+
+Sum = (n-3 + 1) * [(n-3) + 1] / 2
+
+Simplifying further:
+
+Sum = (n-2) * (n-2) / 2
+
+Sum = (n^2 - 4n + 4) / 2
+
+Sum = (n^2 - 4n + 4) / 2
+
+Sum = (n^2 - 4n + 4) / 2
+
+Sum = (n^2 - 4n + 4) / 2
+
+Therefore, the expression for the number of diagonals in a convex polygon with n vertices is (n^2 - 4n + 4) / 2.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of diagonals in a convex polygon with n vertices is given by (n * (n-1)) / 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of diagonals in a convex polygon with n vertices is given by the expression (n^2 - 4n + 4) / 2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_11</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 20</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_11']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,49 +81,45 @@ If x_1, x_2 are the two roots of the polynomial x^2-6x+1, for how many integer n
 
 You may find the following information useful:
 
-1. Let x_1, x_2 be the root of the polynomial x^2+px+q. Then x_1+x_2=-p and x_1*x_2=q. For the polynomial rx^2+px+q, we have x_1+x_2=-p/r and x_1*x_2=q/r. 
-2. Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).
-3. Study x^n+y^n mod 5.
-4. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the polynomial \( x^2 - 6x + 1 \), we can identify \( p = -6 \) and \( q = 1 \). The roots of this polynomial, \( x_1 \) and \( x_2 \), satisfy the following relationships:
+1. Study x^n+y^n mod 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we first need to understand the behavior of \( x_1^n + x_2^n \) modulo 5, where \( x_1 \) and \( x_2 \) are the roots of the polynomial \( x^2 - 6x + 1 \).
 
-1. \( x_1 + x_2 = -p = 6 \)
-2. \( x_1 \cdot x_2 = q = 1 \)
+Since \( x_1 \) and \( x_2 \) are roots of the polynomial, by Vieta&#x27;s formulas, we have:
 
-We are interested in the expression \( x_1^n + x_2^n \) and its remainder when divided by 5. We can use the recursive relationship given by \( s_n = u \cdot s_{n-1} - v \cdot s_{n-2} \), where \( u = x_1 + x_2 \) and \( v = x_1 \cdot x_2 \), to find a pattern for \( s_n \mod 5 \).
+\( x_1 + x_2 = 6 \) (sum of roots)
+\( x_1 \cdot x_2 = 1 \) (product of roots)
 
-Let&#x27;s calculate the first few terms of \( s_n \) modulo 5:
+Now, let&#x27;s consider the powers of \( x_1 \) and \( x_2 \) modulo 5. We know that \( x_1 \cdot x_2 \equiv 1 \mod 5 \), which means that \( x_1 \) and \( x_2 \) are either both congruent to 1 or both congruent to 4 modulo 5, or one is congruent to 2 and the other to 3 modulo 5 (since 2 * 3 = 6, which is congruent to 1 modulo 5).
 
-- \( s_0 = x_1^0 + x_2^0 = 1 + 1 = 2 \mod 5 \)
-- \( s_1 = x_1^1 + x_2^1 = x_1 + x_2 = 6 \mod 5 = 1 \mod 5 \)
+However, since \( x_1 + x_2 = 6 \), and \( x_1 + x_2 \equiv 1 \mod 5 \), we can rule out the possibility that both \( x_1 \) and \( x_2 \) are congruent to 1 or both to 4 modulo 5, because in both cases their sum would be congruent to 2 or 3 modulo 5, respectively. Therefore, we must have one root congruent to 2 and the other to 3 modulo 5.
 
-Now we can use the recursive formula to find the next terms:
+Now, let&#x27;s look at the powers of 2 and 3 modulo 5:
 
-- \( s_2 = u \cdot s_1 - v \cdot s_0 = 6 \cdot 1 - 1 \cdot 2 = 6 - 2 = 4 \mod 5 \)
-- \( s_3 = u \cdot s_2 - v \cdot s_1 = 6 \cdot 4 - 1 \cdot 1 = 24 - 1 = 23 \mod 5 = 3 \mod 5 \)
-- \( s_4 = u \cdot s_3 - v \cdot s_2 = 6 \cdot 3 - 1 \cdot 4 = 18 - 4 = 14 \mod 5 = 4 \mod 5 \)
+\( 2^1 \equiv 2 \mod 5 \)
+\( 2^2 \equiv 4 \mod 5 \)
+\( 2^3 \equiv 3 \mod 5 \)
+\( 2^4 \equiv 1 \mod 5 \)
+\( 2^5 \equiv 2 \mod 5 \)
 
-We notice that \( s_2 \) and \( s_4 \) are both congruent to 4 modulo 5. Let&#x27;s see if the pattern repeats:
+\( 3^1 \equiv 3 \mod 5 \)
+\( 3^2 \equiv 4 \mod 5 \)
+\( 3^3 \equiv 2 \mod 5 \)
+\( 3^4 \equiv 1 \mod 5 \)
+\( 3^5 \equiv 3 \mod 5 \)
 
-- \( s_5 = u \cdot s_4 - v \cdot s_3 = 6 \cdot 4 - 1 \cdot 3 = 24 - 3 = 21 \mod 5 = 1 \mod 5 \)
-- \( s_6 = u \cdot s_5 - v \cdot s_4 = 6 \cdot 1 - 1 \cdot 4 = 6 - 4 = 2 \mod 5 \)
+We can see that both 2 and 3 have a period of 4 in their powers modulo 5. Therefore, \( 2^n \) and \( 3^n \) will repeat their values every 4 powers.
 
-We can see a pattern emerging where the sequence of \( s_n \mod 5 \) is repeating every 4 terms after \( s_1 \). The sequence is \( 1, 4, 3, 4, 1, 2, ... \). We are interested in the terms that are congruent to 4 modulo 5.
+Now, we want to find when \( x_1^n + x_2^n \equiv 4 \mod 5 \). Since \( x_1 \) and \( x_2 \) are congruent to 2 and 3 modulo 5, we need to find when \( 2^n + 3^n \equiv 4 \mod 5 \).
 
-Since \( s_2 \) and \( s_4 \) are congruent to 4 modulo 5, and the pattern repeats every 4 terms, we can say that \( s_{4k+2} \) and \( s_{4k+4} \) will be congruent to 4 modulo 5 for any integer \( k \).
+Looking at the powers of 2 and 3 modulo 5, we see that \( 2^n + 3^n \equiv 4 \mod 5 \) when \( n \) is even (since \( 2^2 \equiv 4 \mod 5 \) and \( 3^2 \equiv 4 \mod 5 \)).
 
-Now, we need to find the values of \( n \) in the set {61, 62, ..., 120} that are of the form \( 4k+2 \) or \( 4k+4 \).
+Therefore, we are looking for even values of \( n \) in the set {61, 62, ..., 120}. The first even number in this set is 62 and the last one is 120. The number of even integers from 62 to 120 is half the number of integers in the set from 62 to 120, inclusive.
 
-For \( 4k+2 \), the smallest \( n \) in the set is 62 (when \( k = 15 \)) and the largest is 118 (when \( k = 29 \)). For \( 4k+4 \), the smallest \( n \) in the set is 64 (when \( k = 15 \)) and the largest is 120 (when \( k = 29 \)).
+The number of integers from 62 to 120 is 120 - 62 + 1 = 59. Half of this is \( \frac{59}{2} \), but since we can&#x27;t have a half-integer count, we take the floor of this value, which gives us 29 even integers.
 
-Now we count the number of integers \( n \) that satisfy these conditions:
-
-- For \( 4k+2 \), we have \( k = 15, 16, ..., 29 \), which gives us 15 values of \( n \).
-- For \( 4k+4 \), we have \( k = 15, 16, ..., 29 \), which also gives us 15 values of \( n \).
-
-Therefore, there are a total of \( 15 + 15 = 30 \) integers \( n \) in the set {61, 62, ..., 120} for which \( x_1^n + x_2^n \) gives a remainder of 4 when divided by 5.</code></pre>
+Thus, there are 29 integers \( n \) in the set {61, 62, ..., 120} for which \( x_1^n + x_2^n \) gives a remainder of 4 when divided by 5.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 30 integers \( n \) in the set {61, 62, ..., 120} for which \( x_1^n + x_2^n \) divided by 5 gives a remainder of 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 29 integers \( n \) in the set {61, 62, ..., 120} for which \( x_1^n + x_2^n \) gives a remainder of 4 when divided by 5.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

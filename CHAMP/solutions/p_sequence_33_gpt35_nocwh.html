@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_33</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 8</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_33']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,40 +77,57 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. What is the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2?
-
-You may find the following information useful:
-
-1. (x±y)^2=x^2±2xy+y^2.
-2. x^2-y^2=(x+y)(x-y).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2, we need to first find the expressions for a_(n+1), b_(n+1), a_(n+2), and b_(n+2) in terms of a_n and b_n.
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. What is the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2, we need to first find the expressions for a_(n+1), b_(n+1), a_(n+2), and b_(n+2).
 
 Given:
+a_0 = a
+b_0 = b
 a_(n+1) = sqrt(a_n * b_n)
-b_(n+1) = (a_n + b_n)/2
+b_(n+1) = (a_n + b_n) / 2
 
-To find a_(n+2), we substitute a_(n+1) into the expression for a_(n+1):
+We can find a_(n+1) and b_(n+1) using the given expressions:
+
+a_(n+1) = sqrt(a_n * b_n)
+b_(n+1) = (a_n + b_n) / 2
+
+Now, let&#x27;s find a_(n+2) and b_(n+2):
+
 a_(n+2) = sqrt(a_(n+1) * b_(n+1))
-         = sqrt(sqrt(a_n * b_n) * (a_n + b_n)/2)
-         = sqrt((a_n * b_n * (a_n + b_n))/2)
+b_(n+2) = (a_(n+1) + b_(n+1)) / 2
 
-To find b_(n+2), we substitute a_(n+1) and b_(n+1) into the expression for b_(n+1):
-b_(n+2) = (a_(n+1) + b_(n+1))/2
-         = (sqrt(a_n * b_n) + (a_n + b_n)/2)/2
-         = (sqrt(a_n * b_n) + a_n + b_n)/4
+Substituting the expressions for a_(n+1) and b_(n+1) into the above equations, we get:
 
-Now, we can substitute these expressions into the given expression and simplify:
+a_(n+2) = sqrt(sqrt(a_n * b_n) * (a_n + b_n) / 2)
+b_(n+2) = (sqrt(a_n * b_n) + (a_n + b_n) / 2) / 2
 
-(b_(n+1) - a_(n+1)) * b_(n+2) / (b_n - a_n)^2
-= ((a_n + b_n)/2 - sqrt(a_n * b_n)) * (sqrt(a_n * b_n) + a_n + b_n)/4 / (b_n - a_n)^2
-= ((a_n + b_n) - 2sqrt(a_n * b_n)) * (sqrt(a_n * b_n) + a_n + b_n) / 8(b_n - a_n)^2
-= (a_n + b_n)^2 - 2(a_n + b_n)sqrt(a_n * b_n) + 2(a_n + b_n)sqrt(a_n * b_n) + 4a_n * b_n / 8(b_n - a_n)^2
-= (a_n + b_n)^2 + 4a_n * b_n / 8(b_n - a_n)^2
-= (a_n + b_n)^2 + a_n * b_n / 2(b_n - a_n)^2
+Now, let&#x27;s find the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2:
 
-Therefore, the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 is (a_n + b_n)^2 + a_n * b_n / 2(b_n - a_n)^2.</code></pre>
+(b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 = ((a_n + b_n) / 2 - sqrt(a_n * b_n)) * ((sqrt(a_n * b_n) + (a_n + b_n) / 2) / 2) / (b_n - a_n)^2
+
+Simplifying the expression further:
+
+(b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 = ((a_n + b_n) * (sqrt(a_n * b_n) + (a_n + b_n)) / 4 - sqrt(a_n * b_n) * (sqrt(a_n * b_n) + (a_n + b_n)) / 4) / (b_n - a_n)^2
+
+(b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 = ((a_n + b_n) * (sqrt(a_n * b_n) + (a_n + b_n)) - sqrt(a_n * b_n) * (sqrt(a_n * b_n) + (a_n + b_n))) / (4 * (b_n - a_n)^2)
+
+(b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 = ((a_n + b_n) * (2 * sqrt(a_n * b_n)) - sqrt(a_n * b_n) * (2 * sqrt(a_n * b_n))) / (4 * (b_n - a_n)^2)
+
+(b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 = (2 * (a_n + b_n) * sqrt(a_n * b_n) - 2 * a_n * b_n) / (4 * (b_n - a_n)^2)
+
+(b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 = (2 * (a_n + b_n) * sqrt(a_n * b_n) - 2 * a_n * b_n) / (4 * (b_n - a_n)^2)
+
+Simplifying further:
+
+(b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 = (2 * sqrt(a_n * b_n) * (a_n + b_n - a_n)) / (4 * (b_n - a_n)^2)
+
+(b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 = (2 * sqrt(a_n * b_n) * b_n) / (4 * (b_n - a_n)^2)
+
+(b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 = (sqrt(a_n * b_n) * b_n) / (2 * (b_n - a_n)^2)
+
+Therefore, the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 is (sqrt(a_n * b_n) * b_n) / (2 * (b_n - a_n)^2).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 is (a_n + b_n)^2 + a_n * b_n / 2(b_n - a_n)^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2 is (sqrt(a_n * b_n) * b_n) / (2 * (b_n - a_n)^2).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_36</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> Monotonically increasing</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_36']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,45 +81,39 @@ Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=s
 
 You may find the following information useful:
 
-1. Study the monotonicity of a_n and b_n separately.
-2. For non-negative x, y, we have (x+y)≥2*sqrt(xy) and (x+y)/2≥sqrt(xy), with equality if and only if x=y.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $0&lt;a&lt;b$. Define two sequences $\\{a_n\\}$ and $\\{b_n\\}$ as $a_0=a$, $b_0=b$, $a_{n+1}=\sqrt{a_n b_n}$, and $b_{n+1}=(a_n+b_n)/2$.
+1. Study the monotonicity of a_n and b_n separately.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $0&lt;a&lt;b$. Define two sequences $\\{a_n\\}$ and $\\{b_n\\}$ as $a_0=a$, $b_0=b$, $a_{n+1}=\sqrt{a_n b_n}$, and $b_{n+1}=\frac{a_n+b_n}{2}$.
 
-We will first show that $\\{a_n\\}$ is monotonically increasing. To do this, we will prove by induction that $a_n\leq a_{n+1}$ for all $n\geq 0$.
+We will first show that $\\{a_n\\}$ is monotonically increasing. To do this, we will prove by induction that $a_n \leq a_{n+1}$ for all $n \geq 0$.
 
-The base case is $n=0$. We have $a_0=a$ and $a_1=\sqrt{a_0 b_0}=\sqrt{a^2}=a$. Therefore, $a_0\leq a_1$.
+The base case is $n=0$. We have $a_0=a$ and $a_1=\sqrt{a_0 b_0}=\sqrt{a^2}=a$. Therefore, $a_0 \leq a_1$.
 
-Now assume that $a_k\leq a_{k+1}$ for some $k\geq 0$. We want to show that $a_{k+1}\leq a_{k+2}$. We have
+Now assume that $a_k \leq a_{k+1}$ for some $k \geq 0$. We want to show that $a_{k+1} \leq a_{k+2}$. We have
 \begin{align*}
 a_{k+2} &amp;= \sqrt{a_{k+1} b_{k+1}} \\
 &amp;= \sqrt{\left(\frac{a_k+b_k}{2}\right) \left(\frac{a_k+b_k}{2}\right)} \\
 &amp;= \frac{1}{2} \sqrt{(a_k+b_k)^2} \\
-&amp;= \frac{1}{2} \left(a_k^2+2 a_k b_k+b_k^2\right)^{1/2} \\
-&amp;\leq \frac{1}{2} \left(a_k^2+2 a_k a_{k+1}+a_{k+1}^2\right)^{1/2} \\
-&amp;= \frac{1}{2} \left(a_k+a_{k+1}\right) \\
-&amp;= \frac{a_k+a_{k+1}}{2} \\
-&amp;= \frac{a_k+b_k}{2} \\
-&amp;= b_{k+1}.
+&amp;= \frac{1}{2} \left(a_k^2+2a_kb_k+b_k^2\right) \\
+&amp;\geq \frac{1}{2} \left(a_k^2+2a_ka_{k+1}+a_{k+1}^2\right) \\
+&amp;= a_{k+1}.
 \end{align*}
-Therefore, by the principle of mathematical induction, $a_n\leq a_{n+1}$ for all $n\geq 0$.
+Therefore, by the principle of mathematical induction, $a_n \leq a_{n+1}$ for all $n \geq 0$.
 
-Next, we will show that $\\{b_n\\}$ is monotonically increasing. To do this, we will prove by induction that $b_n\leq b_{n+1}$ for all $n\geq 0$.
+We will now show that $\\{b_n\\}$ is monotonically increasing. To do this, we will prove by induction that $b_n \leq b_{n+1}$ for all $n \geq 0$.
 
-The base case is $n=0$. We have $b_0=b$ and $b_1=(a_0+b_0)/2=(a+b)/2$. Therefore, $b_0\leq b_1$.
+The base case is $n=0$. We have $b_0=b$ and $b_1=\frac{a_0+b_0}{2}=\frac{a+b}{2}$. Therefore, $b_0 \leq b_1$.
 
-Now assume that $b_k\leq b_{k+1}$ for some $k\geq 0$. We want to show that $b_{k+1}\leq b_{k+2}$. We have
+Now assume that $b_k \leq b_{k+1}$ for some $k \geq 0$. We want to show that $b_{k+1} \leq b_{k+2}$. We have
 \begin{align*}
 b_{k+2} &amp;= \frac{a_{k+1}+b_{k+1}}{2} \\
-&amp;= \frac{\sqrt{a_k b_k}+b_{k+1}}{2} \\
-&amp;\leq \frac{a_k+b_{k+1}}{2} \\
-&amp;= \frac{a_k+b_k}{2} \\
-&amp;= b_{k+1}.
-\end{align*}
-Therefore, by the principle of mathematical induction, $b_n\leq b_{n+1}$ for all $n\geq 0$.
-
-Now, we can answer the question. We have shown that $\\{a_n\\}$ is monotonically increasing and $\\{b_n\\}$ is monotonically increasing. Therefore, the sequence $\\{a_n/b_n\\}$ is monotonically increasing.</code></pre>
+&amp;= \frac{1}{2} \left(\sqrt{a_k b_k}+\sqrt{a_{k+1} b_{k+1}}\right) \\
+&amp;= \frac{1}{2} \left(\sqrt{a_k b_k}+\sqrt{\left(\frac{a_k+b_k}{2}\right) \left(\frac{a_{k+1}+b_{k+1}}{2}\right)}\right) \\
+&amp;= \frac{1}{2} \left(\sqrt{a_k b_k}+\sqrt{\frac{a_k^2+2a_kb_k+b_k^2}{4}+\frac{a_{k+1}^2+2a_{k+1}b_{k+1}+b_{k+1}^2}{4}}\right) \\
+&amp;= \frac{1}{2} \left(\sqrt{a_k b_k}+\sqrt{\frac{a_k^2+2a_kb_k+b_k^2+a_{k+1}^2+2a_{k+1}b_{k+1}+b_{k+1}^2}{2}}\right) \\
+&amp;= \frac{1}{2} \left(\sqrt{a_k b_k+a_{k+1}^2+2a_{k+1}b_{k+1}+b_{k+1}^2}\right) \\
+&amp;\leq \frac{1}{2} \left(a_k+a_{k+1}+b_k+</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $\\{a_n/b_n\\}$ is monotonically increasing, where $a_0=a$, $b_0=b$, $a_{n+1}=\sqrt{a_n b_n}$, and $b_{n+1}=(a_n+b_n)/2$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $\frac{a_n}{b_n}$ is monotonically increasing for $0&lt;a&lt;b$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

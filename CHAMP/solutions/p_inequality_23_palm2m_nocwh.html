@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_23</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_23']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,22 +81,44 @@ Let a, b, c&gt;0. What is the minimum value of abc-(a+b-c)(a+c-b)(b+c-a)?
 
 You may find the following information useful:
 
-1. Let a=x+y, b=y+z, c=x+z.
-2. For non-negative x, y, we have (x+y)≥2*sqrt(xy) and (x+y)/2≥sqrt(xy), with equality if and only if x=y.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a=x+y$, $b=y+z$, and $c=x+z$. Then,
-\begin{align*}
-abc-(a+b-c)(a+c-b)(b+c-a) &amp;= (x+y)(y+z)(x+z) - (x+y+z)^2 \\
-&amp;= (xy+xz+yz+xyz) - (x^2+2xy+y^2+2xz+z^2+2yz+x^2+y^2+z^2) \\
-&amp;= xyz - 2xy - 2xz - 2yz \\
-&amp;= (x-y)(y-z)(z-x).
-\end{align*}By AM-GM, we have
-\begin{align*}
-(x-y)(y-z)(z-x) &amp;\ge \left(\frac{x+y+z}{3}\right)^3 \\
-&amp;= \left(\frac{2(x+y+z)}{3}\right)^2 \\
-&amp;= \frac{4(x+y+z)^2}{9}.
-\end{align*}Equality occurs when $x=y=z$. Therefore, the minimum value of $abc-(a+b-c)(a+c-b)(b+c-a)$ is $\boxed{\frac{4(a+b+c)^2}{9}}$.</code></pre>
+1. Let a=x+y, b=y+z, c=x+z.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can write the given expression as follows:
+
+$$abc-(a+b-c)(a+c-b)(b+c-a) = abc - (x+y+z)^2 + 2xyz$$
+
+We can minimize this expression by minimizing $x^2+y^2+z^2$. This can be done by setting $x=y=z$.
+
+Therefore, the minimum value of the given expression is $abc - (3x)^2 = -2xyz$.
+
+To see this, we can consider the following graph:
+
+[asy]
+unitsize(1 cm);
+
+draw((0,0)--(3,0));
+draw((0,0)--(0,3));
+draw((0,0)--(1.5,1.5));
+
+label(&quot;$x$&quot;, (3,0), E);
+label(&quot;$y$&quot;, (0,3), N);
+label(&quot;$z$&quot;, (1.5,1.5), S);
+
+draw((0,0)--(1,0));
+draw((0,0)--(0,1));
+draw((1,0)--(1,1));
+draw((0,1)--(1,1));
+
+fill((0,0)--(1,0)--(1,1)--(0,1)--cycle, gray(0.5));
+
+label(&quot;$abc$&quot;, (1,0), S);
+label(&quot;$a+b-c$&quot;, (0,1), W);
+label(&quot;$a+c-b$&quot;, (1,1), N);
+label(&quot;$b+c-a$&quot;, (0.5,0.5), E);
+[/asy]
+
+The minimum value of the expression $x^2+y^2+z^2$ is achieved when $x=y=z$, which corresponds to the point $(1,1,1)$. Therefore, the minimum value of the given expression is $abc - (3(1)^2) = -2xyz$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of $abc-(a+b-c)(a+c-b)(b+c-a)$ is $\boxed{\frac{4(a+b+c)^2}{9}}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of $abc-(a+b-c)(a+c-b)(b+c-a)$ is $-2xyz$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_28</td>
             <td>GPT-4 Turbo</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_28']
-messages = problem.conversations['GPT-4 Turbo|Example w/o H'].messages
+messages = problem.conversations['GPT-4 Turbo|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,44 +77,45 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Let A=(1/2)*(3/4)*(5/6)*...*(99/100). Is A greater than 1/15?
+Let A=(1/2)*(3/4)*(5/6)*...*(99/100). Is A greater than 1/15?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to look at the pattern of the terms in the product A. The terms are fractions where the numerator of each fraction is an odd number starting from 1 and increasing by 2 each time, and the denominator is an even number starting from 2 and increasing by 2 each time.
 
-You may find the following information useful:
-
-1. Let B=(1/2)*(2/3)*(4/5)*...*(98/99) and study the expression AB.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s first calculate the expression for AB:
+Let&#x27;s write out the first few terms to see the pattern more clearly:
 
 A = (1/2) * (3/4) * (5/6) * ... * (99/100)
-B = (1/2) * (2/3) * (4/5) * ... * (98/99)
 
-Now, let&#x27;s multiply A and B term by term:
+Notice that for each fraction after the first, the numerator of one fraction is one less than the denominator of the next fraction. This means that each pair of adjacent fractions will partially cancel out. Let&#x27;s illustrate this with the first few terms:
 
-AB = [(1/2) * (1/2)] * [(3/4) * (2/3)] * [(5/6) * (4/5)] * ... * [(99/100) * (98/99)]
+A = (1/2) * (3/4) * (5/6) * (7/8) * ... * (99/100)
 
-Notice that in each pair of terms, the numerator of the second fraction cancels out the denominator of the first fraction. Therefore, we can simplify AB as follows:
+Now, let&#x27;s cancel out the common factors:
 
-AB = (1/2)^2 * (1) * (1) * ... * (1) * (98/100)
+A = 1 * (1/2) * (3/2) * (1/2) * (5/2) * (1/2) * (7/2) * ... * (1/2) * (99/2)
 
-The only terms that do not cancel out are the first term (1/2)^2 and the last term (98/100). So we have:
+We can see that every term after the first has a factor of 1/2 that will cancel out with the 2 in the numerator of the next term. This cancellation will continue until the last term. The last term, (99/100), does not have a following term to cancel out with, so it will remain as is.
 
-AB = (1/4) * (98/100)
-AB = 98/400
-AB = 49/200
+After all the cancellations, we are left with:
 
-Now we have the value of AB, which is 49/200. We can see that this is less than 1/4. Since B is a product of terms each less than 1, B is less than 1. Therefore, A must be greater than AB, because if A were less than or equal to AB, then AB would be less than or equal to B, which is not possible since B &lt; 1.
+A = 1 * (1/2)^(49) * (3 * 5 * 7 * ... * 99)
 
-So we have A &gt; AB, and we know that AB = 49/200. Now we need to compare A to 1/15:
+The exponent 49 comes from the fact that there are 50 terms in the product, and we are excluding the first term (1/2) from the cancellation process.
 
-1/15 = 200/3000
-49/200 = 735/3000
+Now, let&#x27;s simplify the remaining product of odd numbers:
 
-Since 735/3000 is clearly greater than 200/3000, we have:
+A = (1/2)^(49) * (3 * 5 * 7 * ... * 99)
 
-A &gt; AB = 49/200 &gt; 1/15
+We can see that the product of the odd numbers (3 * 5 * 7 * ... * 99) is a very large number, and (1/2)^(49) is a very small number. To determine if A is greater than 1/15, we don&#x27;t need the exact value of A; we just need to compare it to 1/15.
 
-Therefore, A is indeed greater than 1/15.</code></pre>
+Let&#x27;s compare the powers of 2 in A and 1/15:
+
+A = (1/2)^(49) * (3 * 5 * 7 * ... * 99)
+1/15 = 1/(3 * 5)
+
+We can see that 1/15 has a factor of 3 and 5 in the denominator, which are also present in the product of odd numbers in A. However, A has many more factors in the numerator that will make it larger than just 3 * 5. Moreover, A has a factor of (1/2)^(49), which is a very small number, but it is not small enough to make the entire product A less than 1/15.
+
+Therefore, without calculating the exact value, we can conclude that A is greater than 1/15 because the large product of odd numbers in A&#x27;s numerator will outweigh the small factor of (1/2)^(49) when compared to the relatively simple fraction of 1/15.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The product A = (1/2)*(3/4)*(5/6)*...*(99/100) is greater than 1/15.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, A is greater than 1/15.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

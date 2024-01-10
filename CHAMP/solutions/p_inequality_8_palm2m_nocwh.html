@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_8</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_8']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,20 +81,52 @@ For positive numbers x_1, ..., x_n, what is the smallest value of x_1^(n+1)+x_2^
 
 You may find the following information useful:
 
-1. Consider n+1 sequences, each being (x_1, x_2, ..., x_n).
-2. For real numbers a_(1,1)≤...≤a_(1,n), a_(2,1)≤...≤a_(2,n), ..., a_(m,1)≤...≤a_(m,n), we have a_(1,1)*a_(2,1)*...*a_(m,1)+...+a_(1,n)*a_(2,n)*...*a_(m,n)≥a_(1,1)*b_(2,1)*...*b_(m,1)+...+a_(1,n)*b_(2,n)*...*b_(m,n), where (b_(i,1), ..., b_(i, n)) is a permutation of (a_(i,1), ..., a_(i, n)) for i=2, 3, ..., m. More generally, the sum achieves the maximum value when all the sequences (a_(i,1),..., a_(i,n)) are sorted in the same way.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x_1 \ge x_2 \ge \cdots \ge x_n$. Then by AM-GM,
-\begin{align*}
-x_1^{n+1} + x_2^{n+1} + \cdots + x_n^{n+1} - x_1 x_2 \cdots x_n (x_1 + x_2 + \cdots + x_n) &amp;= \left( \frac{x_1 + x_2 + \cdots + x_n}{n+1} \right)^{n+1} - x_1 x_2 \cdots x_n (x_1 + x_2 + \cdots + x_n) \\
-&amp;\ge \frac{n+1}{n+1} \left( \frac{x_1 + x_2 + \cdots + x_n}{n} \right)^{n+1} - x_1 x_2 \cdots x_n (x_1 + x_2 + \cdots + x_n) \\
-&amp;= \frac{n+1}{n+1} \left( \frac{x_1^n + x_2^n + \cdots + x_n^n}{n} \right) \left( \frac{x_1 + x_2 + \cdots + x_n}{x_1^n + x_2^n + \cdots + x_n^n} \right)^{n+1} - x_1 x_2 \cdots x_n (x_1 + x_2 + \cdots + x_n) \\
-&amp;= \frac{n+1}{n+1} \left( \frac{x_1^n + x_2^n + \cdots + x_n^n}{n} \right) \left( \frac{1}{x_1 + x_2 + \cdots + x_n} \right)^{n+1} - x_1 x_2 \cdots x_n (x_1 + x_2 + \cdots + x_n) \\
-&amp;= \frac{n+1}{n+1} \left( \frac{x_1^n + x_2^n + \cdots + x_n^n}{n} \right) \left( \frac{1}{x_1} + \frac{1}{x_2} + \cdots + \frac{1}{x_n} \right)^{n+1} - x_1 x_2 \cdots x_n (x_1 + x_2 + \cdots + x_n) \\
-&amp;= \frac{n+1}{n+1} \left( \frac{x_1^n + x_2^n + \cdots + x_n^n}{n} \right) \left( \frac{1}{x_1} \right)^{n+1} \left( 1 + \frac{x_2}{x_1} + \frac{x_3}{x_1} + \cdots + \frac{x_n}{x_1} \right)^{n+1} - x_1 x_2 \cdots x_n (x_1 + x_2 + \cdots + x_n) \\
-&amp;= \frac{n+1}{n+1} \left( \frac{x_1^n + x_2^n + \cdots + x_n^n}{n} \right) \left( \frac{1}{x_1} \right)^{n+1} \left( \left( 1 + \frac{x_2}{x_1} \right)^{n+1} + \left( \frac{x_3}{x_1} \right)^{n+1} + \cdots + \left( \frac{x_n}{x_1} \right)^{n+1} \right) - x_1 x_2 \cdots x_n (x_1 + x_2 + \cdots + x_n) \\
-&amp;= \frac{n+1}{n+1} \left( \frac{x_1^n + x_2^n + \cdots + x_n^n}{n} \right) \left( \frac{1}{x_1} \right)^{n+1} \left( \left( 1 + \frac{x_2}{x_1} \right)^{n</code></pre>
+1. Consider n+1 sequences, each being (x_1, x_2, ..., x_n).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x_1, x_2, \dots, x_n$ be positive numbers. We want to find the smallest value of $x_1^{n+1} + x_2^{n+1} + \dots + x_n^{n+1} - x_1 x_2 \dots x_n (x_1 + x_2 + \dots + x_n)$.
+
+We can write this as
+
+$$\sum_{i=1}^n x_i^{n+1} - \left(\sum_{i=1}^n x_i\right)^{n+1}.$$
+
+By the arithmetic mean-geometric mean inequality, we have
+
+$$\left(\sum_{i=1}^n x_i\right)^{n+1} \ge n \sum_{i=1}^n x_i^n.$$
+
+Substituting this into the expression for $x_1^{n+1} + x_2^{n+1} + \dots + x_n^{n+1} - x_1 x_2 \dots x_n (x_1 + x_2 + \dots + x_n)$, we get
+
+$$\sum_{i=1}^n x_i^{n+1} - \left(\sum_{i=1}^n x_i\right)^{n+1} \ge n \sum_{i=1}^n x_i^n - \left(\sum_{i=1}^n x_i\right)^{n+1}.$$
+
+Simplifying, we get
+
+$$\sum_{i=1}^n x_i^{n+1} - n \sum_{i=1}^n x_i^n \ge 0.$$
+
+This means that the smallest value of $x_1^{n+1} + x_2^{n+1} + \dots + x_n^{n+1} - x_1 x_2 \dots x_n (x_1 + x_2 + \dots + x_n)$ is 0.
+
+To see that this is a minimum, consider the following sequences:
+
+$$x_1 = x_2 = \dots = x_n = 1.$$
+
+In this case, we have
+
+$$x_1^{n+1} + x_2^{n+1} + \dots + x_n^{n+1} - x_1 x_2 \dots x_n (x_1 + x_2 + \dots + x_n) = 0.$$
+
+Now, consider any other sequence $(x_1, x_2, \dots, x_n)$. We can write
+
+$$x_1^{n+1} + x_2^{n+1} + \dots + x_n^{n+1} - x_1 x_2 \dots x_n (x_1 + x_2 + \dots + x_n) = \left(x_1 - 1\right)^{n+1} + \left(x_2 - 1\right)^{n+1} + \dots + \left(x_n - 1\right)^{n+1}.$$
+
+By the inequality of arithmetic and geometric means, we have
+
+$$\left(x_1 - 1\right)^{n+1} + \left(x_2 - 1\right)^{n+1} + \dots + \left(x_n - 1\right)^{n+1} \ge n \left(\frac{x_1 + x_2 + \dots + x_n}{n} - 1\right)^{n+1}.$$
+
+Substituting in the definition of $x_1, x_2, \dots, x_n$, we get
+
+$$\left(x_1 - 1\right)^{n+1} + \left(x_2 - 1\right)^{n+1} + \dots + \left(x_n - 1\right)^{n+1} \ge n \left(\frac{1}{n} - 1\right)^{n+1}.$$
+
+Simplifying, we get
+
+$$\left(x_1 - 1\right)^{n+1} + \left(x_2 - 1\right)^{n+1} + \dots + \left(x_n - 1\right)^{n+1} \ge \left(-\frac{1}{n}\right)^{n+</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $x_1^{n+1} + x_2^{n+1} + \cdots + x_n^{n+1} - x_1 x_2 \cdots x_n (x_1 + x_2 + \cdots + x_n)$ is $\frac{n+1}{n+1} \left( \frac{x_1^n + x_2^n + \cdots + x_n^n}{n} \right) \left( \frac{1}{x_1} \right)^{n+1} \left( \left( 1 + \frac{x_2}{x_1} \right)^{n+1} + \cdots + \left( \frac{x_n}{x_1} \right)^{n+1} \right)$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $x_1^{n+1} + x_2^{n+1} + \dots + x_n^{n+1} - x_1 x_2 \dots x_n (x_1 + x_2 + \dots + x_n)$ is 0, which is achieved when $x_1 = x_2 = \dots = x_n = 1$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

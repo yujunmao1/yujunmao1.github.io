@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_2</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> Always greater than 20</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_2']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,38 +83,20 @@ You may find the following information useful:
 
 1. Let a_n=x_n+y_n+z_n.
 2. Derive a lower bound on a_2.
-3. For positive x, x+1/x≥2, with equality if and only if x=1.
-4. Compare a_n with 18n for all n.
-5. (x±y)^2=x^2±2xy+y^2.
-6. For real numbers a_1, ..., a_n and b_1, ..., b_n, (a_1*b_1+...+a_n*b_n)^2≤(a_1^2+...+a_n^2)(b_1^2+...+b_n^2).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n = x_n + y_n + z_n$. We can derive a lower bound on $a_2$ as follows:
+3. Compare a_n with 18n for all n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n = x_n + y_n + z_n$. We can show that $a_2 \ge 3$. To see this, note that $x_2 = y_1 + \frac{1}{z_1} \ge y_1$, $y_2 = z_1 + \frac{1}{x_1} \ge z_1$, and $z_2 = x_1 + \frac{1}{y_1} \ge x_1$. Adding these inequalities, we get $a_2 \ge x_2 + y_2 + z_2 \ge 3$.
 
-\begin{align*}
-a_2 &amp;= x_2 + y_2 + z_2 \\
-&amp;= (y_1 + 1/z_1)^2 + (z_1 + 1/x_1)^2 + (x_1 + 1/y_1)^2 \\
-&amp;\ge 2(y_1 + 1/z_1)(z_1 + 1/x_1)(x_1 + 1/y_1) \\
-&amp;= 2(x_1^2 + y_1^2 + z_1^2 + 2 + 2/x_1 + 2/y_1 + 2/z_1) \\
-&amp;= 2(x_1^2 + y_1^2 + z_1^2 + 6) \\
-&amp;\ge 18.
-\end{align*}
+Now, we can compare $a_n$ with $18n$. Note that $a_n \ge 3$ for all $n$. Also, $a_{n+1} = x_{n+1} + y_{n+1} + z_{n+1} \ge x_n + y_n + z_n = a_n$. Therefore, $a_n \ge a_1 = x_1 + y_1 + z_1 \ge 3$ for all $n$.
 
-For positive $x$, we have $x + 1/x \ge 2$, with equality if and only if $x = 1$. This can be shown by considering the quadratic $x^2 - 2x + 1$, which has discriminant $-4 &lt; 0$. Therefore, the roots of this quadratic are real and distinct, and we have $x + 1/x \ge 2$.
+Finally, we can show that $a_n \le 18n$ for all $n$. To see this, note that $x_n \le 2n$, $y_n \le 2n$, and $z_n \le 2n$. Adding these inequalities, we get $a_n \le 2n + 2n + 2n = 6n$. Therefore, $a_n \le 18n$ for all $n$.
 
-Comparing $a_n$ with $18n$ for all $n$, we see that $a_n \ge 18n$ for all $n \ge 2$. This is because $a_2 \ge 18$, and $a_{n+1} \ge a_n + 2$ for all $n$.
+Combining these results, we see that $3 \le a_n \le 18n$ for all $n$. In particular, $a_2 \ge 3$ and $a_n \le 18n$ for all $n$. Therefore, $w_200 \le 18 \cdot 200 = 3600$.
 
-We can use the Cauchy-Schwarz inequality to show that $(x_1^2 + y_1^2 + z_1^2)(x_2^2 + y_2^2 + z_2^2) \ge (x_1x_2 + y_1y_2 + z_1z_2)^2$. This inequality states that the sum of the squares of the lengths of two vectors is at least as great as the square of the length of their dot product. In our case, the vectors are $(x_1, y_1, z_1)$ and $(x_2, y_2, z_2)$, and the dot product is $x_1x_2 + y_1y_2 + z_1z_2$.
+We can also show that $w_200 \ge 3$. To see this, note that $x_{200} \ge 100$, $y_{200} \ge 100$, and $z_{200} \ge 100$. Adding these inequalities, we get $a_{200} \ge 300$. Therefore, $w_{200} \ge 3$.
 
-We can use this inequality to show that $a_n^2 \ge (x_1x_2 + y_1y_2 + z_1z_2)^2$ for all $n$. This is because $a_n^2 = (x_n^2 + y_n^2 + z_n^2)^2 \ge (x_1x_2 + y_1y_2 + z_1z_2)^2$.
-
-Therefore, we have $a_n^2 \ge (x_1x_2 + y_1y_2 + z_1z_2)^2 \ge (x_1^2 + y_1^2 + z_1^2)(x_2^2 + y_2^2 + z_2^2) \ge (18n)^2$.
-
-This implies that $a_n \ge 18\sqrt{n}$ for all $n$.
-
-Therefore, we have $w_200 \ge 18\sqrt{200} = 360$.
-
-In conclusion, $w_200$ is always greater than 20.</code></pre>
+In conclusion, we have shown that $3 \le w_{200} \le 3600$. Therefore, $w_{200}$ is sometimes greater than 20 and sometimes smaller than 20.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>$w_200$ is always greater than 20.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum value of $x_n, y_n, z_n$ after 200 steps is sometimes greater than 20 and sometimes smaller than 20.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

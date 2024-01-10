@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_45</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> No</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_45']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,20 +81,32 @@ Let x be 1000...0001, with a total of 1961 zeros in the middle. Is x a prime num
 
 You may find the following information useful:
 
-1. Write x in the form of 10^n+1.
-2. A number is a multiple of 3 if and only if its digit sum is divisible by 3.
-3. For integer a, b and odd n, a + b | a^n + b^n.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x = 1000...0001$, with a total of 1961 zeros in the middle. We can write $x$ as follows:
+1. Write x in the form of 10^n+1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x=10^{1961}+1$. We will show that $x$ is not prime by showing that it is divisible by 11.
 
-$$x = 10^{1961} + 1$$
+To do this, we will use the following lemma:
 
-We know that a number is a multiple of 3 if and only if its digit sum is divisible by 3. The digit sum of $x$ is $1 + 0 + 0 + ... + 0 + 1 = 2$, which is not divisible by 3. Therefore, $x$ is not a multiple of 3.
+Lemma: If $p$ is a prime number and $a$ is an integer, then $a^{p-1} \equiv 1 \pmod{p}$.
 
-We also know that for integer $a$, $b$ and odd $n$, $a + b | a^n + b^n$. In this case, $a = 10^{1961}$ and $b = 1$. Since $n = 1961$ is odd, we have $10^{1961} + 1 | (10^{1961})^2 + 1^2 = 10^{3922} + 1$. Therefore, $x$ is a factor of $10^{3922} + 1$.
+Proof: We can prove this by induction on $p$. The base case is $p=2$. In this case, $a^1 \equiv a \pmod{2}$. If $a$ is even, then $a^2 \equiv a \pmod{2}$. If $a$ is odd, then $a^2 \equiv 1 \pmod{2}$.
 
-Since $x$ is not a multiple of 3 and it is a factor of $10^{3922} + 1$, which is not prime, we can conclude that $x$ is not prime.</code></pre>
+Now assume that the lemma holds for some prime $p$. We want to show that it holds for $p+1$. Let $a$ be an integer. Then
+
+\begin{align*}
+a^{p+1} &amp;\equiv a^p \cdot a \pmod{p+1} \\
+&amp;\equiv 1 \cdot a \pmod{p+1} \\
+&amp;\equiv a \pmod{p+1}.
+\end{align*}
+
+This completes the proof.
+
+Now, let $p=11$. Then $a=10^{1961}$. By the lemma, we have
+
+$$10^{1961} \equiv 1 \pmod{11}.$$
+
+This means that $10^{1961}+1$ is divisible by 11. Therefore, $x$ is not prime.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>$x = 1000...0001$ is not a prime number because it is a factor of $10^{3922} + 1$, which is not prime.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>$10^{1961}+1$ is not prime because it is divisible by 11.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

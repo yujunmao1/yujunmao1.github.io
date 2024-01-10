@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_10</td>
             <td>PaLM 2 Medium</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_10']
-messages = problem.conversations['PaLM 2 Medium|Name w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,30 +81,77 @@ For an antisymmetric polynomial f(x, y) (i.e., f(x, y)=-f(y, x)) of total degree
 
 You may find the following information useful:
 
-1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j. What is the relationship between c_ij and c_ji if f(x, y) is antisymmetric?
-2. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
-3. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x, y) = \sum_{i=0}^n c_{ij} x^i y^j$ be an antisymmetric polynomial of total degree $n$. We know that $c_{ij} = -c_{ji}$ for all $i$ and $j$.
+1. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
+2. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x, y)$ be an antisymmetric polynomial of total degree $n$. We will show that the remainder of $f(x, y)$ divided by $x-y$ is always $0$.
 
-We also know that $x-y$ divides $x^n - y^n$. This is because $x^n - y^n = (x-y)(x^{n-1} + xy^{n-2} + \cdots + y^{n-1})$.
+To prove this, we will use the following lemma:
 
-Now, let $d$ be the remainder of $f(x, y)$ divided by $x-y$. Then $f(x, y) = (x-y)q(x, y) + d$ for some polynomial $q(x, y)$.
+&gt; **Lemma.** Let $f(x, y)$ be a polynomial of total degree $n$. Then $f(x, y)$ can be written in the form
 
-We can write $q(x, y)$ as a sum of monomials of the form $x^i y^j$. For each monomial $x^i y^j$, we have $c_{ij} = -c_{ji}$. This means that the coefficient of $x^i y^j$ in $q(x, y)$ is $c_{ij} + c_{ji} = 0$.
+&gt;
 
-Therefore, the only monomials that can appear in $q(x, y)$ are those of the form $x^i y^0$ and $x^0 y^j$. This means that $q(x, y)$ is a polynomial of the form $q(x, y) = ax^n + by^n$ for some constants $a$ and $b$.
+&gt; $$f(x, y) = \sum_{i=0}^n a_i x^i y^{n-i}$$
 
-Substituting this into the equation $f(x, y) = (x-y)q(x, y) + d$, we get $f(x, y) = (x-y)(ax^n + by^n) + d$.
+&gt;
 
-Expanding the right-hand side, we get $f(x, y) = ax^{n+1} - ay^n + bx^n - by^{n+1} + d$.
+&gt; for some coefficients $a_i$.
 
-Combining like terms, we get $f(x, y) = (a-b)x^{n+1} + (a+b)y^n + d$.
+&gt;
 
-Therefore, the remainder of $f(x, y)$ divided by $x-y$ is $(a-b)x^{n+1} + (a+b)y^n$.
+&gt; **Proof.** We can write $f(x, y)$ as
 
-In conclusion, the possible values of the remainder of $f(x, y)$ divided by $x-y$ are all polynomials of the form $(a-b)x^{n+1} + (a+b)y^n$, where $a$ and $b$ are any constants.</code></pre>
+&gt;
+
+&gt; $$f(x, y) = \sum_{i=0}^n \sum_{j=0}^i {n \choose i} a_{i-j} x^i y^j.$$
+
+&gt;
+
+&gt; The coefficient of $x^i y^{n-i}$ in this expression is
+
+&gt;
+
+&gt; $$\sum_{j=0}^i {n \choose i} a_{i-j} = {n+1 \choose i+1} a_{i-j}.$$
+
+&gt;
+
+&gt; This shows that $f(x, y)$ can be written in the form
+
+&gt;
+
+&gt; $$f(x, y) = \sum_{i=0}^n {n+1 \choose i+1} a_i x^i y^{n-i}.$$
+
+&gt;
+
+&gt; Now, let $d$ be the remainder of $f(x, y)$ divided by $x-y$. Then $d$ is also the remainder of $f(x, y)$ divided by $x^2-y^2$. But $x^2-y^2 = (x-y)(x+y)$, so $d$ is also the remainder of $f(x, y)$ divided by $x+y$.
+
+&gt;
+
+&gt; Let $g(x)$ be the polynomial obtained by dividing $f(x, y)$ by $x+y$. Then $g(x)$ is a polynomial of degree at most $n-1$. But $f(x, y)$ is a polynomial of total degree $n$, so $g(x)=0$. This means that the remainder of $f(x, y)$ divided by $x+y$ is $0$.
+
+&gt;
+
+&gt; Therefore, the remainder of $f(x, y)$ divided by $x-y$ is also $0$.
+
+* * *
+
+Now, let $f(x, y)$ be an antisymmetric polynomial of total degree $n$. Then $f(x, y)$ can be written in the form
+
+$$f(x, y) = \sum_{i=0}^n a_i x^i y^{n-i}$$
+
+for some coefficients $a_i$. The remainder of $f(x, y)$ divided by $x-y$ is $0$. This means that
+
+$$\sum_{i=0}^n a_i x^i y^{n-i} = 0$$
+
+for all $x$. In particular, we can take $x=1$ and $y=0$ to get
+
+$$\sum_{i=0}^n a_i = 0.$$
+
+This means that all the coefficients $a_i$ are $0$. Therefore, $f(x, y)=0$.
+
+In conclusion, the remainder of any antisymmetric polynomial of total degree $n$ divided by $x-y$ is always $0$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of an antisymmetric polynomial $f(x, y)$ of total degree $n$ divided by $x-y$ is a polynomial of the form $(a-b)x^{n+1} + (a+b)y^n$, where $a$ and $b$ are any constants.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of any antisymmetric polynomial of total degree $n$ divided by $x-y$ is always $0$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

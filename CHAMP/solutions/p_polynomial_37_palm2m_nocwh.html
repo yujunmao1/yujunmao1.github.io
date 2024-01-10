@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_37</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> x=16 and x=81</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_37']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,45 +82,20 @@ Find all integer solutions to the equation x^(1/4)+(97-x)^(1/4)=5.
 You may find the following information useful:
 
 1. Let y=x^(1/4) and z=(97-x)^(1/4).
-2. Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).
-3. 264=6*44.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $y=x^{1/4}$ and $z=(97-x)^{1/4}$. Then, we have $y^4+z^4=x+97-x=97$. Also, we have $yz=xy^{3/4}z^{3/4}=x^{3/4}(97-x)^{3/4}=x^{3/4}(97-x)^{1/4}(97-x)^{2/4}=x^{7/4}(97-x)^{2/4}$.
+2. 264=6*44.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Sure, I can help you with that.
 
-Now, let $s_n=x^n+y^n$. Then, we have $s_n=u*s_(n-1)-v*s_(n-2)$, where $u=x+y$ and $v=xy$.
+Let $y=x^{1/4}$ and $z=(97-x)^{1/4}$. Then, we have $y^4+z^4=x+97-x=97$. This implies that $y^4+z^4-97=0$. We can factor this equation as $(y^2+z^2-7)(y^2+z^2+7)=0$. This implies that either $y^2+z^2=7$ or $y^2+z^2=-7$.
 
-Substituting $y=x^{1/4}$ and $z=(97-x)^{1/4}$, we get $s_n=(x+x^{1/4}+(97-x)^{1/4})s_(n-1)-(x^{1/4}(97-x)^{1/4})s_(n-2)$.
+If $y^2+z^2=7$, then $y^2+z^2-4=3$. This implies that either $y^2=3$ or $z^2=3$. If $y^2=3$, then $y=\pm \sqrt{3}$. If $z^2=3$, then $z=\pm \sqrt{3}$. Therefore, the possible values of $y$ and $z$ are $(\sqrt{3}, \sqrt{3})$, $(-\sqrt{3}, -\sqrt{3})$, $(\sqrt{3}, -\sqrt{3})$, and $(-\sqrt{3}, \sqrt{3})$.
 
-We can write this as $s_n=(x+y+z)s_(n-1)-(xy+yz)s_(n-2)$.
+If $y^2+z^2=-7$, then $y^2+z^2+4=-3$. This implies that either $y^2=-4$ or $z^2=-4$. If $y^2=-4$, then $y=\pm 2i$. If $z^2=-4$, then $z=\pm 2i$. Therefore, the possible values of $y$ and $z$ are $(2i, 2i)$, $(-2i, -2i)$, $(2i, -2i)$, and $(-2i, 2i)$.
 
-Now, let $n=1$. Then, we have $s_1=x+y$.
+Now, we need to check whether each of these possible values of $y$ and $z$ satisfies the equation $y+z=5$. If $(y, z)=(\sqrt{3}, \sqrt{3})$, then $y+z=2\sqrt{3}&gt;5$. Therefore, this solution is not valid. If $(y, z)=(-\sqrt{3}, -\sqrt{3})$, then $y+z=-2\sqrt{3}&lt;5$. Therefore, this solution is also not valid. If $(y, z)=(\sqrt{3}, -\sqrt{3})$, then $y+z=3$. Therefore, this solution is valid. If $(y, z)=(-\sqrt{3}, \sqrt{3})$, then $y+z=-3$. Therefore, this solution is also valid.
 
-Substituting $n=1$ into the equation $s_n=(x+y+z)s_(n-1)-(xy+yz)s_(n-2)$, we get $s_1=(x+y+z)s_(0)-(xy+yz)s_(-1)$.
-
-Since $s_0=x$ and $s_{-1}=0$, we get $s_1=(x+y+z)x-(xy+yz)0$.
-
-Simplifying, we get $s_1=x(x+y+z)$.
-
-Now, let $n=2$. Then, we have $s_2=(x+y+z)s_1-(xy+yz)s_0$.
-
-Substituting $n=2$ into the equation $s_n=(x+y+z)s_(n-1)-(xy+yz)s_(n-2)$, we get $s_2=(x+y+z)(x(x+y+z))-(xy+yz)x$.
-
-Simplifying, we get $s_2=x^2(x+y+z)+x(xy+yz)$.
-
-Now, let $n=3$. Then, we have $s_3=(x+y+z)s_2-(xy+yz)s_1$.
-
-Substituting $n=3$ into the equation $s_n=(x+y+z)s_(n-1)-(xy+yz)s_(n-2)$, we get $s_3=(x+y+z)(x^2(x+y+z)+x(xy+yz))-(xy+yz)(x(x+y+z))$.
-
-Simplifying, we get $s_3=x^3(x+y+z)+x^2(xy+yz)+x(xy^2+yz^2)$.
-
-We can continue this process for any value of $n$. We will always get a polynomial in $x$ with coefficients that are integers.
-
-Therefore, the only possible integer solutions to the equation $x^{1/4}+(97-x)^{1/4}=5$ are the values of $x$ that are roots of these polynomials.
-
-We can use a computer to find the roots of these polynomials. The roots are $x=-1$, $x=2$, and $x=43$.
-
-Therefore, the only integer solutions to the equation $x^{1/4}+(97-x)^{1/4}=5$ are $x=-1$, $x=2$, and $x=43$.</code></pre>
+Therefore, the only two integer solutions to the equation $x^{1/4}+(97-x)^{1/4}=5$ are $(x, y, z)=(97, \sqrt{3}, -\sqrt{3})$ and $(x, y, z)=(97, -\sqrt{3}, \sqrt{3})$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only integer solutions to the equation $x^{1/4}+(97-x)^{1/4}=5$ are $x=-1$, $x=2$, and $x=43$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only two integer solutions to the equation $x^{1/4}+(97-x)^{1/4}=5$ are $(x, y, z)=(97, \sqrt{3}, -\sqrt{3})$ and $(x, y, z)=(97, -\sqrt{3}, \sqrt{3})$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_7</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_7']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,39 +81,44 @@ If a, b, c are side lengths of a (possibly degenerate) triangle, then what is th
 
 You may find the following information useful:
 
-1. a, b, c are the sides of a (possibly degenerate) triangle if and only if a+b≥s, b+c≥s, a+c≥s for semi-perimeter s=(a+b+c)/2. The triangle is not degenerate if and only if all inequalities are strict.
-2. Compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the given information and the concept of the triangle inequality. Let&#x27;s denote the semi-perimeter by \( s = \frac{a+b+c}{2} \).
+1. Compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the fact that for a triangle with side lengths \(a\), \(b\), and \(c\), the triangle inequality must hold, which states that the sum of the lengths of any two sides must be greater than the length of the remaining side. This gives us:
 
-We are given that for a non-degenerate triangle, the following strict inequalities hold:
-\[ a + b &gt; c, \]
-\[ b + c &gt; a, \]
-\[ a + c &gt; b. \]
+\[ a + b &gt; c \]
+\[ a + c &gt; b \]
+\[ b + c &gt; a \]
 
-For a degenerate triangle, these inequalities are not strict, meaning they can be equal:
-\[ a + b \geq c, \]
-\[ b + c \geq a, \]
-\[ a + c \geq b. \]
+Now, let&#x27;s consider the expression we want to maximize:
 
-We want to maximize the expression:
-\[ \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b}. \]
+\[ \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \]
 
-Let&#x27;s compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter \( s \):
-\[ \frac{a}{b+c} \leq \frac{a}{s}, \]
-\[ \frac{b}{a+c} \leq \frac{b}{s}, \]
-\[ \frac{c}{a+b} \leq \frac{c}{s}. \]
+Let \(s\) be the semi-perimeter of the triangle, which is given by:
+
+\[ s = \frac{a + b + c}{2} \]
+
+Now, let&#x27;s compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter \(s\):
+
+\[ \frac{a}{b+c} \leq \frac{a}{s} \]
+\[ \frac{b}{a+c} \leq \frac{b}{s} \]
+\[ \frac{c}{a+b} \leq \frac{c}{s} \]
+
+The inequalities hold because \(s\) is greater than \(b+c\), \(a+c\), and \(a+b\) respectively, due to the triangle inequality.
 
 Adding these inequalities together, we get:
-\[ \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \leq \frac{a}{s} + \frac{b}{s} + \frac{c}{s} = \frac{a+b+c}{s}. \]
 
-Since \( s = \frac{a+b+c}{2} \), we have:
-\[ \frac{a+b+c}{s} = \frac{a+b+c}{\frac{a+b+c}{2}} = 2. \]
+\[ \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \leq \frac{a}{s} + \frac{b}{s} + \frac{c}{s} \]
 
-Therefore, the maximum value of the expression is 2, and this maximum is achieved when the triangle is degenerate, meaning one of the sides is equal to the sum of the other two sides (e.g., when \( a = b + c \), \( b = a + c \), or \( c = a + b \)).
+Simplifying the right side, we have:
 
-Thus, the largest value of \( \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \) is 2.</code></pre>
+\[ \frac{a}{s} + \frac{b}{s} + \frac{c}{s} = \frac{a + b + c}{s} = \frac{2s}{s} = 2 \]
+
+Therefore, the largest value of the expression \(\frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b}\) is \(2\), and this maximum is achieved when the triangle degenerates into a straight line, which means one of the sides equals the sum of the other two (e.g., \(a = b + c\)).
+
+Thus, the final answer is:
+
+\[ \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \leq 2 \]</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression \( \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \) for side lengths \( a \), \( b \), and \( c \) of a (possibly degenerate) triangle is 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression \( \frac{a}{b+c} + \frac{b}{a+c} + \frac{c}{a+b} \) for side lengths \(a\), \(b\), and \(c\) of a (possibly degenerate) triangle is \(2\).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_4</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 (none of the values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_4']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,25 +82,24 @@ Let P(x)=x^(2n)-2x^(2n-1)+3x^(2n-2)-4x^(2n-3)+...-2nx+2n+1. For how many values 
 You may find the following information useful:
 
 1. Study the positivity of P(x) when x≤0.
-2. For x&gt;0, study the positivity of x*P(x)+P(x).
-3. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).</code></pre>
+2. For x&gt;0, study the positivity of x*P(x)+P(x).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by studying the positivity of P(x) when x≤0.
 
-For x≤0, all terms in P(x) are non-positive, except the last term 1, which is positive. Therefore, P(x)≤1 for x≤0. This means that P(x) has at least one real root for x≤0.
+For x≤0, the terms of P(x) are alternating in sign, starting with a positive term. Since the absolute value of each term is increasing as we move from right to left, the sum of the terms is positive. Therefore, P(x)&gt;0 for x≤0.
 
 Next, let&#x27;s study the positivity of x*P(x)+P(x) for x&gt;0.
 
-x*P(x)+P(x) = x^(2n+1)-2x^(2n)+3x^(2n-1)-4x^(2n-2)+...-2n*x^2+2n*x+2n+1.
+x*P(x)+P(x) = x^(2n+1)-2x^(2n)+3x^(2n-1)-4x^(2n-2)+...-2n*x^2+2n*x+2P(x)
 
-This is a polynomial of degree 2n+1, and its leading coefficient is positive. Therefore, for large enough x, x*P(x)+P(x) is positive. 
+= x^(2n+1)-2x^(2n)+3x^(2n-1)-4x^(2n-2)+...-2n*x^2+2n*x+x^(2n)-2x^(2n-1)+3x^(2n-2)-4x^(2n-3)+...-2n*x+2n+1
 
-However, we know that x*P(x)+P(x) is negative for x=0. Therefore, by continuity, there must be a root of x*P(x)+P(x) in the interval (0,∞). 
+= 2x^(2n+1)-4x^(2n)+6x^(2n-1)-8x^(2n-2)+...-4n*x^2+4n*x+2n+1
 
-Since x*P(x)+P(x) = P(x)*(x+1), this means that P(x) has a root in the interval (0,∞).
+This is a polynomial of degree 2n+1 with positive coefficients, so it is positive for x&gt;0.
 
-Therefore, P(x) has at least one real root for all n∈{1, 2, ..., 100}. So, the answer is 100.</code></pre>
+Therefore, P(x) has no real roots for any x, and the answer to the question is 0. For no values of n in {1, 2, ..., 100} does P(x) have at least one real-valued root.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial P(x) has at least one real root for all values of n from 1 to 100, so the answer is 100.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For no values of n in {1, 2, ..., 100} does the polynomial P(x) have at least one real-valued root.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

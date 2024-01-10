@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_15</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_15']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,25 +81,32 @@ Find the minimum value of a^4+b^4+c^4-a^2*bc-b^2*ac-c^2*ab for positive numbers 
 
 You may find the following information useful:
 
-1. Consider a^4=(a^2)*a*a, b^4=(b^2)*b*b, c^4=(c^2)*c*c.
-2. For real numbers a_(1,1)≤...≤a_(1,n), a_(2,1)≤...≤a_(2,n), ..., a_(m,1)≤...≤a_(m,n), we have a_(1,1)*a_(2,1)*...*a_(m,1)+...+a_(1,n)*a_(2,n)*...*a_(m,n)≥a_(1,1)*b_(2,1)*...*b_(m,1)+...+a_(1,n)*b_(2,n)*...*b_(m,n), where (b_(i,1), ..., b_(i, n)) is a permutation of (a_(i,1), ..., a_(i, n)) for i=2, 3, ..., m. More generally, the sum achieves the maximum value when all the sequences (a_(i,1),..., a_(i,n)) are sorted in the same way.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem is asking for the minimum value of the expression a^4+b^4+c^4-a^2*bc-b^2*ac-c^2*ab for positive numbers a, b, c.
+1. Consider a^4=(a^2)*a*a, b^4=(b^2)*b*b, c^4=(c^2)*c*c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem can be solved using the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), which states that the arithmetic mean of a set of non-negative numbers is always greater than or equal to the geometric mean of the same set. 
 
-We can rewrite the expression as follows:
+Let&#x27;s rewrite the given expression as follows:
 
-a^4+b^4+c^4-a^2*bc-b^2*ac-c^2*ab = (a^2)^2+(b^2)^2+(c^2)^2 - a^2*bc - b^2*ac - c^2*ab
+a^4 + b^4 + c^4 - a^2*bc - b^2*ac - c^2*ab
+= a^4 + b^4 + c^4 - 2*a^2*bc/2 - 2*b^2*ac/2 - 2*c^2*ab/2
+= a^4 + b^4 + c^4 - (a^2*sqrt(b*c))^2 - (b^2*sqrt(a*c))^2 - (c^2*sqrt(a*b))^2
 
-This is in the form of a^2+b^2+c^2-2ab-2bc-2ca, which is equivalent to (a-b)^2+(b-c)^2+(c-a)^2.
+Now, we can apply the AM-GM inequality to each pair of terms:
 
-So, the expression can be rewritten as:
+a^4 + (a^2*sqrt(b*c))^2 ≥ 2*a^2*a^2*sqrt(b*c) = 2*a^4*sqrt(b*c)
+b^4 + (b^2*sqrt(a*c))^2 ≥ 2*b^2*b^2*sqrt(a*c) = 2*b^4*sqrt(a*c)
+c^4 + (c^2*sqrt(a*b))^2 ≥ 2*c^2*c^2*sqrt(a*b) = 2*c^4*sqrt(a*b)
 
-(a^2-bc)^2 + (b^2-ac)^2 + (c^2-ab)^2
+Adding these inequalities together, we get:
 
-Since squares of real numbers are always non-negative, the minimum value of each term in the expression is 0. Therefore, the minimum value of the entire expression is 0.
+a^4 + b^4 + c^4 - (a^2*sqrt(b*c))^2 - (b^2*sqrt(a*c))^2 - (c^2*sqrt(a*b))^2 ≥ 2*a^4*sqrt(b*c) + 2*b^4*sqrt(a*c) + 2*c^4*sqrt(a*b)
 
-This minimum value is achieved when a^2=bc, b^2=ac, and c^2=ab. These equations imply that a=b=c, which are positive numbers.</code></pre>
+This inequality simplifies to:
+
+a^4 + b^4 + c^4 - a^2*bc - b^2*ac - c^2*ab ≥ 0
+
+Therefore, the minimum value of the given expression is 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression a^4+b^4+c^4-a^2*bc-b^2*ac-c^2*ab for positive numbers a, b, c is 0, which is achieved when a=b=c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression a^4 + b^4 + c^4 - a^2*bc - b^2*ac - c^2*ab for positive numbers a, b, c is 0.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_28</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 164</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_28']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,46 +83,40 @@ You may find the following information useful:
 
 1. Let f(n) be the number of length-n strings that end with 1 and g(n) be the number of length-n strings that end with either 2 or 3.
 2. Find f(n+1) in terms of f(n) and g(n).
-3. Find g(n+1) in terms of f(n) and g(n).
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+3. Find g(n+1) in terms of f(n) and g(n).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by defining the functions f(n) and g(n) as given:
 
-f(n) is the number of length-n strings that end with 1.
+f(n) is the number of length-n strings that end with 1 and no two 1s are neighbors.
 g(n) is the number of length-n strings that end with either 2 or 3.
 
-We want to find f(n+1) and g(n+1) in terms of f(n) and g(n).
+We can start by finding the base cases:
 
-Since no two 1s can be neighbors, a string of length n+1 that ends with 1 must have been a string of length n that ended with either 2 or 3. Therefore, we have:
+f(1) = 1, because the only string of length 1 that ends with 1 is &quot;1&quot;.
+g(1) = 2, because the strings of length 1 that end with 2 or 3 are &quot;2&quot; and &quot;3&quot;.
 
-f(n+1) = g(n)
+Now, let&#x27;s find f(n+1) and g(n+1) in terms of f(n) and g(n):
 
-A string of length n+1 that ends with either 2 or 3 could have been a string of length n that ended with 1, 2, or 3. Therefore, we have:
+f(n+1) is the number of length-(n+1) strings that end with 1. We can get such a string by appending a &quot;1&quot; to any string of length n that ends with 2 or 3. Therefore, f(n+1) = g(n).
 
-g(n+1) = f(n) + g(n)
+g(n+1) is the number of length-(n+1) strings that end with 2 or 3. We can get such a string by appending a &quot;2&quot; or &quot;3&quot; to any string of length n, regardless of whether it ends with 1, 2, or 3. Therefore, g(n+1) = 2*f(n) + 2*g(n).
 
-Now, we need to find the number of strings of length 5. We start with the base cases:
-
-f(1) = 1 (the string &quot;1&quot;)
-g(1) = 2 (the strings &quot;2&quot; and &quot;3&quot;)
-
-We can then use our recurrence relations to find f(2), g(2), f(3), g(3), f(4), g(4), and finally f(5) and g(5):
+Now, we can use these recurrence relations to find f(5) and g(5):
 
 f(2) = g(1) = 2
-g(2) = f(1) + g(1) = 1 + 2 = 3
+g(2) = 2*f(1) + 2*g(1) = 2*1 + 2*2 = 6
 
-f(3) = g(2) = 3
-g(3) = f(2) + g(2) = 2 + 3 = 5
+f(3) = g(2) = 6
+g(3) = 2*f(2) + 2*g(2) = 2*2 + 2*6 = 16
 
-f(4) = g(3) = 5
-g(4) = f(3) + g(3) = 3 + 5 = 8
+f(4) = g(3) = 16
+g(4) = 2*f(3) + 2*g(3) = 2*6 + 2*16 = 44
 
-f(5) = g(4) = 8
-g(5) = f(4) + g(4) = 5 + 8 = 13
+f(5) = g(4) = 44
+g(5) = 2*f(4) + 2*g(4) = 2*16 + 2*44 = 120
 
-The total number of strings of length 5 is then f(5) + g(5) = 8 + 13 = 21.</code></pre>
+The total number of length-5 strings where no two 1s are neighbors is f(5) + g(5) = 44 + 120 = 164.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings consisting of 5 digits of 1, 2, and 3 where no two 1s are neighbors is 21.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings consisting of 5 digits of 1, 2 and 3 where no two 1s are neighbors is 164.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

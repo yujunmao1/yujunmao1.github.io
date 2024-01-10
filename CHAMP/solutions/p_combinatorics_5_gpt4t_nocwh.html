@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_5</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_5']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,30 +82,29 @@ How many subsets of {1, 2,..., 10} have no two successive numbers?
 You may find the following information useful:
 
 1. Consider a string of 0s and 1s, where a digit 1 at i-th place means that i is included in the subset. Find the constraint on the string.
-2. Let P(n) be the number of such strings of length n and express P(n) as P(n-1) and P(n-2).
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will follow the steps outlined in the information provided.
+2. Let P(n) be the number of such strings of length n and express P(n) as P(n-1) and P(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the hint provided and consider a string of 0s and 1s, where a digit 1 at the i-th place means that the number i is included in the subset, and a digit 0 means that it is not included.
 
-1. We consider a string of 0s and 1s of length 10, where a 1 at the i-th place means that the number i is included in the subset. The constraint on the string is that no two 1s can be adjacent, as this would mean that two successive numbers are included in the subset, which is not allowed.
+The constraint on the string is that we cannot have two successive 1s because that would mean we have two successive numbers in the subset, which is not allowed.
 
-2. Let P(n) be the number of such strings of length n. To express P(n) in terms of P(n-1) and P(n-2), we consider two cases for the last digit of the string:
+Let&#x27;s denote P(n) as the number of such strings of length n that satisfy the constraint. We want to find P(10) since our set is {1, 2, ..., 10}.
 
-   - If the last digit is a 0, then the string of length n-1 preceding it can be any string that satisfies the condition (no two 1s are adjacent). There are P(n-1) such strings.
-   - If the last digit is a 1, then the second-to-last digit must be a 0 to satisfy the condition. This means that the string of length n-2 preceding the last two digits (10) can be any string that satisfies the condition. There are P(n-2) such strings.
+To find a recursive formula for P(n), let&#x27;s consider the two possibilities for the last digit in a string of length n:
 
-Therefore, we have the recurrence relation:
+1. If the last digit is 0, then the preceding n-1 digits can be any string that satisfies the constraint. Therefore, there are P(n-1) such strings.
+
+2. If the last digit is 1, then the second-to-last digit must be 0 (to satisfy the constraint of no two successive 1s). The preceding n-2 digits can be any string that satisfies the constraint. Therefore, there are P(n-2) such strings.
+
+Combining these two cases, we get the recursive formula:
 P(n) = P(n-1) + P(n-2)
 
-3. To find the total number of ways to perform the action (in this case, to form the string), we sum the number of ways to perform each action (either ending with a 0 or ending with a 10).
+Now, we need to find the base cases. For n = 1, there are two possible strings: &quot;0&quot; and &quot;1&quot;. So P(1) = 2.
 
-Now, we need to find the initial conditions for our recurrence relation. We can easily see that:
+For n = 2, there are three possible strings: &quot;00&quot;, &quot;01&quot;, and &quot;10&quot;. So P(2) = 3.
 
-- P(1) = 2, because we can have either a 0 or a 1.
-- P(2) = 3, because we can have 00, 01, or 10, but not 11.
+Now we can use the recursive formula to find P(10):
 
-Now we can use the recurrence relation to find P(10):
-
-P(3) = P(2) + P(1) = 3 + 2 = 5 (possible strings: 000, 001, 010, 100, 101)
+P(3) = P(2) + P(1) = 3 + 2 = 5
 P(4) = P(3) + P(2) = 5 + 3 = 8
 P(5) = P(4) + P(3) = 8 + 5 = 13
 P(6) = P(5) + P(4) = 13 + 8 = 21
@@ -114,7 +113,7 @@ P(8) = P(7) + P(6) = 34 + 21 = 55
 P(9) = P(8) + P(7) = 55 + 34 = 89
 P(10) = P(9) + P(8) = 89 + 55 = 144
 
-Therefore, there are 144 subsets of {1, 2, ..., 10} that contain no two successive numbers.</code></pre>
+Therefore, there are 144 subsets of {1, 2, ..., 10} that have no two successive numbers.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 144 subsets of the set {1, 2, ..., 10} that contain no two successive numbers.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_30</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_30']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,18 +82,38 @@ What are possible values of n mod k if x^n-y^n is divisible by x^k-y^k for integ
 You may find the following information useful:
 
 1. Let n=kq+r.
-2. Add and subtract y^(kq)*x^r to x^n-y^n.
-3. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
-4. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $n=kq+r$, where $0\leq r&lt;k$. Then,
-\begin{align*}
-x^n-y^n &amp;= x^{kq+r}-y^{kq+r} \\
-&amp;= (x^k)^q(x^r) - (y^k)^q(y^r) \\
-&amp;= (x^k-y^k)(x^{kq-1}x^r + x^{kq-2}y^r + \cdots + y^{kq-1}x^r + y^r) \\
-&amp;= (x^k-y^k)(x^{kq-1}(x^r+y^r) + x^{kq-2}(x^r-y^r) + \cdots + (-1)^{kq-1}x^r + (-1)^k y^r)).
-\end{align*}Since $x^k-y^k$ divides $x^n-y^n$, and $x^k-y^k$ is a polynomial of degree $k$, then $x^r+y^r$, $x^r-y^r$, $\cdots$, $(-1)^{kq-1}x^r + (-1)^k y^r$ must all be divisible by $x^k-y^k$. This means that $r$ must be a multiple of $k$, or $r=kq$ for some integer $q$. Therefore, the possible values of $n$ modulo $k$ are $n=kq$ for any integer $q$.</code></pre>
+2. Add and subtract y^(kq)*x^r to x^n-y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $x^n-y^n$ is divisible by $x^k-y^k$ for integers $n$ and $k$. We can write $n=kq+r$ for some integer $r$, where $0 \leq r &lt; k$. Adding and subtracting $y^{kq}x^r$ to $x^n-y^n$, we get
+
+$$x^n-y^n = y^{kq}x^r(x^{n-kq}-1)$$
+
+Since $x^n-y^n$ is divisible by $x^k-y^k$, we know that $x^{n-kq}-1$ is divisible by $x^k-y^k$. This means that $n-kq$ is a multiple of $k$, or $n = kq+r$ for some integer $r$. Therefore, the possible values of $n$ modulo $k$ are $0$, $k$, $2k$, $\dots$.
+
+Here is a more detailed solution:
+
+We know that $x^n-y^n$ is divisible by $x^k-y^k$. This means that there exists an integer $m$ such that
+
+$$x^n-y^n = m(x^k-y^k)$$
+
+We can factor the right-hand side as follows:
+
+$$x^k-y^k = (x-y)(x^{k-1}+xy^{k-2}+\dots+y^{k-1})$$
+
+Substituting this into the equation above, we get
+
+$$x^n-y^n = m(x-y)(x^{k-1}+xy^{k-2}+\dots+y^{k-1})$$
+
+We can divide both sides of this equation by $x-y$ to get
+
+$$x^{n-1}+xy^{n-2}+\dots+y^{n-1} = m(x^{k-2}+xy^{k-3}+\dots+y^{k-1})$$
+
+We can continue this process, dividing both sides by $x$, then by $y$, and so on. Eventually, we will get
+
+$$x^r+xy^{r-1}+\dots+y^r = m$$
+
+for some integer $r$. This means that $x^r-y^r$ is divisible by $m$. Since $m$ is a multiple of $x^k-y^k$, we know that $r$ is a multiple of $k$. Therefore, the possible values of $n$ modulo $k$ are $0$, $k$, $2k$, $\dots$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $n$ modulo $k$ are $n=kq$ for any integer $q$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $n$ modulo $k$ are $0$, $k$, $2k$, $\dots$, if $x^n-y^n$ is divisible by $x^k-y^k$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

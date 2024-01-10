@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_20</td>
+            <td>GPT-4</td>
+            <td>Direct C w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load('v0')
+problem = dataset['P_Sequence_20']
+messages = problem.conversations['GPT-4|Direct C w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let a_n be the number of all permutations p of {1, ..., n} with |p(i)−i|≤1 for all i. Find a_10.
+
+You may find the following information useful:
+
+1. Find an expression for a_n in terms of a_(n-1) and a_(n-2).
+2. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem is a classic example of a problem that can be solved using recursion and dynamic programming. 
+
+First, let&#x27;s find an expression for a_n in terms of a_(n-1) and a_(n-2). 
+
+Consider the last position in the permutation. There are two cases:
+
+1. The number in the last position is n. In this case, the first n-1 numbers can be arranged in a_(n-1) ways, because they form a valid permutation of {1, ..., n-1} with the same property.
+
+2. The number in the last position is not n. Then it must be n-1, because |p(i)−i|≤1 for all i. In this case, n must be in the (n-1)th position, and the first n-2 numbers can be arranged in a_(n-2) ways, because they form a valid permutation of {1, ..., n-2} with the same property.
+
+Therefore, we have the recursion relation a_n = a_(n-1) + a_(n-2).
+
+Now, we need to find the base cases. 
+
+For n=1, there is only one permutation, which is {1}, so a_1 = 1.
+
+For n=2, there are two valid permutations, which are {1, 2} and {2, 1}, so a_2 = 2.
+
+Now, we can use the recursion relation and the base cases to find a_10.
+
+a_3 = a_2 + a_1 = 2 + 1 = 3
+a_4 = a_3 + a_2 = 3 + 2 = 5
+a_5 = a_4 + a_3 = 5 + 3 = 8
+a_6 = a_5 + a_4 = 8 + 5 = 13
+a_7 = a_6 + a_5 = 13 + 8 = 21
+a_8 = a_7 + a_6 = 21 + 13 = 34
+a_9 = a_8 + a_7 = 34 + 21 = 55
+a_10 = a_9 + a_8 = 55 + 34 = 89
+
+So, a_10 = 89.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of all permutations p of {1, ..., 10} with |p(i)−i|≤1 for all i, denoted as a_10, is 89.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

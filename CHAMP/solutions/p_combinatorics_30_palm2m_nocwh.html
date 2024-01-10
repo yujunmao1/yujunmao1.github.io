@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_30</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2001000</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_30']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,26 +82,30 @@ When (x+y+z)^1999 is expanded and like terms are collected (e.g., collecting 2*x
 You may find the following information useful:
 
 1. Study the condition on a, b, c for the term x^a*y^b*z^c to appear in the expansion.
-2. For any given value of c, how many possible values can (a, b) take?
-3. 1+2+...+n=n(n+1)/2.
-4. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of terms in the expansion of $(x+y+z)^{1999}$ is the same as the number of ways to choose 3 numbers from 1999 numbers, without replacement. This is equal to $\binom{1999}{3} = \frac{1999!}{3!1996!} = \frac{1999 \times 1998 \times 1997}{6} \approx 1.33 \times 10^{67}$.
+2. For any given value of c, how many possible values can (a, b) take?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of terms in the expansion of $(x+y+z)^{1999}$ is the same as the number of ways to choose $1999$ objects from a set of $3$ objects, which is $3^{1999}$.
 
-To see this, note that each term in the expansion corresponds to a unique triple $(a, b, c)$ of non-negative integers such that $a+b+c=1999$. For example, the term $x^2 y^3 z^4$ corresponds to the triple $(2, 3, 4)$.
+To see this, note that each term in the expansion corresponds to a unique way of choosing $1999$ positions from the $3$ positions in the binomial coefficient $\binom{3}{1999}$. For example, the term $x^{1999}y^0z^0$ corresponds to the choice of all $1999$ positions from the first position in the binomial coefficient, the term $x^{1998}y^1z^0$ corresponds to the choice of the first $1998$ positions from the first position and the last position in the binomial coefficient, and so on.
 
-The number of ways to choose 3 numbers from 1999 numbers is equal to the number of ways to arrange 1999 objects in a row, then choose 3 of them to be in the first 3 positions. This is equal to $\frac{1999!}{3!1996!}$.
+Since there are $3^{1999}$ ways to choose $1999$ objects from a set of $3$ objects, there are also $3^{1999}$ terms in the expansion of $(x+y+z)^{1999}$.
 
-We can also count the number of terms in the expansion by considering the coefficient of each term. The coefficient of the term $x^a y^b z^c$ is equal to $\binom{1999}{a, b, c}$, which is the number of ways to choose $a$ numbers from the first 1999 numbers, $b$ numbers from the next 1999-a numbers, and $c$ numbers from the last 1999-a-b numbers.
+Here is a more detailed explanation of the above argument.
 
-The total number of terms is then equal to the sum of all the coefficients, which is equal to $\sum_{a=0}^{1999} \sum_{b=0}^{1999-a} \sum_{c=0}^{1999-a-b} \binom{1999}{a, b, c} = \frac{1999!}{3!1996!}$.
+The expansion of $(x+y+z)^{1999}$ can be written as
 
-Finally, we can also count the number of terms by considering the number of ways to partition 1999 into 3 parts. This is equal to the number of ways to arrange 1999 objects in a row, then choose 3 places to put dividers between them. This is equal to $\frac{1999!}{3!}$.
+$$(x+y+z)^{1999} = \sum_{a=0}^{1999} \binom{1999}{a} x^a y^{1999-a} z^a.$$
 
-We can see that this is the same as the number of terms in the expansion by considering the following example. The term $x^2 y^3 z^4$ corresponds to the partition $(1, 1, 1996)$. The term $x^3 y^2 z^4$ corresponds to the partition $(2, 2, 1995)$. And so on.
+The binomial coefficient $\binom{1999}{a}$ is the number of ways to choose $a$ objects from a set of $1999$ objects. It can be calculated using the formula
 
-Therefore, the number of terms in the expansion of $(x+y+z)^{1999}$ is $\frac{1999!}{3!1996!} \approx 1.33 \times 10^{67}$.</code></pre>
+$$\binom{n}{k} = \frac{n!}{k!(n-k)!}$$
+
+where $n$ is the number of objects and $k$ is the number of objects to be chosen.
+
+The term $x^a y^{1999-a} z^a$ in the expansion corresponds to the choice of $a$ objects from the set $\\{x, y, z\\}$ and $1999-a$ objects from the set $\\{x, y, z\\}$. There are $\binom{1999}{a}$ ways to make this choice.
+
+Therefore, there are $3^{1999}$ terms in the expansion of $(x+y+z)^{1999}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of terms in the expansion of $(x+y+z)^{1999}$ is $\frac{1999!}{3!1996!} \approx 1.33 \times 10^{67}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $3^{1999}$ terms in the expansion of $(x+y+z)^{1999}$ because there are $3^{1999}$ ways to choose $1999$ objects from a set of $3$ objects.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

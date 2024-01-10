@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_40</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2 inequalities</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_40']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,29 +83,34 @@ You may find the following information useful:
 
 1. Find an assignment of a, b, c that makes two inequalities true.
 2. Study whether all inequalities can be true by multiplying all of them together.
-3. Find the maximum value of a(1-a), b(1-b), c(1-c).
-4. For any real number a, a^2≥0. </code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c$ be positive numbers. We want to find the maximum number of inequalities among $a(1-b) &gt; \frac{1}{4}, b(1-c) &gt; \frac{1}{4}, c(1-a) &gt; \frac{1}{4}$ that can be true at the same time.
+3. Find the maximum value of a(1-a), b(1-b), c(1-c).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c$ be positive numbers. We want to find the maximum number of inequalities $a(1-b) &gt; \frac{1}{4}, b(1-c) &gt; \frac{1}{4}, c(1-a) &gt; \frac{1}{4}$ that can be true at the same time.
 
 We can multiply all three inequalities together to get $a(1-b)(1-c) &gt; \frac{1}{16}$. This inequality is true if and only if $a(1-b)(1-c) \geq \frac{1}{16}$.
 
-We can see that $a(1-b)(1-c)$ is maximized when $a=b=c=\frac{1}{2}$. In this case, $a(1-b)(1-c) = \frac{1}{8}$.
+The maximum value of $a(1-b)(1-c)$ is achieved when $a=b=c=\frac{1}{2}$. In this case, $a(1-b)(1-c) = \frac{1}{8}$. Therefore, the maximum number of inequalities that can be true at the same time is $\boxed{2}$.
 
-Therefore, the maximum number of inequalities that can be true at the same time is $\boxed{2}$.
-
-Here is a proof that $a(1-b)(1-c) \geq \frac{1}{16}$ when $a, b, c$ are positive numbers.
+Here is a proof that the maximum value of $a(1-b)(1-c)$ is $\frac{1}{8}$. Let $a, b, c$ be positive numbers. We want to show that $a(1-b)(1-c) \leq \frac{1}{8}$.
 
 We can write $a(1-b)(1-c)$ as follows:
 
-$$a(1-b)(1-c) = a(1-b) + a(1-c) - ab + abc - ac - bc + abc$$
+$$a(1-b)(1-c) = a(1-b) + a(1-c) - ab - ac + bc - abc.$$
 
-We know that $a, b, c$ are positive numbers. Therefore, $a(1-b) \geq 0$, $a(1-c) \geq 0$, $ab \geq 0$, $ac \geq 0$, $bc \geq 0$, and $abc \geq 0$.
+The first term, $a(1-b)$, is non-negative since $a$ and $b$ are positive. The second term, $a(1-c)$, is also non-negative since $a$ and $c$ are positive. The third term, $ab$, is non-negative since $a$ and $b$ are positive. The fourth term, $ac$, is also non-negative since $a$ and $c$ are positive. The fifth term, $bc$, is non-negative since $b$ and $c$ are positive. The sixth term, $abc$, is non-negative since $a, b, c$ are positive.
 
-Therefore, $a(1-b)(1-c) \geq a(1-b) + a(1-c) - ab + abc - ac - bc + abc = 1$.
+Therefore, $a(1-b)(1-c) \leq a(1-b) + a(1-c) + ab + ac + bc - abc$.
 
-Since $1 \geq \frac{1}{16}$, we have $a(1-b)(1-c) \geq \frac{1}{16}$.</code></pre>
+We can further simplify this inequality as follows:
+
+$$a(1-b)(1-c) \leq \frac{a+b+c}{2}.$$
+
+Since $a, b, c$ are positive, we have $a+b+c \geq 3$. Therefore, $a(1-b)(1-c) \leq \frac{3}{2}$.
+
+Finally, we can divide both sides of the inequality by $2$ to get $a(1-b)(1-c) \leq \frac{1}{2}$.
+
+Therefore, the maximum value of $a(1-b)(1-c)$ is $\frac{1}{8}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most two of the three inequalities $a(1-b) &gt; \frac{1}{4}, b(1-c) &gt; \frac{1}{4}, c(1-a) &gt; \frac{1}{4}$ can be true at the same time.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum number of inequalities $a(1-b) &gt; \frac{1}{4}, b(1-c) &gt; \frac{1}{4}, c(1-a) &gt; \frac{1}{4}$ that can be true at the same time is 2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

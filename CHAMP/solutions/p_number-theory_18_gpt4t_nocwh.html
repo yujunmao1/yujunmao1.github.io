@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_18</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> No integer solutions</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_18']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,28 +81,80 @@ Find all integer solutions to the equation x^2-3y^2=17.
 
 You may find the following information useful:
 
-1. Consider the equation modulo 3.
-2. For integer n, n^2 mod 3 is either 0 or 1.
-3. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s solve the Diophantine equation \( x^2 - 3y^2 = 17 \) for integer solutions.
+1. Consider the equation modulo 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation \( x^2 - 3y^2 = 17 \) for integer solutions, let&#x27;s first consider the equation modulo 3.
 
-First, we consider the equation modulo 3 to gain some insight:
+Taking the equation modulo 3, we get:
+\[ x^2 \equiv 17 \pmod{3} \]
 
-\[ x^2 - 3y^2 \equiv 17 \mod 3 \]
+Since 17 is congruent to 2 modulo 3 (because 17 = 3 * 5 + 2), we can rewrite the equation as:
+\[ x^2 \equiv 2 \pmod{3} \]
 
-Using the properties of modular arithmetic, we know that \( n^2 \mod 3 \) is either 0 or 1 for any integer \( n \). Also, \( 17 \mod 3 \equiv 2 \mod 3 \). Therefore, we have:
+Now, let&#x27;s look at the possible squares modulo 3. The squares of the integers modulo 3 are 0, 1, and 4, which are congruent to 0 and 1 modulo 3. There is no integer whose square is congruent to 2 modulo 3. Therefore, there are no integer solutions for \( x \) that would satisfy \( x^2 \equiv 2 \pmod{3} \).
 
-\[ x^2 \mod 3 - 3y^2 \mod 3 \equiv 2 \mod 3 \]
+However, we must be careful here. The original equation is \( x^2 - 3y^2 = 17 \), and we have not considered the term \( -3y^2 \). Let&#x27;s include that term and reconsider the equation modulo 3:
 
-Since \( 3y^2 \mod 3 \equiv 0 \mod 3 \) (because any multiple of 3 is congruent to 0 modulo 3), we can simplify the equation to:
+\[ x^2 - 3y^2 \equiv 17 \pmod{3} \]
+\[ x^2 - 0 \equiv 2 \pmod{3} \]
+\[ x^2 \equiv 2 \pmod{3} \]
 
-\[ x^2 \mod 3 \equiv 2 \mod 3 \]
+The term \( -3y^2 \) is always congruent to 0 modulo 3 because it is a multiple of 3. Therefore, our previous conclusion still stands: there are no integer solutions for \( x \) that would satisfy \( x^2 \equiv 2 \pmod{3} \).
 
-However, since \( x^2 \mod 3 \) can only be 0 or 1, there is no integer \( x \) such that \( x^2 \mod 3 \equiv 2 \mod 3 \). This means that there are no integer solutions to the equation \( x^2 - 3y^2 = 17 \) when considered modulo 3.
+Now, let&#x27;s try to find solutions by another method. We can rewrite the original equation as a Pell-like equation:
 
-Therefore, the equation \( x^2 - 3y^2 = 17 \) has no integer solutions.</code></pre>
+\[ x^2 - 3y^2 = 17 \]
+
+This is similar to a Pell&#x27;s equation, which has the form \( x^2 - Dy^2 = 1 \), where \( D \) is a non-square integer. Our equation has \( D = 3 \) and the right-hand side is 17 instead of 1.
+
+To find solutions to this equation, we can start by finding the fundamental solution to the related equation \( x^2 - 3y^2 = 1 \). This is done by finding the continued fraction expansion of \( \sqrt{3} \), but since we are looking for integer solutions to our original equation, we can try to find solutions by inspection or by using a systematic approach to generate solutions from the fundamental solution of the related equation.
+
+Let&#x27;s try to find solutions by inspection. We are looking for integer values of \( x \) and \( y \) such that \( x^2 - 3y^2 = 17 \). We can start by trying small values of \( y \) and checking if \( x^2 \) is a perfect square:
+
+For \( y = 1 \):
+\[ x^2 - 3(1)^2 = x^2 - 3 = 17 \]
+\[ x^2 = 20 \]
+This is not a perfect square, so \( y = 1 \) does not give us an integer solution.
+
+For \( y = 2 \):
+\[ x^2 - 3(2)^2 = x^2 - 12 = 17 \]
+\[ x^2 = 29 \]
+This is not a perfect square, so \( y = 2 \) does not give us an integer solution.
+
+For \( y = 3 \):
+\[ x^2 - 3(3)^2 = x^2 - 27 = 17 \]
+\[ x^2 = 44 \]
+This is not a perfect square, so \( y = 3 \) does not give us an integer solution.
+
+For \( y = 4 \):
+\[ x^2 - 3(4)^2 = x^2 - 48 = 17 \]
+\[ x^2 = 65 \]
+This is not a perfect square, so \( y = 4 \) does not give us an integer solution.
+
+For \( y = 5 \):
+\[ x^2 - 3(5)^2 = x^2 - 75 = 17 \]
+\[ x^2 = 92 \]
+This is not a perfect square, so \( y = 5 \) does not give us an integer solution.
+
+Continuing this process, we eventually find:
+
+For \( y = 6 \):
+\[ x^2 - 3(6)^2 = x^2 - 108 = 17 \]
+\[ x^2 = 125 \]
+This is not a perfect square, so \( y = 6 \) does not give us an integer solution.
+
+For \( y = 7 \):
+\[ x^2 - 3(7)^2 = x^2 - 147 = 17 \]
+\[ x^2 = 164 \]
+This is a perfect square, \( x^2 = (8)^2 \). So we have found an integer solution: \( x = 8 \), \( y = 7 \).
+
+We can continue this process to look for other solutions, but it&#x27;s worth noting that Pell-like equations often have an infinite number of solutions that can be generated from the fundamental solution using a recurrence relation or by using the theory of continued fractions.
+
+For now, we have found one integer solution to the equation \( x^2 - 3y^2 = 17 \):
+\[ (x, y) = (8, 7) \]
+
+To find all solutions, we would need to use more advanced techniques related to Pell&#x27;s equation, which are beyond the scope of this explanation. However, the solution we found by inspection is a valid integer solution to the given equation.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The Diophantine equation \( x^2 - 3y^2 = 17 \) has no integer solutions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer solution to the equation \( x^2 - 3y^2 = 17 \) found by inspection is \( (x, y) = (8, 7) \).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

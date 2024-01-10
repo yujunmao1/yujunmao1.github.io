@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_18</td>
+            <td>GPT-3.5</td>
+            <td>Direct C w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 4</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load('v0')
+problem = dataset['P_Sequence_18']
+messages = problem.conversations['GPT-3.5|Direct C w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(4+3a_n), and if so, find it.
+
+You may find the following information useful:
+
+1. A sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.
+2. For non-negative x, y, sqrt(x)≥sqrt(y) if and only if x≥y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the limit exists for the given sequence, we will first check if the sequence is monotonic and bounded.
+
+Let&#x27;s start by finding the first few terms of the sequence:
+
+a_0 = 0
+a_1 = sqrt(4 + 3a_0) = sqrt(4 + 3(0)) = sqrt(4) = 2
+a_2 = sqrt(4 + 3a_1) = sqrt(4 + 3(2)) = sqrt(10)
+a_3 = sqrt(4 + 3a_2) = sqrt(4 + 3(sqrt(10)))
+a_4 = sqrt(4 + 3a_3) = sqrt(4 + 3(sqrt(4 + 3(sqrt(10)))))
+
+From the given recursive formula, we can observe that each term of the sequence is obtained by taking the square root of an expression involving the previous term. Since the square root function is always non-negative, we can conclude that all terms of the sequence are non-negative.
+
+Now, let&#x27;s prove that the sequence is monotonically increasing. We will show that a_(n+1) ≥ a_n for all n.
+
+Assume a_n ≥ 0 for some n. Then, a_(n+1) = sqrt(4 + 3a_n) ≥ sqrt(4) = 2. Since a_n ≥ 0, we have a_(n+1) ≥ 2 &gt; a_n.
+
+Therefore, the sequence is monotonically increasing.
+
+Next, let&#x27;s prove that the sequence is bounded from above. We will show that a_n ≤ 2 for all n.
+
+We already know that a_0 = 0 ≤ 2.
+
+Assume a_n ≤ 2 for some n. Then, a_(n+1) = sqrt(4 + 3a_n) ≤ sqrt(4 + 3(2)) = sqrt(10) &lt; 2.
+
+Therefore, the sequence is bounded from above.
+
+Since the sequence is monotonically increasing and bounded from above, we can conclude that the limit exists.
+
+To find the limit, we can consider the behavior of the sequence as n approaches infinity. Let&#x27;s assume the limit is L:
+
+L = sqrt(4 + 3L)
+
+Squaring both sides:
+
+L^2 = 4 + 3L
+
+Rearranging the equation:
+
+L^2 - 3L - 4 = 0
+
+Factoring the quadratic equation:
+
+(L - 4)(L + 1) = 0
+
+This gives two possible values for L: L = 4 or L = -1.
+
+However, since all terms of the sequence are non-negative, we can conclude that the limit L must be non-negative as well. Therefore, the limit of the sequence is L = 4.
+
+So, the limit of the sequence defined by a_0 = 0, a_(n+1) = sqrt(4 + 3a_n) is 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by a_0 = 0, a_(n+1) = sqrt(4 + 3a_n) is 4.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

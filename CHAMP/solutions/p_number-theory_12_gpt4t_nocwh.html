@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_12</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 76</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_12']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,47 +81,59 @@ An integer a is called automorphic if a^2 ends in a. For example, 5 is automorph
 
 You may find the following information useful:
 
-1. Consider the last two digit of a^2-a.
-2. If a | bc and gcd(b, c)=1, then we can find integer m, n, p, q such that b=mp, c=nq, gcd(m, n)=gcd(p, q)=1 and pq=a.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all two-digit automorphic numbers, we need to find integers \( a \) such that the last two digits of \( a^2 \) are \( a \) itself. Let&#x27;s denote \( a \) as a two-digit number \( 10x + y \), where \( x \) is the tens digit and \( y \) is the units digit.
+1. Consider the last two digit of a^2-a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all two-digit automorphic numbers, we need to find integers \( a \) such that the last two digits of \( a^2 \) are \( a \) itself. Let&#x27;s denote the last two digits of \( a \) as \( d_1 \) (the units digit) and \( d_2 \) (the tens digit), so \( a = 10d_2 + d_1 \).
 
-The square of \( a \) is:
-\[ (10x + y)^2 = 100x^2 + 20xy + y^2 \]
+Now, let&#x27;s consider the last two digits of \( a^2 - a \). Since \( a \) is a two-digit number, \( a^2 \) will be at most a four-digit number. The last two digits of \( a^2 \) will be affected by \( d_1 \) and \( d_2 \) only, as the hundreds and thousands places will not affect the last two digits after subtracting \( a \).
 
-We are interested in the last two digits of \( a^2 \), which are affected by \( 20xy + y^2 \). The term \( 100x^2 \) will contribute to the hundreds place and beyond, so we can ignore it for our purposes.
+Let&#x27;s calculate \( a^2 - a \):
 
-Let&#x27;s express \( 20xy + y^2 \) in terms of its last two digits. We can write it as:
-\[ 20xy + y^2 = 10(2xy) + y^2 \]
+\( a^2 - a = (10d_2 + d_1)^2 - (10d_2 + d_1) \)
+\( = 100d_2^2 + 20d_2d_1 + d_1^2 - 10d_2 - d_1 \)
+\( = 100d_2^2 + 20d_2d_1 - 10d_2 + d_1^2 - d_1 \)
 
-Now, we want the last two digits of \( a^2 \) to be \( a \) itself, which means:
-\[ 10x + y \equiv 10(2xy) + y^2 \pmod{100} \]
+Now, we are only interested in the last two digits, so we can ignore the \( 100d_2^2 \) term as it contributes to the hundreds and thousands places. We are left with:
 
-Simplifying, we get:
-\[ 10x + y \equiv 20xy + y^2 \pmod{100} \]
+\( 20d_2d_1 - 10d_2 + d_1^2 - d_1 \)
 
-Since we are working modulo 100, we can subtract \( y^2 \) from both sides without changing the equivalence:
-\[ 10x \equiv 20xy \pmod{100} \]
+The last two digits of this expression must be 00 for \( a \) to be automorphic, because we want \( a^2 \) to end in \( a \), which means \( a^2 - a \) should end in 00.
 
-Now, we can divide both sides by 10, knowing that \( x \) and \( y \) are integers and \( y \) is not a multiple of 10 (otherwise \( a \) would not be a two-digit number):
-\[ x \equiv 2xy \pmod{10} \]
+Let&#x27;s simplify the expression by taking modulo 100:
 
-This implies that \( x \) must be divisible by \( 2y \). Since \( x \) is a digit, it can only be 0 through 9, and \( y \) can only be 1 through 9 (since \( y = 0 \) would make \( a \) a one-digit number). The only way for \( x \) to be divisible by \( 2y \) is if \( x = 0 \) or \( y = 1 \) (since \( 2y \) would be too large for any other value of \( y \)).
+\( (20d_2d_1 - 10d_2 + d_1^2 - d_1) \mod 100 = 0 \)
 
-If \( y = 1 \), then \( x \) can be any digit. However, we are looking for two-digit numbers, so \( x \) cannot be 0. Let&#x27;s test the values of \( x \) from 1 to 9 with \( y = 1 \):
+Now, let&#x27;s break this down:
 
-For \( x = 1 \), \( a = 11 \), and \( a^2 = 121 \), which does not end in 11.
-For \( x = 2 \), \( a = 21 \), and \( a^2 = 441 \), which does not end in 21.
-For \( x = 3 \), \( a = 31 \), and \( a^2 = 961 \), which does not end in 31.
-For \( x = 4 \), \( a = 41 \), and \( a^2 = 1681 \), which does not end in 41.
-For \( x = 5 \), \( a = 51 \), and \( a^2 = 2601 \), which does not end in 51.
-For \( x = 6 \), \( a = 61 \), and \( a^2 = 3721 \), which does not end in 61.
-For \( x = 7 \), \( a = 71 \), and \( a^2 = 5041 \), which does not end in 71.
-For \( x = 8 \), \( a = 81 \), and \( a^2 = 6561 \), which ends in 81. So 81 is an automorphic number.
-For \( x = 9 \), \( a = 91 \), and \( a^2 = 8281 \), which ends in 91. So 91 is an automorphic number.
+\( 20d_2d_1 - 10d_2 \) is always a multiple of 10, so its last digit is 0. Therefore, the last digit of \( d_1^2 - d_1 \) must also be 0 for the entire expression to end in 00.
 
-Therefore, the two-digit automorphic numbers besides 25 are 81 and 91.</code></pre>
+The units digit of \( d_1^2 - d_1 \) is the same as the units digit of \( d_1(d_1 - 1) \). For this to be 0, \( d_1 \) must be 0 or 1, because those are the only digits that, when multiplied by the consecutive previous digit, result in a units digit of 0.
+
+However, if \( d_1 = 0 \), then \( a \) is not a two-digit number. So, \( d_1 \) must be 1.
+
+Now we have \( a = 10d_2 + 1 \), and we want to find \( d_2 \) such that \( a^2 \) ends in \( a \).
+
+Let&#x27;s calculate \( a^2 \):
+
+\( a^2 = (10d_2 + 1)^2 \)
+\( = 100d_2^2 + 20d_2 + 1 \)
+
+Again, we only care about the last two digits, so we can ignore \( 100d_2^2 \) and focus on \( 20d_2 + 1 \).
+
+We want \( 20d_2 + 1 \) to end in 01, because \( a \) ends in 01. This means \( 20d_2 \) must end in 00, so \( d_2 \) must be a multiple of 5.
+
+Since \( d_2 \) is a digit, the only possibilities are 0 and 5. We&#x27;ve already excluded 0 because it doesn&#x27;t give us a two-digit number. So, \( d_2 = 5 \).
+
+Therefore, the only two-digit automorphic number besides 25 is:
+
+\( a = 10d_2 + 1 = 10 \cdot 5 + 1 = 51 \)
+
+However, we need to verify that 51 is indeed automorphic:
+
+\( 51^2 = 2601 \)
+
+Since 2601 does not end in 51, our assumption that 51 is automorphic is incorrect. This means there are no two-digit automorphic numbers besides 25.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The two-digit automorphic numbers besides 25 are 81 and 91.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no two-digit automorphic numbers besides 25.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_34</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_34']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,22 +81,24 @@ Let f(x)=(1-x+x^2-x^3+...-x^99+x^100)(1+x+x^2+x^3+...+x^99+x^100). What is the s
 
 You may find the following information useful:
 
-1. Evaluate f(-x).
-2. f(x) is an even function if f(x)=f(-x) for all x, and an odd function if f(x)=-f(-x). The sum of two even functions is an even function. The sum of two odd functions is an odd function. The sum of a (non-zero) even and a (non-zero) odd function is neither even nor odd.
-3. x^n is an even function (i.e., f(x)=f(-x)) if n is even, and is an odd function (i.e., f(x)=-f(-x)) if n is odd.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $f(x)=(1-x+x^2-x^3+...-x^99+x^100)(1+x+x^2+x^3+...+x^99+x^100)$. We are asked to find the sum of the coefficients of the terms $x^1, x^3, ..., x^97, x^99$ in the expansion of $f(x)$.
+1. Evaluate f(-x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can expand $f(x)$ as follows:
 
-To do this, we first note that $f(-x)=(1-(-x)+(-x)^2-(-x)^3+...-(-x)^99+(-x)^{100})(1+(-x)+(-x)^2+(-x)^3+...+(-x)^99+(-x)^{100})$. Expanding this, we get
+$$f(x) = (1-x+x^2-x^3+...-x^99+x^100)(1+x+x^2+x^3+...+x^99+x^100)$$
 
-$$f(-x)=(1+x+x^2+x^3+...+x^99+x^100)(-1-x-x^2-x^3-...-x^99-x^{100})$$
+$$= 1 + x^2 + x^4 + x^6 + ... + x^{100} - x - x^3 - x^5 - x^7 - ... - x^{99}$$
 
-We can see that $f(-x)$ is the negative of $f(x)$. This means that $f(x)$ is an odd function.
+$$= 1 + \sum_{n=0}^{50} (-1)^n x^{2n} + \sum_{n=0}^{49} (-1)^n x^{2n+1}$$
 
-Now, we know that the sum of the coefficients of the terms $x^1, x^3, ..., x^97, x^99$ in the expansion of an odd function is always zero. This is because the terms $x^1, x^3, ..., x^97, x^99$ are all odd functions, and the sum of two odd functions is an even function. Therefore, the sum of their coefficients must be zero.
+$$= 1 + \sum_{n=0}^{50} (-1)^n \binom{2n}{n} x^{2n} + \sum_{n=0}^{49} (-1)^n \binom{2n+1}{n+1} x^{2n+1}$$
 
-Therefore, the sum of the coefficients of the terms $x^1, x^3, ..., x^97, x^99$ in the expansion of $f(x)$ is $\boxed{0}$.</code></pre>
+Now, we can use the following identity to evaluate the sum of the coefficients of the terms $x^1, x^3, ..., x^97, x^99$:
+
+$$\sum_{n=0}^m (-1)^n \binom{2n}{n} = \begin{cases} 0 &amp; \text{if } m \text{ is odd} \\\ 1 &amp; \text{if } m \text{ is even} \end{cases}$$
+
+Therefore, the sum of the coefficients of the terms $x^1, x^3, ..., x^97, x^99$ is $1$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sum of the coefficients of the terms $x^1, x^3, ..., x^97, x^99$ in the expansion of $f(x)=(1-x+x^2-x^3+...-x^99+x^100)(1+x+x^2+x^3+...+x^99+x^100)$ is $0$ because $f(x)$ is an odd function.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sum of the coefficients of the terms $x^1, x^3, ..., x^97, x^99$ in the expansion of $(1-x+x^2-x^3+...-x^99+x^100)(1+x+x^2+x^3+...+x^99+x^100)$ is $1$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

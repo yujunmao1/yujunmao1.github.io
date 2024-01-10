@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_23</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (4^n+2^n)/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_23']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,36 +82,28 @@ Among all strings of length n consisting of digit 1, 2, 3 and 4, how many of the
 You may find the following information useful:
 
 1. Let P(k) be the number of strings with k number of 1s and find its value.
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
-3. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-4. Let E(n) and O(n) be the number of length-n strings with even and ood numbers of 1s respectively, and express them in terms of P(k).
-5. Study E(n)+O(n) and E(n)-O(n).
-6. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $P(k)$ be the number of strings of length $n$ consisting of digits 1, 2, 3, and 4 that have $k$ 1s. We can count these strings as follows. For each of the $n$ positions in the string, we have four choices for the digit to put in that position. If we put a 1 in the first position, then there are $P(k-1)$ ways to fill in the remaining $n-1$ positions with an even number of 1s. If we put a 2 in the first position, then there are $P(k)$ ways to fill in the remaining $n-1$ positions with an even number of 1s. If we put a 3 in the first position, then there are $P(k+1)$ ways to fill in the remaining $n-1$ positions with an even number of 1s. And if we put a 4 in the first position, then there are $P(k+2)$ ways to fill in the remaining $n-1$ positions with an even number of 1s. Therefore, we have the following recurrence relation:
+2. Let E(n) and O(n) be the number of length-n strings with even and ood numbers of 1s respectively, and express them in terms of P(k).
+3. Study E(n)+O(n) and E(n)-O(n).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $P(k)$ be the number of strings of length $n$ with $k$ 1s. We can find $P(k)$ by considering the following cases:
 
-$$P(k) = 4P(k-1) + P(k) + P(k+1) + P(k+2).$$
+* If $k=0$, there is only one string of length $n$ with no 1s, namely the empty string.
+* If $k=1$, there are $n$ strings of length $n$ with one 1, namely the strings that consist of a 1 followed by any string of length $n-1$.
+* If $k=2$, there are $\binom{n}{2}$ strings of length $n$ with two 1s, namely the strings that consist of two 1s followed by any string of length $n-2$, or the strings that consist of any string of length $n-1$ followed by a 1 followed by a 1.
+* In general, there are $\binom{n}{k}$ strings of length $n$ with $k$ 1s, namely the strings that consist of $k$ 1s followed by any string of length $n-k$, or the strings that consist of any string of length $n-1$ followed by a 1 followed by any string of length $n-k-1$.
 
-To solve this recurrence relation, we can use the generating function method. The generating function for $P(k)$ is defined as
+Therefore, the total number of strings of length $n$ with an even number of 1s is
 
-$$G(x) = \sum_{k=0}^{\infty} P(k) x^k.$$
+$$E(n) = \sum_{k=0}^{\lfloor n/2 \rfloor} \binom{n}{2k} = \frac{1}{2} \sum_{k=0}^{\lfloor n/2 \rfloor} \binom{n}{k} \binom{n}{n-k} = \frac{1}{2} \binom{2n}{n}.$$
 
-Then, by the definition of $P(k)$, we have
+Similarly, the total number of strings of length $n$ with an odd number of 1s is
 
-$$G(x) = 4x + x^2 + x^3 + x^4 + \sum_{k=0}^{\infty} P(k) x^k = 5x + \sum_{k=0}^{\infty} P(k) x^k.$$
+$$O(n) = \sum_{k=1}^{\lfloor (n+1)/2 \rfloor} \binom{n}{2k-1} = \frac{1}{2} \sum_{k=1}^{\lfloor (n+1)/2 \rfloor} \binom{n}{k} \binom{n}{n-k} = \frac{1}{2} \binom{2n+1}{n+1}.$$
 
-Substituting the recurrence relation for $P(k)$ into this equation, we get
+Therefore, the total number of strings of length $n$ with an even number of 1s is
 
-$$G(x) = 5x + 4G(x) + G(x^2) + G(x^3) + G(x^4).$$
-
-Solving this equation, we get
-
-$$G(x) = \frac{1}{1-4x-x^2-x^3-x^4} = \frac{1}{(1-x)(1-x^2)(1-x^3)(1-x^4)}.$$
-
-The coefficient of $x^n$ in $G(x)$ is the number of strings of length $n$ consisting of digits 1, 2, 3, and 4 that have an even number of 1s. Therefore, the number of such strings is
-
-$$\boxed{ \frac{1}{(1-x)(1-x^2)(1-x^3)(1-x^4)} }.$$</code></pre>
+$$E(n) + O(n) = \frac{1}{2} \binom{2n}{n} + \frac{1}{2} \binom{2n+1}{n+1} = \frac{1}{2} \left( \binom{2n}{n} + \binom{2n+1}{n+1} \right) = \frac{1}{2} \left( \binom{2n}{n} + \binom{2n}{n+1} + \binom{2n}{n+2} \right) = \frac{1}{2} \binom{2n+2}{n+1}.$$</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of length $n$ consisting of digits 1, 2, 3, and 4 that have an even number of 1s is $\frac{1}{(1-x)(1-x^2)(1-x^3)(1-x^4)}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of length $n$ with an even number of 1s is $\frac{1}{2} \binom{2n+2}{n+1}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

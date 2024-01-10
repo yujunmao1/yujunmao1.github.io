@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_49</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> No</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_49']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,51 +81,20 @@ The sequence {x_n} is defined by x_1=2, x_(n+1)=(2+x_n)/(1−2x_n), and it is kn
 
 You may find the following information useful:
 
-1. Let a=arctan(2) and find the relationship between x_n and tan(na).
-2. tan(a±b)=(tan(a)±tan(b))/(1∓tan(ab)).
-3. tan(a)±tan(b)=sin(a±b)/(cos(a)cos(b)).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a = \arctan(2)$. Then, we have
+1. Let a=arctan(2) and find the relationship between x_n and tan(na).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a=\arctan(2)$. Then, we have
 
-$$x_n = \frac{2 + x_{n-1}}{1 - 2x_{n-1}} = \frac{2 + \tan(a)}{1 - 2\tan(a)} = \frac{2 + \tan(na)}{1 - 2\tan(na)}.$$
+$$x_n = \frac{2+x_{n-1}}{1-2x_{n-1}} = \frac{2+2\tan(na)}{1-2\tan(na)} = 2\tan\left(\frac{na}{2}\right).$$
 
-Let $b = na$. Then, we have
+In particular, $x_n$ is a multiple of $\tan\left(\frac{na}{2}\right)$ for all $n$. Since $\tan\left(\frac{na}{2}\right)$ is a continuous function, it takes on every value in the interval $[-\infty,\infty]$ infinitely many times. Therefore, there exist $p$ and $q$ such that $p\neq q$ and $x_p=x_q$.
 
-$$x_n = \frac{2 + \tan(b)}{1 - 2\tan(b)}.$$
+To find the smallest possible value of $p+q$, we can consider the following sequence:
 
-We know that $x_n$ is a sequence of real numbers, and that there are no $x_n = 0$. This means that $\tan(b)$ must be a real number, and that $\tan(b) \neq 1$.
+$$x_1 = 2, \quad x_2 = 2\tan\left(\frac{\pi}{4}\right), \quad x_3 = 2\tan\left(\frac{3\pi}{4}\right), \quad \dots$$
 
-We also know that $x_n$ is a sequence of numbers that are greater than 1. This means that $\tan(b)$ must be a number that is greater than 1.
-
-We can use the identity $\tan(a + b) = \frac{\tan(a) + \tan(b)}{1 - \tan(a)\tan(b)}$ to find the relationship between $\tan(a)$ and $\tan(b)$. We have
-
-$$\tan(b) = \frac{\tan(a) + \tan(b)}{1 - \tan(a)\tan(b)}.$$
-
-We can solve this equation for $\tan(a)$ to get
-
-$$\tan(a) = \frac{1 - \tan(b)}{1 + \tan(b)}.$$
-
-We can then use the identity $\tan(a) = \frac{\sin(a)}{\cos(a)}$ to find the relationship between $\sin(a)$ and $\cos(a)$. We have
-
-$$\sin(a) = \frac{\tan(a)\cos(a)}{\sqrt{1 + \tan^2(a)}} = \frac{(1 - \tan(b))\cos(a)}{\sqrt{1 + (1 - \tan(b))^2}}.$$
-
-We can then use the identity $\cos(a) = \frac{x_1 - x_2}{1 - x_1x_2}$ to find the relationship between $x_1$ and $x_2$. We have
-
-$$x_2 = \frac{x_1 - \sin(a)}{1 - \sin(a)x_1}.$$
-
-We can then use the identity $\sin(a) = \frac{2\tan(a/2)}{1 + \tan^2(a/2)}$ to find the relationship between $x_1$ and $x_2$. We have
-
-$$x_2 = \frac{x_1 - \frac{2\tan(a/2)}{1 + \tan^2(a/2)}}{1 - \frac{2\tan(a/2)}{1 + \tan^2(a/2)}x_1}.$$
-
-We can then use the identity $\tan(a/2) = \frac{\sqrt{x_1^2 - 4}}{2x_1}$ to find the relationship between $x_1$ and $x_2$. We have
-
-$$x_2 = \frac{x_1 - \frac{2\sqrt{x_1^2 - 4}}{2x_1 + \sqrt{x_1^2 - 4}}}{1 - \frac{2\sqrt{x_1^2 - 4}}{2x_1 + \sqrt{x_1^2 - 4}}x_1}.$$
-
-We can then use the identity $x_1^2 - 4 = (x_1 - 2)(x_1 + 2)$ to find the relationship between $x_1$ and $x_2$. We have
-
-$$x_2 = \frac{x_1 - \frac{2\sqrt{(x_1 - 2)(x_1 + 2)}}{2x_1 + \sqrt{(x_1 - 2)(x_1 + 2)}}}{1 - \frac{2\sqrt{(x_1 - 2)(x_1 + 2)}}{2x_1 + \sqrt{(x_1 - 2)(x_1 + 2)}}x_1}.$$
-</code></pre>
+This sequence is clearly increasing, and it converges to $\infty$. Therefore, the smallest possible value of $p+q$ is $\boxed{3}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest possible value of $p+q$ such that $x_p=x_q$ is $\boxed{4}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest possible value of $p+q$ is 3, where $p$ and $q$ are integers such that $x_p=x_q$ and $p\neq q$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

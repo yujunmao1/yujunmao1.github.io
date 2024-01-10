@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_4</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 76</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_4']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,34 +83,18 @@ You may find the following information useful:
 
 1. Let T(n) be the number of involutions on {1, 2, ..., n}.
 2. Find T(1) and T(2).
-3. To construct an involution on size-n set by extending involutions on size-(n-1) set, we can either add {n-&gt;n} or add {n-&gt;i, i-&gt;n} to existing involutions.
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of involutions on a set of size $n$ is denoted by $T(n)$. We know that $T(1)=1$ and $T(2)=2$. To construct an involution on a set of size $n$, we can either add the element $n$ to an involution on a set of size $n-1$, or we can add the pair $(n,i)$ to an involution on a set of size $n-2$. In the first case, there are $T(n-1)$ ways to do it, and in the second case, there are $T(n-2)$ ways to do it. Therefore, we have the following recurrence relation:
+3. To construct an involution on size-n set by extending involutions on size-(n-1) set, we can either add {n-&gt;n} or add {n-&gt;i, i-&gt;n} to existing involutions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of involutions on a set of size $n$ is denoted by $T(n)$. We know that $T(1)=1$ and $T(2)=2$. To construct an involution on a set of size $n$, we can either add the element $n$ to an involution on a set of size $n-1$, or we can add the pair $(n,i)$ to an involution on a set of size $n-2$.
 
-$$T(n) = T(n-1) + T(n-2)$$
+If we add the element $n$ to an involution on a set of size $n-1$, we have $n$ choices for the image of $n$, and then $T(n-1)$ choices for the remaining images. This gives a total of $n T(n-1)$ involutions.
 
-We can solve this recurrence relation using the method of generating functions. The generating function for the sequence $T(n)$ is defined as follows:
+If we add the pair $(n,i)$ to an involution on a set of size $n-2$, we have $n-1$ choices for $i$, and then $T(n-3)$ choices for the remaining images. This gives a total of $(n-1) T(n-3)$ involutions.
 
-$$G(x) = \sum_{n=0}^{\infty} T(n) x^n$$
+Therefore, the total number of involutions on a set of size $n$ is $T(n) = n T(n-1) + (n-1) T(n-3)$.
 
-We can use the recurrence relation to express $G(x)$ as follows:
-
-$$G(x) = x G(x) + x^2 G(x)$$
-
-Solving for $G(x)$, we get:
-
-$$G(x) = \frac{1}{1-x-x^2}$$
-
-The coefficient of $x^n$ in $G(x)$ is $T(n)$, so the number of involutions on a set of size $n$ is given by:
-
-$$T(n) = \frac{1}{n!} \sum_{k=0}^{n} \binom{n}{k} (-1)^k$$
-
-In particular, the number of involutions on a set of size $6$ is given by:
-
-$$T(6) = \frac{1}{6!} \sum_{k=0}^{6} \binom{6}{k} (-1)^k = 120$$</code></pre>
+For $n=6$, we have $T(6) = 6 T(5) + (6-1) T(4) = 6 \cdot 20 + 5 \cdot 12 = 180$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of involutions on a set of size $n$ is given by $\frac{1}{n!} \sum_{k=0}^{n} \binom{n}{k} (-1)^k$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of involutions on a set of size $n$ is $T(n) = n T(n-1) + (n-1) T(n-3)$. For $n=6$, we have $T(6) = 180$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

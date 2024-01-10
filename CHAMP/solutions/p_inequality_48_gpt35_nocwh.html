@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_48</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_48']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,8 +81,7 @@ For how many values of n in {1, 2, ..., 100} do we have (n+1)^n≥2^n*n!?
 
 You may find the following information useful:
 
-1. Study the validity of the inequality for n if the inequality for n-1 holds.
-2. For non-negative x_1, ..., x_n, (1+x_1)(1+x_2)...(1+x_n)≥1+x_1+x_2+...+x_n.</code></pre>
+1. Study the validity of the inequality for n if the inequality for n-1 holds.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use mathematical induction.
 
 Step 1: Base Case
@@ -92,49 +91,37 @@ Let&#x27;s check the inequality for n = 1:
 This is true, so the inequality holds for n = 1.
 
 Step 2: Inductive Hypothesis
-Assume that the inequality holds for some arbitrary value k, where k is an integer between 1 and 100. That is, we assume (k+1)^k ≥ 2^k * k!.
+Assume that the inequality holds for some arbitrary value k, where k is an integer between 1 and 100. That is, assume (k+1)^k ≥ 2^k * k!.
 
 Step 3: Inductive Step
 We need to prove that the inequality also holds for k+1. That is, we need to show that (k+2)^(k+1) ≥ 2^(k+1) * (k+1)!
 
-Using the inductive hypothesis, we have:
-(k+1)^k ≥ 2^k * k!
-
-Now, let&#x27;s multiply both sides of this inequality by (k+2):
-(k+2) * (k+1)^k ≥ (k+2) * 2^k * k!
-
 Expanding the left side:
-(k+2) * (k+1)^k = (k+2) * (k+1) * (k+1)^(k-1)
-
-Using the fact that (1+x_1)(1+x_2)...(1+x_n) ≥ 1+x_1+x_2+...+x_n, we can rewrite the right side as:
-(k+2) * (k+1) * (k+1)^(k-1) ≥ (k+2) * (k+1) * (2^k * k!)
+(k+2)^(k+1) = (k+2) * (k+2)^k
 
 Expanding the right side:
-(k+2) * (k+1) * (2^k * k!) = 2^k * (k+2) * (k+1) * k!
+2^(k+1) * (k+1)! = 2 * 2^k * k!
 
-Now, we can compare the left and right sides of the inequality:
-(k+2) * (k+1) * (k+1)^(k-1) ≥ 2^k * (k+2) * (k+1) * k!
+Now, we can rewrite the inequality as:
+(k+2) * (k+2)^k ≥ 2 * 2^k * k!
 
-Canceling out the common factors (k+2) and (k+1), we get:
-(k+1)^(k-1) ≥ 2^k * k!
+Dividing both sides by 2 * 2^k * k!, we get:
+(k+2)^k / (2^k * k!) ≥ 1
 
-Since we assumed that (k+1)^k ≥ 2^k * k!, we can rewrite the left side as:
-(k+1) * (k+1)^(k-1) ≥ 2^k * k!
+Using the inductive hypothesis, we know that (k+1)^k ≥ 2^k * k!. Therefore, we can rewrite the left side as:
+(k+2)^k / (2^k * k!) ≥ (k+1)^k / (2^k * k!)
 
-Expanding the left side:
-(k+1) * (k+1)^(k-1) = (k+1)^k
+Since we assumed the inequality holds for k, we know that (k+1)^k / (2^k * k!) ≥ 1. Therefore, we have:
+(k+2)^k / (2^k * k!) ≥ 1
 
-Therefore, we have:
-(k+1)^k ≥ 2^k * k!
-
-This is exactly the inductive hypothesis, which we assumed to be true. Hence, the inequality holds for k+1.
+This means that if the inequality holds for k, it also holds for k+1.
 
 Step 4: Conclusion
-By mathematical induction, we have shown that the inequality (n+1)^n ≥ 2^n * n! holds for all positive integers n between 1 and 100.
+Since the inequality holds for n = 1 and if it holds for n = k, it also holds for n = k+1, we can conclude that the inequality holds for all values of n in {1, 2, ..., 100}.
 
-Therefore, for all values of n in {1, 2, ..., 100}, the inequality is true.</code></pre>
+Therefore, there are 100 values of n for which the inequality (n+1)^n ≥ 2^n * n! holds.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For all values of n in {1, 2, ..., 100}, the inequality (n+1)^n ≥ 2^n * n! holds true.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality (n+1)^n ≥ 2^n * n! holds for all values of n in {1, 2, ..., 100}.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_31</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 120</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_31']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,29 +81,34 @@ for message in messages:
 
 You may find the following information useful:
 
-1. Consider possible configurations of a row of 10 dots, with 7 being black and 3 being white, and count the number of white dots in between the black dots, as well as on the two sides.
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
-3. C(n, r)=n!/(r!*(n-r)!)=n*(n-1)*(n-2)*...*(n-r+1)/r!.
-4. C(n, k)=C(n, n-k).</code></pre>
+1. Consider possible configurations of a row of 10 dots, with 7 being black and 3 being white, and count the number of white dots in between the black dots, as well as on the two sides.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use combinatorics. We have 8 dogs and 3 identical cookies. We want to distribute these cookies to the dogs such that no two dogs share the same cookie, and all cookies are distributed.
 
-Since the cookies are identical, we can think of this as a problem of partitioning the dogs into groups where each group corresponds to a cookie. We can use the &quot;stars and bars&quot; method (also known as &quot;balls and urns&quot;) to solve this problem. In this method, we represent the cookies as &quot;stars&quot; and the divisions between different dogs as &quot;bars&quot;.
+We can think of this as a problem of placing 3 identical dividers among 8 distinct dogs to create 4 groups (the groups represent the dogs before the first cookie, between the first and second cookie, between the second and third cookie, and after the third cookie). The dogs in the groups between the dividers are the ones that get the cookies.
 
-We have 3 cookies (stars) to distribute among 8 dogs, and we need 2 bars to create 3 sections (one for each cookie). The total number of objects (stars + bars) is 3 + 2 = 5.
+To visualize this, we can represent the dogs as dots and the cookies as dividers. For example, if we have dogs A, B, C, D, E, F, G, H, a possible distribution could be:
 
-Now, we need to arrange these 5 objects in a row. The number of ways to do this is the number of ways to choose 2 positions for the bars out of 5 positions (since the stars are identical, their positions don&#x27;t matter, only the positions of the bars do).
+A | B C | D E F | G H
 
-Using the combination formula C(n, k), where n is the total number of positions and k is the number of bars, we get:
+In this case, dogs A, C, and H would get the cookies.
 
-C(5, 2) = 5! / (2! * (5 - 2)!)
-         = (5 * 4 * 3 * 2 * 1) / (2 * 1 * 3 * 2 * 1)
-         = (5 * 4) / (2 * 1)
-         = 20 / 2
-         = 10
+The number of ways to arrange these dividers among the dogs is equivalent to the number of ways to arrange a sequence of 8 dogs (D) and 3 dividers (|), which is a permutation of a multiset. The formula for the permutations of a multiset is:
 
-So there are 10 possible ways to distribute the 3 identical cookies among the 8 dogs without any two dogs sharing the same cookie and with no cookies left unclaimed.</code></pre>
+n! / (n1! * n2! * ... * nk!)
+
+where n is the total number of items, and n1, n2, ..., nk are the counts of each distinct item.
+
+In our case, we have a total of 8 + 3 = 11 positions, with 8 being dogs (D) and 3 being dividers (|). So we have:
+
+11! / (8! * 3!)
+
+Calculating this, we get:
+
+11! / (8! * 3!) = (11 * 10 * 9 * 8!)/(8! * 3 * 2 * 1) = (11 * 10 * 9) / (3 * 2 * 1) = 11 * 5 * 3 = 165
+
+So there are 165 possible results for distributing 3 identical cookies among 8 distinct dogs with no sharing and no cookies left unclaimed.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 10 possible ways to distribute 3 identical cookies among 8 distinct dogs with no sharing and no cookies left unclaimed.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 165 possible ways to distribute 3 identical cookies among 8 distinct dogs with no sharing and no cookies left unclaimed.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

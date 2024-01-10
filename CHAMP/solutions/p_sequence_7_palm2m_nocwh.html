@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_7</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 3</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_7']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,35 +77,55 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(6+a_n), and if so, find it.
+Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(6+a_n), and if so, find it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence defined by $a_0=0$ and $a_{n+1}=\sqrt{6+a_n}$ is a recursive sequence. To find the limit of this sequence, we can use the following steps:
 
-You may find the following information useful:
+1. Find the fixed points of the sequence. A fixed point of a function $f$ is a value $x$ such that $f(x)=x$. In this case, the fixed points of the sequence are the values $x$ such that $\sqrt{6+x}=x$.
+2. If the sequence has a unique fixed point, then the limit of the sequence is the fixed point.
+3. If the sequence has multiple fixed points, then the limit of the sequence does not exist.
 
-1. A sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.
-2. For non-negative x, y, sqrt(x)≥sqrt(y) if and only if x≥y.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given the sequence $a_0=0$ and $a_{n+1}=\sqrt{6+a_n}$. We want to show that this sequence has a limit.
+To find the fixed points of the sequence, we can solve the equation $\sqrt{6+x}=x$. This equation has two solutions, $x=2$ and $x=-3$.
 
-First, we will show that the sequence is monotonically increasing. To do this, we will show that $a_{n+1}\geq a_n$ for all $n$.
+Since the sequence has two fixed points, the limit of the sequence does not exist.
 
-We have $a_{n+1}=\sqrt{6+a_n}\geq \sqrt{6}=\sqrt{6+a_0}=a_0$.
+Here is a graph of the sequence:
 
-Therefore, the sequence is monotonically increasing.
+[asy]
+unitsize(1 cm);
 
-Next, we will show that the sequence is bounded. To do this, we will show that there exists a number $M$ such that $a_n\leq M$ for all $n$.
+draw((0,-4)--(0,4));
+draw((0,0)--(4,0));
 
-We have $a_n\leq \sqrt{6+a_n}\leq \sqrt{6+M}$.
+label(&quot;$x$&quot;, (4,0), E);
+label(&quot;$y$&quot;, (0,4), N);
 
-Therefore, the sequence is bounded.
+draw((0,2)--(2,2));
+draw((0,-3)--(-3,-3));
 
-By the Monotone Convergence Theorem, a monotonic and bounded sequence has a limit. Therefore, the sequence $a_0=0$ and $a_{n+1}=\sqrt{6+a_n}$ has a limit.
+draw((0,0)--(sqrt(6),sqrt(6)));
 
-To find the limit, we can use the following formula:
+label(&quot;$2$&quot;, (2,0), S);
+label(&quot;$-3$&quot;, (-3,0), S);
+label(&quot;$\sqrt{6}$&quot;, (sqrt(6),0), S);
 
-$$\lim_{n\to\infty}a_n=\lim_{n\to\infty}a_{n+1}=\lim_{n\to\infty}\sqrt{6+a_n}=\sqrt{6+\lim_{n\to\infty}a_n}=\sqrt{6}.$$
+real ticklen=0.1;
+real tickspace=1;
 
-Therefore, the limit of the sequence is $\sqrt{6}$.</code></pre>
+for (int i=-3; i&lt;=3; ++i) {
+  draw((i,-0.1)--(i,0.1));
+}
+
+for (int i=0; i&lt;=4; i+=tickspace) {
+  draw((0,i-0.1)--(0,i+0.1));
+}
+
+dot(&quot;$0$&quot;, (0,0), S);
+dot(&quot;$2$&quot;, (2,0), S);
+dot(&quot;$-3$&quot;, (-3,0), S);
+dot(&quot;$\sqrt{6}$&quot;, (sqrt(6),0), S);
+[/asy]</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence $a_0=0$ and $a_{n+1}=\sqrt{6+a_n}$ is $\sqrt{6}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by $a_0=0$ and $a_{n+1}=\sqrt{6+a_n}$ does not exist.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

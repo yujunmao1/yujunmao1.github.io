@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_20</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_20']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,40 +81,44 @@ Let a_n be the number of all permutations p of {1, ..., n} with |p(i)−i|≤1 f
 
 You may find the following information useful:
 
-1. Find an expression for a_n in terms of a_(n-1) and a_(n-2).
-2. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem is a classic example of a problem that can be solved using recursion and dynamic programming. 
+1. Find an expression for a_n in terms of a_(n-1) and a_(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem is asking for the number of permutations of the set {1, ..., n} such that the absolute difference between the position of each element in the permutation and its original position is at most 1. 
 
-First, let&#x27;s find an expression for a_n in terms of a_(n-1) and a_(n-2). 
+To solve this, we can use a recursive approach. 
 
-Consider the last position in the permutation. There are two cases:
+Let&#x27;s denote a_n as the number of such permutations for the set {1, ..., n}. 
 
-1. The number in the last position is n. In this case, the first n-1 numbers can be arranged in a_(n-1) ways, because they form a valid permutation of {1, ..., n-1} with the same property.
+We can express a_n in terms of a_(n-1) and a_(n-2) as follows:
 
-2. The number in the last position is not n. Then it must be n-1, because |p(i)−i|≤1 for all i. In this case, n must be in the (n-1)th position, and the first n-2 numbers can be arranged in a_(n-2) ways, because they form a valid permutation of {1, ..., n-2} with the same property.
+a_n = a_(n-1) + (n-1) * a_(n-2)
 
-Therefore, we have the recursion relation a_n = a_(n-1) + a_(n-2).
+The reasoning behind this is as follows:
 
-Now, we need to find the base cases. 
+- a_(n-1) accounts for the permutations where the element n is in its original position (i.e., position n). In this case, the remaining elements {1, ..., n-1} can be permuted according to the problem&#x27;s conditions, which gives us a_(n-1) permutations.
 
-For n=1, there is only one permutation, which is {1}, so a_1 = 1.
+- (n-1) * a_(n-2) accounts for the permutations where the element n is not in its original position. In this case, n can be in one of the (n-1) positions from 1 to (n-1). For each of these positions, the remaining elements {1, ..., n-1, n+1, ..., n} can be permuted according to the problem&#x27;s conditions, which gives us a_(n-2) permutations. 
 
-For n=2, there are two valid permutations, which are {1, 2} and {2, 1}, so a_2 = 2.
+Now, we can use this recursive formula to find a_10. 
 
-Now, we can use the recursion relation and the base cases to find a_10.
+First, we need the base cases:
 
-a_3 = a_2 + a_1 = 2 + 1 = 3
-a_4 = a_3 + a_2 = 3 + 2 = 5
-a_5 = a_4 + a_3 = 5 + 3 = 8
-a_6 = a_5 + a_4 = 8 + 5 = 13
-a_7 = a_6 + a_5 = 13 + 8 = 21
-a_8 = a_7 + a_6 = 21 + 13 = 34
-a_9 = a_8 + a_7 = 34 + 21 = 55
-a_10 = a_9 + a_8 = 55 + 34 = 89
+a_1 = 1 (only one permutation for a single-element set)
+a_2 = 2 (two permutations for a two-element set: {1, 2} and {2, 1})
 
-So, a_10 = 89.</code></pre>
+Then, we can use the recursive formula to find a_3, a_4, ..., a_10:
+
+a_3 = a_2 + 2*a_1 = 2 + 2*1 = 4
+a_4 = a_3 + 3*a_2 = 4 + 3*2 = 10
+a_5 = a_4 + 4*a_3 = 10 + 4*4 = 26
+a_6 = a_5 + 5*a_4 = 26 + 5*10 = 76
+a_7 = a_6 + 6*a_5 = 76 + 6*26 = 232
+a_8 = a_7 + 7*a_6 = 232 + 7*76 = 800
+a_9 = a_8 + 8*a_7 = 800 + 8*232 = 2656
+a_10 = a_9 + 9*a_8 = 2656 + 9*800 = 9856
+
+So, a_10 = 9856.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of all permutations p of {1, ..., 10} with |p(i)−i|≤1 for all i, denoted as a_10, is 89.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of all permutations p of {1, ..., 10} with |p(i)−i|≤1 for all i, denoted as a_10, is 9856.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

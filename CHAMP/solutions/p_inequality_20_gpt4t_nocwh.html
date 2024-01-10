@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_20</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 3/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_20']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,70 +82,59 @@ For real values a, b, c, with a^2+b^2+c^2=1, what is the difference between the 
 You may find the following information useful:
 
 1. To get the largest value, study the expression (a-b)^2+(b-c)^2+(a-c)^2.
-2. (x±y)^2=x^2±2xy+y^2.
-3. For any real number a, a^2≥0. 
-4. To get the smallest value, study the expression (a+b+c)^2.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the difference between the largest and smallest possible values of ab + bc + ac, we will use the given hints.
+2. To get the smallest value, study the expression (a+b+c)^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the given hints.
 
-First, let&#x27;s find the largest possible value of ab + bc + ac.
+First, let&#x27;s find the largest possible value of ab + bc + ac by studying the expression (a - b)^2 + (b - c)^2 + (a - c)^2:
 
-Consider the expression (a - b)^2 + (b - c)^2 + (a - c)^2, which is a sum of squares and therefore non-negative:
+(a - b)^2 + (b - c)^2 + (a - c)^2 = (a^2 - 2ab + b^2) + (b^2 - 2bc + c^2) + (a^2 - 2ac + c^2)
+= 2(a^2 + b^2 + c^2) - 2(ab + bc + ac)
+= 2(1) - 2(ab + bc + ac)  [since a^2 + b^2 + c^2 = 1]
+= 2 - 2(ab + bc + ac)
+
+Now, we know that squares of real numbers are non-negative, so:
 
 (a - b)^2 + (b - c)^2 + (a - c)^2 ≥ 0
+2 - 2(ab + bc + ac) ≥ 0
+2 ≥ 2(ab + bc + ac)
+1 ≥ ab + bc + ac
 
-Expanding each term using the identity (x ± y)^2 = x^2 ± 2xy + y^2, we get:
+Thus, the largest possible value of ab + bc + ac is 1.
 
-(a^2 - 2ab + b^2) + (b^2 - 2bc + c^2) + (a^2 - 2ac + c^2) ≥ 0
+Next, let&#x27;s find the smallest possible value of ab + bc + ac by studying the expression (a + b + c)^2:
 
-Combine like terms:
+(a + b + c)^2 = a^2 + b^2 + c^2 + 2(ab + bc + ac)
+= 1 + 2(ab + bc + ac)  [since a^2 + b^2 + c^2 = 1]
 
-2a^2 + 2b^2 + 2c^2 - 2ab - 2bc - 2ac ≥ 0
+Now, we want to minimize ab + bc + ac. Since a^2 + b^2 + c^2 = 1, we can think of a, b, and c as the coordinates of a point on the unit sphere in three dimensions. The expression a + b + c is maximized when a, b, and c are all positive and equal (since they are constrained by the sphere), and it is minimized when two of the variables are negative and one is positive, or vice versa.
 
-Divide by 2:
+Let&#x27;s assume without loss of generality that a is the positive value and b and c are negative. Then, a + b + c is minimized when a is as large as possible and b and c are as negative as possible. Since a^2 + b^2 + c^2 = 1, the smallest a can be is when b = c = -a/2 (to keep the sum of squares equal to 1). In this case:
 
-a^2 + b^2 + c^2 - ab - bc - ac ≥ 0
+a^2 + (-a/2)^2 + (-a/2)^2 = 1
+a^2 + a^2/4 + a^2/4 = 1
+a^2 + a^2/2 = 1
+(3/2)a^2 = 1
+a^2 = 2/3
+a = sqrt(2/3)
 
-We know that a^2 + b^2 + c^2 = 1, so substituting this in, we get:
+Then b and c would both be -sqrt(2/3)/2. Plugging these values into ab + bc + ac gives:
 
-1 - ab - bc - ac ≥ 0
+ab + bc + ac = a(-a/2) + (-a/2)(-a/2) + a(-a/2)
+= -a^2/2 + a^2/4 - a^2/2
+= -2a^2/4 + a^2/4
+= -a^2/4
+= -(2/3)/4
+= -1/6
 
-Rearrange to find an expression for ab + bc + ac:
+Thus, the smallest possible value of ab + bc + ac is -1/6.
 
-ab + bc + ac ≤ 1
+The difference between the largest and smallest possible values of ab + bc + ac is:
 
-This means the largest possible value of ab + bc + ac is 1.
+1 - (-1/6) = 1 + 1/6 = 7/6
 
-Now, let&#x27;s find the smallest possible value of ab + bc + ac.
-
-Consider the expression (a + b + c)^2, which is also non-negative:
-
-(a + b + c)^2 ≥ 0
-
-Expanding this using the identity (x + y)^2 = x^2 + 2xy + y^2, we get:
-
-a^2 + 2ab + b^2 + 2bc + c^2 + 2ac ≥ 0
-
-Combine like terms:
-
-a^2 + b^2 + c^2 + 2ab + 2bc + 2ac ≥ 0
-
-We know that a^2 + b^2 + c^2 = 1, so substituting this in, we get:
-
-1 + 2ab + 2bc + 2ac ≥ 0
-
-Rearrange to find an expression for ab + bc + ac:
-
-ab + bc + ac ≥ -1/2
-
-This means the smallest possible value of ab + bc + ac is -1/2.
-
-Finally, to find the difference between the largest and smallest possible values of ab + bc + ac, we subtract the smallest from the largest:
-
-Largest - Smallest = 1 - (-1/2) = 1 + 1/2 = 3/2
-
-Therefore, the difference between the largest and smallest possible values of ab + bc + ac is 3/2.</code></pre>
+Therefore, the difference between the largest and smallest possible values of ab + bc + ac is 7/6.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The difference between the largest and smallest possible values of ab + bc + ac for real values a, b, c with a^2 + b^2 + c^2 = 1 is 3/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The difference between the largest and smallest possible values of ab + bc + ac for real values a, b, c with a^2 + b^2 + c^2 = 1 is 7/6.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

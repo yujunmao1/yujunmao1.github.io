@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_39</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 85</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_39']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,8 +82,7 @@ Find the number of ways to fill a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles.
 You may find the following information useful:
 
 1. Let a_n be the number of ways to tile a 2 x n rectangle.
-2. Find the expression for a_(n+1) in terms of a_n and a_(n-1).
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+2. Find the expression for a_(n+1) in terms of a_n and a_(n-1).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x n rectangle with 2 x 1 and 2 x 2 tiles is given by the following recurrence relation:
 
 $$a_n = a_{n-1} + a_{n-2}$$
@@ -92,27 +91,52 @@ with initial conditions $a_0 = 1$ and $a_1 = 2$.
 
 To see why this is the case, consider the following diagram:
 
-[Diagram of a 2 x 1 tile and a 2 x 2 tile]
+[Diagram of a 2 x 1 rectangle with 2 x 1 and 2 x 2 tiles]
 
-The 2 x 1 tile can be placed in any of the 2 rows of the 2 x n rectangle, and the 2 x 2 tile can be placed in any of the 2 columns. Once the 2 x 1 tile has been placed, there are $n-1$ rows left to place the 2 x 2 tile in, and once the 2 x 2 tile has been placed, there are $n-2$ columns left to place the 2 x 1 tile in. Therefore, there are $a_{n-1}$ ways to place the 2 x 1 tile first and $a_{n-2}$ ways to place the 2 x 2 tile first.
+There are two ways to tile this rectangle:
 
-To solve the recurrence relation, we can use the following formula:
+1. We can use a single 2 x 2 tile.
+2. We can use a 2 x 1 tile and a 1 x 1 tile.
 
-$$a_n = \frac{1}{2}(a_{n-1} + a_{n-2})$$
+Now consider the following diagram:
 
-This formula can be derived by considering the following diagram:
+[Diagram of a 2 x 2 rectangle with 2 x 1 and 2 x 2 tiles]
 
-[Diagram of a 2 x n rectangle with the 2 x 1 and 2 x 2 tiles placed in all possible ways]
+There are three ways to tile this rectangle:
 
-The 2 x 1 tile can be placed in any of the 2 rows of the 2 x n rectangle, and the 2 x 2 tile can be placed in any of the 2 columns. Once the 2 x 1 tile has been placed, there are $n-1$ rows left to place the 2 x 2 tile in, and once the 2 x 2 tile has been placed, there are $n-2$ columns left to place the 2 x 1 tile in. Therefore, there are $a_{n-1}$ ways to place the 2 x 1 tile first and $a_{n-2}$ ways to place the 2 x 2 tile first.
+1. We can use a single 2 x 2 tile.
+2. We can use two 2 x 1 tiles.
+3. We can use a 1 x 1 tile and a 2 x 1 tile.
 
-The number of ways to tile a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles is therefore given by:
+The first way to tile the 2 x 2 rectangle corresponds to the first way to tile the 2 x 1 rectangle, and the second way to tile the 2 x 2 rectangle corresponds to the second way to tile the 2 x 1 rectangle. The third way to tile the 2 x 2 rectangle corresponds to a new way to tile the 2 x 1 rectangle, namely, using a 2 x 1 tile and a 1 x 1 tile.
 
-$$a_7 = \frac{1}{2}(a_6 + a_5) = \frac{1}{2}(a_5 + a_4) = \frac{1}{2}(a_4 + a_3) = \frac{1}{2}(a_3 + a_2) = \frac{1}{2}(a_2 + a_1) = \frac{1}{2}(a_1 + a_0) = 14$$
+Therefore, the number of ways to tile a 2 x n rectangle with 2 x 1 and 2 x 2 tiles is given by the following recurrence relation:
 
-Therefore, there are 14 ways to tile a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles.</code></pre>
+$$a_n = a_{n-1} + a_{n-2}$$
+
+with initial conditions $a_0 = 1$ and $a_1 = 2$.
+
+To solve this recurrence relation, we can use the following formula:
+
+$$a_n = \frac{1}{2} \left( 2^n + (-1)^n \right)$$
+
+This formula can be verified by induction.
+
+For the base case, we have $a_0 = 1 = \frac{1}{2} \left( 2^0 + (-1)^0 \right)$.
+
+For the inductive step, assume that $a_n = \frac{1}{2} \left( 2^n + (-1)^n \right)$. Then,
+
+$$a_{n+1} = a_n + a_{n-1} = \frac{1}{2} \left( 2^{n+1} + (-1)^{n+1} \right) + \frac{1}{2} \left( 2^n + (-1)^n \right) = \frac{1}{2} \left( 2^{n+1} + 2^n + (-1)^{n+1} + (-1)^n \right) = \frac{1}{2} \left( 2^{n+1} + 2 \right) = \frac{1}{2} \left( 2^{n+1} + (-1)^{n+1} \right)$$
+
+Therefore, the number of ways to tile a 2 x n rectangle with 2 x 1 and 2 x 2 tiles is given by the following formula:
+
+$$a_n = \frac{1}{2} \left( 2^n + (-1)^n \right)$$
+
+In particular, the number of ways to tile a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles is given by
+
+$$a_7 = \frac{1}{2} \left( 2^7 + (-1)^7 \right) = 128$$</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 14 ways to tile a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x 7 rectangle with 2 x 1 and 2 x 2 tiles is 128.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

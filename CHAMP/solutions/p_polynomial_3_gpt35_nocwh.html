@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_3</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> At most 0 integer-valued zeros (i.e., no integer zeros)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_3']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,46 +82,30 @@ For a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(
 You may find the following information useful:
 
 1. Let a be an integer zero of f(x).
-2. A polynomial f(x) of degree n with roots x_1, ..., x_i (along with other roots) can be written as f(x)=(x-x_1)(x-x_2)...(x-x_i)g(x), where g(x) is a polynomial of degree n-i.
-3. Study the parity of f(0) and f(1).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by considering the given information. We know that f(0) and f(1) are both odd. 
+2. Study the parity of f(0) and f(1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by considering the given information:
 
-1. Let&#x27;s assume that a is an integer zero of f(x). This means that f(a) = 0. Since f(a) = 0, we can write f(x) as (x - a)g(x), where g(x) is a polynomial of degree n-1.
+1. Let a be an integer zero of f(x). This means that if a is a zero of f(x), then f(a) = 0.
 
-2. Now let&#x27;s consider the parity of f(0) and f(1). Since f(0) is odd, this means that (0 - a)g(0) = -a * g(0) is odd. Since a is an integer, -a is also an integer. Therefore, g(0) must be odd.
+2. We are told that both f(0) and f(1) are odd. This means that f(0) and f(1) leave a remainder of 1 when divided by 2.
 
-3. Similarly, since f(1) is odd, this means that (1 - a)g(1) = (1 - a) * g(1) is odd. Again, since a is an integer, (1 - a) is also an integer. Therefore, g(1) must be odd.
+Now, let&#x27;s consider the possible cases:
 
-Now, let&#x27;s consider the possible values of g(0) and g(1) given that they are odd.
+Case 1: f(0) and f(1) are both odd positive integers.
+In this case, we can write f(0) = 2k + 1 and f(1) = 2m + 1, where k and m are positive integers. Since f(0) = 2k + 1, we know that f(0) is odd. Similarly, since f(1) = 2m + 1, we know that f(1) is odd. Therefore, in this case, f(x) cannot have any integer-valued zeros.
 
-If g(0) is odd, this means that g(0) can be written as 2k + 1, where k is an integer.
+Case 2: f(0) and f(1) are both odd negative integers.
+In this case, we can write f(0) = -2k - 1 and f(1) = -2m - 1, where k and m are positive integers. Since f(0) = -2k - 1, we know that f(0) is odd. Similarly, since f(1) = -2m - 1, we know that f(1) is odd. Therefore, in this case, f(x) cannot have any integer-valued zeros.
 
-If g(1) is odd, this means that g(1) can be written as 2m + 1, where m is an integer.
+Case 3: f(0) is an odd positive integer and f(1) is an odd negative integer.
+In this case, we can write f(0) = 2k + 1 and f(1) = -2m - 1, where k and m are positive integers. Since f(0) = 2k + 1, we know that f(0) is odd. Similarly, since f(1) = -2m - 1, we know that f(1) is odd. Therefore, in this case, f(x) can have at most one integer-valued zero.
 
-Now, let&#x27;s substitute these values into the expression for f(x) = (x - a)g(x):
+Case 4: f(0) is an odd negative integer and f(1) is an odd positive integer.
+In this case, we can write f(0) = -2k - 1 and f(1) = 2m + 1, where k and m are positive integers. Since f(0) = -2k - 1, we know that f(0) is odd. Similarly, since f(1) = 2m + 1, we know that f(1) is odd. Therefore, in this case, f(x) can have at most one integer-valued zero.
 
-f(0) = (0 - a)g(0) = -a(2k + 1) = -2ak - a
-f(1) = (1 - a)g(1) = (1 - a)(2m + 1) = 2m - 2am + 1 - a = -2am + 2m + 1 - a
-
-Since f(0) and f(1) are both odd, this means that -2ak - a and -2am + 2m + 1 - a must both be odd.
-
-For -2ak - a to be odd, -2ak must be odd. This means that k must be odd.
-
-For -2am + 2m + 1 - a to be odd, -2am + 2m + 1 must be odd. This means that -2am + 2m must be even, and a must be odd.
-
-Therefore, a must be an odd integer, and k must be an odd integer.
-
-Now, let&#x27;s consider the possible values of a. Since a is an integer zero of f(x), it must be a factor of the constant term of f(x). Let&#x27;s assume the constant term of f(x) is c.
-
-If a is odd, then c must be odd as well. This means that c can be written as 2n + 1, where n is an integer.
-
-Since a is a factor of c, this means that a can be written as a = ±(2n + 1), where n is an integer.
-
-Therefore, the possible values of a are odd integers of the form ±(2n + 1), where n is an integer.
-
-In conclusion, a polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, can have at most n integer-valued zeros.</code></pre>
+In summary, we have considered all possible cases and found that in each case, f(x) can have at most one integer-valued zero. Therefore, the polynomial f(x) of degree n with integer coefficients, if both f(0) and f(1) are odd, can have at most one integer-valued zero.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>A polynomial of degree n with integer coefficients, if both f(0) and f(1) are odd, can have at most n integer-valued zeros.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>If a polynomial of degree n with integer coefficients has both f(0) and f(1) as odd, it can have at most one integer-valued zero.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

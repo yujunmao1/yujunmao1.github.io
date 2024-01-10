@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_42</td>
             <td>GPT-4 Turbo</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 3</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_42']
-messages = problem.conversations['GPT-4 Turbo|Example w/o H'].messages
+messages = problem.conversations['GPT-4 Turbo|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,74 +77,85 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For positive a, b, c, find the largest value of (ab(a+b)+bc(b+c)+ac(a+c)-a^3-b^3-c^3)/abc.
+For positive a, b, c, find the largest value of (ab(a+b)+bc(b+c)+ac(a+c)-a^3-b^3-c^3)/abc.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can start by expanding the numerator and then factoring it to simplify the expression. Let&#x27;s work through it step by step:
 
-You may find the following information useful:
+The expression we want to maximize is:
 
-1. Find a lower bound on the greatest value of the expression when a=b=c.
-2. Check if the greatest value can be larger than the lower bound.
-3. Let f(a, b, c)=a^3+b^3+c^3+k*abc-ab(a+b)-bc(b+c)-ac(a+c).
-4. Assume that a≤b≤c and write b=a+u, c=a+v.
-5. Let g(a, b, c)=f(a, b, c)/a^3 and write x=u/a, y=v/a.
-6. Simplify g(a, b, c) by adding and subtracting xy to write it as the sum of two (factorized) terms.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s follow the steps outlined to solve the problem.
+(ab(a+b) + bc(b+c) + ac(a+c) - a^3 - b^3 - c^3) / abc
 
-Step 1: Find a lower bound on the greatest value of the expression when a=b=c.
+First, let&#x27;s expand the terms in the numerator:
 
-When a=b=c, the expression simplifies to:
-(ab(a+b)+bc(b+c)+ac(a+c)-a^3-b^3-c^3)/abc = (3a^3 - 3a^3) / a^3 = 0.
+= (a^2b + ab^2 + b^2c + bc^2 + a^2c + ac^2 - a^3 - b^3 - c^3) / abc
 
-So, the lower bound on the greatest value of the expression is 0.
+Now, let&#x27;s group the terms with common factors:
 
-Step 2: Check if the greatest value can be larger than the lower bound.
+= (a^2b + ab^2 - a^3) / abc + (b^2c + bc^2 - b^3) / abc + (a^2c + ac^2 - c^3) / abc
 
-We need to determine if the expression can be greater than 0 for some values of a, b, and c.
+We can factor out a, b, and c from each group, respectively:
 
-Step 3: Let f(a, b, c)=a^3+b^3+c^3+k*abc-ab(a+b)-bc(b+c)-ac(a+c).
+= (a^2(b + a - a^2)) / abc + (b^2(c + b - b^2)) / abc + (c^2(a + c - c^2)) / abc
 
-We want to find the value of k such that f(a, b, c) = 0 for all a, b, c. This would mean that the expression we are interested in is equal to k.
+Now, we can simplify each term by canceling out the common factors:
 
-Step 4: Assume that a≤b≤c and write b=a+u, c=a+v.
+= (b + a - a^2) / bc + (c + b - b^2) / ac + (a + c - c^2) / ab
 
-Step 5: Let g(a, b, c)=f(a, b, c)/a^3 and write x=u/a, y=v/a.
+Next, let&#x27;s find a common denominator to combine these fractions:
 
-Step 6: Simplify g(a, b, c) by adding and subtracting xy to write it as the sum of two (factorized) terms.
+= [(b + a - a^2)ac + (c + b - b^2)ab + (a + c - c^2)bc] / (abc)
 
-Let&#x27;s perform the calculations for steps 4, 5, and 6.
+Now, let&#x27;s expand the terms in the numerator again:
 
-We have b = a + u and c = a + v, so b = a(1 + x) and c = a(1 + y) where x = u/a and y = v/a.
+= (abc + a^2c - a^3c + abc + ab^2 - ab^3 + abc + b^2c - bc^3) / (abc)
 
-Now, let&#x27;s express f(a, b, c) in terms of a, x, and y:
-f(a, b, c) = a^3 + (a(1+x))^3 + (a(1+y))^3 + k*a^3*(1+x)(1+y) - a^2(1+x)(a+a(1+x)) - a^2(1+y)(a+a(1+y)) - a^2(1+x)(a+a(1+y))
+Combine like terms:
 
-Simplify the terms:
-f(a, b, c) = a^3 + a^3(1+x)^3 + a^3(1+y)^3 + k*a^3*(1+x)(1+y) - a^3(1+x)^2 - a^3(1+y)^2 - a^3(1+x)(1+y)
+= (3abc + a^2c - a^3c + ab^2 - ab^3 + b^2c - bc^3) / (abc)
 
-Now, divide by a^3 to get g(a, b, c):
-g(a, b, c) = 1 + (1+x)^3 + (1+y)^3 + k*(1+x)(1+y) - (1+x)^2 - (1+y)^2 - (1+x)(1+y)
+Now, let&#x27;s factor out the common factor of abc in the numerator:
 
-Now, let&#x27;s add and subtract xy:
-g(a, b, c) = 1 + (1+x)^3 + (1+y)^3 + k*(1+x)(1+y) - (1+x)^2 - (1+y)^2 - (1+x)(1+y) + xy - xy
+= abc(3 + a/c - a^2/c + b/a - b^2/a + c/b - c^2/b) / (abc)
 
-Group terms to factorize:
-g(a, b, c) = [1 - (1+x)(1+y) + xy] + [(1+x)^3 - (1+x)^2] + [(1+y)^3 - (1+y)^2] + k*(1+x)(1+y) - xy
+The abc terms cancel out:
 
-Now, let&#x27;s factorize the terms in brackets:
-g(a, b, c) = [1 - (1+x+y+xy) + xy] + [(1+x)^2(1+x-1)] + [(1+y)^2(1+y-1)] + k*(1+x)(1+y) - xy
+= 3 + a/c - a^2/c + b/a - b^2/a + c/b - c^2/b
 
-Simplify further:
-g(a, b, c) = [1 - 1 - x - y - xy + xy] + [x(1+x)^2] + [y(1+y)^2] + k*(1+x)(1+y) - xy
-g(a, b, c) = [- x - y] + [x + x^2 + x^3] + [y + y^2 + y^3] + k*(1+x+y+xy) - xy
+Now, let&#x27;s rewrite the terms with negative exponents as fractions:
 
-Now, we need to find the value of k such that g(a, b, c) is always non-negative for all non-negative x and y. This is equivalent to finding the maximum value of the original expression.
+= 3 + a/c - a^2/c^2 + b/a - b^2/a^2 + c/b - c^2/b^2
 
-Notice that the terms x^3 and y^3 are always non-negative since x and y are non-negative. The term -xy is non-positive. To make g(a, b, c) non-negative, we need to choose k such that the term k*(1+x+y+xy) compensates for the negative terms.
+We can now apply AM-GM inequality (Arithmetic Mean - Geometric Mean inequality) to each pair of terms that add up to a constant. The AM-GM inequality states that for non-negative real numbers x and y, the arithmetic mean is always greater than or equal to the geometric mean:
 
-The worst case is when x = y = 0, which gives us k ≥ 1 to ensure g(a, b, c) is non-negative.
+AM = (x + y) / 2
+GM = √(xy)
 
-Therefore, the largest value of the original expression is k = 1.</code></pre>
+And AM ≥ GM.
+
+Let&#x27;s apply this to the pairs (a/c, a^2/c^2), (b/a, b^2/a^2), and (c/b, c^2/b^2):
+
+(a/c + a^2/c^2) / 2 ≥ √(a/c * a^2/c^2) = a^(3/2) / c^(3/2)
+(b/a + b^2/a^2) / 2 ≥ √(b/a * b^2/a^2) = b^(3/2) / a^(3/2)
+(c/b + c^2/b^2) / 2 ≥ √(c/b * c^2/b^2) = c^(3/2) / b^(3/2)
+
+Since each pair adds up to a constant, the maximum value of each pair is when the two terms are equal (by the equality condition of AM-GM, which holds when x = y). Therefore, the maximum value of the original expression is when:
+
+a/c = a^2/c^2
+b/a = b^2/a^2
+c/b = c^2/b^2
+
+This implies:
+
+a = c
+b = a
+c = b
+
+Which means a = b = c. When a = b = c, the expression simplifies to:
+
+3 + 1 - 1 + 1 - 1 + 1 - 1 = 3
+
+Therefore, the largest value of the given expression is 3 when a = b = c.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression (ab(a+b)+bc(b+c)+ac(a+c)-a^3-b^3-c^3)/abc for positive a, b, c is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression (ab(a+b) + bc(b+c) + ac(a+c) - a^3 - b^3 - c^3) / abc for positive a, b, c is 3, which occurs when a = b = c.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

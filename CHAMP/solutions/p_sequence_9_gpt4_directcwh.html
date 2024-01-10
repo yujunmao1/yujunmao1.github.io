@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Sequence_9</td>
+            <td>GPT-4</td>
+            <td>Direct C w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no such values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load('v0')
+problem = dataset['P_Sequence_9']
+messages = problem.conversations['GPT-4|Direct C w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Let n&gt;1 be an integer. There are n lamps L_0, ..., L_(n−1) arranged in a circle. Each lamp is either ON or OFF. A sequence of steps S_0, ..., S_i, ... is carried out. Step S_j affects the state of L_j only (leaving the states of all other lamps unaltered) as follows: if L_(j−1) is ON, S_j changes the state of L_j from ON to OFF or from OFF to ON; if L_(j−1) is OFF, S_j leaves the state L_j unchanged. The lamps are labeled modulo n, that is, L_(−1)=L_(n−1), L_0=L_n, L_1=L_(n+1). Initially all lamps are ON. For n in {2, 3, ..., 100}, how many of them result in a the sequence of switching not being able to return all lamps to the ON state ever again?
+
+You may find the following information useful:
+
+1. Consider a sequence (x_0, x_1, x_2, ..., x_(n-1))=(1, 1, 1, ..., 1) representing the initial state of the lamp, and each S_j appends the new state of the lamp being affected to the sequence.
+2. Find a formula for x_(j+1) given x_0, ..., x_j.
+3. Let v_j=[x_j, x_(j+1), ..., x_(j+n-1)] be a binary vector.
+4. Study any possible repetitions in the sequence of vectors v_0, v_1, v_2, ...
+5. Study if the mapping from v_j to v_(j+1) is invertible, and its implication on the repetition of sequence values.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem is a classic example of a problem in the field of discrete mathematics, specifically in the area of sequences and series. Here&#x27;s how you can solve it:
+
+1. The initial state of the lamps is represented by the sequence (1, 1, 1, ..., 1). Each S_j operation appends the new state of the lamp being affected to the sequence. Therefore, the state of the lamp at position j+1, denoted by x_(j+1), can be given by the formula:
+
+   x_(j+1) = x_j XOR x_(j-1)
+
+   where XOR is the exclusive OR operation, which returns 1 if the two bits are different, and 0 if they are the same.
+
+2. The binary vector v_j = [x_j, x_(j+1), ..., x_(j+n-1)] represents the state of the lamps at step j. 
+
+3. To study the possible repetitions in the sequence of vectors v_0, v_1, v_2, ..., we need to observe that since each x_(j+1) depends only on x_j and x_(j-1), and each x_j is a binary digit (0 or 1), there are only a finite number of possible states for the sequence. Therefore, the sequence of vectors must eventually repeat.
+
+4. The mapping from v_j to v_(j+1) is invertible if and only if the sequence can return to its initial state. This is because if the mapping is invertible, we can reverse the operations to get back to the initial state. 
+
+5. Therefore, the problem reduces to finding the values of n for which the mapping from v_j to v_(j+1) is not invertible. This happens when n is a power of 2. This is because when n is a power of 2, the sequence enters a cycle of length less than 2^n before it can return to the initial state.
+
+6. The powers of 2 less than or equal to 100 are 2, 4, 8, 16, 32, 64. So, there are 6 values of n in {2, 3, ..., 100} for which the sequence of switching cannot return all lamps to the ON state ever again.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 6 values of n in the set {2, 3, ..., 100} for which the sequence of switching cannot return all lamps to the ON state ever again, specifically when n is a power of 2 (2, 4, 8, 16, 32, 64).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

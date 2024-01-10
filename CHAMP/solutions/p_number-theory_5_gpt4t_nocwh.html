@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_5</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 9376</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_5']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,44 +81,78 @@ An integer a is called automorphic if a^2 ends in a. For example, 5 is automorph
 
 You may find the following information useful:
 
-1. Consider the last four digit of a^2-a.
-2. If a | bc and gcd(b, c)=1, then we can find integer m, n, p, q such that b=mp, c=nq, gcd(m, n)=gcd(p, q)=1 and pq=a.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all four-digit automorphic numbers, we need to find integers \( a \) such that the last four digits of \( a^2 \) are \( a \) itself. Let&#x27;s denote the last four digits of \( a \) as \( d \), so we can write \( a \) as \( 10000k + d \) for some integer \( k \) and \( 0 \leq d &lt; 10000 \).
+1. Consider the last four digit of a^2-a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find all four-digit automorphic numbers, we need to find integers \( a \) such that the last four digits of \( a^2 \) are \( a \) itself. Let&#x27;s denote the last four digits of \( a \) as \( d_1d_2d_3d_4 \), where \( d_1 \) is the thousands digit, \( d_2 \) is the hundreds digit, \( d_3 \) is the tens digit, and \( d_4 \) is the units digit.
 
-Now, let&#x27;s consider the last four digits of \( a^2 - a \):
+We are looking for \( a \) such that:
+\[ a^2 - a \equiv 0 \pmod{10000} \]
 
-\[ a^2 - a = (10000k + d)^2 - (10000k + d) \]
-\[ = 10000^2k^2 + 2 \cdot 10000kd + d^2 - 10000k - d \]
-\[ = 10000(10000k^2 + 2kd - k) + d^2 - d \]
+This means that \( a \) divides \( a^2 \), and the remainder when \( a^2 \) is divided by 10000 is \( a \) itself.
 
-The last four digits of \( a^2 - a \) are given by \( d^2 - d \), since the term \( 10000(10000k^2 + 2kd - k) \) will not affect the last four digits.
+Let&#x27;s start by considering the last digit of \( a \), which is \( d_4 \). For \( a^2 \) to end in \( d_4 \), \( d_4 \) must be either 0, 1, 5, or 6, because these are the only digits that, when squared, end in themselves:
 
-For \( a \) to be automorphic, \( a^2 \) must end in \( a \), which means \( d^2 - d \) must end in \( 0000 \). This implies that \( d \) must be a solution to the congruence:
+- \( 0^2 = 0 \)
+- \( 1^2 = 1 \)
+- \( 5^2 = 25 \)
+- \( 6^2 = 36 \)
 
-\[ d^2 \equiv d \pmod{10000} \]
+Now, let&#x27;s consider the last two digits of \( a \), which are \( d_3d_4 \). We know that \( d_4 \) is either 0, 1, 5, or 6. If \( d_4 \) is 0 or 1, then \( d_3 \) can be any digit from 0 to 9. However, if \( d_4 \) is 5 or 6, then \( d_3 \) must be 2 or 5, respectively, because:
 
-This simplifies to:
+- \( 25^2 = 625 \)
+- \( 76^2 = 5776 \) (Note that we consider 76 because the last two digits must be 76 for the square to end in 76)
 
-\[ d(d - 1) \equiv 0 \pmod{10000} \]
+Now, let&#x27;s consider the last three digits of \( a \), which are \( d_2d_3d_4 \). We know that \( d_3d_4 \) can be 00, 01, 25, or 76. We need to find \( d_2 \) such that when we square \( d_2d_3d_4 \), the last three digits are \( d_3d_4 \). This is a more complex calculation, and we can use a computer or a systematic approach to find the solutions.
 
-Since \( d \) and \( d - 1 \) are consecutive integers, they are coprime. Therefore, we can apply the given information: if \( a \mid bc \) and \( \gcd(b, c) = 1 \), then \( b \) and \( c \) can be written in terms of \( a \) and other coprime factors.
+However, we can simplify the problem by realizing that the last three digits of \( a \) must form a number that, when squared, ends in those same three digits. This is because the last three digits of \( a^2 \) are only affected by the last three digits of \( a \) when we square it.
 
-Applying this to our congruence, we have \( d \mid 10000 \) and \( d - 1 \mid 10000 \). Since \( d \) and \( d - 1 \) are coprime, they must individually divide factors of \( 10000 \) that are also coprime.
+So, we can look for numbers \( x \) such that \( x^2 \) mod 1000 equals \( x \). We can do this by checking all numbers from 0 to 999 and squaring them to see if they satisfy the condition.
 
-The prime factorization of \( 10000 \) is \( 2^4 \cdot 5^4 \). The coprime factors of \( 10000 \) are \( 2^i \cdot 5^j \) where \( i + j \leq 4 \) and \( i, j \) are non-negative integers.
+Let&#x27;s start with the last two digits we already know can work: 00, 01, 25, and 76. We can check numbers ending in these two digits and see if any of them, when squared, end in the same three digits.
 
-We can now check the possible values of \( d \) and \( d - 1 \) that are factors of \( 10000 \) and are coprime:
+For example, let&#x27;s check numbers ending in 25:
+- \( 125^2 = 15625 \) (last three digits are 625)
+- \( 225^2 = 50625 \) (last three digits are 625)
+- \( 325^2 = 105625 \) (last three digits are 625)
+- ...
+- \( 625^2 = 390625 \) (last three digits are 625)
+- ...
+- \( 925^2 = 855625 \) (last three digits are 625)
 
-1. \( d = 1 \cdot 5^0 = 1 \) and \( d - 1 = 2^4 \cdot 5^0 = 16 \) (not a four-digit number)
-2. \( d = 2^4 \cdot 5^0 = 16 \) and \( d - 1 = 1 \cdot 5^0 = 15 \) (not a four-digit number)
-3. \( d = 1 \cdot 5^4 = 625 \) and \( d - 1 = 2^4 \cdot 5^3 = 10000/5 = 2000 \)
-4. \( d = 2^4 \cdot 5^3 = 2000 \) and \( d - 1 = 1 \cdot 5^3 = 125 \) (not a four-digit number)
+We can see that for numbers ending in 25, the last three digits of their square are always 625, not the original three digits (125, 225, 325, etc.).
 
-From the above, we see that \( d = 625 \) is a valid four-digit automorphic number since \( 625^2 = 390625 \) ends in \( 625 \), and \( d = 2000 \) is not valid since \( 2000^2 = 4000000 \) does not end in \( 2000 \).
+We can perform a similar check for numbers ending in 76:
+- \( 176^2 = 30976 \) (last three digits are 976)
+- \( 276^2 = 76176 \) (last three digits are 176)
+- ...
+- \( 576^2 = 331776 \) (last three digits are 776)
+- ...
+- \( 876^2 = 767376 \) (last three digits are 376)
 
-Therefore, the only four-digit automorphic number is \( 625 \).</code></pre>
+Here, we find that \( 376^2 = 141376 \), so 376 is a three-digit number that, when squared, ends in the same three digits.
+
+Now, we need to extend this to four digits. We can check numbers ending in 376 and 625 to see if any of them, when squared, end in the same four digits.
+
+For numbers ending in 376:
+- \( 1376^2 = 1893376 \) (last four digits are 3376)
+- \( 2376^2 = 5645376 \) (last four digits are 5376)
+- ...
+- \( 9376^2 = 87909376 \) (last four digits are 9376)
+
+Here, we find that \( 9376^2 = 87909376 \), so 9376 is a four-digit number that, when squared, ends in the same four digits.
+
+For numbers ending in 625:
+- \( 0625^2 = 390625 \) (last four digits are 0625)
+- \( 1625^2 = 2640625 \) (last four digits are 0625)
+- ...
+- \( 5625^2 = 31640625 \) (last four digits are 0625)
+- ...
+- \( 7625^2 = 58140625 \) (last four digits are 0625)
+
+Here, we find that \( 0625^2 = 390625 \), so 0625 (or simply 625) is a four-digit number that, when squared, ends in the same four digits.
+
+Therefore, the four-digit automorphic numbers are 0625 and 9376.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only four-digit automorphic number is 625.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The four-digit automorphic numbers are 0625 and 9376.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_2</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> Always greater than 20</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_2']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,45 +83,31 @@ You may find the following information useful:
 
 1. Let a_n=x_n+y_n+z_n.
 2. Derive a lower bound on a_2.
-3. For positive x, x+1/x≥2, with equality if and only if x=1.
-4. Compare a_n with 18n for all n.
-5. (x±y)^2=x^2±2xy+y^2.
-6. For real numbers a_1, ..., a_n and b_1, ..., b_n, (a_1*b_1+...+a_n*b_n)^2≤(a_1^2+...+a_n^2)(b_1^2+...+b_n^2).</code></pre>
+3. Compare a_n with 18n for all n.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This is a complex problem that requires a deep understanding of sequences and inequalities. Let&#x27;s break it down step by step.
 
-1. Let a_n=x_n+y_n+z_n. 
+First, let&#x27;s derive a lower bound on a_2. 
 
-This is the sum of the three sequences at the nth term.
+a_2 = x_2 + y_2 + z_2 
+    = (y_1 + 1/z_1) + (z_1 + 1/x_1) + (x_1 + 1/y_1)
+    = (x_1 + y_1 + z_1) + (1/x_1 + 1/y_1 + 1/z_1)
+    = a_1 + 1/x_1 + 1/y_1 + 1/z_1
 
-2. Derive a lower bound on a_2.
+Since x_1, y_1, z_1 are positive, 1/x_1, 1/y_1, 1/z_1 are also positive. Therefore, a_2 &gt; a_1.
 
-We know that x_2=y_1+1/z_1, y_2=z_1+1/x_1, and z_2=x_1+1/y_1. Therefore, a_2=x_2+y_2+z_2=2(x_1+y_1+z_1)+3. 
+Next, let&#x27;s compare a_n with 18n for all n. 
 
-3. For positive x, x+1/x≥2, with equality if and only if x=1.
+We know that a_2 &gt; a_1. It&#x27;s also clear that a_3 &gt; a_2, a_4 &gt; a_3, and so on, because each term adds a positive quantity to the previous term. Therefore, the sequence {a_n} is strictly increasing.
 
-This is a well-known inequality. It means that for any positive x, the sum of x and its reciprocal is at least 2. This will be useful in deriving a lower bound for a_n.
+Now, let&#x27;s consider the initial terms. If x_1, y_1, z_1 are all less than 6, then a_1 = x_1 + y_1 + z_1 &lt; 18. Since {a_n} is strictly increasing, a_n &lt; 18n for all n.
 
-4. Compare a_n with 18n for all n.
+On the other hand, if any of x_1, y_1, z_1 is greater than 6, then a_1 &gt; 18. Since {a_n} is strictly increasing, a_n &gt; 18n for all n.
 
-We want to show that a_n≥18n for all n. We have already shown that a_2=2(x_1+y_1+z_1)+3≥18*2=36, assuming x_1, y_1, z_1≥1. 
+Finally, let&#x27;s consider w_n, the maximum value of x_n, y_n, z_n. Since a_n is the sum of x_n, y_n, z_n, we have w_n ≤ a_n for all n. Therefore, if a_n &lt; 18n, then w_n &lt; 18n, and if a_n &gt; 18n, then w_n &gt; 18n.
 
-Assume a_n≥18n for some n. Then a_(n+1)=x_(n+1)+y_(n+1)+z_(n+1)=(y_n+1/z_n)+(z_n+1/x_n)+(x_n+1/y_n)≥2(x_n+y_n+z_n)+3=2a_n+3≥2*18n+3=18(n+1)+6. 
-
-Therefore, by induction, a_n≥18n for all n.
-
-5. (x±y)^2=x^2±2xy+y^2.
-
-This is a basic algebraic identity that will be useful in the next step.
-
-6. For real numbers a_1, ..., a_n and b_1, ..., b_n, (a_1*b_1+...+a_n*b_n)^2≤(a_1^2+...+a_n^2)(b_1^2+...+b_n^2).
-
-This is the Cauchy-Schwarz inequality. It will be useful in proving that w_n≥20 for all n.
-
-We know that w_n≤a_n/3 for all n, because a_n is the sum of x_n, y_n, z_n and w_n is the maximum of these three numbers. Therefore, w_n≤a_n/3≤18n/3=6n. 
-
-Since w_200≤6*200=1200, we can conclude that w_200 is sometimes greater and sometimes smaller than 20, depending on the initial values of x_1, y_1, z_1.</code></pre>
+In conclusion, w_200 can be either greater or smaller than 20, depending on the initial values of x_1, y_1, z_1. If x_1, y_1, z_1 are all less than 6, then w_200 &lt; 20. If any of x_1, y_1, z_1 is greater than 6, then w_200 &gt; 20.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For different values of x_1, y_1, z_1, the maximum value of the sequences x_n, y_n, z_n at the 200th term, denoted as w_200, can be sometimes greater and sometimes smaller than 20.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of w_200 can be either greater or smaller than 20, depending on the initial values of x_1, y_1, z_1; if all are less than 6, then w_200 &lt; 20, but if any is greater than 6, then w_200 &gt; 20.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_28</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 164</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_28']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,42 +83,26 @@ You may find the following information useful:
 
 1. Let f(n) be the number of length-n strings that end with 1 and g(n) be the number of length-n strings that end with either 2 or 3.
 2. Find f(n+1) in terms of f(n) and g(n).
-3. Find g(n+1) in terms of f(n) and g(n).
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+3. Find g(n+1) in terms of f(n) and g(n).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the principle of inclusion-exclusion.
 
-Let&#x27;s consider the number of strings that do not have any restrictions. Since each digit can be either 1, 2, or 3, there are 3 options for each digit. Therefore, the total number of strings without any restrictions is 3^5 = 243.
+Let&#x27;s consider the number of strings of length 5 that can be formed using only the digits 2 and 3. This can be done in 2^5 = 32 ways.
 
-Now, let&#x27;s consider the number of strings where two 1s are neighbors. We can think of this as a task with 4 steps: placing the first digit, placing the second digit, placing the third digit, and placing the remaining two digits. 
+Now, let&#x27;s subtract the number of strings that have two 1s as neighbors. We can count these strings by considering the positions of the two 1s. There are 4 possible positions for the first 1 (positions 1, 2, 3, or 4), and once the first 1 is placed, there are 3 possible positions for the second 1 (positions 2, 3, or 4). So, there are 4 * 3 = 12 strings with two 1s as neighbors.
 
-For the first step, there are 3 options (2, 3, or 1 if it is not followed by another 1). For the second step, there are 2 options (2 or 3). For the third step, there are 2 options (2 or 3). Finally, for the remaining two digits, there are 3^2 = 9 options.
+However, we have double-counted the strings that have two 1s at positions 2 and 3. There are 3 such strings: 11323, 11233, and 12313.
 
-Using the principle of multiplication, the total number of strings where two 1s are neighbors is 3 * 2 * 2 * 9 = 108.
+Therefore, the number of strings consisting of 5 digits of 1, 2, and 3 where no two 1s are neighbors is 32 - 12 + 3 = 23.
 
-Now, let&#x27;s consider the number of strings where three 1s are neighbors. We can think of this as a task with 3 steps: placing the first digit, placing the second digit, and placing the remaining two digits.
+To summarize:
 
-For the first step, there are 3 options (2, 3, or 1 if it is not followed by another 1). For the second step, there are 2 options (2 or 3). Finally, for the remaining two digits, there are 3^2 = 9 options.
+Number of strings using only 2 and 3: 2^5 = 32
+Number of strings with two 1s as neighbors: 12
+Number of strings with two 1s at positions 2 and 3: 3
 
-Using the principle of multiplication, the total number of strings where three 1s are neighbors is 3 * 2 * 9 = 54.
-
-However, we have overcounted the strings where both two 1s and three 1s are neighbors. To correct for this, we need to subtract the number of strings where both conditions are satisfied.
-
-We can think of this as a task with 2 steps: placing the first digit and placing the remaining three digits.
-
-For the first step, there are 2 options (2 or 3). For the remaining three digits, there are 3^3 = 27 options.
-
-Using the principle of multiplication, the total number of strings where both two 1s and three 1s are neighbors is 2 * 27 = 54.
-
-Now, we can use the principle of inclusion-exclusion to find the number of strings where no two 1s are neighbors.
-
-The total number of strings without any restrictions is 243. We subtract the number of strings where two 1s are neighbors (108), subtract the number of strings where three 1s are neighbors (54), and add back the number of strings where both two 1s and three 1s are neighbors (54).
-
-Therefore, the number of strings where no two 1s are neighbors is 243 - 108 - 54 + 54 = 135.
-
-So, the final answer is 135.</code></pre>
+Final answer: 23.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings consisting of 5 digits of 1, 2, and 3 where no two 1s are neighbors is 135.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings consisting of 5 digits of 1, 2, and 3 where no two 1s are neighbors is 23.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

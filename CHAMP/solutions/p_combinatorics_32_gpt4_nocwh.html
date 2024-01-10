@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_32</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 75</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_32']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -84,44 +84,34 @@ You may find the following information useful:
 1. Let H(n, r) represent the number of ways that n horses can finish in r groups (where horses in each group are tied).
 2. Find H(n, 1).
 3. Find H(n, r) as a function of H(n-1, r-1) and H(n-1, r).
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
-6. Express the number of finishes P(n) for n horses in terms of H(n, r).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by finding H(n, 1). This is the number of ways that n horses can finish in 1 group, which means all horses are tied. Since all horses are tied, there is only 1 way for them to finish, regardless of the number of horses. So, H(n, 1) = 1 for any n.
+4. Express the number of finishes P(n) for n horses in terms of H(n, r).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>1. H(n, 1) represents the number of ways that n horses can finish in 1 group. Since all horses are tied in this case, there is only one way for this to happen, regardless of the number of horses. So, H(n, 1) = 1 for any n.
 
-Next, let&#x27;s find H(n, r) as a function of H(n-1, r-1) and H(n-1, r). 
+2. H(n, r) can be found as a function of H(n-1, r-1) and H(n-1, r). This is because any finish with n horses and r groups can be formed in one of two ways:
 
-H(n, r) represents the number of ways that n horses can finish in r groups. This can happen in two ways:
+   a. Take a finish with n-1 horses and r-1 groups, and add the nth horse to form a new group. There are H(n-1, r-1) ways to do this.
+   
+   b. Take a finish with n-1 horses and r groups, and add the nth horse to one of the existing groups. There are r*H(n-1, r) ways to do this (since the nth horse can join any of the r groups).
 
-1. The nth horse forms a new group by itself. There are H(n-1, r-1) ways for the first n-1 horses to finish in r-1 groups, and then the nth horse can finish in 1 way (by itself), for a total of H(n-1, r-1) ways.
+   Therefore, H(n, r) = H(n-1, r-1) + r*H(n-1, r).
 
-2. The nth horse joins an existing group. There are H(n-1, r) ways for the first n-1 horses to finish in r groups, and then the nth horse can join any of these groups in r ways, for a total of r*H(n-1, r) ways.
+3. The number of finishes P(n) for n horses can be found by summing H(n, r) over all possible values of r (from 1 to n). This is because each value of r represents a different way to group the horses, and all of these possibilities are mutually exclusive and collectively exhaustive. Therefore, P(n) = Σ H(n, r) for r = 1 to n.
 
-So, H(n, r) = H(n-1, r-1) + r*H(n-1, r).
+Now, let&#x27;s calculate P(4) using the above formulas:
 
-Now, let&#x27;s express the number of finishes P(n) for n horses in terms of H(n, r). 
+H(4, 1) = 1 (as established above)
 
-P(n) is the total number of ways that n horses can finish, regardless of the number of groups. This is the sum of the number of ways that n horses can finish in r groups, for all possible values of r. 
+H(4, 2) = H(3, 1) + 2*H(3, 2) = 1 + 2*2 = 5
 
-So, P(n) = H(n, 1) + H(n, 2) + ... + H(n, n).
+H(4, 3) = H(3, 2) + 3*H(3, 3) = 2 + 3*1 = 5
 
-Finally, let&#x27;s solve the problem for 4 horses. 
+H(4, 4) = H(3, 3) + 4*H(3, 4) = 1 + 4*0 = 1
 
-We need to find P(4) = H(4, 1) + H(4, 2) + H(4, 3) + H(4, 4).
+Therefore, P(4) = H(4, 1) + H(4, 2) + H(4, 3) + H(4, 4) = 1 + 5 + 5 + 1 = 12.
 
-We already know that H(n, 1) = 1 for any n, so H(4, 1) = 1.
-
-To find H(4, 2), H(4, 3), and H(4, 4), we can use the formula H(n, r) = H(n-1, r-1) + r*H(n-1, r) and the fact that H(n, 1) = 1 for any n.
-
-H(4, 2) = H(3, 1) + 2*H(3, 2) = 1 + 2*3 = 7.
-H(4, 3) = H(3, 2) + 3*H(3, 3) = 7 + 3*1 = 10.
-H(4, 4) = H(3, 3) + 4*H(3, 4) = 1 + 4*1 = 5.
-
-So, P(4) = H(4, 1) + H(4, 2) + H(4, 3) + H(4, 4) = 1 + 7 + 10 + 5 = 23.
-
-Therefore, there are 23 ways for 4 horses to go through the finish, with the possibility of ties.</code></pre>
+So, there are 12 ways for 4 horses to go through the finish, allowing for the possibility of ties.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 23 ways for 4 horses to go through the finish, with the possibility of ties.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 12 ways for 4 horses to go through the finish, allowing for the possibility of ties.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

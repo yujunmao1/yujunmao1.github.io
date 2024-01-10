@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_73</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_73']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,79 +81,68 @@ What are possible values of 20^n+16^n-3^n-1 mod 323 for even n?
 
 You may find the following information useful:
 
-1. 323=17*19.
-2. For integer a, b, n, a - b | a^n - b^n.
-3. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.
-4. If a | c, b | c and gcd(a, b)=1, then ab | c.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n, we can use the given information and properties of modular arithmetic.
+1. 323=17*19.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n, we can use modular arithmetic properties and the given information that 323 = 17 * 19.
 
-First, let&#x27;s simplify the expression using the properties of modular arithmetic:
+First, let&#x27;s simplify the expression:
 
-20^n + 16^n - 3^n - 1 ≡ (20^n - 1) + (16^n - 1) - 3^n (mod 323)
+20^n + 16^n - 3^n - 1 mod 323
 
-Now, let&#x27;s consider each term separately:
+Since we are looking for the values mod 323, we can simplify each term separately:
 
-1. (20^n - 1) ≡ (20 - 1)(20^(n-1) + 20^(n-2) + ... + 1) ≡ 19(20^(n-1) + 20^(n-2) + ... + 1) (mod 323)
+20^n mod 323
+16^n mod 323
+3^n mod 323
+1 mod 323
 
-2. (16^n - 1) ≡ (16 - 1)(16^(n-1) + 16^(n-2) + ... + 1) ≡ 15(16^(n-1) + 16^(n-2) + ... + 1) (mod 323)
+Now, let&#x27;s analyze each term:
 
-3. -3^n ≡ -1(3^n) ≡ -1(3^(2k)) ≡ -1(9^k) ≡ -1 (mod 323) (since n is even)
+1. 20^n mod 323:
+We can use Euler&#x27;s theorem since 323 = 17 * 19, and both 17 and 19 are prime numbers. Euler&#x27;s theorem states that if a and m are coprime (gcd(a, m) = 1), then a^phi(m) ≡ 1 mod m, where phi(m) is Euler&#x27;s totient function.
 
-Now, let&#x27;s substitute these simplified expressions back into the original equation:
+phi(323) = phi(17 * 19) = phi(17) * phi(19) = 16 * 18 = 288
 
-(20^n + 16^n - 3^n - 1) ≡ 19(20^(n-1) + 20^(n-2) + ... + 1) + 15(16^(n-1) + 16^(n-2) + ... + 1) - 1 (mod 323)
+Therefore, 20^288 ≡ 1 mod 323.
 
-Using the property that a - b | a^n - b^n, we can combine the terms:
+Since n is even, we can write n = 2k for some integer k.
 
-(20^n + 16^n - 3^n - 1) ≡ 19(20^(n-1) + 20^(n-2) + ... + 1 + 15(16^(n-1) + 16^(n-2) + ... + 1) - 1 (mod 323)
+20^n ≡ (20^2)^k ≡ 400^k ≡ (77 * 5)^k ≡ 77^k * 5^k mod 323
 
-Simplifying further:
+Using Euler&#x27;s theorem, we know that 77^288 ≡ 1 mod 323 and 5^288 ≡ 1 mod 323.
 
-(20^n + 16^n - 3^n - 1) ≡ 19(20^(n-1) + 20^(n-2) + ... + 1 + 15(16^(n-1) + 16^(n-2) + ... + 1) - 1 (mod 323)
+Therefore, 20^n ≡ 77^k * 5^k mod 323.
 
-Now, let&#x27;s consider the factors of 323:
+2. 16^n mod 323:
+Using the same logic as above, we can write 16^n ≡ 16^k mod 323.
 
-323 = 17 * 19
+Since 16 = 2^4, we can use the property that (a^b)^c ≡ a^(b*c) mod m.
 
-Since 19 and 17 are relatively prime (gcd(19, 17) = 1), we can apply property 4:
+Therefore, 16^n ≡ (2^4)^k ≡ 2^(4k) mod 323.
 
-ab | c
+3. 3^n mod 323:
+Similarly, we can write 3^n ≡ 3^k mod 323.
 
-19 * 17 | 323
+4. 1 mod 323:
+This term remains unchanged.
 
-Therefore, we can conclude that:
+Now, let&#x27;s substitute these simplified terms back into the original expression:
 
-19(20^(n-1) + 20^(n-2) + ... + 1 + 15(16^(n-1) + 16^(n-2) + ... + 1) - 1 ≡ 0 (mod 323)
+20^n + 16^n - 3^n - 1 mod 323
+≡ 77^k * 5^k + 2^(4k) - 3^k - 1 mod 323
 
-Simplifying further:
+Since we are looking for even values of n, we can substitute n = 2k:
 
-19(20^(n-1) + 20^(n-2) + ... + 1 + 15(16^(n-1) + 16^(n-2) + ... + 1) ≡ 1 (mod 323)
+≡ 77^k * 5^k + 2^(4k) - 3^k - 1 mod 323
 
-Now, we need to find the inverse of 19 modulo 323. Using property 3, we can find the inverse:
+Now, we can combine the terms:
 
-19 * 17 ≡ 1 (mod 323)
+≡ (77^k * 5^k + 2^(4k) - 3^k - 1) mod 323
 
-Therefore, the inverse of 19 modulo 323 is 17.
+At this point, we can use modular arithmetic properties to simplify further, but we cannot determine the exact values without knowing the specific value of k.
 
-Multiplying both sides of the congruence by 17:
-
-17 * 19(20^(n-1) + 20^(n-2) + ... + 1 + 15(16^(n-1) + 16^(n-2) + ... + 1) ≡ 17 (mod 323)
-
-Simplifying:
-
-(17 * 19)(20^(n-1) + 20^(n-2) + ... + 1 + 15(16^(n-1) + 16^(n-2) + ... + 1) ≡ 17 (mod 323)
-
-Since 17 * 19 = 323, we can simplify further:
-
-323(20^(n-1) + 20^(n-2) + ... + 1 + 15(16^(n-1) + 16^(n-2) + ... + 1) ≡ 17 (mod 323)
-
-Finally, we can conclude that the possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n are all multiples of 323, since any multiple of 323 will satisfy the congruence:
-
-20^n + 16^n - 3^n - 1 ≡ 0 (mod 323)
-
-Therefore, the final answer is any multiple of 323.</code></pre>
+Therefore, the possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n are dependent on the specific values of k.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n are any multiples of 323.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of 20^n + 16^n - 3^n - 1 mod 323 for even n depend on the specific values of k.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

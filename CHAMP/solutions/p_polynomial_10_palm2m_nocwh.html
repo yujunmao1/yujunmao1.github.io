@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_10</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_10']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,30 +81,41 @@ For an antisymmetric polynomial f(x, y) (i.e., f(x, y)=-f(y, x)) of total degree
 
 You may find the following information useful:
 
-1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j. What is the relationship between c_ij and c_ji if f(x, y) is antisymmetric?
-2. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
-3. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x, y) = \sum_{i=0}^n c_{ij} x^i y^j$ be an antisymmetric polynomial of total degree $n$. We know that $c_{ij} = -c_{ji}$ for all $i$ and $j$.
+1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j. What is the relationship between c_ij and c_ji if f(x, y) is antisymmetric?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x, y) = \sum_{i=0}^n c_{ij} x^i y^j$ be an antisymmetric polynomial of total degree $n$. Then, for any $i, j$, we have $c_{ij} = -c_{ji}$.
 
-We also know that $x-y$ divides $x^n - y^n$. This is because $x^n - y^n = (x-y)(x^{n-1} + xy^{n-2} + \cdots + y^{n-1})$.
+We can write $f(x, y)$ as follows:
 
-Now, let $d$ be the remainder of $f(x, y)$ divided by $x-y$. Then $f(x, y) = (x-y)q(x, y) + d$ for some polynomial $q(x, y)$.
+$$f(x, y) = \sum_{i=0}^n c_{0i} x^i + \sum_{i=1}^n \left(c_{1i} x^{i-1} y + c_{i1} x^i y^{-1} + c_{i2} x^{i-2} y^2 + \cdots + c_{ii} y^i\right) + \sum_{i=2}^n \left(c_{2i} x^{i-2} y + c_{i2} x^i y^{-2} + c_{i3} x^{i-3} y^3 + \cdots + c_{ii} y^i\right) + \cdots + c_{nn} y^n.$$
 
-We can write $q(x, y)$ as a sum of monomials of the form $x^i y^j$. For each monomial $x^i y^j$, we have $c_{ij} = -c_{ji}$. This means that the coefficient of $x^i y^j$ in $q(x, y)$ is $c_{ij} + c_{ji} = 0$.
+Now, let $x-y = t$. Then, we have:
 
-Therefore, the only monomials that can appear in $q(x, y)$ are those of the form $x^i y^0$ and $x^0 y^j$. This means that $q(x, y)$ is a polynomial of the form $q(x, y) = ax^n + by^n$ for some constants $a$ and $b$.
+$$f(x, y) = f(t+y, y) = \sum_{i=0}^n c_{0i} (t+y)^i + \sum_{i=1}^n \left(c_{1i} (t+y)^{i-1} y + c_{i1} (t+y)^i y^{-1} + c_{i2} (t+y)^{i-2} y^2 + \cdots + c_{ii} y^i\right) + \sum_{i=2}^n \left(c_{2i} (t+y)^{i-2} y + c_{i2} (t+y)^i y^{-2} + c_{i3} (t+y)^{i-3} y^3 + \cdots + c_{ii} y^i\right) + \cdots + c_{nn} y^n.$$
 
-Substituting this into the equation $f(x, y) = (x-y)q(x, y) + d$, we get $f(x, y) = (x-y)(ax^n + by^n) + d$.
+Expanding the right-hand side, we get:
 
-Expanding the right-hand side, we get $f(x, y) = ax^{n+1} - ay^n + bx^n - by^{n+1} + d$.
+$$f(x, y) = \sum_{i=0}^n c_{0i} t^i + \sum_{i=1}^n \left(c_{1i} t^{i-1} + c_{i1} t^i + c_{i2} t^{i-2} + \cdots + c_{ii} t^0\right) y + \sum_{i=2}^n \left(c_{2i} t^{i-2} + c_{i2} t^i + c_{i3} t^{i-3} + \cdots + c_{ii} t^0\right) y^2 + \cdots + c_{nn} t^0 y^n.$$
 
-Combining like terms, we get $f(x, y) = (a-b)x^{n+1} + (a+b)y^n + d$.
+Comparing coefficients of $t^n$, we get $c_{nn} = 0$.
 
-Therefore, the remainder of $f(x, y)$ divided by $x-y$ is $(a-b)x^{n+1} + (a+b)y^n$.
+Comparing coefficients of $t^{n-1}$, we get $c_{n-1, n} = 0$.
 
-In conclusion, the possible values of the remainder of $f(x, y)$ divided by $x-y$ are all polynomials of the form $(a-b)x^{n+1} + (a+b)y^n$, where $a$ and $b$ are any constants.</code></pre>
+Comparing coefficients of $t^{n-2}$, we get $c_{n-2, n} + c_{n-1, n-1} = 0$.
+
+Continuing in this way, we get:
+
+$$c_{0n} = 0,$$
+$$c_{1, n-1} = -c_{n-1, 1},$$
+$$c_{2, n-2} = -c_{n-2, 2} + c_{n-1, 1},$$
+$$\vdots$$
+$$c_{n-1, 2} = -c_{2, n-2} + c_{3, n-3} - \cdots + (-1)^{n-1} c_{n-1, 1},$$
+$$c_{nn-1} = -c_{n-1, n-1} + c_{n-2, n-2} - \cdots + (-1)^{n-1} c_{2, 2} + (-1)^n c_{1, 1}.$$
+
+Therefore, the remainder of $f(x, y)$ divided by $x-y$ is:
+
+$$\boxed{c_{1, 1} y}.$$</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of an antisymmetric polynomial $f(x, y)$ of total degree $n$ divided by $x-y$ is a polynomial of the form $(a-b)x^{n+1} + (a+b)y^n$, where $a$ and $b$ are any constants.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of an antisymmetric polynomial of total degree $n$ divided by $x-y$ is $c_{1, 1} y$, where $c_{1, 1}$ is the coefficient of $x y$ in the polynomial.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

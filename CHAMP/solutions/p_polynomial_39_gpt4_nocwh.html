@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_39</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> x^3-1</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_39']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,32 +81,30 @@ Find the remainder of x^1959−1 divided by (x^2+1)(x^2+x+1).
 
 You may find the following information useful:
 
-1. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).
-2. Study the value of x^1959−1 at x=i, -i, w, w^2 where w=e^(i*pi/3) is the cube root of unity.
-3. The cube root of unity w=e^(i*pi/3) satisfies w+w^2+1=0 and w^n=w^(n mod 3).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the polynomial f(x) = x^1959 - 1 and g(x) = (x^2 + 1)(x^2 + x + 1). We want to find the remainder r(x) when f(x) is divided by g(x).
+1. Study the value of x^1959−1 at x=i, -i, w, w^2 where w=e^(i*pi/3) is the cube root of unity.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>First, let&#x27;s evaluate x^1959 - 1 at x = i, -i, w, w^2.
 
-First, we note that the roots of g(x) are i, -i, w, and w^2. Therefore, to find the remainder r(x), we can evaluate f(x) at these four points.
+1. For x = i, we have i^1959 - 1. Since i^4 = 1, we can write i^1959 as (i^4)^489 * i = 1^489 * i = i. So, i^1959 - 1 = i - 1.
 
-1. f(i) = i^1959 - 1 = i^(2*980 + 1) - 1 = -i - 1
-2. f(-i) = (-i)^1959 - 1 = -(-i) - 1 = i - 1
-3. f(w) = w^1959 - 1 = w^(3*653 + 2) - 1 = w^2 - 1
-4. f(w^2) = (w^2)^1959 - 1 = w^(2*3*653 + 2) - 1 = w^2 - 1
+2. For x = -i, we have (-i)^1959 - 1. Since (-i)^4 = 1, we can write (-i)^1959 as ((-i)^4)^489 * -i = 1^489 * -i = -i. So, (-i)^1959 - 1 = -i - 1.
 
-Since the degree of r(x) is less than that of g(x), r(x) is a linear combination of 1, x, x^2, and x^3. Therefore, we can write r(x) = a + bx + cx^2 + dx^3.
+3. For x = w, we have w^1959 - 1. Since w^3 = 1, we can write w^1959 as (w^3)^653 * w = 1^653 * w = w. So, w^1959 - 1 = w - 1.
 
-We can now set up a system of equations using the values of f at the roots of g:
+4. For x = w^2, we have (w^2)^1959 - 1. Since (w^2)^3 = 1, we can write (w^2)^1959 as ((w^2)^3)^653 * w^2 = 1^653 * w^2 = w^2. So, (w^2)^1959 - 1 = w^2 - 1.
 
-1. a + bi - c - d = -i - 1
-2. a - bi - c + d = i - 1
-3. a + bw + cw^2 + dw^3 = w^2 - 1
-4. a + bw^2 + cw + dw^3 = w^2 - 1
+Now, let&#x27;s evaluate the divisor (x^2 + 1)(x^2 + x + 1) at x = i, -i, w, w^2.
 
-Solving this system of equations, we find that a = -1, b = 0, c = 0, and d = 0.
+1. For x = i, we have (i^2 + 1)(i^2 + i + 1) = (0 + 1)(-1 + i + 1) = 1 * 1 = 1.
 
-Therefore, the remainder r(x) when f(x) is divided by g(x) is r(x) = -1.</code></pre>
+2. For x = -i, we have ((-i)^2 + 1)((-i)^2 - i + 1) = (0 + 1)(-1 - i + 1) = 1 * 1 = 1.
+
+3. For x = w, we have (w^2 + 1)(w^2 + w + 1) = (0 + 1)(-1 + w + 1) = 1 * 1 = 1.
+
+4. For x = w^2, we have ((w^2)^2 + 1)((w^2)^2 + w^2 + 1) = (0 + 1)(-1 + w^2 + 1) = 1 * 1 = 1.
+
+So, the remainder of x^1959 - 1 divided by (x^2 + 1)(x^2 + x + 1) is i - 1 when x = i, -i - 1 when x = -i, w - 1 when x = w, and w^2 - 1 when x = w^2.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder when x^1959 - 1 is divided by (x^2 + 1)(x^2 + x + 1) is -1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of x^1959 - 1 divided by (x^2 + 1)(x^2 + x + 1) is i - 1 when x = i, -i - 1 when x = -i, w - 1 when x = w, and w^2 - 1 when x = w^2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

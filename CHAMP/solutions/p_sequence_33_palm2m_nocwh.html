@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_33</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 8</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_33']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,45 +77,47 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. What is the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2?
-
-You may find the following information useful:
-
-1. (x±y)^2=x^2±2xy+y^2.
-2. x^2-y^2=(x+y)(x-y).</code></pre>
+Let 0&lt;a&lt;b. Define two sequences {a_n} and {b_n} as a_0=a, b_0=b, a_(n+1)=sqrt(a_n*b_n), b_(n+1)=(a_n+b_n)/2. What is the value of (b_(n+1)-a_(n+1))*b_(n+2)/(b_n-a_n)^2?</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $0&lt;a&lt;b$ and that the sequences $\\{a_n\\}$ and $\\{b_n\\}$ are defined as follows:
 
 $$a_0 = a, \qquad b_0 = b, \qquad a_{n+1} = \sqrt{a_n b_n}, \qquad b_{n+1} = \frac{a_n + b_n}{2}.$$
 
-We are asked to find the value of
+We are asked to find the value of the expression
 
 $$\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2}.$$
 
-We can start by rewriting the expression as
+To do this, we will first need to find a closed-form expression for the sequences $\\{a_n\\}$ and $\\{b_n\\}$. We can do this by using the following recursive formulas:
 
-$$\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2} = \frac{(b_{n+1} - a_{n+1}) b_{n+1}}{(b_n - a_n)^2} \cdot \frac{b_{n+1}}{b_n}.$$
+$$a_{n+1} = \sqrt{a_n b_n} = \sqrt{\left(\frac{a_{n-1} + b_{n-1}}{2}\right) \left(\frac{a_n + b_n}{2}\right)} = \frac{a_{n-1} + b_{n-1}}{2},$$
 
-Now, we can use the fact that $a_n$ and $b_n$ are positive numbers to simplify the expression. We have
+and
 
-$$\frac{(b_{n+1} - a_{n+1}) b_{n+1}}{(b_n - a_n)^2} \leq \frac{(b_{n+1} - a_{n+1}) b_{n+1}}{(b_n - a_n)^2} \cdot 1 = \frac{b_{n+1} - a_{n+1}}{b_n - a_n}.$$
+$$b_{n+1} = \frac{a_n + b_n}{2} = \frac{\sqrt{a_n b_n} + a_n}{2} = \frac{a_n + \sqrt{a_n b_n}}{2}.$$
 
-We can further simplify the expression by using the fact that $a_n$ and $b_n$ are positive numbers and that $a_n &lt; b_n$. We have
+Solving these recursive formulas, we find that
 
-$$\frac{b_{n+1} - a_{n+1}}{b_n - a_n} = \frac{\sqrt{a_n b_{n+1}} - \sqrt{a_n a_{n+1}}}{\sqrt{b_n b_{n+1}} - \sqrt{a_n a_{n+1}}} = \frac{\sqrt{b_{n+1}} - \sqrt{a_{n+1}}}{\sqrt{b_n} - \sqrt{a_{n+1}}}.$$
+$$a_n = \frac{a_0 + b_0}{2} + \frac{1}{2} \sum_{k=1}^{n-1} \left(a_k - b_k\right),$$
 
-Finally, we can use the fact that $\sqrt{x} - \sqrt{y} = \frac{x - y}{\sqrt{x} + \sqrt{y}}$ to simplify the expression. We have
+and
 
-$$\frac{b_{n+1} - a_{n+1}}{b_n - a_n} = \frac{\sqrt{b_{n+1}} - \sqrt{a_{n+1}}}{\sqrt{b_n} - \sqrt{a_{n+1}}} = \frac{b_{n+1} - a_{n+1}}{\sqrt{b_{n+1}} + \sqrt{a_{n+1}}} \cdot \frac{\sqrt{b_{n+1}} + \sqrt{a_{n+1}}}{\sqrt{b_n} - \sqrt{a_{n+1}}} = \frac{b_{n+1} - a_{n+1}}{b_n - a_n} \cdot \frac{\sqrt{b_{n+1} + a_{n+1}}}{\sqrt{b_n + a_n}}.$$
+$$b_n = \frac{a_0 + b_0}{2} + \frac{1}{2} \sum_{k=1}^{n-1} \left(a_k + b_k\right).$$
 
-Therefore, we have
+Substituting these expressions into the given expression, we find that
 
-$$\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2} \leq \frac{b_{n+1} - a_{n+1}}{b_n - a_n} \cdot \frac{\sqrt{b_{n+1} + a_{n+1}}}{\sqrt{b_n + a_n}}.$$
+\begin{align*}
+\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2} &amp;= \frac{\left(\frac{a_n + b_n}{2} - \frac{a_{n-1} + b_{n-1}}{2}\right) \left(\frac{a_{n+1} + b_{n+1}}{2}\right)}{(b_n - a_n)^2} \\
+&amp;= \frac{\left(\frac{a_n^2 + b_n^2 - a_{n-1}^2 - b_{n-1}^2}{4}\right) \left(\frac{a_{n+1}^2 + b_{n+1}^2}{4}\right)}{(b_n - a_n)^2} \\
+&amp;= \frac{a_n^2 + b_n^2 - a_{n-1}^2 - b_{n-1}^2}{4 b_n^2} \\
+&amp;= \frac{(a_n + b_n)^2 - 2 a_n b_n + (a_{n-1} + b_{n-1})^2 - 2 a_{n-1} b_{n-1}}{4 b_n^2} \\
+&amp;= \frac{a_n^2 + 2 a_n b_n + b_n^2 - a_{n-1}^2 - 2 a_{n-1} b_{n-1} + b_{n-1}^2}{4 b_n^2} \\
+&amp;= \frac{2 a_n b_n}{4 b_n^2} \\
+&amp;= \frac{a_n b_n}{2 b_n^2} \\
+&amp;= \frac{a_n}{2 b_n}.
+\end{align*}
 
-We can now use the fact that $b_{n+1} = \frac{a_n + b_n}{2}$ and $a_{n+1} = \sqrt{a_n b_n}$ to simplify the expression. We have
-
-$$\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2} \leq \frac{\frac{a_n + b_n}{2} - \sqrt{a_n b</code></pre>
+Therefore, the value of the given expression is $\boxed{\frac{a_n}{2 b_n}}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of $\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2}$ is less than or equal to $\frac{a_n + b_n}{2} - \sqrt{a_n b_n}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of the expression $\frac{(b_{n+1} - a_{n+1}) b_{n+2}}{(b_n - a_n)^2}$ is $\boxed{\frac{a_n}{2 b_n}}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

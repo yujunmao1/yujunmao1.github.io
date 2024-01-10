@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_46</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_46']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,52 +82,36 @@ For positive integer n for which 2n+1 and 3n+1 are both perfect squares, what ar
 You may find the following information useful:
 
 1. Find possible values of n mod 8 by considering 2n mod 8 and 3n mod 8.
-2. For odd x, x^2 mod 8=1.
-3. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).
-4. If a | bc and gcd(a, b)=1, then a | c.
-5. Find possible values of n mod 5 by considering possible values of u^2 mod 5.
-6. If a | c, b | c and gcd(a, b)=1, then ab | c.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by finding possible values of n mod 8.
+2. Find possible values of n mod 5 by considering possible values of u^2 mod 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by finding the possible values of n mod 8.
 
-We know that 2n+1 and 3n+1 are both perfect squares. Let&#x27;s denote these squares as a^2 and b^2 respectively. So, we have:
+We know that 2n+1 and 3n+1 are both perfect squares. Let&#x27;s denote these squares as a^2 and b^2 respectively. 
+
+So, we have:
 
 2n+1 = a^2
 3n+1 = b^2
 
-We can rewrite these equations as:
+We can rewrite these equations in terms of n:
 
-2n = a^2 - 1
-3n = b^2 - 1
+n = (a^2 - 1) / 2
+n = (b^2 - 1) / 3
 
-Now, let&#x27;s consider these equations mod 8. We know that for odd x, x^2 mod 8 = 1. So, we have:
+Since n is an integer, a^2 - 1 and b^2 - 1 must be divisible by 2 and 3 respectively. 
 
-2n mod 8 = (a^2 - 1) mod 8 = 1 - 1 = 0
-3n mod 8 = (b^2 - 1) mod 8 = 1 - 1 = 0
+The possible values of a^2 mod 8 are 0, 1, 4. But a^2 - 1 must be divisible by 2, so a^2 - 1 mod 8 can only be 0, 2, 6. This means that n mod 8 can be 0, 1, 3.
 
-So, n mod 8 = 0.
+Similarly, the possible values of b^2 mod 8 are 0, 1, 4. But b^2 - 1 must be divisible by 3, so b^2 - 1 mod 8 can only be 0, 2, 6. This means that n mod 8 can be 0, 1, 3.
 
-Now, let&#x27;s find possible values of n mod 5.
+Now, let&#x27;s find the possible values of n mod 5.
 
-We know that 2n+1 and 3n+1 are both perfect squares. Let&#x27;s denote these squares as u^2 and v^2 respectively. So, we have:
+The possible values of a square number u^2 mod 5 are 0, 1, 4. But since 2n+1 and 3n+1 are both perfect squares, 2n and 3n must be divisible by 5. This means that n mod 5 can be 0, 2.
 
-2n+1 = u^2
-3n+1 = v^2
+So, the possible values of n mod 40 (which is the least common multiple of 8 and 5) are the numbers that satisfy both n mod 8 = 0, 1, 3 and n mod 5 = 0, 2. 
 
-We can rewrite these equations as:
-
-2n = u^2 - 1
-3n = v^2 - 1
-
-Now, let&#x27;s consider these equations mod 5. We know that for any integer u, u^2 mod 5 can be 0, 1, or 4. So, we have:
-
-2n mod 5 = (u^2 - 1) mod 5 can be -1, 0, or 3, which is equivalent to 4, 0, or 3 mod 5.
-3n mod 5 = (v^2 - 1) mod 5 can be -1, 0, or 3, which is equivalent to 4, 0, or 3 mod 5.
-
-So, n mod 5 can be 0, 2, or 4.
-
-Finally, we need to find possible values of n mod 40. We know that if a | c, b | c and gcd(a, b)=1, then ab | c. Since gcd(8, 5)=1, we have 8*5=40 | n. So, n mod 40 can be any multiple of the least common multiple of the possible values of n mod 8 and n mod 5, which is 0, 8, 16, 24, or 32.</code></pre>
+By checking all combinations, we find that the possible values of n mod 40 are 0, 8, 16, 20, 28, 36.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of n mod 40, for which 2n+1 and 3n+1 are both perfect squares, are 0, 8, 16, 24, or 32.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of n mod 40, for which 2n+1 and 3n+1 are both perfect squares, are 0, 8, 16, 20, 28, and 36.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

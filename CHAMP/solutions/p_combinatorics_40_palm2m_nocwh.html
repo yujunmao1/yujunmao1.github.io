@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_40</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_40']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,35 +82,33 @@ Find the number of ways to fill a 2 x 11 rectangle with 2 x 1 tiles.
 You may find the following information useful:
 
 1. Let a_n be the number of ways to tile a 2 x n rectangle.
-2. Find the expression for a_(n+1) in terms of a_n and a_(n-1).
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x n rectangle with 2 x 1 tiles is given by the sequence $a_n$, where $a_0 = 1$ and $a_{n+1} = a_n + a_{n-1}$ for $n \ge 0$. This sequence is known as the Fibonacci sequence.
+2. Find the expression for a_(n+1) in terms of a_n and a_(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x n rectangle with 2 x 1 tiles is given by the following recurrence relation:
 
-To see why this is the case, consider the following diagram:
+$$a_n = a_{n-1} + a_n$$
 
-[Diagram of a 2 x 11 rectangle with 11 2 x 1 tiles]
+with initial conditions $a_0 = 1$ and $a_1 = 2$.
 
-The first tile can be placed in any of the 11 positions. Once the first tile is placed, there are 10 positions left for the second tile. The third tile can then be placed in any of the 9 remaining positions, and so on. This gives a total of $11 \times 10 \times 9 \times \cdots \times 3 \times 2 = \frac{11!}{(11-2)!} = 55 \times 11 = 605$ ways to tile the rectangle.
+To prove this, we can consider the following diagram:
 
-Now, consider the following diagram:
+[Diagram of a 2 x n rectangle with 2 x 1 tiles]
 
-[Diagram of a 2 x 11 rectangle with 10 2 x 1 tiles, with the first two tiles placed]
+The number of ways to tile this rectangle is equal to the number of ways to choose $n$ of the $n+1$ spaces to place the tiles in, which is $n+1$. However, we must divide this by 2, since there are two ways to orient each tile. Therefore, the number of ways to tile a 2 x n rectangle with 2 x 1 tiles is $n+1/2$.
 
-The first two tiles can be placed in any of the 11 positions. Once the first two tiles are placed, there are 9 positions left for the third tile. The fourth tile can then be placed in any of the 8 remaining positions, and so on. This gives a total of $11 \times 10 \times 9 \times 8 \times 7 \times 6 \times 5 \times 4 \times 3 \times 2 = \frac{11!}{(11-4)!} = 330 \times 11 = 3630$ ways to tile the rectangle.
+We can also prove this recurrence relation by induction. The base cases are $n = 0$ and $n = 1$. For $n = 0$, there is only one way to tile the rectangle, which is to place a tile in the bottom left corner. For $n = 1$, there are two ways to tile the rectangle, which is to place a tile in the bottom left corner and then in the bottom right corner, or to place a tile in the top left corner and then in the top right corner.
 
-We can see that the number of ways to tile the rectangle with 11 tiles is 3630, which is 1 more than the number of ways to tile the rectangle with 10 tiles. This is because the first tile in the 11-tile tiling can be placed in any of the 11 positions, but the first tile in the 10-tile tiling can only be placed in the 10 positions that are not already occupied by tiles.
+Now, assume that the recurrence relation holds for some $n \geq 1$. We want to show that it holds for $n+1$. There are two cases to consider:
 
-Therefore, the number of ways to tile a 2 x n rectangle with 2 x 1 tiles is given by the sequence $a_n$, where $a_0 = 1$ and $a_{n+1} = a_n + a_{n-1}$ for $n \ge 0$. This sequence is known as the Fibonacci sequence.
+* Case 1: The first tile is placed in the bottom left corner. In this case, there are $a_n$ ways to tile the rest of the rectangle.
+* Case 2: The first tile is placed in any other corner. In this case, there are $a_{n-1}$ ways to tile the rest of the rectangle.
 
-The Fibonacci sequence is a famous sequence of numbers where each number is the sum of the two preceding numbers. The sequence starts with 0 and 1, and the first few numbers are 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...
+In either case, there are $a_{n+1}$ ways to tile the rectangle. Therefore, the recurrence relation holds for $n+1$.
 
-The Fibonacci sequence has many interesting properties. For example, the ratio of any two consecutive Fibonacci numbers approaches the golden ratio, which is approximately equal to 1.618. The golden ratio is often used in art and architecture, and it is considered to be aesthetically pleasing.
+By the principle of mathematical induction, the recurrence relation holds for all $n \geq 0$.
 
-The Fibonacci sequence is also used in many mathematical and scientific applications. For example, it can be used to model the growth of populations, the branching of trees, and the spirals of seashells.
-
-The Fibonacci sequence is a fascinating and beautiful sequence of numbers. It has been studied by mathematicians for centuries, and it continues to be a source of wonder and inspiration.</code></pre>
+Therefore, the number of ways to tile a 2 x 11 rectangle with 2 x 1 tiles is $11 + 1/2 = \boxed{26}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x 11 rectangle with 2 x 1 tiles is 3630, which is the 11th Fibonacci number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x 11 rectangle with 2 x 1 tiles is 26.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

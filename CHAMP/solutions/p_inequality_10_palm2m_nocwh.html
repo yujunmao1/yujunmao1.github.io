@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_10</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_10']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,41 +81,26 @@ For x, y, z&gt;0, what is the smallest value of x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y
 
 You may find the following information useful:
 
-1. y/x=(y/z)(z/x), z/y=(z/x)(x/y), x/z=(x/y)(y/z).
-2. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x, y, z &gt; 0$. We want to minimize the expression $x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y+x/z)$.
+1. y/x=(y/z)(z/x), z/y=(z/x)(x/y), x/z=(x/y)(y/z).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can write the given expression as
 
-We can write this expression as
-
-$$\frac{x^2}{y^2}+\frac{y^2}{z^2}+\frac{z^2}{x^2}-\frac{y}{x}-\frac{z}{y}-\frac{x}{z}.$$
+$$x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y+x/z) = \frac{x^2}{y^2} + \frac{y^2}{z^2} + \frac{z^2}{x^2} - \frac{y}{x} - \frac{z}{y} - \frac{x}{z}.$$
 
 By AM-GM, we have
 
-$$\frac{x^2}{y^2}+\frac{y^2}{z^2}+\frac{z^2}{x^2} \ge 3 \sqrt[3]{\frac{x^2y^2z^2}{xyz}} = 3.$$
+$$\frac{x^2}{y^2} + \frac{y^2}{z^2} + \frac{z^2}{x^2} \ge 3 \sqrt[3]{\frac{x^4y^2z^2}{x^2y^2z^2}} = 3.$$
 
-Also, by AM-GM, we have
+Also, by Cauchy-Schwarz inequality, we have
 
-$$\frac{y}{x}+\frac{z}{y}+\frac{x}{z} \ge 3 \sqrt[3]{\frac{y^2z^2x^2}{xyz}} = 3.$$
+$$\left(\frac{y}{x} + \frac{z}{y} + \frac{x}{z}\right)^2 \le 3 \left(\frac{y^2}{x^2} + \frac{z^2}{y^2} + \frac{x^2}{z^2}\right).$$
 
-Therefore, the expression $x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y+x/z)$ is at least $3-3 = 0$.
+Squaring both sides and rearranging, we get
 
-To show that this is a minimum, we can consider the following function:
+$$\frac{y^2}{x^2} + \frac{z^2}{y^2} + \frac{x^2}{z^2} - \frac{y}{x} - \frac{z}{y} - \frac{x}{z} \ge -3.$$
 
-$$f(x, y, z) = x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y+x/z).$$
-
-We can take the partial derivatives of $f$ with respect to $x$, $y$, and $z$, and set them equal to zero. This gives us the system of equations
-
-$$\frac{2x}{y^3}-\frac{y}{x^2} = 0,$$
-
-$$\frac{2y}{z^3}-\frac{z}{y^2} = 0,$$
-
-$$\frac{2z}{x^3}-\frac{x}{z^2} = 0.$$
-
-Solving this system of equations, we find that the only solution is $x=y=z$.
-
-Therefore, the minimum value of the expression $x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y+x/z)$ is $0$, which occurs when $x=y=z$.</code></pre>
+Therefore, the smallest value of the given expression is $\boxed{-3}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of $x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y+x/z)$ is $0$, which occurs when $x=y=z$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $x^2/y^2+y^2/z^2+z^2/x^2-(y/x+z/y+x/z)$ is $-3$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_19</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> n(n+1)*2^(n-2)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_19']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,63 +82,25 @@ Find a closed-form formula of sum_(k=1)^n C(n, k)*k^2.
 You may find the following information useful:
 
 1. Interpret the expression as the number of ways to choose a committee of any number of people from n people, while at the same time selecting a president and a secretary (who can be the same person) from the chosen committee.
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
-3. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-4. Find the number of ways to select such a committee when the president and the secretary are the same person, by first selecting the president, and then the rest of the committee (of any number).
-5. Find the number of ways to select such a committee when the president and the secretary are different people, by first selecting the president, then the secretary, and finally the rest of the committee (of any number).
-6. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose a committee of any number of people from $n$ people, while at the same time selecting a president and a secretary (who can be the same person) is given by the following formula:
+2. Find the number of ways to select such a committee when the president and the secretary are the same person, by first selecting the president, and then the rest of the committee (of any number).
+3. Find the number of ways to select such a committee when the president and the secretary are different people, by first selecting the president, then the secretary, and finally the rest of the committee (of any number).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The expression $\sum_{k=1}^n \binom{n}{k}k^2$ can be interpreted as the number of ways to choose a committee of any number of people from $n$ people, while at the same time selecting a president and a secretary (who can be the same person).
 
-$$\sum_{k=1}^n \binom{n}{k} k^2$$
+To find a closed-form formula for this expression, we can first find the number of ways to select such a committee when the president and the secretary are the same person, by first selecting the president, and then the rest of the committee (of any number).
 
-To prove this, we can first consider the case where the president and the secretary are the same person. In this case, we can choose the committee in two steps:
+There are $n$ ways to select the president, and then $n-1$ ways to select the rest of the committee. So there are $n(n-1)$ ways to select a committee of any size with the president and secretary being the same person.
 
-1. Choose the president. There are $n$ ways to do this.
-2. Choose the rest of the committee. There are $\binom{n-1}{k-1}$ ways to do this, since we have already chosen one person for the committee.
+Next, we can find the number of ways to select such a committee when the president and the secretary are different people, by first selecting the president, then the secretary, and finally the rest of the committee.
 
-Therefore, the number of ways to choose a committee of any number of people from $n$ people, while at the same time selecting a president and a secretary who are the same person is given by:
+There are $\binom{n}{1}$ ways to select the president, $\binom{n-1}{1}$ ways to select the secretary, and then $n-2$ ways to select the rest of the committee. So there are $\binom{n}{1}\binom{n-1}{1}(n-2)$ ways to select a committee of any size with the president and secretary being different people.
 
-$$n \binom{n-1}{k-1}$$
+Adding these two cases together, we get the following formula for the number of ways to select a committee of any size with the president and secretary being the same or different people:
 
-We can then consider the case where the president and the secretary are different people. In this case, we can choose the committee in three steps:
+$$\sum_{k=1}^n \binom{n}{k}k^2 = n(n-1) + \binom{n}{1}\binom{n-1}{1}(n-2) = \frac{n(n+1)(2n-1)}{6}$$
 
-1. Choose the president. There are $n$ ways to do this.
-2. Choose the secretary. There are $n-1$ ways to do this, since we have already chosen one person for the committee.
-3. Choose the rest of the committee. There are $\binom{n-2}{k-2}$ ways to do this, since we have already chosen two people for the committee.
-
-Therefore, the number of ways to choose a committee of any number of people from $n$ people, while at the same time selecting a president and a secretary who are different people is given by:
-
-$$n(n-1) \binom{n-2}{k-2}$$
-
-Adding these two cases together, we get the following formula for the number of ways to choose a committee of any number of people from $n$ people, while at the same time selecting a president and a secretary:
-
-$$n \binom{n-1}{k-1} + n(n-1) \binom{n-2}{k-2}$$
-
-We can simplify this formula by using the following identity:
-
-$$\binom{n}{k} = \binom{n-1}{k-1} + \binom{n-1}{k}$$
-
-Substituting this into the formula for the number of ways to choose a committee, we get:
-
-$$n \binom{n-1}{k-1} + n(n-1) \binom{n-2}{k-2} = n \binom{n-1}{k-1} + n(n-1) \left(\binom{n-1}{k-1} + \binom{n-1}{k}\right) = n^2 \binom{n-1}{k-1} + n(n-1) \binom{n-1}{k}$$
-
-We can then factor out $n(n-1)$ from the right-hand side to get:
-
-$$n(n-1) \left(\binom{n-1}{k-1} + \frac{\binom{n-1}{k}}{n}\right)$$
-
-Finally, we can use the following identity:
-
-$$\binom{n}{k} = \frac{n!}{k!(n-k)!}$$
-
-Substituting this into the formula for the number of ways to choose a committee, we get:
-
-$$n(n-1) \left(\binom{n-1}{k-1} + \frac{\binom{n-1}{k}}{n}\right) = n(n-1) \left(\frac{(n-1)!}{(k-1)!(n-k)!} + \frac{(n-1)!}{k!(n-k)!}\right) = n(n-1) \left(\frac{(n-1)!}{(k-1)!(n-k)!} + \frac{(n-1)!}{(k-1)!(n-k)!}\right) = n(n-1) \frac{(n-1)!}{(k-1)!(n-k)!} = n(n-1) \binom{n-1}{k-1}$$
-
-Therefore, the number of ways to choose a committee of any number of people from $n$ people,</code></pre>
+This is the closed-form formula that was requested.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose a committee of any number of people from $n$ people, while at the same time selecting a president and a secretary (who can be the same person) is given by the following formula:
-
-$$\sum_{k=1}^n \binom{n}{k} k^2 = n(n-1) \binom{n-1}{k-1}$$</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose a committee of any number of people from $n$ people, while at the same time selecting a president and a secretary (who can be the same person) is $\frac{n(n+1)(2n-1)}{6}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

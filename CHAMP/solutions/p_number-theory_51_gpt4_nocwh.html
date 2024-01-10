@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_51</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (20*10^15-2)/17, or equivalently 1176470588235294</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_51']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,50 +83,38 @@ You may find the following information useful:
 
 1. Let the original number has k+1 digits, with the first digit d, and the last k digits representing the number r.
 2. Set up the equation of digit manipulation involving k, d, r.
-3. Find the smallest value for k by considering the equation modulo 17.
-4. If p is a prime and p | ab, then p | a or p | b (or both). More generally, if p | a_1*a_2*...*a_n, then p | a_i for at least one a_i.
-5. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the original number as N and the new number as M. 
+3. Find the smallest value for k by considering the equation modulo 17.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s follow the steps you&#x27;ve provided.
 
-We know that M = 1.5N. 
+1. Let&#x27;s denote the original number as N. It has k+1 digits, with the first digit d, and the last k digits representing the number r. So, we can write N = 10^k * d + r.
 
-From the problem, we know that M is obtained by moving the first digit of N to the end. 
+2. When we move the first digit to the end, the new number becomes r * 10 + d. According to the problem, this new number is 1.5 times the old one. So, we can set up the following equation:
 
-If N has k+1 digits, with the first digit d, and the last k digits representing the number r, then we can write N = 10^k * d + r and M = r * 10 + d.
+   r * 10 + d = 1.5 * (10^k * d + r)
 
-Substituting these into the equation M = 1.5N, we get:
+   Simplifying this equation gives:
 
-r * 10 + d = 1.5 * (10^k * d + r)
+   10r + d = 15 * 10^k * d + 1.5r
 
-Solving this equation for r, we get:
+   Rearranging terms, we get:
 
-r = (10^k - 1.5) * d / (15 - 10)
+   8.5r = (15 * 10^k - 1) * d
 
-This equation tells us that r must be an integer, since both N and M are integers. 
+   Since r, d, and k are all integers, (15 * 10^k - 1) must be a multiple of 17 (because 8.5 is not an integer, but 17 * 0.5 is).
 
-To find the smallest positive integer N, we need to find the smallest k for which r is an integer. 
+3. Now, we need to find the smallest value for k such that (15 * 10^k - 1) is a multiple of 17. We can do this by trying different values of k and checking if the resulting number is divisible by 17.
 
-We can do this by considering the equation modulo 17, since 17 is the smallest prime number greater than 10. 
+   For k = 1, (15 * 10^1 - 1) = 149, which is not divisible by 17.
+   For k = 2, (15 * 10^2 - 1) = 1499, which is not divisible by 17.
+   For k = 3, (15 * 10^3 - 1) = 14999, which is not divisible by 17.
+   For k = 4, (15 * 10^4 - 1) = 149999, which is not divisible by 17.
+   For k = 5, (15 * 10^5 - 1) = 1499999, which is divisible by 17.
 
-The equation modulo 17 is:
+   So, the smallest value for k is 5.
 
-r mod 17 = ((10^k - 1.5) * d / (15 - 10)) mod 17
+Now, we need to find the smallest positive integer N that satisfies the equation. Since k = 5, N must have 6 digits. The smallest such number is 100000. However, this number does not satisfy the equation. The smallest 6-digit number that does satisfy the equation is 142857.
 
-Using the properties of modulo arithmetic, we can simplify this to:
-
-r mod 17 = ((10^k mod 17 - 1.5 mod 17) * d mod 17 / (15 mod 17 - 10 mod 17)) mod 17
-
-Solving this equation for r mod 17, we get:
-
-r mod 17 = ((10^k mod 17 - 1.5 mod 17) * d mod 17 / 5) mod 17
-
-Since r must be an integer, the right-hand side of this equation must be an integer. 
-
-Therefore, the smallest k for which r is an integer is the smallest k for which (10^k mod 17 - 1.5 mod 17) * d mod 17 / 5 is an integer. 
-
-By trying different values of k, we find that the smallest such k is 16. 
-
-Therefore, the smallest positive integer N with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 142857.</code></pre>
+So, the smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 142857.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 142857.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

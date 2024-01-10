@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_18</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 4</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_18']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,59 +77,44 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(4+3a_n), and if so, find it.
+Does the limit exist for the sequence defined by a_0=0, a_(n+1)=sqrt(4+3a_n), and if so, find it.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the limit exists for the sequence defined by \( a_0 = 0 \) and \( a_{n+1} = \sqrt{4 + 3a_n} \), we can try to find a fixed point of the function \( f(a) = \sqrt{4 + 3a} \), which means we are looking for a value \( L \) such that \( L = \sqrt{4 + 3L} \).
 
-You may find the following information useful:
+Let&#x27;s assume the limit \( L \) exists. Then we can set up the equation:
 
-1. A sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.
-2. For non-negative x, y, sqrt(x)≥sqrt(y) if and only if x≥y.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine if the limit exists for the sequence defined by \( a_0 = 0 \) and \( a_{n+1} = \sqrt{4 + 3a_n} \), we can first check if the sequence is monotonic and bounded.
+\[ L = \sqrt{4 + 3L} \]
 
-Let&#x27;s start by showing that the sequence is monotonically increasing. We will use induction to prove this.
+Squaring both sides, we get:
 
-Base case: \( n = 0 \)
-\( a_0 = 0 \)
-\( a_1 = \sqrt{4 + 3a_0} = \sqrt{4 + 3 \cdot 0} = \sqrt{4} = 2 \)
-So, \( a_1 &gt; a_0 \), and the base case holds.
+\[ L^2 = 4 + 3L \]
 
-Inductive step: Assume \( a_n &gt; a_{n-1} \) for some \( n \geq 1 \). We want to show that \( a_{n+1} &gt; a_n \).
-Given the inductive hypothesis \( a_n &gt; a_{n-1} \), we have:
-\( a_{n+1} = \sqrt{4 + 3a_n} \)
-\( a_n = \sqrt{4 + 3a_{n-1}} \)
+Rearranging the terms, we have a quadratic equation:
 
-Since \( a_n &gt; a_{n-1} \), by the property of square roots for non-negative numbers, we have:
-\( \sqrt{4 + 3a_n} &gt; \sqrt{4 + 3a_{n-1}} \)
-Thus, \( a_{n+1} &gt; a_n \).
+\[ L^2 - 3L - 4 = 0 \]
 
-This proves by induction that the sequence is monotonically increasing.
+This can be factored as:
 
-Next, we need to show that the sequence is bounded above. We will prove that the sequence is bounded above by 4.
+\[ (L - 4)(L + 1) = 0 \]
 
-Assume for the sake of contradiction that there exists some \( n \) such that \( a_n &gt; 4 \). Then we have:
-\( a_{n+1} = \sqrt{4 + 3a_n} \)
-Since \( a_n &gt; 4 \), we have \( 3a_n &gt; 12 \), and thus \( 4 + 3a_n &gt; 16 \). Taking the square root of both sides, we get:
-\( a_{n+1} = \sqrt{4 + 3a_n} &gt; \sqrt{16} = 4 \)
-This would imply that \( a_{n+1} &gt; 4 \), which contradicts our assumption that the sequence is bounded above by 4.
+So the solutions to this equation are \( L = 4 \) and \( L = -1 \).
 
-Therefore, the sequence must be bounded above by 4.
+However, since \( a_n \) is defined in terms of a square root, it must be non-negative for all \( n \). Therefore, the only possible limit is \( L = 4 \).
 
-Since the sequence is monotonically increasing and bounded above, it must have a limit. Let&#x27;s denote this limit as \( L \). Taking the limit of both sides of the recursive definition, we get:
-\( \lim_{n \to \infty} a_{n+1} = \lim_{n \to \infty} \sqrt{4 + 3a_n} \)
+Now, we need to verify that the sequence actually converges to this limit. We can do this by showing that the sequence is increasing and bounded above by 4.
 
-Since the limit exists, we can write:
-\( L = \sqrt{4 + 3L} \)
+First, we show that the sequence is increasing (monotonic). We have \( a_0 = 0 \) and \( a_1 = \sqrt{4 + 3 \cdot 0} = 2 \). Now, assume \( a_n \leq a_{n+1} \) for some \( n \geq 0 \). Then:
 
-Squaring both sides to solve for \( L \), we get:
-\( L^2 = 4 + 3L \)
-\( L^2 - 3L - 4 = 0 \)
+\[ a_{n+1} = \sqrt{4 + 3a_n} \leq \sqrt{4 + 3a_{n+1}} = a_{n+2} \]
 
-This is a quadratic equation, which we can solve by factoring:
-\( (L - 4)(L + 1) = 0 \)
+This inequality holds because the square root function is increasing and if \( a_n \leq a_{n+1} \), then \( 4 + 3a_n \leq 4 + 3a_{n+1} \). Thus, by induction, the sequence is increasing.
 
-This gives us two possible solutions for \( L \):
-\( L = 4 \) or \( L = -1 \)
+Next, we show that the sequence is bounded above by 4. Assume that \( a_n \leq 4 \) for some \( n \geq 0 \). Then:
 
-However, since the sequence is non-negative (as it is built from a non-negative initial term and the square root function), the limit cannot be negative. Therefore, the limit of the sequence is \( L = 4 \).</code></pre>
+\[ a_{n+1} = \sqrt{4 + 3a_n} \leq \sqrt{4 + 3 \cdot 4} = \sqrt{16} = 4 \]
+
+So by induction, the sequence is also bounded above by 4.
+
+Since the sequence \( \{a_n\} \) is increasing and bounded above, it must converge to some limit by the Monotone Convergence Theorem. We have already shown that the only possible limit is 4, so we can conclude that the limit of the sequence is indeed 4.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by \( a_0 = 0 \) and \( a_{n+1} = \sqrt{4 + 3a_n} \) exists and is equal to 4.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

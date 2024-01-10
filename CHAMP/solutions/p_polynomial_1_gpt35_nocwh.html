@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_1</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_1']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,72 +81,38 @@ What is the remainder of nx^(n+1)−(n+1)x^n+1 divided by (x−1)^2?
 
 You may find the following information useful:
 
-1. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).
-2. Let f(x)=nx^(n+1)−(n+1)x^n+1 and study f(1) and f&#x27;(1).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the remainder of nx^(n+1)−(n+1)x^n+1 divided by (x−1)^2, we can use polynomial long division.
+1. Let f(x)=nx^(n+1)−(n+1)x^n+1 and study f(1) and f&#x27;(1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the remainder of the given expression, we can use polynomial long division. 
 
-Let&#x27;s first evaluate f(1) and f&#x27;(1) as mentioned in the given information.
+Let&#x27;s first find f(x) = nx^(n+1) - (n+1)x^n + 1.
 
-f(x) = nx^(n+1)−(n+1)x^n+1
+Now, let&#x27;s evaluate f(1) and f&#x27;(1) as given:
 
-f(1) = n(1)^(n+1)−(n+1)(1)^n+1
-      = n - (n+1)
-      = -1
+f(1) = n(1)^(n+1) - (n+1)(1)^n + 1
+      = n - (n+1) + 1
+      = n - n - 1 + 1
+      = 0
 
-Now, let&#x27;s find the derivative of f(x) and evaluate it at x = 1.
+f&#x27;(x) = d/dx [nx^(n+1) - (n+1)x^n + 1]
+       = n(n+1)x^n - (n+1)nx^(n-1)
+       = n(n+1)x^n - (n+1)nx^(n-1)
 
-f&#x27;(x) = (n+1)nx^n - (n+1)nx^(n-1)
+Now, let&#x27;s perform polynomial long division:
 
-f&#x27;(1) = (n+1)n(1)^n - (n+1)n(1)^(n-1)
-       = (n+1)n - (n+1)n
-       = 0
-
-Since f(1) = -1 and f&#x27;(1) = 0, we can conclude that (x-1) is a factor of f(x) with multiplicity 2.
-
-Now, let&#x27;s perform polynomial long division to find the quotient and remainder.
-
-         nx^(n-1)
-_____________________
+          nx^(n+1) - (n+1)x^n + 1
 (x-1)^2 | nx^(n+1) - (n+1)x^n + 1
+          - nx^(n+1) + nx^n
+          -------------------
+                   - (n+1)x^n + 1
+                   + (n+1)x^n - (n+1)x^(n-1)
+                   -----------------------
+                            (n+1)x^(n-1) + 1
 
-We start by dividing the highest degree term of f(x) by the highest degree term of (x-1)^2, which is x^2.
+The remainder of the division is (n+1)x^(n-1) + 1.
 
-nx^(n+1) / x^2 = nx^(n-1)
-
-Now, we multiply (x-1)^2 by nx^(n-1) to subtract it from f(x).
-
-nx^(n-1) * (x-1)^2 = nx^(n-1) * (x^2 - 2x + 1)
-                   = nx^(n+1) - 2nx^n + nx^(n-1)
-
-Subtracting this from f(x):
-
-(nx^(n+1) - (n+1)x^n + 1) - (nx^(n+1) - 2nx^n + nx^(n-1))
-= - (n+1)x^n + nx^(n-1) + 1
-
-Now, we repeat the process with the new polynomial - (n+1)x^n + nx^(n-1) + 1.
-
-         - (n+1)x^(n-1)
-_____________________
-(x-1)^2 | - (n+1)x^n + nx^(n-1) + 1
-
-Again, we divide the highest degree term of the new polynomial by the highest degree term of (x-1)^2, which is x^2.
-
--(n+1)x^n / x^2 = -(n+1)x^(n-2)
-
-Multiplying (x-1)^2 by -(n+1)x^(n-2) to subtract it from the new polynomial:
-
--(n+1)x^(n-2) * (x-1)^2 = -(n+1)x^n + (n+1)x^(n-2)
-
-Subtracting this from the new polynomial:
-
-(- (n+1)x^n + nx^(n-1) + 1) - (-(n+1)x^n + (n+1)x^(n-2))
-= nx^(n-1) + (n+1)x^(n-2) + 1
-
-Now, we have a polynomial of degree 1, which is nx^(n-1) + (n+1)x^(n-2) + 1. Since the degree of this polynomial is less than 2, we have found the remainder.
-
-Therefore, the remainder of nx^(n+1)−(n+1)x^n+1 divided by (x−1)^2 is nx^(n-1) + (n+1)x^(n-2) + 1.</code></pre>
+Therefore, the remainder of nx^(n+1) - (n+1)x^n + 1 divided by (x-1)^2 is (n+1)x^(n-1) + 1.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of nx^(n+1)−(n+1)x^n+1 divided by (x−1)^2 is nx^(n-1) + (n+1)x^(n-2) + 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of nx^(n+1) - (n+1)x^n + 1 divided by (x-1)^2 is (n+1)x^(n-1) + 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

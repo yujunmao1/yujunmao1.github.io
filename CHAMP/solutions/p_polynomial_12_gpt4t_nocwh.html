@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_12</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 roots</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_12']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,32 +77,32 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-How many (real or complex) roots have multiplicity greater than 1 for the polynomial f(x)=1+x/(1!)+x^2/(2!)+x^3/(3!)+...++x^n/(n!)?
+How many (real or complex) roots have multiplicity greater than 1 for the polynomial f(x)=1+x/(1!)+x^2/(2!)+x^3/(3!)+...++x^n/(n!)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial you&#x27;ve given is closely related to the Taylor series expansion of the exponential function \( e^x \), which is given by:
 
-You may find the following information useful:
+\[ e^x = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots \]
 
-1. A root with multiplicity k for a polynomial f(x) is a root with multiplicity k-1 for f&#x27;(x).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the roots with multiplicity greater than 1 for the polynomial \( f(x) \), we need to look at the derivative \( f&#x27;(x) \) and find the common roots between \( f(x) \) and \( f&#x27;(x) \).
+However, your polynomial stops at \( x^n/n! \), so it is a truncated version of the exponential series. Let&#x27;s denote your polynomial as \( P_n(x) \):
 
-The polynomial \( f(x) \) is given by:
+\[ P_n(x) = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots + \frac{x^n}{n!} \]
 
-\[ f(x) = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots + \frac{x^n}{n!} \]
+To find the roots of \( P_n(x) \) with multiplicity greater than 1, we need to find the values of \( x \) for which both \( P_n(x) = 0 \) and its derivative \( P_n&#x27;(x) = 0 \).
 
-Let&#x27;s differentiate \( f(x) \) term by term to find \( f&#x27;(x) \):
+Let&#x27;s first find the derivative of \( P_n(x) \):
 
-\[ f&#x27;(x) = 0 + \frac{1}{1!} + \frac{2x}{2!} + \frac{3x^2}{3!} + \ldots + \frac{nx^{n-1}}{n!} \]
+\[ P_n&#x27;(x) = \frac{1}{1!} + \frac{2x}{2!} + \frac{3x^2}{3!} + \ldots + \frac{nx^{n-1}}{n!} \]
 
-Simplifying \( f&#x27;(x) \), we get:
+Notice that the derivative is just the original polynomial with each term&#x27;s power reduced by 1 and the corresponding factorial in the denominator also reduced by 1. This is essentially the same as the original polynomial without the constant term:
 
-\[ f&#x27;(x) = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \ldots + \frac{x^{n-1}}{(n-1)!} \]
+\[ P_n&#x27;(x) = P_{n-1}(x) \]
 
-Notice that \( f&#x27;(x) \) is just \( f(x) \) without the last term \( \frac{x^n}{n!} \). This means that \( f(x) \) and \( f&#x27;(x) \) share all the same terms except for the last term in \( f(x) \). Therefore, any root of \( f&#x27;(x) \) is also a root of \( f(x) \), except possibly the root that would come from the term \( \frac{x^n}{n!} \).
+Now, we are looking for values of \( x \) such that \( P_n(x) = 0 \) and \( P_n&#x27;(x) = 0 \). However, since \( e^x \) has no real or complex roots (it is never zero for any value of \( x \)), the truncated polynomial \( P_n(x) \) will not have any roots that are exactly the same as the roots of \( e^x \), because there are none.
 
-However, the polynomial \( f(x) \) is essentially the sum of the first \( n+1 \) terms of the Taylor series expansion of \( e^x \) around 0. The function \( e^x \) has no real or complex roots, so the polynomial \( f(x) \) will not have any roots that are shared with \( f&#x27;(x) \) except for the trivial case when \( n = 0 \), which is not of interest here.
+Therefore, the polynomial \( P_n(x) \) does not have any roots with multiplicity greater than 1. All of its roots (if any) are simple roots with multiplicity 1. In fact, since \( P_n(x) \) is a truncation of the exponential function, which is always positive for real \( x \), \( P_n(x) \) will not have any real roots at all. It may have complex roots, but these will also be simple roots.
 
-Therefore, the polynomial \( f(x) \) has no real or complex roots with multiplicity greater than 1. All roots of \( f(x) \) are simple roots with multiplicity 1.</code></pre>
+In conclusion, the polynomial \( P_n(x) \) has no roots with multiplicity greater than 1.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial \( f(x) = 1 + \frac{x}{1!} + \frac{x^2}{2!} + \frac{x^3}{3!} + \ldots + \frac{x^n}{n!} \) has no real or complex roots with multiplicity greater than 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial \( P_n(x) \) has no roots with multiplicity greater than 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

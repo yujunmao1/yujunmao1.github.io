@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_3</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2^floor(n/2)*floor(n/2)!</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_3']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -84,25 +84,18 @@ You may find the following information useful:
 1. If n is odd, what position must be occupied by a rook?
 2. For even n=2k, consider a board of size 2k x 2k. If a rook is placed on the first row, which other position is also determined?
 3. Let P(2k) be the number of placements on a 2k x 2k board. Express P(2k) in terms of P(2k-2).
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. Find P(2) as the base case.</code></pre>
+4. Find P(2) as the base case.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>1. If n is odd, the center position must be occupied by a rook. This is because a 180-degree rotation of the board will not change the position of the rook in the center.
 
-2. For even n=2k, if a rook is placed on the first row, the other position that is also determined is the one that is 180 degrees rotated from the first position. This is because the placement of the rooks must be invariant to a 180-degree rotation.
+2. For even n=2k, if a rook is placed on the first row, the other position that is also determined is the one that is symmetric to it with respect to the center of the board. This is because a 180-degree rotation of the board will not change the position of these two rooks.
 
-3. Let P(2k) be the number of placements on a 2k x 2k board. We can express P(2k) in terms of P(2k-2) as follows: P(2k) = k * P(2k-2). This is because for each placement on a 2k-2 x 2k-2 board, there are k different ways to place the additional two rooks on the 2k x 2k board such that the placement is invariant to a 180-degree rotation.
+3. Let P(2k) be the number of placements on a 2k x 2k board. We can express P(2k) in terms of P(2k-2) as follows: P(2k) = k * P(2k-2). This is because for each placement on a (2k-2) x (2k-2) board, we can choose k positions on the first row of the 2k x 2k board for the first rook, and the position of the second rook is determined by the position of the first one.
 
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task. This is a basic principle of counting in combinatorics.
+4. P(2) is the base case. On a 2 x 2 board, there are 2 ways to place 2 rooks peacefully and invariant to a 180-degree rotation: one rook in the top-left corner and the other in the bottom-right corner, or one rook in the top-right corner and the other in the bottom-left corner. So, P(2) = 2.
 
-5. P(2) is the base case. On a 2x2 board, there is only one way to place the rooks such that the placement is invariant to a 180-degree rotation. Therefore, P(2) = 1.
-
-Now, we can use these principles to find the number of ways that n rooks can be placed peacefully on an n x n chess board and the placing is also invariant to a 180-degree rotation.
-
-If n is odd, there is only one way to place the rook in the center, and the remaining n-1 rooks can be placed on a (n-1) x (n-1) board. Therefore, the number of placements is P(n-1).
-
-If n is even, we can use the recurrence relation P(2k) = k * P(2k-2) to find the number of placements. Starting with the base case P(2) = 1, we can calculate P(4) = 2 * P(2) = 2, P(6) = 3 * P(4) = 6, P(8) = 4 * P(6) = 24, and so on. Therefore, the number of placements is P(n) = n/2 * P(n-2) for n even.</code></pre>
+Now, we can use the recurrence relation and the base case to find the number of placements for any n x n board. For n=2k, the number of placements is P(2k) = k * P(2k-2) = k * (k-1) * P(2k-4) = ... = k * (k-1) * ... * 2 * P(2) = 2 * k!. For n=2k+1, the number of placements is the same as for a 2k x 2k board, because the rook in the center does not affect the other rooks, so the number of placements is also 2 * k!.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways that n rooks can be placed peacefully on an n x n chess board, such that the placement is invariant to a 180-degree rotation, is P(n-1) if n is odd, and P(n) = n/2 * P(n-2) if n is even, where P(2) = 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For an n x n chess board, the number of ways that n rooks can be placed peacefully and invariant to a 180-degree rotation is 2 * k! for n=2k and n=2k+1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

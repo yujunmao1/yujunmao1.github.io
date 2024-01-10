@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_4</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_4']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,37 +81,64 @@ What&#x27;s the smallest value of (x^2+2)/sqrt(x^2+1) for real x?
 
 You may find the following information useful:
 
-1. Write x^2+2 as (x^2+1)+1.
-2. For positive x, x+1/x≥2, with equality if and only if x=1.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the function f(x) = (x^2 + 2) / sqrt(x^2 + 1) for real x, we can follow the hint provided and rewrite the numerator:
+1. Write x^2+2 as (x^2+1)+1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the given expression, we can use the hint provided. Let&#x27;s rewrite the expression by adding and subtracting 1 to the numerator:
 
-f(x) = (x^2 + 1 + 1) / sqrt(x^2 + 1)
+\[
+\frac{x^2 + 2}{\sqrt{x^2 + 1}} = \frac{(x^2 + 1) + 1}{\sqrt{x^2 + 1}}
+\]
 
-Now, we can separate the terms in the numerator:
+Now, we can split the fraction into two parts:
 
-f(x) = (x^2 + 1) / sqrt(x^2 + 1) + 1 / sqrt(x^2 + 1)
+\[
+\frac{x^2 + 1}{\sqrt{x^2 + 1}} + \frac{1}{\sqrt{x^2 + 1}}
+\]
 
-Notice that (x^2 + 1) / sqrt(x^2 + 1) simplifies to sqrt(x^2 + 1), so we have:
+The first part simplifies nicely because the numerator is the same as the radicand of the denominator:
 
-f(x) = sqrt(x^2 + 1) + 1 / sqrt(x^2 + 1)
+\[
+\frac{x^2 + 1}{\sqrt{x^2 + 1}} = \sqrt{x^2 + 1}
+\]
 
-Now, let&#x27;s consider the second term, 1 / sqrt(x^2 + 1). We can use the inequality provided in the hint to find a lower bound for this term. Let&#x27;s set y = sqrt(x^2 + 1), which is always positive for real x. Then we have:
+So now we have:
 
-1 / y = y / (y^2)
+\[
+\sqrt{x^2 + 1} + \frac{1}{\sqrt{x^2 + 1}}
+\]
 
-Now, we apply the inequality x + 1/x ≥ 2, which holds for positive x, with equality if and only if x = 1. In our case, we substitute x with y:
+To find the minimum value of this expression, we can use the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), which states that for any non-negative real numbers a and b, the following is true:
 
-y + 1/y ≥ 2
+\[
+\frac{a + b}{2} \geq \sqrt{ab}
+\]
 
-Since y = sqrt(x^2 + 1), we know that y is always greater than or equal to 1 for real x (because x^2 is non-negative and adding 1 ensures y is at least 1). Therefore, the inequality holds, and we have:
+Equality holds if and only if \( a = b \). Let&#x27;s apply this to our expression, where \( a = \sqrt{x^2 + 1} \) and \( b = \frac{1}{\sqrt{x^2 + 1}} \):
 
-sqrt(x^2 + 1) + 1 / sqrt(x^2 + 1) ≥ 2
+\[
+\frac{\sqrt{x^2 + 1} + \frac{1}{\sqrt{x^2 + 1}}}{2} \geq \sqrt{\sqrt{x^2 + 1} \cdot \frac{1}{\sqrt{x^2 + 1}}}
+\]
 
-This means that the smallest value of f(x) is 2, and this occurs when y = sqrt(x^2 + 1) = 1, which happens when x = 0.
+Simplifying the right side, we get:
 
-So, the smallest value of f(x) = (x^2 + 2) / sqrt(x^2 + 1) for real x is 2, and it occurs when x = 0.</code></pre>
+\[
+\frac{\sqrt{x^2 + 1} + \frac{1}{\sqrt{x^2 + 1}}}{2} \geq \sqrt{1}
+\]
+
+\[
+\frac{\sqrt{x^2 + 1} + \frac{1}{\sqrt{x^2 + 1}}}{2} \geq 1
+\]
+
+Multiplying both sides by 2, we get:
+
+\[
+\sqrt{x^2 + 1} + \frac{1}{\sqrt{x^2 + 1}} \geq 2
+\]
+
+Therefore, the smallest value of the original expression \(\frac{x^2 + 2}{\sqrt{x^2 + 1}}\) is 2, and this minimum is achieved when \( \sqrt{x^2 + 1} = \frac{1}{\sqrt{x^2 + 1}} \), which occurs when \( x^2 + 1 = 1 \), or \( x = 0 \).
+
+So the final answer is that the smallest value of the expression for real \( x \) is 2.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the function (x^2 + 2) / sqrt(x^2 + 1) for real x is 2, and it occurs when x = 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \((x^2+2)/\sqrt{x^2+1}\) for real \(x\) is 2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

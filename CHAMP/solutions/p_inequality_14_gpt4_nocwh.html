@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_14</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_14']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,45 +82,26 @@ Let x_1=1 and x_(n+1)=1+n/x_n. For how many values of x_1, ..., x_100 do we have
 You may find the following information useful:
 
 1. Study whether x_(n+1) satisfies the inequality if x_n satisfies it.
-2. To find a lower bound of n/(sqrt(n)+1), change sqrt(n) to sqrt(n+1), rewrite n as n+1-1 and get rid of the square root in the denominator.
-3. x^2-y^2=(x+y)(x-y).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by assuming that the inequality sqrt(i) ≤ x_i ≤ sqrt(i) + 1 holds for some i = n. We want to show that it also holds for i = n + 1.
+2. To find a lower bound of n/(sqrt(n)+1), change sqrt(n) to sqrt(n+1), rewrite n as n+1-1 and get rid of the square root in the denominator.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by assuming that the inequality sqrt(i) ≤ x_i ≤ sqrt(i) + 1 holds for some i. We want to show that it also holds for i+1.
 
-First, let&#x27;s find the lower bound of x_(n+1) when x_n = sqrt(n):
+If sqrt(i) ≤ x_i ≤ sqrt(i) + 1, then we can write the inequality for x_(i+1) as follows:
 
-x_(n+1) = 1 + n/x_n ≥ 1 + n/(sqrt(n) + 1)
+1 + (i/x_i) ≤ x_(i+1) ≤ 1 + (i+1)/sqrt(i)
 
-To find a lower bound of n/(sqrt(n) + 1), we can change sqrt(n) to sqrt(n+1), rewrite n as n+1-1 and get rid of the square root in the denominator:
+We know that x_(i+1) = 1 + i/x_i, so we need to show that 1 + (i+1)/sqrt(i) is greater than or equal to this.
 
-n/(sqrt(n) + 1) ≥ (n+1-1)/(sqrt(n+1) + 1) = (n+1)/(sqrt(n+1) + 1) - 1/(sqrt(n+1) + 1)
+To do this, we can rewrite 1 + (i+1)/sqrt(i) as 1 + i/sqrt(i) + 1/sqrt(i). Since x_i is at least sqrt(i), we know that i/x_i is less than or equal to 1. Therefore, 1 + i/x_i is less than or equal to 1 + 1/sqrt(i), which is less than or equal to 1 + i/sqrt(i) + 1/sqrt(i).
 
-We can simplify the right side by multiplying the numerator and denominator by sqrt(n+1) - 1 (this is a trick to get rid of the square root in the denominator):
+So, we have shown that if the inequality holds for i, it also holds for i+1.
 
-(n+1)/(sqrt(n+1) + 1) - 1/(sqrt(n+1) + 1) = ((n+1)(sqrt(n+1) - 1) - 1)/((sqrt(n+1) + 1)(sqrt(n+1) - 1))
+Now, we need to check the base case, i.e., i=1. We know that x_1 = 1, and it&#x27;s easy to see that sqrt(1) ≤ x_1 ≤ sqrt(1) + 1.
 
-Using the identity x^2 - y^2 = (x + y)(x - y), the denominator becomes (n+1 - 1) = n:
+Therefore, by induction, the inequality sqrt(i) ≤ x_i ≤ sqrt(i) + 1 holds for all i from 1 to 100.
 
-((n+1)(sqrt(n+1) - 1) - 1)/n = sqrt(n+1) - 1 - 1/n
-
-This is greater than or equal to sqrt(n+1) - 1, because 1/n is positive. So we have:
-
-x_(n+1) ≥ sqrt(n+1)
-
-Now let&#x27;s find the upper bound of x_(n+1) when x_n = sqrt(n) + 1:
-
-x_(n+1) = 1 + n/x_n ≤ 1 + n/(sqrt(n) + 1)
-
-This is less than or equal to sqrt(n+1) + 1, because n/(sqrt(n) + 1) is less than or equal to sqrt(n) + 1. So we have:
-
-x_(n+1) ≤ sqrt(n+1) + 1
-
-Therefore, if the inequality sqrt(i) ≤ x_i ≤ sqrt(i) + 1 holds for i = n, it also holds for i = n + 1.
-
-Since x_1 = 1 and sqrt(1) ≤ x_1 ≤ sqrt(1) + 1, the inequality holds for i = 1. By induction, it holds for all i from 1 to 100.
-
-So there are 100 values of x_1, ..., x_100 for which the inequality sqrt(i) ≤ x_i ≤ sqrt(i) + 1 holds.</code></pre>
+So, there are 100 values of x_1, ..., x_100 for which the inequality sqrt(i) ≤ x_i ≤ sqrt(i) + 1 holds.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 100 values of x_1, ..., x_100 for which the inequality sqrt(i) ≤ x_i ≤ sqrt(i) + 1 holds.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality sqrt(i) ≤ x_i ≤ sqrt(i) + 1 holds for all i from 1 to 100, so there are 100 values of x_1, ..., x_100 for which this inequality holds.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

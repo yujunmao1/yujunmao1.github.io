@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_10</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_10']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,26 +81,28 @@ For an antisymmetric polynomial f(x, y) (i.e., f(x, y)=-f(y, x)) of total degree
 
 You may find the following information useful:
 
-1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j. What is the relationship between c_ij and c_ji if f(x, y) is antisymmetric?
-2. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
-3. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>1. If f(x, y) is antisymmetric, then f(x, y) = -f(y, x). This means that the coefficients of the terms in the polynomial must satisfy c_ij = -c_ji. 
+1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j. What is the relationship between c_ij and c_ji if f(x, y) is antisymmetric?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>If f(x, y) is antisymmetric, then f(x, y) = -f(y, x). This means that if we swap x and y in the polynomial, we get the negative of the original polynomial. 
 
-2. The polynomial x-y divides the polynomial x^n-y^n. This is a well-known property of polynomials and can be proven by using the difference of powers factorization formula: x^n - y^n = (x - y)(x^(n-1) + x^(n-2)y + ... + xy^(n-2) + y^(n-1)).
+Let&#x27;s write f(x, y) as a sum of terms c_ij*x^i*y^j. Then f(y, x) would be a sum of terms c_ij*y^i*x^j. 
 
-3. If d divides a and d divides b, then d divides ax+by, d divides a + b and d divides a-b. This is a basic property of divisibility in number theory.
+For f(x, y) to be equal to -f(y, x), the coefficients c_ij must be equal to -c_ji. This is because when we swap x and y, the powers i and j are also swapped. 
 
 Now, let&#x27;s consider the remainder of f(x, y) divided by x-y. 
 
-Since f(x, y) is antisymmetric, we can write it as f(x, y) = sum_(i &gt; j) (c_ij*x^i*y^j - c_ij*x^j*y^i). 
+If we divide a term x^i*y^j by x-y, we get a polynomial of degree i+j-1 (because the degree of x-y is 1). 
 
-When we divide f(x, y) by x-y, we are essentially looking at the terms where i = j. However, from the antisymmetry property, we know that c_ij = -c_ji. Therefore, when i = j, c_ij = -c_ji = -c_ii, which implies that c_ii = 0. 
+Since the total degree of f(x, y) is n, the possible values of i+j are 0, 1, 2, ..., n. Therefore, the possible values of i+j-1 are -1, 0, 1, ..., n-1. 
 
-This means that the terms where i = j do not contribute to the polynomial f(x, y), and hence, they do not contribute to the remainder when f(x, y) is divided by x-y. 
+However, the degree of a polynomial cannot be negative, so the possible values of the remainder of f(x, y) divided by x-y are polynomials of degree 0, 1, 2, ..., n-1. 
 
-Therefore, the remainder of f(x, y) divided by x-y is 0.</code></pre>
+In terms of the coefficients, this means that the possible values of the remainder are sums of terms c_ij*x^i*y^j where i+j is in the range 1 to n. 
+
+But remember that c_ij = -c_ji. This means that every term in the remainder has a corresponding term with the same absolute value but opposite sign. Therefore, when we add up all the terms, the total sum is zero. 
+
+So, the possible values of the remainder of f(x, y) divided by x-y are 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of the remainder of an antisymmetric polynomial f(x, y) of total degree n divided by x-y is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of the remainder of an antisymmetric polynomial f(x, y) of total degree n divided by x-y are 0.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

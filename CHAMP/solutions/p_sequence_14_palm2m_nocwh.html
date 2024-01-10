@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_14</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to 2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_14']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,72 +81,62 @@ Let the sequence be defined as a_n=1/C(n, 0)+1/C(n, 1)+...+1/C(n, n). Does the l
 
 You may find the following information useful:
 
-1. C(n, k)=n/k*C(n-1, k-1).
-2. Study the relationship between a_n and a_(n-1).
-3. For even n, express a_n in terms of a_(n-1) by isolating the first term and grouping each pair of the terms from the two ends.
-4. C(n, k)=C(n, n-k).
-5. For odd n, express a_n in terms of a_(n-1) by isolating the first term, grouping each pair of the terms from the two ends and adding the remaining middle term.
-6. Write out the first few terms of a_n up to a_5 and study the relationship between a_n and 2+2/n.
-7. Study the monotonicity of the sequence after a_4.
-8. A sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let the sequence be defined as $a_n = \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \cdots + \frac{1}{C(n, n)}$. We will show that the limit of this sequence does not exist.
+1. Study the relationship between a_n and a_(n-1).
+2. For even n, express a_n in terms of a_(n-1) by isolating the first term and grouping each pair of the terms from the two ends.
+3. For odd n, express a_n in terms of a_(n-1) by isolating the first term, grouping each pair of the terms from the two ends and adding the remaining middle term.
+4. Write out the first few terms of a_n up to a_5 and study the relationship between a_n and 2+2/n.
+5. Study the monotonicity of the sequence after a_4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n = \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \cdots + \frac{1}{C(n, n)}$. We will show that the limit of the sequence does not exist.
 
-First, we will show that the sequence is monotonically increasing. To do this, we will show that $a_n \leq a_{n+1}$ for all $n$.
+First, we will show that $a_n$ is increasing for $n \geq 4$. To do this, we will express $a_n$ in terms of $a_{n-1}$. For even $n$, we have
 
-We have the following identity:
-
-$$C(n, k) = \frac{n!}{k!(n-k)!}$$
-
-Dividing both sides by $n!$, we get:
-
-$$\frac{1}{C(n, k)} = \frac{1}{n!} \cdot \frac{k!(n-k)!}{n!} = \frac{1}{k!} \cdot \frac{(n-k)!}{n!}$$
-
-Now, let $n \geq 2$. Then, we have:
-
-$$\begin{align*}
+\begin{align*}
 a_n &amp;= \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \cdots + \frac{1}{C(n, n)} \\
-&amp;\leq \frac{1}{1!} + \frac{1}{2!} + \cdots + \frac{1}{n!} \\
-&amp;= 2 + \frac{1}{2!} + \cdots + \frac{1}{n!} \\
-&amp;= 2 + \frac{1}{2} + \frac{1}{6} + \cdots + \frac{1}{n!} \\
-&amp;= 2 + \frac{1}{2} \left(1 + \frac{1}{3} + \cdots + \frac{1}{n-1} + \frac{1}{n} \right) \\
-&amp;= 2 + \frac{1}{2} \left(1 - \frac{1}{n} \right) \\
-&amp;= 2 + \frac{n-1}{2n} \\
-&amp;= \frac{2n + n-1}{2n} \\
-&amp;= \frac{3n-1}{2n} \\
-&amp;\leq \frac{3}{2}
-\end{align*}$$
+&amp;= \frac{1}{n!} + \frac{2}{(n-1)!} + \cdots + \frac{1}{2!} + \frac{1}{1!} \\
+&amp;= \frac{n+1}{n!} \\
+&amp;&gt; \frac{n}{n!} = a_{n-1}.
+\end{align*}
 
-Therefore, we have shown that $a_n \leq a_{n+1}$ for all $n$. This shows that the sequence is monotonically increasing.
+For odd $n$, we have
 
-Next, we will show that the sequence is bounded. To do this, we will show that there exists a constant $M$ such that $a_n \leq M$ for all $n$.
+\begin{align*}
+a_n &amp;= \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \cdots + \frac{1}{C(n, n-1)} + \frac{1}{C(n, n)} \\
+&amp;= \frac{1}{n!} + \frac{2}{(n-1)!} + \cdots + \frac{n-1}{2!} + \frac{1}{1!} \\
+&amp;= \frac{n+1}{n!} \\
+&amp;&gt; \frac{n}{n!} = a_{n-1}.
+\end{align*}
 
-We have the following inequality:
+Therefore, $a_n$ is increasing for $n \geq 4$.
 
-$$\frac{1}{C(n, k)} \leq \frac{1}{k!}$$
+Next, we will show that $a_n$ diverges. To do this, we will show that $a_n &gt; 2 + \frac{2}{n}$ for all $n \geq 4$.
 
-This inequality is true because the right-hand side is the probability of getting $k$ successes in $n$ trials with a probability of success of $\frac{1}{n}$. Since the probability of getting $k$ successes in $n$ trials is always non-negative, we have the desired inequality.
+For even $n$, we have
 
-Now, let $M = \max_{0 \leq k \leq n} \frac{1}{k!}$. Then, we have:
+\begin{align*}
+a_n &amp;= \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \cdots + \frac{1}{C(n, n)} \\
+&amp;= \frac{1}{n!} + \frac{2}{(n-1)!} + \cdots + \frac{1}{2!} + \frac{1}{1!} \\
+&amp;&gt; \frac{1}{n!} + \frac{2}{(n-1)!} + \cdots + \frac{1}{2!} + \frac{1}{2!} \\
+&amp;= \frac{2}{n!} + \frac{1}{2!} \\
+&amp;&gt; \frac{2}{n!} + \frac{1}{2} \\
+&amp;&gt; 2 + \frac{2}{n}.
+\end{align*}
 
-$$a_n \leq \frac{1}{1!} + \frac{1}{2!} + \cdots + \frac{1}{n!} \leq M$$
+For odd $n$, we have
 
-Therefore, we have shown that the sequence is bounded.
+\begin{align*}
+a_n &amp;= \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \cdots + \frac{1}{C(n, n-1)} + \frac{1}{C(n, n)} \\
+&amp;= \frac{1}{n!} + \frac{2}{(n-1)!} + \cdots + \frac{n-1}{2!} + \frac{1}{1!} \\
+&amp;&gt; \frac{1}{n!} + \frac{2}{(n-1)!} + \cdots + \frac{n-1}{2!} + \frac{1}{2!} \\
+&amp;= \frac{2}{n!} + \frac{1}{2!} \\
+&amp;&gt; \frac{2}{n!} + \frac{1}{2} \\
+&amp;&gt; 2 + \frac{2}{n}.
+\end{align*}
 
-Finally, we will show that a sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.
+Therefore, $a_n &gt; 2 + \frac{2}{n}$ for all $n \geq 4$. This shows that $a_n$ diverges.
 
-Let $a_n$ be a sequence that is monotonic and bounded. Then, we can define a new sequence $b_n$ as follows:
-
-$$b_n = \lim_{k \to \infty} a_{n+k}$$
-
-We will show that $b_n$ is a constant.
-
-To do this, we will show that $b_n = b_m$ for all $n$ and $m$.
-
-Let $n$ and $m$ be any two positive integers. Then, we have:
-
-$$b_n = \lim_{k \to \infty} a_{n+k} = \lim_{k \to \infty} a_{m+k}</code></pre>
+In conclusion, the limit of the sequence</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $a_n = \frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \cdots + \frac{1}{C(n, n)}$ is monotonically increasing and bounded, but it does not have a limit.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence $\frac{1}{C(n, 0)} + \frac{1}{C(n, 1)} + \cdots + \frac{1}{C(n, n)}$ does not exist.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

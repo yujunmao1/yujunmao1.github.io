@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_78</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_78']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,65 +77,31 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Find all possible values of p^2-q^2 mod 24 for prime numbers p and q greater than 3.
+Find all possible values of p^2-q^2 mod 24 for prime numbers p and q greater than 3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the properties of prime numbers and modular arithmetic.
 
-You may find the following information useful:
+First, note that for any prime number greater than 3, the prime must be of the form 6k ± 1, because all primes greater than 3 are either 1 or 5 modulo 6 (since they cannot be even or divisible by 3).
 
-1. All prime numbers greater than 3 has the form of 6n±1.
-2. x^2-y^2=(x+y)(x-y).
-3. If a | b and c | d, then ac | bd.
-4. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given that all prime numbers greater than 3 are of the form 6n ± 1, we can say that p and q can be written as:
-
-p = 6n + 1 or p = 6n - 1
-q = 6m + 1 or q = 6m - 1
-
-where n and m are integers.
-
-We want to find all possible values of p^2 - q^2 mod 24. Using the identity x^2 - y^2 = (x + y)(x - y), we can rewrite p^2 - q^2 as:
+Now, let&#x27;s consider the expression p^2 - q^2 modulo 24. We can factor this expression as follows:
 
 p^2 - q^2 = (p + q)(p - q)
 
-Now, let&#x27;s consider the possible forms of p and q:
+Since p and q are both primes greater than 3, they are both odd, and thus p + q and p - q are both even. This means that the product (p + q)(p - q) is divisible by 4.
 
-Case 1: p = 6n + 1 and q = 6m + 1
-p + q = (6n + 1) + (6m + 1) = 6(n + m) + 2
-p - q = (6n + 1) - (6m + 1) = 6(n - m)
+Now, let&#x27;s consider the expression modulo 24. Since 24 = 2^3 * 3, we need to ensure that the expression is divisible by both 8 and 3 to determine its value modulo 24.
 
-Case 2: p = 6n - 1 and q = 6m - 1
-p + q = (6n - 1) + (6m - 1) = 6(n + m) - 2
-p - q = (6n - 1) - (6m - 1) = 6(n - m)
+Since p and q are both of the form 6k ± 1, their squares are 1 modulo 24. This is because (6k ± 1)^2 = 36k^2 ± 12k + 1, which is 1 modulo 24 since 36k^2 and 12k are both multiples of 24.
 
-Case 3: p = 6n + 1 and q = 6m - 1
-p + q = (6n + 1) + (6m - 1) = 6(n + m)
-p - q = (6n + 1) - (6m - 1) = 6(n - m) + 2
+Now, let&#x27;s look at the possible values of p^2 and q^2 modulo 24:
 
-Case 4: p = 6n - 1 and q = 6m + 1
-p + q = (6n - 1) + (6m + 1) = 6(n + m)
-p - q = (6n - 1) - (6m + 1) = 6(n - m) - 2
+- If p = 6k + 1, then p^2 = (6k + 1)^2 = 36k^2 + 12k + 1 ≡ 1 (mod 24)
+- If p = 6k - 1, then p^2 = (6k - 1)^2 = 36k^2 - 12k + 1 ≡ 1 (mod 24)
 
-In all cases, p + q and p - q are multiples of 2, and at least one of them is a multiple of 6. Since 24 = 2^3 * 3, and we have a factor of 6 in each case, we only need to consider the mod 8 part of the expression (p + q)(p - q) to determine the value of p^2 - q^2 mod 24.
+So regardless of the value of k, p^2 ≡ 1 (mod 24) and q^2 ≡ 1 (mod 24) for primes p and q greater than 3.
 
-Let&#x27;s consider the mod 8 values of p and q:
+Therefore, p^2 - q^2 ≡ 1 - 1 ≡ 0 (mod 24).
 
-p mod 8 = (6n ± 1) mod 8 = ±1 mod 8 (since 6n mod 8 is either 0 or 4)
-q mod 8 = (6m ± 1) mod 8 = ±1 mod 8
-
-Now, we can calculate the mod 8 values of p + q and p - q:
-
-Case 1: p + q mod 8 = 2 mod 8, p - q mod 8 = 0 mod 8
-Case 2: p + q mod 8 = -2 mod 8 = 6 mod 8, p - q mod 8 = 0 mod 8
-Case 3: p + q mod 8 = 0 mod 8, p - q mod 8 = 2 mod 8
-Case 4: p + q mod 8 = 0 mod 8, p - q mod 8 = -2 mod 8 = 6 mod 8
-
-Now, we can calculate p^2 - q^2 mod 24:
-
-Case 1: (p + q)(p - q) mod 24 = (2 * 0) mod 24 = 0
-Case 2: (p + q)(p - q) mod 24 = (6 * 0) mod 24 = 0
-Case 3: (p + q)(p - q) mod 24 = (0 * 2) mod 24 = 0
-Case 4: (p + q)(p - q) mod 24 = (0 * 6) mod 24 = 0
-
-In all cases, p^2 - q^2 mod 24 is 0. Therefore, the only possible value of p^2 - q^2 mod 24 for prime numbers p and q greater than 3 is 0.</code></pre>
+Since we are looking for the value of p^2 - q^2 modulo 24, and we have shown that it is always 0 for primes p and q greater than 3, the only possible value of p^2 - q^2 mod 24 for prime numbers p and q greater than 3 is 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only possible value of \( p^2 - q^2 \mod 24 \) for prime numbers \( p \) and \( q \) greater than 3 is 0.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

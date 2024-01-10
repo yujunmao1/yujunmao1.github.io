@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_40</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_40']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,36 +82,41 @@ Find the number of ways to fill a 2 x 11 rectangle with 2 x 1 tiles.
 You may find the following information useful:
 
 1. Let a_n be the number of ways to tile a 2 x n rectangle.
-2. Find the expression for a_(n+1) in terms of a_n and a_(n-1).
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem can be solved using the method of generating functions or by using the method of recurrence relations. Here, we will use the method of recurrence relations.
+2. Find the expression for a_(n+1) in terms of a_n and a_(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem is a classic example of a recurrence relation problem. 
 
 Let&#x27;s denote a_n as the number of ways to tile a 2 x n rectangle with 2 x 1 tiles. 
 
-We can see that a_1 = 1 (we can only place the tile vertically) and a_2 = 2 (we can place two tiles vertically or two tiles horizontally).
+We can see that:
 
-Now, let&#x27;s find the expression for a_(n+1) in terms of a_n and a_(n-1).
+- a_1 = 1, because there is only one way to fill a 2 x 1 rectangle with a 2 x 1 tile.
+- a_2 = 2, because there are two ways to fill a 2 x 2 rectangle: either two tiles vertically or two tiles horizontally.
 
-If we have a 2 x n rectangle and we want to add another column to make it a 2 x (n+1) rectangle, we have two options:
+Now, let&#x27;s consider a general 2 x n rectangle. 
 
-1. We can add a vertical tile to the end. There are a_n ways to do this.
-2. We can add two horizontal tiles to the end. There are a_(n-1) ways to do this.
+We can fill it in one of two ways:
 
-So, we can say that a_(n+1) = a_n + a_(n-1).
+1. Place a 2 x 1 tile vertically on the rightmost side. The remaining part is a 2 x (n-1) rectangle. There are a_(n-1) ways to fill this.
 
-Now, we can use this recurrence relation to find a_11.
+2. Place two 2 x 1 tiles horizontally on the rightmost side. The remaining part is a 2 x (n-2) rectangle. There are a_(n-2) ways to fill this.
 
-a_1 = 1
-a_2 = 2
-a_3 = a_2 + a_1 = 3
-a_4 = a_3 + a_2 = 5
-a_5 = a_4 + a_3 = 8
-a_6 = a_5 + a_4 = 13
-a_7 = a_6 + a_5 = 21
-a_8 = a_7 + a_6 = 34
-a_9 = a_8 + a_7 = 55
-a_10 = a_9 + a_8 = 89
-a_11 = a_10 + a_9 = 144
+So, we can express a_n as:
+
+a_n = a_(n-1) + a_(n-2)
+
+This is a Fibonacci sequence, where each term is the sum of the two preceding ones.
+
+Now, we can calculate a_11:
+
+a_3 = a_2 + a_1 = 2 + 1 = 3
+a_4 = a_3 + a_2 = 3 + 2 = 5
+a_5 = a_4 + a_3 = 5 + 3 = 8
+a_6 = a_5 + a_4 = 8 + 5 = 13
+a_7 = a_6 + a_5 = 13 + 8 = 21
+a_8 = a_7 + a_6 = 21 + 13 = 34
+a_9 = a_8 + a_7 = 34 + 21 = 55
+a_10 = a_9 + a_8 = 55 + 34 = 89
+a_11 = a_10 + a_9 = 89 + 55 = 144
 
 So, there are 144 ways to fill a 2 x 11 rectangle with 2 x 1 tiles.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>

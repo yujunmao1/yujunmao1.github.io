@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_27</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2*C(10, 5), or equivalently 504</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_27']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,27 +81,24 @@ How many strings of length 5 using the digits {0, 1, ..., 9} (with leading zeros
 
 You may find the following information useful:
 
-1. For any 5 numbers, how many such strings can be made?
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 10 choices for each digit in a string of length 5, so there are $10^5$ total possible strings. Of these, $9$ are strings of increasing digits and $9$ are strings of decreasing digits. Therefore, the total number of strings with strictly increasing or decreasing digits is $18$.
+1. For any 5 numbers, how many such strings can be made?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 10 choices for each digit in a string of length 5, so there are $10^5$ total possible strings. Of these, $5!$ are strings with strictly increasing digits, and $5!$ are strings with strictly decreasing digits. Therefore, the total number of strings with strictly increasing or decreasing digits is $10^5 - 2 \cdot 5! = 99990$.
 
-To see why there are $9$ strings of increasing digits, we can consider the following cases:
+Here is a more detailed explanation of the solution:
 
-* The string starts with a 0. There are 9 choices for the second digit, 8 choices for the third digit, and so on, for a total of $9!$ strings.
-* The string starts with a 1. There are 9 choices for the second digit, 8 choices for the third digit, and so on, for a total of $9!$ strings.
-* The string starts with a 2. There are 9 choices for the second digit, 8 choices for the third digit, and so on, for a total of $9!$ strings.
-* The string starts with a 3. There are 9 choices for the second digit, 8 choices for the third digit, and so on, for a total of $9!$ strings.
-* The string starts with a 4. There are 9 choices for the second digit, 8 choices for the third digit, and so on, for a total of $9!$ strings.
-* The string starts with a 5. There are 9 choices for the second digit, 8 choices for the third digit, and so on, for a total of $9!$ strings.
-* The string starts with a 6. There are 9 choices for the second digit, 8 choices for the third digit, and so on, for a total of $9!$ strings.
-* The string starts with a 7. There are 9 choices for the second digit, 8 choices for the third digit, and so on, for a total of $9!$ strings.
-* The string starts with an 8. There are 9 choices for the second digit, 8 choices for the third digit, and so on, for a total of $9!$ strings.
+We can think of the problem as asking how many ways there are to arrange 5 digits in a row, such that the digits are either all increasing or all decreasing. There are 10 choices for each digit, so there are $10^5$ total possible arrangements.
 
-In each case, there are $9!$ possible strings. However, we have counted each string twice, once for each of the two possible orders of the digits. Therefore, the total number of strings of increasing digits is $\frac{9!}{2} = 9$.
+To count the number of arrangements with strictly increasing digits, we can first consider the case where the digits are all 1, 2, 3, 4, and 5. There is only one way to arrange these digits in increasing order, so there is one arrangement with strictly increasing digits.
 
-The argument for the number of strings of decreasing digits is similar. There are $9$ choices for the first digit, 8 choices for the second digit, and so on, for a total of $9!$ strings. However, we have counted each string twice, once for each of the two possible orders of the digits. Therefore, the total number of strings of decreasing digits is $\frac{9!}{2} = 9$.</code></pre>
+For any other set of 5 digits, there are $4!$ ways to arrange them in increasing order. This is because we can first choose any 4 of the 5 digits to be the first 4 digits in the arrangement, and then we can arrange these 4 digits in 4! ways.
+
+Therefore, there are $1 + 4! \cdot 9 = 5! = 120$ arrangements with strictly increasing digits.
+
+The number of arrangements with strictly decreasing digits is the same as the number of arrangements with strictly increasing digits, since the two types of arrangements are just the reverse of each other. Therefore, there are $5!$ arrangements with strictly decreasing digits.
+
+The total number of strings with strictly increasing or decreasing digits is $10^5 - 2 \cdot 5! = 99990$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $18$ strings of length $5$ using the digits {0, 1, ..., 9} (with leading zeros allowed) that have strictly increasing or decreasing digits.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $99990$ strings of length 5 using the digits {0, 1, ..., 9} (with leading zeros allowed) that have strictly increasing or decreasing digits.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_21</td>
             <td>PaLM 2 Medium</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> a=3, b=-7, c=4</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_21']
-messages = problem.conversations['PaLM 2 Medium|Example w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,33 +77,44 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Find a, b, c such that (x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3).
-
-You may find the following information useful:
-
-1. Find the expression for x+5 in terms of a, b, c and x.
-2. Find the values of a, b, c by studying the expression at x=1, 2, 3.</code></pre>
+Find a, b, c such that (x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can solve this problem by multiplying both sides of the equation by $(x-1)(x-2)(x-3)$. This gives us:
 
-$$x+5 = a(x-2)(x-3) + b(x-1)(x-3) + c(x-1)(x-2)$$
+$$(x+5) = a(x-2)(x-3) + b(x-1)(x-3) + c(x-1)(x-2)$$
 
-We can then expand each of the terms on the right-hand side to get:
+We can then expand each of the terms on the right-hand side of the equation. This gives us:
 
-$$x+5 = ax^2 - 5ax + 6a + bx^2 - 3bx + 3b + cx^2 - 2cx + c$$
+$$x^2 + 2x - 15 = ax^2 - 5ax + 3ab + bx^2 - 3bx + 2bc + cx^2 - 2cx + ab + bc + ca$$
 
-If we now collect like terms, we get:
+We can then combine like terms. This gives us:
 
-$$(a+b+c)x^2 - (5a+3b+2c)x + (6a+3b+c) = 0$$
+$$(a+b+c)x^2 + (-5a-3b-2c)x + (-15+3ab+2bc+ca) = 0$$
 
-We can then solve this equation for $a$, $b$, and $c$. The quadratic formula tells us that the solutions to this equation are:
+We can then solve for $a$, $b$, and $c$ by using the quadratic formula. The quadratic formula tells us that the solutions to the equation $ax^2 + bx + c = 0$ are given by:
 
-$$a = \frac{5a+3b+2c \pm \sqrt{(5a+3b+2c)^2 - 4(a+b+c)(6a+3b+c)}}{2(a+b+c)}$$
+$$x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}$$
 
-We can then substitute the values of $x=1$, $x=2$, and $x=3$ into the equation to get three equations in three unknowns. Solving these equations, we find that $a=1$, $b=-1$, and $c=-2$.
+In our case, we have $a=a+b+c$, $b=-5a-3b-2c$, and $c=-15+3ab+2bc+ca$. Substituting these values into the quadratic formula, we get:
 
-Therefore, the values of $a$, $b$, and $c$ that satisfy the equation $(x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3)$ are $a=1$, $b=-1$, and $c=-2$.</code></pre>
+$$x = \frac{5a+3b+2c \pm \sqrt{(-5a-3b-2c)^2 - 4(a)(-15+3ab+2bc+ca)}}{2(a+b+c)}$$
+
+Simplifying the expression in the numerator, we get:
+
+$$x = \frac{5a+3b+2c \pm \sqrt{25a^2 + 35ab + 16c^2 - 120a - 120b - 120c}}{2(a+b+c)}$$
+
+Simplifying the expression in the denominator, we get:
+
+$$x = \frac{5a+3b+2c \pm \sqrt{25a^2 + 35ab + 16c^2 - 120a - 120b - 120c}}{2a+2b+2c}$$
+
+We can then solve for $a$, $b$, and $c$ by substituting the values of $x$ that we found into the equation $(x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3)$. This will give us a system of three equations in three unknowns, which we can then solve using standard methods.
+
+Alternatively, we can use the fact that the denominator of the equation $(x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3)$ is a factor of the numerator. This means that $a$, $b$, and $c$ must satisfy the following condition:
+
+$$a(x-2)(x-3) + b(x-1)(x-3) + c(x-1)(x-2) = x+5$$
+
+We can then solve this equation for $a$, $b$, and $c$ using standard methods.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The values of $a$, $b$, and $c$ that satisfy the equation $(x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3)$ are $a=1$, $b=-1$, and $c=-2$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The values of $a$, $b$, and $c$ that satisfy the equation $(x+5)/((x-1)(x-2)(x-3))=a/(x-1)+b/(x-2)+c/(x-3)$ are $a=-1$, $b=2$, and $c=-3$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

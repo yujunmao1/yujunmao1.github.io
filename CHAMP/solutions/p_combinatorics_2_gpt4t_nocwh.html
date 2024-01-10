@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_2</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(10, 5), or equivalently 252</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_2']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,30 +81,22 @@ How many strings of length 5 using the digits {0, 1, ..., 9} (with leading zeros
 
 You may find the following information useful:
 
-1. For any 5 numbers, how many such strings can be made?
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the number of strings of length 5 with strictly increasing digits using the digits {0, 1, ..., 9}.
+1. For any 5 numbers, how many such strings can be made?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of ways to choose 5 distinct digits from the set {0, 1, ..., 9} such that they form a strictly increasing sequence. Since the order of the digits in the sequence matters (they must be strictly increasing), we are essentially looking for combinations, not permutations, because once we choose the 5 distinct digits, there is only one way to arrange them in strictly increasing order.
 
-Since the digits must be strictly increasing, each digit in the string must be greater than the one before it. This means that no digit can be repeated. Therefore, we are essentially choosing 5 different digits from the 10 available (0 through 9) and arranging them in increasing order.
+The number of ways to choose 5 distinct digits out of 10 is given by the binomial coefficient &quot;10 choose 5&quot;, which is calculated as follows:
 
-The number of ways to choose 5 different digits from 10 is given by the combination formula C(n, k), which is the number of ways to choose a set of k items from n items without regard to order. In this case, n = 10 and k = 5.
+\[ \binom{10}{5} = \frac{10!}{5!(10-5)!} \]
 
-The formula for combinations is:
+Calculating this, we get:
 
-C(n, k) = n! / (k! * (n - k)!)
+\[ \binom{10}{5} = \frac{10 \times 9 \times 8 \times 7 \times 6}{5 \times 4 \times 3 \times 2 \times 1} \]
+\[ \binom{10}{5} = \frac{30240}{120} \]
+\[ \binom{10}{5} = 252 \]
 
-Plugging in the values for n and k, we get:
-
-C(10, 5) = 10! / (5! * (10 - 5)!)
-           = 10! / (5! * 5!)
-           = (10 * 9 * 8 * 7 * 6) / (5 * 4 * 3 * 2 * 1)
-           = (10/5) * (9/3) * (8/2) * (7/1) * 6
-           = 2 * 3 * 4 * 7 * 6
-           = 1008
-
-So there are 1008 different strings of length 5 with strictly increasing digits that can be formed using the digits 0 through 9.</code></pre>
+So, there are 252 strings of length 5 using the digits {0, 1, ..., 9} with strictly increasing digits.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 1008 strings of length 5 with strictly increasing digits that can be formed using the digits 0 through 9.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 252 strings of length 5 using the digits {0, 1, ..., 9} that have strictly increasing digits.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

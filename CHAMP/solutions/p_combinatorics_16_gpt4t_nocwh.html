@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_16</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_16']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -84,27 +84,36 @@ You may find the following information useful:
 1. For any string, add the digit 1 to the beginning and digit 0 to the end.
 2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither.
 3. If there are m &quot;0-1&quot; transitions in the original string, how many &quot;1-0&quot; transitions are there in the new string, and what is their ordering?
-4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?
-5. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of binary strings of length n that contain exactly m instances of the substring &quot;01&quot;. Let&#x27;s follow the steps provided:
 
-1. For any string A, we add the digit 1 to the beginning and digit 0 to the end. This ensures that any &quot;01&quot; in the original string is preserved, and we can also count &quot;01&quot; if it occurs at the very beginning or end of the original string.
+1. For any string A, we add the digit 1 to the beginning and digit 0 to the end. This does not change the number of &quot;01&quot; substrings, but it helps us in counting the transitions.
 
-2. Now, we consider the gaps between every two digits. We classify them into &quot;0-1&quot; transitions, &quot;1-0&quot; transitions, and neither (which would be &quot;00&quot; or &quot;11&quot;). Since we are only interested in the &quot;01&quot; transitions, we will focus on those.
+2. We classify the gaps between every two digits into &quot;0-1&quot; transition, &quot;1-0&quot; transition, and neither. A &quot;0-1&quot; transition is a gap where a 0 is followed by a 1, and a &quot;1-0&quot; transition is a gap where a 1 is followed by a 0.
 
-3. If there are m &quot;0-1&quot; transitions in the original string, then in the new string (with the added 1 at the beginning and 0 at the end), there will be m &quot;1-0&quot; transitions. The ordering of these transitions will be alternating, starting with a &quot;1-0&quot; transition (since we added a 1 at the beginning) and ending with a &quot;0-1&quot; transition (since we added a 0 at the end).
+3. If there are m &quot;0-1&quot; transitions in the original string, then in the new string (with the added 1 at the beginning and 0 at the end), there must be exactly m &quot;1-0&quot; transitions. This is because each &quot;0-1&quot; transition must be paired with a &quot;1-0&quot; transition to return to a 0 and allow for another &quot;0-1&quot; transition. The ordering of these transitions in the new string will start with a &quot;1-0&quot; transition (since we added a 1 at the beginning) and end with a &quot;0-1&quot; transition (since we added a 0 at the end).
 
-4. We need to arrange m &quot;0-1&quot; transitions and m &quot;1-0&quot; transitions in an alternating pattern. Since the pattern is fixed (starting with &quot;1-0&quot; and ending with &quot;0-1&quot;), we don&#x27;t actually have to arrange them; their positions are determined by the number of transitions.
+4. Now, we need to arrange m &quot;0-1&quot; transitions and m &quot;1-0&quot; transitions in a string of length n+2 (after adding the 1 at the beginning and 0 at the end). Each transition takes up one gap between two digits. There are n+1 gaps in the new string of length n+2.
 
-5. Now, we need to distribute the remaining n - 2m digits (which are not part of any &quot;01&quot; or &quot;10&quot; transitions) among the m+1 gaps created by the m &quot;0-1&quot; transitions and m &quot;1-0&quot; transitions. This is a problem of distributing indistinguishable items (the n - 2m digits) into distinguishable bins (the m+1 gaps).
+We can think of this as a sequence of 2m transitions that need to be placed in n+1 gaps. The remaining n+1 - 2m gaps will be filled with &quot;neither&quot; transitions (which are sequences of the same digit, either 0 or 1).
 
-The number of ways to distribute n - 2m indistinguishable items into m+1 distinguishable bins is given by the stars and bars method, which is C((n - 2m) + (m+1) - 1, (m+1) - 1) = C(n - m, m).
+The number of ways to arrange these transitions is equivalent to choosing 2m positions from n+1 gaps, which is given by the binomial coefficient:
 
-Therefore, the number of binary strings of length n that contain exactly m instances of the substring &quot;01&quot; is given by the binomial coefficient C(n - m, m).
+C(n+1, 2m) = (n+1)! / (2m)! / (n+1 - 2m)!
 
-This is the final answer, expressed in terms of m and n.</code></pre>
+However, we must ensure that the first transition is &quot;1-0&quot; and the last is &quot;0-1&quot;. This means that we actually have 2m-2 transitions to arrange freely within the n-1 gaps between the first and last transitions.
+
+So the number of ways to arrange the transitions is:
+
+C(n-1, 2m-2) = (n-1)! / (2m-2)! / (n-1 - (2m-2))!
+
+This is the number of binary strings of length n that contain exactly m &quot;01&quot; substrings.
+
+Therefore, the final answer is:
+
+C(n-1, 2m-2) = (n-1)! / (2m-2)! / (n+1-2m)!</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of binary strings of length n that contain exactly m instances of the substring &quot;01&quot; is given by the binomial coefficient C(n - m, m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of binary strings of length n that contain exactly m instances of the substring &quot;01&quot; is given by the binomial coefficient C(n-1, 2m-2) = (n-1)! / [(2m-2)! * (n+1-2m)!].</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

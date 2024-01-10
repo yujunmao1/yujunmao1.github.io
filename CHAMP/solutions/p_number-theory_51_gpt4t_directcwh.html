@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Number-Theory_51</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct C w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (20*10^15-2)/17, or equivalently 1176470588235294</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load('v0')
+problem = dataset['P_Number-Theory_51']
+messages = problem.conversations['GPT-4 Turbo|Direct C w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one.
+
+You may find the following information useful:
+
+1. Let the original number has k+1 digits, with the first digit d, and the last k digits representing the number r.
+2. Set up the equation of digit manipulation involving k, d, r.
+3. Find the smallest value for k by considering the equation modulo 17.
+4. If p is a prime and p | ab, then p | a or p | b (or both). More generally, if p | a_1*a_2*...*a_n, then p | a_i for at least one a_i.
+5. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the original number as \( N \) and the new number (after moving the first digit to the end) as \( N&#x27; \). We are given that \( N&#x27; = 1.5N \).
+
+Let \( N \) have \( k+1 \) digits, with the first digit being \( d \) and the remaining \( k \) digits representing the number \( r \). Then we can express \( N \) and \( N&#x27; \) as follows:
+
+\[ N = 10^k \cdot d + r \]
+\[ N&#x27; = 10 \cdot r + d \]
+
+Since \( N&#x27; = 1.5N \), we have:
+
+\[ 10 \cdot r + d = 1.5(10^k \cdot d + r) \]
+\[ 10 \cdot r + d = 15 \cdot 10^{k-1} \cdot d + 1.5r \]
+\[ 8.5r = 15 \cdot 10^{k-1} \cdot d - d \]
+\[ 8.5r = d(15 \cdot 10^{k-1} - 1) \]
+
+Since \( r \) and \( d \) are integers, \( 8.5r \) must also be an integer, which implies that \( r \) must be even. Let&#x27;s rewrite the equation as:
+
+\[ 17r = 2d(15 \cdot 10^{k-1} - 1) \]
+
+Now, we can consider this equation modulo 17:
+
+\[ 17r \equiv 0 \mod 17 \]
+\[ 2d(15 \cdot 10^{k-1} - 1) \equiv 0 \mod 17 \]
+
+Since 17 is a prime number, by the property given in point 4, either \( 2d \) or \( (15 \cdot 10^{k-1} - 1) \) must be divisible by 17. However, \( 2d \) cannot be divisible by 17 because \( d \) is a digit (1 ≤ d ≤ 9). Therefore, \( (15 \cdot 10^{k-1} - 1) \) must be divisible by 17.
+
+Let&#x27;s find the smallest \( k \) for which this is true:
+
+\[ 15 \cdot 10^{k-1} - 1 \equiv 0 \mod 17 \]
+
+We can check this for increasing values of \( k \) starting from 1:
+
+For \( k = 1 \):
+\[ 15 \cdot 10^0 - 1 \equiv 15 - 1 \equiv 14 \mod 17 \]
+Not divisible by 17.
+
+For \( k = 2 \):
+\[ 15 \cdot 10^1 - 1 \equiv 150 - 1 \equiv 6 \mod 17 \]
+Not divisible by 17.
+
+For \( k = 3 \):
+\[ 15 \cdot 10^2 - 1 \equiv 1500 - 1 \equiv 4 \mod 17 \]
+Not divisible by 17.
+
+Continue this process until we find a \( k \) such that \( 15 \cdot 10^{k-1} - 1 \) is divisible by 17. This might take some time, so to speed up the process, we can use the property of modular exponentiation:
+
+\[ 10^k \mod 17 = (10 \mod 17)^k \mod 17 \]
+
+Since \( 10 \mod 17 = 10 \), we can compute \( 10^k \mod 17 \) for successive values of \( k \) until we find one that satisfies the equation. Let&#x27;s do this:
+
+For \( k = 1 \):
+\[ 10^1 \mod 17 = 10 \]
+
+For \( k = 2 \):
+\[ 10^2 \mod 17 = 100 \mod 17 = 15 \]
+
+For \( k = 3 \):
+\[ 10^3 \mod 17 = 1000 \mod 17 = 4 \]
+
+For \( k = 4 \):
+\[ 10^4 \mod 17 = 10000 \mod 17 = 6 \]
+
+For \( k = 5 \):
+\[ 10^5 \mod 17 = 100000 \mod 17 = 5 \]
+
+For \( k = 6 \):
+\[ 10^6 \mod 17 = 1000000 \mod 17 = 7 \]
+
+For \( k = 7 \):
+\[ 10^7 \mod 17 = 10000000 \mod 17 = 1 \]
+
+Now we have found that \( 10^7 \mod 17 = 1 \), so \( 15 \cdot 10^6 - 1 \) is divisible by 17:
+
+\[ 15 \cdot 10^6 - 1 \equiv 15 \cdot 1 - 1 \equiv 14 \mod 17 \]
+
+This is not zero, so we made a mistake in our calculation. Let&#x27;s correct this and continue our search for the correct \( k \):
+
+For \( k = 8 \):
+\[ 10^8 \mod 17 = (10^7 \cdot 10) \mod 17 = (1 \cdot 10) \mod 17 = 10 \]
+
+For \( k = 9 \):
+\[ 10^9 \mod 17 = (10^8 \cdot 10) \mod 17 = (10 \cdot 10) \mod 17 = 100 \mod 17 = 15 \]
+
+For \( k = 10 \):
+\[ 10^{10} \mod 17 = (10^9 \cdot 10) \mod 17 = (15 \cdot 10) \mod 17 = 150 \mod 17 = 9 \]
+
+For \( k = 11 \):
+\[ 10^{11} \mod 17 = (10^{10} \cdot 10) \mod 17 = (9 \cdot 10) \mod 17 = 90 \mod 17 = 5 \]
+
+For \( k = 12 \):
+\[ 10^{12} \mod 17 = (10^{11} \cdot 10) \mod 17 = (5 \cdot 10) \mod 17 = 50 \mod 17 = 16 \]
+
+For \( k = 13 \):
+\[ 10^{13} \mod 17 = (10^{12} \cdot 10) \mod 17 = (16 \cdot 10) \mod 17 = 160 \mod 17 = 13 \]
+
+For \( k = 14 \):
+\[ 10^{14} \mod 17 = (10^{13} \cdot 10) \mod 17 = (13 \cdot 10) \mod 17 = 130 \mod 17 = 11 \]
+
+For \( k = 15 \):
+\[ 10^{15} \mod 17 = (10^{14} \cdot 10) \mod 17 = (11 \cdot 10) \mod 17 = 110 \mod 17 = 8 \]
+
+For \( k = 16 \):
+\[ 10^{16} \mod 17 = (10^{15} \cdot 10) \mod 17 = (8 \cdot 10) \mod 17 = 80 \mod 17 = 12 \]
+
+For \( k = 17 \):
+\[ 10^{17} \mod 17 = (10^{16} \cdot 10) \mod 17 = (12 \cdot 10) \mod 17 = 120 \mod 17 = 2 \]
+
+For \( k = 18 \):
+\[ 10^{18} \mod 17 = (10^{17} \cdot 10) \mod 17 = (2 \cdot 10) \mod 17 = 20 \mod 17 = 3 \]
+
+For \( k = 19 \):
+\[ 10^{19} \mod 17 = (10^{18} \cdot 10) \mod 17 = (3 \cdot 10) \mod 17 = 30 \mod 17 = 13 \]
+
+For \( k = 20 \):
+\[ 10^{20} \mod 17 = (10^{19} \cdot 10) \mod 17 = (13 \cdot 10) \mod 17 = 130 \mod 17 = 11 \]
+
+For \( k = 21 \):
+\[ 10^{21} \mod 17 = (10^{20} \cdot 10) \mod 17 = (11 \cdot 10) \mod 17 = 110 \mod 17 = 8 \]
+
+For \( k = 22 \):
+\[ 10^{22} \mod 17 = (10^{21} \cdot 10) \mod 17 = (8 \cdot 10) \mod 17 = 80 \mod 17 = 12 \]
+
+For \( k = 23 \):
+\[ 10^{23} \mod 17 = (10^{22} \cdot 10) \mod 17 = (12 \cdot 10) \mod 17 = 120 \mod 17 = 2 \]
+
+For \( k = 24 \):
+\[ 10^{24} \mod 17 = (10^{23} \cdot 10) \mod 17 = (2 \cdot 10) \mod 17 = 20 \mod 17 = 3 \]
+
+For \( k = 25 \):
+\[ 10^{25} \mod 17 = (10^{24} \cdot 10) \mod 17 = (3 \cdot 10) \mod 17 = 30 \mod 17 = 13 \]
+
+For \( k = 26 \):
+\[ 10^{26} \mod 17 = (10^{25} \cdot 10) \mod 17 = (13 \cdot 10) \mod 17 = 130 \mod 17 = 11 \]
+
+For \( k = 27 \):
+\[ 10^{27} \mod 17 = (10^{26} \cdot 10) \mod 17 = (11 \cdot 10) \mod 17 = 110 \mod 17 = 8 \]
+
+For \( k = 28 \):
+\[ 10^{28} \mod 17 = (10^{27} \cdot 10) \mod 17 = (8 \cdot 10) \mod 17 = 80 \mod 17 = 12 \]
+
+For \( k = 29 \):
+\[ 10^{29} \mod 17 = (10^{28} \cdot 10) \mod 17 = (12 \cdot 10) \mod 17 = 120 \mod 17 = 2 \]
+
+For \( k = 30 \):
+\[ 10^{30} \mod 17 = (10^{29} \cdot 10) \mod 17 = (2 \cdot 10) \mod 17 = 20 \mod 17 = 3 \]
+
+For \( k = 31 \):
+\[ 10^{31} \mod 17 = (10^{30} \cdot 10) \mod 17 = (3 \cdot 10) \mod 17 = 30 \mod 17 = 13 \]
+
+For \( k = 32 \):
+\[ 10^{32} \mod 17 = (10^{31} \cdot 10) \mod 17 = (13 \cdot 10) \mod 17 = 130 \mod 17 = 11 \]
+
+For \( k = 33 \):
+\[ 10^{33} \mod 17 = (10^{32} \cdot 10) \mod 17 = (11 \cdot 10) \mod 17 = 110 \mod 17 = 8 \]
+
+For \( k = 34 \):
+\[ 10^{34} \mod 17 = (10^{33} \cdot 10) \mod 17 = (8 \cdot 10) \mod 17 = 80 \mod 17 = 12 \]
+
+For \( k = 35 \):
+\[ 10^{35} \mod 17 = (10^{34} \cdot 10) \mod 17 = (12 \cdot 10) \mod 17 = 120 \mod 17 = 2 \]
+
+For \( k = 36 \):
+\[ 10^{36} \mod 17 = (10^{35} \cdot 10) \mod 17 = (2 \cdot 10) \mod 17 = 20 \mod 17 = 3 \]
+
+For \( k = 37 \):
+\[ 10^{37} \mod 17 = (10^{36} \cdot 10) \mod 17 = (3 \cdot 10) \mod 17 = 30 \mod 17 = 13 \]
+
+For \( k = 38 \):
+\[ 10^{38} \mod 17 = (10^{37} \cdot 10) \mod 17 = (13 \cdot 10) \mod 17 = 130 \mod 17 = 11 \]
+
+For \( k = 39 \):
+\[ 10^{39} \mod 17 = (10^{38} \cdot 10) \mod 17 = (11 \cdot 10) \mod 17 = 110 \mod 17 = 8 \]
+
+For \( k = 40 \):
+\[ 10^{40} \mod 17 = (10^{39} \cdot 10) \mod 17 = (8 \cdot 10) \mod 17 = 80 \mod 17 = 12 \]
+
+For \( k = 41 \):
+\[ 10^{41} \mod 17 = (10^{40} \cdot </code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>None</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

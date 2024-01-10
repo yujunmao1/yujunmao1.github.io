@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_1</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 239</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_1']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,55 +83,58 @@ You may find the following information useful:
 
 1. Let x_n, y_n, z_n be the number of length-n strings that end with digit 1, 2, 3 respectively.
 2. What are x_1, y_1, z_1?
-3. By appending a digit to the existing string, derive the formula for x_(n+1), y_(n+1), z_(n+1) from x_n, y_n, z_n.
-4. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s solve the problem step by step.
+3. By appending a digit to the existing string, derive the formula for x_(n+1), y_(n+1), z_(n+1) from x_n, y_n, z_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will first establish the base cases for strings of length 1, which are x_1, y_1, and z_1. Then, we will derive the recursive formulas for x_(n+1), y_(n+1), and z_(n+1) based on x_n, y_n, and z_n.
 
-1. **Initial Values (n=1):**
-   For strings of length 1, we have:
-   - \( x_1 = 1 \) (the string is &quot;1&quot;)
-   - \( y_1 = 1 \) (the string is &quot;2&quot;)
-   - \( z_1 = 1 \) (the string is &quot;3&quot;)
+1. Base cases:
+For strings of length 1, there is only one possibility for each digit:
+- x_1 (strings ending in 1): There is only one string of length 1 that ends in 1, which is &quot;1&quot;.
+- y_1 (strings ending in 2): There is only one string of length 1 that ends in 2, which is &quot;2&quot;.
+- z_1 (strings ending in 3): There is only one string of length 1 that ends in 3, which is &quot;3&quot;.
 
-2. **Recursive Relations:**
-   To form a string of length \( n+1 \) that ends with a certain digit, we can append that digit to a string of length \( n \) that ends with a digit differing by less than or equal to 1. Therefore, we have:
-   - \( x_{n+1} \) can be formed by appending &quot;1&quot; to strings that end with &quot;1&quot; or &quot;2&quot;. So, \( x_{n+1} = x_n + y_n \).
-   - \( y_{n+1} \) can be formed by appending &quot;2&quot; to strings that end with &quot;1&quot;, &quot;2&quot;, or &quot;3&quot;. So, \( y_{n+1} = x_n + y_n + z_n \).
-   - \( z_{n+1} \) can be formed by appending &quot;3&quot; to strings that end with &quot;2&quot; or &quot;3&quot;. So, \( z_{n+1} = y_n + z_n \).
+So, x_1 = 1, y_1 = 1, and z_1 = 1.
 
-3. **Calculating Values:**
-   We will now calculate \( x_n, y_n, z_n \) for \( n = 2, 3, 4, 5, 6 \) using the recursive relations.
+2. Recursive formulas:
+To find the number of strings of length n+1 that end with a certain digit, we need to consider the constraints that adjacent digits differ by less than or equal to 1.
 
-   For \( n = 2 \):
-   - \( x_2 = x_1 + y_1 = 1 + 1 = 2 \)
-   - \( y_2 = x_1 + y_1 + z_1 = 1 + 1 + 1 = 3 \)
-   - \( z_2 = y_1 + z_1 = 1 + 1 = 2 \)
+- x_(n+1) (strings ending in 1): We can only append a &quot;1&quot; to strings that ended in 1 or 2. Therefore, x_(n+1) = x_n + y_n.
+- y_(n+1) (strings ending in 2): We can append a &quot;2&quot; to strings that ended in 1, 2, or 3. Therefore, y_(n+1) = x_n + y_n + z_n.
+- z_(n+1) (strings ending in 3): We can only append a &quot;3&quot; to strings that ended in 2 or 3. Therefore, z_(n+1) = y_n + z_n.
 
-   For \( n = 3 \):
-   - \( x_3 = x_2 + y_2 = 2 + 3 = 5 \)
-   - \( y_3 = x_2 + y_2 + z_2 = 2 + 3 + 2 = 7 \)
-   - \( z_3 = y_2 + z_2 = 3 + 2 = 5 \)
+Now, we can use these formulas to calculate the number of strings of length 6.
 
-   For \( n = 4 \):
-   - \( x_4 = x_3 + y_3 = 5 + 7 = 12 \)
-   - \( y_4 = x_3 + y_3 + z_3 = 5 + 7 + 5 = 17 \)
-   - \( z_4 = y_3 + z_3 = 7 + 5 = 12 \)
+Starting with the base cases:
+x_1 = 1, y_1 = 1, z_1 = 1.
 
-   For \( n = 5 \):
-   - \( x_5 = x_4 + y_4 = 12 + 17 = 29 \)
-   - \( y_5 = x_4 + y_4 + z_4 = 12 + 17 + 12 = 41 \)
-   - \( z_5 = y_4 + z_4 = 17 + 12 = 29 \)
+For n = 2:
+x_2 = x_1 + y_1 = 1 + 1 = 2
+y_2 = x_1 + y_1 + z_1 = 1 + 1 + 1 = 3
+z_2 = y_1 + z_1 = 1 + 1 = 2
 
-   For \( n = 6 \):
-   - \( x_6 = x_5 + y_5 = 29 + 41 = 70 \)
-   - \( y_6 = x_5 + y_5 + z_5 = 29 + 41 + 29 = 99 \)
-   - \( z_6 = y_5 + z_5 = 41 + 29 = 70 \)
+For n = 3:
+x_3 = x_2 + y_2 = 2 + 3 = 5
+y_3 = x_2 + y_2 + z_2 = 2 + 3 + 2 = 7
+z_3 = y_2 + z_2 = 3 + 2 = 5
 
-4. **Total Number of Strings:**
-   The total number of strings of length 6 with adjacent digits differing by less than or equal to 1 is the sum of the number of strings that end with each digit:
-   - Total = \( x_6 + y_6 + z_6 = 70 + 99 + 70 = 239 \)
+For n = 4:
+x_4 = x_3 + y_3 = 5 + 7 = 12
+y_4 = x_3 + y_3 + z_3 = 5 + 7 + 5 = 17
+z_4 = y_3 + z_3 = 7 + 5 = 12
 
-Therefore, there are 239 such strings of length 6 that have adjacent digits differing by less than or equal to 1.</code></pre>
+For n = 5:
+x_5 = x_4 + y_4 = 12 + 17 = 29
+y_5 = x_4 + y_4 + z_4 = 12 + 17 + 12 = 41
+z_5 = y_4 + z_4 = 17 + 12 = 29
+
+For n = 6:
+x_6 = x_5 + y_5 = 29 + 41 = 70
+y_6 = x_5 + y_5 + z_5 = 29 + 41 + 29 = 99
+z_6 = y_5 + z_5 = 41 + 29 = 70
+
+The total number of strings of length 6 with adjacent digits differing by less than or equal to 1 is the sum of x_6, y_6, and z_6:
+Total = x_6 + y_6 + z_6 = 70 + 99 + 70 = 239.
+
+Therefore, there are 239 such strings of length 6.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 239 strings of length 6 where each pair of adjacent digits differs by at most 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

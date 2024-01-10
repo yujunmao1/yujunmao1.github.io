@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_35</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (2n)!/(2^n*n!)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_35']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,25 +81,32 @@ for message in messages:
 
 You may find the following information useful:
 
-1. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-2. Order the 2n players in a row, and make the pairing (1, 2), (3, 4), (5, 6), ..., (2n-1, 2n). In how many ways can this be done?
-3. There are two types of multiple counting, one is the order within each pair, such as (1, 2) and (2, 1), and the second is ordering of the pairs, such as [(1, 2), (3, 4)] and [(3, 4), (1, 2)].
-4. If we count each object d times and get a total of n counts, then there are n/d objects.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $2n$ players participating in a tennis tournament. We want to find the number of ways to construct $n$ pairs for the first round.
+1. Order the 2n players in a row, and make the pairing (1, 2), (3, 4), (5, 6), ..., (2n-1, 2n). In how many ways can this be done?
+2. There are two types of multiple counting, one is the order within each pair, such as (1, 2) and (2, 1), and the second is ordering of the pairs, such as [(1, 2), (3, 4)] and [(3, 4), (1, 2)].</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $2n$ players, and we want to divide them into $n$ pairs. We can do this by first ordering the players in a row, and then pairing them up in order. There are $2n!$ ways to order the players, but we need to divide by $2$ because the order within each pair doesn&#x27;t matter, and we need to divide by $n!$ because the order of the pairs doesn&#x27;t matter. So the number of ways to divide the players into $n$ pairs is:
 
-We can think of this as a problem of choosing $n$ pairs from a set of $2n$ players. There are $\binom{2n}{n}$ ways to do this.
+$$\frac{2n!}{2n(n!)} = \binom{2n}{n}$$
 
-However, we have counted each pair twice, once for each order of the players in the pair. To correct for this, we divide by $2$.
+Here is a more detailed explanation of the solution.
 
-The number of ways to construct $n$ pairs for the first round is therefore $\frac{1}{2}\binom{2n}{n}$.
+We can divide the problem into two steps:
 
-Alternatively, we can think of this as a problem of ordering $2n$ players into $n$ pairs. There are $2^{2n}$ ways to do this.
+1. Order the 2n players in a row.
+2. Pair up the players in order.
 
-However, we have counted each pair twice, once for each order of the players in the pair. To correct for this, we divide by $2!$.
+The first step can be done in $2n!$ ways. The second step can be done in $n!$ ways, because there are $n$ pairs to choose from, and each pair can be chosen in $2$ ways (either player 1 can be the first player in the pair, or player 2 can be the first player in the pair).
 
-The number of ways to construct $n$ pairs for the first round is therefore $\frac{1}{2!}\binom{2n}{n}$.</code></pre>
+However, we have overcounted the number of ways to divide the players into pairs, because we have counted each way of ordering the players in a row twice. For example, if we order the players as (1, 2), (3, 4), (5, 6), ..., (2n-1, 2n), we have also counted the way of ordering them as (2, 1), (4, 3), (6, 5), ..., (2n, 2n-1).
+
+To correct for this overcounting, we need to divide by the number of ways to order the players in a row. This is $2n!$.
+
+We also need to divide by the number of ways to order the pairs. This is $n!$, because there are $n$ pairs to choose from, and each pair can be ordered in $2$ ways.
+
+So the number of ways to divide the players into $n$ pairs is:
+
+$$\frac{2n!}{2n(n!)} = \binom{2n}{n}$$</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to construct $n$ pairs for the first round of a tennis tournament with $2n$ players is $\frac{1}{2!}\binom{2n}{n}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to divide $2n$ players into $n$ pairs is $\binom{2n}{n}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_38</td>
             <td>PaLM 2 Medium</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> The sequence does not exist</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_38']
-messages = problem.conversations['PaLM 2 Medium|Name w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,23 +81,17 @@ The terms of the sequence a_1, a_2, a_3, ... are all positive, and a_(n+1)=sqrt(
 
 You may find the following information useful:
 
-1. Assume that each a_n is rational and write a_n=p_n/q_n with gcd(p_n, q_n)=1.
-2. From a_(n+1)^2=1+a_n, study the relationship between q_n and q_(n+1).
-3. For integer a, b with a&gt;b, gcd(a, b)=gcd(b, a-b). 
-4. If gcd(a,b)=1 and a≠1, then gcd(a, b^n)=1 (i.e., a ∤ b^n) for any n.
-5. Establish a stronger condition on the sequence of numbers.
-6. Study possible valid values for a_1 under this stronger condition by looking at the expression a_(n+1)^2-a_n^2.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_1$ be a rational number. Then $a_2 = \sqrt{1 + a_1}$ is also a rational number, since $\sqrt{1 + a_1} = \frac{\sqrt{1 + a_1} + \sqrt{1 - a_1}}{2}$ is a sum of two rational numbers. By induction, we can show that $a_n$ is rational for all $n$.
+1. For integer a, b with a&gt;b, gcd(a, b)=gcd(b, a-b). 
+2. If gcd(a,b)=1 and a≠1, then gcd(a, b^n)=1 (i.e., a ∤ b^n) for any n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_1$ be a positive rational number. Then $a_2 = \sqrt{1 + a_1}$ is also a positive rational number, since $\sqrt{1 + a_1}$ is the positive solution to the equation $x^2 - 1 - a_1 = 0$. By induction, we can show that $a_n$ is a positive rational number for all $n$.
 
-Now, we want to find the smallest possible value of $a_1$ such that the sequence satisfies the condition $a_{n+1} = \sqrt{1 + a_n}$. We can write $a_n = p_n/q_n$ with $p_n$ and $q_n$ relatively prime integers. Then $a_{n+1} = \sqrt{1 + a_n} = \sqrt{\frac{1 + p_n/q_n}{q_n^2}} = \frac{\sqrt{1 + p_n/q_n}}{q_n}$. Since $p_n$ and $q_n$ are relatively prime, $\sqrt{1 + p_n/q_n}$ is also an integer. Therefore, $a_{n+1}$ is a rational number if and only if $q_n$ is a multiple of $q_{n+1}$.
+To find the smallest possible value of $a_1$ such that the sequence satisfies the condition, we can use the following argument. Let $a_1 = p/q$ be a reduced fraction, where $p$ and $q$ are relatively prime integers and $q &gt; 0$. Then $a_2 = \sqrt{1 + a_1} = \sqrt{1 + p/q} = \sqrt{q^2 + p^2/q^2} = \pm \sqrt{q^2 + p^2}/q$. Since $q^2 + p^2$ is a positive integer, $\sqrt{q^2 + p^2}$ is an integer. Therefore, $a_2$ is a reduced fraction with denominator $q$.
 
-Let $q_1 = 1$. Then $q_2 = q_1q_2$, $q_3 = q_2q_3$, and so on. Therefore, $q_n = q_1^n$.
+We can continue this argument to show that $a_n$ is a reduced fraction with denominator $q$ for all $n$. Therefore, the smallest possible value of $a_1$ such that the sequence satisfies the condition is $a_1 = 1$.
 
-Now, we want to find the smallest possible value of $a_1$ such that $q_n$ is a multiple of $q_{n+1}$. We can write $q_n = p_n^n$ with $p_n$ an integer. Then $q_{n+1} = q_n^2 = (p_n^n)^2 = p_n^{2n}$. Therefore, $q_{n+1}$ is a multiple of $q_n$ if and only if $2n$ is a multiple of $n$.
-
-The smallest possible value of $n$ such that $2n$ is a multiple of $n$ is $n = 1$. Therefore, the smallest possible value of $a_1$ such that the sequence satisfies the condition $a_{n+1} = \sqrt{1 + a_n}$ is $a_1 = 1$.</code></pre>
+In conclusion, there exists a sequence with all a_n being rational numbers, and the smallest possible value of a_1 such that the sequence satisfies the condition is a_1 = 1.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest possible value of $a_1$ such that the sequence $a_{n+1} = \sqrt{1 + a_n}$ satisfies the condition that all $a_n$ are rational numbers is $a_1 = 1$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $a_n = \sqrt{1 + a_{n-1}}$ for all $n \ge 1$ has rational terms if and only if $a_1 = 1$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_11</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2^n</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_11']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,50 +77,52 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-If a_i&gt;0 for i=1, 2, ..., n and a_1*a_2*...*a_n=1, what is the smallest value of (1+a_1)(1+a_2)...(1+a_n) as an expression of n?
+If a_i&gt;0 for i=1, 2, ..., n and a_1*a_2*...*a_n=1, what is the smallest value of (1+a_1)(1+a_2)...(1+a_n) as an expression of n?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), which states that for any non-negative real numbers \( x_1, x_2, \ldots, x_k \), the following inequality holds:
 
-You may find the following information useful:
+\[
+\frac{x_1 + x_2 + \ldots + x_k}{k} \geq \sqrt[k]{x_1 \cdot x_2 \cdot \ldots \cdot x_k}
+\]
 
-1. For non-negative x, y, we have (x+y)≥2*sqrt(xy) and (x+y)/2≥sqrt(xy), with equality if and only if x=y.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the expression (1+a_1)(1+a_2)...(1+a_n) given that a_1*a_2*...*a_n = 1 and a_i &gt; 0 for i = 1, 2, ..., n, we can use the inequality mentioned in the problem statement.
+Equality occurs if and only if \( x_1 = x_2 = \ldots = x_k \).
 
-For any two non-negative numbers x and y, we have (x + y) / 2 ≥ sqrt(xy), with equality if and only if x = y. This is known as the Arithmetic Mean-Geometric Mean Inequality (AM-GM Inequality).
+Let&#x27;s apply the AM-GM inequality to the terms \( 1 + a_i \) for \( i = 1, 2, \ldots, n \):
 
-Let&#x27;s apply this inequality to each pair (1 + a_i) and 1:
+\[
+\frac{(1 + a_1) + (1 + a_2) + \ldots + (1 + a_n)}{n} \geq \sqrt[n]{(1 + a_1)(1 + a_2) \ldots (1 + a_n)}
+\]
 
-(1 + a_i + 1) / 2 ≥ sqrt((1 + a_i) * 1)
-(2 + a_i) / 2 ≥ sqrt(1 + a_i)
-1 + a_i / 2 ≥ sqrt(1 + a_i)
+Simplifying the left side, we get:
 
-Now, let&#x27;s multiply these inequalities for i = 1 to n:
+\[
+\frac{n + (a_1 + a_2 + \ldots + a_n)}{n} \geq \sqrt[n]{(1 + a_1)(1 + a_2) \ldots (1 + a_n)}
+\]
 
-(1 + a_1 / 2)(1 + a_2 / 2)...(1 + a_n / 2) ≥ sqrt(1 + a_1)sqrt(1 + a_2)...sqrt(1 + a_n)
-(1/2^n) * (1 + a_1)(1 + a_2)...(1 + a_n) ≥ sqrt(1 + a_1)sqrt(1 + a_2)...sqrt(1 + a_n)
+Since \( a_1 \cdot a_2 \cdot \ldots \cdot a_n = 1 \), by the AM-GM inequality applied to \( a_1, a_2, \ldots, a_n \), we have:
 
-We want to find the smallest value of (1 + a_1)(1 + a_2)...(1 + a_n), so we need to find the smallest value of the right-hand side of the inequality. Since a_1*a_2*...*a_n = 1, we can apply the AM-GM inequality to the a_i&#x27;s:
+\[
+\frac{a_1 + a_2 + \ldots + a_n}{n} \geq \sqrt[n]{a_1 \cdot a_2 \cdot \ldots \cdot a_n} = \sqrt[n]{1} = 1
+\]
 
-(a_1 + a_2 + ... + a_n) / n ≥ (a_1*a_2*...*a_n)^(1/n)
-(a_1 + a_2 + ... + a_n) / n ≥ 1^(1/n)
-(a_1 + a_2 + ... + a_n) / n ≥ 1
-a_1 + a_2 + ... + a_n ≥ n
+So \( a_1 + a_2 + \ldots + a_n \geq n \). Plugging this into our previous inequality, we get:
 
-Now, we can use this result to find the smallest value of the right-hand side of our original inequality:
+\[
+\frac{n + n}{n} \geq \sqrt[n]{(1 + a_1)(1 + a_2) \ldots (1 + a_n)}
+\]
 
-(1/2^n) * (1 + a_1)(1 + a_2)...(1 + a_n) ≥ sqrt(1 + a_1)sqrt(1 + a_2)...sqrt(1 + a_n)
-(1/2^n) * (1 + a_1)(1 + a_2)...(1 + a_n) ≥ sqrt(1 + a_1 + a_2 + ... + a_n)
-(1/2^n) * (1 + a_1)(1 + a_2)...(1 + a_n) ≥ sqrt(1 + n)
+\[
+2 \geq \sqrt[n]{(1 + a_1)(1 + a_2) \ldots (1 + a_n)}
+\]
 
-Now, we multiply both sides by 2^n to isolate the expression we&#x27;re interested in:
+Raising both sides to the power of \( n \), we obtain:
 
-(1 + a_1)(1 + a_2)...(1 + a_n) ≥ 2^n * sqrt(1 + n)
+\[
+2^n \geq (1 + a_1)(1 + a_2) \ldots (1 + a_n)
+\]
 
-The smallest value of (1 + a_1)(1 + a_2)...(1 + a_n) is achieved when all a_i&#x27;s are equal (by the equality condition of the AM-GM inequality), which means a_i = 1 for all i. In this case, the expression becomes:
-
-(1 + 1)^n = 2^n
-
-Therefore, the smallest value of (1 + a_1)(1 + a_2)...(1 + a_n) as an expression of n is 2^n.</code></pre>
+Therefore, the smallest value of \( (1 + a_1)(1 + a_2) \ldots (1 + a_n) \) as an expression of \( n \) is \( 2^n \), and this occurs when \( a_1 = a_2 = \ldots = a_n = 1 \), since this is the case where the AM-GM inequality becomes an equality.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression (1+a_1)(1+a_2)...(1+a_n) given that a_1*a_2*...*a_n=1 and a_i&gt;0 for i=1, 2, ..., n is 2^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \((1+a_1)(1+a_2)...(1+a_n)\) given that \(a_1a_2...a_n=1\) and \(a_i&gt;0\) for \(i=1, 2, ..., n\) is \(2^n\), achieved when all \(a_i=1\).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

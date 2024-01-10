@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_45</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> No</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_45']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,36 +81,26 @@ For a, b, c&gt;0, are there possible values of them to make (a^3*b+b^3*c+c^3*a)/
 
 You may find the following information useful:
 
-1. Consider two sequences of real numbers (a/sqrt(c), b/sqrt(a), c/sqrt(b)) and (sqrt(c), sqrt(a), sqrt(b)).
-2. For real numbers a_1, ..., a_n and b_1, ..., b_n, (a_1*b_1+...+a_n*b_n)^2≤(a_1^2+...+a_n^2)(b_1^2+...+b_n^2).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c &gt; 0$. We want to show that $(a^3b + b^3c + c^3a)/(a+b+c) &lt; abc$.
+1. Consider two sequences of real numbers (a/sqrt(c), b/sqrt(a), c/sqrt(b)) and (sqrt(c), sqrt(a), sqrt(b)).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there are possible values of $a$, $b$, and $c$ that make $(a^3b+b^3c+c^3a)/(a+b+c)$ less than $abc$.
 
-We can write
-\begin{align*}
-(a^3b + b^3c + c^3a)/(a+b+c) &amp;= \frac{(a^2b + ab^2 + a^2c + ac^2 + bc^2 + b^2c)}{a+b+c} \\
-&amp;= \frac{(a^2b + ab^2 + a^2c + ac^2 + bc^2 + b^2c) + (-2abc)}{a+b+c} \\
-&amp;= \frac{(a^2 + b^2 + c^2)(ab + ac + bc) - 2abc}{a+b+c}.
-\end{align*}
-By Cauchy-Schwarz inequality, we have
-\begin{align*}
-(a^2 + b^2 + c^2)(ab + ac + bc) &amp;\ge (a^2 + b^2 + c^2)^{1/2}(ab + ac + bc)^{1/2} \\
-&amp;= \sqrt{(a^2 + b^2)(ab + ac + bc)} \\
-&amp;= \sqrt{(a^2b + ab^2 + a^2c + ac^2 + bc^2 + b^2c)} \\
-&amp;= \sqrt{(a^3b + b^3c + c^3a)}.
-\end{align*}
-Therefore, we have
-\begin{align*}
-(a^3b + b^3c + c^3a)/(a+b+c) &amp;\le \frac{\sqrt{(a^3b + b^3c + c^3a)} - 2abc}{a+b+c} \\
-&amp;= \frac{\sqrt{(a^3b + b^3c + c^3a)^2} - 2abc(a+b+c)}{(a+b+c)^2} \\
-&amp;= \frac{(a^3b + b^3c + c^3a)^2 - 2abc(a^2 + ab + ac + b^2 + bc + ca)}{(a+b+c)^2} \\
-&amp;= \frac{a^6b^2 + a^4b^3 + a^4c^2 + a^2b^3c + a^2c^3b + a^2c^3 + b^6c + b^4c^2 + b^3c^3 + c^6a + c^4a^2 + c^3a^3}{(a+b+c)^2} \\
-&amp;= \frac{a^6b^2 + a^4b^3 + a^4c^2 + a^2b^3c + a^2c^3b + a^2c^3 + b^6c + b^4c^2 + b^3c^3 + c^6a + c^4a^2 + c^3a^3}{(a+b+c)^2} \\
-&amp;= \frac{a^6b^2 + a^4b^3 + a^4c^2 + a^2b^3c + a^2c^3b + a^2c^3 + b^6c + b^4c^2 + b^3c^3 + c^6a + c^4a^2 + c^3a^3}{(a+b+c)^2} \\
-&amp;= \frac{(a^3b)^2 + (a^2c)^2 + (b^3c)^2 + (a^2b)^2 + (b^2c)^2 + (c^2a)^2}{(a+b+c)^2} \\
-&amp;= \frac{(a^3b + b^3c)^2}{(a+b+c)^2} + \frac{(a^2c)^2 + (b^2c)^2 + (c^2a)^2}{(a+b+c)^2} \\
-&amp;= \frac{(a^3b + b^3c + c^3a)^2}{(a+b+c)^2} + \frac{(a^2c + bc</code></pre>
+Consider the two sequences of real numbers $(a/\sqrt{c}, b/\sqrt{a}, c/\sqrt{b})$ and $(\sqrt{c}, \sqrt{a}, \sqrt{b})$. The first sequence is a monotonically decreasing sequence, while the second sequence is a monotonically increasing sequence. Therefore, there must exist some point in time where the two sequences intersect. At this point, the value of $(a^3b+b^3c+c^3a)/(a+b+c)$ will be less than $abc$.
+
+To prove this mathematically, we can use the following inequality:
+
+$$(a^3b+b^3c+c^3a)/(a+b+c) \leq \frac{(a/\sqrt{c})^3(b/\sqrt{a})^3 + (b/\sqrt{a})^3(c/\sqrt{b})^3 + (c/\sqrt{b})^3(a/\sqrt{c})^3}{(a/\sqrt{c}+b/\sqrt{a}+c/\sqrt{b})^3}$$
+
+We can simplify this inequality as follows:
+
+$$(a^3b+b^3c+c^3a)/(a+b+c) \leq \frac{a^3b^3c^3}{(a+b+c)^3}$$
+
+Since $a$, $b$, and $c$ are all positive numbers, we know that $a^3b^3c^3$ is also a positive number. Therefore, we can divide both sides of the inequality by $a^3b^3c^3$ to get the following inequality:
+
+$$\frac{1}{(a+b+c)^3} \leq \frac{1}{a^3b^3c^3}$$
+
+This inequality is true for all positive values of $a$, $b$, and $c$. Therefore, there must exist some point in time where the two sequences intersect. At this point, the value of $(a^3b+b^3c+c^3a)/(a+b+c)$ will be less than $abc$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there are possible values of $a, b, c &gt; 0$ to make $(a^3*b+b^3*c+c^3*a)/(a+b+c)$ less than abc. For example, if $a = b = c = 1$, then $(a^3*b+b^3*c+c^3*a)/(a+b+c) = 1 &lt; 3$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there are possible values of $a$, $b$, and $c$ that make $(a^3b+b^3c+c^3a)/(a+b+c)$ less than $abc$. This is because the first sequence $(a/\sqrt{c}, b/\sqrt{a}, c/\sqrt{b})$ is a monotonically decreasing sequence, while the second sequence $(\sqrt{c}, \sqrt{a}, \sqrt{b})$ is a monotonically increasing sequence. Therefore, there must exist some point in time where the two sequences intersect. At this point, the value of $(a^3b+b^3c+c^3a)/(a+b+c)$ will be less than $abc$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

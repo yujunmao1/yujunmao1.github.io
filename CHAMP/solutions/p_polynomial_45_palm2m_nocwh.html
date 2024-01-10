@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_45</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> No</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_45']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -84,29 +84,24 @@ You may find the following information useful:
 1. Let f(x)=ax^3+bx^2+cx+d with its three roots being x_1, x_2, x_3.
 2. Let y_i=a*x_i for i=1, 2, 3 and find a polynomial which has y_i as the roots by studying the polynomial a^2*f(x).
 3. Study the parity of y_i from the constant term a^2*d.
-4. Let x_1, x_2, x_3 be the root of the polynomial x^3+px^2+qx+r. Then x_1+x_2+x_3=-p, x_1*x_2+x_2*x_3+x_1*x_3=q and x_1*x_2*x_3=-r. For the polynomial sx^3+px^2+qx+r, we have x_1+x_2+x_3=-p/s, x_1*x_2+x_2*x_3+x_1*x_3=q/s and x_1*x_2*x_3=-r/s.
-5. Study the parity of b and ac from that of y_i.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x) = ax^3 + bx^2 + cx + d$ be a polynomial with integer coefficients $a, b, c, d$ such that $ad$ is odd and $bc$ is even. We will show that it is possible to choose values of $a, b, c, d$ such that all three roots of $f(x)$ are integers.
+4. Study the parity of b and ac from that of y_i.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x) = ax^3 + bx^2 + cx + d$ be a polynomial with integer coefficients $a, b, c, d$ such that $ad$ is odd and $bc$ is even. We will show that it is possible to choose $a, b, c, d$ such that all three roots of $f(x)$ are integers.
 
-To do this, we will first show that the polynomial $g(x) = a^2 f(x)$ has integer coefficients. This is because $a^2$ is an integer, and $f(x)$ has integer coefficients, so $a^2 f(x)$ also has integer coefficients.
+To do this, we will first show that if $y_1, y_2, y_3$ are the roots of $f(x)$, then $a^2y_1y_2y_3$ is odd. This is because $f(x)$ can be written as
 
-Now, let $y_1, y_2, y_3$ be the roots of $g(x)$. Then $y_1, y_2, y_3$ are also the roots of $f(x)$.
+$$f(x) = (x - y_1)(x - y_2)(x - y_3)$$
 
-We know that $g(x)$ has integer coefficients, so $y_1, y_2, y_3$ are all integers.
+and so
 
-Therefore, it is possible to choose values of $a, b, c, d$ such that all three roots of $f(x)$ are integers.
+$$a^2f(x) = (ax - ay_1)(ax - ay_2)(ax - ay_3) = a^2x^3 - (a^2y_1 + a^2y_2 + a^2y_3)x^2 + (a^2y_1y_2 + a^2y_1y_3 + a^2y_2y_3)x - a^2y_1y_2y_3.$$
 
-To see this, we can consider the following example. Let $a = 2, b = 3, c = 4, d = 1$. Then $f(x) = 2x^3 + 3x^2 + 4x + 1$. The roots of $f(x)$ are $x_1 = -1, x_2 = -\frac{1}{2}, x_3 = \frac{1}{2}$.
+Since $a^2$ is odd, $a^2y_1y_2y_3$ must also be odd.
 
-We can see that $a^2 = 4$, $b = 3$, $c = 4$, $d = 1$, $ad = 2$, $bc = 12$, and $a^2 d = 4$. Therefore, $ad$ is odd and $bc$ is even.
+Now, let $g(x) = a^2x^3 + bx^2 + cx + d$. Then $g(x)$ has the same roots as $f(x)$, and so $a^2y_1y_2y_3$ is a root of $g(x)$. Since $a^2y_1y_2y_3$ is odd, $g(x)$ must have at least one root that is odd.
 
-We can also see that the roots of $g(x) = a^2 f(x) = 16x^3 + 24x^2 + 32x + 4$ are $y_1 = -2, y_2 = -3, y_3 = 2$.
-
-We can see that $y_1, y_2, y_3$ are all integers.
-
-Therefore, it is possible to choose values of $a, b, c, d$ such that all three roots of $f(x)$ are integers.</code></pre>
+But $g(x)$ has integer coefficients, so if it has an odd root, then all three of its roots must be integers. Therefore, it is possible to choose $a, b, c, d$ such that all three roots of $f(x)$ are integers.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, it is possible to choose values of $a, b, c, d$ such that all three roots of the polynomial $ax^3+bx^2+cx+d$ are integers, even if $ad$ is odd and $bc$ is even.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, it is possible to choose $a, b, c, d$ such that all three roots of $ax^3 + bx^2 + cx + d$ are integers, where $ad$ is odd and $bc$ is even.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

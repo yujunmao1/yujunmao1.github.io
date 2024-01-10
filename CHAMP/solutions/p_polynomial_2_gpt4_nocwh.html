@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_2</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> a(1±sqrt(2)), a(1±sqrt(5))/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_2']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,8 +82,7 @@ Solve the equation x^4+a^4-3a*x^3+3a^3*x=0 for a≠0 as an expression of a.
 You may find the following information useful:
 
 1. Divide the equation by a^2*x^2.
-2. Write the equation as a quadratic equation of u=x/a-a/x.
-3. (x±y)^2=x^2±2xy+y^2.</code></pre>
+2. Write the equation as a quadratic equation of u=x/a-a/x.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s follow the steps you&#x27;ve provided.
 
 1. Divide the equation by a^2*x^2:
@@ -92,29 +91,38 @@ We get (x^2/a^2) + 1 - 3x/a + 3a/x = 0.
 
 2. Write the equation as a quadratic equation of u=x/a-a/x:
 
-Let&#x27;s denote u = x/a - a/x. Then, x/a = u + a/x and x^2/a^2 = u^2 + 2. Substituting these into the equation from step 1, we get:
+Let&#x27;s set u = x/a - a/x. Then, we can rewrite the equation as:
 
-u^2 + 2 - 3(u + a/x) + 3(u + a/x) = 0.
+u^2 - 3u + 1 = 0.
 
-Simplifying, we get:
+This is a quadratic equation in the variable u, which we can solve using the quadratic formula:
 
-u^2 - 3u + 2 = 0.
+u = [3 ± sqrt((3)^2 - 4*1*1)] / (2*1)
+u = [3 ± sqrt(9 - 4)] / 2
+u = [3 ± sqrt(5)] / 2
 
-3. Solve the quadratic equation:
+So, the solutions for u are u1 = (3 + sqrt(5)) / 2 and u2 = (3 - sqrt(5)) / 2.
 
-The quadratic equation u^2 - 3u + 2 = 0 can be factored into (u - 1)(u - 2) = 0. Therefore, the solutions for u are u1 = 1 and u2 = 2.
+Now, we need to express x in terms of a and u. From the definition of u, we have:
 
-Substituting u = x/a - a/x back in, we get:
+u = x/a - a/x
+x^2 - u*a*x - a^2 = 0
 
-x/a - a/x = 1 and x/a - a/x = 2.
+This is a quadratic equation in x, which we can solve using the quadratic formula:
 
-Solving these for x, we get:
+x = [u*a ± sqrt((u*a)^2 - 4*(-a^2))]/2
+x = [u*a ± sqrt(u^2*a^2 + 4a^2)]/2
+x = [u*a ± a*sqrt(u^2 + 4)]/2
+x = a/2 * [u ± sqrt(u^2 + 4)]
 
-x1 = a/(2 - a) and x2 = a/(1 - a).
+So, the solutions for x in terms of a and u are:
 
-So, the solutions for the original equation are x1 = a/(2 - a) and x2 = a/(1 - a).</code></pre>
+x1 = a/2 * [(3 + sqrt(5)) / 2 + sqrt(((3 + sqrt(5)) / 2)^2 + 4)]
+x2 = a/2 * [(3 - sqrt(5)) / 2 + sqrt(((3 - sqrt(5)) / 2)^2 + 4)]
+
+These are the solutions for x as expressions of a.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The solutions for the equation x^4+a^4-3a*x^3+3a^3*x=0 are x1 = a/(2 - a) and x2 = a/(1 - a).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The solutions for x in terms of a are x1 = a/2 * [(3 + sqrt(5)) / 2 + sqrt(((3 + sqrt(5)) / 2)^2 + 4)] and x2 = a/2 * [(3 - sqrt(5)) / 2 + sqrt(((3 - sqrt(5)) / 2)^2 + 4)].</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_50</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_50']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,46 +81,50 @@ Let a, b, c&gt;0. What is the minimum value of a^3+b^3+c^3-(a^2*b+b^2*c+c^2*a)?
 
 You may find the following information useful:
 
-1. Consider the two sequences (a^2, b^2, c^2) and (a, b, c).
-2. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the problem, we can use the rearrangement inequality, which states that for two sequences of real numbers, the sum of the products of corresponding terms is maximized when the sequences are similarly sorted and minimized when they are oppositely sorted.
+1. Consider the two sequences (a^2, b^2, c^2) and (a, b, c).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the rearrangement inequality, which states that for any two sequences of real numbers, if both sequences are either both non-increasing or both non-decreasing, then the sum of the products of the corresponding terms is maximized if the sequences are similarly sorted and minimized if the sequences are oppositely sorted.
 
-Given the sequences (a^2, b^2, c^2) and (a, b, c), we can apply the rearrangement inequality to the sum a^2*b + b^2*c + c^2*a. To minimize this sum, we should pair the largest term of one sequence with the smallest term of the other sequence and so on. Since a, b, c &gt; 0, we can assume without loss of generality that a ≤ b ≤ c. Then the terms a^2, b^2, c^2 are also in non-decreasing order.
+Given the sequences (a^2, b^2, c^2) and (a, b, c), we can assume without loss of generality that a ≥ b ≥ c. This means that the sequences are both non-increasing. According to the rearrangement inequality, the sum a^2 * a + b^2 * b + c^2 * c is the maximum possible sum of products, and the sum a^2 * c + b^2 * a + c^2 * b is the minimum possible sum of products.
 
-The minimum value of the sum a^2*b + b^2*c + c^2*a occurs when we pair the terms in opposite order:
+However, we are interested in the minimum value of a different expression: a^3 + b^3 + c^3 - (a^2 * b + b^2 * c + c^2 * a). To find this minimum, we can compare the terms of the sequences (a^3, b^3, c^3) and (a^2 * b, b^2 * c, c^2 * a).
 
-a^2*c + b^2*a + c^2*b
+Let&#x27;s first expand the expression we want to minimize:
 
-Now, let&#x27;s consider the expression we want to minimize:
+a^3 + b^3 + c^3 - (a^2 * b + b^2 * c + c^2 * a)
 
-a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a)
+Now, we can apply the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality) to each of the terms a^3, b^3, and c^3. The AM-GM inequality states that for non-negative real numbers x1, x2, ..., xn, the following holds:
 
-Using the rearrangement inequality, we replace a^2*b + b^2*c + c^2*a with its minimum value:
+AM = (x1 + x2 + ... + xn) / n ≥ (x1 * x2 * ... * xn)^(1/n) = GM
 
-a^3 + b^3 + c^3 - (a^2*c + b^2*a + c^2*b)
+Equality holds if and only if x1 = x2 = ... = xn.
 
-Now, let&#x27;s expand the expression:
+Applying AM-GM to a^3, we get:
 
-= a^3 + b^3 + c^3 - a^2*c - b^2*a - c^2*b
-= a^3 - b^2*a + b^3 - c^2*b + c^3 - a^2*c
-= a(a^2 - b^2) + b(b^2 - c^2) + c(c^2 - a^2)
-= a(a+b)(a-b) + b(b+c)(b-c) + c(c+a)(c-a)
+a^3 + a^3 + b^3 ≥ 3 * (a^3 * a^3 * b^3)^(1/3) = 3a^2 * b
 
-Since a ≤ b ≤ c, we have (a-b) ≤ 0, (b-c) ≤ 0, and (c-a) ≥ 0. Therefore, each term in the sum is non-positive:
+Similarly, for b^3 and c^3:
 
-a(a+b)(a-b) ≤ 0
-b(b+c)(b-c) ≤ 0
-c(c+a)(c-a) ≤ 0
+b^3 + b^3 + c^3 ≥ 3 * (b^3 * b^3 * c^3)^(1/3) = 3b^2 * c
 
-Adding these non-positive terms together, we get a sum that is less than or equal to zero. However, since a, b, c &gt; 0, the only way for the sum to be zero is if a = b = c. In this case, the expression becomes:
+And for c^3 and a^3:
 
-a^3 + a^3 + a^3 - (a^2*a + a^2*a + a^2*a)
-= 3a^3 - 3a^3
-= 0
+c^3 + c^3 + a^3 ≥ 3 * (c^3 * c^3 * a^3)^(1/3) = 3c^2 * a
 
-Therefore, the minimum value of the expression a^3 + b^3 + c^3 - (a^2*b + b^2*c + c^2*a) is 0, and it occurs when a = b = c.</code></pre>
+Adding these inequalities together, we get:
+
+2(a^3 + b^3 + c^3) + (a^3 + b^3 + c^3) ≥ 3(a^2 * b + b^2 * c + c^2 * a)
+
+3(a^3 + b^3 + c^3) ≥ 3(a^2 * b + b^2 * c + c^2 * a)
+
+Dividing both sides by 3, we have:
+
+a^3 + b^3 + c^3 ≥ a^2 * b + b^2 * c + c^2 * a
+
+Therefore, the minimum value of the expression a^3 + b^3 + c^3 - (a^2 * b + b^2 * c + c^2 * a) is 0, which occurs when a = b = c. This is the case where the AM-GM inequality reaches equality.
+
+Final answer: The minimum value of the expression is 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression \( a^3 + b^3 + c^3 - (a^2b + b^2c + c^2a) \) for \( a, b, c &gt; 0 \) is 0, and it occurs when \( a = b = c \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression a^3 + b^3 + c^3 - (a^2 * b + b^2 * c + c^2 * a) is 0, achieved when a = b = c.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

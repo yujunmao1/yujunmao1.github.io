@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_26</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_26']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,30 +77,46 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For real number a, b, what is the largest value of |a+b|/(1+|a+b|)-|a|/(1+|a|)-|b|/(1+|b|)?
+For real number a, b, what is the largest value of |a+b|/(1+|a+b|)-|a|/(1+|a|)-|b|/(1+|b|)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can write the expression as
 
-You may find the following information useful:
+$$\frac{|a+b|}{1+|a+b|}-\frac{|a|}{1+|a|}-\frac{|b|}{1+|b|}$$
 
-1. For real number x, y, |x+y|≤|x|+|y|.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can write the given expression as
+We can factor out a $1/2$ from the numerator and denominator of the first term, and a $1/2$ from the numerator and denominator of the second term, to get
 
-$$\frac{|a+b|}{1+|a+b|}-\frac{|a|}{1+|a|}-\frac{|b|}{1+|b|}.$$
+$$\frac{1}{2}\frac{2|a+b|}{1+|a+b|}-\frac{1}{2}\frac{2|a|}{1+|a|}-\frac{1}{2}\frac{2|b|}{1+|b|}$$
 
-By the triangle inequality, we have
+We can then add the three terms together to get
 
-$$|a+b|\leq|a|+|b|.$$
+$$\frac{1}{2}\left(\frac{2|a+b|}{1+|a+b|}+\frac{2|a|}{1+|a|}+\frac{2|b|}{1+|b|}\right)$$
 
-Dividing both sides by $1+|a+b|$, we get
+We can then simplify the expression by multiplying the numerator and denominator by $1+|a+b|+|a|+|b|$, to get
 
-$$\frac{|a+b|}{1+|a+b|}\leq\frac{|a|}{1+|a|}+\frac{|b|}{1+|b|}.$$
+$$\frac{2|a+b|(1+|a+b|+|a|+|b|)}{2(1+|a+b|)(1+|a|)(1+|b|)}$$
 
-Subtracting $\frac{|a|}{1+|a|}+\frac{|b|}{1+|b|}$ from both sides, we get
+We can then factor out a $2$ from the numerator and denominator, to get
 
-$$\frac{|a+b|}{1+|a+b|}-\frac{|a|}{1+|a|}-\frac{|b|}{1+|b|}\leq0.$$
+$$\frac{|a+b|(1+|a+b|+|a|+|b|)}{(1+|a+b|)(1+|a|)(1+|b|)}$$
 
-Equality occurs when $|a+b|=|a|+|b|$, or when $a=b$. Therefore, the largest value of the given expression is $0$.</code></pre>
+We can then simplify the expression by multiplying the numerator and denominator by $(1-|a+b|)$, to get
+
+$$\frac{|a+b|(1+|a+b|+|a|+|b|)(1-|a+b|)}{(1+|a+b|)(1+|a|)(1+|b|)(1-|a+b|)}$$
+
+We can then simplify the expression by cancelling out the $1+|a+b|$ terms in the numerator and denominator, to get
+
+$$\frac{|a+b|(1+|a|+|b|)(1-|a+b|)}{(1+|a|)(1+|b|)(1-|a+b|)}$$
+
+We can then simplify the expression by cancelling out the $1-|a+b|$ terms in the numerator and denominator, to get
+
+$$\frac{|a+b|(1+|a|+|b|)}{(1+|a|)(1+|b|)}$$
+
+We can then simplify the expression by multiplying the numerator and denominator by $1+|a|+|b|$, to get
+
+$$|a+b|$$
+
+Therefore, the largest value of the expression is $|a+b|$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of $\frac{|a+b|}{1+|a+b|}-\frac{|a|}{1+|a|}-\frac{|b|}{1+|b|}$ is $0$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of $\frac{|a+b|}{1+|a+b|}-\frac{|a|}{1+|a|}-\frac{|b|}{1+|b|}$ is $|a+b|$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

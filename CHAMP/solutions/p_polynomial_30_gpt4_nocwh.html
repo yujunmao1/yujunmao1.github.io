@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_30</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_30']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,34 +82,28 @@ What are possible values of n mod k if x^n-y^n is divisible by x^k-y^k for integ
 You may find the following information useful:
 
 1. Let n=kq+r.
-2. Add and subtract y^(kq)*x^r to x^n-y^n.
-3. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
-4. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given that x^n - y^n is divisible by x^k - y^k, we can write this as:
+2. Add and subtract y^(kq)*x^r to x^n-y^n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by using the given information and applying it to the problem.
 
-x^n - y^n = (x^k - y^k) * m, where m is some integer.
+1. Let n=kq+r. This is a standard way of expressing n in terms of k, where q is the quotient and r is the remainder when n is divided by k. This is equivalent to saying n mod k = r.
 
-We can rewrite n as kq + r, where q and r are integers and 0 &lt;= r &lt; k. Substituting this into the equation, we get:
+2. Add and subtract y^(kq)*x^r to x^n-y^n. This gives us:
 
-x^(kq + r) - y^(kq + r) = (x^k - y^k) * m.
+x^n - y^n + y^(kq)*x^r - y^(kq)*x^r
 
-We can then add and subtract y^(kq)*x^r to the left side of the equation:
+This can be rewritten as:
 
-x^(kq)*x^r - y^(kq)*x^r + y^(kq)*x^r - y^(kq + r) = (x^k - y^k) * m.
+(x^r*y^(kq) + y^n) - (x^r*y^(kq) + y^n)
 
 This simplifies to:
 
-x^r*(x^(kq) - y^(kq)) + x^r*y^(kq) - y^(kq + r) = (x^k - y^k) * m.
+x^n - y^n = 0
 
-We know that x - y divides x^n - y^n for integer n, so x - y divides x^(kq) - y^(kq). Therefore, x^r*(x^(kq) - y^(kq)) is divisible by x^k - y^k.
+This means that x^n - y^n is divisible by x^k - y^k for any integer values of n and k, as long as n mod k = r.
 
-We also know that if d | a and d | b, then d | ax + by, d | a + b and d | a - b. Therefore, x^r*y^(kq) - y^(kq + r) is also divisible by x^k - y^k.
-
-Since both terms on the left side of the equation are divisible by x^k - y^k, the entire left side of the equation is divisible by x^k - y^k. Therefore, the equation holds true for any integer values of n and k.
-
-So, the possible values of n mod k are all integers in the range 0 &lt;= r &lt; k.</code></pre>
+Therefore, the possible values of n mod k are all integers r such that 0 &lt;= r &lt; k.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of n mod k are all integers in the range 0 &lt;= r &lt; k, where r is the remainder when n is divided by k.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of n mod k are all integers r such that 0 &lt;= r &lt; k, given that x^n - y^n is divisible by x^k - y^k for any integer values of n and k.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

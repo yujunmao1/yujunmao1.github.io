@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_15</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_15']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,36 +81,32 @@ Find the minimum value of a^4+b^4+c^4-a^2*bc-b^2*ac-c^2*ab for positive numbers 
 
 You may find the following information useful:
 
-1. Consider a^4=(a^2)*a*a, b^4=(b^2)*b*b, c^4=(c^2)*c*c.
-2. For real numbers a_(1,1)≤...≤a_(1,n), a_(2,1)≤...≤a_(2,n), ..., a_(m,1)≤...≤a_(m,n), we have a_(1,1)*a_(2,1)*...*a_(m,1)+...+a_(1,n)*a_(2,n)*...*a_(m,n)≥a_(1,1)*b_(2,1)*...*b_(m,1)+...+a_(1,n)*b_(2,n)*...*b_(m,n), where (b_(i,1), ..., b_(i, n)) is a permutation of (a_(i,1), ..., a_(i, n)) for i=2, 3, ..., m. More generally, the sum achieves the maximum value when all the sequences (a_(i,1),..., a_(i,n)) are sorted in the same way.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the minimum value of the expression \( a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \) for positive numbers \( a, b, c \), we can use the rearrangement inequality as hinted by the information provided.
+1. Consider a^4=(a^2)*a*a, b^4=(b^2)*b*b, c^4=(c^2)*c*c.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the minimum value of the expression \( f(a, b, c) = a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \) for positive numbers \( a, b, c \), we can use the AM-GM inequality, which states that for non-negative real numbers \( x_1, x_2, \ldots, x_n \), the following inequality holds:
 
-The rearrangement inequality states that if we have sequences \( a_{1,1} \leq \ldots \leq a_{1,n} \), \( a_{2,1} \leq \ldots \leq a_{2,n} \), ..., \( a_{m,1} \leq \ldots \leq a_{m,n} \), then the sum \( a_{1,1}a_{2,1}\ldots a_{m,1} + \ldots + a_{1,n}a_{2,n}\ldots a_{m,n} \) is maximized when the sequences are similarly sorted.
+\[ \frac{x_1 + x_2 + \ldots + x_n}{n} \geq \sqrt[n]{x_1 \cdot x_2 \cdot \ldots \cdot x_n} \]
 
-In our case, we can consider the sequences \( a^2, b^2, c^2 \) and \( a^2, b^2, c^2 \) (which are obviously sorted in the same way since they are the same sequence) and apply the rearrangement inequality to the products \( a^2bc, b^2ac, c^2ab \).
+Equality occurs if and only if \( x_1 = x_2 = \ldots = x_n \).
 
-By the rearrangement inequality, we have:
-\[ a^2 \cdot a^2 + b^2 \cdot b^2 + c^2 \cdot c^2 \geq a^2 \cdot b^2 + b^2 \cdot c^2 + c^2 \cdot a^2 \]
+Let&#x27;s apply the AM-GM inequality to the terms \( a^4, b^4, c^4 \) and the products \( a^2bc, b^2ac, c^2ab \):
 
-This can be rewritten as:
-\[ a^4 + b^4 + c^4 \geq a^2b^2 + b^2c^2 + c^2a^2 \]
+\[ \frac{a^4 + b^4 + c^4}{3} \geq \sqrt[3]{a^4 \cdot b^4 \cdot c^4} = (abc)^{\frac{4}{3}} \]
 
-Now, let&#x27;s subtract \( a^2bc + b^2ac + c^2ab \) from both sides:
-\[ a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \geq a^2b^2 + b^2c^2 + c^2a^2 - a^2bc - b^2ac - c^2ab \]
+\[ \frac{a^2bc + b^2ac + c^2ab}{3} \geq \sqrt[3]{a^2bc \cdot b^2ac \cdot c^2ab} = (abc)^{\frac{4}{3}} \]
 
-Notice that on the right side, we can factor by grouping:
-\[ a^2b^2 - a^2bc + b^2c^2 - b^2ac + c^2a^2 - c^2ab = a^2(b^2 - bc) + b^2(c^2 - ac) + c^2(a^2 - ab) \]
+Now, let&#x27;s subtract the second inequality from the first:
 
-This simplifies to:
-\[ a^2b(b - c) + b^2c(c - a) + c^2a(a - b) \]
+\[ \frac{a^4 + b^4 + c^4}{3} - \frac{a^2bc + b^2ac + c^2ab}{3} \geq (abc)^{\frac{4}{3}} - (abc)^{\frac{4}{3}} = 0 \]
 
-Since \( a, b, c \) are positive numbers, the expression \( a^2b(b - c) + b^2c(c - a) + c^2a(a - b) \) is zero when \( a = b = c \). Otherwise, if \( a, b, c \) are not all equal, the expression will be negative because at least one of the terms \( (b - c), (c - a), (a - b) \) will be negative.
+Multiplying through by 3, we get:
 
-Therefore, the minimum value of the original expression \( a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \) is achieved when \( a = b = c \), and in this case, the expression equals zero.
+\[ a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \geq 0 \]
 
-Hence, the minimum value of the expression for positive numbers \( a, b, c \) is \( \boxed{0} \).</code></pre>
+Therefore, the minimum value of the expression \( f(a, b, c) \) for positive numbers \( a, b, c \) is 0.
+
+Equality occurs when \( a^4 = b^4 = c^4 = a^2bc = b^2ac = c^2ab \), which implies \( a = b = c \). Thus, the minimum value of the expression is achieved when \( a, b, c \) are all equal.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression \( a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \) for positive numbers \( a, b, c \) is \( \boxed{0} \), achieved when \( a = b = c \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression \( a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \) for positive numbers \( a, b, c \) is 0, and it occurs when \( a = b = c \).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_15</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_15']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,55 +83,56 @@ You may find the following information useful:
 
 1. How must the middle column be tiled?
 2. Let a_n be the number of ways to tile a 2 x n rectangle without consideration of the symmetry.
-3. Find the expression for a_(n+1) in terms of a_n and a_(n-1).
-4. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s consider the possible ways to tile the middle column of the rectangle.
+3. Find the expression for a_(n+1) in terms of a_n and a_(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s consider the possible ways to tile the middle column.
 
-1. If the middle column is tiled with a single 2 x 1 tile, then the rest of the rectangle can be tiled in a way that is symmetric when flipped around the middle column. In this case, we can ignore the middle column and focus on tiling the remaining 2 x 20 rectangle. The number of ways to tile a 2 x 20 rectangle is denoted by a_20.
+1. If the middle column is tiled with a single 2 x 1 tile, then the remaining 2 x 20 rectangle can be tiled in a_(20) ways.
 
-2. If the middle column is tiled with two 1 x 2 tiles, then the rest of the rectangle can also be tiled in a way that is symmetric when flipped around the middle column. In this case, we can ignore the middle column and focus on tiling the remaining 2 x 19 rectangle. The number of ways to tile a 2 x 19 rectangle is denoted by a_19.
+2. If the middle column is tiled with two 1 x 2 tiles, then the remaining 2 x 20 rectangle can be tiled in a_(19) ways.
 
-Now, let&#x27;s find the expression for a_(n+1) in terms of a_n and a_(n-1).
+Now, let&#x27;s consider the tiling of the remaining 2 x 20 rectangle.
 
-To tile a 2 x (n+1) rectangle, we have two options for the middle column:
+1. If the leftmost column of the remaining rectangle is tiled with a single 2 x 1 tile, then the remaining 2 x 19 rectangle can be tiled in a_(19) ways.
 
-1. If the middle column is tiled with a single 2 x 1 tile, then the remaining rectangle to be tiled is a 2 x n rectangle. The number of ways to tile this remaining rectangle is a_n.
+2. If the leftmost column of the remaining rectangle is tiled with two 1 x 2 tiles, then the remaining 2 x 19 rectangle can be tiled in a_(18) ways.
 
-2. If the middle column is tiled with two 1 x 2 tiles, then the remaining rectangle to be tiled is a 2 x (n-1) rectangle. The number of ways to tile this remaining rectangle is a_(n-1).
+Therefore, we can conclude that a_(20) = a_(19) + a_(19) + a_(18).
 
-Therefore, we have the expression:
+Using the same logic, we can find the expression for a_(n+1) in terms of a_n and a_(n-1):
 
-a_(n+1) = a_n + a_(n-1)
+a_(n+1) = a_n + a_n + a_(n-1)
 
-Now, let&#x27;s use this expression to find the number of ways to tile a 2 x 21 rectangle.
+Now, let&#x27;s use this information to find the number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles.
 
-We know that a_1 = 1 (there is only one way to tile a 2 x 1 rectangle) and a_2 = 2 (there are two ways to tile a 2 x 2 rectangle).
+We start with the base cases:
 
-Using the expression a_(n+1) = a_n + a_(n-1), we can calculate the values of a_3, a_4, ..., a_21.
+a_1 = 1 (only one way to tile a 2 x 1 rectangle)
+a_2 = 2 (two ways to tile a 2 x 2 rectangle)
 
-a_3 = a_2 + a_1 = 2 + 1 = 3
-a_4 = a_3 + a_2 = 3 + 2 = 5
-a_5 = a_4 + a_3 = 5 + 3 = 8
-a_6 = a_5 + a_4 = 8 + 5 = 13
-a_7 = a_6 + a_5 = 13 + 8 = 21
-a_8 = a_7 + a_6 = 21 + 13 = 34
-a_9 = a_8 + a_7 = 34 + 21 = 55
-a_10 = a_9 + a_8 = 55 + 34 = 89
-a_11 = a_10 + a_9 = 89 + 55 = 144
-a_12 = a_11 + a_10 = 144 + 89 = 233
-a_13 = a_12 + a_11 = 233 + 144 = 377
-a_14 = a_13 + a_12 = 377 + 233 = 610
-a_15 = a_14 + a_13 = 610 + 377 = 987
-a_16 = a_15 + a_14 = 987 + 610 = 1597
-a_17 = a_16 + a_15 = 1597 + 987 = 2584
-a_18 = a_17 + a_16 = 2584 + 1597 = 4181
-a_19 = a_18 + a_17 = 4181 + 2584 = 6765
-a_20 = a_19 + a_18 = 6765 + 4181 = 10946
-a_21 = a_20 + a_19 = 10946 + 6765 = 17711
+Using the recursive formula, we can calculate a_3, a_4, a_5, and so on, until we reach a_21.
 
-Therefore, the number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is the same when the rectangle is flipped around the middle column is 17,711.</code></pre>
+a_3 = a_2 + a_2 + a_1 = 2 + 2 + 1 = 5
+a_4 = a_3 + a_3 + a_2 = 5 + 5 + 2 = 12
+a_5 = a_4 + a_4 + a_3 = 12 + 12 + 5 = 29
+a_6 = a_5 + a_5 + a_4 = 29 + 29 + 12 = 70
+a_7 = a_6 + a_6 + a_5 = 70 + 70 + 29 = 169
+a_8 = a_7 + a_7 + a_6 = 169 + 169 + 70 = 408
+a_9 = a_8 + a_8 + a_7 = 408 + 408 + 169 = 985
+a_10 = a_9 + a_9 + a_8 = 985 + 985 + 408 = 2378
+a_11 = a_10 + a_10 + a_9 = 2378 + 2378 + 985 = 5741
+a_12 = a_11 + a_11 + a_10 = 5741 + 5741 + 2378 = 13860
+a_13 = a_12 + a_12 + a_11 = 13860 + 13860 + 5741 = 33461
+a_14 = a_13 + a_13 + a_12 = 33461 + 33461 + 13860 = 80782
+a_15 = a_14 + a_14 + a_13 = 80782 + 80782 + 33461 = 195025
+a_16 = a_15 + a_15 + a_14 = 195025 + 195025 + 80782 = 470832
+a_17 = a_16 + a_16 + a_15 = 470832 + 470832 + 195025 = 1136689
+a_18 = a_17 + a_17 + a_16 = 1136689 + 1136689 + 470832 = 2744210
+a_19 = a_18 + a_18 + a_17 = 2744210 + 2744210 + 1136689 = 6625109
+a_20 = a_19 + a_19 + a_18 = 6625109 + 6625109 + 2744210 = 15994428
+
+Therefore, the number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles, such that the tiling is the same when the rectangle is flipped around the middle column, is 15994428.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is the same when the rectangle is flipped around the middle column is 17,711.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to fill a 2 x 21 rectangle with 2 x 1 tiles, such that the tiling is the same when the rectangle is flipped around the middle column, is 15,994,428.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_40</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 125</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_40']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,22 +83,24 @@ You may find the following information useful:
 
 1. Study different ways to construct a permutation of n numbers from permutations of n-1 and n-2 numbers, with the more restrictive condition of |p(i)−i|≤1 (i.e., no wrap-around).
 2. Check if any cyclic shifts are allowed under the definition.
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
-4. Find the number of no-wrap-around permutations of n numbers in terms of such permutations of n-1 and n-2 numbers.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to understand the condition given for the permutations. The condition min(n-|p(i)−i|, |p(i)−i|)≤1 means that for each element in the permutation, the absolute difference between its value and its position is at most 1, considering the wrap-around at the end of the set.
+3. Find the number of no-wrap-around permutations of n numbers in terms of such permutations of n-1 and n-2 numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to understand the condition given for the permutations. The condition min(n-|p(i)−i|, |p(i)−i|)≤1 means that for each element in the permutation, the absolute difference between the number and its position is at most 1, considering the wrap-around at the ends of the permutation.
 
 Let&#x27;s denote by b_n the number of permutations of {1, ..., n} with the condition |p(i)−i|≤1 (no wrap-around). We will first find a recursive formula for b_n and then use it to find a_n.
 
-For b_n, we have two cases for the position of the number n in the permutation:
-1. n is in its natural position, i.e., p(n) = n. In this case, the rest of the permutation is a permutation of {1, ..., n-1} with the same condition, which means there are b_(n-1) such permutations.
-2. n is not in its natural position, which means it must be in position n-1, and n-1 must be in position n (since |p(i)−i|≤1). In this case, the rest of the permutation is a permutation of {1, ..., n-2} with the same condition, which means there are b_(n-2) such permutations.
+For b_n, we can construct a valid permutation by considering the following cases:
+
+1. Place n at position n. Then, we need to arrange the remaining n-1 elements, which is b_{n-1}.
+2. Place n at position n-1 and n-1 at position n. We then need to arrange the remaining n-2 elements, which is b_{n-2}.
 
 Therefore, we have the recursive formula:
-b_n = b_(n-1) + b_(n-2)
+b_n = b_{n-1} + b_{n-2}
 
-We also know that b_1 = 1 (since there&#x27;s only one permutation of a single element) and b_2 = 2 (since both permutations [1, 2] and [2, 1] satisfy the condition).
+We also know the base cases:
+b_1 = 1 (since there&#x27;s only one permutation of one element)
+b_2 = 2 (since there are two permutations of two elements: {1,2} and {2,1})
 
-Now let&#x27;s calculate the first few values of b_n:
+Now, let&#x27;s calculate the first few values of b_n:
 b_1 = 1
 b_2 = 2
 b_3 = b_2 + b_1 = 2 + 1 = 3
@@ -110,17 +112,19 @@ b_8 = b_7 + b_6 = 21 + 13 = 34
 b_9 = b_8 + b_7 = 34 + 21 = 55
 b_10 = b_9 + b_8 = 55 + 34 = 89
 
-Now, let&#x27;s consider a_n, which allows for wrap-around. The wrap-around condition means that for the first and last elements, we can also have p(1) = n and p(n) = 1. This introduces one additional permutation for n &gt; 2, which is a cyclic shift of the permutation (2, 3, ..., n, 1).
+Now, let&#x27;s consider a_n, which allows for wrap-around. The wrap-around condition means that we can also have the number n at position 1 and the number 1 at position n. This adds one additional case to our construction:
 
-Therefore, for n &gt; 2, we have:
-a_n = b_n + 1
+3. Place n at position 1 and 1 at position n. We then need to arrange the remaining n-2 elements, which is b_{n-2}.
 
-For n = 10, we have:
-a_10 = b_10 + 1 = 89 + 1 = 90
+So, the recursive formula for a_n is:
+a_n = b_n + b_{n-2}
 
-So, the number of permutations of {1, ..., 10} with the given condition is a_10 = 90.</code></pre>
+Using the values we have already calculated for b_n, we can find a_10:
+a_10 = b_10 + b_8 = 89 + 34 = 123
+
+Therefore, a_10 = 123.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of permutations of {1, ..., 10} with the condition min(n-|p(i)−i|, |p(i)−i|)≤1 for all i is a_10 = 90.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of all permutations of {1, ..., 10} with min(10-|p(i)−i|, |p(i)−i|)≤1 for all i is a_10 = 123.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

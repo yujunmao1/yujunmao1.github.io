@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_11</td>
             <td>PaLM 2 Medium</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_11']
-messages = problem.conversations['PaLM 2 Medium|Example w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,34 +77,44 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?
+Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $x_1, x_2, x_3, ...$ is defined recursively by $x_1 = \frac{1}{2}$ and $x_{k+1} = x_k^2 + x_k$. We can write this as a recurrence relation:
 
-You may find the following information useful:
+$$x_k = x_{k-1}^2 + x_{k-1}$$
 
-1. Express 1/(x_k+1) in terms of 1/x_k and 1/x_(k+1).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $x_1 = \frac{1}{2}$ and $x_{k+1} = x_k^2 + x_k$. We want to find the integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \cdots + \frac{1}{x_{100}+1}$.
+We can also write this as a generating function:
 
-To do this, we will first express $\frac{1}{x_k+1}$ in terms of $\frac{1}{x_k}$ and $\frac{1}{x_{k+1}}$. We have
+$$\sum_{k=1}^{\infty} x_k z^k = \frac{1}{1 - z - z^2}$$
 
-\begin{align*}
-\frac{1}{x_k+1} &amp;= \frac{1}{x_k^2 + x_k} \\
-&amp;= \frac{1}{x_k} \left( \frac{1}{x_k} + \frac{1}{x_k^2} \right) \\
-&amp;= \frac{1}{x_k} \left( \frac{1}{x_k} + \frac{1}{x_k} \frac{1}{1 - \frac{1}{x_k^2}} \right) \\
-&amp;= \frac{1}{x_k} \left( \frac{1}{x_k} + \frac{1}{x_k} \frac{1}{x_k^2 - 1} \right) \\
-&amp;= \frac{1}{x_k^2 - 1}.
-\end{align*}
+The integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \frac{1}{x_3+1} + ... + \frac{1}{x_{100}+1}$ is the number of terms in the sequence that are greater than or equal to 1.
 
-Now, we can express the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \cdots + \frac{1}{x_{100}+1}$ as
+To find this, we can use the partial fraction decomposition of $\frac{1}{1 - z - z^2}$:
 
-\begin{align*}
-\frac{1}{x_1+1} + \frac{1}{x_2+1} + \cdots + \frac{1}{x_{100}+1} &amp;= \frac{1}{x_1^2 - 1} + \frac{1}{x_2^2 - 1} + \cdots + \frac{1}{x_{100}^2 - 1} \\
-&amp;= \frac{1}{(x_1 - 1)(x_1 + 1)} + \frac{1}{(x_2 - 1)(x_2 + 1)} + \cdots + \frac{1}{(x_{100} - 1)(x_{100} + 1)} \\
-&amp;= \frac{1}{(x_1 - 1)(x_2 - 1)} + \frac{1}{(x_1 + 1)(x_2 + 1)} + \frac{1}{(x_3 - 1)(x_4 - 1)} + \frac{1}{(x_3 + 1)(x_4 + 1)} + \cdots + \frac{1}{(x_{99} - 1)(x_{100} - 1)} + \frac{1}{(x_{99} + 1)(x_{100} + 1)} \\
-&amp;= \frac{1}{(x_1 - 1)(x_2 - 1)(x_3 - 1)} + \frac{1}{(x_1 + 1)(x_2 + 1)(x_3 + 1)} + \frac{1}{(x_4 - 1)(x_5 - 1)(x_6 - 1)} + \frac{1}{(x_4 + 1)(x_5 + 1)(x_6 + 1)} + \cdots + \frac{1}{(x_{99} - 1)(x_{100} - 1)(x_{101} - 1)} + \frac{1}{(x_{99} + 1)(x_{100} + 1)(x_{101} + 1)} \\
-&amp;= \cdots \\
-&amp;= \frac{1}{(x_1 - 1)(x_2 - 1) \cdots (x_{99} - 1)(x_{100} - 1)} + \frac{1}{(x_1 + 1)(x_2 + 1) \cdots (x_{99} + 1)(x_{100} + </code></pre>
+$$\frac{1}{1 - z - z^2} = \frac{1}{2} \left( \frac{1}{1 - z} + \frac{1}{1 + z} \right)$$
+
+This gives us:
+
+$$\sum_{k=1}^{\infty} x_k z^k = \frac{1}{2} \left( \sum_{k=1}^{\infty} \frac{z^k}{1 - z} + \sum_{k=1}^{\infty} \frac{z^k}{1 + z} \right)$$
+
+The first sum is the geometric series $\frac{1}{1 - z}$, which converges to $\frac{1}{1 - z}$ for $|z| &lt; 1$. The second sum is the geometric series $\frac{1}{1 + z}$, which converges to $\frac{1}{1 + z}$ for $|z| &lt; 1$.
+
+Therefore, the sum $\sum_{k=1}^{\infty} x_k z^k$ converges to $\frac{1}{2} \left( \frac{1}{1 - z} + \frac{1}{1 + z} \right)$ for $|z| &lt; 1$.
+
+We can now use this to find the integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \frac{1}{x_3+1} + ... + \frac{1}{x_{100}+1}$.
+
+The first term in the sum is $\frac{1}{x_1+1} = \frac{1}{\frac{1}{2} + 1} = \frac{2}{3}$.
+
+The second term in the sum is $\frac{1}{x_2+1} = \frac{1}{x_1^2 + x_1} = \frac{1}{\left( \frac{1}{2} \right)^2 + \frac{1}{2}} = \frac{2}{5}$.
+
+The third term in the sum is $\frac{1}{x_3+1} = \frac{1}{x_2^2 + x_2} = \frac{1}{\left( \frac{2}{5} \right)^2 + \frac{2}{5}} = \frac{5}{13}$.
+
+Continuing in this way, we find that the terms in the sum alternate between being greater than or equal to 1 and less than 1. The first 10 terms in the sum are $\frac{2}{3}, \frac{2}{5}, \frac{5}{13}, \frac{13}{34}, \frac{34}{89}, \frac{89}{233}, \frac{233}{610}, \frac{610}{1597}, \frac{1597}{4181}, \frac{4181}{10946}$.
+
+The integer part of the sum is therefore the number of terms in the sum that are greater than or equal to 1, which is 10.
+
+Therefore, the integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \frac{1}{x_3+1} + ... + \frac{1}{x_{100}+1}$ is $\boxed{10}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \cdots + \frac{1}{x_{100}+1}$ is $\boxed{100}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer part of the sum $\frac{1}{x_1+1} + \frac{1}{x_2+1} + \frac{1}{x_3+1} + ... + \frac{1}{x_{100}+1}$ is 10.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

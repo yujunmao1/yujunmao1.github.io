@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_23</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> -1/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_23']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,43 +81,25 @@ A sequence is defined as a_1=0, |a_n|=|a_(n-1)+1|. What is the smallest value of
 
 You may find the following information useful:
 
-1. Find the expression of a_(n+1)^2 by squaring each recurrence relationship equation.
-2. (x±y)^2=x^2±2xy+y^2.
-3. For any real number a, a^2≥0. </code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $a_1=0$ and $|a_n|=|a_{n-1}+1|$. We want to find the smallest value of $\frac{a_1+a_2+\cdots+a_n}{n}$ for even $n$.
+1. Find the expression of a_(n+1)^2 by squaring each recurrence relationship equation.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence is defined as $a_1=0$ and $|a_n|=|a_{n-1}+1|$. We can square each recurrence relationship equation to get $a_{n+1}^2=(a_{n-1}+1)^2$. This gives us the following expression for $a_{n+1}^2$:
 
-We can start by squaring each recurrence relationship equation to get $a_{n+1}^2=a_n^2+2a_n+1$. We can then use the fact that $(x+y)^2=x^2+2xy+y^2$ to rewrite this as $a_{n+1}^2=a_n^2+2a_n+1=a_n^2+2a_n+1^2-1^2=a_n^2+2a_n+1-1$.
+$$a_{n+1}^2=a_{n-1}^2+2a_{n-1}+1$$
 
-We can then use the fact that for any real number $a$, $a^2\ge 0$ to conclude that $a_{n+1}^2\ge a_n^2+2a_n+1-1$. This means that $a_{n+1}\ge a_n+1$.
+We can then take the square root of both sides to get the following expression for $a_{n+1}$:
 
-We can then use this to show that $\frac{a_1+a_2+\cdots+a_n}{n}$ is increasing. To see this, note that
+$$a_{n+1}=\pm\sqrt{a_{n-1}^2+2a_{n-1}+1}$$
 
-\begin{align*}
-\frac{a_1+a_2+\cdots+a_n}{n}&amp;=\frac{a_1+a_2+\cdots+a_{n-1}+a_n}{n}\\\
-&amp;=\frac{a_1+a_2+\cdots+a_{n-1}}{n-1}+\frac{a_n}{n}\\\
-&amp;\ge\frac{a_1+a_2+\cdots+a_{n-1}}{n-1}+a_n\\\
-&amp;=\frac{a_1+a_2+\cdots+a_{n-1}+a_{n-1}+1}{n-1}+a_n\\\
-&amp;=\frac{a_1+a_2+\cdots+a_{n-2}+a_{n-1}+2}{n-1}+a_n\\\
-&amp;\ge\cdots\\\
-&amp;=\frac{a_1+a_2+\cdots+a_2+2+a_1}{n-1}+a_n\\\
-&amp;=\frac{a_1+a_2+2(a_1+1)}{n-1}+a_n\\\
-&amp;=\frac{a_1+a_2+2a_1+2}{n-1}+a_n\\\
-&amp;=3a_1+\frac{2(a_1+1)}{n-1}+a_n\\\
-&amp;=3a_1+\frac{2a_1+2+a_1}{n-1}+a_n\\\
-&amp;=4a_1+\frac{a_1+2}{n-1}+a_n\\\
-&amp;=5a_1+\frac{2}{n-1}+a_n\\\
-&amp;\ge5a_1+\frac{2}{n}\\\
-&amp;=\frac{5a_1n+2}{n}\\\
-&amp;=\frac{5a_n+2}{n}.
-\end{align*}
+We can see that $a_{n+1}$ can be either positive or negative, depending on the sign of $\sqrt{a_{n-1}^2+2a_{n-1}+1}$.
 
-Therefore, $\frac{a_1+a_2+\cdots+a_n}{n}$ is increasing.
+To find the smallest value of $(a_1+a_2+...+a_n)/n$ for even $n$, we need to find the smallest value of $a_1+a_2+...+a_n$. We can do this by considering the following cases:
 
-We can then use this to conclude that the smallest value of $\frac{a_1+a_2+\cdots+a_n}{n}$ for even $n$ is $\frac{a_1+a_2}{2}$. This is because $\frac{a_1+a_2}{2}$ is the value of $\frac{a_1+a_2+\cdots+a_n}{n}$ when $n=2$.
+* Case 1: $n$ is even and $a_1=0$. In this case, $a_2=1$, $a_3=-1$, $a_4=2$, and so on. The sum of the sequence is then $0+1-1+2-2+...=0$.
+* Case 2: $n$ is even and $a_1=1$. In this case, $a_2=2$, $a_3=3$, $a_4=4$, and so on. The sum of the sequence is then $1+2+3+4+...=n(n+1)/2$.
 
-Therefore, the smallest value of $\frac{a_1+a_2+\cdots+a_n}{n}$ for even $n$ is $\boxed{\frac{a_1+a_2}{2}}$.</code></pre>
+Therefore, the smallest value of $(a_1+a_2+...+a_n)/n$ for even $n$ is $\boxed{0}$ when $n$ is even and $a_1=0$, and the smallest value is $\boxed{n(n+1)/2}$ when $n$ is even and $a_1=1$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $\frac{a_1+a_2+\cdots+a_n}{n}$ for even $n$ is $\frac{a_1+a_2}{2}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $(a_1+a_2+...+a_n)/n$ for even $n$ is $0$ when $n$ is even and $a_1=0$, and the smallest value is $\frac{n(n+1)}{2}$ when $n$ is even and $a_1=1$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

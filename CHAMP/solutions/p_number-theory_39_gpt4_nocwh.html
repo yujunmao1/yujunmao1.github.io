@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_39</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> x=0, y=2 and x=9, y=11</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_39']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,48 +81,44 @@ Find all non-negative integer solutions to the equation x^3+8x^2-6x+8=y^3.
 
 You may find the following information useful:
 
-1. Find the relationship among x+1, x+3 and y.
-2. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.
-3. For positive a, the polynomial ax^2+bx+c≥0 for all x if and only if b^2-4ac≤0. One inequality is strict if and only if the other is also strict.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by rearranging the equation to find the relationship among x+1, x+3 and y:
+1. Find the relationship among x+1, x+3 and y.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can first rewrite the equation in a more convenient form. 
 
-x^3 + 8x^2 - 6x + 8 = y^3
-=&gt; x^3 + 8x^2 + 2x - 8x - 6x + 8 = y^3
-=&gt; x(x^2 + 8x + 2) - 8(x + 1) = y^3
-=&gt; x(x + 1)(x + 2) - 8(x + 1) = y^3
-=&gt; (x + 1)(x^2 + 2x - 8) = y^3
-=&gt; (x + 1)(x + 4)(x - 2) = y^3
+The equation x^3 + 8x^2 - 6x + 8 = y^3 can be rewritten as (x+1)^3 + (x+3)^3 = y^3.
 
-From this, we can see that y^3 is a product of three factors: x + 1, x + 4, and x - 2. Since y is a cube root of y^3, we can say that y is a product of the cube roots of these three factors. 
+This equation is a special case of the sum of cubes formula, a^3 + b^3 = (a+b)(a^2 - ab + b^2). 
 
-Now, let&#x27;s use the second hint to find the relationship between x and y:
+So, we can rewrite the equation as (2x+4)(x^2 - 2x + 10) = y^3.
 
-(x±y)^3 = x^3 ± 3x^2*y + 3x*y^2 ± y^3
-=&gt; x^3 + 8x^2 - 6x + 8 ± y^3 = x^3 ± 3x^2*y + 3x*y^2 ± y^3
-=&gt; 8x^2 - 6x + 8 = ± 3x^2*y + 3x*y^2
-=&gt; 8x^2 - 6x + 8 = 3x^2*y(1 ± y)
-=&gt; 8x^2 - 6x + 8 = 3x^2*y ± 3x^2*y^2
-=&gt; 8x^2 - 6x + 8 = 3x^2*y(1 ± y)
+Now, we can see that y^3 is a product of two terms, 2x+4 and x^2 - 2x + 10. 
 
-From this, we can see that y = (8x^2 - 6x + 8) / (3x^2*(1 ± y)).
+Since y is a non-negative integer, both 2x+4 and x^2 - 2x + 10 must be perfect cubes. 
 
-Finally, let&#x27;s use the third hint to find the conditions for x and y to be non-negative integers:
+Let&#x27;s set 2x+4 = a^3 and x^2 - 2x + 10 = b^3, where a and b are non-negative integers.
 
-For the polynomial ax^2 + bx + c to be greater than or equal to 0 for all x, we need b^2 - 4ac ≤ 0. 
+From 2x+4 = a^3, we get x = (a^3 - 4) / 2.
 
-In our case, a = 3, b = -6, and c = 8, so we have:
+Substitute x into x^2 - 2x + 10 = b^3, we get ((a^3 - 4) / 2)^2 - 2 * (a^3 - 4) / 2 + 10 = b^3.
 
-(-6)^2 - 4*3*8 = 36 - 96 = -60
+Solving this equation for non-negative integer solutions a and b will give us the solutions for x and y.
 
-Since -60 is less than 0, the polynomial 3x^2 - 6x + 8 is greater than or equal to 0 for all x. 
+However, this equation is not easy to solve directly. We can use a computer program to find the solutions. 
 
-Therefore, the non-negative integer solutions to the equation x^3 + 8x^2 - 6x + 8 = y^3 are all pairs (x, y) such that x is a non-negative integer and y = (8x^2 - 6x + 8) / (3x^2*(1 ± y)) is also a non-negative integer. 
+For example, we can write a Python program to find the solutions:
 
-However, this equation for y in terms of x is not straightforward to solve for integer values of y. It would require a trial-and-error approach, testing different values of x and checking whether the resulting value of y is an integer. 
+```python
+for a in range(100):
+    for b in range(100):
+        x = (a**3 - 4) / 2
+        if x == ((b**3 - 10) + 2 * b) / 2:
+            y = (2*x + 4) * (x**2 - 2*x + 10)
+            if y == int(y**0.333333)**3:
+                print(f&quot;x={x}, y={y}&quot;)
+```
 
-In conclusion, the problem does not have a simple solution in terms of a formula for the non-negative integer solutions (x, y). It would require a computational approach to find specific solutions.</code></pre>
+This program will print out all non-negative integer solutions for x and y.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The non-negative integer solutions to the equation x^3 + 8x^2 - 6x + 8 = y^3 are all pairs (x, y) such that x is a non-negative integer and y = (8x^2 - 6x + 8) / (3x^2*(1 ± y)) is also a non-negative integer, but finding specific solutions would require a computational approach.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The non-negative integer solutions to the equation x^3 + 8x^2 - 6x + 8 = y^3 can be found by setting 2x+4 = a^3 and x^2 - 2x + 10 = b^3, where a and b are non-negative integers, and then using a computer program to find the solutions for a and b, which can then be used to find the solutions for x and y.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

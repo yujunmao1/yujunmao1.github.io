@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_36</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> -1</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_36']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,58 +81,57 @@ For non-negative a, b, c, d, what is the smallest value of sqrt((a+c)(b+d))-sqrt
 
 You may find the following information useful:
 
-1. Compare sqrt((a+c)(b+d)) with sqrt(ab)+sqrt(cd) by squaring both terms.
-2. (x±y)^2=x^2±2xy+y^2.
-3. For non-negative x, y, we have (x+y)≥2*sqrt(xy) and (x+y)/2≥sqrt(xy), with equality if and only if x=y.
-4. For non-negative x, y, sqrt(x)≥sqrt(y) if and only if x≥y.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s follow the hints provided and solve the problem step by step.
+1. Compare sqrt((a+c)(b+d)) with sqrt(ab)+sqrt(cd) by squaring both terms.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the expression
 
-First, we compare $\sqrt{(a+c)(b+d)}$ with $\sqrt{ab} + \sqrt{cd}$ by squaring both terms:
+\[ \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1, \]
 
-$(\sqrt{(a+c)(b+d)})^2 = (a+c)(b+d)$
-$(\sqrt{ab} + \sqrt{cd})^2 = ab + 2\sqrt{ab}\sqrt{cd} + cd$
+we can start by comparing \( \sqrt{(a+c)(b+d)} \) with \( \sqrt{ab} + \sqrt{cd} \) as suggested.
 
-Now, let&#x27;s use the identity $(x+y)^2 = x^2 + 2xy + y^2$ to expand the right-hand side of the second equation:
+First, let&#x27;s square \( \sqrt{(a+c)(b+d)} \) and \( \sqrt{ab} + \sqrt{cd} \):
 
-$(\sqrt{ab} + \sqrt{cd})^2 = (\sqrt{ab})^2 + 2\sqrt{ab}\sqrt{cd} + (\sqrt{cd})^2$
-$= ab + 2\sqrt{ab}\sqrt{cd} + cd$
+\[ (\sqrt{(a+c)(b+d)})^2 = (a+c)(b+d) \]
+\[ (\sqrt{ab} + \sqrt{cd})^2 = ab + 2\sqrt{ab}\sqrt{cd} + cd \]
 
-Now, we compare the two expressions:
+Now, let&#x27;s compare these two expressions:
 
-$(a+c)(b+d) = ab + ad + bc + cd$
-$ab + 2\sqrt{ab}\sqrt{cd} + cd = ab + 2\sqrt{ab}\sqrt{cd} + cd$
+\[ (a+c)(b+d) = ab + ad + bc + cd \]
+\[ ab + 2\sqrt{ab}\sqrt{cd} + cd = ab + 2\sqrt{abcd} + cd \]
 
-We can see that the terms $ab$ and $cd$ are present in both expressions. The difference between the two expressions is the presence of $ad + bc$ in the first expression and $2\sqrt{ab}\sqrt{cd}$ in the second. According to the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), for non-negative $x$ and $y$, we have:
+We can see that if we subtract \( ab + cd \) from both expressions, we get:
 
-$(x + y)/2 \geq \sqrt{xy}$
+\[ ad + bc \]
+\[ 2\sqrt{abcd} \]
 
-Applying this to $ad$ and $bc$, we get:
+Now, we want to compare these two quantities. By the AM-GM inequality (Arithmetic Mean - Geometric Mean inequality), we know that the arithmetic mean of two non-negative numbers is greater than or equal to their geometric mean. Therefore:
 
-$(ad + bc)/2 \geq \sqrt{ad \cdot bc}$
+\[ \frac{ad + bc}{2} \geq \sqrt{ad \cdot bc} \]
 
-Multiplying both sides by 2, we get:
+Squaring both sides, we get:
 
-$ad + bc \geq 2\sqrt{ad \cdot bc}$
+\[ \left(\frac{ad + bc}{2}\right)^2 \geq ad \cdot bc \]
 
-Since $\sqrt{ab}\sqrt{cd} = \sqrt{ad \cdot bc}$, we can write:
+This implies that:
 
-$ad + bc \geq 2\sqrt{ab}\sqrt{cd}$
+\[ ad + bc \geq 2\sqrt{abcd} \]
 
-This means that $(a+c)(b+d) \geq ab + 2\sqrt{ab}\sqrt{cd} + cd$, with equality if and only if $ad = bc$.
+So, we have shown that:
 
-Now, let&#x27;s consider the expression we want to minimize:
+\[ (a+c)(b+d) \geq ab + 2\sqrt{abcd} + cd \]
 
-$\sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1$
+Which means:
 
-Since we have shown that $\sqrt{(a+c)(b+d)} \geq \sqrt{ab} + \sqrt{cd}$, the smallest value of the expression occurs when $\sqrt{(a+c)(b+d)} = \sqrt{ab} + \sqrt{cd}$, which happens when $ad = bc$.
+\[ \sqrt{(a+c)(b+d)} \geq \sqrt{ab} + \sqrt{cd} \]
 
-In this case, the expression simplifies to:
+Now, let&#x27;s return to the original expression and apply this inequality:
 
-$\sqrt{ab} + \sqrt{cd} - \sqrt{ab} - \sqrt{cd} - 1 = -1$
+\[ \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \geq (\sqrt{ab} + \sqrt{cd}) - \sqrt{ab} - \sqrt{cd} - 1 \]
+\[ \geq 0 - 1 \]
+\[ \geq -1 \]
 
-Therefore, the smallest value of the expression $\sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1$ for non-negative $a, b, c, d$ is $-1$.</code></pre>
+Therefore, the smallest value of the expression is \(-1\), which occurs when \(a = b = c = d = 0\).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression $\sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1$ for non-negative $a, b, c, d$ is $-1$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \( \sqrt{(a+c)(b+d)} - \sqrt{ab} - \sqrt{cd} - 1 \) for non-negative \( a, b, c, d \) is \(-1\).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

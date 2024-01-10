@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_39</td>
             <td>GPT-4 Turbo</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 900 (i.e., all values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_39']
-messages = problem.conversations['GPT-4 Turbo|Name w/o H'].messages
+messages = problem.conversations['GPT-4 Turbo|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,34 +77,60 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For how many values of n in {101, ..., 1000} is 1/(n+1)+1/(n+2)+...+1/(2n)&gt;1/2?
+For how many values of n in {101, ..., 1000} is 1/(n+1)+1/(n+2)+...+1/(2n)&gt;1/2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the idea of comparing the sum to an integral to estimate its value. The sum of reciprocals can be approximated by the integral of the reciprocal function over the same interval.
 
-You may find the following information useful:
-
-1. Compare each term with 1/(2n).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can compare each term in the sum with \( \frac{1}{2n} \) as suggested. Let&#x27;s consider the sum:
+The sum we are looking at is:
 
 \[ S_n = \frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n} \]
 
-We want to find out for how many values of \( n \) in the set {101, ..., 1000} the inequality \( S_n &gt; \frac{1}{2} \) holds.
+We want to find the number of values of \( n \) for which \( S_n &gt; \frac{1}{2} \).
 
-First, notice that each term \( \frac{1}{n+k} \) for \( k = 1, 2, \ldots, n \) is greater than \( \frac{1}{2n} \) because \( n+k &lt; 2n \) for \( k &lt; n \). Therefore, we can write:
+We can compare this sum to the integral of \( \frac{1}{x} \) from \( n+1 \) to \( 2n \), which gives us a lower bound for the sum:
 
-\[ S_n &gt; \frac{1}{2n} + \frac{1}{2n} + \ldots + \frac{1}{2n} \]
+\[ \int_{n+1}^{2n} \frac{1}{x} \, dx = \ln(x) \Big|_{n+1}^{2n} = \ln(2n) - \ln(n+1) \]
 
-There are \( n \) terms in the sum, so we have:
+Since the function \( \frac{1}{x} \) is decreasing, the sum \( S_n \) is larger than the integral because each term \( \frac{1}{n+k} \) for \( k = 1, 2, \ldots, n \) is greater than the integral of \( \frac{1}{x} \) from \( n+k \) to \( n+k+1 \). Therefore, we have:
 
-\[ S_n &gt; n \cdot \frac{1}{2n} = \frac{n}{2n} = \frac{1}{2} \]
+\[ S_n &gt; \ln(2n) - \ln(n+1) \]
 
-This inequality holds for every \( n \) in the set {101, ..., 1000}. Therefore, the sum \( S_n \) is greater than \( \frac{1}{2} \) for all \( n \) in the given set.
+Now, we want to find when this lower bound is greater than \( \frac{1}{2} \):
 
-To find the number of values of \( n \) for which this is true, we simply count the numbers in the set {101, ..., 1000}:
+\[ \ln(2n) - \ln(n+1) &gt; \frac{1}{2} \]
 
-\[ 1000 - 101 + 1 = 900 \]
+Using the properties of logarithms, we can combine the left side into a single logarithm:
 
-So, there are 900 values of \( n \) for which \( S_n &gt; \frac{1}{2} \).</code></pre>
+\[ \ln\left(\frac{2n}{n+1}\right) &gt; \frac{1}{2} \]
+
+Exponentiating both sides to remove the logarithm, we get:
+
+\[ \frac{2n}{n+1} &gt; e^{\frac{1}{2}} \]
+
+\[ 2n &gt; e^{\frac{1}{2}}(n+1) \]
+
+\[ 2n &gt; \sqrt{e} \cdot n + \sqrt{e} \]
+
+\[ 2n - \sqrt{e} \cdot n &gt; \sqrt{e} \]
+
+\[ n(2 - \sqrt{e}) &gt; \sqrt{e} \]
+
+\[ n &gt; \frac{\sqrt{e}}{2 - \sqrt{e}} \]
+
+Now we can calculate the value of the right side:
+
+\[ \frac{\sqrt{e}}{2 - \sqrt{e}} \approx \frac{1.64872}{2 - 1.64872} \approx \frac{1.64872}{0.35128} \approx 4.692 \]
+
+Since \( n \) must be an integer, we round up to the next integer:
+
+\[ n &gt; 5 \]
+
+Now, we need to find the number of integers \( n \) in the set {101, ..., 1000} for which this inequality holds. Since the inequality holds for all \( n &gt; 5 \), it will hold for all \( n \) in the given set.
+
+Therefore, the number of values of \( n \) in the set {101, ..., 1000} for which \( S_n &gt; \frac{1}{2} \) is the size of the set, which is \( 1000 - 101 + 1 = 900 \).
+
+So, there are 900 values of \( n \) in the set {101, ..., 1000} for which \( S_n &gt; \frac{1}{2} \).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>For all 900 values of \( n \) in the set {101, ..., 1000}, the inequality \( \frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n} &gt; \frac{1}{2} \) holds.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 900 values of \( n \) in the set {101, ..., 1000} for which \( \frac{1}{n+1} + \frac{1}{n+2} + \ldots + \frac{1}{2n} &gt; \frac{1}{2} \).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

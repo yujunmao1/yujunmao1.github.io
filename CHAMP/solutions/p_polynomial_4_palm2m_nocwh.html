@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_4</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 (none of the values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_4']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,67 +82,24 @@ Let P(x)=x^(2n)-2x^(2n-1)+3x^(2n-2)-4x^(2n-3)+...-2nx+2n+1. For how many values 
 You may find the following information useful:
 
 1. Study the positivity of P(x) when x≤0.
-2. For x&gt;0, study the positivity of x*P(x)+P(x).
-3. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $P(x)=x^{2n}-2x^{2n-1}+3x^{2n-2}-4x^{2n-3}+...-2nx+2n+1$. We will show that $P(x)$ has at least one real-valued root for all $n\geq 1$.
+2. For x&gt;0, study the positivity of x*P(x)+P(x).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We will prove by induction that $P(x)$ has at least one real-valued root for all $n \geq 1$.
 
-First, we will show that $P(x)$ is positive for all $x\leq 0$. To do this, we will use the following inequality:
+The base case $n=1$ is trivial, since $P(x) = x^2 + 1$ has the root $x=-1$.
 
-$$x^{2n}-2x^{2n-1}+3x^{2n-2}-4x^{2n-3}+...-2nx+2n+1\geq 0$$
+Now assume that $P(x)$ has at least one real-valued root for some $n \geq 1$. We will show that $P(x)$ also has at least one real-valued root for $n+1$.
 
-for all $x\leq 0$.
+To do this, we will consider the function $Q(x) = x^{2n+2} - 2x^{2n+1} + 3x^{2n} - 4x^{2n-1} + ... - 2nx^2 + 2n+2$. We can write $Q(x)$ as follows:
 
-We can prove this inequality by induction on $n$. The base case is $n=1$. In this case, we have
+$$Q(x) = x^2(x^{2n} - 2x^{2n-1} + 3x^{2n-2} - 4x^{2n-3} + ... - 2n+1) + 2n+2 - 2x$$
 
-$$x^2-2x+1\geq 0$$
+By the induction hypothesis, the polynomial $x^{2n} - 2x^{2n-1} + 3x^{2n-2} - 4x^{2n-3} + ... - 2n+1$ has at least one real-valued root. Therefore, $Q(x)$ has at least one real-valued root, since it is a quadratic polynomial with a positive leading coefficient.
 
-which is true for all $x\leq 0$.
+In particular, $Q(0) = 2n+2 &gt; 0$, so $Q(x)$ has a root in $(0, \infty)$. Since $Q(x)$ is continuous, it must also have a root in $(-\infty, 0)$. Therefore, $P(x)$ has at least one real-valued root for all $n \geq 1$.
 
-Now, assume that the inequality is true for some $n\geq 1$. Then, we have
-
-$$x^{2(n+1)}-2x^{2n+1}+3x^{2n}-4x^{2n-1}+...-2nx+2n+1\geq 0$$
-
-which can be rewritten as
-
-$$x^{2(n+1)}-2x^{2n+1}+3x^{2n}-4x^{2n-1}+...-2nx+2n+1-(x^{2n}-2x^{2n-1}+3x^{2n-2}-4x^{2n-3}+...-2nx+2n+1)\geq 0$$
-
-or
-
-$$x^{2(n+1)}-2x^{2n+1}+3x^{2n}-4x^{2n-1}+...-2nx+2n+1-x^{2n}+2x^{2n-1}-3x^{2n-2}+...+2nx-2n+1\geq 0$$
-
-or
-
-$$x^{2n+1}(x-1)+2x^{2n-1}(x-2)+3x^{2n-2}(x-3)+...+(2n-1)x^{n+1}+(2n)x^n\geq 0$$
-
-By the induction hypothesis, we know that $x^{2n}-2x^{2n-1}+3x^{2n-2}-4x^{2n-3}+...-2nx+2n+1\geq 0$ for all $x\leq 0$. Therefore, we have
-
-$$x^{2n+1}(x-1)+2x^{2n-1}(x-2)+3x^{2n-2}(x-3)+...+(2n-1)x^{n+1}+(2n)x^n\geq 0$$
-
-for all $x\leq 0$.
-
-This completes the proof that $P(x)$ is positive for all $x\leq 0$.
-
-Next, we will show that $P(x)$ is negative for all $x\geq 1$. To do this, we will use the following inequality:
-
-$$x^{2n}-2x^{2n-1}+3x^{2n-2}-4x^{2n-3}+...-2nx+2n+1\leq 0$$
-
-for all $x\geq 1$.
-
-We can prove this inequality by induction on $n$. The base case is $n=1$. In this case, we have
-
-$$x^2-2x+1\leq 0$$
-
-which is true for all $x\geq 1$.
-
-Now, assume that the inequality is true for some $n\geq 1$. Then, we have
-
-$$x^{2(n+1)}-2x^{2n+1}+3x^{2n}-4x^{2n-1}+...-2nx+2n+1\leq 0$$
-
-which can be rewritten as
-
-$$x^{2(n+1)}-2x^{2n+1}+3x^{2n}-4x^{2n</code></pre>
+In conclusion, the number of values of $n \in \\{1, 2, ..., 100\\}$ such that $P(x)$ has at least one real-valued root is $\boxed{100}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial $P(x)=x^{2n}-2x^{2n-1}+3x^{2n-2}-4x^{2n-3}+...-2nx+2n+1$ has at least one real-valued root for all $n\geq 1$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of values of $n \in \\{1, 2, ..., 100\\}$ such that $P(x)$ has at least one real-valued root is 100, since $P(x)$ has at least one real-valued root for all $n \geq 1$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

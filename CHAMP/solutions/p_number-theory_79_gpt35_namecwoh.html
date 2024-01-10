@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_79</td>
             <td>GPT-3.5</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_79']
-messages = problem.conversations['GPT-3.5|Name w/o H'].messages
+messages = problem.conversations['GPT-3.5|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,64 +77,59 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Let integer p, q satisfy p/q=1-1/2+1/3-1/4+...-1/1318+1/1319 with gcd(p,q)=1. What is p mod 1979?
+Let integer p, q satisfy p/q=1-1/2+1/3-1/4+...-1/1318+1/1319 with gcd(p,q)=1. What is p mod 1979?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the value of p mod 1979.
 
-You may find the following information useful:
-
-1. Express the number as a sum of 660 fractions by starting with 1+1/2+1/3+1/4+...+1/1979 and subtracting necessary terms.
-2. Convert the sum of 660 fractions into a sum of 330 terms, each term being a sum of 2 fractions, by recognizing that 660+1319=1979.
-3. 1979 is a prime number.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will follow the given steps:
-
-Step 1: Express the number as a sum of 660 fractions by starting with 1+1/2+1/3+1/4+...+1/1979 and subtracting necessary terms.
-
-Let&#x27;s start by finding the sum of the fractions 1+1/2+1/3+1/4+...+1/1979. This is a well-known sum called the harmonic series and can be represented as H(1979), where H(n) denotes the nth harmonic number.
-
-H(n) = 1 + 1/2 + 1/3 + 1/4 + ... + 1/n
-
-To find H(1979), we can use the formula for the nth harmonic number:
-
-H(n) = ln(n) + γ + ε(n)
-
-where ln(n) is the natural logarithm of n, γ is the Euler-Mascheroni constant, and ε(n) is a small correction term.
-
-H(1979) = ln(1979) + γ + ε(1979)
-
-Now, we need to subtract the necessary terms to obtain the desired fraction:
+First, let&#x27;s simplify the given expression:
 
 p/q = 1 - 1/2 + 1/3 - 1/4 + ... - 1/1318 + 1/1319
 
-To do this, we subtract the fractions 1/1320 + 1/1321 + ... + 1/1979 from H(1979):
+We can rewrite this expression as:
 
-p/q = H(1979) - (1/1320 + 1/1321 + ... + 1/1979)
+p/q = (1 - 1/2) + (1/3 - 1/4) + ... + (1/1317 - 1/1318) + 1/1319
 
-Step 2: Convert the sum of 660 fractions into a sum of 330 terms, each term being a sum of 2 fractions, by recognizing that 660+1319=1979.
+Notice that each pair of terms in parentheses cancels out, leaving us with:
 
-To convert the sum of 660 fractions into a sum of 330 terms, each term being a sum of 2 fractions, we pair up the fractions as follows:
+p/q = 1/1319
 
-(1/1320 - 1/1979) + (1/1321 - 1/1978) + ... + (1/1979 - 1/1320)
+Now, we need to find the value of p mod 1979. To do this, we can use the property of modular arithmetic that states:
 
-Notice that the first fraction in each pair has a negative sign, while the second fraction has a positive sign.
+(a + b) mod n = ((a mod n) + (b mod n)) mod n
 
-Step 3: Find p mod 1979.
+In our case, we have:
 
-To find p mod 1979, we need to evaluate the sum of the 330 terms obtained in Step 2 and take the remainder when divided by 1979.
+p mod 1979 = (1/1319 mod 1979) mod 1979
 
-Let&#x27;s denote the sum of the 330 terms as S:
+To find the modular inverse of 1319 mod 1979, we can use the Extended Euclidean Algorithm.
 
-S = (1/1320 - 1/1979) + (1/1321 - 1/1978) + ... + (1/1979 - 1/1320)
+1979 = 1 * 1319 + 660
+1319 = 1 * 660 + 659
+660 = 1 * 659 + 1
 
-Now, let&#x27;s simplify each term:
+Now, we can work backwards to find the modular inverse:
 
-S = (1/1320 - 1/1979) + (1/1321 - 1/1978) + ... + (1/1979 - 1/1320)
-  = (1/1320 - 1/1320) + (1/1321 - 1/1321) + ... + (1/1979 - 1/1979)
-  = 0
+1 = 660 - 1 * 659
+1 = 660 - 1 * (1319 - 1 * 660)
+1 = 2 * 660 - 1 * 1319
+1 = 2 * (1979 - 1 * 1319) - 1 * 1319
+1 = 2 * 1979 - 3 * 1319
 
-Therefore, p mod 1979 is 0.
+Therefore, the modular inverse of 1319 mod 1979 is -3.
 
-Final Answer: p mod 1979 = 0</code></pre>
+Now, we can substitute this value back into our equation:
+
+p mod 1979 = (1/1319 mod 1979) mod 1979
+p mod 1979 = (1 * -3) mod 1979
+p mod 1979 = -3 mod 1979
+
+Since we want the value of p mod 1979 to be positive, we can add 1979 to -3:
+
+p mod 1979 = (-3 + 1979) mod 1979
+p mod 1979 = 1976 mod 1979
+
+Therefore, the value of p mod 1979 is 1976.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of p mod 1979 is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of p mod 1979 is 1976.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

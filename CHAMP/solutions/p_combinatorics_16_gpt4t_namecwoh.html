@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_16</td>
             <td>GPT-4 Turbo</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_16']
-messages = problem.conversations['GPT-4 Turbo|Name w/o H'].messages
+messages = problem.conversations['GPT-4 Turbo|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,30 +81,33 @@ Let A be a string of n binary digits (leading 0s are allowed). How many such str
 
 You may find the following information useful:
 
-1. For any string, add the digit 1 to the beginning and digit 0 to the end.
-2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither.
-3. If there are m &quot;0-1&quot; transitions in the original string, how many &quot;1-0&quot; transitions are there in the new string, and what is their ordering?
-4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?
-5. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of binary strings of length n that contain exactly m instances of the substring &quot;01&quot;. Let&#x27;s follow the steps provided:
+1. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to count the number of binary strings of length n that contain the substring &quot;01&quot; exactly m times. We can approach this by considering the placement of the &quot;01&quot; substrings and the remaining digits.
 
-1. For any string A, we add the digit 1 to the beginning and digit 0 to the end. This ensures that any &quot;01&quot; in the original string is preserved, and we can also count &quot;01&quot; if it occurs at the very beginning or end of the original string.
+Let&#x27;s break down the string into parts:
 
-2. Now, we consider the gaps between every two digits. We classify them into &quot;0-1&quot; transitions, &quot;1-0&quot; transitions, and neither (which would be &quot;00&quot; or &quot;11&quot;). Since we are only interested in the &quot;01&quot; transitions, we will focus on those.
+1. There are m &quot;01&quot; substrings.
+2. There are m+1 sections around these &quot;01&quot; substrings where other digits (0 or 1) can be placed.
 
-3. If there are m &quot;0-1&quot; transitions in the original string, then in the new string (with the added 1 at the beginning and 0 at the end), there will be m &quot;1-0&quot; transitions. The ordering of these transitions will be alternating, starting with a &quot;1-0&quot; transition (since we added a 1 at the beginning) and ending with a &quot;0-1&quot; transition (since we added a 0 at the end).
+For example, if n = 5 and m = 1, a string could look like this: _0 1_. The underscores represent the sections where other digits can be placed.
 
-4. We need to arrange m &quot;0-1&quot; transitions and m &quot;1-0&quot; transitions in an alternating pattern. Since the pattern is fixed (starting with &quot;1-0&quot; and ending with &quot;0-1&quot;), we don&#x27;t actually have to arrange them; their positions are determined by the number of transitions.
+Each section (including the first and last) can have zero or more digits, and the total number of digits in all sections must add up to n - 2m (since m &quot;01&quot; substrings take up 2m digits).
 
-5. Now, we need to distribute the remaining n - 2m digits (which are not part of any &quot;01&quot; or &quot;10&quot; transitions) among the m+1 gaps created by the m &quot;0-1&quot; transitions and m &quot;1-0&quot; transitions. This is a problem of distributing indistinguishable items (the n - 2m digits) into distinguishable bins (the m+1 gaps).
+We can think of this as a problem of distributing n - 2m indistinguishable items (the remaining digits) into m+1 distinguishable bins (the sections around the &quot;01&quot; substrings). The number of ways to do this is given by the &quot;stars and bars&quot; method, which is C((n - 2m) + (m+1) - 1, (m+1) - 1) = C(n - m, m).
 
-The number of ways to distribute n - 2m indistinguishable items into m+1 distinguishable bins is given by the stars and bars method, which is C((n - 2m) + (m+1) - 1, (m+1) - 1) = C(n - m, m).
+However, we must also consider that each section can contain either 0s, 1s, or a mix of both. The first and last sections can contain any number of 0s or 1s, but the sections between &quot;01&quot; substrings cannot start with 1 or end with 0, as this would create additional &quot;01&quot; substrings.
 
-Therefore, the number of binary strings of length n that contain exactly m instances of the substring &quot;01&quot; is given by the binomial coefficient C(n - m, m).
+To ensure that we do not create additional &quot;01&quot; substrings, we can place a 0 at the end of each internal section and a 1 at the beginning of each internal section. This effectively reduces the number of free digits by m - 1 (since there are m - 1 internal sections), leaving us with n - 2m - (m - 1) = n - 3m + 1 free digits to distribute.
 
-This is the final answer, expressed in terms of m and n.</code></pre>
+Now we distribute these n - 3m + 1 free digits into the m+1 sections, which gives us C((n - 3m + 1) + (m+1) - 1, (m+1) - 1) = C(n - 2m + 1, m) ways to do so.
+
+Therefore, the number of binary strings of length n that contain the substring &quot;01&quot; exactly m times is given by the expression:
+
+C(n - 2m + 1, m)
+
+This is the final answer.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of binary strings of length n that contain exactly m instances of the substring &quot;01&quot; is given by the binomial coefficient C(n - m, m).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of binary strings of length n that contain the substring &quot;01&quot; exactly m times is given by the binomial coefficient C(n - 2m + 1, m).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

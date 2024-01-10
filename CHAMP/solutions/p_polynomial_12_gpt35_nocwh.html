@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_12</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 roots</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_12']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,14 +77,10 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-How many (real or complex) roots have multiplicity greater than 1 for the polynomial f(x)=1+x/(1!)+x^2/(2!)+x^3/(3!)+...++x^n/(n!)?
+How many (real or complex) roots have multiplicity greater than 1 for the polynomial f(x)=1+x/(1!)+x^2/(2!)+x^3/(3!)+...++x^n/(n!)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To determine the number of roots with multiplicity greater than 1 for the polynomial f(x), we need to find the values of x for which the derivative of f(x) is equal to zero.
 
-You may find the following information useful:
-
-1. A root with multiplicity k for a polynomial f(x) is a root with multiplicity k-1 for f&#x27;(x).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the roots with multiplicity greater than 1 for the polynomial f(x), we need to find the roots of f&#x27;(x) and check their multiplicities.
-
-First, let&#x27;s find the derivative of f(x). The derivative of f(x) is given by:
+First, let&#x27;s find the derivative of f(x). The derivative of each term in the polynomial can be found using the power rule:
 
 f&#x27;(x) = 0 + 1/(1!) + 2x/(2!) + 3x^2/(3!) + ... + nx^(n-1)/(n!) + ...
 
@@ -92,39 +88,31 @@ Simplifying this expression, we get:
 
 f&#x27;(x) = 1/1! + x/1! + x^2/2! + x^3/3! + ... + x^(n-1)/(n-1)! + ...
 
-Notice that f&#x27;(x) is the same as f(x) except that the first term is missing. Therefore, the roots of f&#x27;(x) are the same as the roots of f(x), except for the root x = -1.
-
-Now, let&#x27;s find the roots of f&#x27;(x). Setting f&#x27;(x) equal to zero, we have:
+Now, let&#x27;s set f&#x27;(x) equal to zero and solve for x:
 
 1/1! + x/1! + x^2/2! + x^3/3! + ... + x^(n-1)/(n-1)! + ... = 0
 
-Since the terms of f&#x27;(x) are all positive, there are no real roots. However, there may be complex roots.
+Since the terms in the polynomial are non-negative, we can conclude that there are no real roots for f&#x27;(x) = 0.
 
-To determine the multiplicities of the roots, we need to find the roots of f&#x27;&#x27;(x), the derivative of f&#x27;(x). Taking the derivative of f&#x27;(x), we get:
+However, we can have complex roots. To find the complex roots, we can use the fact that e^ix = cos(x) + i*sin(x). We can rewrite the polynomial f(x) using the exponential form:
 
-f&#x27;&#x27;(x) = 0 + 0 + x/1! + 2x^2/2! + 3x^3/3! + ... + (n-1)x^(n-2)/(n-1)! + ...
+f(x) = 1 + x/1! + x^2/2! + x^3/3! + ... + x^n/n!
+     = e^x
 
-Simplifying this expression, we have:
+Now, let&#x27;s find the derivative of f(x) using the exponential form:
 
-f&#x27;&#x27;(x) = x/1! + x^2/1! + x^3/2! + ... + x^(n-2)/(n-2)! + ...
+f&#x27;(x) = d/dx(e^x)
+       = e^x
 
-Notice that f&#x27;&#x27;(x) is the same as f(x) except that the first two terms are missing. Therefore, the roots of f&#x27;&#x27;(x) are the same as the roots of f(x), except for the roots x = -1 and x = 0.
+Setting f&#x27;(x) equal to zero, we get:
 
-Now, let&#x27;s find the roots of f&#x27;&#x27;(x). Setting f&#x27;&#x27;(x) equal to zero, we have:
+e^x = 0
 
-x/1! + x^2/1! + x^3/2! + ... + x^(n-2)/(n-2)! + ... = 0
+Since e^x is never equal to zero for any value of x, we can conclude that there are no complex roots for f&#x27;(x) = 0.
 
-Again, since the terms of f&#x27;&#x27;(x) are all positive, there are no real roots. However, there may be complex roots.
-
-Continuing this process, we can find the roots of f&#x27;&#x27;&#x27;(x), f&#x27;&#x27;&#x27;&#x27;(x), and so on, until we reach f^(n)(x), the nth derivative of f(x).
-
-In general, the roots of f^(k)(x) will be the same as the roots of f(x), except for the first k roots.
-
-Therefore, the number of roots with multiplicity greater than 1 for the polynomial f(x) is equal to the number of roots of f(x) minus the number of roots of f&#x27;(x), minus the number of roots of f&#x27;&#x27;(x), and so on, until we reach f^(n)(x).
-
-Since f(x) has infinitely many terms, it is not possible to determine the exact number of roots with multiplicity greater than 1 without specifying a value for n. However, we can conclude that there are at least 2 roots with multiplicity greater than 1: x = -1 and x = 0.</code></pre>
+Therefore, the polynomial f(x) has no roots with multiplicity greater than 1.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial f(x) has at least 2 roots with multiplicity greater than 1: x = -1 and x = 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial f(x) = 1 + x/1! + x^2/2! + x^3/3! + ... + x^n/n! has no roots with multiplicity greater than 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

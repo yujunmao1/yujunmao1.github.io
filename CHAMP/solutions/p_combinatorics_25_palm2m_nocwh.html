@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_25</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> n!</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_25']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,17 +81,36 @@ On a chess board, two rooks are placed peacefully if they are not on the same ro
 
 You may find the following information useful:
 
-1. Place rooks row by row. How many positions are possible for the rook in each row?
-2. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To place n rooks peacefully on an n x n chess board, we can place them row by row. The first rook can be placed in any of the n rows. The second rook can then be placed in any of the remaining n - 1 rows, without violating the condition that no two rooks are in the same row. The third rook can be placed in any of the remaining n - 2 rows, and so on. Therefore, the total number of ways to place n rooks peacefully on an n x n chess board is $n!$.
+1. Place rooks row by row. How many positions are possible for the rook in each row?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to place $n$ rooks on an $n\times n$ chess board peacefully is $\binom{n(n-1)}{n-1}$.
 
-Here is a more detailed solution:
+To see this, we can place the rooks row by row. In the first row, we have $n$ choices for where to place the first rook. For the second row, we only have $n-1$ choices left, since the first rook cannot be in the same row or column. So far, there are $n(n-1)$ possible placements.
 
-Let $n$ be the number of rooks. We can place the first rook in any of the $n$ rows. For each of these choices, there are $n - 1$ ways to place the second rook, since it cannot be in the same row as the first rook. For each of these choices, there are $n - 2$ ways to place the third rook, and so on. Therefore, the total number of ways to place the rooks is $n! = n(n - 1)(n - 2) \cdots 3 \cdot 2 \cdot 1$.
+For the third row, we only have $n-2$ choices left, since the first two rooks cannot be in the same row or column. Continuing in this way, for the $k$th row, we only have $n-k+1$ choices left, since the first $k-1$ rooks cannot be in the same row or column.
 
-We can also solve this problem by considering the number of ways to place the rooks in conflict. There are $n^2$ ways to place the rooks in conflict, since each rook can be placed in any of the $n$ rows and any of the $n$ columns. However, some of these placements will be the same, since we can rotate or reflect the board without changing the placement of the rooks. There are $n!$ ways to rotate or reflect the board, so the number of distinct placements of the rooks in conflict is $\frac{n^2}{n!}$. Therefore, the number of ways to place the rooks peacefully is $n! - \frac{n^2}{n!} = n(n - 1)(n - 2) \cdots 3 \cdot 2 \cdot 1 - n = n(n - 1)(n - 2) \cdots 3 \cdot 2 \cdot 1 - n^2 + n = n(n - 1)(n - 2) \cdots 3 \cdot 2 \cdot 1 - n(n - 1) = n(n - 2)(n - 3) \cdots 3 \cdot 2 \cdot 1$.</code></pre>
+Therefore, the total number of possible placements is $$n(n-1)(n-2)\dots(n-k+1) = \binom{n(n-1)}{n-1}.$$
+
+Here is a diagram that shows one possible placement of $4$ rooks on a $4\times 4$ chess board:
+
+[asy]
+unitsize(1 cm);
+
+draw((0,0)--(4,0)--(4,4)--(0,4)--cycle);
+
+draw((0,1)--(1,1)--(1,2)--(2,2)--(2,3)--(3,3)--(3,4)--(4,4));
+
+draw((1,0)--(1,4));
+draw((2,0)--(2,4));
+draw((3,0)--(3,4));
+draw((4,0)--(4,4));
+
+label(&quot;$R_1$&quot;, (0,1), S);
+label(&quot;$R_2$&quot;, (1,2), S);
+label(&quot;$R_3$&quot;, (2,3), S);
+label(&quot;$R_4$&quot;, (3,4), S);
+[/asy]</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to place $n$ rooks peacefully on an $n \times n$ chess board is $n(n-2)(n-4)\dots 3 \cdot 1$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to place $n$ rooks on an $n\times n$ chess board peacefully is $\binom{n(n-1)}{n-1}$, which is the number of ways to choose $n-1$ out of $n(n-1)$ pairs of positions for the rooks to occupy.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

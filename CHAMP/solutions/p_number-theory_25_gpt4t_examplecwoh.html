@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_25</td>
             <td>GPT-4 Turbo</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 3 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_25']
-messages = problem.conversations['GPT-4 Turbo|Example w/o H'].messages
+messages = problem.conversations['GPT-4 Turbo|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,52 +77,22 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For positive integer n, if 2^n and 5^n start with the same digit, what are possible values of this digit?
+For positive integer n, if 2^n and 5^n start with the same digit, what are possible values of this digit?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to consider the range of values that \(2^n\) and \(5^n\) can take such that they start with the same digit. Since \(2^n\) and \(5^n\) are powers of 2 and 5 respectively, when multiplied together, they give \(10^n\), which is a 1 followed by n zeros.
 
-You may find the following information useful:
+The key observation is that for \(2^n\) and \(5^n\) to start with the same digit, the leading digit must be the same before they reach the next power of 10, which would add another zero to the end of \(10^n\). This means that the leading digit must be the same in the interval between \(10^n\) and \(10^{n+1}\).
 
-1. Let 2^n be an (r+1)-digit number and 5^n be an (s+1)-digit number, both starting with digit d.
-2. Establish the inequality among d*10^r, 2^n and (d+1)*10^r, and analogously for 5^n.
-3. Multiply the two inequalities to solve for possible values of d.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the possible values of the digit d such that 2^n and 5^n start with the same digit d for some positive integer n.
+Let&#x27;s consider the possible leading digits for \(2^n\) and \(5^n\). Since \(2^n \times 5^n = 10^n\), we can write \(2^n = \frac{10^n}{5^n}\). As \(n\) increases, \(2^n\) will cycle through different leading digits as it grows from just over \(10^k\) to just under \(10^{k+1}\) for some integer \(k\).
 
-Given that 2^n starts with digit d and is an (r+1)-digit number, we can establish the following inequality:
+The possible leading digits for \(2^n\) and \(5^n\) will be the same if \(2^n\) is in the range \([1, 2)\) when multiplied by \(10^k\), because \(5^n\) will be in the range \([0.2, 0.4)\) when multiplied by \(10^k\), and both will have the same leading digit of 1.
 
-\[ d \cdot 10^r \leq 2^n &lt; (d+1) \cdot 10^r \]
+Similarly, if \(2^n\) is in the range \([2, 4)\) when multiplied by \(10^k\), then \(5^n\) will be in the range \([0.4, 0.8)\) when multiplied by \(10^k\), and both will have the same leading digit of 2.
 
-Similarly, since 5^n also starts with digit d and is an (s+1)-digit number, we have:
+Continuing this pattern, we can see that the possible leading digits for \(2^n\) and \(5^n\) to be the same are 1, 2, 4, and 8. These are the digits for which the intervals for \(2^n\) and \(5^n\) overlap before reaching the next power of 10.
 
-\[ d \cdot 10^s \leq 5^n &lt; (d+1) \cdot 10^s \]
-
-Now, we multiply the two inequalities together:
-
-\[ (d \cdot 10^r) \cdot (d \cdot 10^s) \leq 2^n \cdot 5^n &lt; ((d+1) \cdot 10^r) \cdot ((d+1) \cdot 10^s) \]
-
-Simplifying the left side of the inequality:
-
-\[ d^2 \cdot 10^{r+s} \leq (2 \cdot 5)^n \]
-
-Since \(2^n \cdot 5^n = 10^n\), we can rewrite the inequality as:
-
-\[ d^2 \cdot 10^{r+s} \leq 10^n \]
-
-And the right side of the inequality:
-
-\[ 10^n &lt; (d+1)^2 \cdot 10^{r+s} \]
-
-Now, since \(10^n\) is a power of 10, it is clear that \(r+s = n\). Therefore, we can simplify the inequalities to:
-
-\[ d^2 \leq 10^n &lt; (d+1)^2 \]
-
-Taking the square root of all parts of the inequality, we get:
-
-\[ d \leq 10^{n/2} &lt; d+1 \]
-
-This means that \(10^{n/2}\) must start with the digit d. Since \(10^{n/2}\) is simply a 1 followed by n/2 zeros (or a decimal point and n/2 zeros if n is odd), the only digit d that can satisfy this condition is 1.
-
-Therefore, the only possible value of the digit d such that 2^n and 5^n start with the same digit is 1.</code></pre>
+To summarize, the possible leading digits for \(2^n\) and \(5^n\) to start with the same digit are 1, 2, 4, and 8.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only possible value of the digit that 2^n and 5^n can both start with for some positive integer n is 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible leading digits for \(2^n\) and \(5^n\) to start with the same digit are 1, 2, 4, and 8.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

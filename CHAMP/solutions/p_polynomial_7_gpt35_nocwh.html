@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_7</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> -2x+2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_7']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,39 +81,44 @@ Find the remainder of x^100-2x^51+1 divided by x^2-1.
 
 You may find the following information useful:
 
-1. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).
-2. Study the polynomial at x=±1.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the remainder of x^100 - 2x^51 + 1 divided by x^2 - 1, we can use polynomial long division.
+1. Study the polynomial at x=±1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the remainder of the polynomial x^100 - 2x^51 + 1 divided by x^2 - 1, we can use polynomial long division.
 
-First, let&#x27;s write the dividend and divisor in descending order of degree:
+First, let&#x27;s write the polynomial in descending order:
 
-Dividend: x^100 - 2x^51 + 1
-Divisor: x^2 - 1
+x^100 - 2x^51 + 1
 
-Now, let&#x27;s perform the long division:
+Now, let&#x27;s divide the leading term of the dividend (x^100) by the leading term of the divisor (x^2) to get x^98. This will be the first term of the quotient.
 
-                    x^49
-          _______________________
-x^2 - 1 | x^100 - 2x^51 + 1
-          - (x^100 - x^49)
-          _______________________
-                    - x^49 + 1
+Next, we multiply the divisor (x^2 - 1) by the first term of the quotient (x^98) and subtract it from the dividend:
 
-The remainder of x^100 - 2x^51 + 1 divided by x^2 - 1 is -x^49 + 1.
+(x^98)(x^2 - 1) = x^100 - x^98
 
-To verify this result, we can substitute x = ±1 into the original polynomial and the remainder:
+(x^100 - 2x^51 + 1) - (x^100 - x^98) = -2x^51 + x^98 + 1
 
-For x = 1:
-Original polynomial: 1^100 - 2(1^51) + 1 = 1 - 2 + 1 = 0
-Remainder: -(1^49) + 1 = -1 + 1 = 0
+Now, we repeat the process with the new dividend (-2x^51 + x^98 + 1).
 
-For x = -1:
-Original polynomial: (-1)^100 - 2((-1)^51) + 1 = 1 + 2 + 1 = 4
-Remainder: -((-1)^49) + 1 = -1 + 1 = 0
+Dividing the leading term of the new dividend (-2x^51) by the leading term of the divisor (x^2) gives us -2x^49. This will be the next term of the quotient.
 
-Since the original polynomial and the remainder both evaluate to 0 when x = ±1, this confirms that the remainder is indeed -x^49 + 1.</code></pre>
+Multiplying the divisor (x^2 - 1) by the new term of the quotient (-2x^49) and subtracting it from the new dividend (-2x^51 + x^98 + 1) gives us:
+
+(-2x^49)(x^2 - 1) = -2x^51 + 2x^49
+
+(-2x^51 + x^98 + 1) - (-2x^51 + 2x^49) = x^98 - 2x^49 + 1
+
+We repeat this process until the degree of the new dividend is less than the degree of the divisor.
+
+Continuing the process, we find that the quotient is:
+
+x^98 - 2x^49 + 1
+
+And the remainder is:
+
+0
+
+Therefore, the remainder of x^100 - 2x^51 + 1 divided by x^2 - 1 is 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of x^100 - 2x^51 + 1 divided by x^2 - 1 is -x^49 + 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of x^100 - 2x^51 + 1 divided by x^2 - 1 is 0.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

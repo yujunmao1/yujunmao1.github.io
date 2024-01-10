@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_7</td>
             <td>GPT-4</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_7']
-messages = problem.conversations['GPT-4|Name w/o H'].messages
+messages = problem.conversations['GPT-4|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,35 +81,54 @@ If a, b, c are side lengths of a (possibly degenerate) triangle, then what is th
 
 You may find the following information useful:
 
-1. a, b, c are the sides of a (possibly degenerate) triangle if and only if a+b≥s, b+c≥s, a+c≥s for semi-perimeter s=(a+b+c)/2. The triangle is not degenerate if and only if all inequalities are strict.
-2. Compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote s = (a+b+c)/2, the semi-perimeter of the triangle. 
+1. a, b, c are the sides of a (possibly degenerate) triangle if and only if a+b≥s, b+c≥s, a+c≥s for semi-perimeter s=(a+b+c)/2. The triangle is not degenerate if and only if all inequalities are strict.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem is asking for the maximum value of the expression a/(b+c) + b/(a+c) + c/(a+b). 
 
-We want to find the maximum value of the expression a/(b+c) + b/(a+c) + c/(a+b). 
+To solve this, we can use the Cauchy-Schwarz inequality, which states that for any positive real numbers a1, a2, ..., an and b1, b2, ..., bn, the following inequality holds:
 
-We can compare each term in the sum to the fraction with the denominator replaced with the semi-perimeter. 
+(a1*b1 + a2*b2 + ... + an*bn)^2 ≤ (a1^2 + a2^2 + ... + an^2) * (b1^2 + b2^2 + ... + bn^2)
+
+Let&#x27;s apply this inequality to our problem. We can rewrite the expression as follows:
+
+(a/(b+c) + b/(a+c) + c/(a+b)) = (a^2/(ab+ac) + b^2/(ba+bc) + c^2/(ca+cb))
+
+Now, let&#x27;s set a1 = a2 = a3 = a, b1 = b2 = b, c1 = c2 = c, and d1 = b+c, d2 = a+c, d3 = a+b. 
+
+Then, we can rewrite the expression as follows:
+
+(a^2/d1 + b^2/d2 + c^2/d3)
+
+Now, we can apply the Cauchy-Schwarz inequality:
+
+(a^2/d1 + b^2/d2 + c^2/d3)^2 ≤ (a^2 + b^2 + c^2) * (1/d1^2 + 1/d2^2 + 1/d3^2)
+
+Solving this inequality, we get:
+
+(a^2/d1 + b^2/d2 + c^2/d3) ≤ sqrt((a^2 + b^2 + c^2) * (1/d1^2 + 1/d2^2 + 1/d3^2))
+
+Since a, b, c are the sides of a triangle, we know that a+b &gt; c, b+c &gt; a, and a+c &gt; b. Therefore, d1, d2, d3 are all greater than 0. 
+
+So, we can simplify the right side of the inequality:
+
+sqrt((a^2 + b^2 + c^2) * (1/d1^2 + 1/d2^2 + 1/d3^2)) = sqrt((a^2 + b^2 + c^2) / (d1^2 + d2^2 + d3^2))
+
+Since a, b, c are the sides of a triangle, we know that a^2 + b^2 + c^2 = (a+b+c)^2 - 2(ab+bc+ca) = d1^2 + d2^2 + d3^2 - 2(ab+bc+ca)
+
+So, we can simplify the right side of the inequality further:
+
+sqrt((a^2 + b^2 + c^2) / (d1^2 + d2^2 + d3^2)) = sqrt((d1^2 + d2^2 + d3^2 - 2(ab+bc+ca)) / (d1^2 + d2^2 + d3^2)) = sqrt(1 - 2(ab+bc+ca) / (d1^2 + d2^2 + d3^2))
+
+Since ab+bc+ca ≤ d1^2 + d2^2 + d3^2, we know that 1 - 2(ab+bc+ca) / (d1^2 + d2^2 + d3^2) ≤ 1. 
+
+Therefore, sqrt(1 - 2(ab+bc+ca) / (d1^2 + d2^2 + d3^2)) ≤ 1. 
 
 So, we have:
 
-a/(b+c) ≤ a/s
-b/(a+c) ≤ b/s
-c/(a+b) ≤ c/s
+(a^2/d1 + b^2/d2 + c^2/d3) ≤ 1
 
-Adding these inequalities, we get:
-
-a/(b+c) + b/(a+c) + c/(a+b) ≤ a/s + b/s + c/s
-
-Simplifying the right side, we get:
-
-a/(b+c) + b/(a+c) + c/(a+b) ≤ (a+b+c)/s
-
-But we know that s = (a+b+c)/2, so substituting this in, we get:
-
-a/(b+c) + b/(a+c) + c/(a+b) ≤ 2
-
-So, the maximum value of the expression a/(b+c) + b/(a+c) + c/(a+b) is 2.</code></pre>
+Therefore, the maximum value of a/(b+c) + b/(a+c) + c/(a+b) is 1.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum value of the expression a/(b+c) + b/(a+c) + c/(a+b) for a, b, c being the side lengths of a (possibly degenerate) triangle is 2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum value of the expression a/(b+c) + b/(a+c) + c/(a+b), where a, b, and c are the side lengths of a (possibly degenerate) triangle, is 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

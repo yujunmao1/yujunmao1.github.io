@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_4</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 76</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_4']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,27 +83,25 @@ You may find the following information useful:
 
 1. Let T(n) be the number of involutions on {1, 2, ..., n}.
 2. Find T(1) and T(2).
-3. To construct an involution on size-n set by extending involutions on size-(n-1) set, we can either add {n-&gt;n} or add {n-&gt;i, i-&gt;n} to existing involutions.
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the given information to find the number of involutions on the set {1, 2, 3, 4, 5, 6}.
+3. To construct an involution on size-n set by extending involutions on size-(n-1) set, we can either add {n-&gt;n} or add {n-&gt;i, i-&gt;n} to existing involutions.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the given information and the recursive approach to find the number of involutions on the set {1, 2, 3, 4, 5, 6}.
 
 First, let&#x27;s find T(1) and T(2):
 
-1. T(1): There is only one element in the set, so the only involution is the identity mapping {1 -&gt; 1}. Therefore, T(1) = 1.
+1. T(1): There is only one element in the set, so the only involution is the identity mapping, which maps the element to itself. Therefore, T(1) = 1.
 
-2. T(2): There are two elements in the set. The involutions are the identity mapping {1 -&gt; 1, 2 -&gt; 2} and the transposition {1 -&gt; 2, 2 -&gt; 1}. Therefore, T(2) = 2.
+2. T(2): There are two elements in the set. There are two possible involutions: the identity mapping (1 -&gt; 1, 2 -&gt; 2) and the transposition (1 -&gt; 2, 2 -&gt; 1). Therefore, T(2) = 2.
 
-Now, let&#x27;s find T(n) for n &gt; 2 using the recursive construction method given in point 3.
+Now, let&#x27;s find T(n) for n &gt; 2 using the recursive approach:
 
 To construct an involution on a size-n set, we can either:
-- Add the mapping {n -&gt; n} to an involution on a size-(n-1) set, which means we have T(n-1) ways to do this.
-- Add the mapping {n -&gt; i, i -&gt; n} for some i in {1, 2, ..., n-1} to an involution on a size-(n-2) set, because we remove two elements (n and i) and pair them with each other. There are (n-1) choices for i, and for each choice of i, there are T(n-2) involutions on the remaining n-2 elements.
+- Add the pair {n -&gt; n} to an involution of the size-(n-1) set, which means there are T(n-1) ways to do this.
+- Add the pair {n -&gt; i, i -&gt; n} for some i in {1, 2, ..., n-1} to an involution of the size-(n-2) set, because we remove two elements (n and i) and need to form an involution on the remaining n-2 elements. There are (n-1) choices for i, and for each choice, there are T(n-2) involutions on the remaining set.
 
 Therefore, the recursive formula for T(n) is:
 T(n) = T(n-1) + (n-1) * T(n-2)
 
-We already have T(1) and T(2), so we can now find T(3), T(4), T(5), and T(6) using the recursive formula:
+We already have T(1) and T(2), so we can now calculate T(3), T(4), T(5), and T(6) using the recursive formula:
 
 T(3) = T(2) + (3-1) * T(1) = 2 + 2 * 1 = 4
 T(4) = T(3) + (4-1) * T(2) = 4 + 3 * 2 = 10

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_26</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 239</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_26']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,52 +82,70 @@ How many strings of length 6 and consisting solely of the digits 1, 2 and 3 have
 You may find the following information useful:
 
 1. Let a_n, b_n and c_n be the numbers of length-n strings that end with 1, 2 and 3 respectively.
-2. Express a_(n+1), b_(n+1) and c_(n+1) in terms of a_n, b_n and c_n.
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use a dynamic programming approach. Let&#x27;s define three variables: a_n, b_n, and c_n, which represent the number of length-n strings that end with 1, 2, and 3 respectively.
+2. Express a_(n+1), b_(n+1) and c_(n+1) in terms of a_n, b_n and c_n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use a dynamic programming approach. Let&#x27;s define the following variables:
 
-We can start by considering the base cases. For n = 1, there is only one possible string, which is either &quot;1&quot;, &quot;2&quot;, or &quot;3&quot;. Therefore, we have a_1 = b_1 = c_1 = 1.
+a_n = the number of length-n strings that end with 1
+b_n = the number of length-n strings that end with 2
+c_n = the number of length-n strings that end with 3
 
-Now, let&#x27;s consider the recursive relationship between a_n, b_n, and c_n. For a string of length n+1, the last digit can be either 1, 2, or 3. If the last digit is 1, then the previous digit can be either 1 or 2. Therefore, the number of length-(n+1) strings ending with 1 is equal to the sum of the number of length-n strings ending with 1 and 2, which is a_n + b_n. Similarly, we can derive the following relationships:
+We want to find the values of a_6, b_6, and c_6.
+
+Now, let&#x27;s consider the possible ways to form a string of length n+1:
+
+1. If the string ends with 1, the previous digit can be either 1 or 2. So, the number of length-(n+1) strings ending with 1 is equal to the sum of a_n and b_n.
+
+2. If the string ends with 2, the previous digit can be either 1, 2, or 3. So, the number of length-(n+1) strings ending with 2 is equal to the sum of a_n, b_n, and c_n.
+
+3. If the string ends with 3, the previous digit can be either 2 or 3. So, the number of length-(n+1) strings ending with 3 is equal to the sum of b_n and c_n.
+
+Using these relationships, we can express a_(n+1), b_(n+1), and c_(n+1) in terms of a_n, b_n, and c_n:
 
 a_(n+1) = a_n + b_n
 b_(n+1) = a_n + b_n + c_n
 c_(n+1) = b_n + c_n
 
-Using these relationships, we can calculate the values of a_n, b_n, and c_n for n = 2, 3, 4, 5, and 6.
+Now, let&#x27;s use these relationships to find the values of a_6, b_6, and c_6.
 
-n = 2:
+We start with the base cases:
+
+a_1 = 1 (since there is only one string of length 1 that ends with 1)
+b_1 = 1 (since there is only one string of length 1 that ends with 2)
+c_1 = 1 (since there is only one string of length 1 that ends with 3)
+
+Using the relationships above, we can calculate the values of a_2, b_2, and c_2:
+
 a_2 = a_1 + b_1 = 1 + 1 = 2
 b_2 = a_1 + b_1 + c_1 = 1 + 1 + 1 = 3
 c_2 = b_1 + c_1 = 1 + 1 = 2
 
-n = 3:
+Continuing this process, we can calculate the values of a_3, b_3, and c_3:
+
 a_3 = a_2 + b_2 = 2 + 3 = 5
 b_3 = a_2 + b_2 + c_2 = 2 + 3 + 2 = 7
 c_3 = b_2 + c_2 = 3 + 2 = 5
 
-n = 4:
+Similarly, we can calculate the values of a_4, b_4, and c_4:
+
 a_4 = a_3 + b_3 = 5 + 7 = 12
 b_4 = a_3 + b_3 + c_3 = 5 + 7 + 5 = 17
 c_4 = b_3 + c_3 = 7 + 5 = 12
 
-n = 5:
+Continuing this process, we can calculate the values of a_5, b_5, and c_5:
+
 a_5 = a_4 + b_4 = 12 + 17 = 29
 b_5 = a_4 + b_4 + c_4 = 12 + 17 + 12 = 41
 c_5 = b_4 + c_4 = 17 + 12 = 29
 
-n = 6:
+Finally, we can calculate the values of a_6, b_6, and c_6:
+
 a_6 = a_5 + b_5 = 29 + 41 = 70
 b_6 = a_5 + b_5 + c_5 = 29 + 41 + 29 = 99
 c_6 = b_5 + c_5 = 41 + 29 = 70
 
-Finally, we can find the total number of strings of length 6 by summing up the values of a_6, b_6, and c_6:
-
-Total number of strings = a_6 + b_6 + c_6 = 70 + 99 + 70 = 239
-
-Therefore, there are 239 strings of length 6 consisting solely of the digits 1, 2, and 3, where any two adjacent digits differ by at most 1.</code></pre>
+Therefore, the number of strings of length 6 and consisting solely of the digits 1, 2, and 3, with the property that any two adjacent digits differ by at most 1, is given by a_6 + b_6 + c_6 = 70 + 99 + 70 = 239.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 239 strings of length 6 consisting solely of the digits 1, 2, and 3, where any two adjacent digits differ by at most 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of length 6 consisting solely of the digits 1, 2, and 3, with the property that any two adjacent digits differ by at most 1, is 239.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

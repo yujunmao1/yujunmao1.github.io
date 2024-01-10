@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_2</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> a(1±sqrt(2)), a(1±sqrt(5))/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_2']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,29 +82,71 @@ Solve the equation x^4+a^4-3a*x^3+3a^3*x=0 for a≠0 as an expression of a.
 You may find the following information useful:
 
 1. Divide the equation by a^2*x^2.
-2. Write the equation as a quadratic equation of u=x/a-a/x.
-3. (x±y)^2=x^2±2xy+y^2.</code></pre>
+2. Write the equation as a quadratic equation of u=x/a-a/x.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation x^4 + a^4 - 3a*x^3 + 3a^3*x = 0, we will follow the given steps:
 
-1. Divide the equation by a^2*x^2:
-   (x^4 + a^4 - 3a*x^3 + 3a^3*x) / (a^2*x^2) = 0
-   (x^2/a^2) + (a^2/x^2) - 3(x/a) + 3(a/x) = 0
+Step 1: Divide the equation by a^2*x^2.
+Dividing the equation by a^2*x^2, we get:
+(x^4/a^2*x^2) + (a^4/a^2*x^2) - (3a*x^3/a^2*x^2) + (3a^3*x/a^2*x^2) = 0
+x^2 + (a^4/a^2) - (3a/x) + (3a^3/x^2) = 0
 
-2. Write the equation as a quadratic equation of u = x/a - a/x:
-   (u^2 + 2) - 3u + 3/u = 0
-   u^2 - 3u + 3/u + 2 = 0
+Step 2: Write the equation as a quadratic equation of u = x/a - a/x.
+Let&#x27;s substitute u = x/a - a/x into the equation:
+(x^2/a^2) - (2a^2/x^2) + (a^4/a^2) - (3a/x) + (3a^3/x^2) = 0
+u^2 - 2a^2/x^2 + a^4/a^2 - 3a/x + 3a^3/x^2 = 0
 
-3. Multiply the equation by u to eliminate the fraction:
-   u^3 - 3u^2 + 3 + 2u = 0
-   u^3 - 3u^2 + 2u + 3 = 0
+Multiplying the equation by x^2, we get:
+u^2*x^2 - 2a^2 + a^4 - 3a*x + 3a^3/x = 0
 
-Now, we need to solve this cubic equation for u.
+Now, let&#x27;s rearrange the equation:
+u^2*x^2 - 3a*x + (a^4 - 2a^2 + 3a^3/x) = 0
 
-To solve the cubic equation, we can use various methods such as factoring, synthetic division, or the cubic formula. However, since the equation is not easily factorable, we will use an approximation method like Newton&#x27;s method or the bisection method to find the approximate solutions.
+Since we know that u = x/a - a/x, we can substitute it back into the equation:
+(x/a - a/x)^2*x^2 - 3a*x + (a^4 - 2a^2 + 3a^3/x) = 0
 
-Once we find the approximate solutions for u, we can substitute them back into the equation u = x/a - a/x to find the corresponding values of x.</code></pre>
+Expanding the equation, we get:
+(x^2/a^2 - 2 + a^2/x^2)*x^2 - 3a*x + (a^4 - 2a^2 + 3a^3/x) = 0
+
+Multiplying through by a^2*x^2, we have:
+x^4 - 2a^2*x^2 + a^4 - 3a*x^3 + 3a^3*x = 0
+
+Comparing this equation with the original equation, we can see that they are the same.
+
+Therefore, the equation x^4 + a^4 - 3a*x^3 + 3a^3*x = 0 can be written as a quadratic equation of u = x/a - a/x, which is:
+u^2 - 2a^2 + a^4 = 0
+
+To solve this quadratic equation, we can factor it as:
+(u - a^2)(u - a^2) = 0
+
+Setting each factor equal to zero, we get:
+u - a^2 = 0
+u = a^2
+
+Since u = x/a - a/x, we can substitute u back into the equation:
+x/a - a/x = a^2
+
+Multiplying through by x, we have:
+x^2 - a^3 = a^4*x
+
+Rearranging the equation, we get:
+x^2 - a^4*x - a^3 = 0
+
+Now, we have a quadratic equation in terms of x. We can solve this equation using the quadratic formula:
+
+x = (-b ± √(b^2 - 4ac)) / (2a)
+
+In this case, a = 1, b = -a^4, and c = -a^3.
+
+Substituting these values into the quadratic formula, we get:
+x = (-(-a^4) ± √((-a^4)^2 - 4(1)(-a^3))) / (2(1))
+
+Simplifying further, we have:
+x = (a^4 ± √(a^8 + 4a^3)) / 2
+
+Therefore, the solution to the equation x^4 + a^4 - 3a*x^3 + 3a^3*x = 0, for a ≠ 0, as an expression of a is:
+x = (a^4 ± √(a^8 + 4a^3)) / 2</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve the equation x^4 + a^4 - 3a*x^3 + 3a^3*x = 0 for a≠0, divide by a^2*x^2, write as a quadratic equation of u=x/a-a/x, and solve the resulting cubic equation for u.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The solution to the equation x^4 + a^4 - 3a*x^3 + 3a^3*x = 0, for a ≠ 0, as an expression of a is x = (a^4 ± √(a^8 + 4a^3)) / 2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

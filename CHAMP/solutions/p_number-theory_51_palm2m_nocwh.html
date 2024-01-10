@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_51</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (20*10^15-2)/17, or equivalently 1176470588235294</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_51']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,18 +83,42 @@ You may find the following information useful:
 
 1. Let the original number has k+1 digits, with the first digit d, and the last k digits representing the number r.
 2. Set up the equation of digit manipulation involving k, d, r.
-3. Find the smallest value for k by considering the equation modulo 17.
-4. If p is a prime and p | ab, then p | a or p | b (or both). More generally, if p | a_1*a_2*...*a_n, then p | a_i for at least one a_i.
-5. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let the original number be $10^kd+r$, where $d$ is the first digit and $r$ is the remaining $k$ digits. If we move the first digit to the end, the new number is $10^kr+d$. We are given that the new number is 1.5 times as large as the old one, so $10^kr+d = 1.5(10^kd+r)$. Simplifying this equation, we get $9000r - 4500d = 0$. Dividing both sides by 9000, we get $r - \frac{5}{12}d = 0$. This equation tells us that the first digit must be a multiple of 12, and the remaining $k$ digits must add up to a multiple of 5.
+3. Find the smallest value for k by considering the equation modulo 17.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let the original number be $10^kd+r$, where $d$ is the first digit and $r$ is the remaining $k$ digits. If we move the first digit to the end, the new number is $10^kr+d$. We are given that the new number is 1.5 times as large as the old one, so we have the equation
 
-We can use the Chinese remainder theorem to find the smallest positive integer that satisfies this condition. Let $a$ be the first digit, and let $b$ be the sum of the remaining $k$ digits. We want to find a number $n$ such that $n \equiv a \pmod{12}$ and $n \equiv b \pmod{5}$. The Chinese remainder theorem tells us that such a number exists if and only if $12$ and $5$ are relatively prime. In this case, they are, so a solution exists.
+$$10^kr+d = 1.5(10^kd+r)$$
 
-To find a specific solution, we can use the Euclidean algorithm to find the greatest common divisor of 12 and 5, which is 6. This means that we can write 12 as $6a + 2$ and 5 as $6b + 1$. Substituting these into the Chinese remainder theorem, we get $n \equiv a + 2 \pmod{12}$ and $n \equiv b + 1 \pmod{5}$. Solving these two congruences, we get $n \equiv 14 \pmod{12}$ and $n \equiv 6 \pmod{5}$. The smallest positive integer that satisfies both of these congruences is $n = 60$.
+Simplifying this equation, we get
 
-Therefore, the smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is $\boxed{60}$.</code></pre>
+$$10^kr-1.5\cdot10^kd = 1.5r-d$$
+
+Factoring out $10^k$, we get
+
+$$10^k(r-1.5d) = 1.5r-d$$
+
+Dividing both sides by $10^k$, we get
+
+$$r-1.5d = \frac{1.5r-d}{10^k}$$
+
+Combining like terms, we get
+
+$$0.5d = \frac{1.5r}{10^k}$$
+
+Multiplying both sides by 2, we get
+
+$$d = \frac{3r}{10^k}$$
+
+Since $d$ is a digit, it must be between 0 and 9. We can see that $d$ cannot be 0, since then $r$ would have to be 0, and the original number would be 0. We can also see that $d$ cannot be 9, since then $r$ would have to be 0, and the original number would be 0. Therefore, $d$ must be 1, 2, 3, 4, 5, 6, 7, or 8.
+
+We can now consider the equation modulo 17. If we divide both sides of the equation by 17, we get
+
+$$d \equiv \frac{3r}{17} \pmod{17}$$
+
+We can see that the only values of $k$ that satisfy this equation are $k=0$, $k=1$, $k=2$, $k=3$, $k=4$, $k=6$, $k=8$, $k=12$, $k=14$, and $k=16$.
+
+Of these values, the smallest value is $k=0$. Therefore, the smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 1.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 60.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

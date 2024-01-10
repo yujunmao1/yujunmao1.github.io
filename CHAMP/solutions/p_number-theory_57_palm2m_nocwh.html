@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_57</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_57']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,22 +81,26 @@ Find all possible values of 4^n+15n-1 mod 9 for interger n≥0.
 
 You may find the following information useful:
 
-1. Study f(n+1) mod 9 given f(n) mod 9.
-2. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can solve this problem by using modular arithmetic. In modular arithmetic, we consider two integers $a$ and $b$ to be equivalent modulo $m$, written $a \equiv b \pmod{m}$, if their difference is a multiple of $m$. For example, $2 \equiv 7 \pmod{9}$, since $2 - 7 = -5$, which is a multiple of $9$.
+1. Study f(n+1) mod 9 given f(n) mod 9.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We know that $4^1 \equiv 4 \pmod{9}$, $4^2 \equiv 6 \pmod{9}$, $4^3 \equiv 4 \pmod{9}$, and so on. This is because $4^3 = 64 = (-1)^2 \cdot 9$, so $4^3 \equiv -1 \pmod{9}$. Therefore, $4^n \equiv 4^{n \bmod 3} \pmod{9}$.
 
-We can use modular arithmetic to solve the problem by considering the sequence $4^n + 15n - 1$ modulo $9$. We can start by evaluating $4^0 + 15 \cdot 0 - 1 = 1$ modulo $9$. We can then evaluate $4^1 + 15 \cdot 1 - 1 = 5$ modulo $9$. We can continue in this way, evaluating $4^n + 15n - 1$ modulo $9$ for each integer $n$.
+We also know that $15^1 \equiv 15 \pmod{9}$, $15^2 \equiv 225 \equiv 6 \pmod{9}$, $15^3 \equiv 225 \equiv 6 \pmod{9}$, and so on. This is because $15^3 = (3^2 \cdot 5)^3 = 27 \cdot 125 = 3375 = (-1)^2 \cdot 9 \cdot 5^2$, so $15^3 \equiv -1 \pmod{9}$. Therefore, $15^n \equiv 15^{n \bmod 3} \pmod{9}$.
 
-We find that the sequence $4^n + 15n - 1$ modulo $9$ repeats with period 4. This means that for any integer $n$, $4^n + 15n - 1$ modulo $9$ will be equal to one of the following values:
+Now, we can write $4^n + 15n - 1$ as follows:
 
-* 1
-* 5
-* 2
-* 6
+$$4^n + 15n - 1 = 4^n + 15^n - 15n + 14 = (4^n - 15^n) + (15n - 1) + 14$$
 
-Therefore, the possible values of $4^n + 15n - 1$ modulo $9$ for integer $n \geq 0$ are 1, 5, 2, and 6.</code></pre>
+Since $4^n \equiv 4^{n \bmod 3} \pmod{9}$ and $15^n \equiv 15^{n \bmod 3} \pmod{9}$, we have $4^n - 15^n \equiv (4^{n \bmod 3} - 15^{n \bmod 3}) \pmod{9}$.
+
+Also, since $15n - 1$ is always divisible by 9, we have $15n - 1 \equiv 0 \pmod{9}$.
+
+Therefore, $4^n + 15n - 1 \equiv (4^{n \bmod 3} - 15^{n \bmod 3}) + 0 + 14 \equiv 4^{n \bmod 3} + 14 \pmod{9}$.
+
+Now, we need to find all possible values of $4^{n \bmod 3}$. We know that $4^1 \equiv 4 \pmod{9}$, $4^2 \equiv 6 \pmod{9}$, $4^3 \equiv 4 \pmod{9}$, and so on. Therefore, the possible values of $4^{n \bmod 3}$ are 4, 6, and 4.
+
+Therefore, the possible values of $4^n + 15n - 1 \pmod{9}$ are 18, 23, 27, 32, 36, 41, 45, 49, 54, 58, 63, 67, 72, 76, 81, 85, 89, 93, 98.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $4^n + 15n - 1$ modulo $9$ for integer $n \geq 0$ are 1, 5, 2, and 6.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $4^n + 15n - 1 \pmod{9}$ are 18, 23, 27, 32, 36, 41, 45, 49, 54, 58, 63, 67, 72, 76, 81, 85, 89, 93, and 98.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

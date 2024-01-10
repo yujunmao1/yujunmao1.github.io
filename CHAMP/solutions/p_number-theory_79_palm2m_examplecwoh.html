@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_79</td>
             <td>PaLM 2 Medium</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_79']
-messages = problem.conversations['PaLM 2 Medium|Example w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,26 +77,64 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Let integer p, q satisfy p/q=1-1/2+1/3-1/4+...-1/1318+1/1319 with gcd(p,q)=1. What is p mod 1979?
+Let integer p, q satisfy p/q=1-1/2+1/3-1/4+...-1/1318+1/1319 with gcd(p,q)=1. What is p mod 1979?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $p/q=1-1/2+1/3-1/4+...-1/1318+1/1319$ with $\gcd(p,q)=1$. We can write this as
 
-You may find the following information useful:
+$$p = 1979q - \sum_{n=1}^{1318} \frac{1}{n}.$$
 
-1. Express the number as a sum of 660 fractions by starting with 1+1/2+1/3+1/4+...+1/1979 and subtracting necessary terms.
-2. Convert the sum of 660 fractions into a sum of 330 terms, each term being a sum of 2 fractions, by recognizing that 660+1319=1979.
-3. 1979 is a prime number.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $p/q=1-1/2+1/3-1/4+...-1/1318+1/1319$ with $\gcd(p,q)=1$. We can express the number as a sum of 660 fractions by starting with $1+1/2+1/3+1/4+...+1/1979$ and subtracting necessary terms:
+Now, we can use the fact that the sum of the reciprocals of the first $n$ positive integers is equal to $\ln(n) + \gamma + O(1/n)$, where $\gamma$ is the Euler-Mascheroni constant. This gives us
 
-$$1+1/2+1/3+1/4+...+1/1979 = 1-1/2+1/3-1/4+...-1/1318+1/1319 = 2-1/2+1/3-1/4+...-1/1319+1/1320-1/1321+...+1/1979$$
+$$p = 1979q - \ln(1319) - \gamma + O(1/1319).$$
 
-We can convert the sum of 660 fractions into a sum of 330 terms, each term being a sum of 2 fractions, by recognizing that $660+1319=1979$:
+Since $p$ and $q$ are integers, we must have $p \equiv 1979q - \ln(1319) - \gamma \pmod{1979}$. Therefore, $p \equiv 1 \pmod{1979}$.
 
-$$2-1/2+1/3-1/4+...-1/1319+1/1320-1/1321+...+1/1979 = 2(1-1/1979)+(1/3-1/1320)+(1/5-1/1321)+...+(1/1318-1/1978)$$
+Here is a more detailed solution:
 
-Each term in the sum is a sum of two fractions, one of which is in the range $[1/2,1)$ and the other of which is in the range $(1/2,1)$. The sum of two fractions in this range is always less than 1, so the sum of all the terms in the sum is less than 2. This means that $p/q&lt;2$.
+We can write the given equation as
 
-Since 1979 is a prime number, $p$ must be either 1 or 1979. However, we know that $p/q$ is a fraction, so $p$ cannot be 1979. Therefore, $p=1$.
+$$p = 1979q - \sum_{n=1}^{1318} \frac{1}{n}.$$
 
-Therefore, $p \equiv 1 \pmod{1979}$.</code></pre>
+Now, we can use the fact that the sum of the reciprocals of the first $n$ positive integers is equal to $\ln(n) + \gamma + O(1/n)$, where $\gamma$ is the Euler-Mascheroni constant. This gives us
+
+$$p = 1979q - \ln(1319) - \gamma + O(1/1319).$$
+
+Since $p$ and $q$ are integers, we must have $p \equiv 1979q - \ln(1319) - \gamma \pmod{1979}$. Therefore, $p \equiv 1 \pmod{1979}$.
+
+To see that the sum of the reciprocals of the first $n$ positive integers is equal to $\ln(n) + \gamma + O(1/n)$, we can use the following argument. Let $S_n$ be the sum of the reciprocals of the first $n$ positive integers. Then, we have
+
+$$S_n = 1 + \frac{1}{2} + \frac{1}{3} + ... + \frac{1}{n}.$$
+
+We can write this as
+
+$$S_n = \int_0^1 x^{n-1} \, dx.$$
+
+Now, we can use the substitution $x = e^{-t}$ to get
+
+$$S_n = \int_0^\infty e^{-(n-1)t} \, dt = \frac{1}{n-1}.$$
+
+In other words, we have
+
+$$S_n = \frac{1}{n-1} + O(1/n^2).$$
+
+Now, we can use the Taylor series for $\ln(x)$ to get
+
+$$\ln(x) = \sum_{k=1}^{\infty} \frac{(-1)^{k-1}}{k} x^k.$$
+
+Plugging in $x = n$, we get
+
+$$\ln(n) = \sum_{k=1}^{\infty} \frac{(-1)^{k-1}}{k} n^k.$$
+
+Now, we can multiply both sides by $n$ and take the $n$th root to get
+
+$$\sqrt[n]{n} = \sum_{k=1}^{\infty} \frac{(-1)^{k-1}}{k} \sqrt[n]{n^k}.$$
+
+We can rearrange this to get
+
+$$1 = \sum_{k=1}^{\infty} \frac{(-1)^{k-1}}{k} \left(1 + \frac{1}{n} + \frac{1}{n^2} + ... + \frac{1}{n^{k-1}}\right).$$
+
+Now, we can use the fact that $S_n = \frac{1}{n-1} + O(1/n^2)$ to get
+
+$$1 = \sum_{k=1}^{\infty} \frac{(-1)^{k-1}}{k} \left(1 + \frac{S_n}{n</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>$p \equiv 1 \pmod{1979}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_18</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 5050</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_18']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,34 +81,22 @@ How many different ordered triples (a, b, c) of non-negative integers are there 
 
 You may find the following information useful:
 
-1. For any given value of c, how many possible values can (a, b) take?
-2. 1+2+...+n=n(n+1)/2.
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the following formula:
+1. For any given value of c, how many possible values can (a, b) take?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose $a$, $b$, and $c$, such that $a+b+c=99$, is equal to the number of ways to choose $a$ and $b$, such that $a+b=99-c$. This is because we can then choose $c$ to be any number from 0 to 99-a-b.
 
-$$\binom{n+k-1}{k}$$
+The number of ways to choose $a$ and $b$, such that $a+b=99-c$, is equal to the number of ways to choose $a$ from the set $\{0, 1, 2, \ldots, 99-c\\}$ and $b$ from the set $\\{0, 1, 2, \ldots, 99-c-a\\}$. This is because each pair of numbers $(a, b)$ such that $a+b=99-c$ corresponds to a unique way of choosing $a$ and $b$ from the given sets.
 
-where $n$ is the total number of elements, $k$ is the number of elements in each group, and $\binom{n+k-1}{k}$ is the binomial coefficient.
+The number of ways to choose $a$ from the set $\{0, 1, 2, \ldots, 99-c\\}$ is equal to $99-c+1$. This is because there are $99-c$ possible values for $a$, and we must also include the possibility that $a=0$.
 
-In this case, we have $n=99$ and $k=3$. So, the number of ordered triples (a, b, c) of non-negative integers such that a+b+c=99 is:
+The number of ways to choose $b$ from the set $\\{0, 1, 2, \ldots, 99-c-a\\}$ is equal to $99-c-a+1$. This is because there are $99-c-a$ possible values for $b$, and we must also include the possibility that $b=0$.
 
-$$\binom{99+3-1}{3}=\binom{101}{3}=\frac{101\times100\times99}{3\times2\times1}=165,580$$
+Therefore, the number of ways to choose $a$, $b$, and $c$, such that $a+b+c=99$, is equal to $(99-c+1)(99-c-a+1)$.
 
-Here is a step-by-step solution:
+For example, if $c=1$, then the possible values for $a$ and $b$ are $0$ and $99$, $1$ and $98$, $2$ and $97$, and so on, up to $98$ and $1$. The number of ways to choose $a$ and $b$ is therefore $99+1=100$.
 
-1. We start by finding the number of ways to choose 3 elements from a set of 101 elements. This can be done using the formula $\binom{n+k-1}{k}$, where $n=101$ and $k=3$. So, the number of ways to choose 3 elements from a set of 101 elements is:
-
-$$\binom{101+3-1}{3}=\binom{104}{3}=\frac{104\times103\times102}{3\times2\times1}=211,476$$
-
-2. Next, we need to divide this number by 3!, since we are counting ordered triples. This is because the order in which we choose the elements matters. For example, the triple (1, 2, 3) is different from the triple (3, 2, 1). So, the number of ordered triples (a, b, c) of non-negative integers such that a+b+c=99 is:
-
-$$\frac{104\times103\times102}{3\times2\times1}=\frac{211,476}{6}=35246$$
-
-3. Finally, we need to subtract 1 from this number, since the triple (0, 0, 99) is not a valid triple. So, the final answer is:
-
-$$35246-1=35245$$</code></pre>
+Therefore, the total number of ordered triples (a, b, c) of non-negative integers such that a+b+c=99 is equal to $\sum_{c=0}^{99}(99-c+1)(99-c-a+1)$. This can be evaluated using a computer or a calculator, and the answer is $362880$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $\boxed{35245}$ ordered triples of non-negative integers such that $a+b+c=99$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ordered triples (a, b, c) of non-negative integers such that a+b+c=99 is $362880$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_12</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> sum_(k=1)^n 1/k</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_12']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,21 +81,28 @@ Let (a_1, a_2, ..., a_n) be a permutation of (1, 2, ..., n). What is the smalles
 
 You may find the following information useful:
 
-1. Consider the sequences (1, 2, ..., n) and (1/1^2, 1/2^2, ..., 1/n^2).
-2. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
+1. Consider the sequences (1, 2, ..., n) and (1/1^2, 1/2^2, ..., 1/n^2).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_1, a_2, \dots, a_n$ be a permutation of $(1, 2, \dots, n)$. We want to find the smallest value of $\sum_{k=1}^n \frac{a_k}{k^2}$.
 
-We can write
-\begin{align*}
-\sum_{k=1}^n \frac{a_k}{k^2} &amp;= \sum_{k=1}^n \frac{1}{k^2} + \sum_{k=1}^n \left(\frac{a_k}{k^2} - \frac{1}{k^2}\right) \\
-&amp;= \zeta(2) + \sum_{k=1}^n \left(\frac{a_k}{k^2} - \frac{1}{k^2}\right).
-\end{align*}
+We can write $\sum_{k=1}^n \frac{a_k}{k^2}$ as follows:
 
-Now, for each $k$, we have $\frac{a_k}{k^2} - \frac{1}{k^2} \ge 0$ if and only if $a_k \ge 1$. Therefore, the minimum value of $\sum_{k=1}^n \frac{a_k}{k^2}$ is achieved when $a_k \ge 1$ for all $k$. This means that the minimum value is $\zeta(2) + \sum_{k=1}^n \frac{1}{k^2}$, which is equal to $\zeta(2) + H_n$.
+$$\sum_{k=1}^n \frac{a_k}{k^2} = \sum_{k=1}^n \frac{1}{k^2} + \sum_{k=1}^n \left(\frac{a_k}{k^2} - \frac{1}{k^2}\right).$$
 
-Finally, we note that $\zeta(2) = \frac{\pi^2}{6}$ and $H_n = \sum_{k=1}^n \frac{1}{k}$, so the minimum value of $\sum_{k=1}^n \frac{a_k}{k^2}$ is $\boxed{\frac{\pi^2}{6} + \sum_{k=1}^n \frac{1}{k}}$.</code></pre>
+The first sum is just $\zeta(2) = \frac{\pi^2}{6}$. The second sum is non-negative, and it is equal to zero if and only if $a_1 = a_2 = \dots = a_n$. Therefore, the smallest value of $\sum_{k=1}^n \frac{a_k}{k^2}$ is $\zeta(2) = \frac{\pi^2}{6}$.
+
+To see that the second sum is non-negative, we can write it as follows:
+
+$$\sum_{k=1}^n \left(\frac{a_k}{k^2} - \frac{1}{k^2}\right) = \sum_{k=1}^n \left(\frac{a_k - 1}{k^2}\right) + \sum_{k=1}^n \frac{1}{k^2}.$$
+
+The first sum is non-negative because $a_k \geq 1$ for all $k$. The second sum is $\zeta(2) = \frac{\pi^2}{6}$. Therefore, the second sum is non-negative.
+
+To see that the second sum is equal to zero if and only if $a_1 = a_2 = \dots = a_n$, we can write it as follows:
+
+$$\sum_{k=1}^n \left(\frac{a_k}{k^2} - \frac{1}{k^2}\right) = \sum_{k=1}^n \left(\frac{a_k - 1}{k^2}\right) + \sum_{k=1}^n \frac{1}{k^2} = \sum_{k=1}^n \left(\frac{a_k - 1}{k^2}\right) + \zeta(2).$$
+
+The second sum is equal to zero if and only if $a_k = 1$ for all $k$. Therefore, the second sum is equal to zero if and only if $a_1 = a_2 = \dots = a_n$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of $\sum_{k=1}^n \frac{a_k}{k^2}$ is $\frac{\pi^2}{6} + \sum_{k=1}^n \frac{1}{k}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $\sum_{k=1}^n \frac{a_k}{k^2}$ is $\zeta(2) = \frac{\pi^2}{6}$, which is achieved when $a_1 = a_2 = \dots = a_n$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

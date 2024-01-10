@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_29</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(n, 4), or an equivalent form such as n(n-1)(n-2)(n-3)/4!</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_29']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,28 +81,50 @@ A diagnoal in a convex polygon is any line connecting two non-adjacent vertices.
 
 You may find the following information useful:
 
-1. An intersection point is created from two diagnonals.
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $n$ be the number of vertices in the convex polygon. We can draw $n(n-3)/2$ diagonals, since each vertex is connected to $n-3$ other vertices that are not adjacent to it. For each pair of diagonals, there is either one intersection point (if the diagonals intersect) or no intersection points (if the diagonals do not intersect). Therefore, the total number of intersection points is $\frac{1}{2}n(n-3)(n-4) = \frac{n(n-1)(n-2)}{6}$.
+1. An intersection point is created from two diagnonals.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $n$ be the number of vertices in the convex polygon. For each pair of non-adjacent vertices, there is a diagonal connecting them. There are $\binom{n}{2}$ pairs of non-adjacent vertices, so there are $\binom{n}{2}$ diagonals.
 
-To see why there are $\frac{1}{2}n(n-3)(n-4)$ intersection points, we can consider the following diagram:
+If we draw all possible diagonals, then each diagonal will intersect at most two other diagonals. This is because a diagonal can only intersect another diagonal if they share a vertex. If two diagonals share a vertex, then they will intersect at that vertex.
 
-[Diagram of a convex polygon with $n$ vertices and $n(n-3)/2$ diagonals]
+The number of intersection points is therefore at most $\frac{1}{2}\binom{n}{2}(\binom{n}{2}-1)$.
 
-Each diagonal is represented by a line segment, and each intersection point is represented by a dot. The number of intersection points is equal to the number of dots in the diagram.
+To see that this is an upper bound, consider the following example. Let $n=4$. The four vertices of the polygon can be labeled $1$, $2$, $3$, and $4$. There are six pairs of non-adjacent vertices, so there are six diagonals. The diagonals can be drawn as follows:
 
-We can count the number of dots in the diagram by considering the following two cases:
+* $\overline{12}$
+* $\overline{13}$
+* $\overline{14}$
+* $\overline{23}$
+* $\overline{24}$
+* $\overline{34}$
 
-* Case 1: A dot is formed by the intersection of two diagonals.
-* Case 2: A dot is formed by the intersection of a diagonal and the boundary of the polygon.
+The diagonals $\overline{12}$ and $\overline{34}$ intersect at the point $(1,2)$. The diagonals $\overline{13}$ and $\overline{24}$ intersect at the point $(2,3)$. The diagonals $\overline{14}$ and $\overline{23}$ intersect at the point $(3,4)$.
 
-In Case 1, there are $\frac{1}{2}n(n-3)$ pairs of diagonals, so there are $\frac{1}{2}n(n-3)$ dots formed in this way.
+There are three intersection points in the interior of the polygon.
 
-In Case 2, there are $n$ vertices, so there are $n$ dots formed in this way.
+In general, for a convex polygon with $n$ vertices, there will be at most $\frac{1}{2}\binom{n}{2}(\binom{n}{2}-1)$ intersection points in the interior of the polygon.
 
-Therefore, the total number of dots is $\frac{1}{2}n(n-3) + n = \frac{n(n-1)(n-2)}{6}$.</code></pre>
+To prove that this is also a lower bound, consider the following example. Let $n=5$. The five vertices of the polygon can be labeled $1$, $2$, $3$, $4$, and $5$. There are ten pairs of non-adjacent vertices, so there are ten diagonals. The diagonals can be drawn as follows:
+
+* $\overline{12}$
+* $\overline{13}$
+* $\overline{14}$
+* $\overline{15}$
+* $\overline{23}$
+* $\overline{24}$
+* $\overline{25}$
+* $\overline{34}$
+* $\overline{35}$
+* $\overline{45}$
+
+The diagonals $\overline{12}$ and $\overline{35}$ intersect at the point $(1,3)$. The diagonals $\overline{13}$ and $\overline{45}$ intersect at the point $(1,4)$. The diagonals $\overline{14}$ and $\overline{25}$ intersect at the point $(1,5)$. The diagonals $\overline{23}$ and $\overline{45}$ intersect at the point $(2,4)$. The diagonals $\overline{24}$ and $\overline{35}$ intersect at the point $(2,5)$.
+
+There are six intersection points in the interior of the polygon.
+
+In general, for a convex polygon with $n$ vertices, there will be at least $\frac{1}{2}\binom{n}{2}(\binom{n}{2}-1)$ intersection points in the interior of the polygon.
+
+Therefore, the number of intersection points in the interior of a convex polygon with $n$ vertices is $\frac{1}{2}\binom{n}{2}(\binom{n}{2}-1)$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of intersection points in the interior of a convex polygon with $n$ vertices is $\frac{n(n-1)(n-2)}{6}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of intersection points in the interior of a convex polygon with $n$ vertices is $\frac{1}{2}\binom{n}{2}(\binom{n}{2}-1)$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_37</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> sum_(i=1)^n i^2, or equivalently n(n+1)(2n+1)/6</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_37']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,20 +81,14 @@ From the set {1, 2, 3, ..., n+1}, select triple (x, y, z), with duplicate allowe
 
 You may find the following information useful:
 
-1. Consider the number of ways to choose the triple when z=i.
-2. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose the triple (x, y, z) is the number of ways to choose two numbers from the set {1, 2, 3, ..., n+1} and then choose a number from the set {1, 2, 3, ..., n+1} that is greater than both of the chosen numbers.
+1. Consider the number of ways to choose the triple when z=i.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose the triple when $z=i$ is the number of ways to choose two numbers from the set $\\{1, 2, 3, ..., i-1\\}$, which is $\binom{i-1}{2}$.
 
-The number of ways to choose two numbers from the set {1, 2, 3, ..., n+1} is $\binom{n+1}{2}$.
+To choose the triple, we first choose $z$. There are $n+1$ choices for $z$. Then, we choose $x$ and $y$, such that $x&lt;y&lt;z$. There are $\binom{n}{2}$ ways to choose $x$ and $y$. Therefore, the total number of ways to choose the triple is
 
-The number of ways to choose a number from the set {1, 2, 3, ..., n+1} that is greater than both of the chosen numbers is $n+1$.
-
-Therefore, the number of ways to choose the triple (x, y, z) is $\binom{n+1}{2}(n+1)$.
-
-Alternatively, we can consider the number of ways to choose the triple (x, y, z) when $z=i$. There are $\binom{n+1}{2}$ ways to choose $x$ and $y$, and then $1$ way to choose $z$. Therefore, the total number of ways to choose the triple (x, y, z) is $\binom{n+1}{2}(n+1)$.</code></pre>
+$$\binom{n+1}{2}\binom{n}{2} = \frac{(n+1)(n)(n-1)}{2\cdot2} = \frac{n(n+1)(2n+1)}{8}.$$</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose a triple (x, y, z) from the set {1, 2, 3, ..., n+1} such that z&gt;max(x, y) is $\binom{n+1}{2}(n+1)$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose a triple $(x, y, z)$ from the set $\\{1, 2, 3, ..., n+1\\}$, with duplicate allowed, such that $z&gt;max(x, y)$ is $\frac{n(n+1)(2n+1)}{8}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

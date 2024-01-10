@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_28</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> ((-1)^(n+1)+n+1)/(n+2) (i.e., 1 if for odd n, and n/(n+2) for even n)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_28']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,51 +82,30 @@ Let P(x) be a polynomial of degree n such that P(k)=k/(k+1) for k=0, 1, ..., n. 
 You may find the following information useful:
 
 1. Let Q(x)=(x+1)P(x)-x and study its roots.
-2. A polynomial of degree n with root x_1, ..., x_n can be written as a(x-x_1)(x-x_2)...(x-x_n) for some value of a.
-3. Find the expression for Q(x) by studying the value of Q(x) at x=-1.</code></pre>
+2. Find the expression for Q(x) by studying the value of Q(x) at x=-1.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $P(x)$ be a polynomial of degree $n$ such that $P(k) = \frac{k}{k+1}$ for $k = 0, 1, \dots, n$. We want to find $P(n+1)$.
 
-Let $Q(x) = (x+1)P(x) - x$. Then $Q(x)$ is a polynomial of degree $n+1$ with roots $0, 1, \dots, n$. Therefore, we can write $Q(x)$ as
+Let $Q(x) = (x+1)P(x) - x$. Then $Q(k) = k$ for $k = 0, 1, \dots, n$. This means that $Q(x)$ has roots at $x = 0, 1, \dots, n$.
 
-$$Q(x) = a(x-0)(x-1)(x-2)\dots(x-n)$$
+We can find the expression for $Q(x)$ by studying the value of $Q(x)$ at $x = -1$. We have
 
-for some value of $a$.
+$$Q(-1) = (-1+1)P(-1) - (-1) = P(-1) + 1.$$
 
-We can find $a$ by studying the value of $Q(x)$ at $x=-1$. Substituting $x=-1$ into the equation $Q(x) = a(x-0)(x-1)(x-2)\dots(x-n)$, we get
+We also know that $P(-1) = \frac{-1}{-1+1} = -1$. Therefore,
 
-$$Q(-1) = a(-1-0)(-1-1)(-1-2)\dots(-1-n) = a(-n-1)$$
+$$Q(x) = x - 1 - P(x).$$
 
-But we also know that $Q(-1) = P(-1) - (-1) = \frac{-1}{-1+1} = 1$. Therefore, we have
+Now we can find $P(n+1)$ by substituting $x = n+1$ into $Q(x)$. We get
 
-$$a(-n-1) = 1$$
+$$P(n+1) = (n+1) - 1 - P(n+1).$$
 
-Solving for $a$, we get
+Solving for $P(n+1)$, we get
 
-$$a = \frac{1}{-n-1}$$
+$$P(n+1) = \frac{n+1}{n+2}.$$
 
-Now that we know $a$, we can write $Q(x)$ as
-
-$$Q(x) = \frac{1}{-n-1}(x-0)(x-1)(x-2)\dots(x-n)$$
-
-We can factor out $x$ from the right-hand side to get
-
-$$Q(x) = \frac{x}{-n-1}(x-1)(x-2)\dots(x-n-1)$$
-
-Therefore, $P(x) = \frac{x}{x+1}Q(x) = \frac{x}{x+1}\frac{x}{-n-1}(x-1)(x-2)\dots(x-n-1)$.
-
-We can simplify this expression by multiplying the numerator and denominator by $-n-1$ to get
-
-$$P(x) = \frac{-nx}{(x+1)(-n-1)}(x-1)(x-2)\dots(x-n-1)$$
-
-Finally, we can simplify this expression by cancelling out the $x$ factors in the numerator and denominator to get
-
-$$P(x) = \frac{-n}{-n-1}(x-1)(x-2)\dots(x-n-1) = \frac{1}{-n-1}(x-1)(x-2)\dots(x-n-1)$$
-
-Therefore, we have
-
-$$P(n+1) = \frac{1}{-n-1}(n+1-1)(n+1-2)\dots(n+1-n-1) = \boxed{\frac{1}{n+1}}$$</code></pre>
+Therefore, the answer is $\boxed{\frac{n+1}{n+2}}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The answer is $\boxed{\frac{1}{n+1}}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The answer is $\boxed{\frac{n+1}{n+2}}$, since $P(x)$ is a polynomial of degree $n$ such that $P(k) = \frac{k}{k+1}$ for $k = 0, 1, \dots, n$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

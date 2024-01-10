@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_50</td>
             <td>PaLM 2 Medium</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_50']
-messages = problem.conversations['PaLM 2 Medium|Example w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,39 +77,24 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Let a sequence be the defined as a_1=a_2=1, and a_n=(a_(n-1)^2+2)/a_(n-2). How many values in a_1, a_2, ..., a_100 are integers?
+Let a sequence be the defined as a_1=a_2=1, and a_n=(a_(n-1)^2+2)/a_(n-2). How many values in a_1, a_2, ..., a_100 are integers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $a_n$ is defined as follows:
 
-You may find the following information useful:
+$$a_1 = 1$$
+$$a_2 = 2$$
+$$a_n = \frac{a_{n-1}^2 + 2}{a_{n-2}}$$
 
-1. Write the expression for a_n*a_(n-2) and a_(n+1)*a_(n-1).
-2. Find the relationship between (a_(n-1)+a_(n+1))/a_n and (a_(n-2)+a_n)/a_(n-1).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $a_1=a_2=1$ and $a_n=(a_{n-1}^2+2)/a_{n-2}$. We want to find how many values in $a_1, a_2, ..., a_{100}$ are integers.
+We can see that $a_1$ and $a_2$ are both integers. To find the next few terms, we can substitute $a_1 = 1$ and $a_2 = 2$ into the definition of $a_n$:
 
-We can write the expression for $a_n a_{n-2}$ as follows:
+$$a_3 = \frac{(1)^2 + 2}{2} = \frac{3}{2}$$
+$$a_4 = \frac{\left(\frac{3}{2}\right)^2 + 2}{\frac{2}{1}} = \frac{11}{4}$$
+$$a_5 = \frac{\left(\frac{11}{4}\right)^2 + 2}{\frac{4}{3}} = \frac{33}{12}$$
 
-$$a_n a_{n-2} = \frac{(a_{n-1}^2+2) a_{n-2}}{a_{n-3}} = \frac{a_{n-1}^2 a_{n-2} + 2 a_{n-2}}{a_{n-3}} = a_{n-1}^2 + \frac{2 a_{n-2}}{a_{n-3}}$$
+We can see that the terms of the sequence are not always integers. In fact, the terms of the sequence are only integers when $a_{n-2}$ is a perfect square. This is because when $a_{n-2}$ is a perfect square, then $a_{n-1}$ is also a perfect square, and therefore $a_n$ is a rational number that can be written in the form $\frac{p}{q}$, where $p$ and $q$ are integers and $q \neq 0$.
 
-We can also write the expression for $a_{n+1} a_{n-1}$ as follows:
-
-$$a_{n+1} a_{n-1} = \frac{(a_n^2+2) a_{n-1}}{a_{n-2}} = \frac{a_n^2 a_{n-1} + 2 a_{n-1}}{a_{n-2}} = a_n^2 + \frac{2 a_{n-1}}{a_{n-2}}$$
-
-We can see that $a_n a_{n-2}$ and $a_{n+1} a_{n-1}$ are both equal to $a_{n-1}^2 + \frac{2 a_{n-2}}{a_{n-3}}$. This means that if $a_{n-1}$ is an integer, then $a_n a_{n-2}$ and $a_{n+1} a_{n-1}$ are also integers.
-
-We can also find the relationship between $(a_{n-1}+a_{n+1})/a_n$ and $(a_{n-2}+a_n)/a_{n-1}$. We have:
-
-$$\frac{a_{n-1}+a_{n+1}}{a_n} = \frac{a_{n-1}^2+2 + a_{n+1}^2+2}{a_n^2+2} = \frac{(a_{n-1}+a_{n+1})^2}{a_n^2+2}$$
-
-and:
-
-$$\frac{a_{n-2}+a_n}{a_{n-1}} = \frac{a_{n-2}^2+2 + a_n^2+2}{a_{n-1}^2+2} = \frac{(a_{n-2}+a_n)^2}{a_{n-1}^2+2}$$
-
-We can see that $(a_{n-1}+a_{n+1})/a_n$ and $(a_{n-2}+a_n)/a_{n-1}$ are both equal to $(a_{n-1}+a_{n+1})^2/(a_n^2+2)$. This means that if $a_{n-1}$ and $a_{n+1}$ are both integers, then $(a_{n-1}+a_{n+1})/a_n$ and $(a_{n-2}+a_n)/a_{n-1}$ are also integers.
-
-Now, we can use this information to find how many values in $a_1, a_2, ..., a_{100}$ are integers. We know that if $a_{n-1}$ is an integer, then $a_n a_{n-2}$ and $a_{n+1} a_{n-1}$ are also integers. This means that if $a_{n-1}$ is an integer, then there must be at least one value in $a_1, a_2, ..., a_{100}$ that is an integer.
-
-We also know that if $a_{n-1}$ and $a_{n+1}$ are both integers, then $(a_{n-1}+a_{n+1})/a_n$ and $(a_{n-2}+a_n)/a_{n-1}$ are also integers. This means that if $a_{n-1}$ and $a_{n+1}$ are both integers, then there must be at least two values in $a_1, a_2, ..., a</code></pre>
+To find the number of integers in the sequence $a_1, a_2, ..., a_{100}$, we need to find the number of perfect squares between 1 and 100. There are 16 perfect squares between 1 and 100: 1, 4, 9, 16, 25, 36, 49, 64, 81, 100, 121, 144, 169, 196, and 225. Therefore, there are $\boxed{16}$ integers in the sequence $a_1, a_2, ..., a_{100}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are at least 100 values in $a_1, a_2, ..., a_{100}$ that are integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 16 integers in the sequence $a_1, a_2, ..., a_{100}$, because $a_n$ is only an integer when $a_{n-2}$ is a perfect square.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_26</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> -3 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_26']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,44 +81,53 @@ For what value(s) of k is x^3+y^3+z^3+kxyz divisible by x+y+z?
 
 You may find the following information useful:
 
-1. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).
-2. Find the valid value when z=-(x+y).
-3. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.
-4. To verify that the found k value is valid for every x, y, z, factorize the expression by adding and subtracting 3x^2*y+3x*y^2.
-5. a^3±b^3=(a+b)(a^2∓ab+b^2).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the equation x^3 + y^3 + z^3 + kxyz, we are asked to find the value of k such that the equation is divisible by x + y + z.
+1. Find the valid value when z=-(x+y).
+2. To verify that the found k value is valid for every x, y, z, factorize the expression by adding and subtracting 3x^2*y+3x*y^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>1. Let&#x27;s first find the valid value when z=-(x+y). 
 
-We are given the hint to consider the case where z = -(x + y). Substituting this into the equation, we get:
+Substitute z=-(x+y) into the equation:
 
-x^3 + y^3 - (x + y)^3 + kxy(-x - y)
+x^3+y^3+(-x-y)^3+kx(-x-y)(x+y)
 
-Expanding the cubes using the formula (x±y)^3=x^3±3x^2*y+3x*y^2±y^3, we get:
+Simplify the equation:
 
-x^3 + y^3 - (x^3 + 3x^2*y + 3x*y^2 + y^3) + kxy(-x - y)
+x^3+y^3-(x^3+3x^2y+3xy^2+y^3)+kx(-x^2-y^2)
 
-Simplifying, we get:
+This simplifies to:
 
--3x^2*y - 3x*y^2 - kxy(x + y)
+-3x^2y-3xy^2-kx^2y-kxy^2
 
-We want this to be divisible by x + y, so we can factor out x + y:
+Factor out -x^2y-xy^2:
 
--(3x*y + 3y^2 + kxy)(x + y)
+-(3+k)(x^2y+xy^2)
 
-For this to be divisible by x + y, the term in the parentheses must be independent of x and y. This is only possible if k = -3.
+For the expression to be divisible by x+y, the term in the parenthesis must be zero. Therefore, the valid value for k is -3.
 
-So, the value of k for which x^3 + y^3 + z^3 + kxyz is divisible by x + y + z is k = -3.
+2. Now, let&#x27;s verify that the found k value is valid for every x, y, z. 
 
-To verify this, we substitute k = -3 back into the original equation:
+Substitute k=-3 into the original equation:
 
-x^3 + y^3 + z^3 - 3xyz
+x^3+y^3+z^3-3xyz
 
-Now, we can factorize this expression using the formula a^3±b^3=(a+b)(a^2∓ab+b^2) and the hint to add and subtract 3x^2*y+3x*y^2:
+Add and subtract 3x^2y+3xy^2 to factorize the expression:
 
-x^3 + y^3 + z^3 - 3xyz = (x + y + z)(x^2 + y^2 + z^2 - xy - yz - zx)
+x^3+3x^2y+3xy^2+y^3-3x^2y-3xy^2+z^3-3xyz
 
-This verifies that the equation is divisible by x + y + z for k = -3.</code></pre>
+This simplifies to:
+
+(x+y)^3+z^3-3xyz-3x^2y-3xy^2
+
+Factor out x+y from the last two terms:
+
+(x+y)^3+z^3-3xy(x+y)
+
+This simplifies to:
+
+(x+y+z)((x+y)^2-xy+z^2)
+
+Therefore, the expression is divisible by x+y+z for k=-3.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of k for which the equation x^3 + y^3 + z^3 + kxyz is divisible by x + y + z is k = -3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of k for which the expression x^3+y^3+z^3+kxyz is divisible by x+y+z is -3.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

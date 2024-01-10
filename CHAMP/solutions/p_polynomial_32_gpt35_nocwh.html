@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_32</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 5</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_32']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,29 +81,42 @@ Let f(x)=x^4+x^3+x^2+x+1. Find the remainder of f(x^5) divided by f(x).
 
 You may find the following information useful:
 
-1. Construct terms of x^(5k)-1 for k=1, 2, 3, 4 in f(x^5).
-2. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
-3. a^n-1=(a-1)(a^(n-1)+a^(n-2)+...+a+1).
-4. If a | b and b | c, then a | c.
-5. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the remainder of f(x^5) divided by f(x), we can use the Remainder Theorem. According to the Remainder Theorem, if we divide f(x^5) by f(x), the remainder will be equal to f(x^5) evaluated at x = x.
+1. Construct terms of x^(5k)-1 for k=1, 2, 3, 4 in f(x^5).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the remainder of f(x^5) divided by f(x), we need to divide f(x^5) by f(x) using polynomial long division.
 
-First, let&#x27;s find f(x^5):
+First, let&#x27;s find the terms of x^(5k)-1 for k=1, 2, 3, 4 in f(x^5):
 
-f(x^5) = (x^5)^4 + (x^5)^3 + (x^5)^2 + (x^5) + 1
-        = x^20 + x^15 + x^10 + x^5 + 1
+For k=1:
+x^(5*1)-1 = x^5-1
 
-Now, let&#x27;s evaluate f(x^5) at x = x:
+For k=2:
+x^(5*2)-1 = x^10-1
 
-f(x^5) = x^20 + x^15 + x^10 + x^5 + 1
+For k=3:
+x^(5*3)-1 = x^15-1
 
-Therefore, the remainder of f(x^5) divided by f(x) is f(x^5) itself:
+For k=4:
+x^(5*4)-1 = x^20-1
 
-Remainder = f(x^5) = x^20 + x^15 + x^10 + x^5 + 1
+Now, let&#x27;s perform polynomial long division:
 
-So, the remainder of f(x^5) divided by f(x) is x^20 + x^15 + x^10 + x^5 + 1.</code></pre>
+            x^3 + x^2 + x + 1
+_____________________________________
+f(x) | x^5 + 0x^4 + 0x^3 + 0x^2 + 0x + 1
+       - (x^5 + x^4 + x^3 + x^2 + x)
+
+            - x^4 - x^3 - x^2 - x + 1
+       _______________________________
+                      0x^4 + 0x^3 + 0x^2 + 0x + 1
+                      - (0x^4 + 0x^3 + 0x^2 + 0x)
+
+                      0
+
+Therefore, the remainder of f(x^5) divided by f(x) is 0.
+
+Final Answer: The remainder is 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of f(x^5) divided by f(x) is x^20 + x^15 + x^10 + x^5 + 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder of f(x^5) divided by f(x) is 0.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

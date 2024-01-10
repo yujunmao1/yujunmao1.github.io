@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_39</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> x^3-1</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_39']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,18 +81,20 @@ Find the remainder of x^1959−1 divided by (x^2+1)(x^2+x+1).
 
 You may find the following information useful:
 
-1. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).
-2. Study the value of x^1959−1 at x=i, -i, w, w^2 where w=e^(i*pi/3) is the cube root of unity.
-3. The cube root of unity w=e^(i*pi/3) satisfies w+w^2+1=0 and w^n=w^(n mod 3).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(x) = x^{1959} - 1$ and $g(x) = x^2 + 1$. We want to find the remainder when $f(x)$ is divided by $g(x)$.
+1. Study the value of x^1959−1 at x=i, -i, w, w^2 where w=e^(i*pi/3) is the cube root of unity.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can use the Factor Theorem to find the remainder when $x^{1959}-1$ is divided by $(x^2+1)(x^2+x+1)$. The Factor Theorem states that if $f(x)$ is a polynomial and $a$ is a root of $f(x)$, then $x-a$ is a factor of $f(x)$. In this case, we know that $x=i$, $x=-i$, $x=w$, and $x=w^2$ are all roots of $x^2+1$. Therefore, $(x-i)$, $(x+i)$, $(x-w)$, and $(x-w^2)$ are all factors of $x^{1959}-1$.
 
-By the remainder theorem, the remainder when $f(x)$ is divided by $g(x)$ is equal to $f(x)$ evaluated at $x = -1$. Therefore, the remainder we are looking for is $f(-1) = (-1)^{1959} - 1 = -1$.
+We can also use the fact that $x^3-1=(x-1)(x^2+x+1)$ to find the remainder when $x^{1959}-1$ is divided by $(x^2+x+1)$. We can write $x^{1959}-1$ as $(x^{1959}-1)-(1-1)$, which is equal to $x^{1959}-1+1-1$. We can then factor out a $1$ to get $1(x^{1959}-1-1)$. We can then use the Factor Theorem to find that $(x-1)$ is a factor of $x^{1959}-1-1$. Therefore, $(x-1)$ is also a factor of $x^{1959}-1$.
 
-Alternatively, we can use long division to find the quotient and remainder when $f(x)$ is divided by $g(x)$. The quotient is $x^{1958} - x^{1957} + x^{1956} - \cdots - 1$, and the remainder is $-1$. Therefore, the remainder when $f(x)$ is divided by $g(x)$ is $-1$.
+We can now use the Factor Theorem to find the remainder when $x^{1959}-1$ is divided by $(x^2+1)(x^2+x+1)$. We know that $(x-i)$, $(x+i)$, $(x-w)$, and $(x-w^2)$ are all factors of $x^{1959}-1$. We also know that $(x-1)$ is a factor of $x^{1959}-1$. Therefore, the remainder when $x^{1959}-1$ is divided by $(x^2+1)(x^2+x+1)$ is the remainder when $(x-i)(x+i)(x-w)(x-w^2)(x-1)$ is divided by $(x^2+1)(x^2+x+1)$.
 
-Finally, we can also solve this problem by using the fact that $x^3 - 1 = (x - 1)(x^2 + x + 1)$. Therefore, $x^{1959} - 1 = (x^{1959/3} - 1)(x^{1959/3} + x^{1959/6} + x^{1959/9} + \cdots + 1)$. Since $1959$ is not divisible by $3$, the only term in the product that is not divisible by $x^2 + 1$ is $x^{1959/3} - 1$. Therefore, the remainder when $x^{1959} - 1$ is divided by $x^2 + 1$ is $x^{1959/3} - 1$. Since $x^{1959/3} = e^{i\frac{1959\pi}{3}}$, the remainder when $x^{1959} - 1$ is divided by $x^2 + 1$ is $e^{i\frac{1959\pi}{3}} - 1 = -1$.</code></pre>
+We can factor out a $(x-1)$ from $(x-i)(x+i)(x-w)(x-w^2)(x-1)$ to get $(x-1)(x-i)(x+i)(x-w)(x-w^2)$. We can then use the Factor Theorem to find that $(x-1)$ is a factor of $(x-i)(x+i)(x-w)(x-w^2)$. Therefore, the remainder when $x^{1959}-1$ is divided by $(x^2+1)(x^2+x+1)$ is the remainder when $(x-i)(x+i)(x-w)(x-w^2)$ is divided by $(x^2+1)$.
+
+We can now use the Factor Theorem to find the remainder when $(x-i)(x+i)(x-w)(x-w^2)$ is divided by $(x^2+1)$. We know that $x=i$ is a root of $x^2+1$. Therefore, $(x-i)$ is a factor of $(x^2+1)$. We also know that $x=-i$ is a root of $x^2+1$. Therefore, $(x+i)$ is a factor of $(x^2+1)$. We also know that $x=w$ is a root of $x^2+1$. Therefore, $(x-w)$ is a factor of $(x^2+1)$. We also know that $x=w^2$ is a root of $x^2+1$. Therefore, $(x-w^2)$ is a factor of $(x^2+1)$.
+
+We can now use the Factor Theorem to find that $(x-i)(x+i)(x-w)(x-w^2)$ is equal to $(x^2+1)(x-i)(x+i)(x-w)(x-w^2)$. Therefore, the remainder when $x^{1959}-1$ is divided by $(x^2+</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder when $x^{1959} - 1$ is divided by $x^2 + 1$ is $-1$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The remainder when $x^{1959}-1$ is divided by $(x^2+1)(x^2+x+1)$ is $0$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

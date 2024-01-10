@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_12</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> The limit does not exist</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_12']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,31 +81,32 @@ A sequence {a_n} is defined by a_1=1, a_(n+1)=a_n+1/a_n^2. Does a finite limit o
 
 You may find the following information useful:
 
-1. Compare a_n^3 with 3n.
-2. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.</code></pre>
+1. Compare a_n^3 with 3n.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $a_1=1$ and $a_{n+1}=a_n+\frac{1}{a_n^2}$. We want to know if there exists a finite limit of $a_n$ as $n\to\infty$.
 
-We can start by comparing $a_n^3$ with $3n$. We have
+To do this, we will use the following theorem:
 
-$$a_n^3 = (a_n+\frac{1}{a_n^2})^3 = a_n^3 + 3a_n^2\cdot\frac{1}{a_n^2} - 3a_n\cdot\frac{1}{a_n^4} + \frac{1}{a_n^6} = a_n^3 + 3 - 3\frac{1}{a_n^2} + \frac{1}{a_n^6}.$$
+&gt; **Theorem.** Let $a_1,a_2,\ldots$ be a sequence of real numbers. If there exists a number $L$ such that $|a_{n+1}-L|&lt;\frac{1}{n}$ for all sufficiently large $n$, then the sequence converges to $L$.
 
-Now, if $a_n\to\infty$, then $\frac{1}{a_n^2}\to 0$. Therefore, we have
+In our case, we have $a_{n+1}-L=\frac{1}{a_n^2}$. We want to show that there exists a number $L$ such that $\frac{1}{a_n^2}&lt;\frac{1}{n}$ for all sufficiently large $n$.
 
-$$a_n^3 \to a_n^3 + 3 - 3\cdot 0 + 0 = 3n.$$
+To do this, we will use the following inequality:
 
-This means that if $a_n\to\infty$, then $a_n^3$ must also go to $\infty$. However, we know that $a_n\geq 1$ for all $n$. Therefore, we cannot have $a_n\to\infty$.
+&gt; **Theorem.** For all real numbers $x$ and $y$, we have $x^2\ge xy$.
 
-This means that the only other possibility is that $a_n$ converges to some finite value. Let $L$ be the limit of $a_n$. Then we have
+In our case, we have $a_n^2\ge a_n\cdot\frac{1}{a_n}=1$. Therefore, we have $\frac{1}{a_n^2}&lt;\frac{1}{n}$ for all $n\ge 1$.
 
-$$L = \lim_{n\to\infty} a_n = \lim_{n\to\infty} a_{n+1} = \lim_{n\to\infty} a_n + \frac{1}{a_n^2} = L + \frac{1}{L^2}.$$
+This shows that the sequence $\\{a_n\\}$ satisfies the condition of the theorem, and therefore converges to a finite limit.
 
-Solving for $L$, we get
+To find the limit, we can use the following theorem:
 
-$$L^3 - L - 1 = 0.$$
+&gt; **Theorem.** Let $a_1,a_2,\ldots$ be a sequence of real numbers that converges to a limit $L$. Then, for any number $x$, we have $\lim_{n\to\infty}(a_n+x)=L+x$.
 
-This equation has one real solution, which is approximately equal to 2.0788. Therefore, we conclude that the limit of $a_n$ is $2.0788$.</code></pre>
+In our case, we have $a_n\to L$. Therefore, we have $\lim_{n\to\infty}(a_n+\frac{1}{a_n^2})=L+\frac{1}{L^2}$.
+
+This shows that the limit of the sequence is $\boxed{L+\frac{1}{L^2}}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence $a_n$ defined by $a_1=1$ and $a_{n+1}=a_n+\frac{1}{a_n^2}$ is $2.0788$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence $a_n$ defined by $a_1=1$ and $a_{n+1}=a_n+\frac{1}{a_n^2}$ is $L+\frac{1}{L^2}$, where $L$ is any real number.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

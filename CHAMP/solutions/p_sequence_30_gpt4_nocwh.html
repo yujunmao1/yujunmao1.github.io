@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_30</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (a+3b)/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_30']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,44 +81,39 @@ For a≤b, define the sequence as a_1=a, a_2=b, a_(n+2)=(a_(n+1)+a_n)/2. Does th
 
 You may find the following information useful:
 
-1. Study the relationship between |a_(n+2)-a_(n+1)| and |a_(n+1)-a_n|.
-2. If an (infinite) sequence converges to a limit, then all (infinite) subsequences converge, and converge to the same limit.
-3. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by examining the first few terms of the sequence:
+1. Study the relationship between |a_(n+2)-a_(n+1)| and |a_(n+1)-a_n|.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s first look at the sequence and try to understand its behavior. 
+
+The sequence is defined as follows:
 
 a_1 = a
 a_2 = b
-a_3 = (a+b)/2
-a_4 = (b+(a+b)/2)/2 = (2b+a)/4
-a_5 = ((2b+a)/4 + (a+b)/2)/2 = (3b+2a)/8
+a_(n+2) = (a_(n+1) + a_n) / 2
 
-From this, we can see a pattern emerging. The nth term of the sequence can be written as:
+This sequence is a type of sequence known as a recursive sequence, where each term is defined in terms of previous terms. 
 
-a_n = (2^(n-2)*b + (2^(n-2)-1)*a) / 2^(n-1)
+Let&#x27;s look at the first few terms of the sequence:
 
-Now, let&#x27;s examine the difference between consecutive terms:
+a_1 = a
+a_2 = b
+a_3 = (a + b) / 2
+a_4 = (b + (a + b) / 2) / 2 = (2b + a) / 4
+a_5 = ((2b + a) / 4 + (a + b) / 2) / 2 = (3a + 3b) / 8
 
-|a_(n+2) - a_(n+1)| = |(2^n*b + (2^n-1)*a) / 2^n - (2^(n-1)*b + (2^(n-1)-1)*a) / 2^(n-1)|
+From this, we can see that the sequence is getting closer and closer to the average of a and b. 
 
-Simplifying this gives:
+Now, let&#x27;s look at the relationship between |a_(n+2) - a_(n+1)| and |a_(n+1) - a_n|. 
 
-|a_(n+2) - a_(n+1)| = |(2^(n-1)*b + (2^(n-1)-1)*a) / 2^n|
+|a_(n+2) - a_(n+1)| = |(a_(n+1) + a_n) / 2 - a_(n+1)| = |a_n - a_(n+1)| / 2
+|a_(n+1) - a_n| = |(a_n + a_(n-1)) / 2 - a_n| = |a_(n-1) - a_n| / 2
 
-This shows that the difference between consecutive terms is decreasing as n increases, which suggests that the sequence is converging.
+From this, we can see that the difference between consecutive terms is halving each time. This means that the sequence is converging, and the limit exists.
 
-To find the limit of the sequence, we can use the formula for the sum of an infinite geometric series:
+The limit of the sequence is the value that the terms of the sequence are getting closer and closer to. From our earlier observation, we can see that the sequence is getting closer and closer to the average of a and b. 
 
-a + a*r + a*r^2 + ... = a / (1 - r)
-
-In this case, a = a_1 = a, and r = (a_2 - a_1) / (a_1 - a_0) = (b - a) / (a - a) = b - a.
-
-So, the limit of the sequence is:
-
-a / (1 - (b - a)) = a / (a - b)
-
-Therefore, the sequence does converge, and its limit is a / (a - b).</code></pre>
+Therefore, the limit of the sequence is (a + b) / 2.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence defined by a_1=a, a_2=b, a_(n+2)=(a_(n+1)+a_n)/2 does converge, and its limit is a / (a - b).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the given sequence exists and it is equal to the average of a and b, which is (a + b) / 2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

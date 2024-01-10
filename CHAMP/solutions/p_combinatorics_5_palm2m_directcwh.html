@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_5</td>
+            <td>PaLM 2 Medium</td>
+            <td>Direct C w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load('v0')
+problem = dataset['P_Combinatorics_5']
+messages = problem.conversations['PaLM 2 Medium|Direct C w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+How many subsets of {1, 2,..., 10} have no two successive numbers?
+
+You may find the following information useful:
+
+1. Consider a string of 0s and 1s, where a digit 1 at i-th place means that i is included in the subset. Find the constraint on the string.
+2. Let P(n) be the number of such strings of length n and express P(n) as P(n-1) and P(n-2).
+3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $P(n)$ be the number of subsets of $\\{1, 2, ..., n\\}$ that have no two successive numbers. We can count these subsets by considering the following string of 0s and 1s, where a digit 1 at the $i$th place means that $i$ is included in the subset.
+
+1000000000
+
+The constraint on this string is that no two consecutive digits can be 1. This can be expressed as follows:
+
+* The first digit must be 0.
+* For each digit $i$ from 2 to $n$, the digit $i-1$ must be 0 or 1, but not 1.
+
+Let $P(n)$ be the number of such strings of length $n$. We can express $P(n)$ as follows:
+
+$$P(n) = P(n-1) + P(n-2)$$
+
+The base cases are $P(0) = 1$ and $P(1) = 2$.
+
+To see why this is true, consider the following cases:
+
+* If the first digit is 0, then the remaining $n-1$ digits can be any of the 2 choices 0 or 1, so there are $2^{n-1}$ ways to complete the string.
+* If the first digit is 1, then the remaining $n-2$ digits can be any of the 2 choices 0 or 1, except for the digit 2, which must be 0. So there are $2^{n-2}$ ways to complete the string.
+
+Therefore, we have the following recurrence relation:
+
+$$P(n) = P(n-1) + P(n-2)$$
+
+with base cases $P(0) = 1$ and $P(1) = 2$.
+
+This recurrence relation can be solved using the following formula:
+
+$$P(n) = \frac{1}{2} \left( 2^n - 1 \right)$$
+
+Therefore, the number of subsets of $\\{1, 2, ..., 10\\}$ that have no two successive numbers is $\frac{1}{2} \left( 2^{10} - 1 \right) = 1023$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of subsets of $\\{1, 2, ..., 10\\}$ that have no two successive numbers is $\frac{1}{2} \left( 2^{10} - 1 \right) = 1023$.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

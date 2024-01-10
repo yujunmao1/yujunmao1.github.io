@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_32</td>
             <td>PaLM 2 Medium</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> No</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_32']
-messages = problem.conversations['PaLM 2 Medium|Name w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,55 +77,75 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Given a set of n positive numbers a_1≤a_2≤...≤a_n, with the sum of the n(n-1)/2 pairwise products being equal to 1. Is it possible that a_1+a_2+...+a_(n-1) is greater than or equal to sqrt(2)?
+Given a set of n positive numbers a_1≤a_2≤...≤a_n, with the sum of the n(n-1)/2 pairwise products being equal to 1. Is it possible that a_1+a_2+...+a_(n-1) is greater than or equal to sqrt(2)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_1, a_2, \dots, a_n$ be a set of positive numbers such that $a_1 \leq a_2 \leq \dots \leq a_n$ and $\sum_{1 \leq i &lt; j \leq n} a_i a_j = 1$. We will show that $a_1 + a_2 + \dots + a_{n-1} \leq \sqrt{2}$.
 
-You may find the following information useful:
+To prove this, we will use the following inequality:
 
-1. Let S=a_1+a_2+...+a_n, and study the value a_1*(S-a_1)+a_2*(S-a_2)+...+a_n*(S-a_n).
-2. Find the necessary condition on each S-a_i if a_1+a_2+...+a_(n-1)≥sqrt(2).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_1, a_2, \dots, a_n$ be a set of positive numbers such that $a_1 \leq a_2 \leq \dots \leq a_n$ and $\sum_{1 \leq i &lt; j \leq n} a_i a_j = 1$. We want to show that $a_1 + a_2 + \dots + a_{n-1} \leq \sqrt{2}$.
+$$\sum_{1 \leq i &lt; j \leq n} a_i a_j \leq \frac{1}{2} \left( \sum_{i=1}^n a_i \right)^2.$$
 
-To do this, we will use the following lemma:
+This inequality can be proved by considering the following diagram:
 
-&gt; Lemma: Let $a_1, a_2, \dots, a_n$ be a set of positive numbers such that $\sum_{1 \leq i &lt; j \leq n} a_i a_j = 1$. Then,
+[asy]
+unitsize(1 cm);
 
-&gt;
+draw((0,0)--(10,0));
+draw((0,2)--(10,2));
 
-&gt; $$\sum_{i=1}^n a_i^2 \leq \frac{n}{2}.$$
+label(&quot;$a_1$&quot;, (0,0), S);
+label(&quot;$a_2$&quot;, (2,0), S);
+label(&quot;$a_3$&quot;, (4,0), S);
+label(&quot;$a_4$&quot;, (6,0), S);
+label(&quot;$a_5$&quot;, (8,0), S);
+label(&quot;$a_6$&quot;, (10,0), S);
 
-_Proof of Lemma:_ We can write
+label(&quot;$a_1 a_2$&quot;, (1,1), S);
+label(&quot;$a_1 a_3$&quot;, (3,1), S);
+label(&quot;$a_1 a_4$&quot;, (5,1), S);
+label(&quot;$a_1 a_5$&quot;, (7,1), S);
+label(&quot;$a_1 a_6$&quot;, (9,1), S);
 
-$$\sum_{i=1}^n a_i^2 = \sum_{1 \leq i &lt; j \leq n} a_i a_j + \sum_{i=1}^n a_i^2 - 2 \sum_{1 \leq i &lt; j \leq n} a_i a_j.$$
+label(&quot;$a_2 a_3$&quot;, (2,2), S);
+label(&quot;$a_2 a_4$&quot;, (4,2), S);
+label(&quot;$a_2 a_5$&quot;, (6,2), S);
+label(&quot;$a_2 a_6$&quot;, (8,2), S);
 
-By the Cauchy-Schwarz inequality, we have
+label(&quot;$a_3 a_4$&quot;, (3,3), S);
+label(&quot;$a_3 a_5$&quot;, (5,3), S);
+label(&quot;$a_3 a_6$&quot;, (7,3), S);
 
-$$\sum_{1 \leq i &lt; j \leq n} a_i a_j \leq \sqrt{\sum_{1 \leq i &lt; j \leq n} a_i^2} \sqrt{\sum_{1 \leq i &lt; j \leq n} a_j^2} = 1.$$
+label(&quot;$a_4 a_5$&quot;, (4,4), S);
+label(&quot;$a_4 a_6$&quot;, (6,4), S);
 
-Therefore,
+label(&quot;$a_5 a_6$&quot;, (5,5), S);
 
-$$\sum_{i=1}^n a_i^2 \leq \frac{n}{2}.$$
+draw((0,1)--(10,1));
+draw((0,2)--(10,2));
+draw((1,0)--(1,2));
+draw((2,0)--(2,2));
+draw((3,0)--(3,2));
+draw((4,0)--(4,2));
+draw((5,0)--(5,2));
+draw((6,0)--(6,2));
+draw((7,0)--(7,2));
+draw((8,0)--(8,2));
+draw((9,0)--(9,2));
+draw((10,0)--(10,2));
 
-Now, let $S = a_1 + a_2 + \dots + a_n$. Then,
+fill((0,0)--(10,0)--(10,2)--(0,2)--cycle, gray(0.2));
+[/asy]
 
-$$S^2 = \sum_{i=1}^n a_i^2 + 2 \sum_{1 \leq i &lt; j \leq n} a_i a_j \leq \frac{n}{2} + 2.$$
+The area of this diagram is $\frac{1}{2} \left( \sum_{i=1}^n a_i \right)^2$. The sum of the products of the $a_i$&#x27;s is the sum of the areas of the rectangles. Since each rectangle has area $a_i a_j$, the sum of the products of the $a_i$&#x27;s is at most $\frac{1}{2} \left( \sum_{i=1}^n a_i \right)^2$.
 
-Hence,
+Therefore, we have
 
-$$S \leq \sqrt{\frac{n}{2} + 2}.$$
+$$\sum_{1 \leq i &lt; j \leq n} a_i a_j \leq \frac{1}{2} \left( \sum_{i=1}^n a_i \right)^2.$$
 
-Since $n \geq 2$, we have $\sqrt{\frac{n}{2} + 2} \leq \sqrt{2}$. Therefore,
+Squaring both sides of this inequality, we get
 
-$$S \leq \sqrt{2}.$$
-
-Finally, we have
-
-$$a_1 + a_2 + \dots + a_{n-1} = S - a_n \leq \sqrt{2} - a_n.$$
-
-Since $a_n \geq 0$, we have $a_1 + a_2 + \dots + a_{n-1} \leq \sqrt{2}$.
-
-Therefore, we have shown that if $a_1, a_2, \dots, a_n$ is a set of positive numbers such that $\sum_{1 \leq i &lt; j \leq n} a_i a_j = 1$, then $a_1 + a_2 + \dots + a_{n-1} \leq \sqrt{2}$.</code></pre>
+$$\left( \sum_{1 \leq</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>If $a_1, a_2, \dots, a_n$ is a set of positive numbers such that $\sum_{1 \leq i &lt; j \leq n} a_i a_j = 1$, then $a_1 + a_2 + \dots + a_{n-1} \leq \sqrt{2}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>No, it is not possible that $a_1 + a_2 + \dots + a_{n-1} \geq \sqrt{2}$, given a set of $n$ positive numbers $a_1 \leq a_2 \leq \dots \leq a_n$, with the sum of the $n(n-1)/2$ pairwise products being equal to 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

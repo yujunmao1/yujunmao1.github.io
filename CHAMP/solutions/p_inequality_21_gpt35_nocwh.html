@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_21</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 1/(n+1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_21']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,57 +81,46 @@ For positive real number a, b and positive integer n, what is the largest value 
 
 You may find the following information useful:
 
-1. Consider n+1 numbers, with one number being a and n numbers all being b.
-2. For n non-negative numbers x_1, ..., x_n, we have (x_1+x_2+...+x_n)/n≥(x_1*x_2*...*x_n)^(1/n), with equality if and only if x_1=...=x_n.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the largest value of the expression, we can use the information given and apply the AM-GM inequality.
+1. Consider n+1 numbers, with one number being a and n numbers all being b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the largest value of the expression, we can use the concept of limits. Let&#x27;s start by simplifying the expression:
 
-Let&#x27;s start by rewriting the expression:
+(a*b^n)^(1/(n+1))/(a+bn)
 
-E = (a*b^n)^(1/(n+1))/(a+bn)
+First, let&#x27;s simplify the numerator:
 
-Now, let&#x27;s consider n+1 numbers: a and n numbers all being b. According to the AM-GM inequality, we have:
+(a*b^n)^(1/(n+1)) = (a^(1/(n+1)) * (b^n)^(1/(n+1)))
 
-(a + b + b + ... + b)/n ≥ (a*b*b*...*b)^(1/n)
+Since (b^n)^(1/(n+1)) = b^(n/(n+1)), we have:
 
-Simplifying this, we get:
+(a*b^n)^(1/(n+1)) = a^(1/(n+1)) * b^(n/(n+1))
 
-(a + nb)/n ≥ (a*b^n)^(1/n)
+Now, let&#x27;s simplify the denominator:
 
-Now, let&#x27;s raise both sides to the power of (n+1):
+(a+bn)
 
-[(a + nb)/n]^(n+1) ≥ [(a*b^n)^(1/n)]^(n+1)
+Now, let&#x27;s rewrite the expression:
 
-(a + nb)^(n+1)/n^(n+1) ≥ (a*b^n)^(n+1)/(n+1)
+(a^(1/(n+1)) * b^(n/(n+1))) / (a+bn)
 
-Now, let&#x27;s multiply both sides by (n+1):
+To find the largest value of this expression, we can take the limit as n approaches infinity. Let&#x27;s calculate the limit:
 
-(a + nb)^(n+1) ≥ (n+1)*(a*b^n)^(n+1)/(n^(n+1))
+lim(n→∞) [(a^(1/(n+1)) * b^(n/(n+1))) / (a+bn)]
 
-Now, let&#x27;s simplify the right side:
+To simplify the limit, we can divide both the numerator and denominator by b^(n/(n+1)):
 
-(a + nb)^(n+1) ≥ (n+1)*(a^(n+1))*(b^n)^(n+1)/(n^(n+1))
+lim(n→∞) [(a^(1/(n+1)) * b^(n/(n+1))) / (a+bn)] * (1 / b^(n/(n+1)))
 
-(a + nb)^(n+1) ≥ (n+1)*(a^(n+1))*(b^(n+1))/(n^(n+1))
+This simplifies to:
 
-Now, let&#x27;s take the (n+1)th root of both sides:
+lim(n→∞) [a^(1/(n+1)) / (a/b + n)]
 
-(a + nb) ≥ [(n+1)*(a^(n+1))*(b^(n+1))/(n^(n+1))]^(1/(n+1))
+Now, as n approaches infinity, the term n in the denominator becomes dominant. Therefore, we can ignore the other terms and simplify the expression further:
 
-(a + nb) ≥ [(n+1)/(n)]^(1/(n+1)) * (a^(n+1))^(1/(n+1)) * (b^(n+1))^(1/(n+1))
+lim(n→∞) [1 / n] = 0
 
-(a + nb) ≥ [(n+1)/(n)]^(1/(n+1)) * a * b
-
-Now, let&#x27;s substitute this inequality back into the original expression:
-
-E = (a*b^n)^(1/(n+1))/(a+bn)
-
-E ≤ [(a + nb)^(n+1)/n^(n+1)]^(1/(n+1))
-
-E ≤ [(n+1)/(n)]^(1/(n+1)) * a * b
-
-Therefore, the largest value of the expression is [(n+1)/(n)]^(1/(n+1)) * a * b.</code></pre>
+Therefore, the largest value of the expression is 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression is [(n+1)/(n)]^(1/(n+1)) * a * b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression is 0 as n approaches infinity.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_16</td>
             <td>GPT-4</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(n+1, 2m+1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_16']
-messages = problem.conversations['GPT-4|Name w/o H'].messages
+messages = problem.conversations['GPT-4|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,26 +81,18 @@ Let A be a string of n binary digits (leading 0s are allowed). How many such str
 
 You may find the following information useful:
 
-1. For any string, add the digit 1 to the beginning and digit 0 to the end.
-2. Consider the gaps between every two digits and classify them into &quot;0-1&quot; transition, &quot;1-0&quot; transition and neither.
-3. If there are m &quot;0-1&quot; transitions in the original string, how many &quot;1-0&quot; transitions are there in the new string, and what is their ordering?
-4. How many ways in total can we arrange the &quot;0-1&quot; transitions and &quot;1-0&quot; transitions?
-5. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
+1. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem can be solved using combinatorics. 
 
-1. If we add a 1 to the beginning and a 0 to the end of the string, we will have a string of n+2 binary digits. 
+First, let&#x27;s consider the case where m = 1. We want to place &quot;01&quot; somewhere in the string of n binary digits. There are (n-1) places to put &quot;01&quot; (since it takes up two spaces), and the rest of the digits can be anything. So there are 2^(n-2) * (n-1) such strings.
 
-2. In this new string, every &quot;0-1&quot; transition in the original string will still be a &quot;0-1&quot; transition, and every &quot;1-0&quot; transition will still be a &quot;1-0&quot; transition. 
+Now, let&#x27;s consider the case where m &gt; 1. We want to place m &quot;01&quot;s somewhere in the string. Each &quot;01&quot; takes up two spaces, so we have (n - 2m) spaces left. We can choose where to put the &quot;01&quot;s in C(n - m, m) ways (since we are choosing m places out of (n - m) to put the &quot;01&quot;s). The rest of the digits can be anything, so there are 2^(n - 2m) possibilities for them.
 
-3. If there are m &quot;0-1&quot; transitions in the original string, there will be m+1 &quot;1-0&quot; transitions in the new string (one for each &quot;0-1&quot; transition, plus one for the transition from the added 1 to the added 0 at the end). 
+Therefore, the total number of such strings is C(n - m, m) * 2^(n - 2m) for m &gt; 1, and (n-1) * 2^(n-2) for m = 1.
 
-4. The &quot;0-1&quot; transitions and &quot;1-0&quot; transitions must alternate in the new string, starting with a &quot;1-0&quot; transition and ending with a &quot;1-0&quot; transition. Therefore, the ordering of the transitions is fixed.
-
-5. We can think of the problem as choosing m+1 positions for the &quot;1-0&quot; transitions out of n+2 total positions, and then filling in the remaining positions with &quot;0-1&quot; transitions. This can be done in C(n+2, m+1) ways.
-
-Therefore, the number of strings of n binary digits with exactly m &quot;01&quot; substrings is C(n+2, m+1).</code></pre>
+Note: This assumes that &quot;01&quot; cannot overlap with itself (i.e., &quot;0101&quot; counts as two occurrences of &quot;01&quot;). If &quot;01&quot; can overlap with itself (i.e., &quot;0101&quot; counts as one occurrence of &quot;01&quot;), then the problem becomes much more complicated.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of n binary digits with exactly m &quot;01&quot; substrings is given by the binomial coefficient C(n+2, m+1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The total number of strings of n binary digits that have the substring &quot;01&quot; appearing exactly m times is C(n - m, m) * 2^(n - 2m) for m &gt; 1, and (n-1) * 2^(n-2) for m = 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

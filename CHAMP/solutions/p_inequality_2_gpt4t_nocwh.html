@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_2</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 1/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_2']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,54 +77,38 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For positive a, b, what is the smallest value of (a^2+b^2)/(a+b)^2?
+For positive a, b, what is the smallest value of (a^2+b^2)/(a+b)^2?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the expression (a^2 + b^2) / (a + b)^2 for positive a and b, we can use the Cauchy-Schwarz inequality or simply complete the square. I&#x27;ll use the latter method here.
 
-You may find the following information useful:
+Let&#x27;s start by expanding the denominator and then simplifying the expression:
 
-1. For non-negative x, y, we have (x+y)/2≤sqrt((x^2+y^2)/2), with equality if and only if x=y.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the expression \((a^2+b^2)/(a+b)^2\) for positive \(a, b\), we can use the given inequality and the concept of the Arithmetic Mean-Geometric Mean Inequality (AM-GM Inequality).
+(a^2 + b^2) / (a + b)^2 = (a^2 + b^2) / (a^2 + 2ab + b^2)
 
-First, let&#x27;s rewrite the expression in a way that will allow us to apply the given inequality:
+Now, let&#x27;s try to express the numerator in a way that relates more closely to the denominator. We can add and subtract 2ab in the numerator:
 
-\[
-\frac{a^2+b^2}{(a+b)^2} = \frac{a^2+b^2}{a^2+2ab+b^2} = \frac{a^2/2 + a^2/2 + b^2/2 + b^2/2}{a^2+2ab+b^2}
-\]
+(a^2 + 2ab - 2ab + b^2) / (a^2 + 2ab + b^2)
 
-Now, we can apply the given inequality to the numerator:
+Now, group the terms in the numerator:
 
-\[
-\frac{(a^2/2 + a^2/2) + (b^2/2 + b^2/2)}{a^2+2ab+b^2} \leq \frac{2\sqrt{(a^2/2)^2 + (b^2/2)^2}}{a^2+2ab+b^2}
-\]
+[(a^2 + 2ab + b^2) - 2ab] / (a^2 + 2ab + b^2)
 
-Simplifying the square root in the numerator:
+This simplifies to:
 
-\[
-\frac{2\sqrt{(a^4/4) + (b^4/4)}}{a^2+2ab+b^2} = \frac{2\sqrt{(a^4 + b^4)/4}}{a^2+2ab+b^2} = \frac{\sqrt{a^4 + b^4}}{\sqrt{2}(a^2+2ab+b^2)}
-\]
+1 - (2ab / (a^2 + 2ab + b^2))
 
-Now, let&#x27;s apply the AM-GM Inequality to the terms \(a^4\) and \(b^4\):
+Notice that the term (2ab / (a^2 + 2ab + b^2)) is always positive since a and b are positive. Therefore, the smallest value of the original expression occurs when this term is as large as possible. However, since a and b are positive, the largest value that 2ab can take relative to (a^2 + 2ab + b^2) is when a = b, because if a and b are not equal, a^2 + b^2 will be greater than 2ab, making the fraction smaller.
 
-\[
-\frac{\sqrt{a^4 + b^4}}{\sqrt{2}(a^2+2ab+b^2)} \geq \frac{\sqrt{2(a^2b^2)}}{\sqrt{2}(a^2+2ab+b^2)} = \frac{ab}{a^2+2ab+b^2}
-\]
+So, when a = b, we have:
 
-Since \(a\) and \(b\) are positive, we can simplify further:
+2ab = 2a^2 = 2b^2
 
-\[
-\frac{ab}{a^2+2ab+b^2} = \frac{ab}{(a+b)^2}
-\]
+And the expression becomes:
 
-Now, we know that the expression \((a^2+b^2)/(a+b)^2\) is greater than or equal to \(ab/(a+b)^2\). To find the smallest value, we need to find when the inequality becomes an equality. According to the given information, the equality in the initial inequality holds if and only if \(x = y\). In our case, this translates to \(a^2/2 = b^2/2\), or \(a = b\).
+1 - (2a^2 / (a^2 + 2a^2 + a^2)) = 1 - (2a^2 / (4a^2)) = 1 - 1/2 = 1/2
 
-When \(a = b\), the expression becomes:
-
-\[
-\frac{a^2+a^2}{(a+a)^2} = \frac{2a^2}{4a^2} = \frac{1}{2}
-\]
-
-Therefore, the smallest value of the expression \((a^2+b^2)/(a+b)^2\) for positive \(a, b\) is \(\frac{1}{2}\), and this occurs when \(a = b\).</code></pre>
+Therefore, the smallest value of the expression (a^2 + b^2) / (a + b)^2 for positive a and b is 1/2.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \((a^2+b^2)/(a+b)^2\) for positive \(a, b\) is \(\frac{1}{2}\), which occurs when \(a = b\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression (a^2 + b^2) / (a + b)^2 for positive a and b is 1/2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

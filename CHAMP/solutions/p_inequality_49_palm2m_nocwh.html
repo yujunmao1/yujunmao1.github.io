@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_49</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_49']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,39 +81,50 @@ What is the smallest value of |x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z|?
 
 You may find the following information useful:
 
-1. Multiple |x+y-z|+|x-y+z|+|-x+y+z| by 2 and construct 3 groups of 2 terms each.
-2. For real number x, y, |x+y|≤|x|+|y|.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can use the triangle inequality to simplify the expression. The triangle inequality states that for any real numbers $x$, $y$, and $z$, $|x+y| \leq |x| + |y|$. We can use this inequality to bound the terms in the expression $|x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z|$.
+1. Multiple |x+y-z|+|x-y+z|+|-x+y+z| by 2 and construct 3 groups of 2 terms each.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can multiply $|x+y-z|+|x-y+z|+|-x+y+z|$ by 2 and construct 3 groups of 2 terms each:
 
-We can group the terms in the expression as follows:
+$$2(|x+y-z|+|x-y+z|+|-x+y+z|) = 2(|x+y-z|+|x-y+z|)+2(|-x+y+z|)$$
 
-$$|x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z| = 2|x+y-z| + 2|x-y+z| - 2|x| - 2|y| - 2|z|$$
+We can then rearrange the terms in each group:
 
-We can then use the triangle inequality to bound each of the terms in the expression. For example, we can bound $|x+y-z|$ as follows:
+$$2(|x+y-z|+|x-y+z|) = 2|x+y-z|+2|x-y+z|+2|-x+y+z|$$
 
-$$|x+y-z| \leq |x| + |y| - |z|$$
+$$2(|-x+y+z|) = 2|-x+y+z|$$
 
-We can then substitute this bound into the expression for $|x+y-z|$ to get the following:
+We can then add the terms in each group:
 
-$$2|x+y-z| \leq 2(|x| + |y| - |z|)$$
+$$2(|x+y-z|+|x-y+z|) + 2(|-x+y+z|) = 2|x+y-z|+2|x-y+z|+2|-x+y+z|+2|-x+y+z|$$
 
-We can do the same for the other terms in the expression. We can then simplify the expression as follows:
+$$= 2|x+y-z|+2|x-y+z|+2|-x+y+z|+2|-x+y+z|$$
 
-$$2|x+y-z| + 2|x-y+z| - 2|x| - 2|y| - 2|z| \leq 2(|x| + |y| - |z|) + 2(|x| - |y| + |z|) - 2|x| - 2|y| - 2|z|$$
+$$= 4|x+y-z|+4|x-y+z|+4|-x+y+z|$$
 
-$$= 2(|x| + |y| - |z|) + 2(|x| - |y| + |z|) - 4|x| - 4|y| - 4|z|$$
+We can then factor out a 2 from each term:
 
-$$= 2(|x| + |y| - |z| - 2|x|) + 2(|x| - |y| + |z| - 2|y|)$$
+$$= 2(2|x+y-z|+2|x-y+z|+2|-x+y+z|)$$
 
-$$= 2(|y| - |z|) + 2(|x| - |y|)$$
+$$= 2(2|x+y-z|+2|x-y+z|+2|-x+y+z|)$$
 
-We can then simplify the expression further by combining the terms that are in common. We get the following:
+We can then simplify the expression:
 
-$$2(|y| - |z|) + 2(|x| - |y|) = 2(|y| - |z| + |x| - |y|) = 2(|x-y|+|y-z|)$$
+$$= 8|x+y-z|+8|x-y+z|+8|-x+y+z|$$
 
-We can see that the expression is minimized when $|x-y|+|y-z| = 0$. This means that $x=y$ and $y=z$. Therefore, the smallest value of the expression is $0$.</code></pre>
+We can then substitute $x=y=z=1$ into the expression:
+
+$$= 8|1+1-1|+8|1-1+1|+8|-1+1+1|$$
+
+$$= 8|2|+8|0|+8|0|$$
+
+$$= 8(2)+8(0)+8(0)$$
+
+$$= 16+0+0$$
+
+$$= 16$$
+
+Therefore, the smallest value of $|x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z|$ is $\boxed{16}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $|x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z|$ is $0$, which occurs when $x=y=z$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $|x+y-z|+|x-y+z|+|-x+y+z|-|x|-|y|-|z|$ is 16.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

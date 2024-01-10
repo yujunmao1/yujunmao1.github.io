@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_18</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 5050</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_18']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,26 +81,30 @@ How many different ordered triples (a, b, c) of non-negative integers are there 
 
 You may find the following information useful:
 
-1. For any given value of c, how many possible values can (a, b) take?
-2. 1+2+...+n=n(n+1)/2.
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the stars and bars method, which is a combinatorial technique used to solve problems of distributing indistinguishable objects into distinct bins.
+1. For any given value of c, how many possible values can (a, b) take?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the stars and bars method, which is a combinatorial technique used to solve problems of distributing indistinguishable objects into distinguishable bins.
 
-We want to find the number of non-negative integer solutions to the equation a + b + c = 99. We can think of this as distributing 99 indistinguishable objects (like stars) into 3 distinct bins (labeled a, b, and c).
+We have the equation a + b + c = 99, where a, b, and c are non-negative integers. We can think of this as distributing 99 indistinguishable objects (like stars) into 3 distinguishable bins (labeled a, b, and c).
 
-Using the stars and bars method, we can represent this distribution with stars (*) and bars (|) where the stars represent the objects and the bars represent the divisions between the bins. For example, a configuration like &quot;**|***|****&quot; would represent a = 2, b = 3, c = 4.
+Using the stars and bars method, we can represent this distribution with stars (*) and bars (|) where the stars represent the objects and the bars represent the divisions between the bins. For example, if we have 5 objects and 3 bins, a possible distribution could be **|*|**, which would correspond to a=2, b=1, c=2.
 
-Since we have 99 objects to distribute, we will have 99 stars. We need 2 bars to create 3 bins. The number of different ways to arrange these stars and bars is the number of ways to choose 2 positions for the bars out of 99 + 2 = 101 total positions (99 for the stars and 2 for the bars).
+In our case, we have 99 objects and 3 bins, so we need 2 bars to separate the bins. The total number of symbols (stars and bars) will be 99 stars + 2 bars = 101 symbols.
 
-The number of ways to choose 2 positions out of 101 is given by the binomial coefficient C(101, 2), which is calculated as follows:
+Now, we need to choose the positions of the 2 bars among these 101 symbols, and the rest will be stars. The number of ways to choose 2 positions out of 101 for the bars is given by the combination formula:
 
-C(101, 2) = 101! / (2! * (101 - 2)!)
+C(n, k) = n! / (k!(n-k)!)
+
+where n is the total number of items to choose from, k is the number of items to choose, and &quot;!&quot; denotes factorial.
+
+In our case, n = 101 and k = 2, so we have:
+
+C(101, 2) = 101! / (2!(101-2)!)
            = 101! / (2! * 99!)
            = (101 * 100) / (2 * 1)
-           = 10100 / 2
-           = 5050.
+           = 101 * 50
+           = 5050
 
-Therefore, there are 5050 different ordered triples (a, b, c) of non-negative integers such that a + b + c = 99.</code></pre>
+So there are 5050 different ordered triples (a, b, c) of non-negative integers such that a + b + c = 99.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 5050 different ordered triples (a, b, c) of non-negative integers such that a + b + c = 99.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

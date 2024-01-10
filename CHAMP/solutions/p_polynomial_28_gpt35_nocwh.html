@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_28</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> ((-1)^(n+1)+n+1)/(n+2) (i.e., 1 if for odd n, and n/(n+2) for even n)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_28']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,44 +82,52 @@ Let P(x) be a polynomial of degree n such that P(k)=k/(k+1) for k=0, 1, ..., n. 
 You may find the following information useful:
 
 1. Let Q(x)=(x+1)P(x)-x and study its roots.
-2. A polynomial of degree n with root x_1, ..., x_n can be written as a(x-x_1)(x-x_2)...(x-x_n) for some value of a.
-3. Find the expression for Q(x) by studying the value of Q(x) at x=-1.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will follow the given information step by step.
+2. Find the expression for Q(x) by studying the value of Q(x) at x=-1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will follow the given information and use the properties of polynomials.
 
-Step 1: Let Q(x) = (x+1)P(x) - x and study its roots.
+1. Let Q(x) = (x+1)P(x) - x and study its roots.
 Since P(k) = k/(k+1) for k = 0, 1, ..., n, we can substitute these values into Q(x) to get:
-Q(0) = (0+1)P(0) - 0 = P(0) = 0/1 = 0
-Q(1) = (1+1)P(1) - 1 = 2P(1) - 1 = 1/2 - 1 = -1/2
-Q(2) = (2+1)P(2) - 2 = 3P(2) - 2 = 2/3 - 2 = -4/3
+Q(0) = (0+1)P(0) - 0 = P(0) = 0/(0+1) = 0/1 = 0
+Q(1) = (1+1)P(1) - 1 = 2P(1) - 1 = 2(1/(1+1)) - 1 = 2/2 - 1 = 1 - 1 = 0
+Q(2) = (2+1)P(2) - 2 = 3P(2) - 2 = 3(2/(2+1)) - 2 = 6/3 - 2 = 2 - 2 = 0
 ...
 Q(n) = (n+1)P(n) - n = (n+1)(n/(n+1)) - n = n - n = 0
 
-From these values, we can see that Q(x) has roots at x = 0, 1, 2, ..., n.
+From these evaluations, we can see that Q(x) has roots at x = 0, 1, 2, ..., n.
 
-Step 2: A polynomial of degree n with roots x_1, ..., x_n can be written as a(x-x_1)(x-x_2)...(x-x_n) for some value of a.
-Since Q(x) has roots at x = 0, 1, 2, ..., n, we can write Q(x) as:
-Q(x) = a(x-0)(x-1)(x-2)...(x-n)
+2. Find the expression for Q(x) by studying the value of Q(x) at x = -1.
+Q(-1) = (-1+1)P(-1) - (-1) = 0P(-1) + 1 = 1
 
-Step 3: Find the expression for Q(x) by studying the value of Q(x) at x = -1.
-We know that Q(0) = 0, so substituting x = -1 into Q(x), we get:
-Q(-1) = a(-1-0)(-1-1)(-1-2)...(-1-n) = a(-1)(-2)(-3)...(-1-n)
+From this evaluation, we can see that Q(x) = 1.
 
-Since Q(-1) = 0, we have:
-a(-1)(-2)(-3)...(-1-n) = 0
+Now, let&#x27;s find the roots of Q(x) = 1. Since Q(x) has roots at x = 0, 1, 2, ..., n, and Q(x) = 1, we can write the polynomial Q(x) as:
+Q(x) = (x-0)(x-1)(x-2)...(x-n)
 
-Since a is a non-zero constant, we can conclude that (-1)(-2)(-3)...(-1-n) = 0.
+Since Q(x) = 1, we have:
+(x-0)(x-1)(x-2)...(x-n) = 1
 
-This means that n+1 must be an odd number, otherwise, the product of the negative integers would not be zero.
+Expanding this equation, we get:
+x(x-1)(x-2)...(x-n) = 1
 
-Step 4: Find P(n+1).
-Since P(k) = k/(k+1) for k = 0, 1, ..., n, we can substitute n+1 into P(x) to get:
-P(n+1) = (n+1)/((n+1)+1) = (n+1)/(n+2)
+Now, let&#x27;s substitute x = -1 into this equation:
+(-1)(-1-1)(-1-2)...(-1-n) = 1
 
-Therefore, P(n+1) = (n+1)/(n+2).
+Simplifying this equation, we get:
+(-1)^n(n+1)! = 1
 
-Final Answer: P(n+1) = (n+1)/(n+2).</code></pre>
+Since (-1)^n is always 1 for any even value of n, and -1 for any odd value of n, we can rewrite the equation as:
+(n+1)! = 1
+
+Since the factorial of any positive integer is always greater than 1, the only possible value for (n+1)! = 1 is when n = 0.
+
+Therefore, the polynomial P(x) of degree n such that P(k) = k/(k+1) for k = 0, 1, ..., n is a constant polynomial of degree 0.
+
+Now, let&#x27;s find P(n+1) for n = 0:
+P(1) = 1/(1+1) = 1/2
+
+Therefore, P(n+1) = 1/2 for n = 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of P(n+1) is (n+1)/(n+2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The polynomial P(x) of degree n such that P(k) = k/(k+1) for k = 0, 1, ..., n is a constant polynomial of degree 0, and P(n+1) = 1/2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_29</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(n, 4), or an equivalent form such as n(n-1)(n-2)(n-3)/4!</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_29']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,23 +81,25 @@ A diagnoal in a convex polygon is any line connecting two non-adjacent vertices.
 
 You may find the following information useful:
 
-1. An intersection point is created from two diagnonals.
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the number of intersection points formed by the diagonals of a convex polygon with n vertices, we need to consider how these intersection points are created.
+1. An intersection point is created from two diagnonals.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the number of intersection points formed by the diagonals of a convex polygon with \( n \) vertices, we need to consider the following:
 
-Each intersection point is formed by the crossing of two diagonals. To choose two diagonals, we must choose four vertices because each diagonal is determined by two endpoints and no three diagonals intersect at the same point (which means we cannot have more than one diagonal sharing the same pair of endpoints).
+1. Each intersection point is formed by two diagonals intersecting.
+2. Each diagonal is formed by connecting two non-adjacent vertices.
 
-So, we start by choosing 4 vertices out of n, which can be done in C(n, 4) ways. This gives us the number of sets of four vertices, each of which determines a pair of intersecting diagonals.
+First, let&#x27;s find the total number of diagonals in a convex polygon with \( n \) vertices. A vertex can be connected to \( n - 3 \) other vertices to form a diagonal (since it cannot be connected to itself or the two adjacent vertices). Since there are \( n \) vertices, it might seem that there are \( n(n - 3) \) diagonals, but this counts each diagonal twice (once for each end vertex). Therefore, the total number of diagonals is \( \frac{n(n - 3)}{2} \).
 
-However, each set of four vertices gives us exactly one intersection point (since no three diagonals intersect at the same point), so the number of intersection points is equal to the number of ways to choose sets of four vertices from n vertices.
+Now, let&#x27;s consider how many diagonals intersect at a single point. Since no three diagonals pass through the same point, each intersection is formed by exactly two diagonals. To find the number of intersection points, we need to choose 4 vertices out of \( n \) because each intersection point is determined by 4 vertices (the endpoints of the two intersecting diagonals).
 
-Therefore, the number of intersection points in the interior of the polygon is given by the binomial coefficient C(n, 4).
+The number of ways to choose 4 vertices out of \( n \) is given by the binomial coefficient \( \binom{n}{4} \). This is because we are choosing sets of 4 vertices without regard to order, and each set of 4 vertices defines a unique intersection point.
 
-C(n, 4) = n! / (4! * (n - 4)!)
+Therefore, the number of intersection points formed by the diagonals in the interior of the polygon is given by:
 
-This is the expression for the number of intersection points formed by the diagonals in the interior of a convex polygon with n vertices.</code></pre>
+\[ \binom{n}{4} = \frac{n!}{4!(n - 4)!} = \frac{n(n - 1)(n - 2)(n - 3)}{24} \]
+
+This is the expression for the number of intersection points in the interior of a convex polygon with \( n \) vertices, assuming no three diagonals pass through the same point.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of intersection points formed by the diagonals in the interior of a convex polygon with n vertices is given by the binomial coefficient C(n, 4) = n! / (4! * (n - 4)!).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of intersection points formed by the diagonals in the interior of a convex polygon with \( n \) vertices is given by \( \frac{n(n - 1)(n - 2)(n - 3)}{24} \).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

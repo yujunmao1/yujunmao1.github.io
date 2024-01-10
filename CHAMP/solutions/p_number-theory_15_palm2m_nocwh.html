@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_15</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> No</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_15']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,26 +81,34 @@ Can there exist a polynomial f(x) of integer coefficients with f(7)=11 and f(11)
 
 You may find the following information useful:
 
-1. Let the polynomial be m_n*x^n+m_(n-1)*x^(n-1)+...+m_1*x_1+m_0 and study whether (f(a)-f(b)) is divisible by a-b.
-2. For integer a, b, n, a - b | a^n - b^n.
-3. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
+1. Let the polynomial be m_n*x^n+m_(n-1)*x^(n-1)+...+m_1*x_1+m_0 and study whether (f(a)-f(b)) is divisible by a-b.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there can exist a polynomial $f(x)$ of integer coefficients with $f(7)=11$ and $f(11)=13$.
 
-Let $f(x) = a_nx^n + a_{n-1}x^{n-1} + \cdots + a_1x + a_0$ be a polynomial of degree $n$ with integer coefficients. Then, by the Factor Theorem, $f(7) - f(11)$ is divisible by $7-11 = -4$. Since $7-11$ is a prime number, it follows that $f(7) - f(11)$ is divisible by $4$.
+Let $f(x) = a_nx^n + a_{n-1}x^{n-1} + ... + a_1x + a_0$ be a polynomial of degree $n$ with integer coefficients. Then, by the Factor Theorem, $(x-7)(x-11)$ divides $f(x) - f(7)$. This means that there exist integers $b_0, b_1, ..., b_n$ such that
 
-Now, let $d$ be the greatest common divisor of $f(7)$ and $f(11)$. Then, $d$ divides $f(7) - f(11)$, which is divisible by $4$. Therefore, $d$ must be even.
+$$f(x) - f(7) = (x-7)(x-11)b_0 + (x-7)b_1 + (x-11)b_2 + ... + b_n.$$
 
-Let $d = 2k$ for some integer $k$. Then, $f(7) = 2kf(7/2)$ and $f(11) = 2kf(11/2)$. Since $f(7)$ and $f(11)$ are both integers, it follows that $f(7/2)$ and $f(11/2)$ are both integers.
+Substituting $x=7$, we get
 
-Now, let $g(x) = f(2x)$. Then, $g(x)$ is a polynomial of degree $n/2$ with integer coefficients. Moreover, $g(7/2) = f(7)$ and $g(11/2) = f(11)$.
+$$f(7) - f(7) = (7-7)(7-11)b_0 + (7-7)b_1 + (7-11)b_2 + ... + b_n.$$
 
-By the same argument as before, we can show that $g(7/2)$ and $g(11/2)$ are both integers. Therefore, $g(x)$ is a polynomial of integer coefficients with $g(7/2) = 11$ and $g(11/2) = 13$.
+Simplifying, we get
 
-Now, let $h(x) = g(x-7/2)$. Then, $h(x)$ is a polynomial of degree $n/2$ with integer coefficients. Moreover, $h(0) = 11$ and $h(1) = 13$.
+$$0 = -4b_0 - 4b_1 - 4b_2 - ... - b_n.$$
 
-By the Intermediate Value Theorem, there exists a point $x$ in the interval $[0,1]$ such that $h(x) = 12$. Therefore, there exists a polynomial $f(x)$ of integer coefficients with $f(7) = 11$ and $f(11) = 13$.</code></pre>
+Since $b_0, b_1, ..., b_n$ are integers, this implies that $b_0 = b_1 = b_2 = ... = b_n = 0$. Substituting this back into the equation $f(x) - f(7) = (x-7)(x-11)b_0 + (x-7)b_1 + (x-11)b_2 + ... + b_n$, we get
+
+$$f(x) - f(7) = (x-7)(x-11)0 + (x-7)0 + (x-11)0 + ... + 0.$$
+
+Simplifying, we get
+
+$$f(x) - f(7) = 0.$$
+
+This means that $f(x) = f(7)$. Since $f(7)=11$, we have $f(x) = 11$ for all $x$.
+
+Therefore, there exists a polynomial $f(x)$ of integer coefficients with $f(7)=11$ and $f(11)=13$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there exists a polynomial $f(x)$ of integer coefficients with $f(7)=11$ and $f(11)=13$. This is because the Intermediate Value Theorem guarantees that there exists a point $x$ in the interval $[0,1]$ such that $h(x) = 12$, where $h(x) = g(x-7/2)$ and $g(x)$ is a polynomial of integer coefficients with $g(7/2) = 11$ and $g(11/2) = 13$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, there exists a polynomial $f(x)$ of integer coefficients with $f(7)=11$ and $f(11)=13$. The polynomial is $f(x)=11$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

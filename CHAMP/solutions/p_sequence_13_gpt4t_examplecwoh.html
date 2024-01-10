@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_13</td>
             <td>GPT-4 Turbo</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> Such a sequence is not possible</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_13']
-messages = problem.conversations['GPT-4 Turbo|Example w/o H'].messages
+messages = problem.conversations['GPT-4 Turbo|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,73 +77,65 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-A sequence of positive integers a_0, a_1, ..., a_100 is defined as a_1&gt;a_0, a_n=3a_(n-1)-2a_(n-2). Is it possible to have a_100&lt;2^99 for certain such sequences, and if so, find the sequence with the largest sum a_0+a_1+...+a_100.
+A sequence of positive integers a_0, a_1, ..., a_100 is defined as a_1&gt;a_0, a_n=3a_(n-1)-2a_(n-2). Is it possible to have a_100&lt;2^99 for certain such sequences, and if so, find the sequence with the largest sum a_0+a_1+...+a_100.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s first try to understand the recursive relation given by \( a_n = 3a_{n-1} - 2a_{n-2} \).
 
-You may find the following information useful:
+We can rewrite this as \( a_n - 2a_{n-1} = a_{n-1} - 2a_{n-2} \), which suggests that the difference \( a_n - 2a_{n-1} \) is constant for all \( n \geq 2 \). Let&#x27;s denote this constant difference by \( d \), so we have \( a_n - 2a_{n-1} = d \) for all \( n \geq 2 \).
 
-1. Study the difference a_(n+1)-a_n.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s first study the difference \( a_{n+1} - a_n \) as suggested.
+Now, let&#x27;s find \( d \) using the initial terms \( a_0 \) and \( a_1 \):
+\( d = a_2 - 2a_1 = 3a_1 - 2a_0 - 2a_1 = a_1 - 2a_0 \).
 
-Given the recurrence relation \( a_n = 3a_{n-1} - 2a_{n-2} \), we can find the difference between consecutive terms:
+Since \( a_1 &gt; a_0 \), we know that \( d &gt; -a_0 \). However, \( d \) can be negative, zero, or positive depending on the values of \( a_0 \) and \( a_1 \).
 
-\( a_{n+1} - a_n = (3a_n - 2a_{n-1}) - (3a_{n-1} - 2a_{n-2}) \)
-\( a_{n+1} - a_n = 3a_n - 3a_{n-1} - 2a_{n-1} + 2a_{n-2} \)
-\( a_{n+1} - a_n = 3(a_n - a_{n-1}) - 2(a_{n-1} - a_{n-2}) \)
+Now, let&#x27;s see if it&#x27;s possible to have \( a_100 &lt; 2^{99} \). We can express \( a_100 \) in terms of \( a_0 \) and \( a_1 \) using the recursive relation:
+\( a_100 = 3a_{99} - 2a_{98} \)
+\( a_{99} = 3a_{98} - 2a_{97} \)
+\( \vdots \)
+\( a_2 = 3a_1 - 2a_0 \)
 
-Let&#x27;s denote \( d_n = a_n - a_{n-1} \), then we have:
+We can see that each term is a linear combination of \( a_0 \) and \( a_1 \). In fact, we can express \( a_n \) as:
+\( a_n = k_n a_1 + l_n a_0 \),
+where \( k_n \) and \( l_n \) are coefficients that we can determine from the recursive relation.
 
-\( d_{n+1} = 3d_n - 2d_{n-1} \)
+Let&#x27;s find the first few terms to see if we can identify a pattern:
+\( a_2 = 3a_1 - 2a_0 \)
+\( a_3 = 3(3a_1 - 2a_0) - 2a_1 = 7a_1 - 6a_0 \)
+\( a_4 = 3(7a_1 - 6a_0) - 2(3a_1 - 2a_0) = 15a_1 - 14a_0 \)
 
-Now, let&#x27;s find the first few terms of \( d_n \):
+We can see that the coefficients \( k_n \) and \( l_n \) are powers of 2 minus 1. Specifically, \( k_n = 2^n - 1 \) and \( l_n = -(2^n - 2) \).
 
-\( d_1 = a_1 - a_0 \) (which is positive by definition)
-\( d_2 = a_2 - a_1 = 3a_1 - 2a_0 - a_1 = 2a_1 - 2a_0 = 2d_1 \)
+Now, let&#x27;s express \( a_100 \) in terms of \( a_0 \) and \( a_1 \):
+\( a_100 = (2^{100} - 1)a_1 - (2^{100} - 2)a_0 \)
 
-We can see that \( d_2 \) is twice \( d_1 \), and since \( d_1 \) is positive, \( d_2 \) is also positive and larger than \( d_1 \).
+We want to find out if \( a_100 &lt; 2^{99} \) is possible. Let&#x27;s substitute the expression for \( a_100 \) into the inequality:
+\( (2^{100} - 1)a_1 - (2^{100} - 2)a_0 &lt; 2^{99} \)
 
-Now, let&#x27;s assume that \( d_n \) is positive for all \( n \). If this is true, then \( d_{n+1} \) will also be positive because it is a linear combination of positive terms \( 3d_n \) and \( -2d_{n-1} \), where \( 3d_n \) is larger than \( 2d_{n-1} \) (since \( d_n \) is increasing).
+Now, let&#x27;s try to maximize the sum \( S = a_0 + a_1 + \ldots + a_100 \) under the constraint \( a_100 &lt; 2^{99} \). To maximize the sum, we want to maximize \( a_0 \) and \( a_1 \) because all subsequent terms are determined by these two values.
 
-This implies that \( a_n \) is strictly increasing, and \( a_{n+1} &gt; a_n \) for all \( n \).
+Since \( a_1 &gt; a_0 \), let&#x27;s choose \( a_0 = 1 \) and \( a_1 = 2 \) to start with the smallest positive integers that satisfy the initial condition. This gives us \( d = a_1 - 2a_0 = 2 - 2 = 0 \), which means the sequence is non-decreasing.
 
-Now, let&#x27;s look at the growth of \( a_n \). We want to know if it&#x27;s possible for \( a_{100} &lt; 2^{99} \).
+Now, let&#x27;s check if \( a_100 &lt; 2^{99} \) with these values:
+\( a_100 = (2^{100} - 1) \cdot 2 - (2^{100} - 2) \cdot 1 \)
+\( a_100 = 2^{101} - 2 - 2^{100} + 2 \)
+\( a_100 = 2^{100} \)
 
-We can see that the difference \( d_n \) is growing exponentially because each term is a multiple of the previous term minus a smaller term. This suggests that \( a_n \) itself is growing exponentially.
+This does not satisfy the condition \( a_100 &lt; 2^{99} \). However, we can adjust \( a_1 \) to be slightly less while still satisfying \( a_1 &gt; a_0 \). Let&#x27;s choose \( a_1 = 2 - \epsilon \), where \( \epsilon \) is a small positive number.
 
-To maximize the sum \( a_0 + a_1 + ... + a_{100} \), we want to start with the smallest possible values of \( a_0 \) and \( a_1 \) that still satisfy the conditions \( a_1 &gt; a_0 \) and \( a_n = 3a_{n-1} - 2a_{n-2} \).
+Now, \( d = a_1 - 2a_0 = 2 - \epsilon - 2 = -\epsilon \), which means the sequence is strictly decreasing after the first term. This will ensure that \( a_100 \) is as small as possible while still having a large sum \( S \).
 
-Let&#x27;s start with \( a_0 = 1 \) and \( a_1 = 2 \) (the smallest integers satisfying \( a_1 &gt; a_0 \)):
+Let&#x27;s substitute \( a_1 = 2 - \epsilon \) into the inequality for \( a_100 \):
+\( a_100 = (2^{100} - 1)(2 - \epsilon) - (2^{100} - 2) \cdot 1 &lt; 2^{99} \)
+\( a_100 = 2^{101} - 2^{100} - \epsilon(2^{100} - 1) + 2 &lt; 2^{99} \)
 
-\( a_2 = 3a_1 - 2a_0 = 3(2) - 2(1) = 6 - 2 = 4 \)
-\( a_3 = 3a_2 - 2a_1 = 3(4) - 2(2) = 12 - 4 = 8 \)
-\( a_4 = 3a_3 - 2a_2 = 3(8) - 2(4) = 24 - 8 = 16 \)
+To satisfy \( a_100 &lt; 2^{99} \), we need:
+\( - \epsilon(2^{100} - 1) + 2 &lt; 0 \)
+\( \epsilon &gt; \frac{2}{2^{100} - 1} \)
 
-We can see a pattern here: \( a_n = 2^n \) for \( n \geq 1 \).
+We can choose \( \epsilon \) to be just slightly larger than \( \frac{2}{2^{100} - 1} \) to satisfy the inequality. This will give us the largest possible sum \( S \) while still having \( a_100 &lt; 2^{99} \).
 
-Let&#x27;s prove this by induction:
-
-Base case: For \( n = 1 \), \( a_1 = 2^1 \).
-Inductive step: Assume \( a_k = 2^k \) for some \( k \geq 1 \). Then for \( n = k + 1 \), we have:
-
-\( a_{k+1} = 3a_k - 2a_{k-1} \)
-\( a_{k+1} = 3(2^k) - 2(2^{k-1}) \)
-\( a_{k+1} = 3 \cdot 2^k - 2^k \)
-\( a_{k+1} = 2^k(3 - 1) \)
-\( a_{k+1} = 2^k \cdot 2 \)
-\( a_{k+1} = 2^{k+1} \)
-
-This confirms that \( a_n = 2^n \) for all \( n \geq 1 \).
-
-Now, let&#x27;s check if \( a_{100} &lt; 2^{99} \):
-
-\( a_{100} = 2^{100} \)
-
-Clearly, \( 2^{100} \) is not less than \( 2^{99} \), so it is not possible to have \( a_{100} &lt; 2^{99} \) for this sequence.
-
-Since we started with the smallest possible values for \( a_0 \) and \( a_1 \), and the sequence grows exponentially, any other sequence with larger starting values will also not satisfy \( a_{100} &lt; 2^{99} \).
-
-Therefore, it is not possible to have \( a_{100} &lt; 2^{99} \) for any sequence defined by the given recurrence relation with the condition \( a_1 &gt; a_0 \).</code></pre>
+Therefore, it is possible to have \( a_100 &lt; 2^{99} \) for certain sequences, and the sequence with the largest sum \( S \) will have \( a_0 = 1 \) and \( a_1 = 2 - \epsilon \), where \( \epsilon \) is just slightly larger than \( \frac{2}{2^{100} - 1} \). The exact value of \( S \) would require calculating all the terms of the sequence, which is not feasible by hand, but we have determined the initial terms that would maximize the sum.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>It is not possible to have \( a_{100} &lt; 2^{99} \) for any sequence defined by the recurrence relation \( a_n = 3a_{n-1} - 2a_{n-2} \) with \( a_1 &gt; a_0 \), and the sequence starting with \( a_0 = 1 \) and \( a_1 = 2 \) has the largest sum \( a_0 + a_1 + \ldots + a_{100} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, it is possible to have \( a_{100} &lt; 2^{99} \) for certain sequences, and the sequence with the largest sum \( a_0 + a_1 + \ldots + a_{100} \) starts with \( a_0 = 1 \) and \( a_1 = 2 - \epsilon \), where \( \epsilon \) is just slightly larger than \( \frac{2}{2^{100} - 1} \).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

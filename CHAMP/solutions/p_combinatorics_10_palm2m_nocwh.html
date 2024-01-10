@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_10</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2^(n-1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_10']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,40 +82,22 @@ How many sequences of positive integer numbers have sum n, as an expression of n
 You may find the following information useful:
 
 1. Consider a row of n points, with n-1 gaps.
-2. Insert dividers into the gaps, and consider the correspondance between a sequence with a divider insertion configuration.
-3. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $\binom{n+n-1}{n-1} = \binom{2n-1}{n-1}$ ways to insert $n-1$ dividers into a row of $n$ points. Each of these ways corresponds to a sequence of $n$ positive integers with sum $n$, where the integers in the sequence correspond to the positions of the dividers.
+2. Insert dividers into the gaps, and consider the correspondance between a sequence with a divider insertion configuration.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are ${n+1 \choose 2}$ ways to insert dividers into $n$ points, and each such insertion configuration corresponds to a unique sequence of positive integer numbers that have sum $n$. Therefore, the number of sequences of positive integer numbers that have sum $n$ is ${n+1 \choose 2}$.
 
-For example, if $n=4$, there are $\binom{6}{3} = 20$ ways to insert $3$ dividers into a row of $4$ points. These ways correspond to the following sequences of positive integers with sum $4$:
+Here is a proof of this statement. Consider a row of $n$ points, with $n-1$ gaps. We can insert dividers into the gaps in ${n+1 \choose 2}$ ways. For each such insertion configuration, we can associate a sequence of positive integer numbers by starting at the leftmost point and moving to the right, adding 1 to the number at each point that is not preceded by a divider. For example, if we insert dividers into the gaps as follows:
 
-* 1, 2, 3, 4
-* 1, 2, 4, 3
-* 1, 3, 2, 4
-* 1, 3, 4, 2
-* 1, 4, 2, 3
-* 1, 4, 3, 2
-* 2, 1, 3, 4
-* 2, 1, 4, 3
-* 2, 3, 1, 4
-* 2, 3, 4, 1
-* 2, 4, 1, 3
-* 2, 4, 3, 1
-* 3, 1, 2, 4
-* 3, 1, 4, 2
-* 3, 2, 1, 4
-* 3, 2, 4, 1
-* 3, 4, 1, 2
-* 3, 4, 2, 1
-* 4, 1, 2, 3
-* 4, 1, 3, 2
-* 4, 2, 1, 3
-* 4, 2, 3, 1
-* 4, 3, 1, 2
-* 4, 3, 2, 1
+[1 2 3 4 5 6 7 8 9]
 
-Therefore, there are $\binom{2n-1}{n-1}$ sequences of positive integers with sum $n$.</code></pre>
+then the corresponding sequence of positive integer numbers is 1, 3, 5, 7, 9, 2, 4, 6, 8.
+
+Conversely, given any sequence of positive integer numbers that have sum $n$, we can associate an insertion configuration by starting at the leftmost point and moving to the right, adding 1 to the number at each point that is not preceded by a divider. For example, given the sequence 1, 3, 5, 7, 9, 2, 4, 6, 8, we would insert dividers as follows:
+
+[1 2 3 4 5 6 7 8 9]
+
+Therefore, there is a one-to-one correspondence between the set of insertion configurations and the set of sequences of positive integer numbers that have sum $n$. Since there are ${n+1 \choose 2}$ insertion configurations, there are also ${n+1 \choose 2}$ sequences of positive integer numbers that have sum $n$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences of positive integers with sum $n$ is $\binom{2n-1}{n-1}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences of positive integer numbers that have sum $n$ is ${n+1 \choose 2}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

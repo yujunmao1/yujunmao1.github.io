@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_66</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_66']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,63 +82,19 @@ If n is a composite number, find all possible values of 1*2*...*(n-2)*(n-1) mod 
 You may find the following information useful:
 
 1. Let Q(n)=1*2*...*(n-2)*(n-1)/(1+2+...+(n-1)) and simplify it.
-2. 1+2+...+n=n(n+1)/2.
-3. Let n=pq.
-4. Check if p and q are contained in Q(n).
-5. For integer a, b with a&gt;b, gcd(a, b)=gcd(b, a-b). </code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $n$ be a composite number. We will show that $1*2*...*(n-2)*(n-1) \equiv 0 \pmod{1+2+...+(n-2)+(n-1)}$.
+2. Let n=pq.
+3. Check if p and q are contained in Q(n).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $n$ be a composite number. We can write $n=pq$ for some integers $p$ and $q$, where $p$ and $q$ are greater than 1.
 
-Let $Q(n) = \frac{1*2*...*(n-2)*(n-1)}{1+2+...+(n-2)+(n-1)}$. We can simplify $Q(n)$ as follows:
+Let $Q(n)=\frac{1\cdot2\cdot\ldots\cdot(n-2)\cdot(n-1)}{1+2+\ldots+(n-2)+(n-1)}$. We can simplify $Q(n)$ as follows:
 
-$$Q(n) = \frac{n!}{(n+1)!} = \frac{n}{n+1}$$
+$$Q(n)=\frac{(n-1)!}{n!}=\frac{(n-1)}{n}\cdot\frac{(n-2)!}{(n-1)!}=\frac{1}{n}\cdot\frac{(n-2)!}{n!}=\frac{1}{n}\cdot\frac{(n-2)\cdot(n-3)\cdot\ldots\cdot 2\cdot 1}{(n-1)\cdot(n-2)\cdot\ldots\cdot 3\cdot 2\cdot 1}=\frac{1}{n}\cdot\frac{1}{n-1}=\boxed{\frac{1}{n-1}}.$$
 
-Since $n$ is composite, $n$ has at least two factors. Let $p$ and $q$ be two factors of $n$. Then $p$ and $q$ are both less than or equal to $\sqrt{n}$.
+Now, let&#x27;s check if $p$ and $q$ are contained in $Q(n)$. We have $p\mid n$ and $q\mid n$, so $p\mid n-1$ and $q\mid n-1$. Therefore, $p$ and $q$ are both factors of $Q(n)$.
 
-We can write $n$ as follows:
-
-$$n = pq$$
-
-Substituting this into the expression for $Q(n)$, we get:
-
-$$Q(n) = \frac{pq}{(pq+1)}$$
-
-We can factor out $p$ from the numerator to get:
-
-$$Q(n) = \frac{p(q+1)}{(pq+1)} = p$$
-
-Since $p$ is a factor of $n$, $p$ is contained in $Q(n)$.
-
-We can also factor out $q$ from the numerator to get:
-
-$$Q(n) = \frac{q(p+1)}{(pq+1)} = q$$
-
-Since $q$ is a factor of $n$, $q$ is contained in $Q(n)$.
-
-Therefore, $p$ and $q$ are both contained in $Q(n)$. Since $p$ and $q$ are both less than or equal to $\sqrt{n}$, we have:
-
-$$Q(n) \leq \sqrt{n}$$
-
-But we also know that $Q(n) = \frac{n}{n+1} &gt; 1$. Therefore, we have:
-
-$$1 &lt; Q(n) \leq \sqrt{n}$$
-
-This implies that $Q(n)$ is an integer between 1 and $\sqrt{n}$.
-
-Since $Q(n)$ is an integer between 1 and $\sqrt{n}$, it must be contained in the set $\{1, 2, ..., \sqrt{n}\}$.
-
-But the set $\{1, 2, ..., \sqrt{n}\}$ is a subset of the set $\{1, 2, ..., n-2, n-1\}$.
-
-Therefore, $Q(n)$ is contained in the set $\{1, 2, ..., n-2, n-1\}$.
-
-But the set $\{1, 2, ..., n-2, n-1\}$ is the set of terms in the sum $1+2+...+(n-2)+(n-1)$.
-
-Therefore, $Q(n)$ is contained in the set of terms in the sum $1+2+...+(n-2)+(n-1)$.
-
-This implies that $Q(n) \equiv 0 \pmod{1+2+...+(n-2)+(n-1)}$.
-
-Therefore, we have shown that $1*2*...*(n-2)*(n-1) \equiv 0 \pmod{1+2+...+(n-2)+(n-1)}$.</code></pre>
+Therefore, all possible values of $1\cdot2\cdot\ldots\cdot(n-2)\cdot(n-1)$ modulo $1+2+\ldots+(n-2)+(n-1)$ are $\boxed{\frac{1}{n-1}}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>If $n$ is a composite number, then $1*2*...*(n-2)*(n-1) \equiv 0 \pmod{1+2+...+(n-2)+(n-1)}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The answer is $\boxed{\frac{1}{n-1}}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

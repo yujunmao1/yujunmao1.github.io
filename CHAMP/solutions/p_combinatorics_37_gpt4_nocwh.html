@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_37</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> sum_(i=1)^n i^2, or equivalently n(n+1)(2n+1)/6</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_37']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,28 +81,22 @@ From the set {1, 2, 3, ..., n+1}, select triple (x, y, z), with duplicate allowe
 
 You may find the following information useful:
 
-1. Consider the number of ways to choose the triple when z=i.
-2. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+1. Consider the number of ways to choose the triple when z=i.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s consider the number of ways to choose the triple when z=i. 
 
-Since z must be greater than both x and y, x and y must be chosen from the set {1, 2, ..., i-1}. There are i-1 choices for x and i-1 choices for y, and since duplicates are allowed, the number of ways to choose x and y is (i-1)^2.
+For each i, x and y can be any number from 1 to i-1 (inclusive). Since duplicates are allowed, there are i choices for x and i choices for y. Therefore, there are i^2 ways to choose x and y when z=i.
 
-Now, we need to sum this over all possible values of z. Since z can be any number from 2 to n+1, we have:
+We need to sum this over all possible values of i. i can be any number from 2 to n+1 (inclusive), so we need to compute the sum of i^2 from 2 to n+1.
 
-Sum_{i=2}^{n+1} (i-1)^2
+This sum can be computed using the formula for the sum of squares of the first n natural numbers, which is n(n+1)(2n+1)/6. However, since we are starting from 2, we need to subtract the sum of squares from 1 to 1, which is just 1.
 
-This is the sum of squares of the first n numbers, which has a known formula:
+Therefore, the total number of ways to choose the triple (x, y, z) is:
 
-Sum_{i=1}^{n} i^2 = n*(n+1)*(2n+1)/6
+(n+1)(n+2)(2n+3)/6 - 1
 
-However, our sum starts from 2, not 1, so we need to subtract the square of 1 from the total:
-
-Sum_{i=2}^{n+1} (i-1)^2 = Sum_{i=1}^{n} i^2 - 1^2 = n*(n+1)*(2n+1)/6 - 1
-
-So, the number of ways to choose the triple (x, y, z) such that z&gt;max(x, y) from the set {1, 2, 3, ..., n+1} is n*(n+1)*(2n+1)/6 - 1.</code></pre>
+This is the final answer.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose the triple (x, y, z) such that z&gt;max(x, y) from the set {1, 2, 3, ..., n+1} is n*(n+1)*(2n+1)/6 - 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The total number of ways to choose the triple (x, y, z) from the set {1, 2, 3, ..., n+1}, with duplicates allowed and z&gt;max(x, y), is given by the expression (n+1)(n+2)(2n+3)/6 - 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

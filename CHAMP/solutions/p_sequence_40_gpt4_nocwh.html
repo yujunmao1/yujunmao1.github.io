@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_40</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 125</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_40']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,27 +83,32 @@ You may find the following information useful:
 
 1. Study different ways to construct a permutation of n numbers from permutations of n-1 and n-2 numbers, with the more restrictive condition of |p(i)−i|≤1 (i.e., no wrap-around).
 2. Check if any cyclic shifts are allowed under the definition.
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
-4. Find the number of no-wrap-around permutations of n numbers in terms of such permutations of n-1 and n-2 numbers.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem is a classic example of a combinatorial problem that can be solved using the method of generating functions or recursion. 
+3. Find the number of no-wrap-around permutations of n numbers in terms of such permutations of n-1 and n-2 numbers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem is a classic example of a combinatorial problem that can be solved using dynamic programming. The key insight is to realize that the number of valid permutations of n numbers can be expressed in terms of the number of valid permutations of n-1 and n-2 numbers.
 
-Let&#x27;s denote by a_n the number of permutations of {1, ..., n} with min(n-|p(i)−i|, |p(i)−i|)≤1 for all i. 
+Let&#x27;s denote by a_n the number of valid permutations of n numbers. We can construct a valid permutation of n numbers by either:
 
-We can construct a valid permutation of {1, ..., n} by either appending n to a valid permutation of {1, ..., n-1} or by inserting n into the second to last position of a valid permutation of {1, ..., n-2}. 
+1. Taking a valid permutation of n-1 numbers and inserting n at some position such that the absolute difference between n and its neighboring numbers is at most 1. There are a_{n-1} ways to do this.
+2. Taking a valid permutation of n-2 numbers and inserting n and n-1 at some positions such that the absolute difference between each number and its neighboring numbers is at most 1. There are a_{n-2} ways to do this.
 
-In the first case, there are a_{n-1} ways to construct a valid permutation of {1, ..., n}. In the second case, there are a_{n-2} ways to construct a valid permutation of {1, ..., n}. 
+Therefore, we have the recurrence relation a_n = a_{n-1} + a_{n-2}.
 
-Therefore, we have the following recursion relation:
+We also know that a_1 = 1 (there is only one permutation of one number) and a_2 = 2 (there are two permutations of two numbers: 12 and 21).
 
-a_n = a_{n-1} + a_{n-2} for n &gt; 2
+We can now compute a_10 using this recurrence relation:
 
-with initial conditions a_1 = 1 and a_2 = 2.
+a_3 = a_2 + a_1 = 2 + 1 = 3
+a_4 = a_3 + a_2 = 3 + 2 = 5
+a_5 = a_4 + a_3 = 5 + 3 = 8
+a_6 = a_5 + a_4 = 8 + 5 = 13
+a_7 = a_6 + a_5 = 13 + 8 = 21
+a_8 = a_7 + a_6 = 21 + 13 = 34
+a_9 = a_8 + a_7 = 34 + 21 = 55
+a_10 = a_9 + a_8 = 55 + 34 = 89
 
-This is the Fibonacci sequence shifted by one index. The first few terms are 1, 2, 3, 5, 8, 13, 21, 34, 55, 89. 
-
-Therefore, a_10 = 89.</code></pre>
+So, a_10 = 89. There are 89 valid permutations of 10 numbers under the given condition.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of all permutations p of {1, ..., 10} with min(10-|p(i)−i|, |p(i)−i|)≤1 for all i, denoted as a_10, is 89.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of all permutations of 10 numbers with the given condition is 89.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

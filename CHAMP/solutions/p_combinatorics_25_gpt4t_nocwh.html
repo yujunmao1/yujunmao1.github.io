@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_25</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> n!</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_25']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,31 +81,30 @@ On a chess board, two rooks are placed peacefully if they are not on the same ro
 
 You may find the following information useful:
 
-1. Place rooks row by row. How many positions are possible for the rook in each row?
-2. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use a combinatorial approach. We want to place n rooks on an n x n chessboard such that no two rooks can attack each other. This means that each rook must be in a different row and a different column.
+1. Place rooks row by row. How many positions are possible for the rook in each row?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use a combinatorial approach. We want to place n rooks on an n x n chessboard such that no two rooks can attack each other. This means that each rook must be in a unique row and a unique column.
 
-Let&#x27;s follow the hint and place the rooks row by row:
+Let&#x27;s consider the placement of the rooks row by row:
 
-1. For the first row, we have n possible positions to place the first rook since there are n columns and no rooks have been placed yet.
+1. For the first row, we have n possible positions to place the first rook since there are n columns available.
 
-2. For the second row, we have (n - 1) possible positions to place the second rook because one column is already occupied by the first rook.
+2. For the second row, we have already placed a rook in one of the columns, so we have n-1 remaining columns to choose from for the second rook.
 
-3. For the third row, we have (n - 2) possible positions for the third rook, as two columns are now occupied by the first two rooks.
+3. For the third row, we have n-2 remaining columns, as two columns are already occupied by the first two rooks.
 
 ...
 
-n. For the nth row, we have only 1 possible position for the nth rook, since all other (n - 1) columns are occupied by the other (n - 1) rooks.
+n. For the nth row, we have only 1 column left, as the previous n-1 rooks have occupied the other columns.
 
-Now, using the information from the hint, we multiply the number of ways to place each rook to find the total number of ways to place all n rooks peacefully:
+The total number of ways to place the rooks peacefully is the product of the number of choices for each row. This is a permutation of n distinct items, which is given by n factorial (n!).
 
-Total number of ways = n * (n - 1) * (n - 2) * ... * 2 * 1
+Therefore, the number of ways to place n rooks peacefully on an n x n chessboard is:
 
-This is the product of all positive integers from 1 to n, which is known as n factorial, denoted by n!.
+n * (n-1) * (n-2) * ... * 2 * 1 = n!
 
-Therefore, the number of ways that n rooks can be placed peacefully on an n x n chessboard is n!.</code></pre>
+So the final expression for the number of peaceful placements of n rooks on an n x n chessboard is simply n!.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways that n rooks can be placed peacefully on an n x n chessboard is n factorial, or n!.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to place n rooks peacefully on an n x n chessboard is n!.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

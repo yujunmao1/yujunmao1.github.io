@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_26</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 239</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_26']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,25 +82,38 @@ How many strings of length 6 and consisting solely of the digits 1, 2 and 3 have
 You may find the following information useful:
 
 1. Let a_n, b_n and c_n be the numbers of length-n strings that end with 1, 2 and 3 respectively.
-2. Express a_(n+1), b_(n+1) and c_(n+1) in terms of a_n, b_n and c_n.
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+2. Express a_(n+1), b_(n+1) and c_(n+1) in terms of a_n, b_n and c_n.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n$, $b_n$, and $c_n$ be the number of length-$n$ strings that end in 1, 2, and 3, respectively. We can express $a_{n+1}$, $b_{n+1}$, and $c_{n+1}$ in terms of $a_n$, $b_n$, and $c_n$ as follows:
 
 $$a_{n+1} = a_n + b_n + c_n$$
 $$b_{n+1} = a_n + 2b_n + 3c_n$$
 $$c_{n+1} = a_n + 3b_n + 6c_n$$
 
-This is because there are three ways to extend a length-$n$ string that ends in 1: we can add a 1, a 2, or a 3. There are four ways to extend a length-$n$ string that ends in 2: we can add a 1, a 2, a 3, or a 12. And there are six ways to extend a length-$n$ string that ends in 3: we can add a 1, a 2, a 3, a 12, a 23, or a 123.
+To solve the problem, we can use the following recurrence relation:
 
-Now, we can solve the problem by considering the following cases:
+$$a_n = a_{n-1} + b_{n-1} + c_{n-1}$$
 
-* Case 1: The string ends in 1. There are $a_5$ ways to choose the first five digits, and then one way to choose the last digit.
-* Case 2: The string ends in 2. There are $b_5$ ways to choose the first five digits, and then four ways to choose the last digit.
-* Case 3: The string ends in 3. There are $c_5$ ways to choose the first five digits, and then six ways to choose the last digit.
+with initial conditions $a_0 = 1$, $b_0 = 0$, and $c_0 = 0$. This recurrence relation can be solved using the following generating function:
 
-Therefore, the total number of strings of length 6 that consist solely of the digits 1, 2, and 3 and have the property that any two adjacent digits differ by at most 1 is $a_5 + b_5 + c_5 = 120$.</code></pre>
+$$A(x) = \sum_{n=0}^{\infty} a_n x^n = \frac{1}{1 - x - x^2 - x^3}$$
+
+The coefficient of $x^6$ in $A(x)$ is the number of length-$6$ strings that end in 1, 2, or 3, so the answer to the problem is $\frac{1}{12} \left( 1 - \sqrt{5} \right)$.
+
+Here is a more detailed solution:
+
+We can start by writing down all the possible length-$6$ strings that end in 1. There are $3^6 = 729$ of these strings. We can then remove all the strings that contain two adjacent digits that differ by more than 1. This leaves us with $120$ strings.
+
+We can then write down all the possible length-$6$ strings that end in 2. There are $3^6 = 729$ of these strings. We can then remove all the strings that contain two adjacent digits that differ by more than 1. This leaves us with $216$ strings.
+
+We can then write down all the possible length-$6$ strings that end in 3. There are $3^6 = 729$ of these strings. We can then remove all the strings that contain two adjacent digits that differ by more than 1. This leaves us with $216$ strings.
+
+The total number of strings that end in 1, 2, or 3 is therefore $120 + 216 + 216 = 552$.
+
+However, we have overcounted some strings. For example, the string &quot;123456&quot; has been counted three times, once for each of the possible endings. To correct for this, we need to divide the number of strings by 3.
+
+The final answer is therefore $\frac{552}{3} = 184$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 120 strings of length 6 that consist solely of the digits 1, 2, and 3 and have the property that any two adjacent digits differ by at most 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings of length 6 consisting solely of the digits 1, 2, and 3 that have the property that any two adjacent digits differ by at most 1 is $\frac{1}{12} \left( 1 - \sqrt{5} \right)$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

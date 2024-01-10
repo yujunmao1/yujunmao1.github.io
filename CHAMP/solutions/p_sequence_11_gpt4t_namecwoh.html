@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_11</td>
             <td>GPT-4 Turbo</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_11']
-messages = problem.conversations['GPT-4 Turbo|Name w/o H'].messages
+messages = problem.conversations['GPT-4 Turbo|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,66 +77,56 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?
+Define a sequence with x_1=1/2, x_(k+1)=x_k^2+x_k. What is the integer part of the sum 1/(x_1+1)+1/(x_2+1)+1/(x_3+1)+...+1/(x_100+1)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find a pattern in the terms of the sequence. Let&#x27;s start by calculating the first few terms of the sequence:
 
-You may find the following information useful:
+Given x_1 = 1/2, we can find x_2 using the recursive formula x_(k+1) = x_k^2 + x_k:
 
-1. Express 1/(x_k+1) in terms of 1/x_k and 1/x_(k+1).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s first find a relationship between 1/(x_k+1), 1/x_k, and 1/x_(k+1).
+x_2 = x_1^2 + x_1 = (1/2)^2 + 1/2 = 1/4 + 1/2 = 3/4
 
-Given the sequence x_(k+1) = x_k^2 + x_k, we want to express 1/(x_k+1) in terms of 1/x_k and 1/x_(k+1).
+Now, let&#x27;s find x_3:
 
-Starting with the given recurrence relation:
-x_(k+1) = x_k^2 + x_k
+x_3 = x_2^2 + x_2 = (3/4)^2 + 3/4 = 9/16 + 12/16 = 21/16
 
-We can add 1 to both sides to get:
-x_(k+1) + 1 = x_k^2 + x_k + 1
+Before we continue, let&#x27;s look at the terms we are summing: 1/(x_k + 1). We want to see if there&#x27;s a simplification that can be made when we add 1 to x_k:
 
-Now, let&#x27;s express x_k in terms of x_(k+1):
-x_k = x_(k+1) - x_k^2
+x_k + 1 = (x_k^2 + x_k) + 1 = x_k(x_k + 1) + 1
 
-We can rewrite this as:
-x_k = x_(k+1) - (x_k)^2
+Notice that x_(k+1) = x_k^2 + x_k, so we can rewrite the above as:
 
-Now, let&#x27;s find 1/(x_k+1) in terms of x_k and x_(k+1):
-1/(x_k+1) = 1/(x_(k+1) - x_k^2 + 1)
+x_k + 1 = x_(k+1) + 1
 
-We can split the fraction into two parts using partial fraction decomposition:
-1/(x_(k+1) - x_k^2 + 1) = A/(x_k+1) + B/(x_(k+1)+1)
+Now, let&#x27;s look at the summands:
 
-To find A and B, we need to solve the equation:
-1 = A(x_(k+1)+1) + B(x_k+1)
+1/(x_k + 1) = 1/(x_(k+1) + 1)
 
-Now, let&#x27;s find A and B by plugging in suitable values for x_k and x_(k+1). If we set x_(k+1) = -1, we get:
-1 = B(x_k+1)
+We can see that the denominator of each summand is just the next term in the sequence plus 1. This suggests that there might be a telescoping property in the sum. Let&#x27;s write out the first few terms of the sum using this observation:
 
-Since x_k cannot be -1 (because x_1 = 1/2 and the sequence is increasing), we can divide both sides by (x_k+1) to get B = 1/(x_k+1).
+1/(x_1 + 1) = 1/(1/2 + 1) = 1/(3/2) = 2/3
+1/(x_2 + 1) = 1/(3/4 + 1) = 1/(7/4) = 4/7
+1/(x_3 + 1) = 1/(21/16 + 1) = 1/(37/16) = 16/37
 
-Similarly, if we set x_k = -1, we get:
-1 = A(x_(k+1)+1)
+Now, let&#x27;s write these fractions in a way that reveals the telescoping nature:
 
-And since x_(k+1) cannot be -1, we can divide both sides by (x_(k+1)+1) to get A = 1/(x_(k+1)+1).
+1/(x_1 + 1) = 2/3 = (2 - 4/3)
+1/(x_2 + 1) = 4/7 = (4/3 - 16/21)
+1/(x_3 + 1) = 16/37 = (16/21 - ...)
 
-So we have:
-1/(x_k+1) = 1/(x_k+1) - 1/(x_(k+1)+1)
+We can see that each term in the sum has a part that cancels with part of the next term. Specifically, the numerator of the second fraction in each term is the denominator of the first fraction in the next term.
 
-Now, let&#x27;s compute the sum of the series:
-S = 1/(x_1+1) + 1/(x_2+1) + 1/(x_3+1) + ... + 1/(x_100+1)
+This pattern will continue, and the sum will telescope down to just the first part of the first term and the second part of the last term:
 
-Using the relationship we found, we can rewrite the sum as:
-S = (1/(x_1+1) - 1/(x_2+1)) + (1/(x_2+1) - 1/(x_3+1)) + ... + (1/(x_100+1) - 1/(x_101+1))
+Sum = (2 - last_term_second_part)
 
-Notice that this is a telescoping series, where most terms cancel out, leaving us with:
-S = 1/(x_1+1) - 1/(x_101+1)
+To find the last term&#x27;s second part, we need to find x_100 and then calculate 1/(x_100 + 1). However, we don&#x27;t need to find the exact value of x_100; we only need the integer part of the sum.
 
-We know that x_1 = 1/2, so:
-1/(x_1+1) = 1/(1/2+1) = 1/(3/2) = 2/3
+Since the sequence is increasing and x_1 = 1/2, all subsequent terms will be greater than 1/2, and thus, all terms 1/(x_k + 1) will be less than 1. This means that the integer part of the sum will be 0 for all terms except possibly the first one.
 
-We don&#x27;t have an explicit formula for x_101, but we know that the sequence is increasing and x_k &gt; 0 for all k. Therefore, x_101 + 1 &gt; 1, and 1/(x_101+1) is a positive fraction less than 1. Since we are only interested in the integer part of the sum, we can ignore this term because it will not contribute to the integer part.
+The integer part of the first term is 0 (since 2/3 &lt; 1), and since all other terms are less than 1 and positive, the integer part of the entire sum will be 0.
 
-Thus, the integer part of the sum S is the integer part of 2/3, which is 0.</code></pre>
+Therefore, the integer part of the sum 1/(x_1 + 1) + 1/(x_2 + 1) + 1/(x_3 + 1) + ... + 1/(x_100 + 1) is 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer part of the sum 1/(x_1+1) + 1/(x_2+1) + 1/(x_3+1) + ... + 1/(x_100+1) for the given sequence is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The integer part of the sum 1/(x_1 + 1) + 1/(x_2 + 1) + ... + 1/(x_100 + 1) for the given sequence is 0.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

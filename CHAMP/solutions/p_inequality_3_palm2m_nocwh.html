@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_3</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 1/3</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_3']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,34 +77,78 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For positive a, b, c, what is the smallest value of (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2))?
+For positive a, b, c, what is the smallest value of (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2))?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can use AM-GM to solve this problem. AM-GM states that for any non-negative real numbers $a_1, a_2, \dots, a_n$, we have
 
-You may find the following information useful:
+$$\frac{a_1 + a_2 + \dots + a_n}{n} \geq \sqrt[n]{a_1 a_2 \dots a_n}.$$
 
-1. Let (a_1, ..., a_n) and (b_1, ..., b_n) be two similarly sorted sequences (e.g., both increasing or both decreasing). Then ((a_1+...+a_n)/n)*((b_1+...+b_n)/n)≤(a_1*b_1+...+a_n*b_n)/n.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c$ be positive numbers. We want to minimize the expression
+In our case, we have $a_1 = a, a_2 = b, a_3 = c$, and $n = 3$. Substituting these values into AM-GM, we get
 
-$$\frac{a^3+b^3+c^3}{(a+b+c)(a^2+b^2+c^2)}.$$
+$$\frac{a + b + c}{3} \geq \sqrt[3]{a^3 b^3 c^3}.$$
 
-We can write this as
+Multiplying both sides by $3$, we get
 
-$$\frac{(a+b+c)^3-3(a+b+c)(a^2+b^2+c^2)+3abc}{(a+b+c)(a^2+b^2+c^2)}.$$
+$$a + b + c \geq 3 \sqrt[3]{a^3 b^3 c^3}.$$
 
-By AM-GM, we have
+Squaring both sides, we get
 
-$$(a+b+c)^3 \ge 3(a^2+b^2+c^2).$$
+$$(a + b + c)^2 \geq 9 a^3 b^3 c^3.$$
 
-Also, by Cauchy-Schwarz, we have
+Expanding the left-hand side, we get
 
-$$3abc \le (a+b+c)(a^2+b^2+c^2).$$
+$$a^2 + b^2 + c^2 + 2ab + 2ac + 2bc \geq 9 a^3 b^3 c^3.$$
 
-Combining these inequalities, we get
+Subtracting $9 a^3 b^3 c^3$ from both sides, we get
 
-$$\frac{(a+b+c)^3-3(a+b+c)(a^2+b^2+c^2)+3abc}{(a+b+c)(a^2+b^2+c^2)} \ge \frac{3(a^2+b^2+c^2)-3(a+b+c)(a^2+b^2+c^2)+3abc}{(a+b+c)(a^2+b^2+c^2)} = 1.$$
+$$a^2 + b^2 + c^2 - 2ab - 2ac - 2bc \leq 0.$$
 
-Equality occurs when $a=b=c$. Therefore, the minimum value of the expression is $\boxed{1}$.</code></pre>
+Factoring the left-hand side, we get
+
+$$(a - b)^2 + (b - c)^2 + (c - a)^2 \leq 0.$$
+
+Taking the square root of both sides, we get
+
+$$|a - b| \leq 1, \quad |b - c| \leq 1, \quad |c - a| \leq 1.$$
+
+Adding these inequalities, we get
+
+$$|a - b| + |b - c| + |c - a| \leq 3.$$
+
+We can rearrange this inequality as follows:
+
+$$|a - b + b - c + c - a| \leq 3.$$
+
+Since $a, b, c$ are all positive, we know that $a - b, b - c, c - a$ are all non-negative. Therefore, we can add them to get $a + b + c$, which is at least $3$. This means that
+
+$$|a - b + b - c + c - a| \leq 3 \leq a + b + c.$$
+
+Dividing both sides by $2$, we get
+
+$$\frac{|a - b + b - c + c - a|}{2} \leq \frac{a + b + c}{2}.$$
+
+Now, let&#x27;s substitute $x = a - b, y = b - c, z = c - a$. Then, we have
+
+$$\frac{|x + y + z|}{2} \leq \frac{x + y + z}{2}.$$
+
+Simplifying, we get
+
+$$|x + y + z| \leq x + y + z.$$
+
+This is true for any real numbers $x, y, z$. In particular, we can let $x = a^3, y = b^3, z = c^3$. Substituting these values into the inequality, we get
+
+$$|a^3 + b^3 + c^3| \leq a^3 + b^3 + c^3.$$
+
+Since the absolute value of a number is always non-negative, we can drop the absolute value signs. This gives us
+
+$$a^3 + b^3 + c^3 \leq a^3 + b^3 + c^3.$$
+
+Simplifying, we get
+
+$$0 \leq 0.$$
+
+This is a true statement, so we have found the smallest value of $(a^3 + b^3 + c^3)/((a+b+c)(a^2+b^2+c^2))$. It is equal to $0$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of $\frac{a^3+b^3+c^3}{(a+b+c)(a^2+b^2+c^2)}$ is $1$, which occurs when $a=b=c$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of $(a^3 + b^3 + c^3)/((a+b+c)(a^2+b^2+c^2))$ is $0$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

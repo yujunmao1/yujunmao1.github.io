@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_16</td>
             <td>PaLM 2 Medium</td>
-            <td>Name w/o H</td>
+            <td>Name C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> No</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_16']
-messages = problem.conversations['PaLM 2 Medium|Name w/o H'].messages
+messages = problem.conversations['PaLM 2 Medium|Name C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,57 +81,61 @@ Can n+2 be a factor of 1^1987+2^1987+...+n^1987 for some n?
 
 You may find the following information useful:
 
-1. Let s=1^1987+2^1987+...+n^1987 and express 2s=2+t for some t.
-2. Check if 2+n | t.
-3. For integer a, b and odd n, a + b | a^n + b^n.
-4. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $s=1^1987+2^1987+...+n^1987$. We can write $s$ as follows:
+1. For integer a, b and odd n, a + b | a^n + b^n.
+2. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_n = 1^n + 2^n + \cdots + n^n$. We will show that $n+2$ is a factor of $a_n$ for some $n$.
 
-$$s = \frac{n(n+1)(2n+1)}{6} \binom{2n}{n}$$
+First, we will show that $a_n$ is divisible by $n+2$ for all $n$. To do this, we will use the following lemma:
 
-where $\binom{2n}{n}$ is the binomial coefficient. We can then write $2s$ as follows:
+&gt; Lemma: For any integer $n$, $a_n$ is divisible by $n+2$.
 
-$$2s = \frac{n(n+1)(2n+1)}{3} \binom{2n}{n}$$
+&gt;
 
-We can factor out $2$ from $2s$ to get:
+&gt; Proof: We will prove this by induction on $n$. The base case is $n=1$. In this case, $a_1 = 1$, which is clearly divisible by $3$.
 
-$$2s = 2 \left( \frac{n(n+1)(2n+1)}{6} \binom{2n}{n} \right)$$
+&gt;
 
-We can then write $2s$ as follows:
+&gt; Now assume that the claim holds for some $n \geq 1$. We want to show that it holds for $n+1$. We have
 
-$$2s = 2 \left( \frac{n(n+1)}{2} \right) \left( \frac{2n+1}{3} \right) \binom{2n}{n}$$
+&gt;
 
-We can then write $2s$ as follows:
+&gt; $$a_{n+1} = 1^{n+1} + 2^{n+1} + \cdots + (n+1)^{n+1} = (1^n + 2^n + \cdots + n^n) + (n+1)^{n+1}.$$
 
-$$2s = 2 \left( \frac{n(n+1)}{2} \right) \left( \frac{2n+1}{3} \right) \frac{(2n)!}{n!^2}$$
+&gt;
 
-We can then write $2s$ as follows:
+&gt; By the induction hypothesis, $1^n + 2^n + \cdots + n^n$ is divisible by $n+2$. Therefore, $a_{n+1}$ is divisible by $n+2$, since it is a sum of a number divisible by $n+2$ and a number divisible by $1$.
 
-$$2s = 2 \left( \frac{n(n+1)}{2} \right) \left( \frac{2n+1}{3} \right) \frac{(2n)!}{n!^2} \frac{1}{(2n-1)!}$$
+This completes the proof of the lemma.
 
-We can then write $2s$ as follows:
+Now, we will show that $a_n$ is not divisible by any smaller number than $n+2$. To do this, we will use the following lemma:
 
-$$2s = 2 \left( \frac{n(n+1)}{2} \right) \left( \frac{2n+1}{3} \right) \frac{(2n)!}{n!^2} \frac{1}{(2n-1)!} \frac{1}{(2n-2)!}$$
+&gt; Lemma: If $a_n$ is divisible by $d$, then $d \geq n+2$.
 
-We can then write $2s$ as follows:
+&gt;
 
-$$2s = 2 \left( \frac{n(n+1)}{2} \right) \left( \frac{2n+1}{3} \right) \frac{(2n)!}{n!^2} \frac{1}{(2n-1)!} \frac{1}{(2n-2)!} \frac{1}{(2n-3)!}$$
+&gt; Proof: We will prove this by contradiction. Suppose that $a_n$ is divisible by $d$, where $d &lt; n+2$. Then we can write
 
-We can then write $2s$ as follows:
+&gt;
 
-$$2s = 2 \left( \frac{n(n+1)}{2} \right) \left( \frac{2n+1}{3} \right) \frac{(2n)!}{n!^2} \frac{1}{(2n-1)!} \frac{1}{(2n-2)!} \frac{1}{(2n-3)!} \frac{1}{(2n-4)!}$$
+&gt; $$a_n = dk$$
 
-We can then write $2s$ as follows:
+&gt;
 
-$$2s = 2 \left( \frac{n(n+1)}{2} \right) \left( \frac{2n+1}{3} \right) \frac{(2n)!}{n!^2} \frac{1}{(2n-1)!} \frac{1}{(2n-2)!} \frac{1}{(2n-3)!} \frac{1}{(2n-4)!} \frac{1}{(2n-5)!}$$
+&gt; for some integer $k$. But this implies that
 
-We can then write $2s$ as follows:
+&gt;
 
-$$2s = 2 \left( \frac{n(n+1)}{2} \right) \left( \frac{2n+1}{3} \right) \frac{(2n)!}{n!^2} \frac{1}{(2n-1)!} \frac{1}{(2n-2)!} \frac{1}{(2n-3)!} \frac{1}{(2n-4)!} \frac{1}{(2n-5)!} \frac{1}{(2n-6)!}$$
+&gt; $$1^n + 2^n + \cdots + n^n = dk.$$
 
-We can then write $2</code></pre>
+&gt;
+
+&gt; This is a contradiction, since the left-hand side is odd and the right-hand side is even.
+
+This completes the proof of the lemma.
+
+Combining the two lemmas, we see that $n+2$ is the smallest number that divides $a_n$. Therefore, $n+2$ is a factor of $a_n$ for some $n$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>No, $n+2$ cannot be a factor of $1^1987+2^1987+...+n^1987$ for any $n$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>$n+2$ is a factor of $1^n+2^n+\cdots+n^n$ for some $n$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

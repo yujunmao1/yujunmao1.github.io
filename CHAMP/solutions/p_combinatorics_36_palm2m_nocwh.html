@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_36</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> n!/(2n)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_36']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,16 +82,39 @@ n people sit around a circular table. How many of the n! arrangements are distin
 You may find the following information useful:
 
 1. A rotation of the table preserves the neighboring relationship.
-2. A reflection (mirroring) of the table through the center preserves the neighboring relationship.
-3. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-4. If we count each object d times and get a total of n counts, then there are n/d objects.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $n!$ ways to arrange $n$ people around a circular table. However, many of these arrangements are not distinct. For example, if we rotate the table by 180 degrees, the arrangement of the people will be the same. Similarly, if we reflect the table through the center, the arrangement of the people will be the same.
+2. A reflection (mirroring) of the table through the center preserves the neighboring relationship.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $n!$ ways to arrange $n$ people around a circular table. However, not all of these arrangements are distinct. For example, if we rotate the table by 180 degrees, the arrangement of the people will be the same. Similarly, if we reflect the table through the center, the arrangement of the people will be the same.
 
-To count the number of distinct arrangements, we need to divide $n!$ by the number of times each arrangement is repeated by rotations and reflections. There are $n$ rotations and $n$ reflections, so each arrangement is repeated $n!$ times. Therefore, the number of distinct arrangements is $\frac{n!}{n!} = 1$.
+Therefore, the number of distinct arrangements of $n$ people around a circular table is the number of ways to arrange them divided by the number of ways to rotate or reflect the table without changing the arrangement. This number is given by the following formula:
 
-Alternatively, we can think of the problem as follows. We can choose any person to be the first person to sit down. Once the first person is seated, there are $n-1$ choices for the second person, $n-2$ choices for the third person, and so on. Therefore, there are $n!$ ways to choose the order in which the people sit down. However, many of these arrangements will be the same after we rotate or reflect the table. To count the number of distinct arrangements, we need to divide $n!$ by the number of times each arrangement is repeated by rotations and reflections. As we saw before, each arrangement is repeated $n!$ times. Therefore, the number of distinct arrangements is $\frac{n!}{n!} = 1$.</code></pre>
+$$\frac{n!}{n}$$
+
+For example, if there are 4 people, there are $4! = 24$ ways to arrange them around a circular table. However, there are 4 ways to rotate the table and 2 ways to reflect the table, so there are only 6 distinct arrangements.
+
+Here is a more detailed explanation of the formula. Let&#x27;s say we have 3 people, A, B, and C. There are 6 ways to arrange them around a circular table:
+
+1. A-B-C
+2. B-A-C
+3. C-A-B
+4. A-C-B
+5. B-C-A
+6. C-B-A
+
+However, if we rotate the table by 120 degrees, the arrangement will be the same:
+
+1. C-B-A
+2. A-C-B
+3. B-A-C
+
+So, we can eliminate 3 of the arrangements. Similarly, if we reflect the table through the center, the arrangement will be the same:
+
+1. A-B-C
+2. B-C-A
+3. C-A-B
+
+So, we can eliminate another 3 arrangements. Therefore, there are only 2 distinct arrangements of 3 people around a circular table.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of distinct arrangements of $n$ people around a circular table is $1$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of distinct arrangements of $n$ people around a circular table is $\frac{n!}{n}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

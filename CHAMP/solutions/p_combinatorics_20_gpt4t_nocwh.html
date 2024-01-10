@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_20</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 87</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_20']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,37 +83,45 @@ You may find the following information useful:
 
 1. Let a_n be the number of ways to tile a 2 x n rectangle.
 2. Find the expression for a_(n+1) in terms of a_n, a_(n-1) and a_(n-2).
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
-4. Find a_1, a_2 and a_3.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will first find the expressions for a_1, a_2, and a_3, which represent the number of ways to tile a 2 x 1, 2 x 2, and 2 x 3 rectangle, respectively. Then we will derive a recursive formula for a_(n+1) in terms of a_n, a_(n-1), and a_(n-2).
+3. Find a_1, a_2 and a_3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to establish a recursive relationship for \( a_n \), the number of ways to tile a 2 x n rectangle. We will then use this relationship to find \( a_5 \), since that is the number of ways to tile a 2 x 5 rectangle.
 
-1. a_1: There is only one way to tile a 2 x 1 rectangle with 1 x 1 tiles, as the L-shaped tiles cannot fit in such a small space. So, a_1 = 1.
+First, let&#x27;s find \( a_1 \), \( a_2 \), and \( a_3 \).
 
-2. a_2: There are two ways to tile a 2 x 2 rectangle. We can either use four 1 x 1 tiles or one L-shaped tile. So, a_2 = 2.
+1. \( a_1 \): There is only one way to tile a 2 x 1 rectangle, which is by placing two 1 x 1 tiles on top of each other. So, \( a_1 = 1 \).
 
-3. a_3: For a 2 x 3 rectangle, we can tile it in the following ways:
-   - Three L-shaped tiles, each occupying one corner of the rectangle and the center, which gives us two possibilities (the L-shaped tile in the center can be oriented in two different ways).
-   - Two L-shaped tiles and two 1 x 1 tiles, which gives us two possibilities (the L-shaped tiles can be at either end).
-   - Six 1 x 1 tiles, which gives us one possibility.
-   So, a_3 = 2 + 2 + 1 = 5.
+2. \( a_2 \): There are two ways to tile a 2 x 2 rectangle. We can either place four 1 x 1 tiles or one single L-shaped tile. So, \( a_2 = 2 \).
 
-Now, let&#x27;s find the recursive formula for a_(n+1). To tile a 2 x (n+1) rectangle, we can consider the following cases:
+3. \( a_3 \): For a 2 x 3 rectangle, we can tile it in the following ways:
+   - Three L-shaped tiles, each occupying one corner of the rectangle.
+   - Two 1 x 1 tiles on one end and an L-shaped tile on the other end. There are two ways to do this, depending on which end has the 1 x 1 tiles.
+   - One L-shaped tile in the middle and four 1 x 1 tiles filling the remaining spaces. There are two ways to do this, depending on the orientation of the L-shaped tile.
+   
+   This gives us a total of \( a_3 = 3 + 2 + 2 = 7 \) ways.
 
-- Place a 1 x 1 tile at the end of a 2 x n rectangle. There are a_n ways to tile the remaining 2 x n rectangle.
-- Place an L-shaped tile at the end, which covers a 2 x 2 area at the end of the rectangle. There are a_(n-1) ways to tile the remaining 2 x (n-1) rectangle.
-- Place two L-shaped tiles at the end, which cover a 2 x 3 area at the end of the rectangle. There are a_(n-2) ways to tile the remaining 2 x (n-2) rectangle.
+Now, let&#x27;s find the recursive formula for \( a_{n+1} \).
 
-Therefore, the recursive formula is:
-a_(n+1) = a_n + a_(n-1) + a_(n-2)
+To tile a 2 x (n+1) rectangle, we can consider the following cases:
 
-Now we can find a_4 and a_5 using the recursive formula:
+1. Place two 1 x 1 tiles at the end of a 2 x n rectangle. The number of ways to do this is \( a_n \).
 
-a_4 = a_3 + a_2 + a_1 = 5 + 2 + 1 = 8
-a_5 = a_4 + a_3 + a_2 = 8 + 5 + 2 = 15
+2. Place an L-shaped tile at the end of a 2 x (n-1) rectangle. There are two ways to place the L-shaped tile (vertically or horizontally), so the number of ways to do this is \( 2 \cdot a_{n-1} \).
 
-So, there are 15 ways to fill a 2 x 5 rectangle with 1 x 1 tiles and three-cell L-shaped tiles.</code></pre>
+3. Place two L-shaped tiles at the end of a 2 x (n-2) rectangle. There is only one way to place these tiles, so the number of ways to do this is \( a_{n-2} \).
+
+Combining these cases, we get the recursive formula:
+
+\[ a_{n+1} = a_n + 2 \cdot a_{n-1} + a_{n-2} \]
+
+Now we can use this formula to find \( a_4 \) and \( a_5 \):
+
+\( a_4 = a_3 + 2 \cdot a_2 + a_1 = 7 + 2 \cdot 2 + 1 = 7 + 4 + 1 = 12 \)
+
+\( a_5 = a_4 + 2 \cdot a_3 + a_2 = 12 + 2 \cdot 7 + 2 = 12 + 14 + 2 = 28 \)
+
+Therefore, there are \( a_5 = 28 \) ways to fill a 2 x 5 rectangle with 1 x 1 tiles and three-cell L-shaped tiles.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 15 ways to fill a 2 x 5 rectangle with 1 x 1 tiles and three-cell L-shaped tiles.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 28 ways to fill a 2 x 5 rectangle with 1 x 1 tiles and three-cell L-shaped tiles.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

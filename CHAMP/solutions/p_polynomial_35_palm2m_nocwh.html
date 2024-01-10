@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_35</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 1</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_35']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,41 +81,28 @@ Let f(x)=(x^1958+x^1957+2)^1959=a_0+a_1*x+···+a_n*x^n. Find a_0−a_1/2−a_2
 
 You may find the following information useful:
 
-1. Study f(w)+f(w^2) where w is the cube root of unity e^(i*pi/3).
-2. The cube root of unity w=e^(i*pi/3) satisfies w+w^2+1=0 and w^n=w^(n mod 3).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We know that $f(x)=(x^1958+x^1957+2)^1959$. We can write this as
+1. Study f(w)+f(w^2) where w is the cube root of unity e^(i*pi/3).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We have that $f(x)=(x^1958+x^1957+2)^1959$. Let $w$ be the cube root of unity $e^{i\pi/3}$. Then $w^2=-w$ and $w^3=1$.
 
-$$f(x) = (x^1958+x^1957+2)(x^1958+x^1957+2)^1958$$
+We can write $f(x)$ as follows:
 
-We can then factor out $x^1958+x^1957+2$ to get
+$$f(x)=(x^1958+x^1957+2)^1959=(x^1958+w^2x^1957+w^4x^1956+2)^1959=(x^1958+w^2x^1957+w^4x^1956+w^6x^1955+2)^1959=(x^1958+w^2x^1957+w^4x^1956+w^6x^1955+w^8x^1954+2)^1959...$$
 
-$$f(x) = (x^1958+x^1957+2)(x^1958+x^1957+2)^{1958-1}$$
+Continuing in this way, we get that $f(x)$ can be written as follows:
 
-We can continue to factor out $x^1958+x^1957+2$ until we get
+$$f(x)=(x^1958+w^2x^1957+w^4x^1956+w^6x^1955+w^8x^1954+...+w^{1958}x+2)^1959$$
 
-$$f(x) = (x^1958+x^1957+2)(x^1958+x^1957+2)(x^1958+x^1957+2)^{1957-1} = (x^1958+x^1957+2)^3$$
+Now, let $y=x+w$. Then $y^2=x^2+2wx+w^2=x^2+2x+1$. Substituting this into the expression for $f(x)$, we get:
 
-We can then write $x^1958+x^1957+2$ as $w$, where $w$ is the cube root of unity $e^{i\pi/3}$. This gives us
+$$f(x)=(x^1958+w^2x^1957+w^4x^1956+w^6x^1955+w^8x^1954+...+w^{1958}x+2)^1959=(y^1958+w^2y^1957+w^4y^1956+w^6y^1955+w^8y^1954+...+w^{1958}y+2)^1959$$
 
-$$f(x) = (w)^3 = w^3 = w$$
+But $y$ is a root of the polynomial $x^2+2x+1$, so $y^{1958}+w^2y^{1957}+w^4y^{1956}+w^6y^{1955}+w^8y^1954+...+w^{1958}y+2=0$. Therefore, we have that $f(x)=0$.
 
-We know that $w+w^2+1=0$. We can then substitute this into the equation $f(x)=w$ to get
+Now, let $a_0$ be the coefficient of $x^0$ in $f(x)$. Then $a_0=1$. Let $a_1$ be the coefficient of $x$ in $f(x)$. Then $a_1=-1$. Let $a_2$ be the coefficient of $x^2$ in $f(x)$. Then $a_2=-1$. And so on.
 
-$$w = w^3 = (w+w^2+1)w = 0w = 0$$
-
-This means that $f(x)=0$.
-
-We can then write $f(x)$ as a power series in $x$. This gives us
-
-$$f(x) = a_0 + a_1x + a_2x^2 + \cdots + a_nx^n$$
-
-We know that $f(x)=0$. This means that the coefficients of the power series must all be zero. This gives us
-
-$$a_0 = a_1 = a_2 = \cdots = a_n = 0$$
-
-Therefore, the answer is $a_0-a_1/2-a_2/2+a_3-a_4/2-a_5/2+a_6-a_7/2-a_8/2+\cdots = 0$.</code></pre>
+Therefore, we have that $a_0-a_1/2-a_2/2+a_3-a_4/2-a_5/2+a_6-a_7/2-a_8/2+...=0$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The answer is $0$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sum of the coefficients of $x^0$, $x^1$, $x^2$, and so on in $(x^1958+x^1957+2)^1959$ is $0$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

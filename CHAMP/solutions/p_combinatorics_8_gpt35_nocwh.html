@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_8</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 634</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_8']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,34 +82,58 @@ How many strings of length 5 and consisting solely of the digits 1, 2, 3 and 4 h
 You may find the following information useful:
 
 1. Let a_n, b_n, c_n, d_n be the numbers of length-n strings that end with 1, 2, 3, 4 respectively.
-2. Express a_(n+1), b_(n+1), c_(n+1), d_(n+1) in terms of a_n, b_n, c_n, d_n.
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+2. Express a_(n+1), b_(n+1), c_(n+1), d_(n+1) in terms of a_n, b_n, c_n, d_n.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the principle of inclusion-exclusion.
 
-Let&#x27;s consider the number of strings of length 5 without any restrictions. Each digit in the string can be chosen from the set {1, 2, 3, 4}, so there are 4 choices for each position. Therefore, there are 4^5 = 1024 possible strings of length 5.
+Let&#x27;s consider the possible cases for the last digit of the string:
 
-Now, let&#x27;s count the number of strings that violate the given property. We will count the number of strings that contain &quot;12&quot; as a substring and the number of strings that contain &quot;21&quot; as a substring separately.
+Case 1: The last digit is 1.
+In this case, the previous digit cannot be 2. So, we can have any of the digits 1, 3, or 4 before the last digit. Therefore, the number of strings of length n+1 that end with 1 is equal to the total number of strings of length n that end with 1, 3, or 4. This can be represented as a_(n+1) = a_n + c_n + d_n.
 
-1. Counting the number of strings that contain &quot;12&quot; as a substring:
-To count this, we can fix the position of &quot;12&quot; in the string and count the number of choices for the remaining positions. There are 4 choices for the first digit, 3 choices for the second digit (excluding 2), and 4 choices for each of the remaining 3 digits. Therefore, there are 4 * 3 * 4^3 = 768 strings that contain &quot;12&quot; as a substring.
+Case 2: The last digit is 2.
+Similar to Case 1, the previous digit cannot be 1. So, we can have any of the digits 2, 3, or 4 before the last digit. Therefore, the number of strings of length n+1 that end with 2 is equal to the total number of strings of length n that end with 2, 3, or 4. This can be represented as b_(n+1) = b_n + c_n + d_n.
 
-2. Counting the number of strings that contain &quot;21&quot; as a substring:
-Similarly, there are 4 choices for the first digit, 3 choices for the second digit (excluding 1), and 4 choices for each of the remaining 3 digits. Therefore, there are also 4 * 3 * 4^3 = 768 strings that contain &quot;21&quot; as a substring.
+Case 3: The last digit is 3.
+In this case, the previous digit can be any of the digits 1, 2, 3, or 4. Therefore, the number of strings of length n+1 that end with 3 is equal to the total number of strings of length n. This can be represented as c_(n+1) = a_n + b_n + c_n + d_n.
 
-However, we have double-counted the strings that contain both &quot;12&quot; and &quot;21&quot; as substrings. To correct for this, we need to subtract the number of such strings.
+Case 4: The last digit is 4.
+Similar to Case 3, the previous digit can be any of the digits 1, 2, 3, or 4. Therefore, the number of strings of length n+1 that end with 4 is equal to the total number of strings of length n. This can be represented as d_(n+1) = a_n + b_n + c_n + d_n.
 
-3. Counting the number of strings that contain both &quot;12&quot; and &quot;21&quot; as substrings:
-To count this, we can fix the position of &quot;12&quot; in the string and count the number of choices for the remaining positions. There are 4 choices for the first digit, 3 choices for the second digit (excluding 2), and 3 choices for each of the remaining 3 digits (excluding 1). Therefore, there are 4 * 3 * 3^3 = 324 strings that contain both &quot;12&quot; and &quot;21&quot; as substrings.
+Now, let&#x27;s consider the base cases:
 
-Now, we can apply the principle of inclusion-exclusion to find the number of strings that satisfy the given property:
+For n = 1, we have a_1 = 1, b_1 = 1, c_1 = 1, d_1 = 1 since there is only one digit in the string.
 
-Number of strings = Total number of strings - Number of strings that contain &quot;12&quot; - Number of strings that contain &quot;21&quot; + Number of strings that contain both &quot;12&quot; and &quot;21&quot;
-                 = 1024 - 768 - 768 + 324
-                 = 812
+Using the recurrence relations derived above, we can calculate the values of a_n, b_n, c_n, d_n for n = 2, 3, 4, 5.
 
-Therefore, there are 812 strings of length 5 that satisfy the given property.</code></pre>
+For n = 2:
+a_2 = a_1 + c_1 + d_1 = 1 + 1 + 1 = 3
+b_2 = b_1 + c_1 + d_1 = 1 + 1 + 1 = 3
+c_2 = a_1 + b_1 + c_1 + d_1 = 1 + 1 + 1 + 1 = 4
+d_2 = a_1 + b_1 + c_1 + d_1 = 1 + 1 + 1 + 1 = 4
+
+For n = 3:
+a_3 = a_2 + c_2 + d_2 = 3 + 4 + 4 = 11
+b_3 = b_2 + c_2 + d_2 = 3 + 4 + 4 = 11
+c_3 = a_2 + b_2 + c_2 + d_2 = 3 + 3 + 4 + 4 = 14
+d_3 = a_2 + b_2 + c_2 + d_2 = 3 + 3 + 4 + 4 = 14
+
+For n = 4:
+a_4 = a_3 + c_3 + d_3 = 11 + 14 + 14 = 39
+b_4 = b_3 + c_3 + d_3 = 11 + 14 + 14 = 39
+c_4 = a_3 + b_3 + c_3 + d_3 = 11 + 11 + 14 + 14 = 50
+d_4 = a_3 + b_3 + c_3 + d_3 = 11 + 11 + 14 + 14 = 50
+
+For n = 5:
+a_5 = a_4 + c_4 + d_4 = 39 + 50 + 50 = 139
+b_5 = b_4 + c_4 + d_4 = 39 + 50 + 50 = 139
+c_5 = a_4 + b_4 + c_4 + d_4 = 39 + 39 + 50 + 50 = 178
+d_5 = a_4 + b_4 + c_4 + d_4 = 39 + 39 + 50 + 50 = 178
+
+Therefore, the total number of strings of length 5 that satisfy the given condition is a_5 + b_5 + c_5 + d_5 = 139 + 139 + 178 + 178 = 634.
+
+So, there are 634 strings of length 5 consisting solely of the digits 1, 2, 3, and 4, where any 1 and 2 are never neighbors.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 812 strings of length 5 consisting solely of the digits 1, 2, 3, and 4, where any 1 and 2 are never neighbors.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 634 strings of length 5 consisting solely of the digits 1, 2, 3, and 4, where any 1 and 2 are never neighbors.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

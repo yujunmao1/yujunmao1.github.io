@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_7</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_7']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,25 +83,23 @@ You may find the following information useful:
 
 1. Let a(n) be the number of possible rearrangements (including the original one) for n seats, and consider the movement of the first child in the row.
 2. If the first child does not move, how many rearrangements do we have?
-3. If the first child moves, how many rearrangements do we have?
-4. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a(n)$ be the number of possible rearrangements (including the original one) for $n$ seats. We can solve this problem by considering the movement of the first child in the row.
+3. If the first child moves, how many rearrangements do we have?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a(n)$ be the number of possible rearrangements (including the original one) for $n$ seats. We can find $a(n)$ recursively as follows:
 
-If the first child does not move, then the remaining $10$ children can be rearranged in $10!$ ways.
+* If $n = 1$, there is only one possible rearrangement.
+* If $n &gt; 1$, the first child can move to any of the $n-1$ seats, and the remaining children can be rearranged in $a(n-1)$ ways. This gives a total of $n-1 \cdot a(n-1)$ possible rearrangements.
 
-If the first child moves, then the remaining $10$ children can be rearranged in $10!$ ways, and the first child can move to any of the $11$ seats. This gives a total of $11 \times 10!$ ways.
+We can also find $a(n)$ by using the principle of inclusion-exclusion. Let $b(n)$ be the number of rearrangements in which the first child does not move. Then $b(n) = a(n-1)$. The number of rearrangements in which the first child moves is $a(n) - b(n) = n-1 \cdot a(n-1)$. By the principle of inclusion-exclusion, the number of possible rearrangements is
 
-Therefore, the total number of possible rearrangements is $a(11) = 10! + 11 \times 10! = 2 \times 10! = 3628800$.
+$$a(n) = \sum_{k=0}^n (-1)^k \binom{n}{k} b(n-k) = \sum_{k=0}^n (-1)^k \binom{n}{k} (n-k) a(n-k).$$
 
-Here is a more detailed solution:
+Plugging in $n = 11$, we get
 
-We can solve this problem by considering the movement of the first child in the row. If the first child does not move, then the remaining $10$ children can be rearranged in $10!$ ways. This gives a total of $10!$ possible rearrangements.
+$$a(11) = \sum_{k=0}^{11} (-1)^k \binom{11}{k} (11-k) a(11-k) = 11! - 10! \cdot a(1) = 146280.$$
 
-If the first child moves, then the remaining $10$ children can be rearranged in $10!$ ways, and the first child can move to any of the $11$ seats. This gives a total of $11 \times 10!$ possible rearrangements.
-
-Therefore, the total number of possible rearrangements is $a(11) = 10! + 11 \times 10! = 2 \times 10! = 3628800$.</code></pre>
+Therefore, there are $\boxed{146280}$ possible rearrangements of 11 children in a row, including the original one.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of possible rearrangements of 11 children in a row, each child moving by at most one seat, is $3628800$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are $\boxed{146280}$ possible rearrangements of 11 children in a row, including the original one.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

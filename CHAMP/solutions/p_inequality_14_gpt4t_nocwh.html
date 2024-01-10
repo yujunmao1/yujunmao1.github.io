@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_14</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_14']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,53 +82,67 @@ Let x_1=1 and x_(n+1)=1+n/x_n. For how many values of x_1, ..., x_100 do we have
 You may find the following information useful:
 
 1. Study whether x_(n+1) satisfies the inequality if x_n satisfies it.
-2. To find a lower bound of n/(sqrt(n)+1), change sqrt(n) to sqrt(n+1), rewrite n as n+1-1 and get rid of the square root in the denominator.
-3. x^2-y^2=(x+y)(x-y).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by examining the recursive sequence defined by \( x_1 = 1 \) and \( x_{n+1} = 1 + \frac{n}{x_n} \). We want to find out for how many values of \( x_1, x_2, \ldots, x_{100} \) the inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \) holds.
+2. To find a lower bound of n/(sqrt(n)+1), change sqrt(n) to sqrt(n+1), rewrite n as n+1-1 and get rid of the square root in the denominator.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by examining the recursive sequence defined by \( x_1 = 1 \) and \( x_{n+1} = 1 + \frac{n}{x_n} \). We want to determine for how many values of \( x_1, \ldots, x_{100} \) the inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \) holds.
 
 First, let&#x27;s assume that \( x_n \) satisfies the inequality \( \sqrt{n} \leq x_n \leq \sqrt{n} + 1 \). We want to check if \( x_{n+1} \) also satisfies the corresponding inequality \( \sqrt{n+1} \leq x_{n+1} \leq \sqrt{n+1} + 1 \).
 
-Given \( x_{n+1} = 1 + \frac{n}{x_n} \), let&#x27;s find the lower bound of \( x_{n+1} \):
+Given \( x_{n+1} = 1 + \frac{n}{x_n} \), we need to show that:
 
-If \( x_n \geq \sqrt{n} \), then \( \frac{n}{x_n} \leq \frac{n}{\sqrt{n}} = \sqrt{n} \), so \( x_{n+1} = 1 + \frac{n}{x_n} \geq 1 + \sqrt{n} \).
+1. \( x_{n+1} \geq \sqrt{n+1} \)
+2. \( x_{n+1} \leq \sqrt{n+1} + 1 \)
 
-Now, we need to show that \( 1 + \sqrt{n} \geq \sqrt{n+1} \). Squaring both sides, we get:
+Starting with the first part:
 
-\( (1 + \sqrt{n})^2 = 1 + 2\sqrt{n} + n \geq n + 1 \)
+1. \( x_{n+1} \geq \sqrt{n+1} \)
 
-\( 2\sqrt{n} \geq 0 \), which is true for all \( n \geq 1 \).
+Since \( x_n \geq \sqrt{n} \), we have:
 
-Now let&#x27;s find the upper bound of \( x_{n+1} \):
+\( x_{n+1} = 1 + \frac{n}{x_n} \geq 1 + \frac{n}{\sqrt{n} + 1} \)
 
-If \( x_n \leq \sqrt{n} + 1 \), then \( \frac{n}{x_n} \geq \frac{n}{\sqrt{n} + 1} \).
+To find a lower bound of \( \frac{n}{\sqrt{n} + 1} \), we can change \( \sqrt{n} \) to \( \sqrt{n+1} \), rewrite \( n \) as \( n+1-1 \), and get rid of the square root in the denominator:
 
-To find a lower bound of \( \frac{n}{\sqrt{n} + 1} \), we can use the hint provided:
+\( \frac{n}{\sqrt{n} + 1} = \frac{n+1-1}{\sqrt{n+1} + 1} = \frac{(n+1) - 1}{\sqrt{n+1} + 1} \)
 
-Change \( \sqrt{n} \) to \( \sqrt{n+1} \), rewrite \( n \) as \( n+1-1 \), and get rid of the square root in the denominator:
+Multiplying the numerator and denominator by the conjugate of the denominator, we get:
 
-\( \frac{n}{\sqrt{n} + 1} = \frac{n+1-1}{\sqrt{n} + 1} = \frac{(n+1) - 1}{\sqrt{n+1} + \sqrt{n}} \cdot \frac{\sqrt{n+1} - \sqrt{n}}{\sqrt{n+1} - \sqrt{n}} \)
+\( \frac{(n+1) - 1}{\sqrt{n+1} + 1} \cdot \frac{\sqrt{n+1} - 1}{\sqrt{n+1} - 1} = \frac{(n+1)(\sqrt{n+1} - 1) - (\sqrt{n+1} - 1)}{n+1 - 1} \)
 
-\( = \frac{(n+1)(\sqrt{n+1} - \sqrt{n}) - (\sqrt{n+1} - \sqrt{n})}{n+1 - n} \)
+\( = \frac{n+1}{\sqrt{n+1} + 1} - \frac{\sqrt{n+1} - 1}{n} \)
 
-\( = \sqrt{n+1} - \sqrt{n} - \frac{\sqrt{n+1} - \sqrt{n}}{n+1 - n} \)
+Since \( \frac{\sqrt{n+1} - 1}{n} \) is positive, we have:
 
-\( = \sqrt{n+1} - \sqrt{n} - \frac{1}{\sqrt{n+1} + \sqrt{n}} \)
+\( \frac{n+1}{\sqrt{n+1} + 1} - \frac{\sqrt{n+1} - 1}{n} \leq \frac{n+1}{\sqrt{n+1} + 1} \)
 
-Since \( \frac{1}{\sqrt{n+1} + \sqrt{n}} &gt; 0 \), we have \( \frac{n}{\sqrt{n} + 1} &gt; \sqrt{n+1} - \sqrt{n} \).
+Now, we can simplify \( \frac{n+1}{\sqrt{n+1} + 1} \) further:
 
-Therefore, \( x_{n+1} = 1 + \frac{n}{x_n} \leq 1 + \sqrt{n+1} - \sqrt{n} \).
+\( \frac{n+1}{\sqrt{n+1} + 1} \cdot \frac{\sqrt{n+1} - 1}{\sqrt{n+1} - 1} = \frac{(n+1)(\sqrt{n+1} - 1)}{n} \)
 
-Now we need to show that \( 1 + \sqrt{n+1} - \sqrt{n} \leq \sqrt{n+1} + 1 \).
+\( = \sqrt{n+1} - \frac{1}{\sqrt{n+1} + 1} \)
 
-This simplifies to \( -\sqrt{n} \leq 1 \), which is true for all \( n \geq 1 \).
+Since \( \frac{1}{\sqrt{n+1} + 1} \) is positive, we have:
 
-So, if \( x_n \) satisfies the inequality \( \sqrt{n} \leq x_n \leq \sqrt{n} + 1 \), then \( x_{n+1} \) also satisfies the inequality \( \sqrt{n+1} \leq x_{n+1} \leq \sqrt{n+1} + 1 \).
+\( \sqrt{n+1} - \frac{1}{\sqrt{n+1} + 1} \leq \sqrt{n+1} \)
 
-Since \( x_1 = 1 \) satisfies \( \sqrt{1} \leq x_1 \leq \sqrt{1} + 1 \), by induction, all \( x_i \) for \( i = 1, 2, \ldots, 100 \) satisfy the inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \).
+Therefore, \( x_{n+1} \geq 1 + \sqrt{n+1} - \frac{1}{\sqrt{n+1} + 1} \leq 1 + \sqrt{n+1} = \sqrt{n+1} \)
 
-Therefore, the inequality holds for all 100 values of \( x_1, x_2, \ldots, x_{100} \).</code></pre>
+Now, let&#x27;s check the second part:
+
+2. \( x_{n+1} \leq \sqrt{n+1} + 1 \)
+
+Since \( x_n \leq \sqrt{n} + 1 \), we have:
+
+\( x_{n+1} = 1 + \frac{n}{x_n} \leq 1 + \frac{n}{\sqrt{n}} = 1 + \sqrt{n} \)
+
+We need to show that \( 1 + \sqrt{n} \leq \sqrt{n+1} + 1 \), or equivalently, \( \sqrt{n} \leq \sqrt{n+1} \), which is true since the square root function is increasing.
+
+Therefore, if \( x_n \) satisfies the inequality \( \sqrt{n} \leq x_n \leq \sqrt{n} + 1 \), then \( x_{n+1} \) also satisfies the inequality \( \sqrt{n+1} \leq x_{n+1} \leq \sqrt{n+1} + 1 \).
+
+Since \( x_1 = 1 \) satisfies \( \sqrt{1} \leq x_1 \leq \sqrt{1} + 1 \), by induction, all \( x_i \) for \( i = 1, \ldots, 100 \) satisfy the inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \).
+
+Therefore, the inequality holds for all 100 values of \( x_1, \ldots, x_{100} \).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \) holds for all 100 values of \( x_1, x_2, \ldots, x_{100} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality \( \sqrt{i} \leq x_i \leq \sqrt{i} + 1 \) holds for all 100 values of \( x_1, \ldots, x_{100} \).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

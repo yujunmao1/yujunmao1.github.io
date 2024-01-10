@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_35</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (2n)!/(2^n*n!)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_35']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,25 +81,21 @@ for message in messages:
 
 You may find the following information useful:
 
-1. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-2. Order the 2n players in a row, and make the pairing (1, 2), (3, 4), (5, 6), ..., (2n-1, 2n). In how many ways can this be done?
-3. There are two types of multiple counting, one is the order within each pair, such as (1, 2) and (2, 1), and the second is ordering of the pairs, such as [(1, 2), (3, 4)] and [(3, 4), (1, 2)].
-4. If we count each object d times and get a total of n counts, then there are n/d objects.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s solve this problem step by step.
+1. Order the 2n players in a row, and make the pairing (1, 2), (3, 4), (5, 6), ..., (2n-1, 2n). In how many ways can this be done?
+2. There are two types of multiple counting, one is the order within each pair, such as (1, 2) and (2, 1), and the second is ordering of the pairs, such as [(1, 2), (3, 4)] and [(3, 4), (1, 2)].</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>1. The number of ways to order 2n players in a row is (2n)!. 
 
-1. First, we need to arrange the 2n players in a row. This can be done in (2n)! ways.
+2. For each pair, there are 2! = 2 ways to order the players within the pair. Since there are n pairs, the number of ways to order the players within each pair is 2^n.
 
-2. However, we have over-counted because we have considered the order within each pair and the order of the pairs. 
+3. For the ordering of the pairs, there are n! ways to order n pairs.
 
-3. For the order within each pair, we have over-counted by a factor of 2^n because for each pair, there are 2 ways to arrange the two players. 
+Therefore, the number of ways to pair 2n players is (2n)! / (2^n * n!). 
 
-4. For the order of the pairs, we have over-counted by a factor of n! because there are n! ways to arrange the n pairs.
-
-5. Therefore, the total number of ways to pair the players is (2n)! / (2^n * n!).
+This is because we divide by 2^n to correct for the over-counting of the order within each pair, and divide by n! to correct for the over-counting of the order of the pairs. 
 
 So, the final answer is (2n)! / (2^n * n!).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways that n pairs can be constructed for the first round of a tennis tournament with 2n players is given by the expression (2n)! / (2^n * n!).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to pair 2n players in a tennis tournament for the first round is given by the expression (2n)! / (2^n * n!).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_38</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> x=±1, ±2, ±1/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_38']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,57 +82,52 @@ Find all real-valued solutions to the equation 4x^11+4x^10−21x^9-21x^8+17x^7+1
 You may find the following information useful:
 
 1. Let the polynomial be f(x).
-2. A polynomial f(x) of degree n is reciprocal if the coefficients of x^i and x^(n-i) are the same for all i=0, 1, ..., n, and such a polynomial with an odd degree n always has a root of -1 and can be written as f(x)=(x+1)g(x).
-3. For the factorization f(x)=(x+1)*x^5*h(z) where z=x+1/x, find h(z) by comparing it to the expressions of z^5, z^3 and z.
-4. A polynomial f(x) of degree 2n is reciprocal if the coefficients of x^i and x^(2n-i) are the same for all i=0, 1, ..., n-1, and such a polynomial can be written in the form of f(x)=x^n*g(z) with z=x+1/x and g(z) is a polynomial in z of degree n.
-5. (x+y)^n=x^n+C(n,1)x^(n-1)*y+C(n,2)x^(n-2)*y^2+...+C(n,2)x^2*y^(n-2)+C(n,1)x*y^(n-1)+y^n.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the polynomial f(x) = 4x^11 + 4x^10 - 21x^9 - 21x^8 + 17x^7 + 17x^6 + 17x^5 + 17x^4 - 21x^3 - 21x^2 + 4x + 4, we can see that it is a reciprocal polynomial of degree 11. 
+2. For the factorization f(x)=(x+1)*x^5*h(z) where z=x+1/x, find h(z) by comparing it to the expressions of z^5, z^3 and z.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The given polynomial is a symmetric polynomial, which means it remains the same if we replace x with 1/x. This is a hint that we can use the substitution z = x + 1/x to simplify the problem.
 
-According to the information provided, a reciprocal polynomial of odd degree always has a root of -1 and can be written as f(x) = (x+1)g(x). 
+First, let&#x27;s rewrite the polynomial in terms of z:
 
-So, we can divide the given polynomial by (x+1) to find g(x):
+f(x) = 4x^11 + 4x^10 - 21x^9 - 21x^8 + 17x^7 + 17x^6 + 17x^5 + 17x^4 - 21x^3 - 21x^2 + 4x + 4
+     = 4x^5(x^6 + x^4 - 21x^3 - 21x^2 + 17x + 17) + 4(x^6 + x^4 - 21x^3 - 21x^2 + 17x + 17)
+     = 4x^5g(x) + 4g(x)
 
-g(x) = 4x^10 - 21x^8 + 17x^6 - 21x^4 + 4x^2 + 4
+where g(x) = x^6 + x^4 - 21x^3 - 21x^2 + 17x + 17.
 
-Now, we can see that g(x) is a reciprocal polynomial of degree 10. According to the information provided, such a polynomial can be written in the form of g(x) = x^5*h(z) with z = x + 1/x. 
+Now, let&#x27;s substitute z = x + 1/x into g(x):
 
-So, we can rewrite g(x) as:
+g(z) = z^6 - 15z^4 + 85z^2 - 225.
 
-g(x) = x^5*h(x + 1/x)
+So, we can rewrite f(x) as:
 
-Now, we can find h(z) by comparing it to the expressions of z^5, z^3 and z. 
+f(x) = 4x^5g(x) + 4g(x)
+     = 4x^5(z^6 - 15z^4 + 85z^2 - 225) + 4(z^6 - 15z^4 + 85z^2 - 225)
+     = 4x^5h(z) + 4h(z)
 
-We can write g(x) as:
+where h(z) = z^6 - 15z^4 + 85z^2 - 225.
 
-g(x) = 4x^10 - 21x^8 + 17x^6 - 21x^4 + 4x^2 + 4
+Now, we can solve the equation f(x) = 0:
 
-= 4(x^5)^2 - 21(x^4)(x^4) + 17(x^3)(x^3) - 21(x^2)(x^2) + 4x^2 + 4
+4x^5h(z) + 4h(z) = 0
+4h(z)(x^5 + 1) = 0
+h(z)(x^5 + 1) = 0
 
-= 4z^2 - 21z^2 + 17z^2 - 21z + 4z + 4
+This equation has solutions when h(z) = 0 or x^5 + 1 = 0.
 
-= 4z^2 - 21z + 4
+Solving h(z) = 0 gives:
 
-So, h(z) = 4z^2 - 21z + 4.
+z^6 - 15z^4 + 85z^2 - 225 = 0
 
-Now, we can solve the equation h(z) = 0 to find the roots of the original polynomial:
+This is a quadratic equation in z^2, which can be solved to find the values of z.
 
-4z^2 - 21z + 4 = 0
+Solving x^5 + 1 = 0 gives:
 
-Using the quadratic formula, we find:
+x^5 = -1
 
-z = [21 ± sqrt((21)^2 - 4*4*4)] / (2*4)
+The solutions to this equation are the fifth roots of -1, which are complex numbers.
 
-z = [21 ± sqrt(441 - 64)] / 8
-
-z = [21 ± sqrt(377)] / 8
-
-z = [21 ± sqrt(377)] / 8
-
-So, the roots of the original polynomial are:
-
-x = -1, (21 + sqrt(377)) / 8, (21 - sqrt(377)) / 8.</code></pre>
+So, the real-valued solutions to the original equation are the values of x that correspond to the real-valued solutions of the equation in z.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The real-valued solutions to the given equation are x = -1, (21 + sqrt(377)) / 8, and (21 - sqrt(377)) / 8.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The real-valued solutions to the given equation are the values of x that correspond to the real-valued solutions of the equation z^6 - 15z^4 + 85z^2 - 225 = 0, where z = x + 1/x.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

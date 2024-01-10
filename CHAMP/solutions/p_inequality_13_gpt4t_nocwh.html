@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_13</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> -9</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_13']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,38 +81,57 @@ For real numbers a, b, c satisfying a+b+c=9, what is the smallest value of a^2+b
 
 You may find the following information useful:
 
-1. Multiple the expression without -(a+b+c) by 2, group terms and factorize.
-2. (x±y)^2=x^2±2xy+y^2.
-3. For any real number a, a^2≥0. </code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by expanding the expression a^2 + b^2 + c^2 - (ab + bc + ac) - (a + b + c) and then simplifying it using the given hints.
+1. Multiple the expression without -(a+b+c) by 2, group terms and factorize.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by expanding the expression a^2 + b^2 + c^2 - (ab + bc + ac) - (a + b + c) and then we will follow the hint to multiply by 2, group terms, and factorize.
 
-First, we multiply the expression by 2 (without the -(a+b+c) term) and then group terms and factorize:
+First, let&#x27;s expand the expression without the -(a + b + c) term:
 
-2(a^2 + b^2 + c^2 - ab - bc - ac) = 2a^2 + 2b^2 + 2c^2 - 2ab - 2bc - 2ac
+a^2 + b^2 + c^2 - ab - bc - ac
 
-Now, we can group the terms to form squares:
+Now, let&#x27;s multiply this expression by 2:
 
-= (a^2 - 2ab + b^2) + (b^2 - 2bc + c^2) + (c^2 - 2ac + a^2)
+2(a^2 + b^2 + c^2) - 2(ab + bc + ac)
 
-Using the identity (x±y)^2 = x^2 ± 2xy + y^2, we can rewrite the expression as:
+This gives us:
 
-= (a - b)^2 + (b - c)^2 + (c - a)^2
+2a^2 + 2b^2 + 2c^2 - 2ab - 2bc - 2ac
 
-Now, we need to subtract (a + b + c) from the original expression. Since a + b + c = 9, we have:
+Now, let&#x27;s group the terms to facilitate factorization:
 
-a^2 + b^2 + c^2 - (ab + bc + ac) - (a + b + c) = (a - b)^2 + (b - c)^2 + (c - a)^2 - 9
+(2a^2 - 2ab + 2b^2) + (2b^2 - 2bc + 2c^2) + (2c^2 - 2ac + 2a^2) - 2a^2 - 2b^2 - 2c^2
 
-Since we know that for any real number x, x^2 ≥ 0, each of the squared terms in our expression is non-negative. Therefore, the smallest value of the expression is achieved when each squared term is zero, which happens when a = b = c.
+Notice that each of the three big parentheses is a perfect square trinomial:
 
-Given that a + b + c = 9, if a = b = c, then we have 3a = 9, which means a = b = c = 3.
+(a^2 - 2ab + b^2) + (b^2 - 2bc + c^2) + (c^2 - 2ac + a^2) - 2a^2 - 2b^2 - 2c^2
+
+Now we can factor each perfect square trinomial:
+
+(a - b)^2 + (b - c)^2 + (c - a)^2 - 2a^2 - 2b^2 - 2c^2
+
+Now, let&#x27;s add back the -(a + b + c) term that we initially left out, and multiply it by 2 as well (since we multiplied the rest of the expression by 2):
+
+2(a - b)^2 + 2(b - c)^2 + 2(c - a)^2 - 2a^2 - 2b^2 - 2c^2 - 2(a + b + c)
+
+Now, we know that a + b + c = 9, so we can substitute this value in:
+
+2(a - b)^2 + 2(b - c)^2 + 2(c - a)^2 - 2a^2 - 2b^2 - 2c^2 - 2(9)
+
+Simplify the constant term:
+
+2(a - b)^2 + 2(b - c)^2 + 2(c - a)^2 - 2a^2 - 2b^2 - 2c^2 - 18
+
+Now, we want to find the smallest value of this expression. Since squares are always non-negative, the smallest value for each squared term is 0. This occurs when a = b = c. Since a + b + c = 9, if a = b = c, then each of them must be equal to 9/3 = 3.
 
 Substituting a = b = c = 3 into the expression, we get:
 
-(3 - 3)^2 + (3 - 3)^2 + (3 - 3)^2 - 9 = 0 + 0 + 0 - 9 = -9
+2(3 - 3)^2 + 2(3 - 3)^2 + 2(3 - 3)^2 - 2(3)^2 - 2(3)^2 - 2(3)^2 - 18
+= 2(0)^2 + 2(0)^2 + 2(0)^2 - 2(9) - 2(9) - 2(9) - 18
+= 0 - 18 - 18 - 18 - 18
+= -72
 
-Therefore, the smallest value of the expression a^2 + b^2 + c^2 - (ab + bc + ac) - (a + b + c) is -9.</code></pre>
+Therefore, the smallest value of the expression a^2 + b^2 + c^2 - (ab + bc + ac) - (a + b + c) is -72.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression a^2 + b^2 + c^2 - (ab + bc + ac) - (a + b + c) for real numbers a, b, c satisfying a + b + c = 9 is -9.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression a^2 + b^2 + c^2 - (ab + bc + ac) - (a + b + c) for real numbers a, b, c satisfying a + b + c = 9 is -72.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

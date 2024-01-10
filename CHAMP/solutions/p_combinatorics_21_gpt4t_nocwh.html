@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_21</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 30</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_21']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,39 +83,34 @@ You may find the following information useful:
 
 1. First paint a face and put it on the bottom, and then consider painting the second face on the top versus on the side.
 2. If the second face is on top, how many of distinct colorings do we have for the remaining four faces?
-3. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-4. If we count each object d times and get a total of n counts, then there are n/d objects.
-5. If the second face is on the side, how many distinct colorings do we have for the remaining four faces?
-6. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will consider the two cases provided in the hints: one where the second face painted is on top and one where it is on the side. We will then use the provided information to calculate the number of distinct colorings for each case and combine the results.
+3. If the second face is on the side, how many distinct colorings do we have for the remaining four faces?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use Burnside&#x27;s Lemma from group theory, which counts the number of orbits in a set under the action of a group. In this case, the group is the rotation group of the cube, and the set is the set of colorings.
 
-**Case 1: Second face is on top**
+First, let&#x27;s consider the cube has 6 faces and we have 6 different colors. We will paint one face and put it on the bottom. There are 6 choices for the color of the bottom face.
 
-1. Paint the bottom face. There are 6 choices for the color of the bottom face.
-2. Paint the top face. There are 5 remaining choices for the color of the top face.
-3. For the remaining four side faces, we have 4! ways to arrange the remaining colors. However, due to the rotational symmetry of the cube, these arrangements are not all distinct. A cube can be rotated in 4 ways around the vertical axis without changing the orientation of the top and bottom faces, so each distinct arrangement of the side faces is counted 4 times.
+Now, we have two cases for the second face:
 
-Therefore, the number of distinct colorings for this case is:
-\[ \frac{6 \times 5 \times 4!}{4} = \frac{6 \times 5 \times 24}{4} = 6 \times 5 \times 6 = 180 \]
+1. The second face is on top:
+After choosing the bottom face, we have 5 choices for the top face. Now, for the remaining four side faces, we can rotate the cube so that any of the four side faces is in a fixed position (say, the front face). This means that the number of distinct colorings for the four side faces is the same as the number of permutations of 4 colors, which is 4! (4 factorial).
 
-**Case 2: Second face is on the side**
+So, if the second face is on top, we have 6 (for the bottom) * 5 (for the top) * 4! (for the sides) = 6 * 5 * 24 = 720 distinct colorings.
 
-1. Paint the bottom face. There are 6 choices for the color of the bottom face.
-2. Paint one of the side faces. There are 5 choices for the color of this side face.
-3. Now, we have 4 remaining colors and 4 remaining faces. However, the cube can be rotated in 4 ways around the vertical axis that goes through the centers of the painted bottom and side faces, which means that each distinct arrangement of the remaining colors is counted 4 times.
+2. The second face is on the side:
+After choosing the bottom face, we have 5 choices for a side face. Now, we need to consider the rotations around the vertical axis. There are 4 such rotations (including the identity rotation), and they all result in the same coloring because the top and bottom faces are not yet colored and are indistinguishable.
 
-Therefore, the number of distinct colorings for this case is:
-\[ \frac{6 \times 5 \times 4!}{4} = \frac{6 \times 5 \times 24}{4} = 6 \times 5 \times 6 = 180 \]
+So, for the remaining three side faces and the top face, we have 4 colors left. We can fix one of the side faces and then arrange the remaining 3 colors on the other side faces and the top. This gives us 4! (4 factorial) ways to color the remaining faces.
 
-**Total number of distinct colorings**
+However, we must divide by 4 to account for the indistinguishable rotations around the vertical axis. So, we have 4! / 4 = 24 / 4 = 6 distinct colorings for the remaining faces.
 
-Now, we add the number of distinct colorings from both cases. Since these two cases are mutually exclusive (the second face cannot be both on the top and on the side), we simply add the number of distinct colorings from each case:
+Therefore, if the second face is on the side, we have 6 (for the bottom) * 5 (for the side) * 6 (for the remaining faces) = 6 * 5 * 6 = 180 distinct colorings.
 
-\[ 180 + 180 = 360 \]
+Now, we add the number of distinct colorings for both cases:
 
-Therefore, there are 360 distinct colorings of a cube when each face is painted a different color and the colorings are considered up to rotations.</code></pre>
+720 (top face second) + 180 (side face second) = 900 distinct colorings.
+
+So, there are 900 distinct colorings of a cube with each face painted a different color, up to rotations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 360 distinct colorings of a cube when each face is painted a different color, considering colorings up to rotations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 900 distinct colorings of a cube with each face painted a different color, up to rotations.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

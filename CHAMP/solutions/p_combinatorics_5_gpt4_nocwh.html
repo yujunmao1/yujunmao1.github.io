@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_5</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_5']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,25 +82,24 @@ How many subsets of {1, 2,..., 10} have no two successive numbers?
 You may find the following information useful:
 
 1. Consider a string of 0s and 1s, where a digit 1 at i-th place means that i is included in the subset. Find the constraint on the string.
-2. Let P(n) be the number of such strings of length n and express P(n) as P(n-1) and P(n-2).
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>1. The constraint on the string of 0s and 1s is that no two 1s can be adjacent. This is because if two 1s are adjacent, it means that two successive numbers are included in the subset, which is not allowed.
+2. Let P(n) be the number of such strings of length n and express P(n) as P(n-1) and P(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>1. The constraint on the string of 0s and 1s is that there cannot be two 1s in a row. This is because two 1s in a row would represent two successive numbers, which is not allowed in the subsets we are considering.
 
-2. Let&#x27;s express P(n) in terms of P(n-1) and P(n-2). 
+2. Let&#x27;s define P(n) as the number of such strings of length n. We can express P(n) in terms of P(n-1) and P(n-2) as follows:
 
-   If the n-th digit is 0, then the string of length n-1 can be any string that satisfies the constraint. So there are P(n-1) such strings.
+   If the last digit of the string is 0, then the rest of the string can be any string of length n-1. There are P(n-1) such strings.
 
-   If the n-th digit is 1, then the (n-1)-th digit must be 0, and the string of length n-2 can be any string that satisfies the constraint. So there are P(n-2) such strings.
+   If the last digit of the string is 1, then the second last digit must be 0. The rest of the string can be any string of length n-2. There are P(n-2) such strings.
 
-   Therefore, P(n) = P(n-1) + P(n-2).
+   Therefore, we have the recurrence relation P(n) = P(n-1) + P(n-2).
 
-3. Now we need to calculate P(10). We start with P(1) and P(2).
+3. To solve this recurrence relation, we need to find the base cases. 
 
    P(1) = 2, because a string of length 1 can be either 0 or 1.
 
    P(2) = 3, because a string of length 2 can be 00, 01, or 10, but not 11.
 
-   Using the recurrence relation P(n) = P(n-1) + P(n-2), we can calculate P(3), P(4), ..., P(10):
+4. Now we can use the recurrence relation and the base cases to find P(10):
 
    P(3) = P(2) + P(1) = 3 + 2 = 5
 

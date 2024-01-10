@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_3</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 376 and 625</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_3']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,23 +81,30 @@ An integer a is called automorphic if a^2 ends in a. For example, 5 is automorph
 
 You may find the following information useful:
 
-1. Consider the last three digit of a^2-a.
-2. If a | bc and gcd(b, c)=1, then we can find integer m, n, p, q such that b=mp, c=nq, gcd(m, n)=gcd(p, q)=1 and pq=a.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a$ be a three-digit automorphic number. Then $a^2$ ends in $a$, so $a^2-a$ ends in $0$. This means that $a^2-a$ is divisible by $100$.
+1. Consider the last three digit of a^2-a.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a$ be a three-digit automorphic number. Then $a^2$ ends in $a$, so $a^2-a$ ends in $0$. This means that $a^2-a$ is divisible by 100.
 
-We can write $a^2-a = 100k$ for some integer $k$. Then $a^2 = a+100k$.
+We can write $a^2-a = (a-1)(a+1)$. If $a$ is even, then $a-1$ and $a+1$ are both odd, so $a^2-a$ is divisible by 4. But this means that $a^2$ is also divisible by 4, which contradicts our assumption that $a^2$ ends in $a$.
 
-If $a$ is even, then $a^2$ is even, so $a+100k$ is even. This means that $k$ is even, so we can write $k = 2j$ for some integer $j$. Then $a^2 = a+200j$.
+Therefore, $a$ must be odd. We can write $a = 10x+y$, where $x$ and $y$ are single-digit integers. Then $a^2 = (10x+y)^2 = 100x^2 + 20xy + y^2$.
 
-If $a$ is odd, then $a^2$ is odd, so $a+100k$ is odd. This means that $j$ is odd, so we can write $k = 2j+1$ for some integer $j$. Then $a^2 = a+200j+201$.
+We want $a^2$ to end in $a$, so we need $20xy + y^2$ to end in $0$. This means that $y$ must be even.
 
-In either case, we have $a^2 = a+200j+201$. This means that $a$ is a solution to the equation $x^2 - x - 201 = 0$.
+We can write $y = 2z$, where $z$ is a single-digit integer. Then $a^2 = 100x^2 + 40xz + 4z^2$.
 
-We can factor this equation as $(x-21)(x+9) = 0$. This means that the solutions are $x=21$ and $x=-9$.
+We want $a^2$ to end in $a$, so we need $40xz + 4z^2$ to end in $0$. This means that $z$ must be $0$ or $5$.
 
-Since $a$ is a three-digit number, we must have $a \ge 100$. This means that $a$ cannot be equal to $-9$. Therefore, the only three-digit automorphic number is $a=21$.</code></pre>
+If $z=0$, then $a^2 = 100x^2$, which is not divisible by 100. Therefore, $z=5$.
+
+We can write $a = 10x+5$. Then $a^2 = (10x+5)^2 = 100x^2 + 100x + 25$.
+
+We want $a^2$ to end in $a$, so we need $100x^2 + 100x + 25$ to end in $a$. This means that $x$ must be $0$ or $5$.
+
+If $x=0$, then $a^2 = 25$, which is not a three-digit number. Therefore, $x=5$.
+
+We can write $a = 50+5 = 55$. Therefore, the only three-digit automorphic number is $55$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only three-digit automorphic number is 21.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only three-digit automorphic number is $55$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

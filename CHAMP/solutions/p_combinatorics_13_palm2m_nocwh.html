@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_13</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 4^n</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_13']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,26 +81,20 @@ Of 3n+1 objects, n are indistinguishable, and the remaining ones are distinct. I
 
 You may find the following information useful:
 
-1. Find the number of ways to choose a collection containing k distinguishable objects.
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.
-4. sum_(k=1)^n C(n, k)=2^n.
-5. C(n, k)=C(n, n-k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose a set of $n$ objects from $3n+1$ objects, where $n$ of the objects are indistinguishable, is given by the following formula:
+1. Find the number of ways to choose a collection containing k distinguishable objects.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose a collection containing $k$ distinguishable objects from a set of $n$ objects is $n$ choose $k$, which is denoted by $n \choose k$. This can be calculated using the following formula:
 
-$$\binom{3n+1}{n} = \frac{(3n+1)!}{n!(3n-n)!} = \frac{(3n+1)!}{n!2^n}$$
+$$n \choose k = \frac{n!}{k!(n-k)!}$$
 
-To see why this is the case, let&#x27;s consider the following example. Suppose we have 5 objects, 3 of which are indistinguishable. We can choose 3 objects in $\binom{8}{3} = 56$ ways. However, some of these ways will be equivalent, since we don&#x27;t care about the order of the indistinguishable objects. For example, the choices $(1,2,3)$ and $(3,2,1)$ are equivalent, since the objects 1, 2, and 3 are indistinguishable.
+where $n!$ is the factorial of $n$, which is defined as $n! = n(n-1)(n-2)\dots 3 \cdot 2 \cdot 1$.
 
-To account for this, we need to divide the number of ways to choose 3 objects without replacement by the number of ways to order 3 indistinguishable objects. This is given by $3!$. Therefore, the number of ways to choose 3 objects from 5 objects, where 3 of the objects are indistinguishable, is given by:
+In this problem, we are given that there are $3n+1$ objects, of which $n$ are indistinguishable. This means that the remaining $3n+1-n = 2n+1$ objects are distinct. We want to choose $n$ objects from these $3n+1$ objects.
 
-$$\binom{5}{3} = \frac{5!}{3!2!} = \frac{120}{6} = 20$$
+To do this, we can first choose $n$ objects from the $2n+1$ distinct objects. This can be done in $2n+1 \choose n$ ways. Then, we can choose any of the $n$ indistinguishable objects to be the $n$th object in our collection. This can be done in $n$ ways. Therefore, the total number of ways to choose $n$ objects from the $3n+1$ objects is $2n+1 \choose n \cdot n = \frac{(2n+1)!}{n!(2n+1-n)!} \cdot n = \frac{(2n+1)!}{n!n!} = \binom{2n+1}{n}$.
 
-In general, the number of ways to choose $n$ objects from $3n+1$ objects, where $n$ of the objects are indistinguishable, is given by the following formula:
-
-$$\binom{3n+1}{n} = \frac{(3n+1)!}{n!(3n-n)!} = \frac{(3n+1)!}{n!2^n}$$</code></pre>
+In conclusion, the number of ways to choose $n$ objects from $3n+1$ objects, of which $n$ are indistinguishable, is $\binom{2n+1}{n}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose $n$ objects from $3n+1$ objects, where $n$ of the objects are indistinguishable, is given by $\binom{3n+1}{n} = \frac{(3n+1)!}{n!2^n}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to choose $n$ objects from $3n+1$ objects, of which $n$ are indistinguishable, is $\binom{2n+1}{n}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

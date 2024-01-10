@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_26</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> -3 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_26']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,56 +81,31 @@ For what value(s) of k is x^3+y^3+z^3+kxyz divisible by x+y+z?
 
 You may find the following information useful:
 
-1. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).
-2. Find the valid value when z=-(x+y).
-3. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.
-4. To verify that the found k value is valid for every x, y, z, factorize the expression by adding and subtracting 3x^2*y+3x*y^2.
-5. a^3±b^3=(a+b)(a^2∓ab+b^2).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $x^3+y^3+z^3+kxyz$ is divisible by $x+y+z$. This means that there exist polynomials $q(x)$ and $r(x)$ such that
+1. Find the valid value when z=-(x+y).
+2. To verify that the found k value is valid for every x, y, z, factorize the expression by adding and subtracting 3x^2*y+3x*y^2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can use the Factor Theorem to solve this problem. The Factor Theorem states that if $f(x)$ is a polynomial and $x=a$ is a root of $f(x)$, then $(x-a)$ is a factor of $f(x)$.
 
-$$x^3+y^3+z^3+kxyz = (x+y+z)q(x) + r(x)$$
+In this case, we have the polynomial $x^3+y^3+z^3+kxyz$. We want to find the value of $k$ such that $x+y+z$ is a factor of this polynomial.
 
-where $r(x)$ is a polynomial of degree less than 1.
+Let $z=-(x+y)$. Then, we have
 
-We can write $r(x)$ as $ax+by+cz$ for some constants $a$, $b$, and $c$. Substituting $z=-(x+y)$ into the equation above, we get
+$$x^3+y^3+(-(x+y))^3+k(-(x+y))(x+y)=x^3+y^3-(x^3+3x^2y+3xy^2+y^3)+k(-x^2-2xy-y^2)$$
 
-$$x^3+y^3+(-x-y)^3+k(-x-y)(x+y) = (x+y-(x+y))q(x) + ax+by+cz$$
+$$=-3x^2y-3xy^2+k(-x^2-2xy-y^2)$$
 
-Simplifying, we get
+We can factor out $-3xy(x+y)$ from this expression to get
 
-$$x^3+y^3-x^3-y^3-3xyz+kxyz = (x+y)q(x) + ax+by+cz$$
+$$-3xy(x+y)(x-y+k)$$
 
-or
+Therefore, $x+y+z$ is a factor of $x^3+y^3+z^3+kxyz$ if and only if $k=-3xy(x-y)$.
 
-$$-3xyz = (x+y)q(x) + ax+by+cz$$
+To verify that this is the case, we can factor the expression $x^3+y^3+z^3+kxyz$ as follows:
 
-Since $r(x)$ is a polynomial of degree less than 1, $q(x)$ must be a polynomial of degree 0, or a constant. This means that $q(x)=k$ for some constant $k$. Substituting this into the equation above, we get
+$$x^3+y^3+z^3+kxyz=(x+y+z)(x^2+y^2+z^2-xy-xz-yz)+3xyz(x-y)$$
 
-$$-3xyz = k(x+y) + ax+by+cz$$
-
-or
-
-$$-3xyz = kx+ky+kz+ax+by+cz$$
-
-Grouping like terms, we get
-
-$$-3xyz - kx - ky - cz = ax + by$$
-
-or
-
-$$-3xyz - (k+a)x - (k+b)y = 0$$
-
-Since this equation holds for all values of $x$, $y$, and $z$, the coefficients of $x$, $y$, and $z$ must all be 0. This means that
-
-$$-3k - a = 0$$
-$$-3k - b = 0$$
-$$z = 0$$
-
-Solving the first two equations, we get $k=-\frac{a}{3}$ and $k=-\frac{b}{3}$. Substituting these values into the third equation, we get $z=0$.
-
-Therefore, the only value of $k$ that makes $x^3+y^3+z^3+kxyz$ divisible by $x+y+z$ is $k=-\frac{a}{3}$ or $k=-\frac{b}{3}$.</code></pre>
+We can see that this expression is divisible by $x+y+z$ if and only if $k=-3xy(x-y)$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only value of $k$ that makes $x^3+y^3+z^3+kxyz$ divisible by $x+y+z$ is $k=-\frac{a}{3}$ or $k=-\frac{b}{3}$, where $a$ and $b$ are the coefficients of $x^2$ and $y^2$ in the polynomial $x^3+y^3+z^3$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of $k$ for which $x^3+y^3+z^3+kxyz$ is divisible by $x+y+z$ is $k=-3xy(x-y)$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

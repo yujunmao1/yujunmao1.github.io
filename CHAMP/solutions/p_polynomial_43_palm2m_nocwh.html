@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_43</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> Yes</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_43']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,24 +82,38 @@ If polynomial f(x, y) is symmetric (i.e., f(x, y)=f(y, x)) and x-y | f(x, y), ca
 You may find the following information useful:
 
 1. Write f(x, y)=(x-y)g(x, y) and study the relationship between g(x, y) and g(y, x).
-2. Let g(x, y)=sum_(i, j) c_ij*x^i*y^j and study the relationship between c_ij and c_ji.
-3. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
-4. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
+2. Let g(x, y)=sum_(i, j) c_ij*x^i*y^j and study the relationship between c_ij and c_ji.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, we can always find $h(x, y)$ with $f(x, y) = (x-y)^2 h(x, y)$ such that $h(x, y)$ is a polynomial function.
 
-Let $f(x, y) = (x-y) g(x, y)$. Since $f(x, y)$ is symmetric, $g(x, y) = g(y, x)$.
+Let $f(x, y) = (x-y) g(x, y)$, where $g(x, y)$ is a polynomial function. Since $f(x, y)$ is symmetric, we have $g(x, y) = g(y, x)$.
 
-Let $g(x, y) = \sum_{i=0}^n c_{ij} x^i y^j$. Then $g(y, x) = \sum_{i=0}^n c_{ij} y^i x^j = \sum_{i=0}^n c_{ji} x^i y^j = g(x, y)$.
+Let $g(x, y) = \sum_{i=0}^n c_{ij} x^i y^j$, where $c_{ij}$ are constants. Then, we have
 
-Therefore, $c_{ij} = c_{ji}$ for all $i$ and $j$.
+\begin{align*}
+g(y, x) &amp;= \sum_{i=0}^n c_{ij} y^i x^j \\
+&amp;= \sum_{i=0}^n c_{ji} x^i y^j \\
+&amp;= \sum_{i=0}^n c_{ji} (-1)^i \binom{i}{j} x^{i-j} y^j \\
+&amp;= (-1)^n \sum_{i=0}^n c_{ji} \binom{i}{j} x^{i-j} y^j \\
+&amp;= (-1)^n g(x, y).
+\end{align*}
 
-Let $h(x, y) = \sum_{i=0}^n c_{ii} x^i y^i$. Then $h(x, y)$ is a polynomial function.
+Therefore, $c_{ij} = (-1)^n c_{ji}$.
 
-We can see that $f(x, y) = (x-y)^2 h(x, y)$ by expanding the right-hand side.
+Let $h(x, y) = \sum_{i=0}^n d_{ij} x^i y^j$, where $d_{ij} = (-1)^n c_{ij}$. Then, we have
 
-Therefore, we can always find $h(x, y)$ with $f(x, y) = (x-y)^2 h(x, y)$ such that $h(x, y)$ is a polynomial function.</code></pre>
+\begin{align*}
+f(x, y) &amp;= (x-y) g(x, y) \\
+&amp;= (x-y) \sum_{i=0}^n c_{ij} x^i y^j \\
+&amp;= \sum_{i=0}^n c_{ij} (x-y) x^i y^j \\
+&amp;= \sum_{i=0}^n c_{ij} x^{i+1} y^j - \sum_{i=0}^n c_{ij} x^i y^{j+1} \\
+&amp;= \sum_{i=0}^{n+1} d_{i, j-1} x^i y^j - \sum_{i=0}^n c_{ij} x^i y^{j+1} \\
+&amp;= \sum_{i=0}^{n+1} d_{i, j-1} x^i y^j - \sum_{i=1}^{n+1} d_{i-1, j} x^i y^j \\
+&amp;= \sum_{i=0}^n (d_{i, j-1} - d_{i-1, j}) x^i y^j.
+\end{align*}
+
+Therefore, $h(x, y)$ is a polynomial function.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, we can always find $h(x, y)$ with $f(x, y) = (x-y)^2 h(x, y)$ such that $h(x, y)$ is a polynomial function.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Yes, we can always find $h(x, y)$ with $f(x, y) = (x-y)^2 h(x, y)$ such that $h(x, y)$ is a polynomial function. This is because if $f(x, y)$ is symmetric and $x-y$ divides $f(x, y)$, then $f(x, y) = (x-y) g(x, y)$ for some polynomial function $g(x, y)$. Since $f(x, y)$ is symmetric, $g(x, y) = g(y, x)$. Let $g(x, y) = \sum_{i=0}^n c_{ij} x^i y^j$, where $c_{ij}$ are constants. Then, we have $c_{ij} = (-1)^n c_{ji}$. Let $h(x, y) = \sum_{i=0}^n d_{ij} x^i y^j$, where $d_{ij} = (-1)^n c_{ij}$. Then, we have $f(x, y) = (x-y) g(x, y) = (x-y) \sum_{i=0}^n c_{ij} x^i y^j = \sum_{i=0}^n c_{ij} (x-y) x^i y^j = \sum_{i=0}^n c_{ij} x^{i+1} y^j - \sum_{i=0}^n c_{ij} x^i y^{j+1} = \sum_{i=0}^{n+1} d_{i, j-1} x^i y^j - \sum_{i=0}^n c_{ij} x^i y^{j+1} = \sum_{i=0}^{n+1} d_{i, j-1} x^i y^j - \sum_{i=1}^{n+1} d_{i-1, j} x^i y^j = \sum_{i=0}^n (d_{i, j-1} - d_{i-1, j}) x^i y^j$. Therefore, $h(x, y)$ is a polynomial function.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

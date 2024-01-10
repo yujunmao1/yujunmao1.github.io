@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_15</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 89</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_15']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,21 +83,33 @@ You may find the following information useful:
 
 1. How must the middle column be tiled?
 2. Let a_n be the number of ways to tile a 2 x n rectangle without consideration of the symmetry.
-3. Find the expression for a_(n+1) in terms of a_n and a_(n-1).
-4. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The middle column must be tiled with a single tile, so there is only one way to tile it.
+3. Find the expression for a_(n+1) in terms of a_n and a_(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The middle column must be tiled with a single tile, so there is only one way to do this.
 
-Let $a_n$ be the number of ways to tile a 2 x $n$ rectangle without consideration of the symmetry. We can tile a 2 x $n$ rectangle by tiling the first column, then the second column, and so on. There are $2$ ways to tile the first column, $2$ ways to tile the second column, and so on, so there are $2^n$ ways to tile a 2 x $n$ rectangle without consideration of the symmetry.
+Let $a_n$ be the number of ways to tile a 2 x $n$ rectangle without consideration of the symmetry. We can see that $a_1 = 1$ and $a_2 = 2$.
 
-To find the number of ways to tile a 2 x $n$ rectangle such that the tiling is same when the rectangle is flipped around the middle column, we need to divide the number of ways to tile a 2 x $n$ rectangle without consideration of the symmetry by $2$, since there are two ways to tile the middle column. Therefore, the number of ways to tile a 2 x $n$ rectangle such that the tiling is same when the rectangle is flipped around the middle column is $a_n/2$.
+To find $a_{n+1}$, we can consider the following two cases:
 
-We can find the expression for $a_{n+1}$ in terms of $a_n$ and $a_{n-1}$ by considering the following. To tile a 2 x $(n+1)$ rectangle, we can either tile the first column and then the second column, or we can tile the second column and then the first column. If we tile the first column and then the second column, we have $a_n$ ways to tile the first column and $2$ ways to tile the second column, so there are $2a_n$ ways to tile the rectangle in this way. If we tile the second column and then the first column, we have $2$ ways to tile the first column and $a_n$ ways to tile the second column, so there are $2a_n$ ways to tile the rectangle in this way. Therefore, there are $4a_n$ ways to tile a 2 x $(n+1)$ rectangle.
+1. The last tile in the first row is a single tile. In this case, the last tile in the second row must also be a single tile, and the rest of the tiling can be done in any of the $a_n$ ways.
+2. The last tile in the first row is a double tile. In this case, the last tile in the second row must also be a double tile, and the rest of the tiling can be done in any of the $a_{n-1}$ ways.
 
-We can also find the expression for $a_{n+1}$ in terms of $a_n$ and $a_{n-1}$ by considering the following. To tile a 2 x $(n+1)$ rectangle, we can either tile the first column with a single tile, then tile the second column with $n$ tiles, or we can tile the first column with $n$ tiles, then tile the second column with a single tile. If we tile the first column with a single tile, then we have $a_{n-1}$ ways to tile the second column, so there are $a_{n-1}$ ways to tile the rectangle in this way. If we tile the first column with $n$ tiles, then we have $a_n$ ways to tile the second column, so there are $a_n$ ways to tile the rectangle in this way. Therefore, there are $a_{n-1}+a_n$ ways to tile a 2 x $(n+1)$ rectangle.
+Therefore, we have the following recurrence relation:
 
-Therefore, the number of ways to tile a 2 x $n$ rectangle such that the tiling is same when the rectangle is flipped around the middle column is $a_n/2$, where $a_n$ is the number of ways to tile a 2 x $n$ rectangle without consideration of the symmetry.</code></pre>
+$$a_{n+1} = a_n + a_{n-1}$$
+
+The initial conditions are $a_1 = 1$ and $a_2 = 2$.
+
+We can solve this recurrence relation using the following formula:
+
+$$a_n = \frac{1}{2}(1 + \sqrt{5})^{n-1} + \frac{1}{2}(1 - \sqrt{5})^{n-1}$$
+
+Plugging in $n = 21$, we get the following answer:
+
+$$a_{21} = \frac{1}{2}(1 + \sqrt{5})^{20} + \frac{1}{2}(1 - \sqrt{5})^{20} \approx 1.0233423342334233$$
+
+Therefore, there are approximately $1.0233423342334233$ ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to tile a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column is $\frac{2^{21}-1}{2}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are approximately $1.0233423342334233$ ways to fill a 2 x 21 rectangle with 2 x 1 tiles such that the tiling is same when the rectangle is flipped around the middle column.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

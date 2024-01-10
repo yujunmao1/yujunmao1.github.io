@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_6</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 (i.e., no sequence is bounded)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_6']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -84,27 +84,34 @@ You may find the following information useful:
 1. Study the behavior of the three sequences when one is not bounded.
 2. To see if all three sequences can be bounded, let a_n=x_n+y_n+z_n.
 3. Derive a lower bound on a_2.
-4. For positive x, x+1/x≥2, with equality if and only if x=1.
-5. Compare a_n with 18n for all n.
-6. (x±y)^2=x^2±2xy+y^2.
-7. For real numbers a_1, ..., a_n and b_1, ..., b_n, (a_1*b_1+...+a_n*b_n)^2≤(a_1^2+...+a_n^2)(b_1^2+...+b_n^2).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x_n, y_n, z_n$ be three sequences with positive initial terms $x_1, y_1, z_1$, defined as $x_{n+1} = y_n + \frac{1}{z_n}, y_{n+1} = z_n + \frac{1}{x_n}, z_{n+1} = x_n + \frac{1}{y_n}$. We will show that at most two of the three sequences can be bounded.
+4. Compare a_n with 18n for all n.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $x_1, y_1, z_1$ be positive numbers. We define the sequences $\\{x_n\\}, \\{y_n\\}, \\{z_n\\}$ recursively by
 
-To see this, let $a_n = x_n + y_n + z_n$. Then $a_{n+1} = x_{n+1} + y_{n+1} + z_{n+1} = y_n + z_n + \frac{1}{z_n} + z_n + \frac{1}{x_n} + x_n + \frac{1}{y_n} = 2y_n + 2z_n + 2x_n + 1$.
+$$x_{n+1} = y_n + \frac{1}{z_n}, \qquad y_{n+1} = z_n + \frac{1}{x_n}, \qquad z_{n+1} = x_n + \frac{1}{y_n}.$$
 
-Now, for positive $x$, we have $x + \frac{1}{x} \geq 2$, with equality if and only if $x = 1$. This can be shown by considering the quadratic $x^2 - 2x - 1$. This quadratic has discriminant $4 + 4 = 8$, which is positive, so it has two distinct real roots. The roots are $x = 1 \pm \sqrt{2}$. Since $x$ is positive, we must have $x = 1 + \sqrt{2}$.
+We want to show that at most two of these sequences can be bounded.
 
-Therefore, we have $a_{n+1} \geq 2(y_n + z_n + x_n) + 1$. In particular, $a_{n+1} \geq 2a_n + 1$.
+To do this, we will show that if one of the sequences is unbounded, then the other two sequences must also be unbounded.
 
-This shows that $a_n$ is increasing. Since $a_1$ is positive, we must have $a_n \geq a_1$ for all $n$.
+Suppose that $x_n$ is unbounded. Then there exists a subsequence $\\{x_{n_k}\\}$ such that $x_{n_k} \to \infty$. We can then write
 
-Now, let $M$ be an upper bound for $a_n$. Then $a_n \leq M$ for all $n$. But we have $a_{n+1} \geq 2a_n + 1$, so $a_n \geq \frac{1}{2}(M - 1)$. This is a contradiction, since $a_n$ is an integer.
+$$x_{n_k+1} = y_{n_k} + \frac{1}{z_{n_k}} \ge y_{n_k} + \frac{1}{x_{n_k}} \to \infty.$$
 
-Therefore, there is no upper bound for $a_n$, and $a_n$ must diverge to infinity. This means that at least one of the sequences $x_n, y_n, z_n$ must diverge to infinity.
+This shows that $y_{n_k}$ is also unbounded. Similarly, we can show that if $y_n$ or $z_n$ is unbounded, then the other two sequences must also be unbounded.
 
-Therefore, at most two of the three sequences $x_n, y_n, z_n$ can be bounded.</code></pre>
+Therefore, at most two of the sequences $\\{x_n\\}, \\{y_n\\}, \\{z_n\\}$ can be bounded.
+
+* * *
+
+To see why this is the case, let&#x27;s consider what happens if one of the sequences is unbounded. For example, suppose that $x_n$ is unbounded. Then there exists a subsequence $\\{x_{n_k}\\}$ such that $x_{n_k} \to \infty$. We can then write
+
+$$x_{n_k+1} = y_{n_k} + \frac{1}{z_{n_k}} \ge y_{n_k} + \frac{1}{x_{n_k}} \to \infty.$$
+
+This shows that $y_{n_k}$ is also unbounded. Similarly, we can show that if $y_n$ or $z_n$ is unbounded, then the other two sequences must also be unbounded.
+
+Therefore, at most two of the sequences $\\{x_n\\}, \\{y_n\\}, \\{z_n\\}$ can be bounded.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most two of the three sequences $x_n, y_n, z_n$ can be bounded, because $a_n = x_n + y_n + z_n$ is increasing and diverges to infinity.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>At most two of the sequences $\\{x_n\\}, \\{y_n\\}, \\{z_n\\}$ can be bounded, because if one of the sequences is unbounded, then the other two sequences must also be unbounded.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

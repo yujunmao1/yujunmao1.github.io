@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_5</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (x=8, y=2), (x=2, y=8)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_5']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,14 +82,11 @@ Find all integer solutions to the equation x^3+x^2*y+x*y^2+y^3=8(x^2+xy+y^2+1).
 You may find the following information useful:
 
 1. Let u=x+y, v=xy and write the equation in terms of u, v.
-2. (x±y)^3=x^3±3x^2*y+3x*y^2±y^3.
-3. (x±y)^2=x^2±2xy+y^2.
-4. Study the parity of u and write u=2t or u=2t+1 accordingly.
-5. Solve v as a division of two polynomials and study the integer solutions of (t, v).
-6. When a polynomial f(x) is divided by a polynomial g(x), the quotient q(x) and the remainder r(x) are polynomials such that f(x)=g(x)q(x)+r(x) and the remainder r(x) has degree less than that of g(x).</code></pre>
+2. Study the parity of u and write u=2t or u=2t+1 accordingly.
+3. Solve v as a division of two polynomials and study the integer solutions of (t, v).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $u=x+y$ and $v=xy$. Then the equation $x^3+x^2y+xy^2+y^3=8(x^2+xy+y^2+1)$ can be rewritten as
 
-$$u^3-8u^2+8uv+v^3=0.$$
+$$u^3-8u^2+8uv-v^3=0.$$
 
 We can factor this equation as
 
@@ -97,21 +94,39 @@ $$(u-v)(u^2+uv+v^2-8)=0.$$
 
 If $u=v$, then $x=y$ and the equation becomes $x^3=8$, which has no integer solutions.
 
-If $u\neq v$, then $u^2+uv+v^2-8=(u+v)^2-2uv-8=-2(uv-4)$. Since $u$ and $v$ are integers, $uv-4$ must be even. Therefore, $u$ and $v$ must have the same parity.
+If $u\neq v$, then $u^2+uv+v^2-8=(u+v)^2-9=-1$. This means that $u+v=i$ or $u+v=-i$, where $i$ is the imaginary unit.
 
-If $u$ and $v$ are both even, then $u=2t$ and $v=2s$ for some integers $t$ and $s$. Substituting into the equation $u^2+uv+v^2-8=-2(uv-4)$, we get
+If $u+v=i$, then $u=i-v$ and the equation becomes
 
-$$4t^2+4ts+4s^2-8=-2(2ts-4)$$
+$$(i-v)^3-8(i-v)^2+8(i-v)v-v^3=0.$$
 
-$$4t^2+4ts+4s^2+8=4ts$$
+This simplifies to
 
-$$t^2+ts+s^2=ts.$$
+$$-v^3+3iv^2-3v+i=0.$$
 
-This equation has no integer solutions.
+We can solve this equation for $v$ as follows:
 
-Therefore, the only integer solutions to the equation $x^3+x^2y+xy^2+y^3=8(x^2+xy+y^2+1)$ are $x=y=0$.</code></pre>
+$$v=\frac{3i\pm\sqrt{9-4(-3)(-1)}}{3}=\frac{3i\pm\sqrt{13}}{3}.$$
+
+Since $v$ is an integer, we must have $\sqrt{13}\in\mathbb{Z}$. However, $\sqrt{13}$ is an irrational number, so this is impossible. Therefore, there are no integer solutions to the equation $u^3-8u^2+8uv-v^3=0$ when $u+v=i$.
+
+If $u+v=-i$, then $u=-i-v$ and the equation becomes
+
+$$(-i-v)^3-8(-i-v)^2+8(-i-v)v-v^3=0.$$
+
+This simplifies to
+
+$$v^3-3iv^2+3v-i=0.$$
+
+We can solve this equation for $v$ as follows:
+
+$$v=\frac{3i\pm\sqrt{9-4(-3)(-1)}}{3}=\frac{3i\pm\sqrt{13}}{3}.$$
+
+Since $v$ is an integer, we must have $\sqrt{13}\in\mathbb{Z}$. However, $\sqrt{13}$ is an irrational number, so this is impossible. Therefore, there are no integer solutions to the equation $u^3-8u^2+8uv-v^3=0$ when $u+v=-i$.
+
+In conclusion, there are no integer solutions to the equation $x^3+x^2y+xy^2+y^3=8(x^2+xy+y^2+1)$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The only integer solutions to the equation $x^3+x^2y+xy^2+y^3=8(x^2+xy+y^2+1)$ are $x=y=0$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The equation $x^3+x^2y+xy^2+y^3=8(x^2+xy+y^2+1)$ has no integer solutions.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_22</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_22']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,44 +81,76 @@ Let a, b, c be the lengths of the three sides of a (possibly degenerate) triangl
 
 You may find the following information useful:
 
-1. a, b, c are three sides of a (possibly degenerate) triangle if and only if |b-c|≤a≤b+c, |a-c|≤b≤a+c, |a-b|≤c≤a+b. The triangle is not degenerate if and only if all inequalities are strict.
-2. Take the square of the triangle side difference constraint.
-3. (x±y)^2=x^2±2xy+y^2.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c$ be the lengths of the three sides of a (possibly degenerate) triangle. We want to maximize the value of $\frac{a^2+b^2+c^2}{ab+bc+ac}$.
+1. Take the square of the triangle side difference constraint.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of $\frac{a^2+b^2+c^2}{ab+bc+ac}$ is $\frac{3}{4}$.
 
-We can write this as
+To prove this, we can use the triangle inequality. The triangle inequality states that the sum of the lengths of any two sides of a triangle must be greater than or equal to the length of the third side. In other words, $a+b \ge c$, $a+c \ge b$, and $b+c \ge a$.
 
-$$\frac{a^2+b^2+c^2}{ab+bc+ac} = \frac{(a+b+c)^2 - 2(ab+bc+ac)}{ab+bc+ac} = \frac{(a+b+c)^2}{ab+bc+ac} - 2.$$
+We can use the triangle inequality to write the following inequality:
 
-Now, we can use the triangle inequality to bound $a+b+c$. The triangle inequality states that the sum of the lengths of any two sides of a triangle must be greater than or equal to the length of the third side. In other words,
+$$a^2+b^2+c^2 \ge 2ab + 2bc + 2ac.$$
 
-$$a+b \ge c, \qquad a+c \ge b, \qquad b+c \ge a.$$
+We can then divide both sides of the inequality by 2 to get:
 
-Adding these three inequalities, we get
+$$\frac{a^2+b^2+c^2}{2} \ge ab + bc + ac.$$
 
-$$2(a+b+c) \ge a+b+c,$$
+We can then square both sides of the inequality to get:
 
-so $a+b+c \ge 2$.
+$$\frac{a^4+b^4+c^4}{4} \ge (ab+bc+ac)^2.$$
 
-Therefore, we can bound the expression $\frac{(a+b+c)^2}{ab+bc+ac}$ as follows:
+We can then expand the right-hand side of the inequality to get:
 
-$$\frac{(a+b+c)^2}{ab+bc+ac} \le \frac{(2)^2}{ab+bc+ac} = \frac{4}{ab+bc+ac}.$$
+$$\frac{a^4+b^4+c^4}{4} \ge a^2b^2 + a^2c^2 + b^2c^2 + 2abc(a+b+c).$$
 
-Subtracting 2 from both sides, we get
+We can then rearrange the terms on the right-hand side of the inequality to get:
 
-$$\frac{a^2+b^2+c^2}{ab+bc+ac} \le \frac{4}{ab+bc+ac} - 2.$$
+$$\frac{a^4+b^4+c^4}{4} - a^2b^2 - a^2c^2 - b^2c^2 \ge 2abc(a+b+c).$$
 
-This is the maximum value of $\frac{a^2+b^2+c^2}{ab+bc+ac}$.
+We can then factor out $2abc$ from the right-hand side of the inequality to get:
 
-To see that this is indeed the maximum value, consider the triangle with sides $a=1, b=2, c=3$. In this case, we have
+$$\frac{a^4+b^4+c^4}{4} - a^2b^2 - a^2c^2 - b^2c^2 \ge 2abc(a+b+c).$$
 
-$$\frac{a^2+b^2+c^2}{ab+bc+ac} = \frac{1^2+2^2+3^2}{1\cdot2+2\cdot3+3\cdot1} = \frac{14}{11}.$$
+We can then use the Cauchy-Schwarz inequality to bound the left-hand side of the inequality. The Cauchy-Schwarz inequality states that for any two vectors $u$ and $v$, we have:
 
-This is greater than the bound $\frac{4}{ab+bc+ac} - 2 = \frac{4}{11} - 2 = -\frac{2}{11}$.
+$$\langle u, v \rangle^2 \le \|u\|^2\|v\|^2,$$
 
-Therefore, the maximum value of $\frac{a^2+b^2+c^2}{ab+bc+ac}$ is $\frac{4}{ab+bc+ac} - 2$.</code></pre>
+where $\langle u, v \rangle$ is the inner product of $u$ and $v$, $\|u\|$ is the norm of $u$, and $\|v\|$ is the norm of $v$.
+
+In our case, we can let $u = (a, b, c)$ and $v = (a, b, c)$. Then, the inner product of $u$ and $v$ is:
+
+$$\langle u, v \rangle = a^2 + b^2 + c^2.$$
+
+The norm of $u$ is:
+
+$$\|u\| = \sqrt{a^2 + b^2 + c^2}.$$
+
+The norm of $v$ is also $\sqrt{a^2 + b^2 + c^2}$.
+
+Therefore, the Cauchy-Schwarz inequality states that:
+
+$$(a^2 + b^2 + c^2)^2 \le (\sqrt{a^2 + b^2 + c^2})^2(\sqrt{a^2 + b^2 + c^2})^2,$$
+
+which simplifies to:
+
+$$a^4 + b^4 + c^4 \le 3(a^2b^2 + a^2c^2 + b^2c^2).$$
+
+We can then substitute this inequality into the inequality we derived from the triangle inequality to get:
+
+$$3(a^2b^2 + a^2c^2 + b^2c^2) - a^2b^2 - a^2c^2 - b^2c^2 \ge 2abc(a+b+c).$$
+
+We can then simplify the left-hand side of the inequality to get:
+
+$$2abc(a+b+c) \ge 0.$$
+
+We can then divide both sides of the inequality by $2abc$ to get:
+
+$$(a+b+c) \ge 0.$$
+
+This inequality is always true, since the sum of the lengths of any three sides of a triangle is always greater than or equal to zero.
+
+</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum value of $\frac{a^2+b^2+c^2}{ab+bc+ac}$ is $\frac{4}{ab+bc+ac}-2$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of $\frac{a^2+b^2+c^2}{ab+bc+ac}$ is $\frac{3}{4}$, which is achieved when $a=b=c$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

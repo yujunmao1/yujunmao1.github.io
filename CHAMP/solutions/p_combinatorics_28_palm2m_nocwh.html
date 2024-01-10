@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_28</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 164</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_28']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,38 +83,34 @@ You may find the following information useful:
 
 1. Let f(n) be the number of length-n strings that end with 1 and g(n) be the number of length-n strings that end with either 2 or 3.
 2. Find f(n+1) in terms of f(n) and g(n).
-3. Find g(n+1) in terms of f(n) and g(n).
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
+3. Find g(n+1) in terms of f(n) and g(n).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $f(n)$ be the number of length-$n$ strings that end with 1 and $g(n)$ be the number of length-$n$ strings that end with either 2 or 3. We can find $f(n+1)$ in terms of $f(n)$ and $g(n)$ as follows:
 
-* There are $f(n)$ ways to end the string with 1, followed by any of the $g(n)$ strings that do not end with 1.
-* There are $g(n)$ ways to end the string with 2 or 3, followed by any of the $f(n)$ strings that do not end with 1.
+* There are $f(n)$ ways to end a length-$n+1$ string with 1, followed by any of the $3$ possible digits.
+* There are $g(n)$ ways to end a length-$n+1$ string with either 2 or 3, followed by any of the $3$ possible digits.
 
-Therefore, $f(n+1) = f(n) + g(n)$.
+Therefore, $f(n+1) = f(n) + 3g(n)$.
 
 We can find $g(n+1)$ in terms of $f(n)$ and $g(n)$ as follows:
 
-* There are $g(n)$ ways to end the string with 2 or 3, followed by any of the $g(n)$ strings that do not end with 1.
-* There are $f(n)$ ways to end the string with 1, followed by any of the $g(n)$ strings that do not end with 1.
+* There are $g(n)$ ways to end a length-$n+1$ string with either 2 or 3, followed by any of the $3$ possible digits.
+* There are $f(n)$ ways to end a length-$n+1$ string with 1, followed by 2 or 3, followed by any of the $2$ possible digits.
 
-Therefore, $g(n+1) = 2g(n) + f(n)$.
+Therefore, $g(n+1) = g(n) + 2f(n)$.
 
-We can find the number of strings consisting of 5 digits of 1, 2 and 3 where no two 1s are neighbors by solving the recurrence relation $f(n+1) = f(n) + g(n)$ with initial conditions $f(0) = 1$ and $g(0) = 2$.
+We can use these recurrence relations to find $f(5)$ and $g(5)$. We start with the initial conditions $f(0) = 1$ and $g(0) = 2$. Then, we can use the recurrence relations to find $f(1) = 4$, $g(1) = 5$, $f(2) = 13$, $g(2) = 16$, $f(3) = 37$, $g(3) = 42$, $f(4) = 98$, and $g(4) = 110$. Finally, we can find $f(5) = 255$ and $g(5) = 286$.
 
-The characteristic equation of this recurrence relation is $x^2 - x - 2 = 0$, which has solutions $x = 1$ and $x = -2$. Therefore, the general solution is $f(n) = A + Bn$, where $A$ and $B$ are constants to be determined.
+Now, we can find the number of strings consisting of 5 digits of 1, 2 and 3 where no two 1s are neighbors. Let $h(n)$ be the number of such strings of length $n$. We can find $h(n)$ in terms of $f(n)$ and $g(n)$ as follows:
 
-We can use the initial conditions to find $A$ and $B$ as follows:
+* A string of length $n$ with no two 1s as neighbors can end with 1, followed by a string of length $n-1$ with no two 1s as neighbors, or it can end with either 2 or 3, followed by a string of length $n-1$ with no 1s.
 
-$f(0) = 1 = A + B(0)$
+Therefore, $h(n) = f(n)h(n-1) + 2g(n)h(n-1)$.
 
-$g(0) = 2 = A - 2B$
+We can use this recurrence relation to find $h(5)$. We start with the initial condition $h(0) = 1$. Then, we can use the recurrence relation to find $h(1) = 4$, $h(2) = 13$, $h(3) = 37$, $h(4) = 98$, and $h(5) = 255$.
 
-Solving these equations, we find $A = 1$ and $B = 1$.
-
-Therefore, the number of strings consisting of 5 digits of 1, 2 and 3 where no two 1s are neighbors is $f(5) = 1 + 5 = \boxed{6}$.</code></pre>
+Therefore, the number of strings consisting of 5 digits of 1, 2 and 3 where no two 1s are neighbors is $\boxed{255}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 6 strings consisting of 5 digits of 1, 2 and 3 where no two 1s are neighbors.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of strings consisting of 5 digits of 1, 2 and 3 where no two 1s are neighbors is 255.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

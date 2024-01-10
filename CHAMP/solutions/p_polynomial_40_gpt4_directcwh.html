@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Polynomial_40</td>
+            <td>GPT-4</td>
+            <td>Direct C w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> -3</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load('v0')
+problem = dataset['P_Polynomial_40']
+messages = problem.conversations['GPT-4|Direct C w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the smallest value of a^2+ab+b^2-3a-3b for real numbers a, b.
+
+You may find the following information useful:
+
+1. Let the smallest value be m and define a non-negative expression.
+2. Consider the expression as a quadratic polynomial in the variable a.
+3. For positive a, the polynomial ax^2+bx+c≥0 for all x if and only if b^2-4ac≤0. One inequality is strict if and only if the other is also strict.
+4. (x±y)^2=x^2±2xy+y^2.
+5. For any real number a, a^2≥0. </code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s consider the expression as a quadratic polynomial in the variable a:
+
+a^2 + ab + b^2 - 3a - 3b = a^2 + a(b - 3) + (b^2 - 3b)
+
+This is in the form of ax^2 + bx + c, where x = a, b = b - 3, and c = b^2 - 3b.
+
+The smallest value of a quadratic function ax^2 + bx + c is achieved when x = -b/2a. So, the smallest value of our expression is achieved when a = -(b - 3)/2.
+
+Substitute a = -(b - 3)/2 into the expression:
+
+m = [-(b - 3)/2]^2 + [-(b - 3)/2](b - 3) + (b^2 - 3b)
+  = (b^2 - 6b + 9)/4 - (b^3 - 9b^2 + 27b - 27)/4 + b^2 - 3b
+  = (b^2 - 6b + 9 - b^3 + 9b^2 - 27b + 27 + 4b^2 - 12b)/4
+  = (-b^3 + 14b^2 - 45b + 36)/4
+
+Now, let&#x27;s consider this as a cubic polynomial in the variable b:
+
+m = -1/4 * b^3 + 14/4 * b^2 - 45/4 * b + 36/4
+
+The smallest value of a cubic function is achieved at the roots of its derivative. So, let&#x27;s find the derivative of m with respect to b:
+
+dm/db = -3/4 * b^2 + 28/4 * b - 45/4
+
+Setting this equal to zero gives us:
+
+-3/4 * b^2 + 7 * b - 45/4 = 0
+
+Multiplying through by -4 gives us:
+
+3b^2 - 28b + 45 = 0
+
+This is a quadratic equation in b, which we can solve using the quadratic formula:
+
+b = [28 ± sqrt((28)^2 - 4*3*45)] / (2*3)
+  = [28 ± sqrt(784 - 540)] / 6
+  = [28 ± sqrt(244)] / 6
+  = [28 ± 2*sqrt(61)] / 6
+  = 14/3 ± sqrt(61)/3
+
+The two roots are b = 14/3 - sqrt(61)/3 and b = 14/3 + sqrt(61)/3. We substitute these into the expression for m to find the corresponding values of m. 
+
+After calculating, we find that the smallest value of m is achieved when b = 14/3 - sqrt(61)/3. Substituting this value of b into the expression for m gives us:
+
+m = 9 - sqrt(61)
+
+So, the smallest value of a^2 + ab + b^2 - 3a - 3b for real numbers a, b is 9 - sqrt(61).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression a^2 + ab + b^2 - 3a - 3b for real numbers a and b is 9 - sqrt(61).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_31</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> The only possible value for the limit is 4</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_31']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,45 +82,50 @@ What are possible values of the limit of the sequence a_n=sqrt(a_(n-1))+sqrt(a_(
 You may find the following information useful:
 
 1. Study the monotonicity and boundedness of the sequence for 0&lt;a_0≤a_1&lt;1.
-2. For non-negative x, y, sqrt(x)≥sqrt(y) if and only if x≥y.
-3. A sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit.
-4. Study the monotonicity and boundedness of the sequence for 0&lt;a_1&lt;a_0&lt;1.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a_0$ and $a_1$ be two positive real numbers such that $0 &lt; a_0 &lt; a_1 &lt; 1$. We will show that the sequence $a_n = \sqrt{a_{n-1}} + \sqrt{a_{n-2}}$ converges to $\frac{1}{2}$.
+2. Study the monotonicity and boundedness of the sequence for 0&lt;a_1&lt;a_0&lt;1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The sequence $a_n = \sqrt{a_{n-1}} + \sqrt{a_{n-2}}$ is monotonically increasing for $0 &lt; a_0, a_1 &lt; 1$. This is because, for any $n \geq 2$, we have
 
-First, we will show that the sequence is monotonically increasing. To do this, we will prove by induction that $a_n \geq a_{n-1}$ for all $n \geq 1$.
+$$a_n = \sqrt{a_{n-1}} + \sqrt{a_{n-2}} \geq \sqrt{a_{n-2}} = a_{n-1}.$$
 
-The base case is $n = 1$. We have $a_1 = \sqrt{a_0} + \sqrt{a_{-1}}$. Since $0 &lt; a_0 &lt; a_1 &lt; 1$, we have $\sqrt{a_0} &lt; \sqrt{a_1}$ and $\sqrt{a_{-1}} &lt; \sqrt{a_1}$. Therefore, $a_1 = \sqrt{a_0} + \sqrt{a_{-1}} &gt; \sqrt{a_1} + \sqrt{a_1} = 2 \sqrt{a_1}$.
+In particular, this means that the sequence is bounded from below by $a_0$.
 
-Now, assume that $a_k \geq a_{k-1}$ for some $k \geq 1$. We want to show that $a_{k+1} \geq a_k$. We have
-\begin{align*}
-a_{k+1} &amp;= \sqrt{a_k} + \sqrt{a_{k-1}} \\
-&amp;\geq \sqrt{a_{k-1}} + \sqrt{a_{k-1}} \\
-&amp;= 2 \sqrt{a_{k-1}} \\
-&amp;\geq a_{k-1}.
-\end{align*}
-Therefore, by the principle of mathematical induction, $a_n \geq a_{n-1}$ for all $n \geq 1$.
+To study the boundedness from above, we can consider the following function:
 
-Next, we will show that the sequence is bounded. To do this, we will prove that there exists a constant $M$ such that $a_n \leq M$ for all $n \geq 1$.
+$$f(x) = \sqrt{x} + \sqrt{x-1}.$$
 
-Let $M = \sqrt{a_0} + \sqrt{a_1}$. Then, for all $n \geq 1$, we have
-\begin{align*}
-a_n &amp;= \sqrt{a_{n-1}} + \sqrt{a_{n-2}} \\
-&amp;\leq \sqrt{M} + \sqrt{M} \\
-&amp;= 2 \sqrt{M}.
-\end{align*}
-Therefore, $a_n \leq M$ for all $n \geq 1$.
+We can see that $f(x)$ is increasing on $[0, 1]$. This is because, for any $x, y \in [0, 1]$ with $x &lt; y$, we have
 
-Now, we can conclude that the sequence $a_n$ converges to $\frac{1}{2}$. This is because a sequence that is monotonic and bounded has a limit. Specifically, a sequence that is monotonically increasing and bounded from above, or monotonically decreasing and bounded from below, has a limit. In our case, the sequence $a_n$ is monotonically increasing and bounded from above, so it converges to a limit.
+$$f(y) - f(x) = \sqrt{y} + \sqrt{y-1} - \sqrt{x} - \sqrt{x-1} = \sqrt{y} - \sqrt{x} &gt; 0.$$
 
-Since $a_n \leq M$ for all $n \geq 1$, we know that the limit of the sequence $a_n$ must be less than or equal to $\sqrt{M}$. On the other hand, we know that $a_n \geq a_{n-1}$ for all $n \geq 1$, so the limit of the sequence $a_n$ must be greater than or equal to $\sqrt{a_{n-1}}$. Therefore, the limit of the sequence $a_n$ must be $\sqrt{a_{n-1}}$.
+Therefore, we have $a_n \leq f(a_0)$ for all $n \geq 1$. Since $f(x)$ is continuous on $[0, 1]$ and $f(0) = 0$, we have $f(x) \leq 1$ for all $x \in [0, 1]$. Hence, we have $a_n \leq 1$ for all $n \geq 1$.
 
-Finally, we will show that $\sqrt{a_{n-1}} = \frac{1}{2}$. To do this, we will prove by induction that $a_{n-1} = \left(\frac{1}{2}\right)^n$ for all $n \geq 1$.
+Therefore, the sequence $a_n = \sqrt{a_{n-1}} + \sqrt{a_{n-2}}$ is monotonically increasing and bounded from above by $1$. Hence, it converges.
 
-The base case is $n = 1$. We have $a_0 = \sqrt{a_{-1}}$. Since $0 &lt; a_0 &lt; 1$, we have $\sqrt{a_0} &lt; 1$. Therefore, $a_0 = \sqrt{a_{-1}} &lt; 1$.
+To find the limit, we can consider the following limit:
 
-Now, assume that $a_{k-1} = \left(\frac{1}{2}\right)^k$ for some $k \geq 1$. We want to show that $a_{k} = \left(\frac{</code></pre>
+$$\lim_{n\to\infty} f^n(x) = \lim_{n\to\infty} \left(\sqrt{x} + \sqrt{x-1}\right)^n.$$
+
+We can use the binomial theorem to expand this as follows:
+
+$$\left(\sqrt{x} + \sqrt{x-1}\right)^n = \sum_{k=0}^n \binom{n}{k} \sqrt{x}^{n-k} \sqrt{x-1}^k.$$
+
+Note that $\sqrt{x} \leq 1$ and $\sqrt{x-1} \leq 1$ for all $x \in [0, 1]$. Hence, we have
+
+$$\left(\sqrt{x} + \sqrt{x-1}\right)^n \leq \sum_{k=0}^n \binom{n}{k} \leq 2^n.$$
+
+Therefore, we have
+
+$$\lim_{n\to\infty} f^n(x) \leq \lim_{n\to\infty} 2^n = 2.$$
+
+On the other hand, we can also see that $f^n(x) \geq 1$ for all $n \geq 1$. Hence, we have
+
+$$\lim_{n\to\infty} f^n(x) \geq 1.$$
+
+Therefore, we have $\lim_{n\to\infty} f^n(x) = 2$.
+
+In conclusion, the limit of the sequence $a_n = \sqrt{a_{n-1}} + \sqrt{a_{n-2}}$ is $2$, for any initial values $0 &lt; a_0, a_1 &lt; 1$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence $a_n = \sqrt{a_{n-1}} + \sqrt{a_{n-2}}$, for different initial values of $0 &lt; a_0, a_1 &lt; 1$, is $\frac{1}{2}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence $a_n = \sqrt{a_{n-1}} + \sqrt{a_{n-2}}$ is $2$, for any initial values $0 &lt; a_0, a_1 &lt; 1$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

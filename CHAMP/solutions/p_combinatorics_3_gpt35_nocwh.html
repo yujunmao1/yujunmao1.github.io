@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_3</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2^floor(n/2)*floor(n/2)!</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_3']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -84,44 +84,48 @@ You may find the following information useful:
 1. If n is odd, what position must be occupied by a rook?
 2. For even n=2k, consider a board of size 2k x 2k. If a rook is placed on the first row, which other position is also determined?
 3. Let P(2k) be the number of placements on a 2k x 2k board. Express P(2k) in terms of P(2k-2).
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. Find P(2) as the base case.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use a recursive approach and build up the solution step by step.
+4. Find P(2) as the base case.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will consider the cases separately for odd and even values of n.
 
-Let&#x27;s start with the base case, P(2), which represents the number of ways to place two rooks on a 2x2 chessboard. In this case, there are only two possible configurations:
+Case 1: n is odd
+In this case, we know that one rook must be placed in the center of the chessboard. This is because the center position is the only one that is equidistant from all rows and columns, ensuring that it is not on the same row or column as any other rook.
 
-1. Rook 1 on (1,1) and Rook 2 on (2,2)
-2. Rook 1 on (1,2) and Rook 2 on (2,1)
+Once the center position is occupied, we are left with an (n-1) x (n-1) chessboard. We can place the remaining (n-1) rooks on this smaller chessboard in a way that satisfies the conditions. This is equivalent to finding the number of ways to place (n-1) rooks peacefully on an (n-1) x (n-1) chessboard, which we can denote as P(n-1).
+
+Therefore, the number of ways to place n rooks peacefully on an n x n chessboard, invariant to a 180-degree rotation, when n is odd, is P(n-1).
+
+Case 2: n is even
+In this case, we can divide the chessboard into four quadrants. Each quadrant is a (n/2) x (n/2) chessboard.
+
+Consider placing a rook on the first row of the chessboard. This determines the position of another rook in the same column but in the opposite quadrant. This is because the rooks must be placed peacefully and invariant to a 180-degree rotation.
+
+Once the rook is placed on the first row, we are left with a (n-1) x (n-1) chessboard. We can place the remaining (n-1) rooks on this smaller chessboard in a way that satisfies the conditions. This is equivalent to finding the number of ways to place (n-1) rooks peacefully on an (n-1) x (n-1) chessboard, which we can denote as P(n-1).
+
+Therefore, the number of ways to place n rooks peacefully on an n x n chessboard, invariant to a 180-degree rotation, when n is even, is 2P(n-1).
+
+Now, let&#x27;s find the base case P(2):
+
+For a 2 x 2 chessboard, there are only two possible placements of rooks that satisfy the conditions:
+
+1. Rook 1 in top left, Rook 2 in bottom right.
+2. Rook 1 in top right, Rook 2 in bottom left.
 
 Therefore, P(2) = 2.
 
-Now, let&#x27;s consider the case of a 4x4 chessboard, P(4). We can divide the chessboard into four 2x2 quadrants. The rooks can be placed in the following configurations:
+Using this base case, we can now express P(4) in terms of P(2):
 
-1. Rook 1 on (1,1) and Rook 2 on (3,3): This determines the placement of the other two rooks as follows:
-   - Rook 3 on (2,2) and Rook 4 on (4,4)
-   - Rook 3 on (2,4) and Rook 4 on (4,2)
+For a 4 x 4 chessboard, we can place the first rook on the first row, which determines the position of the second rook. Then, we are left with a 3 x 3 chessboard to place the remaining rooks. This is equivalent to P(2).
 
-2. Rook 1 on (1,3) and Rook 2 on (3,1): This determines the placement of the other two rooks as follows:
-   - Rook 3 on (2,4) and Rook 4 on (4,2)
-   - Rook 3 on (2,2) and Rook 4 on (4,4)
+Therefore, P(4) = 2P(2) = 2(2) = 4.
 
-Therefore, P(4) = 2 * P(2) * P(2) = 2 * 2 * 2 = 8.
+Using this pattern, we can continue to express P(6), P(8), and so on, in terms of P(2) and P(4).
 
-Now, let&#x27;s generalize this pattern for a 2k x 2k chessboard. We can divide the chessboard into four quadrants of size (k x k). The rooks can be placed in the following configurations:
+In summary, the number of ways to place n rooks peacefully on an n x n chessboard, invariant to a 180-degree rotation, is:
 
-1. Rook 1 on (1,1) and Rook 2 on (2k,2k): This determines the placement of the other (2k-2) rooks in the (k x k) quadrant as P(2k-2).
-
-2. Rook 1 on (1,2k) and Rook 2 on (2k,1): This determines the placement of the other (2k-2) rooks in the (k x k) quadrant as P(2k-2).
-
-Therefore, P(2k) = 2 * P(2k-2) * P(2k-2).
-
-Using this recursive formula, we can calculate P(2), P(4), P(6), and so on until we reach the desired value of n.
-
-For example, using the base case P(2) = 2, we can calculate P(4) = 8, P(6) = 8 * 8 = 64, and so on.
-
-Note: The recursive formula assumes that the chessboard is large enough to accommodate the required number of rooks. If n is odd, there will always be one position that must be occupied by a rook. If n is even, the position of the first rook on the first row determines the position of the other rook on the same column in the last row.</code></pre>
+- P(n-1) when n is odd.
+- 2P(n-1) when n is even.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to place n rooks peacefully on an n x n chessboard, with the placement invariant to a 180-degree rotation, can be calculated recursively using the formula P(2k) = 2 * P(2k-2) * P(2k-2), with P(2) = 2 as the base case.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of ways to place n rooks peacefully on an n x n chessboard, invariant to a 180-degree rotation, is P(n-1) when n is odd and 2P(n-1) when n is even, where P(2) = 2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

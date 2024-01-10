@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_33</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 512</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_33']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,70 +82,76 @@ Find the smallest positive integer a, so that 1971 | 50^n+23^n*a for odd n.
 You may find the following information useful:
 
 1. 1971=27*73.
-2. If ab | c, then a | c and b | c.
-3. Find a mod 27 and a mod 73.
-4. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).
-5. If gcd(a,b)=1 and a≠1, then gcd(a, b^n)=1 (i.e., a ∤ b^n) for any n.
-6. Set up the equation of a=27x+p=73y+q for suitable p, q and starting from y=0, increment y to find the smallest value that satisfy the equation.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>First, we need to find a such that 1971 | 50^n+23^n*a for odd n. 
+2. Find a mod 27 and a mod 73.
+3. Set up the equation of a=27x+p=73y+q for suitable p, q and starting from y=0, increment y to find the smallest value that satisfy the equation.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>First, we need to find a mod 27 and a mod 73.
 
-Given that 1971 = 27*73, we need to find a such that both 27 and 73 divide 50^n+23^n*a. 
+Since 1971 = 27*73, we know that 50^n + 23^n*a is divisible by both 27 and 73 for odd n. 
 
-Let&#x27;s start with 27. 
+We can use Fermat&#x27;s Little Theorem to find a mod 27 and a mod 73. 
 
-We need to find a such that 27 | 50^n+23^n*a. 
+Fermat&#x27;s Little Theorem states that if p is a prime number, then for any integer a, the number a^p - a is an integer multiple of p. 
 
-Using the property of modular arithmetic, we can write this as:
+For a mod 27, we have:
 
-50^n mod 27 + 23^n*a mod 27 = 0 
+50^n + 23^n*a ≡ 0 (mod 27)
 
-We know that 50 mod 27 = 23 and 23 mod 27 = 23. 
+Since 50 ≡ -2 (mod 27) and 23 ≡ -4 (mod 27), we can rewrite the equation as:
 
-So, we can rewrite the equation as:
+(-2)^n + (-4)^n*a ≡ 0 (mod 27)
 
-23^n mod 27 + 23^n*a mod 27 = 0 
+For odd n, (-2)^n = -2 and (-4)^n = -4, so we have:
 
-Simplifying, we get:
+-2 - 4a ≡ 0 (mod 27)
 
-a mod 27 = -1 
+Solving for a, we get a ≡ -2/-4 ≡ 1/2 (mod 27)
 
-So, a = 27x - 1 for some integer x. 
+Since we are looking for an integer, we multiply both sides by 2 to get a ≡ 1 (mod 27)
 
-Now, let&#x27;s consider 73. 
+For a mod 73, we have:
 
-We need to find a such that 73 | 50^n+23^n*a. 
+50^n + 23^n*a ≡ 0 (mod 73)
 
-Again, using the property of modular arithmetic, we can write this as:
+Since 50 ≡ 50 (mod 73) and 23 ≡ 23 (mod 73), we can rewrite the equation as:
 
-50^n mod 73 + 23^n*a mod 73 = 0 
+50^n + 23^n*a ≡ 0 (mod 73)
 
-We know that 50 mod 73 = 50 and 23 mod 73 = 23. 
+For odd n, 50^n = 50 and 23^n = 23, so we have:
 
-So, we can rewrite the equation as:
+50 + 23a ≡ 0 (mod 73)
 
-50^n mod 73 + 23^n*a mod 73 = 0 
+Solving for a, we get a ≡ -50/23 ≡ -2 (mod 73)
 
-Simplifying, we get:
+Now we have two equations:
 
-a mod 73 = -50/23 
+a ≡ 1 (mod 27)
+a ≡ -2 (mod 73)
 
-So, a = 73y - 50/23 for some integer y. 
+We can use the Chinese Remainder Theorem to solve these equations. 
 
-Now, we need to find the smallest positive integer a that satisfies both equations. 
+The Chinese Remainder Theorem states that if one knows the remainders of the Euclidean division of an integer n by several integers, then one can determine uniquely the remainder of the division of n by the product of these integers, under the condition that the divisors are pairwise coprime.
 
-Setting the two equations equal to each other, we get:
+We set up the equation of a=27x+1=73y-2 for suitable x, y and starting from y=0, increment y to find the smallest value that satisfy the equation.
 
-27x - 1 = 73y - 50/23 
+For y=0, a=27x+1=73*0-2=-2, which is not a positive integer.
 
-Solving for y, we get:
+For y=1, a=27x+1=73*1-2=71, which is not divisible by 27.
 
-y = (27x + 50/23 + 1)/73 
+For y=2, a=27x+1=73*2-2=144, which is not divisible by 27.
 
-Starting from y = 0 and incrementing y, we find that the smallest positive integer a that satisfies the equation is a = 22. 
+For y=3, a=27x+1=73*3-2=217, which is not divisible by 27.
 
-So, the smallest positive integer a such that 1971 | 50^n+23^n*a for odd n is a = 22.</code></pre>
+For y=4, a=27x+1=73*4-2=290, which is not divisible by 27.
+
+For y=5, a=27x+1=73*5-2=363, which is not divisible by 27.
+
+For y=6, a=27x+1=73*6-2=436, which is not divisible by 27.
+
+For y=7, a=27x+1=73*7-2=509, which is divisible by 27.
+
+So, the smallest positive integer a that satisfies the equation is 509.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer a such that 1971 divides 50^n+23^n*a for odd n is 22.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer a, so that 1971 divides 50^n+23^n*a for odd n, is 509.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

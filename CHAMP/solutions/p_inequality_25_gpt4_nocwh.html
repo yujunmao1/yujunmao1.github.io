@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_25</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_25']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,61 +81,42 @@ For how many values of n in {1, 2, ..., 100}, do we have (1/2)*(3/4)*(5/6)*...*(
 
 You may find the following information useful:
 
-1. Assuming that the inequality hold for n, study the condition for it to hold for n+1.
-2. (x±y)^2=x^2±2xy+y^2.</code></pre>
+1. Assuming that the inequality hold for n, study the condition for it to hold for n+1.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the left side of the inequality as P(n) = (1/2)*(3/4)*(5/6)*...*(2n-1)/(2n). We want to find for how many values of n in {1, 2, ..., 100}, P(n) ≤ 1/sqrt(3n+1).
 
-First, let&#x27;s study the condition for the inequality to hold for n+1 if it holds for n. 
+First, let&#x27;s study the condition for the inequality to hold for n+1 given that it holds for n. 
 
-P(n+1)/P(n) = [(2n+1)/(2n+2)] = [1 - 1/(2n+2)].
+If P(n) ≤ 1/sqrt(3n+1), then we want to find when P(n+1) = P(n) * [(2n+1)/(2n+2)] ≤ 1/sqrt(3(n+1)+1).
 
-We know that P(n) ≤ 1/sqrt(3n+1), so we want to find when P(n+1) ≤ 1/sqrt(3n+4).
+Simplifying the right side of the inequality, we get 1/sqrt(3n+4).
 
-This is equivalent to finding when [1 - 1/(2n+2)] ≤ sqrt[(3n+1)/(3n+4)].
+So, we want to find when P(n) * [(2n+1)/(2n+2)] ≤ 1/sqrt(3n+4).
 
-Squaring both sides to get rid of the square root (and because both sides are positive), we get:
+Since we know that P(n) ≤ 1/sqrt(3n+1), we can substitute this into the inequality:
 
-[1 - 1/(2n+2)]^2 ≤ (3n+1)/(3n+4).
+(1/sqrt(3n+1)) * [(2n+1)/(2n+2)] ≤ 1/sqrt(3n+4).
 
-Using the formula (x±y)^2=x^2±2xy+y^2, we get:
+Squaring both sides to get rid of the square roots, we get:
 
-1 - 2/(2n+2) + 1/(4n^2+8n+4) ≤ (3n+1)/(3n+4).
+(1/(3n+1)) * [(2n+1)^2/(2n+2)^2] ≤ 1/(3n+4).
 
-Simplifying, we get:
+Solving this inequality, we get:
 
-(4n^2 + 8n + 4 - 2(2n+2) + 1)/(4n^2 + 8n + 4) ≤ (3n+1)/(3n+4).
-
-This simplifies to:
-
-(4n^2 + 4n + 1)/(4n^2 + 8n + 4) ≤ (3n+1)/(3n+4).
-
-Cross multiplying, we get:
-
-(4n^2 + 4n + 1)(3n+4) ≤ (3n+1)(4n^2 + 8n + 4).
+(2n+1)^2 ≤ (3n+1)*(3n+4)*(2n+2)^2.
 
 Expanding and simplifying, we get:
 
-12n^3 + 16n^2 + 12n + 4 ≤ 12n^3 + 20n^2 + 12n + 4.
+4n^2 + 4n + 1 ≤ 9n^2 + 15n + 4.
 
-Subtracting 12n^3 + 12n + 4 from both sides, we get:
+Subtracting the left side from the right, we get:
 
-0 ≤ 4n^2.
+5n^2 + 11n + 3 ≥ 0.
 
 This inequality holds for all n in {1, 2, ..., 100}.
 
-Therefore, if the inequality holds for n, it also holds for n+1.
-
-Now, let&#x27;s check the base case, n=1. 
-
-P(1) = (1/2) ≤ 1/sqrt(3*1+1) = 1/sqrt(4) = 1/2.
-
-So, the inequality holds for n=1.
-
-By induction, the inequality holds for all n in {1, 2, ..., 100}.
-
-Therefore, there are 100 values of n for which the inequality holds.</code></pre>
+Therefore, the original inequality (1/2)*(3/4)*(5/6)*...*(2n-1)/(2n) ≤ 1/sqrt(3n+1) holds for all n in {1, 2, ..., 100}. So, there are 100 values of n for which the inequality holds.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The inequality (1/2)*(3/4)*(5/6)*...*(2n-1)/(2n) ≤ 1/sqrt(3n+1) holds for all 100 values of n in the set {1, 2, ..., 100}.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The original inequality (1/2)*(3/4)*(5/6)*...*(2n-1)/(2n) ≤ 1/sqrt(3n+1) holds for all n in {1, 2, ..., 100}, so there are 100 values of n for which the inequality holds.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

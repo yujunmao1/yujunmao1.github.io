@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_18</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> sqrt(3)/3, or equivalently 1/sqrt(3)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_18']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,28 +81,42 @@ For positive a, b, c, what is the largest value of sqrt(ab+bc+ac)/(a+b+c)?
 
 You may find the following information useful:
 
-1. Square the expression and study its largest value.
-2. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a \leq b \leq c$. Then, by AM-GM,
-\begin{align*}
-\sqrt{ab+bc+ac} &amp;\leq \sqrt{3abc} \\
-&amp;= \sqrt{3} \sqrt{abc} \\
-&amp;= \sqrt{3} \sqrt{(a+b+c)(ab+bc+ac)} \\
-&amp;\leq \sqrt{3} \sqrt{(a+b+c)^2} \\
-&amp;= \sqrt{3}(a+b+c).
-\end{align*}Equality occurs when $a=b=c$. Therefore, the largest value of $\sqrt{ab+bc+ac}/(a+b+c)$ is $\boxed{\sqrt{3}}$.
+1. Square the expression and study its largest value.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let $a, b, c$ be positive numbers. We want to maximize $\frac{\sqrt{ab+bc+ac}}{a+b+c}$.
 
-Alternatively, we can square the expression and study its largest value. We have
-\begin{align*}
-\frac{(ab+bc+ac)^2}{(a+b+c)^2} &amp;= \frac{a^2b^2 + a^2c^2 + b^2c^2 + 2abc(a+b+c)}{(a+b+c)^2} \\
-&amp;= \frac{a^2b^2 + a^2c^2 + b^2c^2 + 2abc(a+b+c)}{(a+b+c)(a+b+c)} \\
-&amp;= \frac{(a+b)^2c^2 + (a+c)^2b^2 + (b+c)^2a^2}{(a+b+c)^2} \\
-&amp;\geq \frac{(a+b)^2(c^2+a^2) + (a+c)^2(b^2+a^2) + (b+c)^2(a^2+c^2)}{(a+b+c)^2} \\
-&amp;= \frac{(a+b)^2(a^2+b^2+c^2) + (a+c)^2(a^2+b^2+c^2) + (b+c)^2(a^2+b^2+c^2)}{(a+b+c)^2} \\
-&amp;= 3(a^2+b^2+c^2).
-\end{align*}Equality occurs when $a=b=c$. Therefore, the largest value of $\sqrt{ab+bc+ac}/(a+b+c)$ is $\boxed{\sqrt{3}}$.</code></pre>
+Squaring both sides, we get
+
+$$\frac{ab+bc+ac}{(a+b+c)^2} \leq 1.$$
+
+Multiplying both sides by $(a+b+c)^2$, we get
+
+$$ab+bc+ac \leq (a+b+c)^2.$$
+
+Expanding the right-hand side, we get
+
+$$ab+bc+ac \leq a^2+b^2+c^2+2ab+2bc+2ac.$$
+
+Subtracting $a^2+b^2+c^2$ from both sides, we get
+
+$$2(ab+bc+ac) \leq 2ab+2bc+2ac.$$
+
+Factoring out $2$, we get
+
+$$2(a+b+c) \leq 2(a+b+c).$$
+
+Dividing both sides by $2$, we get
+
+$$a+b+c \leq a+b+c.$$
+
+This is true for all real numbers $a, b, c$. In particular, it is true for positive numbers $a, b, c$. Therefore, the maximum value of $\frac{\sqrt{ab+bc+ac}}{a+b+c}$ is $1$.
+
+In other words, for any positive numbers $a, b, c$, we have
+
+$$\frac{\sqrt{ab+bc+ac}}{a+b+c} \leq 1.$$
+
+Equality occurs when $a=b=c$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of $\sqrt{ab+bc+ac}/(a+b+c)$ is $\boxed{\sqrt{3}}$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The maximum value of $\frac{\sqrt{ab+bc+ac}}{a+b+c}$ is $1$, which occurs when $a=b=c$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

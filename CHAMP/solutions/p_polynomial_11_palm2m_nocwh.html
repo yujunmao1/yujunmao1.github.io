@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_11</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 20</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_11']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,21 +81,18 @@ If x_1, x_2 are the two roots of the polynomial x^2-6x+1, for how many integer n
 
 You may find the following information useful:
 
-1. Let x_1, x_2 be the root of the polynomial x^2+px+q. Then x_1+x_2=-p and x_1*x_2=q. For the polynomial rx^2+px+q, we have x_1+x_2=-p/r and x_1*x_2=q/r. 
-2. Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).
-3. Study x^n+y^n mod 5.
-4. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $x_1$ and $x_2$ are the two roots of the polynomial $x^2-6x+1$. We can factor this polynomial as $(x-1)(x-5)$, so we know that $x_1=1$ and $x_2=5$.
+1. Study x^n+y^n mod 5.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We know that $x_1^2-6x_1+1=0$ and $x_2^2-6x_2+1=0$. Adding these two equations, we get $x_1^2+x_2^2-6(x_1+x_2)+2=0$. Factoring, we get $(x_1+x_2-2)(x_1+x_2-1)=0$. Therefore, $x_1+x_2=2$ or $x_1+x_2=1$.
 
-We are asked for how many integer $n$ in $\{61, 62, ..., 120\}$ does $x_1^n+x_2^n$ divided by 5 give a remainder of 4.
+Now, we know that $x_1^n+x_2^n$ is divisible by 5 if and only if $x_1+x_2$ is divisible by 5. This is because $x_1^n+x_2^n=(x_1+x_2)(x_1^{n-1}-x_1^{n-2}x_2+\cdots+x_2^{n-1})$. If $x_1+x_2$ is divisible by 5, then $x_1^{n-1}-x_1^{n-2}x_2+\cdots+x_2^{n-1}$ is also divisible by 5, since it is a polynomial with coefficients in $\mathbb{Z}$. Therefore, $x_1^n+x_2^n$ is divisible by 5.
 
-We can write $x_1^n+x_2^n$ as $(1)^n+(5)^n$. We know that $1^n$ is always congruent to 1 modulo 5, and $5^n$ is always congruent to 1 modulo 5 when $n$ is even, and congruent to 4 modulo 5 when $n$ is odd. Therefore, $x_1^n+x_2^n$ is always congruent to 1 modulo 5 when $n$ is even, and congruent to 4 modulo 5 when $n$ is odd.
+In the range $61 \leq n \leq 120$, there are 24 numbers that are divisible by 5: 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120. Therefore, there are 24 numbers in the range $61 \leq n \leq 120$ such that $x_1^n+x_2^n$ is divisible by 5.
 
-The integers in $\{61, 62, ..., 120\}$ that are even are 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, and 120. The integers in $\{61, 62, ..., 120\}$ that are odd are 61, 63, 65, 67, 69, 71, 73, 75, 77, 79, 81, 83, 85, 87, 89, 91, 93, 95, 97, 99, 101, 103, 105, 107, 109, 111, 113, and 115.
+However, we need to be careful. We have only considered the case where $x_1+x_2$ is divisible by 5. What about the case where $x_1+x_2=1$? In this case, $x_1^n+x_2^n$ is not necessarily divisible by 5. For example, if $n=61$, then $x_1^n+x_2^n=1+1=2$, which is not divisible by 5.
 
-Of the 60 integers in $\{61, 62, ..., 120\}$, 30 are even and 30 are odd. Therefore, there are $\boxed{30}$ integers in $\{61, 62, ..., 120\}$ for which $x_1^n+x_2^n$ divided by 5 gives a remainder of 4.</code></pre>
+Therefore, the number of numbers in the range $61 \leq n \leq 120$ such that $x_1^n+x_2^n$ divided by 5 gives a remainder of 4 is 24-1=23.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 30 integers in $\{61, 62, ..., 120\}$ for which $x_1^n+x_2^n$ divided by 5 gives a remainder of 4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of numbers in the range $61 \leq n \leq 120$ such that $x_1^n+x_2^n$ divided by 5 gives a remainder of 4 is 23.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

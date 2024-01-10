@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_29</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> C(n, 4), or an equivalent form such as n(n-1)(n-2)(n-3)/4!</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_29']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,27 +81,18 @@ A diagnoal in a convex polygon is any line connecting two non-adjacent vertices.
 
 You may find the following information useful:
 
-1. An intersection point is created from two diagnonals.
-2. The number of ways to choose a set of (unordered) k items from n items is C(n, k).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The problem is asking for the number of intersection points created by the diagonals in a convex polygon with n vertices. 
+1. An intersection point is created from two diagnonals.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of diagonals in a convex polygon with n vertices is given by the formula n(n-3)/2. This is because each vertex is connected to n-3 other vertices by a diagonal (it&#x27;s not connected to itself or its two adjacent vertices).
 
-First, we need to determine how many diagonals can be drawn from a single vertex in a polygon with n vertices. We can&#x27;t draw a diagonal to the vertex itself or to its two adjacent vertices, so the number of diagonals from a single vertex is n - 3. 
+Since each intersection point is formed by two diagonals, we might be tempted to say that the number of intersection points is the number of ways to choose 2 diagonals from the total number of diagonals, which would be [n(n-3)/2] choose 2.
 
-However, each diagonal is shared by two vertices, so the total number of diagonals in the polygon is (n(n - 3))/2.
+However, this would overcount the number of intersection points, because each intersection point is counted multiple times (once for each pair of diagonals that intersect at that point).
 
-Now, each intersection point inside the polygon is formed by two diagonals. Therefore, we need to choose 2 diagonals from the total number of diagonals. 
+To correct for this overcounting, we note that each intersection point is formed by 4 vertices of the polygon (the endpoints of the two intersecting diagonals). There are n choose 4 ways to choose 4 vertices from n, so this is the number of intersection points.
 
-The number of ways to choose 2 items from a set of n items is given by the combination formula C(n, 2) = n(n - 1)/2. 
-
-So, the number of intersection points is given by C((n(n - 3))/2, 2).
-
-This simplifies to:
-
-[((n(n - 3))/2)((n(n - 3))/2 - 1)]/2
-
-This is the expression for the number of intersection points in terms of n.</code></pre>
+Therefore, the number of intersection points in the interior of the polygon is given by the expression n choose 4, or n(n-1)(n-2)(n-3)/24.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of intersection points created by the diagonals in a convex polygon with n vertices is given by the expression: [((n(n - 3))/2)((n(n - 3))/2 - 1)]/2.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of intersection points in the interior of a convex polygon with n vertices, where no three diagonals pass through the same point, is given by the expression n(n-1)(n-2)(n-3)/24.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

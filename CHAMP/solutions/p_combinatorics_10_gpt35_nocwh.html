@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_10</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2^(n-1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_10']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,33 +82,43 @@ How many sequences of positive integer numbers have sum n, as an expression of n
 You may find the following information useful:
 
 1. Consider a row of n points, with n-1 gaps.
-2. Insert dividers into the gaps, and consider the correspondance between a sequence with a divider insertion configuration.
-3. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of stars and bars, which is based on the information provided.
+2. Insert dividers into the gaps, and consider the correspondance between a sequence with a divider insertion configuration.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of stars and bars, also known as the balls and urns method.
 
-Consider a row of n points, with n-1 gaps. We want to insert dividers into the gaps to create sequences of positive integer numbers that sum to n.
+Let&#x27;s consider a row of n points, with n-1 gaps. We want to insert dividers into the gaps to create sequences of positive integer numbers that sum up to n.
 
-Let&#x27;s represent the dividers as bars &quot;|&quot; and the points as stars &quot;*&quot;. For example, if n = 5, we can represent a sequence of positive integer numbers that sum to 5 as follows:
+We can think of the dividers as bars and the points as stars. The number of bars we need to insert is n-1, and the number of stars is n.
 
-**|*|**
+For example, if n = 5, we would have 5 stars and 4 gaps:
 
-In this representation, the number of stars between two bars represents the value of a positive integer in the sequence.
+* * * * *
 
-Now, let&#x27;s consider the correspondence between a sequence with a divider insertion configuration. The number of stars between two bars represents the value of a positive integer in the sequence, and the number of gaps between the bars represents the number of positive integers in the sequence.
+We can insert dividers into the gaps to represent different sequences. For instance, if we insert dividers after the 2nd and 4th stars, we would have the sequence 1, 1, 3.
 
-For example, in the configuration **|*|**, we have three positive integers: 2, 1, and 2.
+* | * | * * |
 
-Using this correspondence, we can see that the problem is equivalent to finding the number of ways to arrange the stars and bars.
+To find the number of sequences, we need to determine the number of ways we can arrange the stars and bars. This can be calculated using combinations.
 
-Now, let&#x27;s consider the number of steps involved in this task. We have n-1 gaps, and we need to insert dividers into these gaps. For each gap, we have two choices: either insert a divider or not. Therefore, there are 2 choices for each of the n-1 gaps.
+The total number of objects (stars and bars) is n + (n-1) = 2n-1. We need to choose n-1 objects to be the bars, so the number of sequences is given by:
 
-According to the third piece of information provided, if there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1 * p_2 * ... * p_n ways to do the task.
+C(2n-1, n-1) = (2n-1)! / [(n-1)! * (2n-1 - (n-1))!]
+              = (2n-1)! / [(n-1)! * n!]
+              = (2n-1)! / [(n-1)! * n!]
 
-Applying this information to our problem, there are 2 choices for each of the n-1 gaps, so there are 2^(n-1) ways to insert the dividers.
+Therefore, the number of sequences of positive integer numbers that sum up to n is (2n-1)! / [(n-1)! * n!].
 
-Therefore, the final answer is 2^(n-1).</code></pre>
+Let&#x27;s take an example to illustrate this. If n = 3, we have:
+
+C(5, 2) = 5! / (2! * 3!)
+        = (5 * 4 * 3!) / (2! * 3!)
+        = 5 * 4 / 2
+        = 10
+
+So, there are 10 different sequences of positive integer numbers that sum up to 3.
+
+In general, the number of sequences of positive integer numbers that sum up to n is given by (2n-1)! / [(n-1)! * n!].</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences of positive integer numbers that have a sum of n is 2^(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences of positive integer numbers that have a sum of n is given by (2n-1)! / [(n-1)! * n!].</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

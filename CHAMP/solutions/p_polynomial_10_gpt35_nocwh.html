@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_10</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_10']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,40 +81,48 @@ For an antisymmetric polynomial f(x, y) (i.e., f(x, y)=-f(y, x)) of total degree
 
 You may find the following information useful:
 
-1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j. What is the relationship between c_ij and c_ji if f(x, y) is antisymmetric?
-2. For integer n, the polynomial x-y divides the polynomial x^n-y^n.
-3. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the possible values of the remainder of f(x, y) divided by x-y, we can use the fact that x-y divides x^n-y^n for any integer n.
+1. Let f(x, y)=sum_(i, j) c_ij*x^i*y^j. What is the relationship between c_ij and c_ji if f(x, y) is antisymmetric?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>If f(x, y) is antisymmetric, then we have f(x, y) = -f(y, x). 
 
-Let&#x27;s consider the polynomial f(x, y) = sum_(i, j) c_ij*x^i*y^j, where c_ij represents the coefficients of the polynomial.
+Let&#x27;s expand f(x, y) using the given polynomial form: f(x, y) = sum_(i, j) c_ij*x^i*y^j.
 
-Since f(x, y) is antisymmetric, we have f(x, y) = -f(y, x). This implies that the coefficients satisfy c_ij = -c_ji.
+Now, let&#x27;s expand -f(y, x): -f(y, x) = sum_(i, j) -c_ji*y^j*x^i.
 
-Now, let&#x27;s divide f(x, y) by x-y using polynomial long division.
+Since f(x, y) = -f(y, x), we can equate the coefficients of corresponding terms:
 
-We have:
+c_ij = -c_ji
 
-          c_00*x^0*y^0 + c_10*x^1*y^0 + c_01*x^0*y^1 + c_20*x^2*y^0 + c_11*x^1*y^1 + c_02*x^0*y^2 + ...
+This relationship between c_ij and c_ji holds for all terms in the polynomial.
 
-        - (c_00*y^0*x^0 + c_01*y^1*x^0 + c_10*y^0*x^1 + c_02*y^2*x^0 + c_11*y^1*x^1 + c_20*y^0*x^2 + ...)
+Now, let&#x27;s consider the division of f(x, y) by x-y.
 
-        -----------------------------------------------------------
+Using polynomial long division, we can write:
 
-        = (c_10 - c_01)*x^1*y^0 + (c_20 - c_02)*x^2*y^0 + (c_11 - c_11)*x^1*y^1 + (c_30 - c_03)*x^3*y^0 + ...
+f(x, y) = (x-y) * q(x, y) + r(x, y)
 
-Notice that the terms involving x^i*y^j for which i+j is odd cancel out due to the antisymmetry property.
+where q(x, y) is the quotient and r(x, y) is the remainder.
 
-Therefore, the remainder of f(x, y) divided by x-y is a polynomial that only contains terms with even powers of x and y.
+Since x-y is a linear polynomial, the remainder r(x, y) will be a polynomial of degree less than 1 (i.e., a constant).
 
-In other words, the remainder is of the form:
+To find the possible values of the remainder, we need to determine the coefficients of r(x, y) in terms of c_ij.
 
-R(x, y) = sum_(k=0)^(n/2) d_k*x^(2k)*y^(2k),
+Let&#x27;s substitute x = y into the division equation:
 
-where d_k represents the coefficients of the remainder polynomial.
+f(y, y) = (y-y) * q(y, y) + r(y, y)
 
-To summarize, the possible values of the remainder of f(x, y) divided by x-y are polynomials of the form R(x, y) = sum_(k=0)^(n/2) d_k*x^(2k)*y^(2k), where d_k can be any real number.</code></pre>
+Simplifying, we get:
+
+f(y, y) = r(y, y)
+
+Since f(y, y) = -f(y, y) (due to antisymmetry), we have:
+
+r(y, y) = -r(y, y)
+
+This implies that the remainder r(y, y) must be equal to zero.
+
+Therefore, the possible values of the remainder of f(x, y) divided by x-y are only zero.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of the remainder of an antisymmetric polynomial f(x, y) divided by x-y are polynomials of the form R(x, y) = sum_(k=0)^(n/2) d_k*x^(2k)*y^(2k), where d_k can be any real number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible value of the remainder of an antisymmetric polynomial f(x, y) divided by x-y is always zero.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

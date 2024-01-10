@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_30</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> The limit exists and is equal to (a+3b)/2</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_30']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,28 +81,23 @@ For a≤b, define the sequence as a_1=a, a_2=b, a_(n+2)=(a_(n+1)+a_n)/2. Does th
 
 You may find the following information useful:
 
-1. Study the relationship between |a_(n+2)-a_(n+1)| and |a_(n+1)-a_n|.
-2. If an (infinite) sequence converges to a limit, then all (infinite) subsequences converge, and converge to the same limit.
-3. a+a*r+a*r^2+...+a*r^n=a(1-r^(n+1))/(1-r), a+a*r+a*r^2+...=a/(1-r).</code></pre>
+1. Study the relationship between |a_(n+2)-a_(n+1)| and |a_(n+1)-a_n|.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s analyze the sequence given by the recursive formula:
 
 a_1 = a,
 a_2 = b,
 a_(n+2) = (a_(n+1) + a_n) / 2.
 
-First, let&#x27;s look at the relationship between |a_(n+2) - a_(n+1)| and |a_(n+1) - a_n|.
+We want to study the relationship between |a_(n+2) - a_(n+1)| and |a_(n+1) - a_n| to understand the behavior of the sequence.
 
-We have:
-a_(n+2) - a_(n+1) = (a_(n+1) + a_n)/2 - a_(n+1)
-= a_n/2 - a_(n+1)/2
-= (a_n - a_(n+1))/2
-= -1/2 * (a_(n+1) - a_n).
+First, let&#x27;s compute |a_(n+2) - a_(n+1)|:
 
-Taking absolute values, we get:
-|a_(n+2) - a_(n+1)| = |(a_n - a_(n+1))/2|
-= 1/2 * |a_(n+1) - a_n|.
+|a_(n+2) - a_(n+1)| = |(a_(n+1) + a_n)/2 - a_(n+1)| 
+                    = |a_(n+1)/2 + a_n/2 - 2a_(n+1)/2| 
+                    = |(a_n - a_(n+1))/2| 
+                    = 1/2 * |a_n - a_(n+1)|.
 
-This shows that the absolute difference between successive terms is halved each time. This suggests that the sequence is Cauchy and therefore convergent, since the terms are getting closer together at each step.
+So we have that |a_(n+2) - a_(n+1)| = 1/2 * |a_(n+1) - a_n|, which means that the absolute difference between consecutive terms is halved with each step. This indicates that the sequence is Cauchy and therefore convergent, since the terms are getting closer together at each step.
 
 Now, let&#x27;s assume the sequence has a limit L. Then, as n goes to infinity, both a_n and a_(n+1) approach L. So we can write the limit of the recursive formula as:
 
@@ -110,45 +105,25 @@ L = (L + L) / 2
 2L = L + L
 2L = 2L.
 
-This is a tautology and doesn&#x27;t give us information about L. However, since the sequence is convergent, we can use the fact that the sequence and its shift both converge to the same limit. Let&#x27;s express the limit in terms of a and b:
+This equation is trivially true for any L, so it doesn&#x27;t give us information about the limit itself. However, since the sequence is convergent, we can use the initial terms to find the limit.
+
+Let&#x27;s look at the first few terms of the sequence to see if we can spot a pattern:
 
 a_1 = a,
 a_2 = b,
 a_3 = (a + b) / 2,
 a_4 = (b + (a + b) / 2) / 2 = (2b + a + b) / 4 = (a + 3b) / 4,
-...
+a_5 = ((a + b) / 2 + (a + 3b) / 4) / 2 = (2a + 2b + a + 3b) / 8 = (3a + 5b) / 8.
 
-We can see that each term is a weighted average of a and b, with the weights being powers of 1/2. This suggests that the limit will be a weighted average of a and b where the weights sum to 1.
+We can see that each term is a weighted average of a and b, with the weights being powers of 1/2. As n increases, the weights of a and b approach each other, suggesting that the limit will be an average of a and b.
 
-Let&#x27;s consider the sum of the sequence as it approaches infinity:
-
-S = a + b + (a + b)/2 + (a + 3b)/4 + ...
-
-We can split this into two series, one involving a and the other involving b:
-
-S = a(1 + 1/2 + 1/4 + ...) + b(1 + 3/4 + 9/16 + ...).
-
-The first series is a geometric series with a common ratio of 1/2:
-
-a(1 + 1/2 + 1/4 + ...) = a/(1 - 1/2) = 2a.
-
-The second series is a bit more complex, but we can see that each term is a power of 3/4 times b. This is also a geometric series, with the first term being b and the common ratio being 3/4:
-
-b(1 + 3/4 + 9/16 + ...) = b/(1 - 3/4) = 4b.
-
-So the sum of the series as it approaches infinity is:
-
-S = 2a + 4b.
-
-However, this is not the limit of the sequence, but the sum of two divergent series. We need to find the average value that the terms of the sequence approach. Since the terms are getting closer together, the limit will be the value that the terms oscillate around.
-
-Given that the sequence is a weighted average of a and b, and the weights are powers of 1/2, the limit should be the average of a and b:
+Since the sequence is convergent and the terms are getting closer to each other, the limit must be the value that is equidistant from a and b. This value is the average of a and b:
 
 L = (a + b) / 2.
 
-This is the value that the sequence will converge to, as it is the fixed point of the transformation defined by the recursive formula.</code></pre>
+Therefore, the limit of the sequence exists and is equal to (a + b) / 2.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence defined by \(a_1 = a\), \(a_2 = b\), and \(a_{n+2} = \frac{a_{n+1} + a_n}{2}\) exists and is \(L = \frac{a + b}{2}\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The limit of the sequence exists and is (a + b) / 2.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

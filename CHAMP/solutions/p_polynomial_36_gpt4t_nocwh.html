@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_36</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> -4</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_36']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,39 +77,65 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For the polynomial x^3+4x^2+2x+a, what value of a results in one root being equal to the sum of the other two roots?
+For the polynomial x^3+4x^2+2x+a, what value of a results in one root being equal to the sum of the other two roots?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s denote the roots of the polynomial \( x^3 + 4x^2 + 2x + a \) as \( r_1 \), \( r_2 \), and \( r_3 \). According to the problem, one of the roots is equal to the sum of the other two roots. Without loss of generality, let&#x27;s assume that \( r_3 = r_1 + r_2 \).
 
-You may find the following information useful:
+By Vieta&#x27;s formulas, which relate the coefficients of a polynomial to sums and products of its roots, we have the following relationships for a cubic polynomial \( x^3 + bx^2 + cx + d \):
 
-1. Let x_1, x_2, x_3 be the root of the polynomial x^3+px^2+qx+r. Then x_1+x_2+x_3=-p, x_1*x_2+x_2*x_3+x_1*x_3=q and x_1*x_2*x_3=-r. For the polynomial sx^3+px^2+qx+r, we have x_1+x_2+x_3=-p/s, x_1*x_2+x_2*x_3+x_1*x_3=q/s and x_1*x_2*x_3=-r/s.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the polynomial \( x^3 + 4x^2 + 2x + a \), we want to find the value of \( a \) such that one root is equal to the sum of the other two roots. Let&#x27;s denote the roots of the polynomial by \( x_1, x_2, \) and \( x_3 \). According to the problem, we have:
+1. \( r_1 + r_2 + r_3 = -b \)
+2. \( r_1r_2 + r_1r_3 + r_2r_3 = c \)
+3. \( r_1r_2r_3 = -d \)
 
-\( x_1 = x_2 + x_3 \)
+For our polynomial \( x^3 + 4x^2 + 2x + a \), we have \( b = 4 \), \( c = 2 \), and \( d = a \). Applying Vieta&#x27;s formulas, we get:
 
-From Vieta&#x27;s formulas for the roots of polynomials, we know that the sum of the roots of the polynomial \( x^3 + px^2 + qx + r \) is given by \( -p \). In our case, the polynomial is \( x^3 + 4x^2 + 2x + a \), so we have:
+1. \( r_1 + r_2 + r_3 = -4 \)
+2. \( r_1r_2 + r_1r_3 + r_2r_3 = 2 \)
+3. \( r_1r_2r_3 = -a \)
 
-\( x_1 + x_2 + x_3 = -4 \)
+Since \( r_3 = r_1 + r_2 \), we can substitute \( r_3 \) in the first equation:
 
-Now, using the fact that \( x_1 = x_2 + x_3 \), we can substitute \( x_1 \) in the equation above:
+\( r_1 + r_2 + (r_1 + r_2) = -4 \)
+\( 2r_1 + 2r_2 = -4 \)
+\( r_1 + r_2 = -2 \)
 
-\( (x_2 + x_3) + x_2 + x_3 = -4 \)
-\( 2x_2 + 2x_3 = -4 \)
-\( x_2 + x_3 = -2 \)
+Now we know that \( r_3 = -2 \). We can substitute \( r_3 \) into the third equation to find \( a \):
 
-But we also know that \( x_1 = x_2 + x_3 \), so:
+\( r_1r_2r_3 = -a \)
+\( r_1r_2(-2) = -a \)
+\( -2r_1r_2 = -a \)
+\( a = 2r_1r_2 \)
 
-\( x_1 = -2 \)
+We can now use the second Vieta&#x27;s formula to find \( a \):
 
-Now, we need to find the value of \( a \) that makes \( x_1 = -2 \) a root of the polynomial. We substitute \( x_1 \) into the polynomial:
+\( r_1r_2 + r_1r_3 + r_2r_3 = 2 \)
+Since \( r_3 = r_1 + r_2 \), we can substitute \( r_3 \) in the equation:
 
-\( (-2)^3 + 4(-2)^2 + 2(-2) + a = 0 \)
-\( -8 + 4(4) - 4 + a = 0 \)
-\( -8 + 16 - 4 + a = 0 \)
-\( 4 + a = 0 \)
+\( r_1r_2 + r_1(r_1 + r_2) + r_2(r_1 + r_2) = 2 \)
+\( r_1r_2 + r_1^2 + r_1r_2 + r_2^2 + r_1r_2 = 2 \)
+\( r_1^2 + 3r_1r_2 + r_2^2 = 2 \)
 
-Therefore, the value of \( a \) that results in one root being equal to the sum of the other two roots is:
+We already know that \( r_1 + r_2 = -2 \), so we can square this to get another equation:
 
-\( a = -4 \)</code></pre>
+\( (r_1 + r_2)^2 = (-2)^2 \)
+\( r_1^2 + 2r_1r_2 + r_2^2 = 4 \)
+
+Now we have two equations:
+
+1. \( r_1^2 + 3r_1r_2 + r_2^2 = 2 \)
+2. \( r_1^2 + 2r_1r_2 + r_2^2 = 4 \)
+
+Subtracting the second equation from the first gives us:
+
+\( (r_1^2 + 3r_1r_2 + r_2^2) - (r_1^2 + 2r_1r_2 + r_2^2) = 2 - 4 \)
+\( r_1r_2 = -2 \)
+
+Now we can find \( a \):
+
+\( a = 2r_1r_2 \)
+\( a = 2(-2) \)
+\( a = -4 \)
+
+Therefore, the value of \( a \) that results in one root being equal to the sum of the other two roots is \( a = -4 \).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The value of \( a \) that results in one root of the polynomial \( x^3 + 4x^2 + 2x + a \) being equal to the sum of the other two roots is \( a = -4 \).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>

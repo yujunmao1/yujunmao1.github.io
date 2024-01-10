@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Combinatorics_12</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct C w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> (n+1)^(n-1)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load('v0')
+problem = dataset['P_Combinatorics_12']
+messages = problem.conversations['GPT-4 Turbo|Direct C w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Along a one-way street there are n parking lots. One-by-one n cars numbered 1 to n enter the street. Each driver i heads to his favorite parking lot a_i, and, if it is free, he occupies it. Otherwise, he continues to the next free lot and occupies it. But if all succeeding lots are occupied, he leaves for good. How many sequences {a_1, ..., a_n} are such that every driver can park, as an expression of n?
+
+You may find the following information useful:
+
+1. Convert the street parking lot into a circle by adding an (n+1)-th lot that connects to both the n-th lot and the 1st lot.
+2. Establish the condition on the circular lot equivalent to every car being able to park on the street parking lot.
+3. Consider all driver preference sequences of length n but taking values in 1 to n+1. How many of the satisfy the condition?
+4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
+5. For each sequence {a}, consider its n cyclically shifted version (including itself), and study how many lead to a valid parking configuration.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find the number of sequences {a_1, ..., a_n} such that every driver can park. We will follow the steps provided.
+
+Step 1: Convert the street parking lot into a circle by adding an (n+1)-th lot that connects to both the n-th lot and the 1st lot.
+
+Step 2: Establish the condition on the circular lot equivalent to every car being able to park on the street parking lot.
+
+The condition for every car to be able to park on the street parking lot is that there should not be a sequence of n consecutive lots starting from some lot k where each lot i (k ≤ i &lt; k+n) is the favorite of some car j (1 ≤ j ≤ n). In the circular configuration, this translates to the condition that there should not be a sequence of n consecutive favorite lots among the n+1 lots.
+
+Step 3: Consider all driver preference sequences of length n but taking values in 1 to n+1. How many of them satisfy the condition?
+
+Each driver has n+1 choices for his favorite lot, so there are (n+1)^n total sequences. However, we need to exclude the sequences where n consecutive lots are occupied. To count these, we can fix a block of n consecutive lots and then assign the favorite lots to the drivers. There are n+1 such blocks (since the lots are arranged in a circle), and for each block, there are n! ways to assign the favorite lots to the drivers (since each driver must choose a different lot within the block). So, we need to subtract n+1 * n! from the total.
+
+Step 4: If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
+
+This step is a general principle of counting, which we&#x27;ve already implicitly used in the previous steps.
+
+Step 5: For each sequence {a}, consider its n cyclically shifted versions (including itself), and study how many lead to a valid parking configuration.
+
+Each sequence of driver preferences can be shifted n times (including the original sequence), creating n different sequences. However, only one of these sequences can be valid for the original street parking problem because the circular configuration allows for one extra lot. Therefore, the number of valid sequences for the street parking problem is 1/n times the number of valid sequences for the circular lot.
+
+Putting it all together, we have:
+
+Total sequences for the circular lot: (n+1)^n
+Invalid sequences due to n consecutive lots being occupied: n+1 * n!
+Valid sequences for the circular lot: (n+1)^n - (n+1) * n!
+
+Since each valid sequence for the street corresponds to n sequences in the circular lot, the number of valid sequences for the street is:
+
+((n+1)^n - (n+1) * n!) / n
+
+This is the final expression for the number of sequences {a_1, ..., a_n} such that every driver can park.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of sequences {a_1, ..., a_n} such that every driver can park is given by the expression ((n+1)^n - (n+1) * n!) / n.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

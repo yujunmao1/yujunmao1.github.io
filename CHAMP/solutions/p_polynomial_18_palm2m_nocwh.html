@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_18</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (x^2+x+1)(x^2-x+1)(x^4-x^2+1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_18']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,28 +82,35 @@ Factorize x^8+x^4+1 into terms of integer coefficients.
 You may find the following information useful:
 
 1. Add and subtract x^4.
-2. (x±y)^2=x^2±2xy+y^2.
-3. x^2-y^2=(x+y)(x-y).
-4. To factorize x^4+x^2+1, add and subtract x^2.</code></pre>
+2. To factorize x^4+x^2+1, add and subtract x^2.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We can factorize $x^8+x^4+1$ as follows:
 
 \begin{align*}
-x^8+x^4+1 &amp;= (x^4)^2 + 2x^4 + 1 - 2x^4 \\
-&amp;= (x^4+1)^2 - 2x^4 \\
-&amp;= (x^4+1+2x^2)(x^4+1-2x^2) \\
+x^8+x^4+1 &amp;= (x^4)^2 + (x^2)^2 + 1 - 2x^4 \\
+&amp;= (x^4+x^2+1)(x^4-x^2+1) \\
 &amp;= (x^2+x+1)(x^2-x+1) \\
 &amp;= (x+1)^2(x-1)^2.
 \end{align*}
 
-Here, we used the following identities:
+To see this, we can use the following identity:
 
-* $(x+y)^2=x^2+2xy+y^2$
-* $x^2-y^2=(x+y)(x-y)$
-* To factorize $x^4+x^2+1$, add and subtract $x^2$.
+$$(a^2+b^2)^2 = a^4+2ab^2+b^4.$$
 
-Therefore, the answer is $(x+1)^2(x-1)^2$.</code></pre>
+In this case, we have $a=x^2$ and $b=x$. Substituting these values into the identity, we get:
+
+$$(x^2)^2+2x(x)(x^2)+(x^2)^2 = x^4+2x^3+x^4 = x^8+2x^4+1.$$
+
+We can then factor out the $x^4$ to get:
+
+$$x^8+2x^4+1 = x^4(x^4+2+1) = x^4(x^4+1+1) = x^4(x^2+x+1)(x^2-x+1).$$
+
+Finally, we can factor out the $x^2+x+1$ and $x^2-x+1$ to get:
+
+$$x^8+2x^4+1 = (x^2+x+1)(x^2-x+1)(x^4).$$
+
+Therefore, the factorization of $x^8+x^4+1$ is $(x^2+x+1)(x^2-x+1)(x^4)$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>$x^8+x^4+1=(x+1)^2(x-1)^2$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>$x^8+x^4+1=(x^2+x+1)(x^2-x+1)(x^4)$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_35</td>
             <td>GPT-4</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 900 (i.e., all values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_35']
-messages = problem.conversations['GPT-4|Example w/o H'].messages
+messages = problem.conversations['GPT-4|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,51 +77,38 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For how many values of n in {101, ..., 1000} is 1/(n+1)+1/(n+2)+...+1/(2n)&lt;3/4?
+For how many values of n in {101, ..., 1000} is 1/(n+1)+1/(n+2)+...+1/(2n)&lt;3/4?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem involves a series of fractions and inequalities. Let&#x27;s break it down step by step.
 
-You may find the following information useful:
+First, let&#x27;s consider the sum of the series 1/(n+1) + 1/(n+2) + ... + 1/(2n). This is a harmonic series, which is known to be approximately equal to the natural logarithm of the number of terms. In this case, the number of terms is 2n - n = n, and the first term is 1/(n+1), so the sum is approximately ln(n) - ln(n+1).
 
-1. Add 1/n to the sum.
-2. Duplicate each term twice.
-3. Group the largest and smallest, 2nd largest and 2nd smallest, 3rd largest and 3rd smallest, etc.
-4. Find a shared upper bound on the sum for all groups.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>This problem can be solved using the method of bounding and the harmonic series. 
+We want to find the values of n for which this sum is less than 3/4. So we have the inequality:
 
-1. Add 1/n to the sum:
+ln(n) - ln(n+1) &lt; 3/4
 
-1/(n+1) + 1/(n+2) + ... + 1/(2n) + 1/n
+This simplifies to:
 
-2. Duplicate each term twice:
+ln(n/(n+1)) &lt; 3/4
 
-2/(n+1) + 2/(n+2) + ... + 2/(2n) + 2/n
+Taking the exponential of both sides to get rid of the natural logarithm, we get:
 
-3. Group the largest and smallest, 2nd largest and 2nd smallest, 3rd largest and 3rd smallest, etc.:
+n/(n+1) &lt; e^(3/4)
 
-(1/n + 1/(2n)) + (1/(n+1) + 1/(2n-1)) + ... + (1/(n+n/2) + 1/(n+n/2))
+Solving this inequality for n, we get:
 
-4. Find a shared upper bound on the sum for all groups:
+n &lt; e^(3/4) * (n+1)
 
-Each group is less than or equal to 2/n. There are n groups, so the sum is less than or equal to 2. 
+n &lt; e^(3/4) * n + e^(3/4)
 
-So, we have:
+0 &lt; (e^(3/4) - 1) * n + e^(3/4)
 
-1/(n+1) + 1/(n+2) + ... + 1/(2n) + 1/n &lt; 2
+n &gt; -e^(3/4) / (e^(3/4) - 1)
 
-Subtract 1/n from both sides:
+This inequality holds for all n greater than -e^(3/4) / (e^(3/4) - 1), which is approximately -1.39. So the values of n in the set {101, ..., 1000} for which the sum is less than 3/4 are all the values in this set.
 
-1/(n+1) + 1/(n+2) + ... + 1/(2n) &lt; 2 - 1/n
-
-We want this to be less than 3/4, so:
-
-2 - 1/n &lt; 3/4
-
-Solving for n gives:
-
-n &gt; 8/3
-
-So, the values of n in {101, ..., 1000} that satisfy this are {101, 102, ..., 1000}, which is 900 values.</code></pre>
+Therefore, there are 1000 - 101 + 1 = 900 values of n for which the sum is less than 3/4.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 900 values of n in the set {101, ..., 1000} for which 1/(n+1) + 1/(n+2) + ... + 1/(2n) is less than 3/4.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 900 values of n in the set {101, ..., 1000} for which the sum 1/(n+1) + 1/(n+2) + ... + 1/(2n) is less than 3/4.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

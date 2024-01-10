@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_33</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 98 values</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_33']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,25 +81,24 @@ If a, b, c are sides of a non-degenerate 90-degree triangle with c being the hyp
 
 You may find the following information useful:
 
-1. a, b, c are sides of a 90-degree triangle and c being the hypotenuse if and only if a^2+b^2=c^2.
-2. For n&gt;2, write a^n=a^2*a^(n-2), b^n=b^2*b^(n-2), c^n=c^2*c^(n-2).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that $a, b, c$ are sides of a non-degenerate 90-degree triangle with $c$ being the hypotenuse. We are also given that $a^2+b^2=c^2$. We are asked for the number of values of $n$ in $\{1, 2, 3, ..., 100\}$ such that $c^n&gt;a^n+b^n$.
+1. For n&gt;2, write a^n=a^2*a^(n-2), b^n=b^2*b^(n-2), c^n=c^2*c^(n-2).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The Pythagorean theorem states that in a right triangle, the square of the hypotenuse is equal to the sum of the squares of the other two sides. In other words, $c^2=a^2+b^2$.
 
-We can write $a^n$ as $a^2a^{n-2}$, $b^n$ as $b^2b^{n-2}$, and $c^n$ as $c^2c^{n-2}$. Substituting these into the equation $a^2+b^2=c^2$, we get $a^2a^{n-2}+b^2b^{n-2}=c^2c^{n-2}$. We can then factor out $a^{n-2}+b^{n-2}$ to get $a^{n-2}(a+b)+b^{n-2}(a+b)=c^2c^{n-2}$. Dividing both sides by $a^{n-2}+b^{n-2}$, we get $a+b=\frac{c^2c^{n-2}}{a^{n-2}+b^{n-2}}$.
+We are given that $a$, $b$, and $c$ are the sides of a non-degenerate 90-degree triangle with $c$ being the hypotenuse. We are asked for how many values of $n$ in $\{1, 2, 3, ..., 100\}$ do we have $c^n&gt;a^n+b^n$.
 
-Now, we can see that $a+b&gt;\frac{c^2c^{n-2}}{a^{n-2}+b^{n-2}}$ if and only if $a^{n-2}+b^{n-2}&lt;c^2c^{n-2}$. This is equivalent to $a^{n-2}&lt;c^2c^{n-2}-b^{n-2}$.
+We can rewrite the Pythagorean theorem as $c^2-a^2-b^2=0$. This is a quadratic equation in $c$. We can solve for $c$ as follows:
 
-We can see that $a^{n-2}&lt;c^2c^{n-2}-b^{n-2}$ if and only if $a&lt;c\sqrt{c^{n-2}-\frac{b^{n-2}}{c^{n-2}}}$.
+$$c=\frac{a^2+b^2\pm\sqrt{(a^2+b^2)^2-4c^2}}{2}$$
 
-We are given that $n$ is an integer in $\{1, 2, 3, ..., 100\}$. We can see that $c^{n-2}-\frac{b^{n-2}}{c^{n-2}}$ is always positive for any positive integers $a, b, c$ such that $a^2+b^2=c^2$. Therefore, $a&lt;c\sqrt{c^{n-2}-\frac{b^{n-2}}{c^{n-2}}}$ for any positive integers $a, b, c$ such that $a^2+b^2=c^2$.
+We can see that $c^n&gt;a^n+b^n$ if and only if $\sqrt{(a^2+b^2)^2-4c^2}&gt;0$. This is equivalent to $a^2+b^2&gt;2c^2$.
 
-We are asked for the number of values of $n$ in $\{1, 2, 3, ..., 100\}$ such that $c^n&gt;a^n+b^n$. We have just shown that $a&lt;c\sqrt{c^{n-2}-\frac{b^{n-2}}{c^{n-2}}}$ for any positive integers $a, b, c$ such that $a^2+b^2=c^2$. Therefore, $c^n&gt;a^n+b^n$ for any positive integers $a, b, c$ such that $a^2+b^2=c^2$ and $n&gt;2$.
+We can write $a^2+b^2=c^2+2ab$. Substituting this into the inequality, we get $c^2+2ab&gt;2c^2$. Simplifying, we get $ab&gt;0$.
 
-There are 99 positive integers in $\{1, 2, 3, ..., 100\}$. Therefore, there are 99 values of $n$ in $\{1, 2, 3, ..., 100\}$ such that $c^n&gt;a^n+b^n$.
+Since $a$ and $b$ are the sides of a right triangle, they must have opposite signs. Therefore, $ab&lt;0$.
 
-Therefore, the answer is $\boxed{99}$.</code></pre>
+We can see that there are no values of $n$ in $\{1, 2, 3, ..., 100\}$ for which $c^n&gt;a^n+b^n$. Therefore, the answer is $\boxed{0}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 99 values of $n$ in $\{1, 2, 3, ..., 100\}$ such that $c^n&gt;a^n+b^n$, where $a, b, c$ are sides of a non-degenerate 90-degree triangle with $c$ being the hypotenuse.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are no values of $n$ in $\{1, 2, 3, ..., 100\}$ for which $c^n&gt;a^n+b^n$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

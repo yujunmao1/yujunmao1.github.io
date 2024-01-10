@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_24</td>
             <td>GPT-4</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_24']
-messages = problem.conversations['GPT-4|Direct w/ H'].messages
+messages = problem.conversations['GPT-4|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,29 +81,32 @@ Let a, b&gt;0. What is the smallest value of (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3)?
 
 You may find the following information useful:
 
-1. Simplify the expression and consider the two sequences (a^2, b^2) and (a, b).
-2. For real numbers a_1≤a_2≤...≤a_n and b_1≤b_2≤...≤b_n, we have a_1*b_1+a_2*b_2...+a_n*b_n≥a_1*c_1+a*2_b*2+...+a_n*c_n≥a_1*b_n+a_2*b_(n-1)+...+a_n*b_1 where (c_1, ..., c_n) is any permutation of (b_1, ..., b_n). More generally, the sum achieves the maximum value when a_i&#x27;s and b_i&#x27;s are sorted in the same way, and the minimum value when they are sorted in the opposite way.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by simplifying the given expression:
+1. Simplify the expression and consider the two sequences (a^2, b^2) and (a, b).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s simplify the given expression:
 
 (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3)
 
-= a^5 + a^4b + b^5 + b^4a - (a^5 + a^3b + b^5 + b^3a)
+First, we can distribute the terms:
 
-= a^4b + b^4a - a^3b - b^3a
+= a^5 + a*b^4 + b*a^4 + b^5 - (a^5 + a^2*b^3 + a^3*b^2 + b^5)
 
-= ab(a^3 - a^2 + b^3 - b^2)
+Then, we can simplify by canceling out the similar terms:
 
-Now, let&#x27;s consider the two sequences (a^2, b^2) and (a, b). According to the given information, the sum achieves the minimum value when they are sorted in the opposite way. 
+= a*b^4 + a^4*b - a^2*b^3 - a^3*b^2
 
-So, we have:
+Now, let&#x27;s rewrite the expression by factoring out a and b:
 
-a^3 - a^2 + b^3 - b^2 ≥ a^2b - ab^2 + b^2a - ba^2
+= a*b*(b^3 - a^2*b) + a*b*(a^3 - a*b^2)
 
-= ab(a - b)^2
+= a*b*(b^3 - a^2*b + a^3 - a*b^2)
 
-Since a, b &gt; 0, the smallest value of (a - b)^2 is 0 (when a = b). Therefore, the smallest value of the original expression is 0.</code></pre>
+Now, let&#x27;s consider the two sequences (a^2, b^2) and (a, b). We can see that the expression inside the parentheses is a difference of squares:
+
+= a*b*((a - b)^2*(a + b))
+
+Since a, b &gt; 0, the smallest value of the expression is when a = b. In this case, the expression becomes 0. Therefore, the smallest value of the given expression is 0.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3) for a, b &gt; 0 is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression (a+b)(a^4+b^4)-(a^2+b^2)(a^3+b^3) is 0, when a equals b.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

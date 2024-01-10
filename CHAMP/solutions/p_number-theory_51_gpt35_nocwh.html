@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_51</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (20*10^15-2)/17, or equivalently 1176470588235294</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_51']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -83,70 +83,68 @@ You may find the following information useful:
 
 1. Let the original number has k+1 digits, with the first digit d, and the last k digits representing the number r.
 2. Set up the equation of digit manipulation involving k, d, r.
-3. Find the smallest value for k by considering the equation modulo 17.
-4. If p is a prime and p | ab, then p | a or p | b (or both). More generally, if p | a_1*a_2*...*a_n, then p | a_i for at least one a_i.
-5. (a+b) mod m=((a mod m)+(b mod m) mod m). (a-b) mod m=((a mod m)-(b mod m) mod m). ab mod m=((a mod m)*(b mod m) mod m). a^k mod m=((a mod m)^k mod m).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by setting up the equation based on the given information.
+3. Find the smallest value for k by considering the equation modulo 17.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s follow the steps to solve the problem:
 
-Let the original number have k+1 digits, with the first digit d, and the last k digits representing the number r.
+1. Let the original number have k+1 digits, with the first digit d, and the last k digits representing the number r.
 
-The original number can be represented as dr.
+2. Set up the equation of digit manipulation involving k, d, r.
 
-If we move the first digit to the end, the new number is represented as rd.
+The original number can be represented as 10^k * d + r. When we move the first digit to the end, the new number becomes 10^k * r + d.
 
-According to the problem, the new number is exactly 1.5 times as large as the old one. Mathematically, we can express this as:
+According to the problem, the new number is exactly 1.5 times as large as the old one. Mathematically, we can write this as:
 
-rd = 1.5 * dr
+10^k * r + d = 1.5 * (10^k * d + r)
 
-Now, let&#x27;s simplify this equation:
+3. Simplify the equation:
 
-rd = 3/2 * dr
+10^k * r + d = 1.5 * 10^k * d + 1.5 * r
 
-Multiplying both sides by 2 to get rid of the fraction:
+Rearranging the terms, we get:
 
-2rd = 3dr
+10^k * r - 1.5 * r = 1.5 * 10^k * d - d
 
-Now, let&#x27;s rearrange the equation:
+Factoring out r and d, we have:
 
-2rd - 3dr = 0
+r * (10^k - 1.5) = d * (1.5 * 10^k - 1)
 
-Factoring out the common factor of dr:
+4. Find the smallest value for k by considering the equation modulo 17.
 
-dr(2 - 3) = 0
+To find the smallest value for k, we can consider the equation modulo 17. This means we take the remainder when dividing both sides of the equation by 17.
 
-dr(-1) = 0
+(r * (10^k - 1.5)) mod 17 = (d * (1.5 * 10^k - 1)) mod 17
 
-Since we are looking for a positive integer, we can ignore the solution dr = 0.
+Simplifying further, we have:
 
-Therefore, we have:
+(r * (10^k mod 17 - 1.5 mod 17)) mod 17 = (d * (1.5 * 10^k mod 17 - 1 mod 17)) mod 17
 
--1 = 0
+Since we are looking for the smallest positive integer, we can start with k = 1 and check the equation modulo 17 for each value of k until we find a solution.
 
-This is not a valid solution, so we need to reconsider our approach.
+For k = 1:
+(r * (10^1 mod 17 - 1.5 mod 17)) mod 17 = (d * (1.5 * 10^1 mod 17 - 1 mod 17)) mod 17
+(r * (10 - 1.5)) mod 17 = (d * (1.5 * 10 - 1)) mod 17
+(r * 8.5) mod 17 = (d * 14) mod 17
 
-Let&#x27;s try a different approach by considering the equation modulo 17.
+We can see that for k = 1, there is no solution since 8.5 is not an integer.
 
-We have:
+For k = 2:
+(r * (10^2 mod 17 - 1.5 mod 17)) mod 17 = (d * (1.5 * 10^2 mod 17 - 1 mod 17)) mod 17
+(r * (10^2 - 1.5)) mod 17 = (d * (1.5 * 10^2 - 1)) mod 17
+(r * 14.5) mod 17 = (d * 14.5) mod 17
 
-2rd - 3dr ≡ 0 (mod 17)
+We can see that for k = 2, there is a solution since 14.5 is an integer. Let&#x27;s find the values of r and d.
 
-Now, let&#x27;s simplify this equation using the properties of modulo arithmetic:
+(r * 14.5) mod 17 = (d * 14.5) mod 17
 
-2rd ≡ 3dr (mod 17)
+Since 14.5 is divisible by 17, we can cancel it out:
 
-Dividing both sides by dr (since dr ≠ 0):
+r mod 17 = d mod 17
 
-2 ≡ 3 (mod 17)
+This means that r and d have the same remainder when divided by 17. The smallest positive integer that satisfies this condition is 17.
 
-This equation tells us that 2 and 3 are congruent modulo 17, which means they have the same remainder when divided by 17.
-
-However, 2 and 3 are not congruent modulo 17, so this equation has no solutions.
-
-Therefore, there is no positive integer that satisfies the given property.
-
-Hence, there is no smallest positive integer that meets the given conditions.</code></pre>
+Therefore, the smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 17.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There is no smallest positive integer that, when the first digit is moved to the end, results in a number that is exactly 1.5 times as large as the original number.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest positive integer with the property that, if you move the first digit to the end, the new number is exactly 1.5 times as large as the old one is 17.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Quickstart Guide</title>
+
+    <style>
+      code { 
+        background-color: #eee; 
+        padding-left: 4px;
+        padding-right: 4px;
+        padding-top: 2px;
+        padding-bottom: 2px;
+      }
+
+      p {
+        margin-top: 3px;
+        margin-bottom: 3px;
+        text-align: justify; 
+        text-justify: inter-word;
+      }
+
+      li {
+        margin-top: 5px;
+        margin-bottom: 5px;
+      }
+
+      pre>code {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+      }
+    </style>
+
+
+  </head>
+  <body>
+    <h2 style="text-align: center; margin-bottom: 5px; margin-top: 30px;">CHAMP Package Quickstart Guide and Documentation</h2>
+    <h5 style="text-align: center; margin-bottom: 5px; margin-top: 20px;">
+      <a target="_blank" rel="noopener noreferrer" href="https://yujunmao1.github.io/">Yujun Mao</a><sup>1</sup>,
+      <a target="_blank" rel="noopener noreferrer" href="https://people.csail.mit.edu/yoonkim/">Yoon Kim</a><sup>2</sup>,
+      <a target="_blank" rel="noopener noreferrer" href="https://yilunzhou.github.io/">Yilun Zhou</a><sup>2</sup>
+    </h5>
+    <h6 style="text-align: center; margin-bottom: 5px; margin-top: 10px;">
+      <sup>1 </sup>Independent Researcher, <sup>2 </sup>MIT CSAIL
+    </h6>
+    <h6 style="text-align: center; margin-bottom: 5px; margin-top: 10px;">
+      [<a target="_blank" href="/CHAMP">Main Project Page</a>] &nbsp;&nbsp;
+      [<a target="_blank" href="https://mathai2023.github.io/papers/14.pdf">Paper</a>] &nbsp;&nbsp;
+      [<a target="_blank" href="/CHAMP/explorer.html">Dataset Explorer</a>] &nbsp;&nbsp;
+      [<a href="#">GitHub Repo (Coming Soon)</a>] 
+    </h6>
+
+    <div class="container">
+
+      <div class='col col-12'>
+        <h5>Installation</h5>
+        <p>
+          The package is available on <code>pip</code>. Simply run
+          <pre><code>$ pip install champ-dataset</code></pre>
+          <p>on the command line.</p> 
+        </p>
+        <h5>Main Functionality Demo</h5>
+        <p>The code below demonstrates pretty much all of the main functionality of the package: loading the dataset, reading its various contents, and generating prompts used in the paper. The code is also available as a <a href='' target='_blank'>Google Colab Notebook</a>. For more detailed explanations, see the documentation below.</p> 
+        <pre><code>import champ_dataset
+import random
+
+# =================================Load the dataset==================================
+# dataset is a champ_dataset.Dataset instance; 'v0' is the dataset used in the paper
+dataset = champ_dataset.load('v0')
+
+# =====================Get a random problem and read its content=====================
+# get a random problem; dataset.problems is a dictionary
+problem_id = random.choice(list(dataset.problems.keys()))
+# shortcut for dataset.problems[problem_id]
+problem = dataset[problem_id]
+# problem identifier (which is equal to problem_id) and problem statement
+print(f'{problem.identifier}: {problem.text}')
+print('\n')
+
+# iterate over the list of relevant concepts and hints
+for ch_id in problem.ch_list:
+    ch = dataset[ch_id]  # ch is either a champ_dataset.Concept instance or champ_dataset.Hint instance
+    if isinstance(ch, champ_dataset.Concept):  # displaying a concept
+        print(f'We have a concept: {ch.identifier}')
+        print(f'Text: {ch.text}')  # content of the concept
+        print(f'Category: {ch.category}')  # category of the concept
+        if ch.name is not None:  # some concept has a name
+            print(f'Name: {ch.name}')
+        if ch.parent is not None:  # some concept has a parent concept (i.e., a more general version)
+            print(f'Parent concept ({ch.parent.identifier}): {ch.parent.text}')
+        print('-------------End of this concept-------------')
+    else:  # displaying a hint
+        print(f'We have a hint: {ch.identifier}')
+        print(f'Text: {ch.text}')  # content of the hint
+        print('--------------End of this hint---------------')
+print('\n')
+
+print(f'Answer: {problem.answer}')  # final answer
+print('Step-wise soluion:')
+# problem.solution.steps is a list of champ_dataset.Step object
+for idx, step in enumerate(problem.solution.steps):
+    print(f'Step {idx}: {step.text}')  # content of the step
+    # step.ch_idxs is the list of concepts and hints associated with this step
+    # (by their index in problem.ch_list)
+    if len(step.ch_idxs) == 0:
+        print('This step does not use any concepts or hints.')
+    else:
+        print('This step uses the following concepts and hints: ' + \
+            ', '.join([problem.ch_list[idx] for idx in step.ch_idxs]))
+print('\n')
+
+# ======================Use PromptGenerator to generate prompts======================
+generator = champ_dataset.PromptGenerator(dataset)  # the prompt generator is defined on a dataset
+print(f'The prompt generator supports the following prompts: {generator.get_all_prompt_names()}')
+# randomly select a prompt to generate
+name = random.choice(generator.get_all_prompt_names())
+name = '5-Shot'
+print(f'Generating prompt: {name}')
+sys_prompt, user_inputs, imputed_outputs = generator.construct_prompt(name, problem)
+print('-----------------------')
+print(f'System prompt: \n{sys_prompt}')
+print('-----------------------')
+for idx, msg in enumerate(user_inputs):
+    print(f'User input {idx+1}: \n{msg}')
+    print('-----------------------')
+for idx, msg in enumerate(imputed_outputs):
+    print(f'Imputed output {idx+1}: \n{msg}')
+    print('-----------------------')
+print('\n')
+
+# the following code is (currently) only supported on the 'v0' version of the dataset
+
+# =======================Read the first wrong step annotation========================
+# problem.fws_annotations is a dictionary; note the key format as '{model}|{prompt}'
+print(f'We have the following FWS annotations: {list(problem.fws_annotations.keys())}')
+# get a key-value pair from the dictionary
+key, annotation = next(iter(problem.fws_annotations.items()))
+print(f'Displaying FWS annotation: {key}')
+print(f'The model response is generated by {annotation.author}')
+# annotation.text is the full model-generated solution
+print(f'Beginning of model response: {annotation.text[:200]}')
+if annotation.start_idx is None:
+    print('The model-generated solution is fully correct')
+else:
+    # start_idx inclusive, end_idx exclusive
+    print(f'The error happens at characters {annotation.start_idx}-{annotation.end_idx}')
+    # shortcut for annotation.text[annotation.start_idx : annotation.end_idx]
+    print(f'The text span is: {annotation.wrong_step()}')
+print('\n')
+
+# ========================Read all model-generated solutions=========================
+# problem.conversations is a dictionary; note the key format as '{model}|{prompt}'
+print(f'We have the following conversations: {list(problem.conversations.keys())}')  
+key, conversation = next(iter(problem.conversations.items()))  # get a key-value pair from the dictionary
+print(f'Displaying conversation: {key}')
+for message in conversation.messages:  # conversation.messages is a list of champ_dataset.Message instances
+    # one of 'System', 'User', 'Imputation' and 'Model.*' (e.g., 'Model.GPT-3.5')
+    print(f'Role: {message.role}')
+    # verbatim content of the message
+    print(f'Text: {message.text}')
+    # any possible error with the model-generation
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+        <h5>Documentation</h5>
+        <p>The command above installs the <code>champ_dataset</code> package, which has the following classes (e.g., <code>champ_datast.Dataset</code>, etc.):</p>
+          <ul>
+            <li><p><code>Dataset</code> represents the entire dataset. Its class structure is as follows: </p>
+              <pre><code>Dataset
+├─ problems: Dict[str, Problem] # mapping from problem identifier to problem instance
+├─ concepts: Dict[str, Concept] # mapping from concept identifier to concept instance
+└─ hints: Dict[str, Hint]       # mapping from hint identifier to hint instance</code></pre>
+<p>Each problem, concept and hint has a globally unique identifier, and starts with <code>P_</code>, <code>C_</code> and <code>H_</code> respectively. Indexing the dataset (i.e., <code>dataset[identifier]</code>) returns the respective instance.</p>
+
+<p>There are two ways to load a dataset, using the same function <code>champ_dataset.load(arg)</code>. </p>
+<ol><li>The first way is to specify a version number, where possible values can be found with <code>champ_dataset.list_versions()</code>. The version used in the paper is <code>'v0'</code>, so this version can be loaded with <code>dataset = champ_dataset.load('v0')</code>. Future versions will be released for correcting errors and/or adding new problems. All versions are included in the package, so no downloading or external files are necessary.</li>
+<li>The second way is to specify a json file name representing a dataset object.</li></ol>
+<p>Related to the second way, a <code>dataset</code> instance can be converted to json file with <code>dataset.to_json(output_file_name)</code>. </p></li>
+            <li><p><code>Problem</code> represents a problem instance. Its class structure is as follows:</p>
+              <pre><code>Problem
+├─ identifier: str    # problem identifier
+├─ raw_text: str      # "raw" problem statement (see below for explanation)
+├─ text: str          # problem statement
+├─ category: str      # one of 'Combinatorics', 'Inequality', 'Polynomial', 'Sequence' or 'NT' (for number theory)
+├─ solution: Solution # solution to the problem
+├─ raw_answer: str    # "raw" final answer (see below for explanation)
+├─ answer: str        # final answer
+├─ ch_list: List[str] # a list of relevant concepts and hints, by their identifiers
+├─ fws_annotations: Dict[str, FWSAnnotation] # Annotated solutions (see below for explanation)
+└─ conversations: Dict[str, Conversation]    # All conversations solicited from models (see below for explanation)</code></pre>
+<p>For <code>text</code> and <code>answer</code> (and <code>text</code> of some other classes), the "raw" version has mathematical expressions (e.g., <code>n/2</code>) marked by paired <code>'@@'</code> (escaping is currently not supported), which is removed in the normal (non-raw) version. For example, we could have <code>raw_text='Solve @@x^2-2x+1=0@@.'</code> and <code>text='Solve x^2-2x+1=0.'</code>. Currently <code>raw_text</code> is not used, but could be useful, e.g., for adding LaTeX conversion support.</p>
+
+<p><code>fws_annotations</code> and <code>conversations</code> are both dictionaries, with the same key format: <code>'{model}|{prompt}'</code>. For example, the key <code>'GPT-3.5|0-shot'</code> refers to GPT-3.5 model tested on the 0-shot (problem only) prompt. Note that only the <code>'v0'</code> version of the dataset has these two fields associated with each problem.</p>
+</li>
+            <li><p><code>Concept</code> represents a concept instance. Its class structure is as follows: </p>
+              <pre><code>Concept
+├─ identifier: str # concept identifier
+├─ raw_text: str   # "raw" concept text (same convention as <code>Problem</code>)
+├─ text: str       # concept text
+├─ category: str   # one of 'Algebra', 'Combinatorics', 'Inequality', 'Polynomial', 'Sequence' or 'NT' (for number theory)
+├─ name: str       # name of the concept, or None if it does not have one 
+└─ parent: Concept # parent concept, or None if it does not have one</code></pre></li>
+            <li><p><code>Hint</code> represents a hint instance. Its class structure is as follows:</p>
+            <pre><code>Hint
+├─ identifier: str # hint identifier
+├─ raw_text: str   # "raw" hint text (same convention as <code>Problem</code>)
+└─ text: str       # hint text</code></pre></li>
+            <li><p><code>Solution</code> reprsents a step-wise solution to a problem. Its class structure is as follows:</p>
+<pre><code>Solution
+└─ steps: List[SolutionStep] # (ordered) list of SolutionStep instances</code></pre></li>
+            <li><p><code>SolutionStep</code> represents a step in a solution. Its class structure is as follows:</p><pre><code>SolutionStep
+├─ raw_text: str      # "raw" text of the solution step (same convention as <code>Problem</code>)
+├─ text: str          # text of the solution step
+└─ ch_idxs: List[int] # the list of concepts and hints used in this step (see below for explanation)</code></pre>
+<p><code>ch_idxs</code> is a list of integers, each representing an index in the <code>Problem</code>'s <code>ch_list</code>. Thus, for a <code>problem</code> and its one solution <code>step</code>, <code>[problem.ch_list[idx] for idx in step.ch_idxs]</code> gives the list of identifiers for concepts and hints used in this step, which can then looked up with the unified interface of <code>dataset[identifier]</code>.</p></li>
+            <li><p><code>FWSAnnotation</code> reprsents a first wrong step (FWS) annotation on a model-generated solution (or a judgment that the solution is fully correct). Its class structure is as follows:</p><pre><code>FWSAnnotation
+├─ text: str      # the verbatim text of the model-generated solution
+├─ start_idx: int # the starting index (inclusive) of the first wrong step span
+├─ end_idx: int   # the ending index (exclusive) of the first wrong step span
+└─ author: str    # the model that generates the solution</code></pre>
+<p>For fully correct solutions, <code>start_idx</code> and <code>end_idx</code> are both <code>None</code>. For a specific instance <code>fws</code>, <code>fws.wrong_step()</code> returns the text span of the wrong step (i.e., <code>fws.text[fws.start_idx : fws.end_idx]</code>) or <code>'No mistake'</code> if the solution is fully correct.</p></li>
+            <li><p><code>Conversation</code> reprsents a full conversation in a prompting execution. Its class structure is as follows:</p><pre><code>Conversation
+└─ messages: List[Message] # (ordered) list of Message instances</code></pre></li>
+            <li><p><code>Message</code> reprsents an individual message in a conversation. Its class structure is as follows:</p><pre><code>Message
+├─ role: str  # the role of message producer (see below for explanation)
+├─ text: str  # the verbatim text of the message (could be None; see below for explanation)
+└─ error: str # error for 'Model.*' role (see below for explanation)</code></pre>
+<p>There are four possible <code>role</code> values:</p>
+            <ol>
+              <li><code>'System'</code> for system prompt.</li>
+              <li><code>'User'</code> for user input.</li>
+              <li><code>'Model.*'</code> for model-generated output, where <code>*</code> is the model name, such as <code>'Model.GPT-3.5'</code>.</li>
+              <li><code>'Imputation'</code> for imputed model message. This is used when we want to tell the model what it should say, in earlier rounds of conversation. Its most popular use case is few-shot prompting.</li>
+            </ol>
+          <p>In addition, error could have three possible values for <code>'Model.*</code> role: </p>
+          <ol>
+            <li><code>None</code>: the model generation succeeds and terminates normally.</li>
+            <li><code>'LENGTH_CURRENT'</code>: the current model generation is terminated due to token limit. In this case, <code>text</code> contains the cut-off generated content.</li>
+            <li><code>'LENGTH_PREVIOUS'</code>: a <code>'LENGTH_CURRENT'</code> error happens in an earlier round of conversation, which stops the generation. As a result, the current round is not generated at all (and <code>text</code> takes the <code>None</code> value).</li>
+          </ol>
+        </li>
+          </ul>
+          <div style='margin-top: 100px'></p>
+        
+      </div>
+
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+  </body>
+</html>

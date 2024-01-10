@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_15</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct C w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load('v0')
+problem = dataset['P_Inequality_15']
+messages = problem.conversations['GPT-4 Turbo|Direct C w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+Find the minimum value of a^4+b^4+c^4-a^2*bc-b^2*ac-c^2*ab for positive numbers a, b, c.
+
+You may find the following information useful:
+
+1. Consider a^4=(a^2)*a*a, b^4=(b^2)*b*b, c^4=(c^2)*c*c.
+2. For real numbers a_(1,1)≤...≤a_(1,n), a_(2,1)≤...≤a_(2,n), ..., a_(m,1)≤...≤a_(m,n), we have a_(1,1)*a_(2,1)*...*a_(m,1)+...+a_(1,n)*a_(2,n)*...*a_(m,n)≥a_(1,1)*b_(2,1)*...*b_(m,1)+...+a_(1,n)*b_(2,n)*...*b_(m,n), where (b_(i,1), ..., b_(i, n)) is a permutation of (a_(i,1), ..., a_(i, n)) for i=2, 3, ..., m. More generally, the sum achieves the maximum value when all the sequences (a_(i,1),..., a_(i,n)) are sorted in the same way.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the minimum value of the expression \( a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \) for positive numbers \( a, b, c \), we can use the rearrangement inequality as hinted by the information provided.
+
+The rearrangement inequality states that if we have sequences \( a_{1,1} \leq \ldots \leq a_{1,n} \), \( a_{2,1} \leq \ldots \leq a_{2,n} \), ..., \( a_{m,1} \leq \ldots \leq a_{m,n} \), then the sum \( a_{1,1}a_{2,1}\ldots a_{m,1} + \ldots + a_{1,n}a_{2,n}\ldots a_{m,n} \) is maximized when the sequences are similarly sorted.
+
+In our case, we can consider the sequences \( a^2, b^2, c^2 \) and \( a^2, b^2, c^2 \) (which are obviously sorted in the same way since they are the same sequence) and apply the rearrangement inequality to the products \( a^2bc, b^2ac, c^2ab \).
+
+By the rearrangement inequality, we have:
+\[ a^2 \cdot a^2 + b^2 \cdot b^2 + c^2 \cdot c^2 \geq a^2 \cdot b^2 + b^2 \cdot c^2 + c^2 \cdot a^2 \]
+
+This can be rewritten as:
+\[ a^4 + b^4 + c^4 \geq a^2b^2 + b^2c^2 + c^2a^2 \]
+
+Now, let&#x27;s subtract \( a^2bc + b^2ac + c^2ab \) from both sides:
+\[ a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \geq a^2b^2 + b^2c^2 + c^2a^2 - a^2bc - b^2ac - c^2ab \]
+
+Notice that on the right side, we can factor by grouping:
+\[ a^2b^2 - a^2bc + b^2c^2 - b^2ac + c^2a^2 - c^2ab = a^2(b^2 - bc) + b^2(c^2 - ac) + c^2(a^2 - ab) \]
+
+This simplifies to:
+\[ a^2b(b - c) + b^2c(c - a) + c^2a(a - b) \]
+
+Since \( a, b, c \) are positive numbers, the expression \( a^2b(b - c) + b^2c(c - a) + c^2a(a - b) \) is zero when \( a = b = c \). Otherwise, if \( a, b, c \) are not all equal, the expression will be negative because at least one of the terms \( (b - c), (c - a), (a - b) \) will be negative.
+
+Therefore, the minimum value of the original expression \( a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \) is achieved when \( a = b = c \), and in this case, the expression equals zero.
+
+Hence, the minimum value of the expression for positive numbers \( a, b, c \) is \( \boxed{0} \).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The minimum value of the expression \( a^4 + b^4 + c^4 - a^2bc - b^2ac - c^2ab \) for positive numbers \( a, b, c \) is \( \boxed{0} \), achieved when \( a = b = c \).</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>

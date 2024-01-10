@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_12</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (n+1)^(n-1)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_12']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -84,67 +84,66 @@ You may find the following information useful:
 1. Convert the street parking lot into a circle by adding an (n+1)-th lot that connects to both the n-th lot and the 1st lot.
 2. Establish the condition on the circular lot equivalent to every car being able to park on the street parking lot.
 3. Consider all driver preference sequences of length n but taking values in 1 to n+1. How many of the satisfy the condition?
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1*p_2*...*p_n ways to do the task.
-5. For each sequence {a}, consider its n cyclically shifted version (including itself), and study how many lead to a valid parking configuration.</code></pre>
+4. For each sequence {a}, consider its n cyclically shifted version (including itself), and study how many lead to a valid parking configuration.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s follow the steps provided:
 
-1. Convert the street parking lot into a circle by adding an (n+1)-th lot that connects to both the n-th lot and the 1st lot.
+Step 1: Convert the street parking lot into a circle by adding an (n+1)-th lot that connects to both the n-th lot and the 1st lot.
 
 By adding the (n+1)-th lot, we create a circular arrangement of the parking lots.
 
-2. Establish the condition on the circular lot equivalent to every car being able to park on the street parking lot.
+Step 2: Establish the condition on the circular lot equivalent to every car being able to park on the street parking lot.
 
-For every driver i, their favorite parking lot a_i should be free. If it is not free, they should be able to continue to the next free lot until they find one. If all succeeding lots are occupied, they should leave for good.
+For every driver to be able to park, we need to ensure that there are no consecutive occupied lots. In other words, we want to avoid situations where two neighboring drivers both choose their favorite lot, resulting in one of them not being able to park.
 
-3. Consider all driver preference sequences of length n but taking values in 1 to n+1. How many of them satisfy the condition?
+Step 3: Consider all driver preference sequences of length n but taking values in 1 to n+1. How many of them satisfy the condition?
 
-Let&#x27;s denote the number of valid sequences as V(n).
+Let&#x27;s consider the driver preference sequences of length n. Each driver has n+1 choices for their favorite lot (including the (n+1)-th lot). Therefore, there are (n+1)^n possible sequences.
 
-4. If there are n steps of doing a task, and there are p_i ways to do the i-th step, then there are p_1 * p_2 * ... * p_n ways to do the task.
+Step 4: For each sequence {a}, consider its n cyclically shifted versions (including itself), and study how many lead to a valid parking configuration.
 
-In this case, we can consider each step as assigning a parking lot to a driver. For the first driver, there are n+1 options (n parking lots + the circular lot). For the second driver, there are n options (n-1 parking lots + the circular lot, excluding the lot already assigned to the first driver). Similarly, for the third driver, there are n-1 options, and so on.
+To analyze the valid parking configurations, we need to consider all possible cyclic shifts of each sequence {a}. By doing so, we can determine if there exists a valid parking configuration for each sequence.
 
-Therefore, the total number of valid sequences is V(n) = (n+1) * n * (n-1) * ... * 2 * 1.
+Let&#x27;s illustrate this with an example:
 
-5. For each sequence {a}, consider its n cyclically shifted versions (including itself), and study how many lead to a valid parking configuration.
+Suppose we have n = 3, and the driver preference sequence is {1, 2, 3}. The possible cyclic shifts are:
 
-Since the circular arrangement allows for cyclic shifts, we need to consider all possible cyclic shifts of each sequence. For example, if the sequence is {1, 2, 3}, the cyclic shifts would be {1, 2, 3}, {2, 3, 1}, and {3, 1, 2}.
+{1, 2, 3}
+{2, 3, 1}
+{3, 1, 2}
 
-To determine the number of valid parking configurations for each sequence, we can start with the first driver&#x27;s assigned lot and check if each subsequent driver can park in their favorite lot or continue to the next free lot. If all drivers can park, the sequence is valid.
+For the first sequence {1, 2, 3}, all drivers can park since there are no consecutive occupied lots.
 
-By considering all cyclic shifts, we can count the number of valid parking configurations for each sequence.
+For the second sequence {2, 3, 1}, driver 1 chooses lot 2, driver 2 chooses lot 3, and driver 3 chooses lot 1. Again, all drivers can park.
 
-Therefore, the final answer is the sum of the number of valid parking configurations for each sequence.
+For the third sequence {3, 1, 2}, driver 1 chooses lot 3, driver 2 chooses lot 1, and driver 3 chooses lot 2. Once again, all drivers can park.
 
-Let&#x27;s denote the number of valid parking configurations for a sequence {a} as C({a}).
+Therefore, all three sequences lead to valid parking configurations.
 
-The total number of valid sequences is then given by V(n) = C({a_1, ..., a_n}) + C({a_n, a_1, ..., a_{n-1}}) + ... + C({a_2, a_3, ..., a_n, a_1}).
+To generalize this, we can conclude that for any driver preference sequence of length n, all cyclic shifts of the sequence will lead to a valid parking configuration if and only if there are no consecutive occupied lots in the original sequence.
 
-To find the expression for C({a}), we need to analyze the conditions for each driver to park in their favorite lot or continue to the next free lot.
+So, the number of valid parking configurations is equal to the number of driver preference sequences of length n that have no consecutive occupied lots.
 
-Let&#x27;s denote the number of valid parking configurations for a sequence of length k as C(k).
+In other words, we need to count the number of sequences {a_1, ..., a_n} such that a_i ≠ a_(i+1) for all i, where a_(n+1) is considered to be a_1.
 
-For the first driver, there are k+1 options (k parking lots + the circular lot).
+To count these sequences, we can use the principle of inclusion-exclusion.
 
-For the second driver, there are k options (k-1 parking lots + the circular lot, excluding the lot already assigned to the first driver).
+Let&#x27;s denote A_i as the set of sequences where a_i = a_(i+1) for some i.
 
-Similarly, for the third driver, there are k-1 options, and so on.
+Using the principle of inclusion-exclusion, the number of valid parking configurations is given by:
 
-Therefore, C(k) = (k+1) * k * (k-1) * ... * 2 * 1.
+Total number of sequences - |A_1 ∪ A_2 ∪ ... ∪ A_n|
 
-Now, we can substitute C(k) into the expression for V(n):
+To calculate |A_1 ∪ A_2 ∪ ... ∪ A_n|, we need to consider all possible intersections of the sets A_i.
 
-V(n) = C(n) + C(n-1) + ... + C(2) + C(1)
+For example, |A_1 ∩ A_2| represents the number of sequences where a_1 = a_2 and a_2 = a_3.
 
-V(n) = (n+1) * n * (n-1) * ... * 2 * 1 + n * (n-1) * ... * 2 * 1 + ... + 2 * 1 + 1
+By considering all possible intersections, we can calculate |A_1 ∪ A_2 ∪ ... ∪ A_n|.
 
-V(n) = (n+1)! + n! + ... + 2! + 1!
+Finally, we subtract |A_1 ∪ A_2 ∪ ... ∪ A_n| from the total number of sequences to obtain the number of valid parking configurations.
 
-Therefore, the final answer is V(n) = (n+1)! + n! + ... + 2! + 1.
-
-This expression represents the number of valid sequences {a_1, ..., a_n} such that every driver can park, as an expression of n.</code></pre>
+Unfortunately, without knowing the specific value of n, it is not possible to provide a closed-form expression for the number of valid parking configurations. However, the above approach outlines the general method to solve the problem.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of valid sequences {a_1, ..., a_n} such that every driver can park is given by V(n) = (n+1)! + n! + ... + 2! + 1.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The number of valid parking configurations is equal to the total number of driver preference sequences of length n minus the number of sequences where consecutive occupied lots occur.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

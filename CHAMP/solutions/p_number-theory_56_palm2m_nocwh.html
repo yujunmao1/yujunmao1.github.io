@@ -53,7 +53,7 @@
           <tr>
             <td>P_Number-Theory_56</td>
             <td>PaLM 2 Medium</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0 is the only possible value</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Number-Theory_56']
-messages = problem.conversations['PaLM 2 Medium|Direct w/ H'].messages
+messages = problem.conversations['PaLM 2 Medium|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -81,19 +81,80 @@ Positive integers a, b satisfy that (a+1)/b+(b+1)/a is also a positive integer. 
 
 You may find the following information useful:
 
-1. Convert the fact that (a+1)/b+(b+1)/a is an integer to a statement about divisibility by ab.
-2. If a | b and c | d, then ac | bd.
-3. If a | b and b | c, then a | c.
-4. If d | a and d | b, then d | ax+by, d | a + b and d | a-b.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that (a+1)/b+(b+1)/a is an integer. This means that ab divides (a+1)+(b+1), or that ab divides $2(a+b)+1$. Since $a$ and $b$ are positive integers, $a+b$ is also a positive integer. Therefore, $ab$ divides $2(a+b)+1$, which means that $ab$ divides $2(a+b)$. This means that $a$ and $b$ are both even, or that $a$ and $b$ are both odd.
+1. Convert the fact that (a+1)/b+(b+1)/a is an integer to a statement about divisibility by ab.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>We are given that (a+1)/b+(b+1)/a is an integer. We can write this as
 
-If $a$ and $b$ are both even, then $a+b$ is even, and so $a+b \equiv 0 \pmod{2}$. Therefore, $a+b \equiv 0 \pmod{d^2}$, where $d$ is the greatest common divisor of $a$ and $b$.
+$$\frac{a+1}{b}+\frac{b+1}{a} = n$$
 
-If $a$ and $b$ are both odd, then $a+b$ is odd, and so $a+b \equiv 1 \pmod{2}$. Therefore, $a+b \equiv 1 \pmod{d^2}$, where $d$ is the greatest common divisor of $a$ and $b$.
+for some integer $n$. Multiplying both sides by ab, we get
 
-Therefore, the possible values of $a+b \pmod{d^2}$ are $0$ and $1$.</code></pre>
+$$a^2 + 2ab + b^2 = nab$$
+
+Factoring the left-hand side, we get
+
+$$(a+b)^2 = nab$$
+
+Since $a$ and $b$ are positive integers, $a+b$ must also be a positive integer. This means that $n$ must be even.
+
+Let $n = 2m$ for some integer $m$. Then we have
+
+$$(a+b)^2 = 4mb$$
+
+Taking the square root of both sides, we get
+
+$$a+b = 2m\sqrt{b}$$
+
+or
+
+$$a+b = -2m\sqrt{b}$$
+
+Since $a$ and $b$ are positive integers, $a+b$ must be positive. This means that the only solution is
+
+$$a+b = 2m\sqrt{b}$$
+
+Let $d = \gcd(a, b)$. Then $a = dk$ and $b = dl$ for some integers $k$ and $l$. Substituting into the equation $a+b = 2m\sqrt{b}$, we get
+
+$$dk + dl = 2m\sqrt{bl}$$
+
+Factoring out $l$, we get
+
+$$l(dk + m\sqrt{b}) = 2m\sqrt{bl}$$
+
+Since $l$ is a positive integer, $dk + m\sqrt{b}$ must also be a positive integer. This means that $dk + m\sqrt{b}$ is divisible by $l$.
+
+Let $dk + m\sqrt{b} = lq$ for some integer $q$. Then
+
+$$a = dk = l(q - m\sqrt{b})$$
+
+and
+
+$$b = dl = l(q + m\sqrt{b})$$
+
+Substituting into the equation $a^2 + 2ab + b^2 = nab$, we get
+
+$$l^2(q^2 - 2mq\sqrt{b} + b^2) + 2l^2q(q - m\sqrt{b}) + l^2(q^2 + 2mq\sqrt{b} + b^2) = nbl^2$$
+
+Simplifying, we get
+
+$$l^2(q^2 + b^2) = nbl^2$$
+
+Since $l$ is a positive integer, $q^2 + b^2$ must also be a positive integer. This means that $q^2 + b^2$ is divisible by $l^2$.
+
+Let $q^2 + b^2 = l^2r$ for some integer $r$. Then
+
+$$q = \pm \sqrt{r - b}$$
+
+and
+
+$$b = \pm \sqrt{r + b}$$
+
+Substituting into the equation $a+b = 2m\sqrt{b}$, we get
+
+$$a = 2m\sqrt{b} = 2m\sqrt{\pm \sqrt{r + b}} = \pm 2m\sqrt{r + b}$$
+
+Therefore, the possible values of $a+b$ mod $d^2$ are $\pm 2m\sqrt{r + b}$, where $r$ is an integer such that $r \equiv b \pmod{d^2}$.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $a+b \pmod{d^2}$ are $0$ and $1$, where $d$ is the greatest common divisor of $a$ and $b$.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The possible values of $a+b$ mod $d^2$ are $\pm 2m\sqrt{r + b}$, where $r$ is an integer such that $r \equiv b \pmod{d^2}$.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

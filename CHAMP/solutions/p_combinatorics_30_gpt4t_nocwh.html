@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_30</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 2001000</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_30']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,38 +82,26 @@ When (x+y+z)^1999 is expanded and like terms are collected (e.g., collecting 2*x
 You may find the following information useful:
 
 1. Study the condition on a, b, c for the term x^a*y^b*z^c to appear in the expansion.
-2. For any given value of c, how many possible values can (a, b) take?
-3. 1+2+...+n=n(n+1)/2.
-4. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to understand the multinomial theorem, which is a generalization of the binomial theorem. It describes the expansion of a power of a sum in terms of powers of the terms in that sum.
+2. For any given value of c, how many possible values can (a, b) take?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the concept of combinations with repetition, also known as stars and bars in combinatorics.
 
-The multinomial coefficient will tell us the number of ways to distribute the exponents among the variables x, y, and z such that the sum of the exponents is equal to the power of the expanded term, which in this case is 1999.
+When we expand \((x+y+z)^{1999}\), we are looking for the number of ways to distribute 1999 identical objects (the power) into 3 distinct boxes (the variables x, y, and z). The condition for a term \(x^a y^b z^c\) to appear in the expansion is that \(a + b + c = 1999\) where \(a, b, c\) are non-negative integers.
 
-The general term in the expansion of (x+y+z)^1999 will be of the form:
+To find the number of terms, we need to find the number of solutions to the equation \(a + b + c = 1999\). This is equivalent to finding the number of ways to place two dividers among 1999 identical items to create three non-empty groups. The dividers represent the transition from one variable&#x27;s exponent to the next.
 
-C(a, b, c) * x^a * y^b * z^c
+Using the stars and bars method, we have 1999 stars and we need to place 2 bars to create 3 sections (for \(x^a\), \(y^b\), and \(z^c\)). The number of ways to do this is the number of combinations of placing 2 bars in between or at the ends of 1999 stars, which is equivalent to choosing 2 positions from 1999 + 2 positions (for the stars plus the two bars).
 
-where a + b + c = 1999 and C(a, b, c) is the multinomial coefficient, which is the number of ways to arrange a x&#x27;s, b y&#x27;s, and c z&#x27;s.
+The formula for combinations is \(C(n, k) = \frac{n!}{k!(n-k)!}\), where \(n\) is the total number of items and \(k\) is the number of items to choose.
 
-To find the number of terms, we need to count all the possible combinations of non-negative integers (a, b, c) that satisfy the equation a + b + c = 1999.
+So, we need to calculate \(C(1999 + 2, 2)\), which is the number of ways to choose 2 positions from 2001 positions:
 
-This is equivalent to finding the number of solutions to the equation with non-negative integers. We can think of this as a problem of distributing 1999 indistinguishable objects (the total power) into 3 distinguishable boxes (the variables x, y, and z).
+\[
+C(2001, 2) = \frac{2001!}{2!(2001-2)!} = \frac{2001 \times 2000}{2 \times 1} = 2001 \times 1000 = 2001000
+\]
 
-Using the &quot;stars and bars&quot; combinatorial argument, we can find the number of ways to do this by adding 2 &quot;bars&quot; to separate the objects into 3 groups. The number of ways to arrange 1999 objects and 2 bars is the number of terms in the expansion.
-
-The number of arrangements of 1999 objects and 2 bars is the number of ways to choose 2 positions from 2001 positions (1999 objects + 2 bars), which is given by the binomial coefficient:
-
-C(2001, 2) = 2001! / (2! * (2001 - 2)!)
-
-Simplifying this, we get:
-
-C(2001, 2) = 2001 * 2000 / (2 * 1)
-C(2001, 2) = 2001 * 1000
-C(2001, 2) = 2001000
-
-So, when (x+y+z)^1999 is expanded and like terms are collected, there will be 2,001,000 terms.</code></pre>
+Therefore, when \((x+y+z)^{1999}\) is expanded and like terms are collected, there will be 2,001,000 terms.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>When (x+y+z)^1999 is expanded and like terms are collected, there will be 2,001,000 terms.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>When \((x+y+z)^{1999}\) is expanded and like terms are collected, there will be 2,001,000 terms.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

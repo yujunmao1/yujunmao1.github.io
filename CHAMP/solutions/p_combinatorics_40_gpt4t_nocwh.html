@@ -53,7 +53,7 @@
           <tr>
             <td>P_Combinatorics_40</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 144</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Combinatorics_40']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,29 +82,30 @@ Find the number of ways to fill a 2 x 11 rectangle with 2 x 1 tiles.
 You may find the following information useful:
 
 1. Let a_n be the number of ways to tile a 2 x n rectangle.
-2. Find the expression for a_(n+1) in terms of a_n and a_(n-1).
-3. If there are n actions, with p_i ways to perform the i-th action, and no two actions can be performed at the same time, then there are p_1+p_2+...+p_n ways to perform the action in total.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the given information to find a recursive formula for \( a_n \), the number of ways to tile a 2 x n rectangle with 2 x 1 tiles. Then we will use this formula to calculate \( a_{11} \).
+2. Find the expression for a_(n+1) in terms of a_n and a_(n-1).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the given information to find a recursive formula for \( a_n \), the number of ways to tile a 2 x n rectangle with 2 x 1 tiles. Then we will use this formula to calculate \( a_{11} \), which is the number of ways to tile a 2 x 11 rectangle.
 
-First, let&#x27;s consider the base cases:
-- For \( n = 1 \), there is only one way to fill a 2 x 1 rectangle with 2 x 1 tiles (vertically). So, \( a_1 = 1 \).
-- For \( n = 2 \), there are two ways to fill a 2 x 2 rectangle: either by placing two tiles vertically or by placing two tiles horizontally. So, \( a_2 = 2 \).
+Let&#x27;s consider the two possible orientations of the 2 x 1 tiles:
 
-Now, let&#x27;s find the expression for \( a_{n+1} \) in terms of \( a_n \) and \( a_{n-1} \).
+1. Placing a tile vertically will cover a 2 x 1 section of the rectangle.
+2. Placing two tiles horizontally will cover a 2 x 2 section of the rectangle.
 
-To fill a 2 x (n+1) rectangle, we can consider the last part of the rectangle. There are two ways to place the tiles in the last part:
-1. Place one 2 x 1 tile vertically at the end of the rectangle. The remaining part is a 2 x n rectangle, which can be filled in \( a_n \) ways.
-2. Place two 2 x 1 tiles horizontally at the end of the rectangle. The remaining part is a 2 x (n-1) rectangle, which can be filled in \( a_{n-1} \) ways.
+Now, let&#x27;s find the expression for \( a_{n+1} \) in terms of \( a_n \) and \( a_{n-1} \):
 
-According to the third point of the given information, the total number of ways to perform the action (filling the rectangle) is the sum of the number of ways to perform each individual action. Therefore, the recursive formula is:
+- If we place a vertical tile on the rightmost side of a 2 x n rectangle, we are left with a 2 x (n-1) rectangle. The number of ways to tile the remaining part is \( a_{n-1} \).
+- If we place two horizontal tiles on the rightmost side, we are left with a 2 x (n-2) rectangle. The number of ways to tile the remaining part is \( a_{n-2} \).
+
+Therefore, the total number of ways to tile a 2 x (n+1) rectangle is the sum of the number of ways to tile a 2 x (n-1) rectangle and a 2 x (n-2) rectangle:
 
 \[ a_{n+1} = a_n + a_{n-1} \]
 
-This is actually the Fibonacci sequence, where each term is the sum of the two preceding ones.
+This is a Fibonacci-like sequence, where each term is the sum of the two preceding terms. To find \( a_{11} \), we need to calculate the sequence from the beginning, using the initial conditions:
 
-Now, we can calculate \( a_{11} \) using the recursive formula:
+- \( a_1 \) is the number of ways to tile a 2 x 1 rectangle, which is 1 (only one vertical tile).
+- \( a_2 \) is the number of ways to tile a 2 x 2 rectangle, which is 2 (either two vertical tiles or two horizontal tiles).
 
-Starting with \( a_1 = 1 \) and \( a_2 = 2 \), we find the next terms:
+Now we can calculate the sequence up to \( a_{11} \):
+
 - \( a_3 = a_2 + a_1 = 2 + 1 = 3 \)
 - \( a_4 = a_3 + a_2 = 3 + 2 = 5 \)
 - \( a_5 = a_4 + a_3 = 5 + 3 = 8 \)

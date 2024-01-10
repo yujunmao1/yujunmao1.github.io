@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_3</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 1/3</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_3']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,34 +77,70 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For positive a, b, c, what is the smallest value of (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2))?
+For positive a, b, c, what is the smallest value of (a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2))?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find the smallest value of the expression
 
-You may find the following information useful:
+\[
+\frac{a^3 + b^3 + c^3}{(a + b + c)(a^2 + b^2 + c^2)}
+\]
 
-1. Let (a_1, ..., a_n) and (b_1, ..., b_n) be two similarly sorted sequences (e.g., both increasing or both decreasing). Then ((a_1+...+a_n)/n)*((b_1+...+b_n)/n)≤(a_1*b_1+...+a_n*b_n)/n.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we can use the given inequality, which is a form of the Chebyshev&#x27;s sum inequality. The inequality states that for two similarly sorted sequences, the average of their products is at least as large as the product of their averages.
+we can use the Cauchy-Schwarz inequality, which states that for any real numbers \(x_1, x_2, \ldots, x_n\) and \(y_1, y_2, \ldots, y_n\), we have
 
-Let&#x27;s denote the average of the a_i&#x27;s as A = (a + b + c) / 3 and the average of the b_i&#x27;s as B = (a^2 + b^2 + c^2) / 3. According to the inequality, we have:
+\[
+(x_1^2 + x_2^2 + \ldots + x_n^2)(y_1^2 + y_2^2 + \ldots + y_n^2) \geq (x_1y_1 + x_2y_2 + \ldots + x_ny_n)^2
+\]
 
-(A * B) ≤ (a^3 + b^3 + c^3) / 3
+with equality if and only if \(x_i/y_i = x_j/y_j\) for all \(i, j\).
 
-Multiplying both sides by 3 and substituting the expressions for A and B, we get:
+Let&#x27;s apply the Cauchy-Schwarz inequality to the vectors \((a, b, c)\) and \((a^2, b^2, c^2)\):
 
-((a + b + c) / 3) * ((a^2 + b^2 + c^2) / 3) ≤ (a^3 + b^3 + c^3) / 3
+\[
+(a^2 + b^2 + c^2)^2 \geq (a \cdot a^2 + b \cdot b^2 + c \cdot c^2)^2 = (a^3 + b^3 + c^3)^2
+\]
 
-Now, we can multiply both sides by 9 to get rid of the denominators:
+Taking the square root of both sides, we get:
 
-(a + b + c) * (a^2 + b^2 + c^2) ≤ 3 * (a^3 + b^3 + c^3)
+\[
+a^2 + b^2 + c^2 \geq a^3 + b^3 + c^3
+\]
 
-Now, we want to find the smallest value of the expression (a^3 + b^3 + c^3) / ((a + b + c) * (a^2 + b^2 + c^2)). According to the inequality we just derived, we have:
+Now, let&#x27;s consider the denominator of our original expression:
 
-(a^3 + b^3 + c^3) / ((a + b + c) * (a^2 + b^2 + c^2)) ≥ 1/3
+\[
+(a + b + c)(a^2 + b^2 + c^2)
+\]
 
-Therefore, the smallest value of the given expression is 1/3, and this occurs when a = b = c, which makes the sequences (a, b, c) and (a^2, b^2, c^2) similarly sorted (both increasing or both decreasing).
+Since \(a, b, c\) are positive, \(a + b + c\) is also positive. Therefore, we can divide both sides of the inequality by \((a + b + c)(a^2 + b^2 + c^2)\) to get:
 
-Final answer: The smallest value of the expression (a^3 + b^3 + c^3) / ((a + b + c) * (a^2 + b^2 + c^2)) is 1/3.</code></pre>
+\[
+\frac{a^2 + b^2 + c^2}{(a + b + c)(a^2 + b^2 + c^2)} \geq \frac{a^3 + b^3 + c^3}{(a + b + c)(a^2 + b^2 + c^2)}
+\]
+
+Simplifying the left side, we have:
+
+\[
+\frac{1}{a + b + c} \geq \frac{a^3 + b^3 + c^3}{(a + b + c)(a^2 + b^2 + c^2)}
+\]
+
+Since \(a, b, c\) are positive, the smallest value of \(a + b + c\) is when \(a = b = c\), which would make \(a + b + c = 3a\). Therefore, the smallest value of the left side is \(\frac{1}{3a}\), which occurs when \(a = b = c\).
+
+Thus, the smallest value of the original expression is:
+
+\[
+\frac{1}{3a}
+\]
+
+However, we need to be careful here. The above inequality shows that the expression on the left is greater than or equal to the expression on the right. This means that the smallest value of the right-hand side expression cannot be less than \(\frac{1}{a + b + c}\). But we have not yet shown that this is indeed the smallest value it can take.
+
+To find the smallest value, we need to consider when the Cauchy-Schwarz inequality becomes an equality. This happens when \(a = b = c\), as mentioned before. In this case, the original expression becomes:
+
+\[
+\frac{a^3 + a^3 + a^3}{(a + a + a)(a^2 + a^2 + a^2)} = \frac{3a^3}{3a \cdot 3a^2} = \frac{3a^3}{9a^3} = \frac{1}{3}
+\]
+
+Therefore, the smallest value of the expression is \(\frac{1}{3}\), and this occurs when \(a = b = c\).</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \((a^3 + b^3 + c^3) / ((a + b + c)(a^2 + b^2 + c^2))\) for positive \(a\), \(b\), and \(c\) is \(1/3\).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The smallest value of the expression \((a^3+b^3+c^3)/((a+b+c)(a^2+b^2+c^2))\) for positive \(a\), \(b\), and \(c\) is \(1/3\), which occurs when \(a = b = c\).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

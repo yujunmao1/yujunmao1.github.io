@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_31</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> (a^3+2b)/(3a)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_31']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,73 +77,51 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Suppose that for x, y we have x+y=a and x^3+y^3=b. Find x^2+y^2, as an expression of a and b.
+Suppose that for x, y we have x+y=a and x^3+y^3=b. Find x^2+y^2, as an expression of a and b.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To find x^2 + y^2 in terms of a and b, we can use the given equations and manipulate them algebraically.
 
-You may find the following information useful:
+We have:
+1) x + y = a
+2) x^3 + y^3 = b
 
-1. Let u=x+y, v=xy and s_n=x^n+y^n. Then, we have s_n=u*s_(n-1)-v*s_(n-2).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Given the identities x + y = a and x^3 + y^3 = b, we want to find x^2 + y^2.
+We want to find:
+x^2 + y^2
 
-First, let&#x27;s use the given information that s_n = u * s_(n-1) - v * s_(n-2), where u = x + y and v = xy.
+First, let&#x27;s square equation (1) to get an expression that includes x^2 + y^2:
+(x + y)^2 = a^2
+x^2 + 2xy + y^2 = a^2
 
-We know that s_1 = x + y = a.
+Now, we need to find a way to express xy in terms of a and b to eliminate it from the equation above.
 
-We also know that s_3 = x^3 + y^3 = b.
+We can use the fact that (x + y)^3 = x^3 + y^3 + 3x^2y + 3xy^2 and we know that (x + y)^3 = a^3 and x^3 + y^3 = b.
 
-We want to find s_2 = x^2 + y^2.
+So:
+a^3 = b + 3x^2y + 3xy^2
+a^3 = b + 3xy(x + y)
+a^3 = b + 3xy * a
 
-Using the recursive formula, we can express s_2 in terms of s_1 and s_0:
+Now we solve for xy:
+3axy = a^3 - b
+xy = (a^3 - b) / 3a
 
-s_2 = u * s_1 - v * s_0
+Now we have xy in terms of a and b. We can substitute this back into the squared equation (1):
 
-But we need to find s_0 and v. We know that s_0 = x^0 + y^0 = 1 + 1 = 2 since any non-zero number raised to the power of 0 is 1.
+x^2 + 2xy + y^2 = a^2
+x^2 + y^2 = a^2 - 2xy
+x^2 + y^2 = a^2 - 2 * (a^3 - b) / 3a
 
-Now, we need to find v = xy. We can do this by using the fact that (x + y)^2 = x^2 + 2xy + y^2. We know x + y = a, so:
+Now, simplify the expression:
+x^2 + y^2 = a^2 - (2a^3 - 2b) / 3a
+x^2 + y^2 = a^2 - (2a^3 / 3a) + (2b / 3a)
+x^2 + y^2 = a^2 - (2/3)a^2 + (2/3)b/a
 
-a^2 = (x + y)^2 = x^2 + 2xy + y^2
+Combine the terms with a^2:
+x^2 + y^2 = (3/3)a^2 - (2/3)a^2 + (2/3)b/a
+x^2 + y^2 = (1/3)a^2 + (2/3)b/a
 
-We want to find x^2 + y^2, which is s_2, so we need to isolate 2xy:
-
-2xy = a^2 - (x^2 + y^2)
-
-2xy = a^2 - s_2
-
-Now, we can solve for xy (which is v):
-
-v = xy = (a^2 - s_2) / 2
-
-We can now use the recursive formula to find s_2:
-
-s_2 = u * s_1 - v * s_0
-s_2 = a * a - ((a^2 - s_2) / 2) * 2
-s_2 = a^2 - (a^2 - s_2)
-s_2 = a^2 - a^2 + s_2
-s_2 = s_2
-
-This doesn&#x27;t help us find s_2 directly, so we need to find another way to express s_2 in terms of a and b.
-
-We can use the identity x^3 + y^3 = (x + y)(x^2 - xy + y^2) to relate b to s_2:
-
-b = x^3 + y^3 = (x + y)(x^2 - xy + y^2)
-b = a(x^2 - xy + y^2)
-b = a(s_2 - xy)
-b = a(s_2 - v)
-
-Now we can solve for s_2:
-
-b = a(s_2 - (a^2 - s_2) / 2)
-2b = 2a(s_2 - (a^2 - s_2) / 2)
-2b = 2as_2 - a(a^2 - s_2)
-2b = 2as_2 - a^3 + as_2
-2b = 3as_2 - a^3
-3as_2 = 2b + a^3
-s_2 = (2b + a^3) / (3a)
-
-So, x^2 + y^2, which is s_2, is given by:
-
-x^2 + y^2 = (2b + a^3) / (3a)</code></pre>
+This is the expression for x^2 + y^2 in terms of a and b.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The expression for x^2 + y^2 in terms of a and b is (2b + a^3) / (3a).</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The expression for x^2 + y^2 in terms of a and b is x^2 + y^2 = (1/3)a^2 + (2/3)b/a.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

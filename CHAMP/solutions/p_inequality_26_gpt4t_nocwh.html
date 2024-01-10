@@ -53,7 +53,7 @@
           <tr>
             <td>P_Inequality_26</td>
             <td>GPT-4 Turbo</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 0</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Inequality_26']
-messages = problem.conversations['GPT-4 Turbo|Direct w/ H'].messages
+messages = problem.conversations['GPT-4 Turbo|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,52 +77,46 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-For real number a, b, what is the largest value of |a+b|/(1+|a+b|)-|a|/(1+|a|)-|b|/(1+|b|)?
+For real number a, b, what is the largest value of |a+b|/(1+|a+b|)-|a|/(1+|a|)-|b|/(1+|b|)?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to analyze the expression given and find the maximum value of the function:
 
-You may find the following information useful:
+f(a, b) = |a+b|/(1+|a+b|) - |a|/(1+|a|) - |b|/(1+|b|)
 
-1. For real number x, y, |x+y|≤|x|+|y|.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will use the given inequality |x+y| ≤ |x| + |y|, which is the triangle inequality for real numbers. We want to find the largest value of the expression:
+First, let&#x27;s consider the properties of the absolute value and the function f(x) = |x|/(1+|x|) for any real x.
 
-\[ \frac{|a+b|}{1+|a+b|} - \frac{|a|}{1+|a|} - \frac{|b|}{1+|b|} \]
+The function f(x) is bounded between 0 and 1 because the numerator is always less than or equal to the denominator (since |x| is always non-negative). Also, f(x) is increasing for x ≥ 0 and decreasing for x ≤ 0 because as x increases, |x| increases, making the ratio increase until it approaches 1 as x approaches infinity.
 
-Let&#x27;s analyze the expression part by part. We know that for any real number x, the expression |x|/(1+|x|) is always less than or equal to 1, because |x| is always non-negative and the denominator is always larger than the numerator. This means that each term in our expression is between 0 and 1.
+Now, let&#x27;s analyze the expression term by term:
 
-Now, let&#x27;s use the triangle inequality to relate |a+b| to |a| and |b|:
+1. |a+b|/(1+|a+b|) is maximized when |a+b| is maximized.
+2. -|a|/(1+|a|) is minimized (most negative) when |a| is maximized.
+3. -|b|/(1+|b|) is minimized (most negative) when |b| is maximized.
 
-\[ |a+b| \leq |a| + |b| \]
+To maximize |a+b|, we want a and b to have the same sign. Without loss of generality, let&#x27;s assume a and b are both non-negative (the case where they are both non-positive is symmetric). In this case, |a+b| = a + b.
 
-Dividing both sides by (1 + |a+b|), we get:
+Now, let&#x27;s consider the case where a and b are both maximized. Since there are no constraints given on the values of a and b, they can be arbitrarily large. As a and b become very large, the terms |a|/(1+|a|) and |b|/(1+|b|) both approach 1, because the absolute values dominate the +1 in the denominator.
 
-\[ \frac{|a+b|}{1+|a+b|} \leq \frac{|a| + |b|}{1+|a+b|} \]
+So, as a and b become very large, the expression approaches:
 
-Now, we want to compare this with the sum of the other two fractions. Notice that for any non-negative x and y, the following is true:
+f(a, b) ≈ (a+b)/(1+a+b) - a/(1+a) - b/(1+b)
 
-\[ \frac{x}{1+x} + \frac{y}{1+y} \geq \frac{x+y}{1+x+y} \]
+Now, let&#x27;s take the limit as a and b approach infinity:
 
-This is because the denominators on the left-hand side are smaller than the denominator on the right-hand side, making the fractions on the left-hand side larger.
+lim (a, b → ∞) f(a, b) = lim (a, b → ∞) [(a+b)/(1+a+b) - a/(1+a) - b/(1+b)]
+= 1 - 1 - 1
+= -1
 
-Applying this to our terms, we get:
+However, this is not the maximum value; it&#x27;s the minimum value when a and b are both very large and positive. To find the maximum value, we need to consider when |a+b| is maximized but |a| and |b| are not too large.
 
-\[ \frac{|a|}{1+|a|} + \frac{|b|}{1+|b|} \geq \frac{|a| + |b|}{1+|a|+|b|} \]
+The maximum value of |a+b|/(1+|a+b|) is 1, which occurs when |a+b| is very large. However, we want to minimize the impact of the other two terms, -|a|/(1+|a|) and -|b|/(1+|b|). This happens when a and b are both zero, which makes both terms equal to zero.
 
-Now, since |a+b| ≤ |a| + |b|, we have 1+|a+b| ≤ 1+|a|+|b|, which means that:
+Therefore, the largest value of the expression is:
 
-\[ \frac{|a| + |b|}{1+|a+b|} \geq \frac{|a| + |b|}{1+|a|+|b|} \]
+f(a, b) = 1 - 0 - 0 = 1
 
-Combining this with our previous inequality, we have:
-
-\[ \frac{|a+b|}{1+|a+b|} \leq \frac{|a|}{1+|a|} + \frac{|b|}{1+|b|} \]
-
-Subtracting the right-hand side from the left-hand side, we get:
-
-\[ \frac{|a+b|}{1+|a+b|} - \frac{|a|}{1+|a|} - \frac{|b|}{1+|b|} \leq 0 \]
-
-This means that the largest value the original expression can take is 0, and this occurs when |a+b| = |a| + |b|, which happens when a and b have the same sign or one of them is zero.
-
-Therefore, the largest value of the given expression is 0.</code></pre>
+This is the maximum value of the given expression.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression |a+b|/(1+|a+b|) - |a|/(1+|a|) - |b|/(1+|b|) is 0.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The largest value of the expression |a+b|/(1+|a+b|) - |a|/(1+|a|) - |b|/(1+|b|) is 1.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -53,7 +53,7 @@
           <tr>
             <td>P_Sequence_50</td>
             <td>GPT-4 Turbo</td>
-            <td>Example w/o H</td>
+            <td>Example C w/o H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> 100 (i.e., all values)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Sequence_50']
-messages = problem.conversations['GPT-4 Turbo|Example w/o H'].messages
+messages = problem.conversations['GPT-4 Turbo|Example C w/o H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -77,65 +77,56 @@ for message in messages:
           <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
 
-Let a sequence be the defined as a_1=a_2=1, and a_n=(a_(n-1)^2+2)/a_(n-2). How many values in a_1, a_2, ..., a_100 are integers?
+Let a sequence be the defined as a_1=a_2=1, and a_n=(a_(n-1)^2+2)/a_(n-2). How many values in a_1, a_2, ..., a_100 are integers?</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we need to find a pattern in the sequence. Let&#x27;s start by calculating the first few terms using the given recursive formula:
 
-You may find the following information useful:
+Given:
+a_1 = 1
+a_2 = 1
 
-1. Write the expression for a_n*a_(n-2) and a_(n+1)*a_(n-1).
-2. Find the relationship between (a_(n-1)+a_(n+1))/a_n and (a_(n-2)+a_n)/a_(n-1).</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>Let&#x27;s start by writing the expressions for \( a_n \cdot a_{n-2} \) and \( a_{n+1} \cdot a_{n-1} \) using the given recursive formula:
+Now, let&#x27;s calculate a_3 using the formula:
+a_3 = (a_2^2 + 2) / a_1 = (1^2 + 2) / 1 = 3 / 1 = 3
 
-Given \( a_n = \frac{a_{n-1}^2 + 2}{a_{n-2}} \), we can multiply both sides by \( a_{n-2} \) to get:
+Next, calculate a_4:
+a_4 = (a_3^2 + 2) / a_2 = (3^2 + 2) / 1 = 11 / 1 = 11
 
-\[ a_n \cdot a_{n-2} = a_{n-1}^2 + 2 \]
+Now, calculate a_5:
+a_5 = (a_4^2 + 2) / a_3 = (11^2 + 2) / 3 = 123 / 3 = 41
 
-Now, let&#x27;s find \( a_{n+1} \cdot a_{n-1} \):
+Let&#x27;s calculate a_6:
+a_6 = (a_5^2 + 2) / a_4 = (41^2 + 2) / 11 = 1683 / 11 = 153
 
-\[ a_{n+1} = \frac{a_n^2 + 2}{a_{n-1}} \]
+We can see that the sequence is not simply increasing or decreasing, and the terms are not obviously following a simple pattern. However, we can notice that the denominator in each step is a previous term of the sequence, which suggests that if a term is an integer, the next term that uses it as a denominator will also be an integer.
 
-Multiplying both sides by \( a_{n-1} \), we get:
+Let&#x27;s try to prove that if a_n is an integer, then a_(n+2) is also an integer.
 
-\[ a_{n+1} \cdot a_{n-1} = a_n^2 + 2 \]
+Assume a_n is an integer. Then, according to the recursive formula, we have:
+a_(n+2) = (a_(n+1)^2 + 2) / a_n
 
-Now, let&#x27;s find the relationship between \( \frac{a_{n-1} + a_{n+1}}{a_n} \) and \( \frac{a_{n-2} + a_n}{a_{n-1}} \):
+Since a_n is an integer, for a_(n+2) to be an integer, (a_(n+1)^2 + 2) must be a multiple of a_n.
 
-Using the expressions we found for \( a_n \cdot a_{n-2} \) and \( a_{n+1} \cdot a_{n-1} \), we can write:
+Now, let&#x27;s look at the terms we&#x27;ve calculated:
+a_1 = 1 (integer)
+a_2 = 1 (integer)
+a_3 = 3 (integer)
+a_4 = 11 (integer)
+a_5 = 41 (integer)
+a_6 = 153 (integer)
 
-\[ \frac{a_{n-1} + a_{n+1}}{a_n} = \frac{a_{n-1} + \frac{a_n^2 + 2}{a_{n-1}}}{a_n} = \frac{a_{n-1}^2 + a_n^2 + 2}{a_n \cdot a_{n-1}} \]
+We can see that every term we&#x27;ve calculated so far is an integer. This suggests that the pattern may continue, and every term in the sequence might be an integer. To prove this, we need to show that if a_n is an integer, then a_(n+1) will also be an integer.
 
-\[ \frac{a_{n-2} + a_n}{a_{n-1}} = \frac{a_{n-2} + \frac{a_{n-1}^2 + 2}{a_{n-2}}}{a_{n-1}} = \frac{a_{n-2}^2 + a_{n-1}^2 + 2}{a_{n-1} \cdot a_{n-2}} \]
+Let&#x27;s assume that a_n is an integer for some n ≥ 3. Then, we have:
+a_(n+1) = (a_n^2 + 2) / a_(n-1)
 
-Notice that both numerators are the same, \( a_{n-1}^2 + a_n^2 + 2 \), and the denominators are the products of consecutive terms of the sequence. This suggests that the two expressions are equal:
+Since a_(n-1) is also an integer (by our assumption that all previous terms are integers), we need to show that a_n^2 + 2 is a multiple of a_(n-1).
 
-\[ \frac{a_{n-1} + a_{n+1}}{a_n} = \frac{a_{n-2} + a_n}{a_{n-1}} \]
+We know that a_(n-1) * a_(n+1) = a_n^2 + 2, which was derived from the recursive formula. This means that a_n^2 + 2 is indeed a multiple of a_(n-1), and thus a_(n+1) is an integer.
 
-Now, let&#x27;s try to find a pattern in the sequence to determine which terms are integers. We start with \( a_1 = 1 \) and \( a_2 = 1 \), and we can calculate the next few terms:
+Since we have shown that if a_n is an integer, then a_(n+1) is also an integer, and we know that a_1 and a_2 are integers, it follows by induction that all terms in the sequence up to a_100 are integers.
 
-\[ a_3 = \frac{a_2^2 + 2}{a_1} = \frac{1^2 + 2}{1} = 3 \]
-\[ a_4 = \frac{a_3^2 + 2}{a_2} = \frac{3^2 + 2}{1} = 11 \]
-\[ a_5 = \frac{a_4^2 + 2}{a_3} = \frac{11^2 + 2}{3} = \frac{123}{3} = 41 \]
-
-We can see that \( a_3, a_4, \) and \( a_5 \) are all integers. However, without a clear pattern, it&#x27;s difficult to determine which of the terms up to \( a_{100} \) are integers. We need to find a more systematic approach.
-
-Let&#x27;s consider the relationship we derived earlier:
-
-\[ \frac{a_{n-1} + a_{n+1}}{a_n} = \frac{a_{n-2} + a_n}{a_{n-1}} \]
-
-This can be rewritten as:
-
-\[ a_{n-1} \cdot a_n + a_n \cdot a_{n+1} = a_{n-2} \cdot a_{n-1} + a_{n-1} \cdot a_n \]
-
-Simplifying, we get:
-
-\[ a_n \cdot a_{n+1} = a_{n-2} \cdot a_{n-1} \]
-
-This implies that the product of two consecutive terms is constant. Since \( a_1 = a_2 = 1 \), the product of any two consecutive terms is 1. This means that if \( a_n \) is an integer, then \( a_{n+1} \) must also be an integer because their product is 1.
-
-Now, we know that \( a_1, a_2, \) and \( a_3 \) are integers. By the property we just discovered, all subsequent terms \( a_4, a_5, \ldots, a_{100} \) must also be integers because each term is the reciprocal of the previous term (since their product is 1), and the previous term is an integer.
-
-Therefore, all values in \( a_1, a_2, \ldots, a_{100} \) are integers. There are 100 terms in this sequence, so the answer is 100.</code></pre>
+Therefore, all 100 values in the sequence a_1, a_2, ..., a_100 are integers.</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>All 100 terms in the sequence \(a_1, a_2, \ldots, a_{100}\) are integers.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>All 100 values in the sequence a_1, a_2, ..., a_100 are integers.</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

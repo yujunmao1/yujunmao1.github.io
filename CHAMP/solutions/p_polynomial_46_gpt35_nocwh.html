@@ -53,7 +53,7 @@
           <tr>
             <td>P_Polynomial_46</td>
             <td>GPT-3.5</td>
-            <td>Direct w/ H</td>
+            <td>No C w/ H</td>
           </tr>
           <tr>
             <td colspan="3"><b>Ground Truth Answer:</b> x(x-1)(x-2)...(x-2022)</td>
@@ -61,9 +61,9 @@
         </table>
           <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
           <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
-dataset = champ_dataset.load()
+dataset = champ_dataset.load('v0')
 problem = dataset['P_Polynomial_46']
-messages = problem.conversations['GPT-3.5|Direct w/ H'].messages
+messages = problem.conversations['GPT-3.5|No C w/ H'].messages
 for message in messages:
     print(f'Role: {message.role}')
     print(f'Text: {message.text}')
@@ -82,50 +82,48 @@ Find a monic polynomial (i.e. a polynomial with the leading coefficient being 1)
 You may find the following information useful:
 
 1. Study the equation at x=0 to recover a root of p(x).
-2. Continue studying the equation at x=1, 2, 3... to recover more roots of p(x) until this logic stops working.
-3. A polynomial f(x) of degree n with roots x_1, ..., x_i (along with other roots) can be written as f(x)=(x-x_1)(x-x_2)...(x-x_i)g(x), where g(x) is a polynomial of degree n-i.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s follow the given information step by step.
+2. Continue studying the equation at x=1, 2, 3... to recover more roots of p(x) until this logic stops working.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, let&#x27;s start by studying the equation at x=0:
 
-Step 1: Study the equation at x=0 to recover a root of p(x).
-When x=0, the equation becomes:
 0 * p(0-1) = (0-2023) * p(0)
 0 * p(-1) = -2023 * p(0)
-Since we want to find a monic polynomial, we know that p(0) must be 0. Therefore, we have found one root of p(x), which is x=0.
+0 = -2023 * p(0)
 
-Step 2: Continue studying the equation at x=1, 2, 3... to recover more roots of p(x) until this logic stops working.
-Let&#x27;s try x=1:
+From this equation, we can conclude that p(0) must be equal to 0. Therefore, we have found one root of p(x), which is x=0.
+
+Now, let&#x27;s study the equation at x=1:
+
 1 * p(1-1) = (1-2023) * p(1)
 1 * p(0) = -2022 * p(1)
-Since we know that p(0) is 0, we have:
 0 = -2022 * p(1)
-This implies that p(1) must also be 0. Therefore, we have found another root of p(x), which is x=1.
 
-Let&#x27;s try x=2:
+From this equation, we can conclude that p(1) must also be equal to 0. Therefore, we have found another root of p(x), which is x=1.
+
+Continuing this process, we can study the equation at x=2:
+
 2 * p(2-1) = (2-2023) * p(2)
 2 * p(1) = -2021 * p(2)
-Since we know that p(1) is 0, we have:
-2 * 0 = -2021 * p(2)
 0 = -2021 * p(2)
-This implies that p(2) must also be 0. Therefore, we have found another root of p(x), which is x=2.
 
-We can continue this process for x=3, 4, 5... until we find a pattern or until it stops working.
+Again, we find that p(2) must be equal to 0. Therefore, we have found another root of p(x), which is x=2.
 
-Step 3: Write the polynomial p(x) using the roots we found.
-From the information given, we know that a polynomial of degree n with roots x_1, ..., x_i can be written as:
-f(x) = (x - x_1)(x - x_2)...(x - x_i)g(x)
-where g(x) is a polynomial of degree n-i.
+We can continue this process for as long as it works, but we can already see a pattern emerging. Each time we study the equation at x=n, we find that p(n) must be equal to 0. Therefore, we can conclude that p(x) is a polynomial of the form:
 
-Since we have found three roots of p(x) (x=0, x=1, x=2), we can write p(x) as:
-p(x) = (x - 0)(x - 1)(x - 2)g(x)
-where g(x) is a polynomial of degree n-3.
+p(x) = (x-0)(x-1)(x-2)...(x-n)
 
-Therefore, the monic polynomial p(x) that satisfies the given equation is:
-p(x) = x(x - 1)(x - 2)g(x)
-where g(x) is a polynomial of degree n-3.
+Since we want p(x) to be monic, we can rewrite it as:
 
-Note: Without further information or a pattern in the equation, we cannot determine the exact form of g(x) or the degree of p(x).</code></pre>
+p(x) = (x-0)(x-1)(x-2)...(x-n) / (1)(2)(3)...(n)
+
+The degree of p(x) is equal to the number of roots we have found, which is n+1. Therefore, we can say that p(x) is a monic polynomial of degree n+1, where n is the number of roots we have found.
+
+In this case, we have found three roots (x=0, x=1, x=2), so the degree of p(x) is 3+1=4.
+
+Therefore, the monic polynomial p(x) of degree greater than 1 that satisfies the given equation is:
+
+p(x) = (x-0)(x-1)(x-2)(x-3)</code></pre>
 <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
-<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The monic polynomial p(x) that satisfies the equation x*p(x-1)=(x-2023)*p(x) is p(x) = x(x - 1)(x - 2)g(x), where g(x) is a polynomial of degree n-3.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>The monic polynomial p(x) of degree greater than 1 that satisfies the equation x*p(x-1)=(x-2023)*p(x) is p(x) = (x-0)(x-1)(x-2)(x-3).</code></pre>
           <div style="margin-top: 50px; margin-bottom: 50px;"></div>
         </div>
         <div class='col-2 px-3'></div>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang='en'>
+  <head>
+    <!-- Required meta tags -->
+    <meta charset='utf-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+
+    <!-- Bootstrap CSS -->
+    <link rel='stylesheet' href="/CHAMP/static/custom.css">
+    <link rel="stylesheet" href="/CHAMP/static/bootstrap.css">
+    <link rel="stylesheet" href="/CHAMP/static/stackoverflow-light.min.css">
+    <script src="/CHAMP/static/bootstrap.bundle.min.js"></script>
+    <script src="/CHAMP/static/jquery.min.js"></script>
+    <script src="/CHAMP/static/utils.js"></script>
+    <script src="/CHAMP/static/highlight.min.js"></script>
+
+    <title>CHAMP Dataset Explorer</title>
+
+    <style>
+      html {
+        font-size: 15px;
+        line-height: 1.1;
+      }
+      .modebar{
+        display: none !important;
+      }
+
+      .noscroll {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+      }
+
+      .noscroll::-webkit-scrollbar {
+        display: none;
+      }
+
+    </style>
+  </head>
+
+  <body>
+    <h3 style='text-align: center; margin-bottom: 20px; margin-top: 20px;'>Model Generation</h3>
+
+    <div class='container-fluid mb-3'>
+
+      <div class='row'>
+        <div class='col-2 px-3'></div>
+        <div class='col-8 px-3'>
+          <table class='table table-striped' style="width: 100%; table-layout: fixed"><tr>
+            <th>Problem</th>
+            <th>Model</th>
+            <th>Prompt</th>
+          </tr>
+          <tr>
+            <td>P_Inequality_35</td>
+            <td>GPT-4 Turbo</td>
+            <td>Direct C w/ H</td>
+          </tr>
+          <tr>
+            <td colspan="3"><b>Ground Truth Answer:</b> 900 (i.e., all values)</td>
+          </tr>
+        </table>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Use in Code</h5>
+          <pre><code>import champ_dataset # "pip install champ-dataset" if necessary
+dataset = champ_dataset.load('v0')
+problem = dataset['P_Inequality_35']
+messages = problem.conversations['GPT-4 Turbo|Direct C w/ H'].messages
+for message in messages:
+    print(f'Role: {message.role}')
+    print(f'Text: {message.text}')
+    print(f'Error: {message.error}')
+    print('-----------------------')</code></pre>
+          <h5 style="margin-top: 15px; padding-left: 3px;">Full Conversation
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #AEC7E8;'>System Prompt</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #98DF8A;'>User Input</span>
+            <span style='padding-left: 5px; padding-right: 5px; margin-left: 15px; font-size: 1rem; background-color: #FFBB78;'>Model Output</span>
+          </h5>
+          <pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #AEC7E8 !important;'>You are an expert on mathematics.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Solve the following problem. Make sure to show your work before giving the final answer.
+
+For how many values of n in {101, ..., 1000} is 1/(n+1)+1/(n+2)+...+1/(2n)&lt;3/4?
+
+You may find the following information useful:
+
+1. Add 1/n to the sum.
+2. Duplicate each term twice.
+3. Group the largest and smallest, 2nd largest and 2nd smallest, 3rd largest and 3rd smallest, etc.
+4. Find a shared upper bound on the sum for all groups.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>To solve this problem, we will follow the steps provided and use the properties of harmonic series and inequalities.
+
+First, let&#x27;s consider the sum:
+
+S = 1/(n+1) + 1/(n+2) + ... + 1/(2n)
+
+We want to find for how many values of n in the set {101, ..., 1000} the inequality S &lt; 3/4 holds.
+
+Step 1: Add 1/n to the sum.
+We add 1/n to both sides of the inequality to get a new sum S&#x27;:
+
+S&#x27; = 1/n + 1/(n+1) + 1/(n+2) + ... + 1/(2n)
+
+Step 2: Duplicate each term twice.
+We will duplicate each term in the sum S&#x27; to get a new sum S&#x27;&#x27;:
+
+S&#x27;&#x27; = 2/n + 2/(n+1) + 2/(n+2) + ... + 2/(2n)
+
+Step 3: Group the largest and smallest, 2nd largest and 2nd smallest, 3rd largest and 3rd smallest, etc.
+We will group the terms in pairs from the ends towards the middle:
+
+S&#x27;&#x27; = (2/n + 2/(2n)) + (2/(n+1) + 2/(2n-1)) + ... + (2/(n+n/2) + 2/(n+n/2))
+
+Step 4: Find a shared upper bound on the sum for all groups.
+Each of these pairs can be bounded above by 2/n, since the smallest term in each pair is at least 1/(2n) and the largest is at most 2/n. There are n such pairs, so we have:
+
+S&#x27;&#x27; &lt; 2n * (2/n) = 4
+
+Now, we need to relate S&#x27;&#x27; back to our original sum S. Since we duplicated each term twice and added 1/n, we have:
+
+S&#x27;&#x27; = 2S + 2/n
+
+We found that S&#x27;&#x27; &lt; 4, so:
+
+2S + 2/n &lt; 4
+
+Now, we solve for S:
+
+2S &lt; 4 - 2/n
+S &lt; 2 - 1/n
+
+We want to find when S &lt; 3/4, so we need to compare:
+
+2 - 1/n &lt; 3/4
+
+Subtract 2 from both sides:
+
+-1/n &lt; -5/4
+
+Multiply both sides by -n (which reverses the inequality because n is positive):
+
+1 &gt; 5n/4
+
+Now, divide both sides by 5/4:
+
+4/n &gt; 5
+
+Finally, multiply both sides by n:
+
+4 &gt; 5n
+
+Now, divide both sides by 5:
+
+n &lt; 4/5
+
+This inequality cannot be true for any n in the set {101, ..., 1000} because all values of n are greater than 4/5. Therefore, there are no values of n in the given set for which the original inequality S &lt; 3/4 holds. The final answer is that there are 0 values of n in the set {101, ..., 1000} for which the inequality is true.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #98DF8A !important;'>Now, summarize the answer above in one sentence, without any intermediate steps or explanations.</code></pre>
+<pre style="margin-bottom: 15px; margin-top: 15px;"><code class="language-plaintext" style='background-color: #FFBB78 !important;'>There are 0 values of n in the set {101, ..., 1000} for which the inequality 1/(n+1) + 1/(n+2) + ... + 1/(2n) &lt; 3/4 holds.</code></pre>
+          <div style="margin-top: 50px; margin-bottom: 50px;"></div>
+        </div>
+        <div class='col-2 px-3'></div>
+      </div>
+    </div>
+
+    <script type="text/javascript">hljs.highlightAll();</script>
+
+  </body>
+</html>
